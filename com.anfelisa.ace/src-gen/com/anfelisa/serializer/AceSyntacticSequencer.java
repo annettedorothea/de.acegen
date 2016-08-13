@@ -26,14 +26,14 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q;
 	protected AbstractElementAlias match_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_Event___ListenedToByKeyword_1_0_LeftParenthesisKeyword_1_1_RightParenthesisKeyword_1_3__q;
-	protected AbstractElementAlias match_Project___ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1_RightCurlyBracketKeyword_1_3__a;
-	protected AbstractElementAlias match_Project___CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1_RightCurlyBracketKeyword_2_3__a;
-	protected AbstractElementAlias match_Project___EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a;
-	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_1_3_ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1__a;
-	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_2_3_CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1__a;
-	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_3_3_EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a;
-	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_4_3_ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a;
-	protected AbstractElementAlias match_Project___ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a;
+	protected AbstractElementAlias match_Project___ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a;
+	protected AbstractElementAlias match_Project___CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a;
+	protected AbstractElementAlias match_Project___EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a;
+	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_4_3_ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a;
+	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_5_3_CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a;
+	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_6_3_EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a;
+	protected AbstractElementAlias match_Project___RightCurlyBracketKeyword_7_3_ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1__a;
+	protected AbstractElementAlias match_Project___ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__a;
 	protected AbstractElementAlias match_View___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__a;
 	protected AbstractElementAlias match_View___RightCurlyBracketKeyword_1_2_LeftCurlyBracketKeyword_1_0__a;
 	
@@ -45,14 +45,14 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getPublishesKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getLeftParenthesisKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getRightParenthesisKeyword_2_3()));
 		match_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_Event___ListenedToByKeyword_1_0_LeftParenthesisKeyword_1_1_RightParenthesisKeyword_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventAccess().getListenedToByKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getEventAccess().getLeftParenthesisKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getEventAccess().getRightParenthesisKeyword_1_3()));
-		match_Project___ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1_RightCurlyBracketKeyword_1_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getActionsKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_1_3()));
-		match_Project___CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1_RightCurlyBracketKeyword_2_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getCommandsKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_2_3()));
-		match_Project___EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getEventsKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_3_3()));
-		match_Project___RightCurlyBracketKeyword_1_3_ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_1_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getActionsKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_1_1()));
-		match_Project___RightCurlyBracketKeyword_2_3_CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_2_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getCommandsKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_2_1()));
-		match_Project___RightCurlyBracketKeyword_3_3_EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_3_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getEventsKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_3_1()));
-		match_Project___RightCurlyBracketKeyword_4_3_ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getViewsKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1()));
-		match_Project___ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getViewsKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3()));
+		match_Project___ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getActionsKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3()));
+		match_Project___CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getCommandsKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_5_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_5_3()));
+		match_Project___EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getEventsKeyword_6_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_6_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_6_3()));
+		match_Project___RightCurlyBracketKeyword_4_3_ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getActionsKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1()));
+		match_Project___RightCurlyBracketKeyword_5_3_CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_5_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getCommandsKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_5_1()));
+		match_Project___RightCurlyBracketKeyword_6_3_EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_6_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getEventsKeyword_6_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_6_1()));
+		match_Project___RightCurlyBracketKeyword_7_3_ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_7_3()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getViewsKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_7_1()));
+		match_Project___ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getViewsKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_7_1()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_7_3()));
 		match_View___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getViewAccess().getLeftCurlyBracketKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getViewAccess().getRightCurlyBracketKeyword_1_2()));
 		match_View___RightCurlyBracketKeyword_1_2_LeftCurlyBracketKeyword_1_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getViewAccess().getRightCurlyBracketKeyword_1_2()), new TokenAlias(false, false, grammarAccess.getViewAccess().getLeftCurlyBracketKeyword_1_0()));
 	}
@@ -79,22 +79,22 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Event___ListenedToByKeyword_1_0_LeftParenthesisKeyword_1_1_RightParenthesisKeyword_1_3__q.equals(syntax))
 				emit_Event___ListenedToByKeyword_1_0_LeftParenthesisKeyword_1_1_RightParenthesisKeyword_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1_RightCurlyBracketKeyword_1_3__a.equals(syntax))
-				emit_Project___ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1_RightCurlyBracketKeyword_1_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1_RightCurlyBracketKeyword_2_3__a.equals(syntax))
-				emit_Project___CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1_RightCurlyBracketKeyword_2_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a.equals(syntax))
-				emit_Project___EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___RightCurlyBracketKeyword_1_3_ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1__a.equals(syntax))
-				emit_Project___RightCurlyBracketKeyword_1_3_ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___RightCurlyBracketKeyword_2_3_CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1__a.equals(syntax))
-				emit_Project___RightCurlyBracketKeyword_2_3_CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___RightCurlyBracketKeyword_3_3_EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a.equals(syntax))
-				emit_Project___RightCurlyBracketKeyword_3_3_EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___RightCurlyBracketKeyword_4_3_ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a.equals(syntax))
-				emit_Project___RightCurlyBracketKeyword_4_3_ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Project___ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a.equals(syntax))
-				emit_Project___ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a.equals(syntax))
+				emit_Project___ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a.equals(syntax))
+				emit_Project___CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a.equals(syntax))
+				emit_Project___EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___RightCurlyBracketKeyword_4_3_ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a.equals(syntax))
+				emit_Project___RightCurlyBracketKeyword_4_3_ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___RightCurlyBracketKeyword_5_3_CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a.equals(syntax))
+				emit_Project___RightCurlyBracketKeyword_5_3_CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___RightCurlyBracketKeyword_6_3_EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a.equals(syntax))
+				emit_Project___RightCurlyBracketKeyword_6_3_EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___RightCurlyBracketKeyword_7_3_ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1__a.equals(syntax))
+				emit_Project___RightCurlyBracketKeyword_7_3_ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__a.equals(syntax))
+				emit_Project___ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_View___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__a.equals(syntax))
 				emit_View___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_View___RightCurlyBracketKeyword_1_2_LeftCurlyBracketKeyword_1_0__a.equals(syntax))
@@ -171,12 +171,16 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action '}' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     actions+=Action '}' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     actions+=Action '}' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
-	 *     name=ID (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
-	 *     name=ID (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
-	 *     name=ID (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
-	 *     name=ID (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='ES6' (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
+	 *     target='ES6' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='ES6' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='ES6' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='PHP' (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
+	 *     target='PHP' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='PHP' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='PHP' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 */
-	protected void emit_Project___ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1_RightCurlyBracketKeyword_1_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -191,11 +195,14 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command '}' (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     commands+=Command '}' (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     commands+=Command '}' (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
-	 *     name=ID ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
-	 *     name=ID ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
-	 *     name=ID ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='ES6' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='ES6' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='ES6' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='PHP' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 */
-	protected void emit_Project___CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1_RightCurlyBracketKeyword_2_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -210,10 +217,12 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command '}' ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 *     events+=Event '}' (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
 	 *     events+=Event '}' (ambiguity) ('views' '{' '}')* (rule end)
-	 *     name=ID ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
-	 *     name=ID ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
+	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
+	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 */
-	protected void emit_Project___EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -223,9 +232,10 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     actions+=Action (ambiguity) actions+=Action
-	 *     name=ID 'actions' '{' (ambiguity) actions+=Action
+	 *     target='ES6' 'actions' '{' (ambiguity) actions+=Action
+	 *     target='PHP' 'actions' '{' (ambiguity) actions+=Action
 	 */
-	protected void emit_Project___RightCurlyBracketKeyword_1_3_ActionsKeyword_1_0_LeftCurlyBracketKeyword_1_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___RightCurlyBracketKeyword_4_3_ActionsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -236,9 +246,10 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     actions+=Action '}' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 *     commands+=Command (ambiguity) commands+=Command
-	 *     name=ID ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
+	 *     target='ES6' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
+	 *     target='PHP' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 */
-	protected void emit_Project___RightCurlyBracketKeyword_2_3_CommandsKeyword_2_0_LeftCurlyBracketKeyword_2_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___RightCurlyBracketKeyword_5_3_CommandsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -250,9 +261,10 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action '}' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 *     commands+=Command '}' ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 *     events+=Event (ambiguity) events+=Event
-	 *     name=ID ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
+	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
+	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 */
-	protected void emit_Project___RightCurlyBracketKeyword_3_3_EventsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___RightCurlyBracketKeyword_6_3_EventsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -264,10 +276,11 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action '}' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     commands+=Command '}' ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     events+=Event '}' ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
-	 *     name=ID ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
+	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
+	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     views+=View (ambiguity) views+=View
 	 */
-	protected void emit_Project___RightCurlyBracketKeyword_4_3_ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___RightCurlyBracketKeyword_7_3_ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -279,10 +292,11 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action '}' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     commands+=Command '}' ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     events+=Event '}' ('events' '{' '}')* (ambiguity) (rule end)
-	 *     name=ID ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
+	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
+	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     views+=View '}' (ambiguity) (rule end)
 	 */
-	protected void emit_Project___ViewsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Project___ViewsKeyword_7_0_LeftCurlyBracketKeyword_7_1_RightCurlyBracketKeyword_7_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

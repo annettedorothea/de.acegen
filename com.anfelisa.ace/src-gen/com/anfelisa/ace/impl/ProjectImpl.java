@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getCommands <em>Commands</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getEvents <em>Events</em>}</li>
@@ -64,6 +65,26 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getTarget() <em>Target</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTarget()
+   * @generated
+   * @ordered
+   */
+  protected static final String TARGET_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTarget() <em>Target</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTarget()
+   * @generated
+   * @ordered
+   */
+  protected String target = TARGET_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
@@ -147,6 +168,29 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.PROJECT__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getTarget()
+  {
+    return target;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTarget(String newTarget)
+  {
+    String oldTarget = target;
+    target = newTarget;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.PROJECT__TARGET, oldTarget, target));
   }
 
   /**
@@ -239,6 +283,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     {
       case AcePackage.PROJECT__NAME:
         return getName();
+      case AcePackage.PROJECT__TARGET:
+        return getTarget();
       case AcePackage.PROJECT__ACTIONS:
         return getActions();
       case AcePackage.PROJECT__COMMANDS:
@@ -264,6 +310,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     {
       case AcePackage.PROJECT__NAME:
         setName((String)newValue);
+        return;
+      case AcePackage.PROJECT__TARGET:
+        setTarget((String)newValue);
         return;
       case AcePackage.PROJECT__ACTIONS:
         getActions().clear();
@@ -298,6 +347,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       case AcePackage.PROJECT__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case AcePackage.PROJECT__TARGET:
+        setTarget(TARGET_EDEFAULT);
+        return;
       case AcePackage.PROJECT__ACTIONS:
         getActions().clear();
         return;
@@ -326,6 +378,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     {
       case AcePackage.PROJECT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AcePackage.PROJECT__TARGET:
+        return TARGET_EDEFAULT == null ? target != null : !TARGET_EDEFAULT.equals(target);
       case AcePackage.PROJECT__ACTIONS:
         return actions != null && !actions.isEmpty();
       case AcePackage.PROJECT__COMMANDS:
@@ -351,6 +405,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", target: ");
+    result.append(target);
     result.append(')');
     return result.toString();
   }

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.Project#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Project#getTarget <em>Target</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getActions <em>Actions</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getCommands <em>Commands</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getEvents <em>Events</em>}</li>
@@ -54,6 +55,32 @@ public interface Project extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Target</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Target</em>' attribute.
+   * @see #setTarget(String)
+   * @see com.anfelisa.ace.AcePackage#getProject_Target()
+   * @model
+   * @generated
+   */
+  String getTarget();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.Project#getTarget <em>Target</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Target</em>' attribute.
+   * @see #getTarget()
+   * @generated
+   */
+  void setTarget(String value);
 
   /**
    * Returns the value of the '<em><b>Actions</b></em>' containment reference list.

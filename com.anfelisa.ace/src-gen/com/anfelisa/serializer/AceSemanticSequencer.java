@@ -116,7 +116,14 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Project returns Project
 	 *
 	 * Constraint:
-	 *     (name=ID actions+=Action* commands+=Command* events+=Event* views+=View*)
+	 *     (
+	 *         name=ID 
+	 *         (target='PHP' | target='ES6') 
+	 *         actions+=Action* 
+	 *         commands+=Command* 
+	 *         events+=Event* 
+	 *         views+=View*
+	 *     )
 	 */
 	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -11,6 +11,8 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 public class ACEOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 	public final static String DEFAULT_JAVASCRIPT_OUTPUT_ONCE = "DEFAULT_JAVASCRIPT_OUTPUT_ONCE";
+	public final static String DEFAULT_PHP_OUTPUT = "DEFAULT_PHP_OUTPUT";
+	public final static String DEFAULT_PHP_OUTPUT_ONCE = "DEFAULT_PHP_OUTPUT_ONCE";
 
 	/**
 	 * @return a set of {@link OutputConfiguration} available for the generator
@@ -32,7 +34,23 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceOutput.setCleanUpDerivedResources(false);
 		onceOutput.setSetDerivedProperty(false);
 		
-		return newHashSet(defaultOutput, onceOutput);
+		OutputConfiguration defaultPhpOutput = new OutputConfiguration(DEFAULT_PHP_OUTPUT);
+		defaultPhpOutput.setDescription("generated PHP sources");
+		defaultPhpOutput.setOutputDirectory("./php/gen/");
+		defaultPhpOutput.setOverrideExistingResources(true);
+		defaultPhpOutput.setCreateOutputDirectory(true);
+		defaultPhpOutput.setCleanUpDerivedResources(true);
+		defaultPhpOutput.setSetDerivedProperty(true);
+		
+		OutputConfiguration oncePhpOutput = new OutputConfiguration(DEFAULT_PHP_OUTPUT_ONCE);
+		oncePhpOutput.setDescription("initial PHP sources");
+		oncePhpOutput.setOutputDirectory("./php/");
+		oncePhpOutput.setOverrideExistingResources(false);
+		oncePhpOutput.setCreateOutputDirectory(true);
+		oncePhpOutput.setCleanUpDerivedResources(false);
+		oncePhpOutput.setSetDerivedProperty(false);
+		
+		return newHashSet(defaultOutput, onceOutput, defaultPhpOutput, oncePhpOutput);
 	}
 
 }

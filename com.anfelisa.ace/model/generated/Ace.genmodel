@@ -8,6 +8,7 @@
       fileExtensions="ace" ecorePackage="Ace.ecore#/">
     <genClasses ecoreClass="Ace.ecore#//Project">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/target"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/actions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/commands"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/events"/>

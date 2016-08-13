@@ -77,13 +77,22 @@ public interface AcePackage extends EPackage
   int PROJECT__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROJECT__TARGET = 1;
+
+  /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROJECT__ACTIONS = 1;
+  int PROJECT__ACTIONS = 2;
 
   /**
    * The feature id for the '<em><b>Commands</b></em>' containment reference list.
@@ -92,7 +101,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROJECT__COMMANDS = 2;
+  int PROJECT__COMMANDS = 3;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' containment reference list.
@@ -101,7 +110,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROJECT__EVENTS = 3;
+  int PROJECT__EVENTS = 4;
 
   /**
    * The feature id for the '<em><b>Views</b></em>' containment reference list.
@@ -110,7 +119,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROJECT__VIEWS = 4;
+  int PROJECT__VIEWS = 5;
 
   /**
    * The number of structural features of the '<em>Project</em>' class.
@@ -119,7 +128,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROJECT_FEATURE_COUNT = 5;
+  int PROJECT_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.ActionImpl <em>Action</em>}' class.
@@ -364,6 +373,17 @@ public interface AcePackage extends EPackage
    * @generated
    */
   EAttribute getProject_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link com.anfelisa.ace.Project#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target</em>'.
+   * @see com.anfelisa.ace.Project#getTarget()
+   * @see #getProject()
+   * @generated
+   */
+  EAttribute getProject_Target();
 
   /**
    * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Project#getActions <em>Actions</em>}'.
@@ -641,6 +661,14 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PROJECT__TARGET = eINSTANCE.getProject_Target();
 
     /**
      * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.

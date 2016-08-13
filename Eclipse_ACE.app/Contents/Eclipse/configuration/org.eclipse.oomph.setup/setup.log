@@ -7,3 +7,58 @@
 [2016-07-06 16:51:43] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = Users/annette/Sites/es6/
 [2016-07-06 16:51:43] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = Users/annette/Sites/es6/gen/
 [2016-07-06 16:51:44] 
+[2016-07-10 18:17:43] Executing startup tasks
+[2016-07-10 18:17:43] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-07-10 18:17:43] Product self.product.version
+[2016-07-10 18:17:43] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-07-10 18:17:43] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-07-10 18:17:43] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-07-10 18:17:43] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-07-10 18:17:43] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-07-10 18:17:43] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2016-07-10 18:17:43] org.eclipse.swt.SWTException: Widget is disposed
+  at org.eclipse.swt.SWT.error(SWT.java:4533)
+  at org.eclipse.swt.SWT.error(SWT.java:4448)
+  at org.eclipse.swt.SWT.error(SWT.java:4419)
+  at org.eclipse.swt.widgets.Widget.error(Widget.java:799)
+  at org.eclipse.swt.widgets.Widget.getDisplay(Widget.java:923)
+  at org.eclipse.oomph.ui.UICallback.execInUI(UICallback.java:52)
+  at org.eclipse.oomph.setup.impl.SetupTaskImpl.performUI(SetupTaskImpl.java:829)
+  at org.eclipse.oomph.setup.impl.PreferenceTaskImpl.perform(PreferenceTaskImpl.java:378)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.doPerformNeededSetupTasks(SetupTaskPerformer.java:3021)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.access$1(SetupTaskPerformer.java:2964)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil$1.run(SetupTaskPerformer.java:4160)
+  at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
+  at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil.performNeededSetupTasks(SetupTaskPerformer.java:4154)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer$WorkspaceUtil.access$0(SetupTaskPerformer.java:4152)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.performNeededSetupTasks(SetupTaskPerformer.java:2955)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.performTriggeredSetupTasks(SetupTaskPerformer.java:2930)
+  at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.perform(SetupTaskPerformer.java:2861)
+  at org.eclipse.oomph.setup.ui.wizards.ProgressPage$9.run(ProgressPage.java:555)
+  at org.eclipse.oomph.setup.ui.wizards.ProgressPage$11$1.run(ProgressPage.java:681)
+  at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+[2016-07-10 18:17:44] 
+[2016-08-01 12:56:21] Executing startup tasks
+[2016-08-01 12:56:22] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-08-01 12:56:22] Product self.product.version
+[2016-08-01 12:56:22] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-01 12:56:22] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-01 12:56:22] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-01 12:56:22] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-08-01 12:56:22] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-08-01 12:56:22] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2016-08-01 12:56:22] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2016-08-01 12:56:22] 
+[2016-08-13 21:32:49] Executing startup tasks
+[2016-08-13 21:32:49] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-08-13 21:32:49] Product self.product.version
+[2016-08-13 21:32:49] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-13 21:32:49] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-13 21:32:49] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-08-13 21:32:49] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-08-13 21:32:49] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-08-13 21:32:49] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2016-08-13 21:32:49] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2016-08-13 21:32:49] 

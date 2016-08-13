@@ -24,4 +24,21 @@ public class ActionExtension {
     _builder.append("Action");
     return _builder.toString();
   }
+  
+  public String abstractName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Abstract");
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    return _builder.toString();
+  }
+  
+  public String nameUppercase(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    return _builder.toString();
+  }
 }

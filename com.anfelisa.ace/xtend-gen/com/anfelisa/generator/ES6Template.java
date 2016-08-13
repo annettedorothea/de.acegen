@@ -18,7 +18,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
-public class Template {
+public class ES6Template {
   @Inject
   @Extension
   private ActionExtension _actionExtension;

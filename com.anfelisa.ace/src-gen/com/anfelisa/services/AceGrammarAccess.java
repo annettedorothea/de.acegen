@@ -6,6 +6,7 @@ package com.anfelisa.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
@@ -27,33 +28,40 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cActionsKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cActionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cActionsActionParserRuleCall_1_2_0 = (RuleCall)cActionsAssignment_1_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommandsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Assignment cCommandsAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cCommandsCommandParserRuleCall_2_2_0 = (RuleCall)cCommandsAssignment_2_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cEventsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
-		private final Assignment cEventsAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cEventsEventParserRuleCall_3_2_0 = (RuleCall)cEventsAssignment_3_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Keyword cTargetKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTargetAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cTargetAlternatives_3_0 = (Alternatives)cTargetAssignment_3.eContents().get(0);
+		private final Keyword cTargetPHPKeyword_3_0_0 = (Keyword)cTargetAlternatives_3_0.eContents().get(0);
+		private final Keyword cTargetES6Keyword_3_0_1 = (Keyword)cTargetAlternatives_3_0.eContents().get(1);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cViewsKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cActionsKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cViewsAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cViewsViewParserRuleCall_4_2_0 = (RuleCall)cViewsAssignment_4_2.eContents().get(0);
+		private final Assignment cActionsAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cActionsActionParserRuleCall_4_2_0 = (RuleCall)cActionsAssignment_4_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cCommandsKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cCommandsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cCommandsCommandParserRuleCall_5_2_0 = (RuleCall)cCommandsAssignment_5_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEventsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cEventsAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cEventsEventParserRuleCall_6_2_0 = (RuleCall)cEventsAssignment_6_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cViewsKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
+		private final Assignment cViewsAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final RuleCall cViewsViewParserRuleCall_7_2_0 = (RuleCall)cViewsAssignment_7_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
 		
 		//Project:
-		//	name=ID ('actions' '{'
+		//	name=ID
+		//	'target' ':' target=('PHP' | 'ES6') ('actions' '{'
 		//	actions+=Action*
 		//	'}')* ('commands' '{'
 		//	commands+=Command*
@@ -64,8 +72,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}')*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('actions' '{' actions+=Action* '}')* ('commands' '{' commands+=Command* '}')* ('events' '{' events+=Event*
-		//'}')* ('views' '{' views+=View* '}')*
+		//name=ID 'target' ':' target=('PHP' | 'ES6') ('actions' '{' actions+=Action* '}')* ('commands' '{' commands+=Command*
+		//'}')* ('events' '{' events+=Event* '}')* ('views' '{' views+=View* '}')*
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -74,77 +82,95 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
+		//'target'
+		public Keyword getTargetKeyword_1() { return cTargetKeyword_1; }
+		
+		//':'
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		
+		//target=('PHP' | 'ES6')
+		public Assignment getTargetAssignment_3() { return cTargetAssignment_3; }
+		
+		//('PHP' | 'ES6')
+		public Alternatives getTargetAlternatives_3_0() { return cTargetAlternatives_3_0; }
+		
+		//'PHP'
+		public Keyword getTargetPHPKeyword_3_0_0() { return cTargetPHPKeyword_3_0_0; }
+		
+		//'ES6'
+		public Keyword getTargetES6Keyword_3_0_1() { return cTargetES6Keyword_3_0_1; }
+		
 		//('actions' '{' actions+=Action* '}')*
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//'actions'
-		public Keyword getActionsKeyword_1_0() { return cActionsKeyword_1_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_1() { return cLeftCurlyBracketKeyword_1_1; }
-		
-		//actions+=Action*
-		public Assignment getActionsAssignment_1_2() { return cActionsAssignment_1_2; }
-		
-		//Action
-		public RuleCall getActionsActionParserRuleCall_1_2_0() { return cActionsActionParserRuleCall_1_2_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_3() { return cRightCurlyBracketKeyword_1_3; }
-		
-		//('commands' '{' commands+=Command* '}')*
-		public Group getGroup_2() { return cGroup_2; }
-		
-		//'commands'
-		public Keyword getCommandsKeyword_2_0() { return cCommandsKeyword_2_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2_1() { return cLeftCurlyBracketKeyword_2_1; }
-		
-		//commands+=Command*
-		public Assignment getCommandsAssignment_2_2() { return cCommandsAssignment_2_2; }
-		
-		//Command
-		public RuleCall getCommandsCommandParserRuleCall_2_2_0() { return cCommandsCommandParserRuleCall_2_2_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_2_3() { return cRightCurlyBracketKeyword_2_3; }
-		
-		//('events' '{' events+=Event* '}')*
-		public Group getGroup_3() { return cGroup_3; }
-		
-		//'events'
-		public Keyword getEventsKeyword_3_0() { return cEventsKeyword_3_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3_1() { return cLeftCurlyBracketKeyword_3_1; }
-		
-		//events+=Event*
-		public Assignment getEventsAssignment_3_2() { return cEventsAssignment_3_2; }
-		
-		//Event
-		public RuleCall getEventsEventParserRuleCall_3_2_0() { return cEventsEventParserRuleCall_3_2_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
-		
-		//('views' '{' views+=View* '}')*
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'views'
-		public Keyword getViewsKeyword_4_0() { return cViewsKeyword_4_0; }
+		//'actions'
+		public Keyword getActionsKeyword_4_0() { return cActionsKeyword_4_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4_1() { return cLeftCurlyBracketKeyword_4_1; }
 		
-		//views+=View*
-		public Assignment getViewsAssignment_4_2() { return cViewsAssignment_4_2; }
+		//actions+=Action*
+		public Assignment getActionsAssignment_4_2() { return cActionsAssignment_4_2; }
 		
-		//View
-		public RuleCall getViewsViewParserRuleCall_4_2_0() { return cViewsViewParserRuleCall_4_2_0; }
+		//Action
+		public RuleCall getActionsActionParserRuleCall_4_2_0() { return cActionsActionParserRuleCall_4_2_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
+		
+		//('commands' '{' commands+=Command* '}')*
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'commands'
+		public Keyword getCommandsKeyword_5_0() { return cCommandsKeyword_5_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_5_1() { return cLeftCurlyBracketKeyword_5_1; }
+		
+		//commands+=Command*
+		public Assignment getCommandsAssignment_5_2() { return cCommandsAssignment_5_2; }
+		
+		//Command
+		public RuleCall getCommandsCommandParserRuleCall_5_2_0() { return cCommandsCommandParserRuleCall_5_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5_3() { return cRightCurlyBracketKeyword_5_3; }
+		
+		//('events' '{' events+=Event* '}')*
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//'events'
+		public Keyword getEventsKeyword_6_0() { return cEventsKeyword_6_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_6_1() { return cLeftCurlyBracketKeyword_6_1; }
+		
+		//events+=Event*
+		public Assignment getEventsAssignment_6_2() { return cEventsAssignment_6_2; }
+		
+		//Event
+		public RuleCall getEventsEventParserRuleCall_6_2_0() { return cEventsEventParserRuleCall_6_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_6_3() { return cRightCurlyBracketKeyword_6_3; }
+		
+		//('views' '{' views+=View* '}')*
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//'views'
+		public Keyword getViewsKeyword_7_0() { return cViewsKeyword_7_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_7_1() { return cLeftCurlyBracketKeyword_7_1; }
+		
+		//views+=View*
+		public Assignment getViewsAssignment_7_2() { return cViewsAssignment_7_2; }
+		
+		//View
+		public RuleCall getViewsViewParserRuleCall_7_2_0() { return cViewsViewParserRuleCall_7_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_7_3() { return cRightCurlyBracketKeyword_7_3; }
 	}
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Action");
@@ -493,7 +519,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Project:
-	//	name=ID ('actions' '{'
+	//	name=ID
+	//	'target' ':' target=('PHP' | 'ES6') ('actions' '{'
 	//	actions+=Action*
 	//	'}')* ('commands' '{'
 	//	commands+=Command*

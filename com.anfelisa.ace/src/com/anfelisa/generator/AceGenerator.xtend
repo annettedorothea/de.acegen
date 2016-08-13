@@ -23,8 +23,11 @@ import com.anfelisa.extensions.ViewExtension
 class AceGenerator extends AbstractGenerator {
 
 	@Inject
-	Template template;
-	
+	ES6Template es6Template;
+
+	@Inject
+	PHPTemplate phpTemplate;
+
 	@Inject
 	extension ActionExtension
 
@@ -40,39 +43,64 @@ class AceGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource != null && resource.contents != null && resource.contents.size > 0) {
 			val project = resource.contents.get(0) as Project
-			
-			for (action: project.actions) {
-				fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.es6',
-					IFileSystemAccess.DEFAULT_OUTPUT,
-					template.generateAbstractActionFile(action));
-				fsa.generateFile(project.name + '/actions/' + action.actionName + '.es6',
-					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-					template.generateInitialActionFile(action));
+
+			if (project.target == 'ES6') {
+				for (action : project.actions) {
+					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.es6',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractActionFile(action));
+					fsa.generateFile(project.name + '/actions/' + action.actionName + '.es6',
+						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+						es6Template.generateInitialActionFile(action));
+				}
+				for (command : project.commands) {
+					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.es6',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(command));
+					fsa.generateFile(project.name + '/commands/' + command.commandName + '.es6',
+						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+						es6Template.generateInitialCommandFile(command));
+				}
+				fsa.generateFile(project.name + '/EventListenerRegistration.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateEventListenerRegistration(project));
+				for (event : project.events) {
+					fsa.generateFile(project.name + '/events/' + event.eventName + '.es6',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateEventFile(event));
+				}
+				for (view : project.views) {
+					fsa.generateFile(project.name + '/' + view.viewName + '.es6',
+						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateView(view));
+				}
+				fsa.generateFile(project.name + '/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateHtmlDevSnippet(project));
+			} else if (project.target == 'PHP') {
+				for (action : project.actions) {
+					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
+						phpTemplate.generateAbstractActionFile(action, project));
+					fsa.generateFile(project.name + '/actions/' + action.actionName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
+						phpTemplate.generateInitialActionFile(action, project));
+					fsa.generateFile(project.name + '/' + action.nameUppercase + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
+						phpTemplate.generateInitialFile(action, project));
+				}
+				for (command : project.commands) {
+					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
+						phpTemplate.generateAbstractCommandFile(command, project));
+					fsa.generateFile(project.name + '/commands/' + command.commandName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
+						phpTemplate.generateInitialCommandFile(command, project));
+				}
+				for (event : project.events) {
+					fsa.generateFile(project.name + '/events/' + event.eventName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
+						phpTemplate.generateEventFile(event, project));
+				}
+				for (view : project.views) {
+					fsa.generateFile(project.name + '/views/' + view.viewName + '.php',
+						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, phpTemplate.generateView(view));
+				}
 			}
-			for (command: project.commands) {
-				fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.es6',
-					IFileSystemAccess.DEFAULT_OUTPUT,
-					template.generateAbstractCommandFile(command));
-				fsa.generateFile(project.name + '/commands/' + command.commandName + '.es6',
-					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-					template.generateInitialCommandFile(command));
-			}
-			fsa.generateFile(project.name + '/EventListenerRegistration.es6',
-				IFileSystemAccess.DEFAULT_OUTPUT,
-				template.generateEventListenerRegistration(project));
-			for (event: project.events) {
-				fsa.generateFile(project.name + '/events/' + event.eventName + '.es6',
-					IFileSystemAccess.DEFAULT_OUTPUT,
-					template.generateEventFile(event));
-			}
-			for (view: project.views) {
-				fsa.generateFile(project.name + '/' + view.viewName + '.es6',
-					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-					template.generateView(view));
-			}
-			fsa.generateFile(project.name + '/htmlDev.snippet',
-				IFileSystemAccess.DEFAULT_OUTPUT,
-				template.generateHtmlDevSnippet(project));
 		}
 	}
 }

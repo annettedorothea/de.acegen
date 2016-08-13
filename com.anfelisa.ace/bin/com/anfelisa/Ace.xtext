@@ -4,6 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = ID
+	'target' ':' target = ('PHP' | 'ES6')
 	('actions' '{'
 		(actions += Action)*
 	'}')*

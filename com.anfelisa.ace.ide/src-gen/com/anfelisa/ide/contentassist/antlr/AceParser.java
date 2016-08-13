@@ -35,11 +35,12 @@ public class AceParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getProjectAccess().getTargetAlternatives_3_0(), "rule__Project__TargetAlternatives_3_0");
 					put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
-					put(grammarAccess.getProjectAccess().getGroup_1(), "rule__Project__Group_1__0");
-					put(grammarAccess.getProjectAccess().getGroup_2(), "rule__Project__Group_2__0");
-					put(grammarAccess.getProjectAccess().getGroup_3(), "rule__Project__Group_3__0");
 					put(grammarAccess.getProjectAccess().getGroup_4(), "rule__Project__Group_4__0");
+					put(grammarAccess.getProjectAccess().getGroup_5(), "rule__Project__Group_5__0");
+					put(grammarAccess.getProjectAccess().getGroup_6(), "rule__Project__Group_6__0");
+					put(grammarAccess.getProjectAccess().getGroup_7(), "rule__Project__Group_7__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_1(), "rule__Action__Group_1__0");
 					put(grammarAccess.getCommandAccess().getGroup(), "rule__Command__Group__0");
@@ -54,10 +55,11 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 					put(grammarAccess.getProjectAccess().getNameAssignment_0(), "rule__Project__NameAssignment_0");
-					put(grammarAccess.getProjectAccess().getActionsAssignment_1_2(), "rule__Project__ActionsAssignment_1_2");
-					put(grammarAccess.getProjectAccess().getCommandsAssignment_2_2(), "rule__Project__CommandsAssignment_2_2");
-					put(grammarAccess.getProjectAccess().getEventsAssignment_3_2(), "rule__Project__EventsAssignment_3_2");
-					put(grammarAccess.getProjectAccess().getViewsAssignment_4_2(), "rule__Project__ViewsAssignment_4_2");
+					put(grammarAccess.getProjectAccess().getTargetAssignment_3(), "rule__Project__TargetAssignment_3");
+					put(grammarAccess.getProjectAccess().getActionsAssignment_4_2(), "rule__Project__ActionsAssignment_4_2");
+					put(grammarAccess.getProjectAccess().getCommandsAssignment_5_2(), "rule__Project__CommandsAssignment_5_2");
+					put(grammarAccess.getProjectAccess().getEventsAssignment_6_2(), "rule__Project__EventsAssignment_6_2");
+					put(grammarAccess.getProjectAccess().getViewsAssignment_7_2(), "rule__Project__ViewsAssignment_7_2");
 					put(grammarAccess.getActionAccess().getNameAssignment_0(), "rule__Action__NameAssignment_0");
 					put(grammarAccess.getActionAccess().getCommandAssignment_1_1(), "rule__Action__CommandAssignment_1_1");
 					put(grammarAccess.getCommandAccess().getNameAssignment_0(), "rule__Command__NameAssignment_0");

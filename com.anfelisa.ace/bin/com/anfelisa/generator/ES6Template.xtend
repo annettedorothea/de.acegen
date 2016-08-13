@@ -11,7 +11,7 @@ import javax.inject.Inject
 import com.anfelisa.extensions.ViewExtension
 import com.anfelisa.ace.View
 
-class Template {
+class ES6Template {
 	
 	@Inject
 	extension ActionExtension

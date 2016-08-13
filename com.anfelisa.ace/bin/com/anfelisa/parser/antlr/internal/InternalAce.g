@@ -94,21 +94,56 @@ ruleProject returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_1='target'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getProjectAccess().getTargetKeyword_1());
+		}
+		otherlv_2=':'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getProjectAccess().getColonKeyword_2());
+		}
 		(
-			otherlv_1='actions'
+			(
+				(
+					lv_target_3_1='PHP'
+					{
+						newLeafNode(lv_target_3_1, grammarAccess.getProjectAccess().getTargetPHPKeyword_3_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getProjectRule());
+						}
+						setWithLastConsumed($current, "target", lv_target_3_1, null);
+					}
+					    |
+					lv_target_3_2='ES6'
+					{
+						newLeafNode(lv_target_3_2, grammarAccess.getProjectAccess().getTargetES6Keyword_3_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getProjectRule());
+						}
+						setWithLastConsumed($current, "target", lv_target_3_2, null);
+					}
+				)
+			)
+		)
+		(
+			otherlv_4='actions'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getProjectAccess().getActionsKeyword_1_0());
+				newLeafNode(otherlv_4, grammarAccess.getProjectAccess().getActionsKeyword_4_0());
 			}
-			otherlv_2='{'
+			otherlv_5='{'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_1_1());
+				newLeafNode(otherlv_5, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProjectAccess().getActionsActionParserRuleCall_1_2_0());
+						newCompositeNode(grammarAccess.getProjectAccess().getActionsActionParserRuleCall_4_2_0());
 					}
-					lv_actions_3_0=ruleAction
+					lv_actions_6_0=ruleAction
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -116,32 +151,32 @@ ruleProject returns [EObject current=null]
 						add(
 							$current,
 							"actions",
-							lv_actions_3_0,
+							lv_actions_6_0,
 							"com.anfelisa.Ace.Action");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_4='}'
+			otherlv_7='}'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_1_3());
+				newLeafNode(otherlv_7, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3());
 			}
 		)*
 		(
-			otherlv_5='commands'
+			otherlv_8='commands'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getProjectAccess().getCommandsKeyword_2_0());
+				newLeafNode(otherlv_8, grammarAccess.getProjectAccess().getCommandsKeyword_5_0());
 			}
-			otherlv_6='{'
+			otherlv_9='{'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_2_1());
+				newLeafNode(otherlv_9, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_5_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProjectAccess().getCommandsCommandParserRuleCall_2_2_0());
+						newCompositeNode(grammarAccess.getProjectAccess().getCommandsCommandParserRuleCall_5_2_0());
 					}
-					lv_commands_7_0=ruleCommand
+					lv_commands_10_0=ruleCommand
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -149,32 +184,32 @@ ruleProject returns [EObject current=null]
 						add(
 							$current,
 							"commands",
-							lv_commands_7_0,
+							lv_commands_10_0,
 							"com.anfelisa.Ace.Command");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_8='}'
+			otherlv_11='}'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_2_3());
+				newLeafNode(otherlv_11, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_5_3());
 			}
 		)*
 		(
-			otherlv_9='events'
+			otherlv_12='events'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getProjectAccess().getEventsKeyword_3_0());
+				newLeafNode(otherlv_12, grammarAccess.getProjectAccess().getEventsKeyword_6_0());
 			}
-			otherlv_10='{'
+			otherlv_13='{'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_3_1());
+				newLeafNode(otherlv_13, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_6_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProjectAccess().getEventsEventParserRuleCall_3_2_0());
+						newCompositeNode(grammarAccess.getProjectAccess().getEventsEventParserRuleCall_6_2_0());
 					}
-					lv_events_11_0=ruleEvent
+					lv_events_14_0=ruleEvent
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -182,32 +217,32 @@ ruleProject returns [EObject current=null]
 						add(
 							$current,
 							"events",
-							lv_events_11_0,
+							lv_events_14_0,
 							"com.anfelisa.Ace.Event");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_12='}'
+			otherlv_15='}'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_3_3());
+				newLeafNode(otherlv_15, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_6_3());
 			}
 		)*
 		(
-			otherlv_13='views'
+			otherlv_16='views'
 			{
-				newLeafNode(otherlv_13, grammarAccess.getProjectAccess().getViewsKeyword_4_0());
+				newLeafNode(otherlv_16, grammarAccess.getProjectAccess().getViewsKeyword_7_0());
 			}
-			otherlv_14='{'
+			otherlv_17='{'
 			{
-				newLeafNode(otherlv_14, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_4_1());
+				newLeafNode(otherlv_17, grammarAccess.getProjectAccess().getLeftCurlyBracketKeyword_7_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProjectAccess().getViewsViewParserRuleCall_4_2_0());
+						newCompositeNode(grammarAccess.getProjectAccess().getViewsViewParserRuleCall_7_2_0());
 					}
-					lv_views_15_0=ruleView
+					lv_views_18_0=ruleView
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -215,15 +250,15 @@ ruleProject returns [EObject current=null]
 						add(
 							$current,
 							"views",
-							lv_views_15_0,
+							lv_views_18_0,
 							"com.anfelisa.Ace.View");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_16='}'
+			otherlv_19='}'
 			{
-				newLeafNode(otherlv_16, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_4_3());
+				newLeafNode(otherlv_19, grammarAccess.getProjectAccess().getRightCurlyBracketKeyword_7_3());
 			}
 		)*
 	)

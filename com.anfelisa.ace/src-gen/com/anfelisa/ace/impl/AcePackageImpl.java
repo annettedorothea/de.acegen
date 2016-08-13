@@ -165,9 +165,9 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProject_Actions()
+  public EAttribute getProject_Target()
   {
-    return (EReference)projectEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)projectEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -175,7 +175,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProject_Commands()
+  public EReference getProject_Actions()
   {
     return (EReference)projectEClass.getEStructuralFeatures().get(2);
   }
@@ -185,7 +185,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProject_Events()
+  public EReference getProject_Commands()
   {
     return (EReference)projectEClass.getEStructuralFeatures().get(3);
   }
@@ -195,9 +195,19 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProject_Views()
+  public EReference getProject_Events()
   {
     return (EReference)projectEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getProject_Views()
+  {
+    return (EReference)projectEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -412,6 +422,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     // Create classes and their features
     projectEClass = createEClass(PROJECT);
     createEAttribute(projectEClass, PROJECT__NAME);
+    createEAttribute(projectEClass, PROJECT__TARGET);
     createEReference(projectEClass, PROJECT__ACTIONS);
     createEReference(projectEClass, PROJECT__COMMANDS);
     createEReference(projectEClass, PROJECT__EVENTS);
@@ -475,6 +486,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     // Initialize classes and features; add operations and parameters
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProject_Target(), ecorePackage.getEString(), "target", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_Actions(), this.getAction(), null, "actions", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_Commands(), this.getCommand(), null, "commands", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_Events(), this.getEvent(), null, "events", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
