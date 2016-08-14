@@ -4,7 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = ID
-	'target' ':' target = ('PHP' | 'ES6')
+	'target' target = ('PHP' | 'ES6')
 	('actions' '{'
 		(actions += Action)*
 	'}')*
@@ -20,7 +20,7 @@ Project:
 ;
 
 Action:
-	name = ID 
+	(type = FunctionType)? name = ID 
 	('executes' command = [Command])? 
 ;
 
@@ -54,4 +54,9 @@ RenderFunction:
 QualifiedName:
   ID ('.' ID)*
 ;
+
+FunctionType:
+	'CREATE' | 'READ' | 'UPDATE' | 'DELETE'
+;
+
 

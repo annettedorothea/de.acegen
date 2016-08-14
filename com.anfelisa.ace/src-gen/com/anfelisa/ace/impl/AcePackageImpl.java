@@ -225,7 +225,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Name()
+  public EAttribute getAction_Type()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(0);
   }
@@ -235,9 +235,19 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getAction_Name()
+  {
+    return (EAttribute)actionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getAction_Command()
   {
-    return (EReference)actionEClass.getEStructuralFeatures().get(1);
+    return (EReference)actionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -429,6 +439,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     createEReference(projectEClass, PROJECT__VIEWS);
 
     actionEClass = createEClass(ACTION);
+    createEAttribute(actionEClass, ACTION__TYPE);
     createEAttribute(actionEClass, ACTION__NAME);
     createEReference(actionEClass, ACTION__COMMAND);
 
@@ -493,6 +504,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     initEReference(getProject_Views(), this.getView(), null, "views", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAction_Type(), ecorePackage.getEString(), "type", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAction_Command(), this.getCommand(), null, "command", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

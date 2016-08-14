@@ -11,6 +11,7 @@ import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
 import com.anfelisa.extensions.ViewExtension;
+import com.google.common.base.Objects;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -188,6 +189,26 @@ public class PHPTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("    ");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("function isRead() {");
+    _builder.newLine();
+    {
+      String _type = it.getType();
+      boolean _equals = Objects.equal(_type, "READ");
+      if (_equals) {
+        _builder.append("    \t");
+        _builder.append("return true;");
+        _builder.newLine();
+      } else {
+        _builder.append("    \t");
+        _builder.append("return false;");
+        _builder.newLine();
+      }
+    }
+    _builder.append("    ");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

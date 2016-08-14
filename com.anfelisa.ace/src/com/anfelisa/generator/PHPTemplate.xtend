@@ -77,6 +77,14 @@ class PHPTemplate {
 		        }
 		    }
 		    
+		    function isRead() {
+		    	«IF type == 'READ'»
+		    		return true;
+		    	«ELSE»
+		    		return false;
+		    	«ENDIF»
+		    }
+		
 		}
 		
 		/*       S.D.G.       */

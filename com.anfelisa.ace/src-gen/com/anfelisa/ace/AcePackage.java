@@ -141,13 +141,22 @@ public interface AcePackage extends EPackage
   int ACTION = 1;
 
   /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__TYPE = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__NAME = 0;
+  int ACTION__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Command</b></em>' reference.
@@ -156,7 +165,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION__COMMAND = 1;
+  int ACTION__COMMAND = 2;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -165,7 +174,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 2;
+  int ACTION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.CommandImpl <em>Command</em>}' class.
@@ -440,6 +449,17 @@ public interface AcePackage extends EPackage
   EClass getAction();
 
   /**
+   * Returns the meta object for the attribute '{@link com.anfelisa.ace.Action#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see com.anfelisa.ace.Action#getType()
+   * @see #getAction()
+   * @generated
+   */
+  EAttribute getAction_Type();
+
+  /**
    * Returns the meta object for the attribute '{@link com.anfelisa.ace.Action#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -711,6 +731,14 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EClass ACTION = eINSTANCE.getAction();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ACTION__TYPE = eINSTANCE.getAction_Type();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

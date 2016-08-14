@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getType <em>Type</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getCommand <em>Command</em>}</li>
  * </ul>
@@ -31,6 +32,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class ActionImpl extends MinimalEObjectImpl.Container implements Action
 {
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -80,6 +101,29 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   protected EClass eStaticClass()
   {
     return AcePackage.Literals.ACTION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.ACTION__TYPE, oldType, type));
   }
 
   /**
@@ -158,6 +202,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
+      case AcePackage.ACTION__TYPE:
+        return getType();
       case AcePackage.ACTION__NAME:
         return getName();
       case AcePackage.ACTION__COMMAND:
@@ -177,6 +223,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
+      case AcePackage.ACTION__TYPE:
+        setType((String)newValue);
+        return;
       case AcePackage.ACTION__NAME:
         setName((String)newValue);
         return;
@@ -197,6 +246,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
+      case AcePackage.ACTION__TYPE:
+        setType(TYPE_EDEFAULT);
+        return;
       case AcePackage.ACTION__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -217,6 +269,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
+      case AcePackage.ACTION__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case AcePackage.ACTION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AcePackage.ACTION__COMMAND:
@@ -236,7 +290,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
+    result.append(" (type: ");
+    result.append(type);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

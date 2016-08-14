@@ -68,7 +68,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     (name=ID command=[Command|ID]?)
+	 *     (type=FunctionType? name=ID command=[Command|ID]?)
 	 */
 	protected void sequence_Action(ISerializationContext context, com.anfelisa.ace.Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
