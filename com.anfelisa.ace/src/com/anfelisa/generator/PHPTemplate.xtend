@@ -36,7 +36,7 @@ class PHPTemplate {
 		    function __construct($actionParam) {
 		        $this->actionParam = $actionParam;
 		        $this->actionName = "«actionName»";
-		        $this->actionData = [];
+		        $this->actionData = array();
 		    }
 
 		    function getCommand() {
@@ -106,7 +106,7 @@ class PHPTemplate {
 		    function __construct($commandParam) {
 				$this->commandParam = $commandParam;
 				$this->commandName = "«commandName»";
-				$this->commandData = [];
+				$this->commandData = array();
 		    }
 		
 		    function publishEvents() {
@@ -179,8 +179,8 @@ class PHPTemplate {
 		spl_autoload_register('commandsLoader');
 		spl_autoload_register('viewsLoader');
 		
-		include_once getcwd() . '/dbConfig.php';
-		include_once getcwd() . '/Timeline.php';
+		include_once '../config/dbConfig.php';
+		include_once '../ace/Timeline.php';
 		
 		function abstractActionsLoader($className) {
 		    $path = '../gen/«project.name»/actions/';
@@ -209,7 +209,8 @@ class PHPTemplate {
 		
 		$dbconn = pg_connect ( "host=" . getDbServer () . " dbname=" . getDbDatabase() . " user=" . getDbUser() . " password=" . getDbPassword() ) or die ( 'Error connecting to database: ' . pg_last_error () );
 		
-		(new «actionName»(array_merge($_GET, $_POST)))->apply();
+		$action = new «actionName»(array_merge($_GET, $_POST));
+		$action->apply();
 		
 		pg_close($dbconn);
 		

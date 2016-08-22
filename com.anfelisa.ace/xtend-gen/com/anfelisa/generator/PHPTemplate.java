@@ -72,7 +72,7 @@ public class PHPTemplate {
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.append("        ");
-    _builder.append("$this->actionData = [];");
+    _builder.append("$this->actionData = array();");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -267,7 +267,7 @@ public class PHPTemplate {
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("$this->commandData = [];");
+    _builder.append("$this->commandData = array();");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -449,9 +449,9 @@ public class PHPTemplate {
     _builder.append("spl_autoload_register(\'viewsLoader\');");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("include_once getcwd() . \'/dbConfig.php\';");
+    _builder.append("include_once \'../config/dbConfig.php\';");
     _builder.newLine();
-    _builder.append("include_once getcwd() . \'/Timeline.php\';");
+    _builder.append("include_once \'../ace/Timeline.php\';");
     _builder.newLine();
     _builder.newLine();
     _builder.append("function abstractActionsLoader($className) {");
@@ -527,11 +527,13 @@ public class PHPTemplate {
     _builder.append("$dbconn = pg_connect ( \"host=\" . getDbServer () . \" dbname=\" . getDbDatabase() . \" user=\" . getDbUser() . \" password=\" . getDbPassword() ) or die ( \'Error connecting to database: \' . pg_last_error () );");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("(new ");
+    _builder.append("$action = new ");
     String _actionName = this._actionExtension.actionName(it);
     _builder.append(_actionName, "");
-    _builder.append("(array_merge($_GET, $_POST)))->apply();");
+    _builder.append("(array_merge($_GET, $_POST));");
     _builder.newLineIfNotEmpty();
+    _builder.append("$action->apply();");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("pg_close($dbconn);");
     _builder.newLine();
