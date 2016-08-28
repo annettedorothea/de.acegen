@@ -449,7 +449,7 @@ public class PHPTemplate {
     _builder.append("spl_autoload_register(\'viewsLoader\');");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("include_once \'../config/dbConfig.php\';");
+    _builder.append("include_once \'../../config/dbConfig.php\';");
     _builder.newLine();
     _builder.append("include_once \'../ace/Timeline.php\';");
     _builder.newLine();

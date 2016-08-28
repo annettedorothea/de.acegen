@@ -179,7 +179,7 @@ class PHPTemplate {
 		spl_autoload_register('commandsLoader');
 		spl_autoload_register('viewsLoader');
 		
-		include_once '../config/dbConfig.php';
+		include_once '../../config/dbConfig.php';
 		include_once '../ace/Timeline.php';
 		
 		function abstractActionsLoader($className) {
