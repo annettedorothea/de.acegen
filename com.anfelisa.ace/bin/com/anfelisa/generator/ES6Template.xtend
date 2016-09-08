@@ -147,17 +147,7 @@ class ES6Template {
 	def generateView(View it) '''
 		'use strict';
 		
-		class «viewName» extends View {
-		    constructor() {
-		        super('«viewName»');
-		    }
-		
-		    reset() {
-		        return new Promise(() => {
-		            //MainController.addActionToQueue(new InitAppAction());
-		        });
-		    }
-		    
+		class «viewName» {
 		    «FOR renderFunction : renderFunctions»
 		    	static «renderFunction.name»(data) {
 		    	};
