@@ -62,8 +62,10 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile(project.name + '/EventListenerRegistration.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateEventListenerRegistration(project));
 				for (event : project.events) {
+					fsa.generateFile(project.name + '/events/' + event.abstractEventName + '.es6',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(event));
 					fsa.generateFile(project.name + '/events/' + event.eventName + '.es6',
-						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateEventFile(event));
+						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(event));
 				}
 				for (view : project.views) {
 					fsa.generateFile(project.name + '/' + view.viewName + '.es6',
@@ -71,6 +73,20 @@ class AceGenerator extends AbstractGenerator {
 				}
 				fsa.generateFile(project.name + '/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateHtmlDevSnippet(project));
+				fsa.generateFile('ace/Action.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateAction());
+				fsa.generateFile('ace/Command.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateCommand());
+				fsa.generateFile('ace/Event.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateEvent());
+				fsa.generateFile('ace/MainController.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateMainController());
+				fsa.generateFile('ace/ReplayController.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateReplayController());
+				fsa.generateFile('ace/TriggerAction.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateTriggerAction());
+				fsa.generateFile('ace/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateUUID());
 			} else if (project.target == 'PHP') {
 				for (action : project.actions) {
 					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.php',
