@@ -2,3 +2,4 @@
 *._trace
 *.xtendbin
 *.class
+com.anfelisa.ace/bin/com/anfelisa/generator/*.xtend
