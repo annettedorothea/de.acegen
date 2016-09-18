@@ -79,10 +79,8 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateCommand());
 				fsa.generateFile('ace/Event.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateEvent());
-				fsa.generateFile('ace/MainController.es6', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateMainController());
-				fsa.generateFile('ace/ReplayController.es6', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateReplayController());
+				fsa.generateFile('ace/ACEController.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateACEController());
 				fsa.generateFile('ace/TriggerAction.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateTriggerAction());
 				fsa.generateFile('ace/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,

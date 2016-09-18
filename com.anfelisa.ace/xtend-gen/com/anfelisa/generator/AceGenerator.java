@@ -152,10 +152,8 @@ public class AceGenerator extends AbstractGenerator {
         fsa.generateFile("ace/Command.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateCommand);
         CharSequence _generateEvent = this.es6Template.generateEvent();
         fsa.generateFile("ace/Event.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateEvent);
-        CharSequence _generateMainController = this.es6Template.generateMainController();
-        fsa.generateFile("ace/MainController.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateMainController);
-        CharSequence _generateReplayController = this.es6Template.generateReplayController();
-        fsa.generateFile("ace/ReplayController.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateReplayController);
+        CharSequence _generateACEController = this.es6Template.generateACEController();
+        fsa.generateFile("ace/ACEController.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateACEController);
         CharSequence _generateTriggerAction = this.es6Template.generateTriggerAction();
         fsa.generateFile("ace/TriggerAction.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateTriggerAction);
         CharSequence _generateUUID = this.es6Template.generateUUID();

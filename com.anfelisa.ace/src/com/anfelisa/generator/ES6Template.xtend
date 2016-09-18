@@ -40,9 +40,6 @@ class ES6Template {
 			    }
 		    «ENDIF»
 		
-		    replay() {
-		    }
-		
 		}
 		
 		/*       S.D.G.       */
@@ -59,7 +56,16 @@ class ES6Template {
 		        });
 		    }
 		
-		    replay() {
+		    captureActionParam() {
+		    	// capture user input
+		    }
+		
+		    initActionData() {
+		    	// bind action parameters to action data
+		    }
+		
+		    releaseActionParam() {
+		    	// replease action params during replay
 		    }
 		}
 		
@@ -141,13 +147,31 @@ class ES6Template {
 		'use strict';
 		
 		class EventListenerRegistration {
+		
 			static init() {
+				EventListenerRegistration.listeners = {};
 		    	«FOR event : events»
 		    		«FOR renderFunction : event.listeners»
-		    			MainController.registerListener('«event.eventName»', «renderFunction.renderFunctionWithViewName»);
+		    			EventListenerRegistration.registerListener('«event.eventName»', «renderFunction.renderFunctionWithViewName»);
 		    		«ENDFOR»
 		    	«ENDFOR»
 			}
+			
+			static registerListener(eventName, listener) {
+				if (!eventName.trim()) {
+					throw new Error('cannot register listener for empty eventName');
+				}
+				if (!listener) {
+					throw new Error('cannot register undefined listener');
+				}
+				var listenersForEventName;
+				if (EventListenerRegistration.listeners[eventName] === undefined) {
+					EventListenerRegistration.listeners[eventName] = [];
+				}
+				listenersForEventName = EventListenerRegistration.listeners[eventName];
+				listenersForEventName.push(listener);
+			}
+		
 		}
 		
 		/*       S.D.G.       */
@@ -170,8 +194,7 @@ class ES6Template {
 		<script type="text/javascript" src="es6/gen/ace/Action.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Command.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Event.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/MainController.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/ReplayController.es6"></script>
+		<script type="text/javascript" src="es6/gen/ace/ACEController.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/TriggerAction.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
 		
@@ -196,7 +219,6 @@ class ES6Template {
 	def generateAction() '''
 		'use strict';
 		
-		
 		class Action {
 		    constructor(actionParam, actionName) {
 		        if (actionParam === undefined) {
@@ -207,8 +229,13 @@ class ES6Template {
 		        this.actionData = {};
 		    }
 		
-		    initActionDataFromView() {
-		        throw "no function initActionDataFromView defined for " + this.actionName;
+		    captureActionParam() {
+		    }
+		
+		    releaseActionParam() {
+		    }
+		
+		    initActionData() {
 		    }
 		
 		    getCommand() {
@@ -216,16 +243,39 @@ class ES6Template {
 		    }
 		
 		    apply() {
-		        MainController.addActionToQueue(this);
+		        ACEController.addActionToQueue(this);
 		    }
 		
-		    replay() {
+		    applyAction() {
+		        return new Promise((resolve, reject) => {
+		            if (ACEController.execution === ACEController.LIVE) {
+		                this.actionData.uuid = ACEController.uuidGenerator.createUUID();
+		            }
+		            if (ACEController.execution === ACEController.LIVE) {
+		                this.captureActionParam();
+		            } else {
+		                this.releaseActionParam();
+		            }
+		            this.initActionData();
+		            ACEController.addItemToTimeLine({action: this});
+		            let command = this.getCommand()
+		            if (command) {
+		                command.executeCommand().then(() => {
+		                    resolve();
+		                },
+		                (error) => {
+		                    reject(error + " when executing command " + command.commandName);
+		                });
+		            } else {
+		                resolve();
+		            }
+		        });
 		    }
 		
 		}
 		
 		/*       S.D.G.       */
-
+		
 	'''
 
 	def generateCommand() '''
@@ -244,10 +294,38 @@ class ES6Template {
 		    publishEvents() {
 		        throw "no publishEvents method defined for " + this.commandName;
 		    }
+		
+		    executeCommand() {
+		        return new Promise((resolve, reject) => {
+		            if (ACEController.execution !== ACEController.REPLAY) {
+		                this.execute().then(() => {
+		                    ACEController.addItemToTimeLine({command: this});
+		                    this.publishEvents().then(() => {
+		                        ACEController.applyNextActions();
+		                        resolve();
+		                    }, (error) => {
+		                        reject(error + " when publishing events of command " + this.commandName);
+		                    });
+		                }, (error) => {
+		                    reject(error + " when executing command " + this.commandName);
+		                });
+		            } else {
+		                var timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
+		                this.commandData = timelineCommand.commandData;
+		                ACEController.addItemToTimeLine({command: this});
+		                this.publishEvents().then(() => {
+		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                    resolve();
+		                }, (error) => {
+		                    reject(error + " when publishing events of command " + this.commandName);
+		                });
+		            }
+		        });
+		    }
 		}
 		
 		/*       S.D.G.       */
-
+		
 	'''
 	
 	def generateEvent() '''
@@ -263,247 +341,146 @@ class ES6Template {
 		
 		    }
 		    publish() {
-		        return MainController.publishEvent(this);
-		    }
-		}
-		
-		
-		/*       S.D.G.       */
-	'''
-	
-	def generateMainController() '''
-		'use strict';
-		
-		class MainController {
-		
-		    static init() {
-		        MainController.timeLine = [];
-		        MainController.timeLineLocalStorageChunks = [];
-		        MainController.writeTimeLine = true;
-		        MainController.listeners = {};
-		        MainController.replayLevel = undefined;
-		        MainController.views = {};
-		        MainController.EVENT_REPLAY_LEVEL = 1;
-		        MainController.COMMAND_REPLAY_LEVEL = 2;
-		        MainController.ACTION_REPLAY_LEVEL = 3;
-		        MainController.verificationCleanupFunctionsForReplayLevel = {};
-		        MainController.registerListener('TriggerAction', MainController.triggerAction);
-		        MainController.actionIsProcessing = false;
-		        MainController.actionQueue = [];
-		        MainController.uuidGenerator = new UUID();
-		    }
-		
-		    static start() {
-		        MainController.timeLine = [];
-		        MainController.timeLineLocalStorageChunks = [];
-		        sessionStorage.clear();
-		        MainController.actionQueue = [];
-		        MainController.actionIsProcessing = false;
-		    }
-		
-		    static registerListener(eventName, listener) {
-		        if (!eventName.trim()) {
-		            throw new Error('cannot register listener for empty eventName');
-		        }
-		        if (!listener) {
-		            throw new Error('cannot register undefined listener');
-		        }
-		        var listenersForEventName;
-		        if (MainController.listeners[eventName] === undefined) {
-		            MainController.listeners[eventName] = [];
-		        }
-		        listenersForEventName = MainController.listeners[eventName];
-		        listenersForEventName.push(listener);
-		    }
-		
-		    static deRegisterListener(eventName, listener) {
-		        if (!eventName.trim()) {
-		            throw new Error('cannot deRegister listener for empty eventName');
-		        }
-		        if (!listener) {
-		            throw new Error('cannot deRegister undefined listener');
-		        }
-		        var listenersForEventName;
-		        if (MainController.listeners[eventName] !== undefined) {
-		            listenersForEventName = MainController.listeners[eventName];
-		            for (var i = 0; i < listenersForEventName.length; i++) {
-		                if (listenersForEventName[i] === listener) {
-		                    break;
-		                }
-		            }
-		            listenersForEventName.splice(i, 1);
-		            if (listenersForEventName.length === 0) {
-		                MainController.listeners[eventName] = undefined;
-		            }
-		        }
-		    }
-		
-		    static applyAction(action) {
 		        return new Promise((resolve, reject) => {
-		            if (!MainController.replayLevel || MainController.replayLevel === MainController.ACTION_REPLAY_LEVEL) {
-		                if (MainController.replayLevel !== MainController.ACTION_REPLAY_LEVEL) {
-		                    action.actionData.uuid = MainController.uuidGenerator.createUUID();
-		                    action.initActionDataFromView().then(() => {
-		                            MainController.addItemToTimeLine({action: action});
-		                            if (action.getCommand()) {
-		                                MainController.executeCommandOfAction(action).then(function () {
-		                                    resolve();
-		                                }, function (error) {
-		                                    reject(error + " when executing command " + action.getCommand().commandName);
-		                                });
-		                            } else {
-		                                resolve();
-		                            }
-		                        },
-		                        (error) => {
-		                            reject(error + " when init action from view " + action.actionName);
-		                        });
-		                }
-		            } else {
+		            this.prepareDataForView();
+		            ACEController.addItemToTimeLine({event: this});
+		            Promise.all(this.notifyListeners()).then(() => {
 		                resolve();
-		            }
-		        });
-		    }
-		
-		    static executeCommandOfAction(action) {
-		        return new Promise((resolve, reject) => {
-		            if (!MainController.replayLevel || MainController.replayLevel === MainController.ACTION_REPLAY_LEVEL) {
-		                let command = action.getCommand();
-		                command.execute().then(function () {
-		                    MainController.addItemToTimeLine({command: command});
-		                    MainController.publishEventsOfCommand(command).then(function () {
-		                        resolve();
-		                    }, function (error) {
-		                        reject(error + " when executing command " + command.commandName);
-		                    });
-		                }, function () {
-		                    reject();
-		                });
-		            } else {
-		                resolve();
-		            }
-		        });
-		    }
-		
-		    static publishEventsOfCommand(command) {
-		        return new Promise((resolve, reject) => {
-		            command.publishEvents().then(function () {
-		                MainController.applyNextActions();
-		                resolve();
-		            }, function (error) {
-		                reject(error + "when publishing events of command " + command.commandName);
+		            }, (error) => {
+		                reject(error + " when notifying listeners of event " + this.eventName);
 		            });
 		        });
 		    }
 		
-		    static applyNextActions() {
-		        let action = MainController.getNextAction();
-		        if (action && !this.replayLevel) {
-		            MainController.applyAction(action).then(function () {
-		            }, function (error) {
-		                MainController.actionIsProcessing = false;
-		                throw error;
-		            });
-		        } else if (action === undefined) {
-		            MainController.actionIsProcessing = false;
-		        }
-		    }
-		
-		    static publishEvent(event) {
-		        return new Promise((resolve, reject) => {
-		            if (!MainController.replayLevel || MainController.replayLevel === MainController.ACTION_REPLAY_LEVEL || MainController.replayLevel === MainController.COMMAND_REPLAY_LEVEL) {
-		                event.prepareDataForView();
-		                MainController.addItemToTimeLine({event: event});
-		                Promise.all(MainController.notifyListeners(event)).then(function () {
-		                    resolve();
-		                }, function (error) {
-		                    reject(error + " when notifying listeners of event " + event.eventName);
-		                });
-		            } else {
-		                resolve();
-		            }
-		        });
-		    }
-		
-		    static notifyListeners(event) {
+		    notifyListeners() {
 		        let promises = [];
-		        var i, listener, eventName = event.eventName;
-		        if (eventName !== undefined) {
-		            var listenersForEvent = MainController.listeners[eventName];
+		        var i, listener;
+		        if (this.eventName !== undefined) {
+		            var listenersForEvent = EventListenerRegistration.listeners[this.eventName];
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
-		                    promises.push(listener(event.eventData));
+		                    promises.push(listener(this.eventData));
 		                }
 		            }
 		        }
 		        return promises;
 		    }
 		
-		    static addItemToTimeLine(item) {
-		        let timestamp = new Date();
-		        item.timestamp = timestamp.getTime();
-		        if (!MainController.replayLevel) {
-		            if (MainController.writeTimeLine) {
-		                MainController.timeLine.push(JSON.parse(JSON.stringify(item)));
-		                if (MainController.timeLine.length > 50) {
-		                    let timestampInMillis  = timestamp.getTime();
-		                    try {
-		                        sessionStorage[timestampInMillis] = JSON.stringify(MainController.timeLine, null, 2);
-		                        MainController.timeLineLocalStorageChunks.push(timestampInMillis);
-		                    } catch (exception) {
-		                        MainController.writeTimeLine = false;
-		                    }
-		                    MainController.timeLine = [];
-		                }
-		            }
-		        } else {
-		            ReplayController.addItemToReplayTimeLine(item);
-		        }
-		    }
-		
-		    static getCompleteTimeline() {
-		        var completeTimeline = [];
-		        for(var i=0; i<MainController.timeLineLocalStorageChunks.length; i++) {
-		            let timelineChunk = sessionStorage[MainController.timeLineLocalStorageChunks[i]];
-		            completeTimeline.push.apply(completeTimeline, JSON.parse(timelineChunk));
-		        }
-		        completeTimeline.push.apply(completeTimeline, MainController.timeLine);
-		        return completeTimeline;
-		    }
-		
-		    static addActionToQueue(action) {
-		        MainController.actionQueue.push(action);
-		        if (MainController.actionIsProcessing === false) {
-		            MainController.actionIsProcessing = true;
-		            MainController.applyNextActions();
-		        }
-		    }
-		
-		    static getNextAction() {
-		        return MainController.actionQueue.shift();
-		    }
-		
-		    static triggerAction(action) {
-		        MainController.addActionToQueue(action);
-		    }
-		
 		}
 		
 		/*       S.D.G.       */
 		
 	'''
 	
-	def generateReplayController() '''
+	def generateACEController() '''
 		'use strict';
 		
-		class ReplayController {
+		class ACEController {
+		
 		    static init() {
-		        ReplayController.id = "ReplayController";
-		        ReplayController.passed = undefined;
-		        ReplayController.timeLine = [];
-		        ReplayController.expectedTimeLine = [];
-		        ReplayController.pauseInMillis = undefined;
+		        ACEController.timeLine = [];
+		        ACEController.timeLineLocalStorageChunks = [];
+		        ACEController.writeTimeLine = true;
+		        EventListenerRegistration.init();
+		        EventListenerRegistration.registerListener('TriggerAction', ACEController.triggerAction);
+		        ACEController.actionIsProcessing = false;
+		        ACEController.actionQueue = [];
+		        ACEController.uuidGenerator = new UUID();
+		        ACEController.LIVE = 1;
+		        ACEController.REPLAY = 2;
+		        ACEController.E2E = 3;
+		        ACEController.execution = ACEController.LIVE;
+		        ACEController.replayTimeLine = [];
+		        sessionStorage.clear();
+		    }
+		
+		    static addItemToTimeLine(item) {
+		        let timestamp = new Date();
+		        item.timestamp = timestamp.getTime();
+		        if (ACEController.execution === ACEController.LIVE) {
+		            if (ACEController.writeTimeLine) {
+		                ACEController.timeLine.push(JSON.parse(JSON.stringify(item)));
+		                if (ACEController.timeLine.length > 50) {
+		                    let timestampInMillis  = timestamp.getTime();
+		                    try {
+		                        sessionStorage[timestampInMillis] = JSON.stringify(ACEController.timeLine, null, 2);
+		                        ACEController.timeLineLocalStorageChunks.push(timestampInMillis);
+		                    } catch (exception) {
+		                        ACEController.writeTimeLine = false;
+		                    }
+		                    ACEController.timeLine = [];
+		                }
+		            }
+		        } else {
+		            ACEController.replayTimeLine.push(JSON.parse(JSON.stringify(item)));
+		        }
+		    }
+		
+		    static getCompleteTimeline() {
+		        var completeTimeline = [];
+		        for(var i=0; i<ACEController.timeLineLocalStorageChunks.length; i++) {
+		            let timelineChunk = sessionStorage[ACEController.timeLineLocalStorageChunks[i]];
+		            completeTimeline.push.apply(completeTimeline, JSON.parse(timelineChunk));
+		        }
+		        completeTimeline.push.apply(completeTimeline, ACEController.timeLine);
+		        return completeTimeline;
+		    }
+		
+		    static downloadTimeline() {
+		        let timelineJson = JSON.stringify(ACEController.getCompleteTimeline(), null, 2);
+		
+		        let a = window.document.createElement('a');
+		        a.href = window.URL.createObjectURL(new Blob([timelineJson], {type: 'text/json'}));
+		        a.download = 'scenario.json';
+		
+		        document.body.appendChild(a);
+		        a.click();
+		
+		        document.body.removeChild(a);
+		    }
+		
+		    static uploadTimeline(event) {
+		        ACEController.clearReplayResultDiv();
+		
+		        var input = event.target;
+		        var reader = new FileReader();
+		        reader.onload = function () {
+		            let json = reader.result;
+		            ACEController.timeLine = JSON.parse(json);
+		            document.getElementById("uploadTimelineInputField").value = "";
+		        };
+		        reader.readAsText(input.files[0]);
+		    }
+		
+		    static addActionToQueue(action) {
+		        if (ACEController.execution === ACEController.LIVE) {
+		            ACEController.actionQueue.push(action);
+		            if (ACEController.actionIsProcessing === false) {
+		                ACEController.actionIsProcessing = true;
+		                ACEController.applyNextActions();
+		            }
+		        }
+		    }
+		
+		    static applyNextActions() {
+		        let action = ACEController.actionQueue.shift();
+		        if (action) {
+		            action.applyAction().then(() => {
+		            }, (error) => {
+		                ACEController.actionIsProcessing = false;
+		                throw error + " when applying action " + action.actionName;
+		            });
+		        } else if (action === undefined) {
+		            ACEController.actionIsProcessing = false;
+		            if (ACEController.execution !== ACEController.LIVE) {
+		                ACEController.finishReplay();
+		            }
+		        }
+		    }
+		
+		    static triggerAction(action) {
+		        ACEController.addActionToQueue(action);
 		    }
 		
 		    static clearReplayResultDiv() {
@@ -517,235 +494,117 @@ class ES6Template {
 		        }
 		    }
 		
-		    static startReplay(replayLevel) {
-		        if (!replayLevel && replayLevel !== MainController.EVENT_REPLAY_LEVEL && replayLevel !== MainController.COMMAND_REPLAY_LEVEL && replayLevel !== MainController.ACTION_REPLAY_LEVEL) {
-		            throw new Error(replayLevel + ' is no valid replay level');
-		        }
+		    static replay() {
+		        ACEController.startReplay(ACEController.REPLAY)
+		    }
 		
-		        ReplayController.clearReplayResultDiv();
+		    static e2e() {
+		        ACEController.startReplay(ACEController.E2E)
+		    }
 		
-		        ReplayController.expectedTimeLine = [];
-		        for (let i = 0; i < ReplayController.timeLine.length; i++) {
-		            let item = ReplayController.timeLine[i];
-		            if (item.action && replayLevel === MainController.ACTION_REPLAY_LEVEL) {
-		                ReplayController.expectedTimeLine.push(item);
-		            } else if (item.command && (replayLevel === MainController.ACTION_REPLAY_LEVEL || replayLevel === MainController.COMMAND_REPLAY_LEVEL)) {
-		                ReplayController.expectedTimeLine.push(item);
-		            } else if (item.event) {
-		                ReplayController.expectedTimeLine.push(item);
+		    static startReplay(level) {
+		        ACEController.passed = undefined;
+		        ACEController.expectedTimeLine = [];
+		        ACEController.replayTimeLine = [];
+		        ACEController.pauseInMillis = undefined;
+		
+		        ACEController.clearReplayResultDiv();
+		
+		        var actions = [];
+		        var completeTimeLine = ACEController.getCompleteTimeline();
+		        for (let i = 0; i < completeTimeLine.length; i++) {
+		            let item = completeTimeLine[i];
+		            ACEController.expectedTimeLine.push(item);
+		            if (item.action) {
+		                var action = eval('new ' + item.action.actionName + '(item.action.actionParam)');
+		                action.actionData.uuid = item.action.actionData.uuid;
+		                actions.push(action);
 		            }
 		        }
 		
+		        ACEController.actionQueue = actions;
+		
 		        if (document.getElementById('pauseInMillisInput')) {
-		            ReplayController.pauseInMillis = document.getElementById('pauseInMillisInput').value;
+		            ACEController.pauseInMillis = document.getElementById('pauseInMillisInput').value;
 		        }
 		
-		        MainController.replayLevel = replayLevel;
+		        ACEController.execution = level;
+		
+		        ACEController.applyNextActions();
+		    }
+		
+		    static getCommandByUuid(uuid) {
+		        for (let i = 0; i < ACEController.expectedTimeLine.length; i++) {
+		            let item = ACEController.expectedTimeLine[i];
+		            if (item.command && item.command.commandParam.uuid === uuid) {
+		                return item.command;
+		            }
+		        }
 		    }
 		
 		    static finishReplay() {
 		        App.completeReplay();
-		        ReplayController.passed = true;
+		        ACEController.passed = true;
 		        if (document.getElementById("replayResultDiv")) {
 		            let table = document.getElementById("replayResultDiv");
-		            for (let i = 0; i < ReplayController.expectedTimeLine.length; i++) {
-		                let expectedItem = ReplayController.expectedTimeLine[i];
+		            for (let i = 0; i < ACEController.expectedTimeLine.length; i++) {
+		                let expectedItem = ACEController.expectedTimeLine[i];
 		                let actualItem = undefined;
-		                if (i < ReplayController.replayTimeLine.length) {
-		                    actualItem = ReplayController.replayTimeLine[i];
+		                if (i < ACEController.replayTimeLine.length) {
+		                    actualItem = ACEController.replayTimeLine[i];
 		                }
+		
+		                let rowAbstract = table.insertRow(table.rows.length);
+		                rowAbstract.insertCell(0);
+		                let original = rowAbstract.insertCell(1);
+		                let actual= rowAbstract.insertCell(2);
+		                rowAbstract.insertCell(3);
+		                original.innerHTML = '<a onclick=\'toggleVisibilityOfRow("row_' + i + '")\'>' + ACEController.abstractText(expectedItem) + '</a>';
+		                actual.innerHTML = '<a onclick=\'toggleVisibilityOfRow("row_' + i + '")\'>' + ACEController.abstractText(actualItem) + '</a>';
+		
 		                let row = table.insertRow(table.rows.length);
+		                row.id = "row_" + i;
+		                row.style = "display: none;";
 		                let originalExpectedItemCell = row.insertCell(0);
 		                let expectedItemCell = row.insertCell(1);
 		                let actualItemCell = row.insertCell(2);
 		                let originalActualItemCell = row.insertCell(3);
 		                originalExpectedItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(expectedItem, null, 2) + '</pre>';
-		                expectedItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(expectedItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel], 2) + '</pre>';
-		                actualItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(actualItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel], 2) + '</pre>';
+		                expectedItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(expectedItem, ACEController.verificationCleanupFunction, 2) + '</pre>';
+		                actualItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(actualItem, ACEController.verificationCleanupFunction, 2) + '</pre>';
 		                originalActualItemCell.innerHTML = '<pre style="font-size: 10px;">' + JSON.stringify(actualItem, null, 2) + '</pre>';
-		                if (JSON.stringify(expectedItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel]) === JSON.stringify(actualItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel])) {
+		                if (JSON.stringify(expectedItem, ACEController.verificationCleanupFunction) === JSON.stringify(actualItem, ACEController.verificationCleanupFunction)) {
 		                    row.className = 'success';
+		                    rowAbstract.className = 'success';
 		                } else {
 		                    row.className = 'danger';
-		                    ReplayController.passed = false;
+		                    rowAbstract.className = 'danger';
+		                    ACEController.passed = false;
 		                }
 		            }
-		            if (ReplayController.passed) {
+		            if (ACEController.passed) {
 		                table.rows[0].className = 'success';
 		            } else {
 		                table.rows[0].className = 'danger';
 		            }
-		        } else {
-		            for (let i = 0; i < ReplayController.expectedTimeLine.length; i++) {
-		                let expectedItem = ReplayController.expectedTimeLine[i];
-		                let actualItem = undefined;
-		                if (i < ReplayController.replayTimeLine.length) {
-		                    actualItem = ReplayController.replayTimeLine[i];
-		                }
-		                if (JSON.stringify(expectedItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel]) !== JSON.stringify(actualItem, MainController.verificationCleanupFunctionsForReplayLevel[MainController.replayLevel])) {
-		                    ReplayController.passed = false;
-		                }
-		            }
 		        }
-		        MainController.replayLevel = undefined;
-		        MainController.actionQueue.splice(0, MainController.actionQueue.length);
-		        MainController.actionIsProcessing = false;
+		
+		        ACEController.actionIsProcessing = false;
+		        ACEController.actionQueue = [];
+		        ACEController.execution = ACEController.LIVE;
 		    }
 		
-		    static replayEvents() {
-		        ReplayController.startReplay(MainController.EVENT_REPLAY_LEVEL);
-		        ReplayController.replayTimeLine = [];
-		        var index = 0;
-		        if (index < ReplayController.timeLine.length) {
-		            ReplayController.replayEvent(index, ReplayController.pauseInMillis);
+		    static abstractText(item) {
+		        if (item.action) {
+		            return "A " + item.action.actionName;
 		        }
-		    }
-		
-		    static replayEvent(index, timeout) {
-		        var item = ReplayController.timeLine[index];
-		        while (item && item.event === undefined && index < ReplayController.timeLine.length) {
-		            index++;
-		            item = ReplayController.timeLine[index];
+		        if (item.command) {
+		            return "C " + item.command.commandName;
 		        }
-		        if (item && item.event) {
-		            ReplayController.addItemToReplayTimeLine({event: item.event});
-		            var event = eval('new ' + item.event.eventName + '(item.event.eventData)');
-		            event.prepareDataForView();
-		            Promise.all(MainController.notifyListeners(event)).then(function () {
-		                const nextItem = index + 1 < ReplayController.timeLine.length ? ReplayController.timeLine[index+1] : undefined;
-		                if (nextItem !== undefined && nextItem.event === undefined ) {
-		                    MainController.applyNextActions();
-		                    index++;
-		                    if (index < ReplayController.timeLine.length) {
-		                        setTimeout(ReplayController.replayEvent, timeout, index, timeout);
-		                    } else {
-		                        ReplayController.finishReplay();
-		                        }
-		                } else {
-		                    index++;
-		                    if (index < ReplayController.timeLine.length) {
-		                        setTimeout(ReplayController.replayEvent, timeout, index, timeout);
-		                    } else {
-		                        ReplayController.finishReplay();
-		                    }
-		                }
-		            }, function (error) {
-		                throw error;
-		            });
-		        } else {
-		            ReplayController.finishReplay();
+		        if (item.event) {
+		            var triggerActionName = item.event.eventName === 'TriggerAction' ? " " + item.event.eventParam.actionName : "";
+		            return "E " + item.event.eventName + triggerActionName;
 		        }
-		    }
-		
-		    static replayCommands() {
-		        ReplayController.startReplay(MainController.COMMAND_REPLAY_LEVEL);
-		        ReplayController.replayTimeLine = [];
-		        var index = 0;
-		        if (index < ReplayController.timeLine.length) {
-		            ReplayController.replayCommand(index, ReplayController.pauseInMillis);
-		        }
-		    }
-		
-		    static replayCommand(index, timeout) {
-		        var item = ReplayController.timeLine[index];
-		        while (item && item.command === undefined && index < ReplayController.timeLine.length) {
-		            index++;
-		            item = ReplayController.timeLine[index];
-		        }
-		        if (item && item.command) {
-		            var command = eval('new ' + item.command.commandName + '(item.command.commandParam)');
-		            command.commandData = item.command.commandData;
-		            ReplayController.addItemToReplayTimeLine({command: command});
-		            MainController.publishEventsOfCommand(command).then(function () {
-		                    index++;
-		                    if (index < ReplayController.timeLine.length) {
-		                        setTimeout(ReplayController.replayCommand, timeout, index, timeout);
-		                    } else {
-		                        ReplayController.finishReplay();
-		                    }
-		                },
-		                function (error) {
-		                    throw error;
-		                });
-		        } else {
-		            ReplayController.finishReplay();
-		        }
-		    }
-		
-		    static replayActions() {
-		        ReplayController.startReplay(MainController.ACTION_REPLAY_LEVEL);
-		        ReplayController.replayTimeLine = [];
-		        var index = 0;
-		        if (index < ReplayController.timeLine.length) {
-		            ReplayController.replayAction(index, ReplayController.pauseInMillis);
-		        }
-		    }
-		
-		    static replayAction(index, timeout) {
-		        var item = ReplayController.timeLine[index];
-		        while (item && item.action === undefined && index < ReplayController.timeLine.length) {
-		            index++;
-		            item = ReplayController.timeLine[index];
-		        }
-		        if (item && item.action) {
-		            let action = undefined;
-		            action = eval('new ' + item.action.actionName + '(item.action.actionParam)');
-		            action.actionData = item.action.actionData;
-		            action.isUndoAction = item.action.isUndoAction;
-		            action.isRedoAction = item.action.isRedoAction;
-		            ReplayController.addItemToReplayTimeLine({action: action});
-		            action.replay();
-		            setTimeout(function () {
-		                MainController.executeCommandOfAction(action).then(function () {
-		                    index++;
-		                    if (index < ReplayController.timeLine.length) {
-		                        setTimeout(ReplayController.replayAction, timeout, index, timeout);
-		                    } else {
-		                        ReplayController.finishReplay();
-		                    }
-		                }, function (error) {
-		                    throw error;
-		                });
-		            }, timeout);
-		        } else {
-		            ReplayController.finishReplay();
-		        }
-		    }
-		
-		    static executeCommand(command) {
-		        ReplayController.addItemToReplayTimeLine({command: command});
-		        command.execute();
-		    }
-		
-		    static addItemToReplayTimeLine(item) {
-		        item.timestamp = new Date().getTime();
-		        ReplayController.replayTimeLine.push(JSON.parse(JSON.stringify(item)));
-		    }
-		
-		    static downloadTimeline() {
-		        let timelineJson = JSON.stringify(MainController.getCompleteTimeline(), null, 2);
-		
-		        let a = window.document.createElement('a');
-		        a.href = window.URL.createObjectURL(new Blob([timelineJson], {type: 'text/json'}));
-		        a.download = 'scenario.json';
-		
-		        document.body.appendChild(a);
-		        a.click();
-		
-		        document.body.removeChild(a);
-		    }
-		
-		    static uploadTimeline(event) {
-		        ReplayController.clearReplayResultDiv();
-		
-		        var input = event.target;
-		        var reader = new FileReader();
-		        reader.onload = function () {
-		            let json = reader.result;
-		            ReplayController.timeLine = JSON.parse(json);
-		            document.getElementById("uploadTimelineInputField").value = "";
-		        };
-		        reader.readAsText(input.files[0]);
 		    }
 		
 		}
@@ -763,8 +622,6 @@ class ES6Template {
 		        this.eventData = action;
 		    }
 		    prepareDataForView() {
-		
-		
 		    }
 		}
 		
@@ -773,9 +630,6 @@ class ES6Template {
 	'''
 	
 	def generateUUID() '''
-		/**
-		 * Created by annette on 08.08.16.
-		 */
 		/*
 		 uuid.js - Version 0.3
 		 JavaScript Class to create a UUID like identifier
