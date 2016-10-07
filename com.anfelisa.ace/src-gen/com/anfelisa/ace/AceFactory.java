@@ -78,13 +78,13 @@ public interface AceFactory extends EFactory
   View createView();
 
   /**
-   * Returns a new object of class '<em>Render Function</em>'.
+   * Returns a new object of class '<em>View Function</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Render Function</em>'.
+   * @return a new object of class '<em>View Function</em>'.
    * @generated
    */
-  RenderFunction createRenderFunction();
+  ViewFunction createViewFunction();
 
   /**
    * Returns the package supported by this factory.

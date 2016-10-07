@@ -78,19 +78,20 @@ ruleProject returns [EObject current=null]
 	(
 		(
 			(
-				lv_name_0_0=RULE_ID
 				{
-					newLeafNode(lv_name_0_0, grammarAccess.getProjectAccess().getNameIDTerminalRuleCall_0_0());
+					newCompositeNode(grammarAccess.getProjectAccess().getNameQualifiedNameParserRuleCall_0_0());
 				}
+				lv_name_0_0=ruleQualifiedName
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getProjectRule());
+						$current = createModelElementForParent(grammarAccess.getProjectRule());
 					}
-					setWithLastConsumed(
+					set(
 						$current,
 						"name",
 						lv_name_0_0,
-						"org.eclipse.xtext.common.Terminals.ID");
+						"com.anfelisa.Ace.QualifiedName");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -121,6 +122,17 @@ ruleProject returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getProjectRule());
 						}
 						setWithLastConsumed($current, "target", lv_target_2_2, null);
+					}
+					    |
+					lv_target_2_3='JAVA'
+					{
+						newLeafNode(lv_target_2_3, grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_2());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getProjectRule());
+						}
+						setWithLastConsumed($current, "target", lv_target_2_3, null);
 					}
 				)
 			)
@@ -325,9 +337,12 @@ ruleAction returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getActionRule());
 						}
 					}
-					otherlv_3=RULE_ID
 					{
-						newLeafNode(otherlv_3, grammarAccess.getActionAccess().getCommandCommandCrossReference_2_1_0());
+						newCompositeNode(grammarAccess.getActionAccess().getCommandCommandCrossReference_2_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)
@@ -455,9 +470,12 @@ ruleEventOnOutcome returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getEventOnOutcomeRule());
 						}
 					}
-					otherlv_4=RULE_ID
 					{
-						newLeafNode(otherlv_4, grammarAccess.getEventOnOutcomeAccess().getEventsEventCrossReference_2_2_0());
+						newCompositeNode(grammarAccess.getEventOnOutcomeAccess().getEventsEventCrossReference_2_2_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
@@ -482,9 +500,12 @@ ruleEventOnOutcome returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getEventOnOutcomeRule());
 						}
 					}
-					otherlv_8=RULE_ID
 					{
-						newLeafNode(otherlv_8, grammarAccess.getEventOnOutcomeAccess().getActionsActionCrossReference_3_2_0());
+						newCompositeNode(grammarAccess.getEventOnOutcomeAccess().getActionsActionCrossReference_3_2_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
@@ -547,7 +568,7 @@ ruleEvent returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getEventAccess().getListenersRenderFunctionCrossReference_1_2_0());
+						newCompositeNode(grammarAccess.getEventAccess().getListenersViewFunctionCrossReference_1_2_0());
 					}
 					ruleQualifiedName
 					{
@@ -605,9 +626,9 @@ ruleView returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getViewAccess().getRenderFunctionsRenderFunctionParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getViewAccess().getRenderFunctionsViewFunctionParserRuleCall_1_1_0());
 					}
-					lv_renderFunctions_2_0=ruleRenderFunction
+					lv_renderFunctions_2_0=ruleViewFunction
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getViewRule());
@@ -616,7 +637,7 @@ ruleView returns [EObject current=null]
 							$current,
 							"renderFunctions",
 							lv_renderFunctions_2_0,
-							"com.anfelisa.Ace.RenderFunction");
+							"com.anfelisa.Ace.ViewFunction");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -629,15 +650,15 @@ ruleView returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleRenderFunction
-entryRuleRenderFunction returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getRenderFunctionRule()); }
-	iv_ruleRenderFunction=ruleRenderFunction
-	{ $current=$iv_ruleRenderFunction.current; }
+// Entry rule entryRuleViewFunction
+entryRuleViewFunction returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getViewFunctionRule()); }
+	iv_ruleViewFunction=ruleViewFunction
+	{ $current=$iv_ruleViewFunction.current; }
 	EOF;
 
-// Rule RenderFunction
-ruleRenderFunction returns [EObject current=null]
+// Rule ViewFunction
+ruleViewFunction returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -648,11 +669,11 @@ ruleRenderFunction returns [EObject current=null]
 		(
 			lv_name_0_0=RULE_ID
 			{
-				newLeafNode(lv_name_0_0, grammarAccess.getRenderFunctionAccess().getNameIDTerminalRuleCall_0());
+				newLeafNode(lv_name_0_0, grammarAccess.getViewFunctionAccess().getNameIDTerminalRuleCall_0());
 			}
 			{
 				if ($current==null) {
-					$current = createModelElement(grammarAccess.getRenderFunctionRule());
+					$current = createModelElement(grammarAccess.getViewFunctionRule());
 				}
 				setWithLastConsumed(
 					$current,

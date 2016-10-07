@@ -4,7 +4,7 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
-import com.anfelisa.ace.RenderFunction;
+import com.anfelisa.ace.ViewFunction;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -15,18 +15,18 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Render Function</b></em>'.
+ * An implementation of the model object '<em><b>View Function</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.anfelisa.ace.impl.RenderFunctionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements RenderFunction
+public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements ViewFunction
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -53,7 +53,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  protected RenderFunctionImpl()
+  protected ViewFunctionImpl()
   {
     super();
   }
@@ -66,7 +66,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
   @Override
   protected EClass eStaticClass()
   {
-    return AcePackage.Literals.RENDER_FUNCTION;
+    return AcePackage.Literals.VIEW_FUNCTION;
   }
 
   /**
@@ -89,7 +89,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.RENDER_FUNCTION__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.VIEW_FUNCTION__NAME, oldName, name));
   }
 
   /**
@@ -102,7 +102,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AcePackage.RENDER_FUNCTION__NAME:
+      case AcePackage.VIEW_FUNCTION__NAME:
         return getName();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -118,7 +118,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AcePackage.RENDER_FUNCTION__NAME:
+      case AcePackage.VIEW_FUNCTION__NAME:
         setName((String)newValue);
         return;
     }
@@ -135,7 +135,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AcePackage.RENDER_FUNCTION__NAME:
+      case AcePackage.VIEW_FUNCTION__NAME:
         setName(NAME_EDEFAULT);
         return;
     }
@@ -152,7 +152,7 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AcePackage.RENDER_FUNCTION__NAME:
+      case AcePackage.VIEW_FUNCTION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
@@ -175,4 +175,4 @@ public class RenderFunctionImpl extends MinimalEObjectImpl.Container implements 
     return result.toString();
   }
 
-} //RenderFunctionImpl
+} //ViewFunctionImpl

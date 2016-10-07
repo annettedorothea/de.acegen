@@ -8,8 +8,8 @@ import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Project;
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.services.AceGrammarAccess;
 import com.google.inject.Inject;
 import java.util.Set;
@@ -52,11 +52,11 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case AcePackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
 				return; 
-			case AcePackage.RENDER_FUNCTION:
-				sequence_RenderFunction(context, (RenderFunction) semanticObject); 
-				return; 
 			case AcePackage.VIEW:
 				sequence_View(context, (View) semanticObject); 
+				return; 
+			case AcePackage.VIEW_FUNCTION:
+				sequence_ViewFunction(context, (ViewFunction) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -68,7 +68,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     (type=FunctionType? name=ID command=[Command|ID]?)
+	 *     (type=FunctionType? name=ID command=[Command|QualifiedName]?)
 	 */
 	protected void sequence_Action(ISerializationContext context, com.anfelisa.ace.Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -92,7 +92,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     EventOnOutcome returns EventOnOutcome
 	 *
 	 * Constraint:
-	 *     (outcome=ID events+=[Event|ID]* actions+=[Action|ID]*)
+	 *     (outcome=ID events+=[Event|QualifiedName]* actions+=[Action|QualifiedName]*)
 	 */
 	protected void sequence_EventOnOutcome(ISerializationContext context, EventOnOutcome semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -104,7 +104,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Event returns Event
 	 *
 	 * Constraint:
-	 *     (name=ID listeners+=[RenderFunction|QualifiedName]*)
+	 *     (name=ID listeners+=[ViewFunction|QualifiedName]*)
 	 */
 	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -117,8 +117,8 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=ID 
-	 *         (target='PHP' | target='ES6') 
+	 *         name=QualifiedName 
+	 *         (target='PHP' | target='ES6' | target='JAVA') 
 	 *         actions+=Action* 
 	 *         commands+=Command* 
 	 *         events+=Event* 
@@ -132,18 +132,18 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     RenderFunction returns RenderFunction
+	 *     ViewFunction returns ViewFunction
 	 *
 	 * Constraint:
 	 *     name=ID
 	 */
-	protected void sequence_RenderFunction(ISerializationContext context, RenderFunction semanticObject) {
+	protected void sequence_ViewFunction(ISerializationContext context, ViewFunction semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AcePackage.Literals.RENDER_FUNCTION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AcePackage.Literals.RENDER_FUNCTION__NAME));
+			if (transientValues.isValueTransient(semanticObject, AcePackage.Literals.VIEW_FUNCTION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AcePackage.Literals.VIEW_FUNCTION__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRenderFunctionAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getViewFunctionAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
@@ -153,7 +153,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     View returns View
 	 *
 	 * Constraint:
-	 *     (name=ID renderFunctions+=RenderFunction*)
+	 *     (name=ID renderFunctions+=ViewFunction*)
 	 */
 	protected void sequence_View(ISerializationContext context, View semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

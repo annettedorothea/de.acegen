@@ -62,3 +62,34 @@
 [2016-08-13 21:32:49] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
 [2016-08-13 21:32:49] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
 [2016-08-13 21:32:49] 
+[2016-09-24 18:27:32] Executing startup tasks
+[2016-09-24 18:27:32] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-09-24 18:27:32] Product self.product.version
+[2016-09-24 18:27:32] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:27:32] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:27:32] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:27:32] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-09-24 18:27:32] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-09-24 18:27:32] 
+[2016-09-24 18:33:12] Executing startup tasks
+[2016-09-24 18:33:13] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-09-24 18:33:13] Product self.product.version
+[2016-09-24 18:33:13] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:33:13] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:33:13] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-09-24 18:33:13] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-09-24 18:33:13] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-09-24 18:33:13] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2016-09-24 18:33:13] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2016-09-24 18:33:13] 
+[2016-10-01 16:54:36] Executing startup tasks
+[2016-10-01 16:54:36] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2016-10-01 16:54:36] Product self.product.version
+[2016-10-01 16:54:36] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-10-01 16:54:36] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-10-01 16:54:36] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2016-10-01 16:54:36] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2016-10-01 16:54:36] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2016-10-01 16:54:36] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2016-10-01 16:54:36] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2016-10-01 16:54:36] 

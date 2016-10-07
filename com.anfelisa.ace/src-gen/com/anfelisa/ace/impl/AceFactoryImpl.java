@@ -71,7 +71,7 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
       case AcePackage.EVENT_ON_OUTCOME: return createEventOnOutcome();
       case AcePackage.EVENT: return createEvent();
       case AcePackage.VIEW: return createView();
-      case AcePackage.RENDER_FUNCTION: return createRenderFunction();
+      case AcePackage.VIEW_FUNCTION: return createViewFunction();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -148,10 +148,10 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public RenderFunction createRenderFunction()
+  public ViewFunction createViewFunction()
   {
-    RenderFunctionImpl renderFunction = new RenderFunctionImpl();
-    return renderFunction;
+    ViewFunctionImpl viewFunction = new ViewFunctionImpl();
+    return viewFunction;
   }
 
   /**

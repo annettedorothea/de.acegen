@@ -115,10 +115,10 @@ public class AceSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AcePackage.RENDER_FUNCTION:
+      case AcePackage.VIEW_FUNCTION:
       {
-        RenderFunction renderFunction = (RenderFunction)theEObject;
-        T result = caseRenderFunction(renderFunction);
+        ViewFunction viewFunction = (ViewFunction)theEObject;
+        T result = caseViewFunction(viewFunction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -223,17 +223,17 @@ public class AceSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Render Function</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>View Function</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Render Function</em>'.
+   * @return the result of interpreting the object as an instance of '<em>View Function</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseRenderFunction(RenderFunction object)
+  public T caseViewFunction(ViewFunction object)
   {
     return null;
   }

@@ -334,14 +334,14 @@ public interface AcePackage extends EPackage
   int VIEW_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link com.anfelisa.ace.impl.RenderFunctionImpl <em>Render Function</em>}' class.
+   * The meta object id for the '{@link com.anfelisa.ace.impl.ViewFunctionImpl <em>View Function</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see com.anfelisa.ace.impl.RenderFunctionImpl
-   * @see com.anfelisa.ace.impl.AcePackageImpl#getRenderFunction()
+   * @see com.anfelisa.ace.impl.ViewFunctionImpl
+   * @see com.anfelisa.ace.impl.AcePackageImpl#getViewFunction()
    * @generated
    */
-  int RENDER_FUNCTION = 6;
+  int VIEW_FUNCTION = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -350,16 +350,16 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int RENDER_FUNCTION__NAME = 0;
+  int VIEW_FUNCTION__NAME = 0;
 
   /**
-   * The number of structural features of the '<em>Render Function</em>' class.
+   * The number of structural features of the '<em>View Function</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RENDER_FUNCTION_FEATURE_COUNT = 1;
+  int VIEW_FUNCTION_FEATURE_COUNT = 1;
 
 
   /**
@@ -621,25 +621,25 @@ public interface AcePackage extends EPackage
   EReference getView_RenderFunctions();
 
   /**
-   * Returns the meta object for class '{@link com.anfelisa.ace.RenderFunction <em>Render Function</em>}'.
+   * Returns the meta object for class '{@link com.anfelisa.ace.ViewFunction <em>View Function</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Render Function</em>'.
-   * @see com.anfelisa.ace.RenderFunction
+   * @return the meta object for class '<em>View Function</em>'.
+   * @see com.anfelisa.ace.ViewFunction
    * @generated
    */
-  EClass getRenderFunction();
+  EClass getViewFunction();
 
   /**
-   * Returns the meta object for the attribute '{@link com.anfelisa.ace.RenderFunction#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link com.anfelisa.ace.ViewFunction#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see com.anfelisa.ace.RenderFunction#getName()
-   * @see #getRenderFunction()
+   * @see com.anfelisa.ace.ViewFunction#getName()
+   * @see #getViewFunction()
    * @generated
    */
-  EAttribute getRenderFunction_Name();
+  EAttribute getViewFunction_Name();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -869,14 +869,14 @@ public interface AcePackage extends EPackage
     EReference VIEW__RENDER_FUNCTIONS = eINSTANCE.getView_RenderFunctions();
 
     /**
-     * The meta object literal for the '{@link com.anfelisa.ace.impl.RenderFunctionImpl <em>Render Function</em>}' class.
+     * The meta object literal for the '{@link com.anfelisa.ace.impl.ViewFunctionImpl <em>View Function</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see com.anfelisa.ace.impl.RenderFunctionImpl
-     * @see com.anfelisa.ace.impl.AcePackageImpl#getRenderFunction()
+     * @see com.anfelisa.ace.impl.ViewFunctionImpl
+     * @see com.anfelisa.ace.impl.AcePackageImpl#getViewFunction()
      * @generated
      */
-    EClass RENDER_FUNCTION = eINSTANCE.getRenderFunction();
+    EClass VIEW_FUNCTION = eINSTANCE.getViewFunction();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -884,7 +884,7 @@ public interface AcePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute RENDER_FUNCTION__NAME = eINSTANCE.getRenderFunction_Name();
+    EAttribute VIEW_FUNCTION__NAME = eINSTANCE.getViewFunction_Name();
 
   }
 

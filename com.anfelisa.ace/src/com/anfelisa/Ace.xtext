@@ -3,8 +3,8 @@ grammar com.anfelisa.Ace with org.eclipse.xtext.common.Terminals
 generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
-	name = ID
-	'target' target = ('PHP' | 'ES6')
+	name = QualifiedName
+	'target' target = ('PHP' | 'ES6' | 'JAVA')
 	('actions' '{'
 		(actions += Action)*
 	'}')*
@@ -21,7 +21,7 @@ Project:
 
 Action:
 	(type = FunctionType)? name = ID 
-	('executes' command = [Command])? 
+	('executes' command = [Command | QualifiedName])? 
 ;
 
 Command:
@@ -32,22 +32,22 @@ Command:
 
 EventOnOutcome:
 	'on' outcome = ID 
-	('publishes' '(' (events += [Event | ID])* ')')? 
-	('triggers' '(' (actions += [Action | ID])* ')')? 
+	('publishes' '(' (events += [Event | QualifiedName])* ')')? 
+	('triggers' '(' (actions += [Action | QualifiedName])* ')')? 
 ;
 
 Event:
 	name = ID 
-	('listenedToBy' '(' (listeners += [RenderFunction | QualifiedName])* ')')? 
+	('listenedToBy' '(' (listeners += [ViewFunction | QualifiedName])* ')')? 
 ;
 
 View: 
 	name = ID ('{'
-		(renderFunctions += RenderFunction)*
+		(renderFunctions += ViewFunction)*
 	'}')*
 ;
 
-RenderFunction:
+ViewFunction:
 	name = ID
 ;
 
@@ -58,5 +58,4 @@ QualifiedName:
 FunctionType:
 	'CREATE' | 'READ' | 'UPDATE' | 'DELETE'
 ;
-
 

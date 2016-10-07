@@ -73,7 +73,7 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventAccess().getListenersAssignment_1_2(), "rule__Event__ListenersAssignment_1_2");
 					put(grammarAccess.getViewAccess().getNameAssignment_0(), "rule__View__NameAssignment_0");
 					put(grammarAccess.getViewAccess().getRenderFunctionsAssignment_1_1(), "rule__View__RenderFunctionsAssignment_1_1");
-					put(grammarAccess.getRenderFunctionAccess().getNameAssignment(), "rule__RenderFunction__NameAssignment");
+					put(grammarAccess.getViewFunctionAccess().getNameAssignment(), "rule__ViewFunction__NameAssignment");
 				}
 			};
 		}

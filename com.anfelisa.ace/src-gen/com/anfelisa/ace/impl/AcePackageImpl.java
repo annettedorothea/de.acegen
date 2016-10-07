@@ -10,8 +10,8 @@ import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Project;
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -75,7 +75,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass renderFunctionEClass = null;
+  private EClass viewFunctionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -385,9 +385,9 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getRenderFunction()
+  public EClass getViewFunction()
   {
-    return renderFunctionEClass;
+    return viewFunctionEClass;
   }
 
   /**
@@ -395,9 +395,9 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getRenderFunction_Name()
+  public EAttribute getViewFunction_Name()
   {
-    return (EAttribute)renderFunctionEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)viewFunctionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -460,8 +460,8 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     createEAttribute(viewEClass, VIEW__NAME);
     createEReference(viewEClass, VIEW__RENDER_FUNCTIONS);
 
-    renderFunctionEClass = createEClass(RENDER_FUNCTION);
-    createEAttribute(renderFunctionEClass, RENDER_FUNCTION__NAME);
+    viewFunctionEClass = createEClass(VIEW_FUNCTION);
+    createEAttribute(viewFunctionEClass, VIEW_FUNCTION__NAME);
   }
 
   /**
@@ -519,14 +519,14 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEvent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEvent_Listeners(), this.getRenderFunction(), null, "listeners", null, 0, -1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEvent_Listeners(), this.getViewFunction(), null, "listeners", null, 0, -1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getView_Name(), ecorePackage.getEString(), "name", null, 0, 1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getView_RenderFunctions(), this.getRenderFunction(), null, "renderFunctions", null, 0, -1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getView_RenderFunctions(), this.getViewFunction(), null, "renderFunctions", null, 0, -1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(renderFunctionEClass, RenderFunction.class, "RenderFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRenderFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, RenderFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(viewFunctionEClass, ViewFunction.class, "ViewFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getViewFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, ViewFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

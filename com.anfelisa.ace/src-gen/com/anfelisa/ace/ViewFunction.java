@@ -7,21 +7,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Render Function</b></em>'.
+ * A representation of the model object '<em><b>View Function</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link com.anfelisa.ace.RenderFunction#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.ViewFunction#getName <em>Name</em>}</li>
  * </ul>
  *
- * @see com.anfelisa.ace.AcePackage#getRenderFunction()
+ * @see com.anfelisa.ace.AcePackage#getViewFunction()
  * @model
  * @generated
  */
-public interface RenderFunction extends EObject
+public interface ViewFunction extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -33,14 +33,14 @@ public interface RenderFunction extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see com.anfelisa.ace.AcePackage#getRenderFunction_Name()
+   * @see com.anfelisa.ace.AcePackage#getViewFunction_Name()
    * @model
    * @generated
    */
   String getName();
 
   /**
-   * Sets the value of the '{@link com.anfelisa.ace.RenderFunction#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link com.anfelisa.ace.ViewFunction#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Name</em>' attribute.
@@ -49,4 +49,4 @@ public interface RenderFunction extends EObject
    */
   void setName(String value);
 
-} // RenderFunction
+} // ViewFunction

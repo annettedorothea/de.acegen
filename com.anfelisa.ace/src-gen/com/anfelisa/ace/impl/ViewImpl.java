@@ -4,8 +4,8 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 
 import java.util.Collection;
 
@@ -67,7 +67,7 @@ public class ViewImpl extends MinimalEObjectImpl.Container implements View
    * @generated
    * @ordered
    */
-  protected EList<RenderFunction> renderFunctions;
+  protected EList<ViewFunction> renderFunctions;
 
   /**
    * <!-- begin-user-doc -->
@@ -118,11 +118,11 @@ public class ViewImpl extends MinimalEObjectImpl.Container implements View
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<RenderFunction> getRenderFunctions()
+  public EList<ViewFunction> getRenderFunctions()
   {
     if (renderFunctions == null)
     {
-      renderFunctions = new EObjectContainmentEList<RenderFunction>(RenderFunction.class, this, AcePackage.VIEW__RENDER_FUNCTIONS);
+      renderFunctions = new EObjectContainmentEList<ViewFunction>(ViewFunction.class, this, AcePackage.VIEW__RENDER_FUNCTIONS);
     }
     return renderFunctions;
   }
@@ -177,7 +177,7 @@ public class ViewImpl extends MinimalEObjectImpl.Container implements View
         return;
       case AcePackage.VIEW__RENDER_FUNCTIONS:
         getRenderFunctions().clear();
-        getRenderFunctions().addAll((Collection<? extends RenderFunction>)newValue);
+        getRenderFunctions().addAll((Collection<? extends ViewFunction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

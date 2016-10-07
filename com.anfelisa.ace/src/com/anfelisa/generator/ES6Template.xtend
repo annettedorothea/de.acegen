@@ -152,7 +152,7 @@ class ES6Template {
 				EventListenerRegistration.listeners = {};
 		    	«FOR event : events»
 		    		«FOR renderFunction : event.listeners»
-		    			EventListenerRegistration.registerListener('«event.eventName»', «renderFunction.renderFunctionWithViewName»);
+		    			EventListenerRegistration.registerListener('«event.eventName»', «renderFunction.viewFunctionWithViewName»);
 		    		«ENDFOR»
 		    	«ENDFOR»
 			}

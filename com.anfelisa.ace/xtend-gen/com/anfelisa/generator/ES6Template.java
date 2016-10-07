@@ -5,8 +5,8 @@ import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Project;
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
@@ -379,15 +379,15 @@ public class ES6Template {
       EList<Event> _events = it.getEvents();
       for(final Event event : _events) {
         {
-          EList<RenderFunction> _listeners = event.getListeners();
-          for(final RenderFunction renderFunction : _listeners) {
+          EList<ViewFunction> _listeners = event.getListeners();
+          for(final ViewFunction renderFunction : _listeners) {
             _builder.append("    \t");
             _builder.append("EventListenerRegistration.registerListener(\'");
             String _eventName = this._eventExtension.eventName(event);
             _builder.append(_eventName, "    \t");
             _builder.append("\', ");
-            String _renderFunctionWithViewName = this._viewExtension.renderFunctionWithViewName(renderFunction);
-            _builder.append(_renderFunctionWithViewName, "    \t");
+            String _viewFunctionWithViewName = this._viewExtension.viewFunctionWithViewName(renderFunction);
+            _builder.append(_viewFunctionWithViewName, "    \t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -461,8 +461,8 @@ public class ES6Template {
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     {
-      EList<RenderFunction> _renderFunctions = it.getRenderFunctions();
-      for(final RenderFunction renderFunction : _renderFunctions) {
+      EList<ViewFunction> _renderFunctions = it.getRenderFunctions();
+      for(final ViewFunction renderFunction : _renderFunctions) {
         _builder.append("    ");
         _builder.append("static ");
         String _name = renderFunction.getName();

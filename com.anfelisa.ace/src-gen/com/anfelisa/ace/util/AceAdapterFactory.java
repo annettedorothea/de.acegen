@@ -106,9 +106,9 @@ public class AceAdapterFactory extends AdapterFactoryImpl
         return createViewAdapter();
       }
       @Override
-      public Adapter caseRenderFunction(RenderFunction object)
+      public Adapter caseViewFunction(ViewFunction object)
       {
-        return createRenderFunctionAdapter();
+        return createViewFunctionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -223,16 +223,16 @@ public class AceAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link com.anfelisa.ace.RenderFunction <em>Render Function</em>}'.
+   * Creates a new adapter for an object of class '{@link com.anfelisa.ace.ViewFunction <em>View Function</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see com.anfelisa.ace.RenderFunction
+   * @see com.anfelisa.ace.ViewFunction
    * @generated
    */
-  public Adapter createRenderFunctionAdapter()
+  public Adapter createViewFunctionAdapter()
   {
     return null;
   }

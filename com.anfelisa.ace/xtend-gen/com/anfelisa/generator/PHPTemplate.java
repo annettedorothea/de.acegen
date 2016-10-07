@@ -5,8 +5,8 @@ import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Project;
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
@@ -292,8 +292,8 @@ public class PHPTemplate {
           EList<Event> _events = eventOnOutcome_1.getEvents();
           for(final Event event : _events) {
             {
-              EList<RenderFunction> _listeners = event.getListeners();
-              for(final RenderFunction listenerFunction : _listeners) {
+              EList<ViewFunction> _listeners = event.getListeners();
+              for(final ViewFunction listenerFunction : _listeners) {
                 _builder.append("\t\t\t");
                 _builder.append("\t");
                 EObject _eContainer = listenerFunction.eContainer();
@@ -556,8 +556,8 @@ public class PHPTemplate {
     _builder.append("\t");
     _builder.newLine();
     {
-      EList<RenderFunction> _renderFunctions = it.getRenderFunctions();
-      for(final RenderFunction renderFunction : _renderFunctions) {
+      EList<ViewFunction> _renderFunctions = it.getRenderFunctions();
+      for(final ViewFunction renderFunction : _renderFunctions) {
         _builder.append("    ");
         _builder.append("public static function ");
         String _name = renderFunction.getName();

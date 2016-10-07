@@ -132,7 +132,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('publishes' '(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     outcome=ID (ambiguity) 'triggers' '(' actions+=[Action|ID]
+	 *     outcome=ID (ambiguity) 'triggers' '(' actions+=[Action|QualifiedName]
 	 *     outcome=ID (ambiguity) ('triggers' '(' ')')? (rule end)
 	 */
 	protected void emit_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -144,7 +144,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('triggers' '(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     events+=[Event|ID] ')' (ambiguity) (rule end)
+	 *     events+=[Event|QualifiedName] ')' (ambiguity) (rule end)
 	 *     outcome=ID ('publishes' '(' ')')? (ambiguity) (rule end)
 	 */
 	protected void emit_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -175,6 +175,10 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     target='ES6' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='ES6' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='ES6' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='JAVA' (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
+	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 *     target='PHP' (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
 	 *     target='PHP' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='PHP' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
@@ -198,6 +202,9 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     target='ES6' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='ES6' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='ES6' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
+	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
+	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 *     target='PHP' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
@@ -219,6 +226,8 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     events+=Event '}' (ambiguity) ('views' '{' '}')* (rule end)
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
+	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
+	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 */
@@ -233,6 +242,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     actions+=Action (ambiguity) actions+=Action
 	 *     target='ES6' 'actions' '{' (ambiguity) actions+=Action
+	 *     target='JAVA' 'actions' '{' (ambiguity) actions+=Action
 	 *     target='PHP' 'actions' '{' (ambiguity) actions+=Action
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_3_3_ActionsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -247,6 +257,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action '}' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 *     commands+=Command (ambiguity) commands+=Command
 	 *     target='ES6' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
+	 *     target='JAVA' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 *     target='PHP' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_4_3_CommandsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -262,6 +273,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command '}' ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 *     events+=Event (ambiguity) events+=Event
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
+	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_5_3_EventsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -277,6 +289,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command '}' ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     events+=Event '}' ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
+	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     views+=View (ambiguity) views+=View
 	 */
@@ -293,6 +306,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command '}' ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     events+=Event '}' ('events' '{' '}')* (ambiguity) (rule end)
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
+	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     views+=View '}' (ambiguity) (rule end)
 	 */
@@ -306,7 +320,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name=ID (ambiguity) (rule end)
-	 *     renderFunctions+=RenderFunction '}' (ambiguity) (rule end)
+	 *     renderFunctions+=ViewFunction '}' (ambiguity) (rule end)
 	 */
 	protected void emit_View___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -317,8 +331,8 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('}' '{')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=ID '{' (ambiguity) renderFunctions+=RenderFunction
-	 *     renderFunctions+=RenderFunction (ambiguity) renderFunctions+=RenderFunction
+	 *     name=ID '{' (ambiguity) renderFunctions+=ViewFunction
+	 *     renderFunctions+=ViewFunction (ambiguity) renderFunctions+=ViewFunction
 	 */
 	protected void emit_View___RightCurlyBracketKeyword_1_2_LeftCurlyBracketKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

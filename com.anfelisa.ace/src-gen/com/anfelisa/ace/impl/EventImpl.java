@@ -5,7 +5,7 @@ package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Event;
-import com.anfelisa.ace.RenderFunction;
+import com.anfelisa.ace.ViewFunction;
 
 import java.util.Collection;
 
@@ -64,7 +64,7 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * @generated
    * @ordered
    */
-  protected EList<RenderFunction> listeners;
+  protected EList<ViewFunction> listeners;
 
   /**
    * <!-- begin-user-doc -->
@@ -115,11 +115,11 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<RenderFunction> getListeners()
+  public EList<ViewFunction> getListeners()
   {
     if (listeners == null)
     {
-      listeners = new EObjectResolvingEList<RenderFunction>(RenderFunction.class, this, AcePackage.EVENT__LISTENERS);
+      listeners = new EObjectResolvingEList<ViewFunction>(ViewFunction.class, this, AcePackage.EVENT__LISTENERS);
     }
     return listeners;
   }
@@ -158,7 +158,7 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
         return;
       case AcePackage.EVENT__LISTENERS:
         getListeners().clear();
-        getListeners().addAll((Collection<? extends RenderFunction>)newValue);
+        getListeners().addAll((Collection<? extends ViewFunction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

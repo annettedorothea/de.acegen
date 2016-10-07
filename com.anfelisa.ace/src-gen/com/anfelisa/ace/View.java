@@ -54,7 +54,7 @@ public interface View extends EObject
 
   /**
    * Returns the value of the '<em><b>Render Functions</b></em>' containment reference list.
-   * The list contents are of type {@link com.anfelisa.ace.RenderFunction}.
+   * The list contents are of type {@link com.anfelisa.ace.ViewFunction}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Render Functions</em>' containment reference list isn't clear,
@@ -66,6 +66,6 @@ public interface View extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<RenderFunction> getRenderFunctions();
+  EList<ViewFunction> getRenderFunctions();
 
 } // View

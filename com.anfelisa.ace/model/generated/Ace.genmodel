@@ -36,8 +36,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//View/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//View/renderFunctions"/>
     </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//RenderFunction">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//RenderFunction/name"/>
+    <genClasses ecoreClass="Ace.ecore#//ViewFunction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ViewFunction/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

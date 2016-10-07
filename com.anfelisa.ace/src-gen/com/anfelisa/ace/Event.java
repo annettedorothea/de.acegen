@@ -54,7 +54,7 @@ public interface Event extends EObject
 
   /**
    * Returns the value of the '<em><b>Listeners</b></em>' reference list.
-   * The list contents are of type {@link com.anfelisa.ace.RenderFunction}.
+   * The list contents are of type {@link com.anfelisa.ace.ViewFunction}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Listeners</em>' reference list isn't clear,
@@ -66,6 +66,6 @@ public interface Event extends EObject
    * @model
    * @generated
    */
-  EList<RenderFunction> getListeners();
+  EList<ViewFunction> getListeners();
 
 } // Event

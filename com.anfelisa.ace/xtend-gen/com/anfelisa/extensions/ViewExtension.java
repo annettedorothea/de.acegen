@@ -1,7 +1,7 @@
 package com.anfelisa.extensions;
 
-import com.anfelisa.ace.RenderFunction;
 import com.anfelisa.ace.View;
+import com.anfelisa.ace.ViewFunction;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -17,7 +17,7 @@ public class ViewExtension {
     return _builder.toString();
   }
   
-  public String renderFunctionWithViewName(final RenderFunction it) {
+  public String viewFunctionWithViewName(final ViewFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
     String _viewName = this.viewName(((View) _eContainer));

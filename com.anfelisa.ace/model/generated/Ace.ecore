@@ -33,14 +33,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
-        upperBound="-1" eType="#//RenderFunction"/>
+        upperBound="-1" eType="#//ViewFunction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="View">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
-        eType="#//RenderFunction" containment="true"/>
+        eType="#//ViewFunction" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RenderFunction">
+  <eClassifiers xsi:type="ecore:EClass" name="ViewFunction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
