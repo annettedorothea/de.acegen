@@ -3,3 +3,5 @@
 *.xtendbin
 *.class
 com.anfelisa.ace/bin/com/anfelisa/generator/*.xtend
+com.anfelisa.ace.ide/bin
+com.anfelisa.ace/bin
