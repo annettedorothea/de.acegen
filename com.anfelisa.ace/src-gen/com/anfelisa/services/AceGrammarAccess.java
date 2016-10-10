@@ -31,9 +31,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTargetKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cTargetAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Alternatives cTargetAlternatives_2_0 = (Alternatives)cTargetAssignment_2.eContents().get(0);
-		private final Keyword cTargetPHPKeyword_2_0_0 = (Keyword)cTargetAlternatives_2_0.eContents().get(0);
-		private final Keyword cTargetES6Keyword_2_0_1 = (Keyword)cTargetAlternatives_2_0.eContents().get(1);
-		private final Keyword cTargetJAVAKeyword_2_0_2 = (Keyword)cTargetAlternatives_2_0.eContents().get(2);
+		private final Keyword cTargetES6Keyword_2_0_0 = (Keyword)cTargetAlternatives_2_0.eContents().get(0);
+		private final Keyword cTargetJAVAKeyword_2_0_1 = (Keyword)cTargetAlternatives_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cActionsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
@@ -61,7 +60,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Project:
 		//	name=QualifiedName
-		//	'target' target=('PHP' | 'ES6' | 'JAVA') ('actions' '{'
+		//	'target' target=('ES6' | 'JAVA') ('actions' '{'
 		//	actions+=Action*
 		//	'}')* ('commands' '{'
 		//	commands+=Command*
@@ -72,7 +71,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}')*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=QualifiedName 'target' target=('PHP' | 'ES6' | 'JAVA') ('actions' '{' actions+=Action* '}')* ('commands' '{'
+		//name=QualifiedName 'target' target=('ES6' | 'JAVA') ('actions' '{' actions+=Action* '}')* ('commands' '{'
 		//commands+=Command* '}')* ('events' '{' events+=Event* '}')* ('views' '{' views+=View* '}')*
 		public Group getGroup() { return cGroup; }
 		
@@ -85,20 +84,17 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//'target'
 		public Keyword getTargetKeyword_1() { return cTargetKeyword_1; }
 		
-		//target=('PHP' | 'ES6' | 'JAVA')
+		//target=('ES6' | 'JAVA')
 		public Assignment getTargetAssignment_2() { return cTargetAssignment_2; }
 		
-		//('PHP' | 'ES6' | 'JAVA')
+		//('ES6' | 'JAVA')
 		public Alternatives getTargetAlternatives_2_0() { return cTargetAlternatives_2_0; }
 		
-		//'PHP'
-		public Keyword getTargetPHPKeyword_2_0_0() { return cTargetPHPKeyword_2_0_0; }
-		
 		//'ES6'
-		public Keyword getTargetES6Keyword_2_0_1() { return cTargetES6Keyword_2_0_1; }
+		public Keyword getTargetES6Keyword_2_0_0() { return cTargetES6Keyword_2_0_0; }
 		
 		//'JAVA'
-		public Keyword getTargetJAVAKeyword_2_0_2() { return cTargetJAVAKeyword_2_0_2; }
+		public Keyword getTargetJAVAKeyword_2_0_1() { return cTargetJAVAKeyword_2_0_1; }
 		
 		//('actions' '{' actions+=Action* '}')*
 		public Group getGroup_3() { return cGroup_3; }
@@ -474,29 +470,29 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	public class FunctionTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.FunctionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cCREATEKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cREADKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cUPDATEKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cDELETEKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cPOSTKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cPUTKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cDELETEKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cGETKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 		
 		//FunctionType:
-		//	'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
+		//	'POST' | 'PUT' | 'DELETE' | 'GET';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'CREATE' | 'READ' | 'UPDATE' | 'DELETE'
+		//'POST' | 'PUT' | 'DELETE' | 'GET'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'CREATE'
-		public Keyword getCREATEKeyword_0() { return cCREATEKeyword_0; }
+		//'POST'
+		public Keyword getPOSTKeyword_0() { return cPOSTKeyword_0; }
 		
-		//'READ'
-		public Keyword getREADKeyword_1() { return cREADKeyword_1; }
-		
-		//'UPDATE'
-		public Keyword getUPDATEKeyword_2() { return cUPDATEKeyword_2; }
+		//'PUT'
+		public Keyword getPUTKeyword_1() { return cPUTKeyword_1; }
 		
 		//'DELETE'
-		public Keyword getDELETEKeyword_3() { return cDELETEKeyword_3; }
+		public Keyword getDELETEKeyword_2() { return cDELETEKeyword_2; }
+		
+		//'GET'
+		public Keyword getGETKeyword_3() { return cGETKeyword_3; }
 	}
 	
 	
@@ -559,7 +555,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Project:
 	//	name=QualifiedName
-	//	'target' target=('PHP' | 'ES6' | 'JAVA') ('actions' '{'
+	//	'target' target=('ES6' | 'JAVA') ('actions' '{'
 	//	actions+=Action*
 	//	'}')* ('commands' '{'
 	//	commands+=Command*
@@ -652,7 +648,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FunctionType:
-	//	'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
+	//	'POST' | 'PUT' | 'DELETE' | 'GET';
 	public FunctionTypeElements getFunctionTypeAccess() {
 		return pFunctionType;
 	}

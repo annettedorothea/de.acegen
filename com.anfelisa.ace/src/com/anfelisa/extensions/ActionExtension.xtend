@@ -7,4 +7,5 @@ class ActionExtension {
 	def String actionName(Action it) '''«name.toFirstUpper»Action'''
 	def String abstractName(Action it) '''Abstract«name.toFirstUpper»'''
 	def String nameUppercase(Action it) '''«name.toFirstUpper»'''
+	def String resourceName(Action it) '''«name.toFirstUpper»Resource'''
 }

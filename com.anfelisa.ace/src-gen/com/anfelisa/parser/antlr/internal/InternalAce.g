@@ -102,9 +102,9 @@ ruleProject returns [EObject current=null]
 		(
 			(
 				(
-					lv_target_2_1='PHP'
+					lv_target_2_1='ES6'
 					{
-						newLeafNode(lv_target_2_1, grammarAccess.getProjectAccess().getTargetPHPKeyword_2_0_0());
+						newLeafNode(lv_target_2_1, grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_0());
 					}
 					{
 						if ($current==null) {
@@ -113,26 +113,15 @@ ruleProject returns [EObject current=null]
 						setWithLastConsumed($current, "target", lv_target_2_1, null);
 					}
 					    |
-					lv_target_2_2='ES6'
+					lv_target_2_2='JAVA'
 					{
-						newLeafNode(lv_target_2_2, grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_1());
+						newLeafNode(lv_target_2_2, grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_1());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getProjectRule());
 						}
 						setWithLastConsumed($current, "target", lv_target_2_2, null);
-					}
-					    |
-					lv_target_2_3='JAVA'
-					{
-						newLeafNode(lv_target_2_3, grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_2());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getProjectRule());
-						}
-						setWithLastConsumed($current, "target", lv_target_2_3, null);
 					}
 				)
 			)
@@ -741,28 +730,28 @@ ruleFunctionType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 	leaveRule();
 }:
 	(
-		kw='CREATE'
+		kw='POST'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getCREATEKeyword_0());
+			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getPOSTKeyword_0());
 		}
 		    |
-		kw='READ'
+		kw='PUT'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getREADKeyword_1());
-		}
-		    |
-		kw='UPDATE'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getUPDATEKeyword_2());
+			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getPUTKeyword_1());
 		}
 		    |
 		kw='DELETE'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getDELETEKeyword_3());
+			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getDELETEKeyword_2());
+		}
+		    |
+		kw='GET'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getFunctionTypeAccess().getGETKeyword_3());
 		}
 	)
 ;

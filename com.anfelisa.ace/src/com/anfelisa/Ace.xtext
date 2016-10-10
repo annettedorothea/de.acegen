@@ -4,7 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = QualifiedName
-	'target' target = ('PHP' | 'ES6' | 'JAVA')
+	'target' target = ('ES6' | 'JAVA')
 	('actions' '{'
 		(actions += Action)*
 	'}')*
@@ -56,6 +56,6 @@ QualifiedName:
 ;
 
 FunctionType:
-	'CREATE' | 'READ' | 'UPDATE' | 'DELETE'
+	'POST' | 'PUT' | 'DELETE' | 'GET'
 ;
 

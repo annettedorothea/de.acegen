@@ -280,21 +280,15 @@ rule__Project__TargetAlternatives_2_0
 	}
 :
 	(
-		{ before(grammarAccess.getProjectAccess().getTargetPHPKeyword_2_0_0()); }
-		'PHP'
-		{ after(grammarAccess.getProjectAccess().getTargetPHPKeyword_2_0_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_1()); }
+		{ before(grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_0()); }
 		'ES6'
-		{ after(grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_1()); }
+		{ after(grammarAccess.getProjectAccess().getTargetES6Keyword_2_0_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_2()); }
+		{ before(grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_1()); }
 		'JAVA'
-		{ after(grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_2()); }
+		{ after(grammarAccess.getProjectAccess().getTargetJAVAKeyword_2_0_1()); }
 	)
 ;
 finally {
@@ -307,27 +301,27 @@ rule__FunctionType__Alternatives
 	}
 :
 	(
-		{ before(grammarAccess.getFunctionTypeAccess().getCREATEKeyword_0()); }
-		'CREATE'
-		{ after(grammarAccess.getFunctionTypeAccess().getCREATEKeyword_0()); }
+		{ before(grammarAccess.getFunctionTypeAccess().getPOSTKeyword_0()); }
+		'POST'
+		{ after(grammarAccess.getFunctionTypeAccess().getPOSTKeyword_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getFunctionTypeAccess().getREADKeyword_1()); }
-		'READ'
-		{ after(grammarAccess.getFunctionTypeAccess().getREADKeyword_1()); }
+		{ before(grammarAccess.getFunctionTypeAccess().getPUTKeyword_1()); }
+		'PUT'
+		{ after(grammarAccess.getFunctionTypeAccess().getPUTKeyword_1()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getFunctionTypeAccess().getUPDATEKeyword_2()); }
-		'UPDATE'
-		{ after(grammarAccess.getFunctionTypeAccess().getUPDATEKeyword_2()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getFunctionTypeAccess().getDELETEKeyword_3()); }
+		{ before(grammarAccess.getFunctionTypeAccess().getDELETEKeyword_2()); }
 		'DELETE'
-		{ after(grammarAccess.getFunctionTypeAccess().getDELETEKeyword_3()); }
+		{ after(grammarAccess.getFunctionTypeAccess().getDELETEKeyword_2()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getFunctionTypeAccess().getGETKeyword_3()); }
+		'GET'
+		{ after(grammarAccess.getFunctionTypeAccess().getGETKeyword_3()); }
 	)
 ;
 finally {

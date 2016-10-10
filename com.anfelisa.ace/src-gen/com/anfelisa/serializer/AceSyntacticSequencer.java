@@ -179,10 +179,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='JAVA' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
-	 *     target='PHP' (ambiguity) 'commands' '{' ('}' 'commands' '{')* commands+=Command
-	 *     target='PHP' (ambiguity) ('commands' '{' '}')* 'events' '{' ('}' 'events' '{')* events+=Event
-	 *     target='PHP' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
-	 *     target='PHP' (ambiguity) ('commands' '{' '}')* ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 */
 	protected void emit_Project___ActionsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -205,9 +201,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
 	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='JAVA' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
-	 *     target='PHP' ('actions' '{' '}')* (ambiguity) 'events' '{' ('}' 'events' '{')* events+=Event
-	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* 'views' '{' ('}' 'views' '{')* views+=View
-	 *     target='PHP' ('actions' '{' '}')* (ambiguity) ('events' '{' '}')* ('views' '{' '}')* (rule end)
 	 */
 	protected void emit_Project___CommandsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -228,8 +221,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
 	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
-	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) 'views' '{' ('}' 'views' '{')* views+=View
-	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* (ambiguity) ('views' '{' '}')* (rule end)
 	 */
 	protected void emit_Project___EventsKeyword_5_0_LeftCurlyBracketKeyword_5_1_RightCurlyBracketKeyword_5_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -243,7 +234,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     actions+=Action (ambiguity) actions+=Action
 	 *     target='ES6' 'actions' '{' (ambiguity) actions+=Action
 	 *     target='JAVA' 'actions' '{' (ambiguity) actions+=Action
-	 *     target='PHP' 'actions' '{' (ambiguity) actions+=Action
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_3_3_ActionsKeyword_3_0_LeftCurlyBracketKeyword_3_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -258,7 +248,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     commands+=Command (ambiguity) commands+=Command
 	 *     target='ES6' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 *     target='JAVA' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
-	 *     target='PHP' ('actions' '{' '}')* 'commands' '{' (ambiguity) commands+=Command
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_4_3_CommandsKeyword_4_0_LeftCurlyBracketKeyword_4_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -274,7 +263,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     events+=Event (ambiguity) events+=Event
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
-	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* 'events' '{' (ambiguity) events+=Event
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_5_3_EventsKeyword_5_0_LeftCurlyBracketKeyword_5_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -290,7 +278,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     events+=Event '}' ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
-	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* 'views' '{' (ambiguity) views+=View
 	 *     views+=View (ambiguity) views+=View
 	 */
 	protected void emit_Project___RightCurlyBracketKeyword_6_3_ViewsKeyword_6_0_LeftCurlyBracketKeyword_6_1__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -307,7 +294,6 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     events+=Event '}' ('events' '{' '}')* (ambiguity) (rule end)
 	 *     target='ES6' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     target='JAVA' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
-	 *     target='PHP' ('actions' '{' '}')* ('commands' '{' '}')* ('events' '{' '}')* (ambiguity) (rule end)
 	 *     views+=View '}' (ambiguity) (rule end)
 	 */
 	protected void emit_Project___ViewsKeyword_6_0_LeftCurlyBracketKeyword_6_1_RightCurlyBracketKeyword_6_3__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

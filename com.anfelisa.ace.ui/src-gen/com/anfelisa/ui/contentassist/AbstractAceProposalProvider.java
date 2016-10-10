@@ -24,7 +24,6 @@ public abstract class AbstractAceProposalProvider extends TerminalsProposalProvi
 	public void completeProject_Target(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 		// subclasses may override
-		// subclasses may override
 	}
 	public void completeProject_Actions(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

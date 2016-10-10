@@ -14,6 +14,7 @@ import com.anfelisa.extensions.ActionExtension
 import com.anfelisa.extensions.CommandExtension
 import com.anfelisa.extensions.EventExtension
 import com.anfelisa.extensions.ViewExtension
+import com.anfelisa.extensions.ProjectExtension
 
 /**
  * Generates code from your model files on save.
@@ -26,7 +27,7 @@ class AceGenerator extends AbstractGenerator {
 	ES6Template es6Template;
 
 	@Inject
-	PHPTemplate phpTemplate;
+	JavaTemplate javaTemplate;
 
 	@Inject
 	extension ActionExtension
@@ -39,6 +40,9 @@ class AceGenerator extends AbstractGenerator {
 
 	@Inject
 	extension ViewExtension
+
+	@Inject
+	extension ProjectExtension
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource != null && resource.contents != null && resource.contents.size > 0) {
@@ -85,35 +89,40 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateTriggerAction());
 				fsa.generateFile('ace/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateUUID());
-			} else if (project.target == 'PHP') {
+			} else if (project.target == 'JAVA') {
 				for (action : project.actions) {
-					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
-						phpTemplate.generateAbstractActionFile(action, project));
-					fsa.generateFile(project.name + '/actions/' + action.actionName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
-						phpTemplate.generateInitialActionFile(action, project));
-					fsa.generateFile(project.name + '/' + action.nameUppercase + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
-						phpTemplate.generateInitialFile(action, project));
+					fsa.generateFile(project.packageFolder + '/actions/' + action.abstractActionName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateAbstractActionFile(action, project));
+					fsa.generateFile(project.packageFolder + '/actions/' + action.actionName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateInitialActionFile(action, project));
+					fsa.generateFile(project.packageFolder + '/resources/' + action.resourceName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateInitialResourceFile(action, project));
 				}
 				for (command : project.commands) {
-					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
-						phpTemplate.generateAbstractCommandFile(command, project));
-					fsa.generateFile(project.name + '/commands/' + command.commandName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE,
-						phpTemplate.generateInitialCommandFile(command, project));
+					fsa.generateFile(project.packageFolder + '/commands/' + command.abstractCommandName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateAbstractCommandFile(command, project));
+					fsa.generateFile(project.packageFolder + '/commands/' + command.commandName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateInitialCommandFile(command, project));
 				}
 				for (event : project.events) {
-					fsa.generateFile(project.name + '/events/' + event.eventName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT,
-						phpTemplate.generateEventFile(event, project));
+					fsa.generateFile(project.packageFolder + '/events/' + event.abstractEventName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateAbstractEventFile(event, project));
+					fsa.generateFile(project.packageFolder + '/events/' + event.eventName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateInitialEventFile(event, project));
 				}
 				for (view : project.views) {
-					fsa.generateFile(project.name + '/views/' + view.viewName + '.php',
-						ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, phpTemplate.generateView(view));
+					fsa.generateFile(project.packageFolder + '/views/' + view.viewName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateView(view, project));
 				}
+				fsa.generateFile(project.packageFolder + '/AppRegistration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAppRegistration(project));
 			}
 		}
 	}

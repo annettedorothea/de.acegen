@@ -41,4 +41,13 @@ public class ActionExtension {
     _builder.append(_firstUpper, "");
     return _builder.toString();
   }
+  
+  public String resourceName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    _builder.append("Resource");
+    return _builder.toString();
+  }
 }

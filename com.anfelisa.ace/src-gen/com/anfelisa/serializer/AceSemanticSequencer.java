@@ -118,7 +118,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         name=QualifiedName 
-	 *         (target='PHP' | target='ES6' | target='JAVA') 
+	 *         (target='ES6' | target='JAVA') 
 	 *         actions+=Action* 
 	 *         commands+=Command* 
 	 *         events+=Event* 

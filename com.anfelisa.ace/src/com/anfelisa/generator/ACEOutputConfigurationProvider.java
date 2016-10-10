@@ -11,8 +11,8 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 public class ACEOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 	public final static String DEFAULT_JAVASCRIPT_OUTPUT_ONCE = "DEFAULT_JAVASCRIPT_OUTPUT_ONCE";
-	public final static String DEFAULT_PHP_OUTPUT = "DEFAULT_PHP_OUTPUT";
-	public final static String DEFAULT_PHP_OUTPUT_ONCE = "DEFAULT_PHP_OUTPUT_ONCE";
+	public final static String DEFAULT_JAVA_OUTPUT = "DEFAULT_JAVA_OUTPUT";
+	public final static String DEFAULT_JAVA_OUTPUT_ONCE = "DEFAULT_JAVA_OUTPUT_ONCE";
 
 	/**
 	 * @return a set of {@link OutputConfiguration} available for the generator
@@ -34,17 +34,17 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceOutput.setCleanUpDerivedResources(false);
 		onceOutput.setSetDerivedProperty(false);
 		
-		OutputConfiguration defaultPhpOutput = new OutputConfiguration(DEFAULT_PHP_OUTPUT);
+		OutputConfiguration defaultPhpOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT);
 		defaultPhpOutput.setDescription("generated PHP sources");
-		defaultPhpOutput.setOutputDirectory("./php/gen/");
+		defaultPhpOutput.setOutputDirectory("./src/gen/java/");
 		defaultPhpOutput.setOverrideExistingResources(true);
 		defaultPhpOutput.setCreateOutputDirectory(true);
 		defaultPhpOutput.setCleanUpDerivedResources(true);
 		defaultPhpOutput.setSetDerivedProperty(true);
 		
-		OutputConfiguration oncePhpOutput = new OutputConfiguration(DEFAULT_PHP_OUTPUT_ONCE);
+		OutputConfiguration oncePhpOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT_ONCE);
 		oncePhpOutput.setDescription("initial PHP sources");
-		oncePhpOutput.setOutputDirectory("./php/");
+		oncePhpOutput.setOutputDirectory("./src/main/java/");
 		oncePhpOutput.setOverrideExistingResources(false);
 		oncePhpOutput.setCreateOutputDirectory(true);
 		oncePhpOutput.setCleanUpDerivedResources(false);

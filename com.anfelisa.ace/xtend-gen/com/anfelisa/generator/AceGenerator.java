@@ -11,10 +11,11 @@ import com.anfelisa.ace.View;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
+import com.anfelisa.extensions.ProjectExtension;
 import com.anfelisa.extensions.ViewExtension;
 import com.anfelisa.generator.ACEOutputConfigurationProvider;
 import com.anfelisa.generator.ES6Template;
-import com.anfelisa.generator.PHPTemplate;
+import com.anfelisa.generator.JavaTemplate;
 import com.google.common.base.Objects;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -37,7 +38,7 @@ public class AceGenerator extends AbstractGenerator {
   private ES6Template es6Template;
   
   @Inject
-  private PHPTemplate phpTemplate;
+  private JavaTemplate javaTemplate;
   
   @Inject
   @Extension
@@ -54,6 +55,10 @@ public class AceGenerator extends AbstractGenerator {
   @Inject
   @Extension
   private ViewExtension _viewExtension;
+  
+  @Inject
+  @Extension
+  private ProjectExtension _projectExtension;
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
@@ -160,80 +165,95 @@ public class AceGenerator extends AbstractGenerator {
         fsa.generateFile("ace/UUID.js", IFileSystemAccess.DEFAULT_OUTPUT, _generateUUID);
       } else {
         String _target_1 = project.getTarget();
-        boolean _equals_1 = Objects.equal(_target_1, "PHP");
+        boolean _equals_1 = Objects.equal(_target_1, "JAVA");
         if (_equals_1) {
           EList<Action> _actions_1 = project.getActions();
           for (final Action action_1 : _actions_1) {
             {
-              String _name_3 = project.getName();
-              String _plus_5 = (_name_3 + "/actions/");
+              String _packageFolder = this._projectExtension.packageFolder(project);
+              String _plus_5 = (_packageFolder + "/actions/");
               String _abstractActionName = this._actionExtension.abstractActionName(action_1);
               String _plus_6 = (_plus_5 + _abstractActionName);
-              String _plus_7 = (_plus_6 + ".php");
-              CharSequence _generateAbstractActionFile = this.phpTemplate.generateAbstractActionFile(action_1, project);
+              String _plus_7 = (_plus_6 + ".java");
+              CharSequence _generateAbstractActionFile = this.javaTemplate.generateAbstractActionFile(action_1, project);
               fsa.generateFile(_plus_7, 
-                ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT, _generateAbstractActionFile);
-              String _name_4 = project.getName();
-              String _plus_8 = (_name_4 + "/actions/");
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractActionFile);
+              String _packageFolder_1 = this._projectExtension.packageFolder(project);
+              String _plus_8 = (_packageFolder_1 + "/actions/");
               String _actionName = this._actionExtension.actionName(action_1);
               String _plus_9 = (_plus_8 + _actionName);
-              String _plus_10 = (_plus_9 + ".php");
-              CharSequence _generateInitialActionFile = this.phpTemplate.generateInitialActionFile(action_1, project);
+              String _plus_10 = (_plus_9 + ".java");
+              CharSequence _generateInitialActionFile = this.javaTemplate.generateInitialActionFile(action_1, project);
               fsa.generateFile(_plus_10, 
-                ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, _generateInitialActionFile);
-              String _name_5 = project.getName();
-              String _plus_11 = (_name_5 + "/");
-              String _nameUppercase = this._actionExtension.nameUppercase(action_1);
-              String _plus_12 = (_plus_11 + _nameUppercase);
-              String _plus_13 = (_plus_12 + ".php");
-              CharSequence _generateInitialFile = this.phpTemplate.generateInitialFile(action_1, project);
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialActionFile);
+              String _packageFolder_2 = this._projectExtension.packageFolder(project);
+              String _plus_11 = (_packageFolder_2 + "/resources/");
+              String _resourceName = this._actionExtension.resourceName(action_1);
+              String _plus_12 = (_plus_11 + _resourceName);
+              String _plus_13 = (_plus_12 + ".java");
+              CharSequence _generateInitialResourceFile = this.javaTemplate.generateInitialResourceFile(action_1, project);
               fsa.generateFile(_plus_13, 
-                ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, _generateInitialFile);
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialResourceFile);
             }
           }
           EList<Command> _commands_1 = project.getCommands();
           for (final Command command_1 : _commands_1) {
             {
-              String _name_3 = project.getName();
-              String _plus_5 = (_name_3 + "/commands/");
+              String _packageFolder = this._projectExtension.packageFolder(project);
+              String _plus_5 = (_packageFolder + "/commands/");
               String _abstractCommandName = this._commandExtension.abstractCommandName(command_1);
               String _plus_6 = (_plus_5 + _abstractCommandName);
-              String _plus_7 = (_plus_6 + ".php");
-              CharSequence _generateAbstractCommandFile = this.phpTemplate.generateAbstractCommandFile(command_1, project);
+              String _plus_7 = (_plus_6 + ".java");
+              CharSequence _generateAbstractCommandFile = this.javaTemplate.generateAbstractCommandFile(command_1, project);
               fsa.generateFile(_plus_7, 
-                ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT, _generateAbstractCommandFile);
-              String _name_4 = project.getName();
-              String _plus_8 = (_name_4 + "/commands/");
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractCommandFile);
+              String _packageFolder_1 = this._projectExtension.packageFolder(project);
+              String _plus_8 = (_packageFolder_1 + "/commands/");
               String _commandName = this._commandExtension.commandName(command_1);
               String _plus_9 = (_plus_8 + _commandName);
-              String _plus_10 = (_plus_9 + ".php");
-              CharSequence _generateInitialCommandFile = this.phpTemplate.generateInitialCommandFile(command_1, project);
+              String _plus_10 = (_plus_9 + ".java");
+              CharSequence _generateInitialCommandFile = this.javaTemplate.generateInitialCommandFile(command_1, project);
               fsa.generateFile(_plus_10, 
-                ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, _generateInitialCommandFile);
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialCommandFile);
             }
           }
           EList<Event> _events_1 = project.getEvents();
           for (final Event event_1 : _events_1) {
-            String _name_3 = project.getName();
-            String _plus_5 = (_name_3 + "/events/");
-            String _eventName = this._eventExtension.eventName(event_1);
-            String _plus_6 = (_plus_5 + _eventName);
-            String _plus_7 = (_plus_6 + ".php");
-            CharSequence _generateEventFile = this.phpTemplate.generateEventFile(event_1, project);
-            fsa.generateFile(_plus_7, 
-              ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT, _generateEventFile);
+            {
+              String _packageFolder = this._projectExtension.packageFolder(project);
+              String _plus_5 = (_packageFolder + "/events/");
+              String _abstractEventName = this._eventExtension.abstractEventName(event_1);
+              String _plus_6 = (_plus_5 + _abstractEventName);
+              String _plus_7 = (_plus_6 + ".java");
+              CharSequence _generateAbstractEventFile = this.javaTemplate.generateAbstractEventFile(event_1, project);
+              fsa.generateFile(_plus_7, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractEventFile);
+              String _packageFolder_1 = this._projectExtension.packageFolder(project);
+              String _plus_8 = (_packageFolder_1 + "/events/");
+              String _eventName = this._eventExtension.eventName(event_1);
+              String _plus_9 = (_plus_8 + _eventName);
+              String _plus_10 = (_plus_9 + ".java");
+              CharSequence _generateInitialEventFile = this.javaTemplate.generateInitialEventFile(event_1, project);
+              fsa.generateFile(_plus_10, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialEventFile);
+            }
           }
           EList<View> _views_1 = project.getViews();
           for (final View view_1 : _views_1) {
-            String _name_4 = project.getName();
-            String _plus_8 = (_name_4 + "/views/");
+            String _packageFolder = this._projectExtension.packageFolder(project);
+            String _plus_5 = (_packageFolder + "/views/");
             String _viewName_1 = this._viewExtension.viewName(view_1);
-            String _plus_9 = (_plus_8 + _viewName_1);
-            String _plus_10 = (_plus_9 + ".php");
-            CharSequence _generateView_1 = this.phpTemplate.generateView(view_1);
-            fsa.generateFile(_plus_10, 
-              ACEOutputConfigurationProvider.DEFAULT_PHP_OUTPUT_ONCE, _generateView_1);
+            String _plus_6 = (_plus_5 + _viewName_1);
+            String _plus_7 = (_plus_6 + ".java");
+            CharSequence _generateView_1 = this.javaTemplate.generateView(view_1, project);
+            fsa.generateFile(_plus_7, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateView_1);
           }
+          String _packageFolder_1 = this._projectExtension.packageFolder(project);
+          String _plus_8 = (_packageFolder_1 + "/AppRegistration.java");
+          CharSequence _generateAppRegistration = this.javaTemplate.generateAppRegistration(project);
+          fsa.generateFile(_plus_8, 
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAppRegistration);
         }
       }
     }
