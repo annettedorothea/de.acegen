@@ -110,7 +110,7 @@ public class JavaTemplate {
         Command _command_3 = it.getCommand();
         String _commandName_1 = this._commandExtension.commandName(_command_3);
         _builder.append(_commandName_1, "\t\t");
-        _builder.append("(this.actionData.copy(), databaseHandle);");
+        _builder.append("(this.actionData, databaseHandle);");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("\t\t");
@@ -144,14 +144,10 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.DatabaseService;");
+    _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import ");
-    String _name_1 = project.getName();
-    _builder.append(_name_1, "");
-    _builder.append(".events.*;");
-    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractCommandName = this._commandExtension.abstractCommandName(it);
@@ -214,10 +210,55 @@ public class JavaTemplate {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new ");
-            String _eventName = this._eventExtension.eventName(event);
-            _builder.append(_eventName, "\t\t\t");
-            _builder.append("(this.commandData.copy(), databaseHandle).publish();");
+            String _eventNameWithPackage = this._eventExtension.eventNameWithPackage(event);
+            _builder.append(_eventNameWithPackage, "\t\t\t");
+            _builder.append("(this.commandData, databaseHandle).publish();");
             _builder.newLineIfNotEmpty();
+          }
+        }
+        {
+          EList<Action> _actions = eventOnOutcome_1.getActions();
+          for(final Action action : _actions) {
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("final ");
+            String _actionNameWithPackage = this._actionExtension.actionNameWithPackage(action);
+            _builder.append(_actionNameWithPackage, "\t\t\t");
+            _builder.append(" action = new ");
+            String _actionNameWithPackage_1 = this._actionExtension.actionNameWithPackage(action);
+            _builder.append(_actionNameWithPackage_1, "\t\t\t");
+            _builder.append("(this.commandData, DatabaseService.getDatabaseHandle());");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("Thread actionThread = new Thread(new Runnable() {");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("public void run() {");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("\t\t");
+            _builder.append("action.apply();");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("});");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("actionThread.start();");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.newLine();
           }
         }
         _builder.append("\t\t");
@@ -358,10 +399,10 @@ public class JavaTemplate {
     _builder.append("protected void applyAction() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("// init actionData maybe like so:");
+    _builder.append("// init actionData");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.actionData = this.actionParam.copy();");
+    _builder.append("this.actionData = this.actionParam;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -497,10 +538,10 @@ public class JavaTemplate {
     _builder.append("protected void prepareDataForView() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("// prepare data for view, at least copy it");
+    _builder.append("// prepare data for view");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.eventData = this.eventParam.copy();");
+    _builder.append("this.eventData = this.eventParam;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

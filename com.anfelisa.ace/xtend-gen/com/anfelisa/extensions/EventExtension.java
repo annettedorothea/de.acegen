@@ -1,6 +1,8 @@
 package com.anfelisa.extensions;
 
 import com.anfelisa.ace.Event;
+import com.anfelisa.ace.Project;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -22,6 +24,17 @@ public class EventExtension {
     String _firstUpper = StringExtensions.toFirstUpper(_name);
     _builder.append(_firstUpper, "");
     _builder.append("Event");
+    return _builder.toString();
+  }
+  
+  public String eventNameWithPackage(final Event it) {
+    StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = it.eContainer();
+    String _name = ((Project) _eContainer).getName();
+    _builder.append(_name, "");
+    _builder.append(".events.");
+    String _eventName = this.eventName(it);
+    _builder.append(_eventName, "");
     return _builder.toString();
   }
 }

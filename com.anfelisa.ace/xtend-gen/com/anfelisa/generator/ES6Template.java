@@ -1657,9 +1657,6 @@ public class ES6Template {
     _builder.append("    ");
     _builder.append("prepareDataForView() {");
     _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("ACEController.addActionToQueue(this.eventData);");
-    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();

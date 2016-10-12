@@ -623,7 +623,6 @@ class ES6Template {
 		        this.eventData = action;
 		    }
 		    prepareDataForView() {
-		    	ACEController.addActionToQueue(this.eventData);
 		    }
 		}
 		

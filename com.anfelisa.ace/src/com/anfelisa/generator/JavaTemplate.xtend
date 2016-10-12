@@ -47,7 +47,7 @@ class JavaTemplate {
 			@Override
 			public ICommand getCommand() {
 				«IF command != null»
-					return new «command.commandName»(this.actionData.copy(), databaseHandle);
+					return new «command.commandName»(this.actionData, databaseHandle);
 				«ELSE»
 					return null;
 				«ENDIF»
@@ -64,10 +64,9 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.DatabaseService;
 		import com.anfelisa.ace.IDataContainer;
 
-		import «project.name».events.*;
-		
 		public abstract class «abstractCommandName» extends Command {
 		
 			«FOR eventOnOutcome : eventsOnOutcome»
@@ -84,7 +83,17 @@ class JavaTemplate {
 				«FOR eventOnOutcome : eventsOnOutcome»
 					case «eventOnOutcome.outcome»:
 						«FOR event : eventOnOutcome.events»
-							new «event.eventName»(this.commandData.copy(), databaseHandle).publish();
+							new «event.eventNameWithPackage»(this.commandData, databaseHandle).publish();
+						«ENDFOR»
+						«FOR action : eventOnOutcome.actions»
+							final «action.actionNameWithPackage» action = new «action.actionNameWithPackage»(this.commandData, DatabaseService.getDatabaseHandle());
+							Thread actionThread = new Thread(new Runnable() {
+								public void run() {
+									action.apply();
+								}
+							});
+							actionThread.start();
+							
 						«ENDFOR»
 						break;
 				«ENDFOR»
@@ -139,8 +148,8 @@ class JavaTemplate {
 		
 			@Override
 			protected void applyAction() {
-				// init actionData maybe like so:
-				this.actionData = this.actionParam.copy();
+				// init actionData
+				this.actionData = this.actionParam;
 			}
 		
 		}
@@ -194,8 +203,8 @@ class JavaTemplate {
 		
 			@Override
 			protected void prepareDataForView() {
-				// prepare data for view, at least copy it
-				this.eventData = this.eventParam.copy();
+				// prepare data for view
+				this.eventData = this.eventParam;
 			}
 		
 		}
