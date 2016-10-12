@@ -34,7 +34,9 @@ class JavaTemplate {
 		import com.anfelisa.ace.ICommand;
 		import com.anfelisa.ace.IDataContainer;
 		
-		import «project.name».commands.«command.commandName»;
+		«IF command != null»
+			import «project.name».commands.«command.commandName»;
+		«ENDIF»
 		
 		public abstract class «abstractActionName» extends Action {
 		
@@ -44,7 +46,11 @@ class JavaTemplate {
 		
 			@Override
 			public ICommand getCommand() {
-				return new «command.commandName»(this.actionData.copy(), databaseHandle);
+				«IF command != null»
+					return new «command.commandName»(this.actionData.copy(), databaseHandle);
+				«ELSE»
+					return null;
+				«ENDIF»
 			}
 		}
 		
@@ -285,10 +291,11 @@ class JavaTemplate {
 				«FOR view : views»
 					«view.viewName» «view.viewNameAsVariable» = new «view.viewName»();
 				«ENDFOR»
+				
 				«FOR event : events»
-		    		«FOR renderFunction : event.listeners»
-		    			AceController.addConsumer("«event.eventName»", «renderFunction.viewFunctionWithViewNameAsVariable»);
-		    		«ENDFOR»
+					«FOR renderFunction : event.listeners»
+						AceController.addConsumer("«event.eventName»", «renderFunction.viewFunctionWithViewNameAsVariable»);
+			    	«ENDFOR»
 		    	«ENDFOR»
 		    }
 		}

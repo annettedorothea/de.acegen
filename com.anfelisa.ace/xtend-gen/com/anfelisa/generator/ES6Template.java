@@ -66,14 +66,25 @@ public class ES6Template {
         _builder.append("\t");
         _builder.append("getCommand() {");
         _builder.newLine();
-        _builder.append("\t");
-        _builder.append("    ");
-        _builder.append("return new ");
-        Command _command_1 = it.getCommand();
-        String _commandName = this._commandExtension.commandName(_command_1);
-        _builder.append(_commandName, "\t    ");
-        _builder.append("(this.actionData);");
-        _builder.newLineIfNotEmpty();
+        {
+          Command _command_1 = it.getCommand();
+          boolean _notEquals_1 = (!Objects.equal(_command_1, null));
+          if (_notEquals_1) {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("return new ");
+            Command _command_2 = it.getCommand();
+            String _commandName = this._commandExtension.commandName(_command_2);
+            _builder.append(_commandName, "\t\t");
+            _builder.append("(this.actionData);");
+            _builder.newLineIfNotEmpty();
+          } else {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("return null;");
+            _builder.newLine();
+          }
+        }
         _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
@@ -103,22 +114,6 @@ public class ES6Template {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("initActionDataFromView() {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return new Promise((resolve) => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
     _builder.append("captureActionParam() {");
     _builder.newLine();
     _builder.append("    \t");
@@ -142,7 +137,7 @@ public class ES6Template {
     _builder.append("releaseActionParam() {");
     _builder.newLine();
     _builder.append("    \t");
-    _builder.append("// replease action params during replay");
+    _builder.append("// release action params during replay");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -1657,6 +1652,9 @@ public class ES6Template {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("prepareDataForView() {");
+    _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("ACEController.addActionToQueue(this.eventData);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");

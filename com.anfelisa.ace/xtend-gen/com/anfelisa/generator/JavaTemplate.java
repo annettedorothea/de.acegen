@@ -11,6 +11,7 @@ import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
 import com.anfelisa.extensions.ViewExtension;
+import com.google.common.base.Objects;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -53,15 +54,21 @@ public class JavaTemplate {
     _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import ");
-    String _name_1 = project.getName();
-    _builder.append(_name_1, "");
-    _builder.append(".commands.");
-    Command _command = it.getCommand();
-    String _commandName = this._commandExtension.commandName(_command);
-    _builder.append(_commandName, "");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
+    {
+      Command _command = it.getCommand();
+      boolean _notEquals = (!Objects.equal(_command, null));
+      if (_notEquals) {
+        _builder.append("import ");
+        String _name_1 = project.getName();
+        _builder.append(_name_1, "");
+        _builder.append(".commands.");
+        Command _command_1 = it.getCommand();
+        String _commandName = this._commandExtension.commandName(_command_1);
+        _builder.append(_commandName, "");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractActionName = this._actionExtension.abstractActionName(it);
@@ -94,13 +101,23 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.append("public ICommand getCommand() {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return new ");
-    Command _command_1 = it.getCommand();
-    String _commandName_1 = this._commandExtension.commandName(_command_1);
-    _builder.append(_commandName_1, "\t\t");
-    _builder.append("(this.actionData.copy(), databaseHandle);");
-    _builder.newLineIfNotEmpty();
+    {
+      Command _command_2 = it.getCommand();
+      boolean _notEquals_1 = (!Objects.equal(_command_2, null));
+      if (_notEquals_1) {
+        _builder.append("\t\t");
+        _builder.append("return new ");
+        Command _command_3 = it.getCommand();
+        String _commandName_1 = this._commandExtension.commandName(_command_3);
+        _builder.append(_commandName_1, "\t\t");
+        _builder.append("(this.actionData.copy(), databaseHandle);");
+        _builder.newLineIfNotEmpty();
+      } else {
+        _builder.append("\t\t");
+        _builder.append("return null;");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -721,18 +738,21 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t\t");
+    _builder.newLine();
     {
       EList<Event> _events = it.getEvents();
       for(final Event event : _events) {
         {
           EList<ViewFunction> _listeners = event.getListeners();
           for(final ViewFunction renderFunction : _listeners) {
+            _builder.append("\t\t");
             _builder.append("AceController.addConsumer(\"");
             String _eventName = this._eventExtension.eventName(event);
-            _builder.append(_eventName, "");
+            _builder.append(_eventName, "\t\t");
             _builder.append("\", ");
             String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(renderFunction);
-            _builder.append(_viewFunctionWithViewNameAsVariable, "");
+            _builder.append(_viewFunctionWithViewNameAsVariable, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }

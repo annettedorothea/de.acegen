@@ -36,7 +36,11 @@ class ES6Template {
 		
 			«IF command != null»
 			    getCommand() {
-			        return new «command.commandName»(this.actionData);
+			    	«IF command != null»
+			    		return new «command.commandName»(this.actionData);
+			    	«ELSE»
+			    		return null;
+			        «ENDIF»
 			    }
 		    «ENDIF»
 		
@@ -50,12 +54,6 @@ class ES6Template {
 		
 		class «actionName» extends «abstractActionName» {
 		
-		    initActionDataFromView() {
-		        return new Promise((resolve) => {
-		            resolve();
-		        });
-		    }
-		
 		    captureActionParam() {
 		    	// capture user input
 		    }
@@ -65,7 +63,7 @@ class ES6Template {
 		    }
 		
 		    releaseActionParam() {
-		    	// replease action params during replay
+		    	// release action params during replay
 		    }
 		}
 		
@@ -622,6 +620,7 @@ class ES6Template {
 		        this.eventData = action;
 		    }
 		    prepareDataForView() {
+		    	ACEController.addActionToQueue(this.eventData);
 		    }
 		}
 		
