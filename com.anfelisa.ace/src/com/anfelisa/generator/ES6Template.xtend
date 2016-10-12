@@ -10,6 +10,7 @@ import com.anfelisa.ace.Project
 import javax.inject.Inject
 import com.anfelisa.extensions.ViewExtension
 import com.anfelisa.ace.View
+import com.anfelisa.extensions.ProjectExtension
 
 class ES6Template {
 	
@@ -24,6 +25,9 @@ class ES6Template {
 	
 	@Inject
 	extension ViewExtension
+	
+	@Inject
+	extension ProjectExtension
 	
 	def generateAbstractActionFile(Action it) '''
 		'use strict';
@@ -144,30 +148,14 @@ class ES6Template {
 	def generateEventListenerRegistration(Project it) '''
 		'use strict';
 		
-		class EventListenerRegistration {
+		class EventListenerRegistration«projectName» {
 		
 			static init() {
-				EventListenerRegistration.listeners = {};
 		    	«FOR event : events»
 		    		«FOR renderFunction : event.listeners»
-		    			EventListenerRegistration.registerListener('«event.eventName»', «renderFunction.viewFunctionWithViewName»);
+		    			ACEController.registerListener('«event.eventName»', «renderFunction.viewFunctionWithViewName»);
 		    		«ENDFOR»
 		    	«ENDFOR»
-			}
-			
-			static registerListener(eventName, listener) {
-				if (!eventName.trim()) {
-					throw new Error('cannot register listener for empty eventName');
-				}
-				if (!listener) {
-					throw new Error('cannot register undefined listener');
-				}
-				var listenersForEventName;
-				if (EventListenerRegistration.listeners[eventName] === undefined) {
-					EventListenerRegistration.listeners[eventName] = [];
-				}
-				listenersForEventName = EventListenerRegistration.listeners[eventName];
-				listenersForEventName.push(listener);
 			}
 		
 		}
@@ -354,7 +342,7 @@ class ES6Template {
 		        let promises = [];
 		        var i, listener;
 		        if (this.eventName !== undefined) {
-		            var listenersForEvent = EventListenerRegistration.listeners[this.eventName];
+		            var listenersForEvent = ACEController.listeners[this.eventName];
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
@@ -380,8 +368,8 @@ class ES6Template {
 		        ACEController.timeLine = [];
 		        ACEController.timeLineLocalStorageChunks = [];
 		        ACEController.writeTimeLine = true;
-		        EventListenerRegistration.init();
-		        EventListenerRegistration.registerListener('TriggerAction', ACEController.triggerAction);
+		        ACEController.listeners = {};
+		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
 		        ACEController.actionIsProcessing = false;
 		        ACEController.actionQueue = [];
 		        ACEController.uuidGenerator = new UUID();
@@ -392,6 +380,21 @@ class ES6Template {
 		        ACEController.replayTimeLine = [];
 		        sessionStorage.clear();
 		    }
+		
+			static registerListener(eventName, listener) {
+				if (!eventName.trim()) {
+					throw new Error('cannot register listener for empty eventName');
+				}
+				if (!listener) {
+					throw new Error('cannot register undefined listener');
+				}
+				var listenersForEventName;
+				if (ACEController.listeners[eventName] === undefined) {
+					ACEController.listeners[eventName] = [];
+				}
+				listenersForEventName = ACEController.listeners[eventName];
+				listenersForEventName.push(listener);
+			}
 		
 		    static addItemToTimeLine(item) {
 		        let timestamp = new Date();

@@ -579,8 +579,11 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("static final Logger LOG = LoggerFactory.getLogger(CreateMandatorResource.class);");
-    _builder.newLine();
+    _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
+    String _resourceName_1 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_1, "\t");
+    _builder.append(".class);");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("@");

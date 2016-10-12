@@ -10,6 +10,7 @@ import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
 import com.anfelisa.extensions.EventExtension;
+import com.anfelisa.extensions.ProjectExtension;
 import com.anfelisa.extensions.ViewExtension;
 import com.google.common.base.Objects;
 import javax.inject.Inject;
@@ -34,6 +35,10 @@ public class ES6Template {
   @Inject
   @Extension
   private ViewExtension _viewExtension;
+  
+  @Inject
+  @Extension
+  private ProjectExtension _projectExtension;
   
   public CharSequence generateAbstractActionFile(final Action it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -361,14 +366,14 @@ public class ES6Template {
     _builder.append("\'use strict\';");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("class EventListenerRegistration {");
-    _builder.newLine();
+    _builder.append("class EventListenerRegistration");
+    String _projectName = this._projectExtension.projectName(it);
+    _builder.append(_projectName, "");
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static init() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("EventListenerRegistration.listeners = {};");
     _builder.newLine();
     {
       EList<Event> _events = it.getEvents();
@@ -377,7 +382,7 @@ public class ES6Template {
           EList<ViewFunction> _listeners = event.getListeners();
           for(final ViewFunction renderFunction : _listeners) {
             _builder.append("    \t");
-            _builder.append("EventListenerRegistration.registerListener(\'");
+            _builder.append("ACEController.registerListener(\'");
             String _eventName = this._eventExtension.eventName(event);
             _builder.append(_eventName, "    \t");
             _builder.append("\', ");
@@ -389,50 +394,6 @@ public class ES6Template {
         }
       }
     }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("static registerListener(eventName, listener) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (!eventName.trim()) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("throw new Error(\'cannot register listener for empty eventName\');");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (!listener) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("throw new Error(\'cannot register undefined listener\');");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("var listenersForEventName;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (EventListenerRegistration.listeners[eventName] === undefined) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("EventListenerRegistration.listeners[eventName] = [];");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("listenersForEventName = EventListenerRegistration.listeners[eventName];");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("listenersForEventName.push(listener);");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -944,7 +905,7 @@ public class ES6Template {
     _builder.append("if (this.eventName !== undefined) {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("var listenersForEvent = EventListenerRegistration.listeners[this.eventName];");
+    _builder.append("var listenersForEvent = ACEController.listeners[this.eventName];");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("if (listenersForEvent !== undefined) {");
@@ -1004,10 +965,10 @@ public class ES6Template {
     _builder.append("ACEController.writeTimeLine = true;");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("EventListenerRegistration.init();");
+    _builder.append("ACEController.listeners = {};");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("EventListenerRegistration.registerListener(\'TriggerAction\', ACEController.triggerAction);");
+    _builder.append("ACEController.registerListener(\'TriggerAction\', ACEController.triggerAction);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("ACEController.actionIsProcessing = false;");
@@ -1037,6 +998,49 @@ public class ES6Template {
     _builder.append("sessionStorage.clear();");
     _builder.newLine();
     _builder.append("    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("static registerListener(eventName, listener) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (!eventName.trim()) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("throw new Error(\'cannot register listener for empty eventName\');");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (!listener) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("throw new Error(\'cannot register undefined listener\');");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("var listenersForEventName;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (ACEController.listeners[eventName] === undefined) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("ACEController.listeners[eventName] = [];");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("listenersForEventName = ACEController.listeners[eventName];");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("listenersForEventName.push(listener);");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

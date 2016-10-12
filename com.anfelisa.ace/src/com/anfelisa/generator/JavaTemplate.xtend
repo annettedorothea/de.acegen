@@ -232,7 +232,7 @@ class JavaTemplate {
 		@Consumes(MediaType.APPLICATION_JSON)
 		public class «resourceName» {
 		
-			static final Logger LOG = LoggerFactory.getLogger(CreateMandatorResource.class);
+			static final Logger LOG = LoggerFactory.getLogger(«resourceName».class);
 		
 			@«type»
 			@Timed
