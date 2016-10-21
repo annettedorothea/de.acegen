@@ -248,15 +248,8 @@ class JavaTemplate {
 			@Path("/path")
 			@PermitAll // set permission
 			public Response «type.toLowerCase»(/* params here */) throws JsonProcessingException {
-				DatabaseHandle handle = DatabaseService.getDatabaseHandle();
-				try {
-					IDataContainer actionParam = null;  // init actionParam
-					return new «actionName»(actionParam, handle).apply();
-				} catch (Exception x) {
-					throw x;
-				} finally {
-					handle.close();
-				}
+				IDataContainer actionParam = null;  // init actionParam
+				return new «actionName»(actionParam, DatabaseService.getDatabaseHandle()).apply();
 			}
 		
 		}
