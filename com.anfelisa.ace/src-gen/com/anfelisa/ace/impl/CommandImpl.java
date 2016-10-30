@@ -5,6 +5,7 @@ package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.EventOnOutcome;
 
 import java.util.Collection;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.CommandImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.CommandImpl#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.CommandImpl#getEventsOnOutcome <em>Events On Outcome</em>}</li>
  * </ul>
  *
@@ -58,6 +60,16 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getData() <em>Data</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getData()
+   * @generated
+   * @ordered
+   */
+  protected Data data;
 
   /**
    * The cached value of the '{@link #getEventsOnOutcome() <em>Events On Outcome</em>}' containment reference list.
@@ -118,6 +130,49 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
    * <!-- end-user-doc -->
    * @generated
    */
+  public Data getData()
+  {
+    if (data != null && data.eIsProxy())
+    {
+      InternalEObject oldData = (InternalEObject)data;
+      data = (Data)eResolveProxy(oldData);
+      if (data != oldData)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.COMMAND__DATA, oldData, data));
+      }
+    }
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Data basicGetData()
+  {
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setData(Data newData)
+  {
+    Data oldData = data;
+    data = newData;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.COMMAND__DATA, oldData, data));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<EventOnOutcome> getEventsOnOutcome()
   {
     if (eventsOnOutcome == null)
@@ -155,6 +210,9 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
     {
       case AcePackage.COMMAND__NAME:
         return getName();
+      case AcePackage.COMMAND__DATA:
+        if (resolve) return getData();
+        return basicGetData();
       case AcePackage.COMMAND__EVENTS_ON_OUTCOME:
         return getEventsOnOutcome();
     }
@@ -174,6 +232,9 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
     {
       case AcePackage.COMMAND__NAME:
         setName((String)newValue);
+        return;
+      case AcePackage.COMMAND__DATA:
+        setData((Data)newValue);
         return;
       case AcePackage.COMMAND__EVENTS_ON_OUTCOME:
         getEventsOnOutcome().clear();
@@ -196,6 +257,9 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
       case AcePackage.COMMAND__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case AcePackage.COMMAND__DATA:
+        setData((Data)null);
+        return;
       case AcePackage.COMMAND__EVENTS_ON_OUTCOME:
         getEventsOnOutcome().clear();
         return;
@@ -215,6 +279,8 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
     {
       case AcePackage.COMMAND__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AcePackage.COMMAND__DATA:
+        return data != null;
       case AcePackage.COMMAND__EVENTS_ON_OUTCOME:
         return eventsOnOutcome != null && !eventsOnOutcome.isEmpty();
     }

@@ -39,6 +39,7 @@
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Command">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Command/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Command/data"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Command/eventsOnOutcome"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//EventOnOutcome">
@@ -48,6 +49,7 @@
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Event">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Event/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Event/data"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Event/listeners"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//View">

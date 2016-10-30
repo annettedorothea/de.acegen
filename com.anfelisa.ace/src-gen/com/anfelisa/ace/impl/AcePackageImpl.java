@@ -449,9 +449,19 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getCommand_EventsOnOutcome()
+  public EReference getCommand_Data()
   {
     return (EReference)commandEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommand_EventsOnOutcome()
+  {
+    return (EReference)commandEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -519,9 +529,19 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEvent_Listeners()
+  public EReference getEvent_Data()
   {
     return (EReference)eventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEvent_Listeners()
+  {
+    return (EReference)eventEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -647,6 +667,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     commandEClass = createEClass(COMMAND);
     createEAttribute(commandEClass, COMMAND__NAME);
+    createEReference(commandEClass, COMMAND__DATA);
     createEReference(commandEClass, COMMAND__EVENTS_ON_OUTCOME);
 
     eventOnOutcomeEClass = createEClass(EVENT_ON_OUTCOME);
@@ -656,6 +677,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     eventEClass = createEClass(EVENT);
     createEAttribute(eventEClass, EVENT__NAME);
+    createEReference(eventEClass, EVENT__DATA);
     createEReference(eventEClass, EVENT__LISTENERS);
 
     viewEClass = createEClass(VIEW);
@@ -731,6 +753,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     initEClass(commandEClass, Command.class, "Command", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCommand_Name(), ecorePackage.getEString(), "name", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommand_Data(), this.getData(), null, "data", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCommand_EventsOnOutcome(), this.getEventOnOutcome(), null, "eventsOnOutcome", null, 0, -1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eventOnOutcomeEClass, EventOnOutcome.class, "EventOnOutcome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -740,6 +763,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEvent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEvent_Data(), this.getData(), null, "data", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEvent_Listeners(), this.getViewFunction(), null, "listeners", null, 0, -1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

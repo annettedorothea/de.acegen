@@ -2,11 +2,28 @@ package com.anfelisa.extensions
 
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Data
-import java.util.List
+import com.anfelisa.ace.Project
 import java.util.ArrayList
+import java.util.List
+import javax.inject.Inject
 
 class DataExtension {
+	
+	@Inject
+	extension AttributeExtension
+	
 	def String dataName(Data it) '''«name.toFirstUpper»Data'''
+	def String dataNameWithPackage(Data it) '''«(eContainer as Project).name».data.«name.toFirstUpper»Data'''
+	
+	def String dataImport(Data it) '''
+		«IF it != null»
+			import «(eContainer as Project).name».data.«dataName»;
+		«ELSE»
+			import com.anfelisa.ace.IDataContainer;
+		«ENDIF»
+	'''
+	
+	def String dataParamType(Data it) '''«IF it != null»«dataName»«ELSE»IDataContainer«ENDIF»'''
 	
 	def List<Attribute> allAttributes(Data it) {
 		val attrs = new ArrayList<Attribute>();
@@ -31,4 +48,12 @@ class DataExtension {
 			}
 		}
 	}
+	
+	def newFromCommandData(Data it) '''new «dataNameWithPackage»(
+			«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
+				this.commandData.«attribute.getterCall»
+			«ENDFOR»
+			this.commandData.getUuid()
+		)'''
+	
 }

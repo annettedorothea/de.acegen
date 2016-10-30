@@ -4,6 +4,7 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.ViewFunction;
 
@@ -14,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.EventImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.EventImpl#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.EventImpl#getListeners <em>Listeners</em>}</li>
  * </ul>
  *
@@ -55,6 +58,16 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getData() <em>Data</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getData()
+   * @generated
+   * @ordered
+   */
+  protected Data data;
 
   /**
    * The cached value of the '{@link #getListeners() <em>Listeners</em>}' reference list.
@@ -115,6 +128,49 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * <!-- end-user-doc -->
    * @generated
    */
+  public Data getData()
+  {
+    if (data != null && data.eIsProxy())
+    {
+      InternalEObject oldData = (InternalEObject)data;
+      data = (Data)eResolveProxy(oldData);
+      if (data != oldData)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.EVENT__DATA, oldData, data));
+      }
+    }
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Data basicGetData()
+  {
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setData(Data newData)
+  {
+    Data oldData = data;
+    data = newData;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.EVENT__DATA, oldData, data));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<ViewFunction> getListeners()
   {
     if (listeners == null)
@@ -136,6 +192,9 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
     {
       case AcePackage.EVENT__NAME:
         return getName();
+      case AcePackage.EVENT__DATA:
+        if (resolve) return getData();
+        return basicGetData();
       case AcePackage.EVENT__LISTENERS:
         return getListeners();
     }
@@ -155,6 +214,9 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
     {
       case AcePackage.EVENT__NAME:
         setName((String)newValue);
+        return;
+      case AcePackage.EVENT__DATA:
+        setData((Data)newValue);
         return;
       case AcePackage.EVENT__LISTENERS:
         getListeners().clear();
@@ -177,6 +239,9 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
       case AcePackage.EVENT__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case AcePackage.EVENT__DATA:
+        setData((Data)null);
+        return;
       case AcePackage.EVENT__LISTENERS:
         getListeners().clear();
         return;
@@ -196,6 +261,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
     {
       case AcePackage.EVENT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AcePackage.EVENT__DATA:
+        return data != null;
       case AcePackage.EVENT__LISTENERS:
         return listeners != null && !listeners.isEmpty();
     }

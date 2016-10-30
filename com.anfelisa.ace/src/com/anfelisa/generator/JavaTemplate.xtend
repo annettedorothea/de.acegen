@@ -101,12 +101,16 @@ class JavaTemplate {
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		
+		import com.anfelisa.ace.IDataContainer;
+		
 		«FOR model : models»
 			«model.importModel»
 		«ENDFOR»
 		
 		@SuppressWarnings("unused")
-		public class «dataName» implements «FOR model : models SEPARATOR ', '»«model.modelName»«ENDFOR» {
+		public class «dataName» implements «FOR model : models SEPARATOR ', '»«model.modelName»«ENDFOR», IDataContainer {
+			
+			private String uuid;
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
@@ -114,13 +118,15 @@ class JavaTemplate {
 			«ENDFOR»
 		
 			public «dataName»(
-				«FOR attribute : allAttributes SEPARATOR ','»
+				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
 				«ENDFOR»
+				@JsonProperty("uuid") String uuid
 			) {
 				«FOR attribute : allAttributes»
 					«attribute.assign»
 				«ENDFOR»
+				this.uuid = uuid;
 			}
 		
 			«FOR attribute : allAttributes»
@@ -128,6 +134,10 @@ class JavaTemplate {
 				«attribute.setter»
 				
 			«ENDFOR»
+			@JsonProperty
+			public String getUuid() {
+				return this.uuid;
+			}
 		
 		}
 		
@@ -144,20 +154,20 @@ class JavaTemplate {
 		
 		public class «modelDao» {
 			
-			public static void create(Handle handle) {
-				handle.execute("CREATE TABLE IF NOT EXISTS public.«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
+			public static void create(Handle handle, String schema) {
+				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public static void insert(Handle handle, «modelName» «modelParam») {
-				Update statement = handle.createStatement("INSERT INTO public.«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
+				Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 				«FOR attribute : attributes»
 					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 				«ENDFOR»
 				statement.execute();
 			}
 			
-			public static void update(Handle handle, «modelName» «modelParam») {
-				Update statement = handle.createStatement("UPDATE public.«table» SET «FOR attribute : attributes SEPARATOR ', '»«attribute.name» = :«attribute.name»«ENDFOR»");
+			public static void update(Handle handle, «modelName» «modelParam», String schema) {
+				Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attribute : attributes SEPARATOR ', '»«attribute.name» = :«attribute.name»«ENDFOR»");
 				«FOR attribute : attributes»
 					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 				«ENDFOR»
@@ -165,22 +175,22 @@ class JavaTemplate {
 			}
 			
 			«IF findSerialAttribute != null»
-				public static void deleteById(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createStatement("DELETE FROM public.«table» WHERE id = :id");
+				public static void deleteById(Handle handle, «modelName» «modelParam», String schema) {
+					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE id = :id");
 					statement.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»);
 					statement.execute();
 				}
 
-				public static «modelName» selectById(Handle handle, «modelName» «modelParam») {
-					return handle.createQuery("SELECT * FROM public.«table» WHERE id = :id")
+				public static «modelName» selectById(Handle handle, «modelName» «modelParam», String schema) {
+					return handle.createQuery("SELECT * FROM " + schema + ".«table» WHERE id = :id")
 						.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»)
 						.map(new «modelMapper»())
 						.first();
 				}
 			«ENDIF»
 			
-			public static List<«modelName»> selectAll(Handle handle) {
-				return handle.createQuery("SELECT * FROM public.«table»")
+			public static List<«modelName»> selectAll(Handle handle, String schema) {
+				return handle.createQuery("SELECT * FROM " + schema + ".«table»")
 					.map(new «modelMapper»())
 					.list();
 			}
@@ -219,15 +229,15 @@ class JavaTemplate {
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;
-		import com.anfelisa.ace.IDataContainer;
+		«data.dataImport»
 		
 		«IF command != null»
 			import «project.name».commands.«command.commandName»;
 		«ENDIF»
 		
-		public abstract class «abstractActionName» extends Action {
+		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(IDataContainer actionParam, DatabaseHandle databaseHandle) {
+			public «abstractActionName»(«data.dataParamType» actionParam, DatabaseHandle databaseHandle) {
 				super("«actionName»", HttpMethod.«type», actionParam, databaseHandle);
 			}
 		
@@ -251,15 +261,17 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.DatabaseService;
 
-		public abstract class «abstractCommandName» extends Command {
+		«data.dataImport»
+
+		public abstract class «abstractCommandName» extends Command<«data.dataParamType»> {
 		
 			«FOR eventOnOutcome : eventsOnOutcome»
 				protected static final String «eventOnOutcome.outcome» = "«eventOnOutcome.outcome»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(IDataContainer commandParam, DatabaseHandle databaseHandle) {
+			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle) {
 				super("«commandName»", commandParam, databaseHandle);
 			}
 		
@@ -272,7 +284,7 @@ class JavaTemplate {
 							new «event.eventNameWithPackage»(this.commandData, databaseHandle).publish();
 						«ENDFOR»
 						«FOR action : eventOnOutcome.actions»
-							final «action.actionNameWithPackage» action = new «action.actionNameWithPackage»(this.commandData, DatabaseService.getDatabaseHandle());
+							«action.newAction»
 							Thread actionThread = new Thread(new Runnable() {
 								public void run() {
 									action.apply();
@@ -297,11 +309,12 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
-		import com.anfelisa.ace.IDataContainer;
 		
-		public abstract class «abstractEventName» extends Event {
+		«data.dataImport»
 		
-			public «abstractEventName»(IDataContainer eventParam, DatabaseHandle databaseHandle) {
+		public abstract class «abstractEventName» extends Event<«data.dataParamType»> {
+		
+			public «abstractEventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
 				super("«eventName»", eventParam, databaseHandle);
 			}
 		
@@ -314,16 +327,17 @@ class JavaTemplate {
 		package «project.name».actions;
 		
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IDataContainer;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		
+		«data.dataImport»
 		
 		public class «actionName» extends «abstractActionName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(IDataContainer actionParam, DatabaseHandle databaseHandle) {
+			public «actionName»(«data.dataParamType» actionParam, DatabaseHandle databaseHandle) {
 				super(actionParam, databaseHandle);
 			}
 		
@@ -347,16 +361,17 @@ class JavaTemplate {
 		package «project.name».commands;
 		
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IDataContainer;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		
+		«data.dataImport»
 		
 		public class «commandName» extends «abstractCommandName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 
-			public «commandName»(IDataContainer commandParam, DatabaseHandle databaseHandle) {
+			public «commandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle) {
 				super(commandParam, databaseHandle);
 			}
 		
@@ -374,16 +389,17 @@ class JavaTemplate {
 		package «project.name».events;
 		
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IDataContainer;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		
+		«data.dataImport»
 		
 		public class «eventName» extends «abstractEventName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«eventName».class);
 
-			public «eventName»(IDataContainer eventParam, DatabaseHandle databaseHandle) {
+			public «eventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
 				super(eventParam, databaseHandle);
 			}
 		
@@ -416,11 +432,12 @@ class JavaTemplate {
 		import org.slf4j.LoggerFactory;
 		
 		import com.anfelisa.ace.DatabaseService;
-		import com.anfelisa.ace.IDataContainer;
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
 		import «project.name».actions.«actionName»;
+		
+		«data.dataImport»
 		
 		@Path("/path")
 		@Produces(MediaType.APPLICATION_JSON)
@@ -434,7 +451,7 @@ class JavaTemplate {
 			@Path("/path")
 			@PermitAll // set permission
 			public Response «type.toLowerCase»(/* params here */) throws JsonProcessingException {
-				IDataContainer actionParam = null;  // init actionParam
+				«data.dataParamType» actionParam = null;  // init actionParam
 				return new «actionName»(actionParam, DatabaseService.getDatabaseHandle()).apply();
 			}
 		
@@ -471,8 +488,12 @@ class JavaTemplate {
 		import io.dropwizard.setup.Environment;
 		import com.anfelisa.ace.AceController;
 		
-		import «name».views.*;
-		import «name».resources.*;
+		«IF views.size > 0»
+			import «name».views.*;
+		«ENDIF»
+		«IF actions.size > 0»
+			import «name».resources.*;
+		«ENDIF»
 
 		public class AppRegistration {
 		

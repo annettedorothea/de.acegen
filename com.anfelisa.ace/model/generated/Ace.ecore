@@ -42,6 +42,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Command">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eventsOnOutcome" upperBound="-1"
         eType="#//EventOnOutcome" containment="true"/>
   </eClassifiers>
@@ -54,6 +55,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
         upperBound="-1" eType="#//ViewFunction"/>
   </eClassifiers>

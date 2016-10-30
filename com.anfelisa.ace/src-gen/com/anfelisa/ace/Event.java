@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.Event#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Event#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.Event#getListeners <em>Listeners</em>}</li>
  * </ul>
  *
@@ -51,6 +52,32 @@ public interface Event extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Data</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Data</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Data</em>' reference.
+   * @see #setData(Data)
+   * @see com.anfelisa.ace.AcePackage#getEvent_Data()
+   * @model
+   * @generated
+   */
+  Data getData();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.Event#getData <em>Data</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Data</em>' reference.
+   * @see #getData()
+   * @generated
+   */
+  void setData(Data value);
 
   /**
    * Returns the value of the '<em><b>Listeners</b></em>' reference list.

@@ -48,7 +48,9 @@ Action:
 ;
 
 Command:
-	name = ID ('{'
+	name = ID 
+	('uses' data = [ Data | QualifiedName ])? 
+	('{'
 		(eventsOnOutcome += EventOnOutcome)*
 	'}')*
 ;
@@ -61,6 +63,7 @@ EventOnOutcome:
 
 Event:
 	name = ID 
+	('uses' data = [ Data | QualifiedName ])? 
 	('listenedToBy' '(' (listeners += [ViewFunction | QualifiedName])* ')')? 
 ;
 

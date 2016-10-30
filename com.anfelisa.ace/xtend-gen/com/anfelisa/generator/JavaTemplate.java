@@ -209,6 +209,9 @@ public class JavaTemplate {
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.newLine();
+    _builder.newLine();
     {
       EList<Model> _models = it.getModels();
       for(final Model model : _models) {
@@ -237,8 +240,13 @@ public class JavaTemplate {
         _builder.append(_modelName, "");
       }
     }
-    _builder.append(" {");
+    _builder.append(", IDataContainer {");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private String uuid;");
+    _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     {
@@ -273,7 +281,13 @@ public class JavaTemplate {
         _builder.append(_param, "\t\t");
         _builder.newLineIfNotEmpty();
       }
+      if (_hasElements_1) {
+        _builder.append(",", "\t\t");
+      }
     }
+    _builder.append("\t\t");
+    _builder.append("@JsonProperty(\"uuid\") String uuid");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append(") {");
     _builder.newLine();
@@ -286,6 +300,9 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t\t");
+    _builder.append("this.uuid = uuid;");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -305,6 +322,18 @@ public class JavaTemplate {
         _builder.newLine();
       }
     }
+    _builder.append("\t");
+    _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public String getUuid() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return this.uuid;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -338,10 +367,10 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void create(Handle handle) {");
+    _builder.append("public static void create(Handle handle, String schema) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("handle.execute(\"CREATE TABLE IF NOT EXISTS public.");
+    _builder.append("handle.execute(\"CREATE TABLE IF NOT EXISTS \" + schema + \".");
     String _table = this._modelExtension.table(it);
     _builder.append(_table, "\t\t");
     _builder.append(" (");
@@ -388,10 +417,10 @@ public class JavaTemplate {
     _builder.append(" ");
     String _modelParam = this._modelExtension.modelParam(it);
     _builder.append(_modelParam, "\t");
-    _builder.append(") {");
+    _builder.append(", String schema) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("Update statement = handle.createStatement(\"INSERT INTO public.");
+    _builder.append("Update statement = handle.createStatement(\"INSERT INTO \" + schema + \".");
     String _table_3 = this._modelExtension.table(it);
     _builder.append(_table_3, "\t\t");
     _builder.append(" (");
@@ -457,10 +486,10 @@ public class JavaTemplate {
     _builder.append(" ");
     String _modelParam_2 = this._modelExtension.modelParam(it);
     _builder.append(_modelParam_2, "\t");
-    _builder.append(") {");
+    _builder.append(", String schema) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("Update statement = handle.createStatement(\"UPDATE public.");
+    _builder.append("Update statement = handle.createStatement(\"UPDATE \" + schema + \".");
     String _table_4 = this._modelExtension.table(it);
     _builder.append(_table_4, "\t\t");
     _builder.append(" SET ");
@@ -518,11 +547,11 @@ public class JavaTemplate {
         _builder.append(" ");
         String _modelParam_4 = this._modelExtension.modelParam(it);
         _builder.append(_modelParam_4, "\t");
-        _builder.append(") {");
+        _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("Update statement = handle.createStatement(\"DELETE FROM public.");
+        _builder.append("Update statement = handle.createStatement(\"DELETE FROM \" + schema + \".");
         String _table_5 = this._modelExtension.table(it);
         _builder.append(_table_5, "\t\t");
         _builder.append(" WHERE id = :id\");");
@@ -560,11 +589,11 @@ public class JavaTemplate {
         _builder.append(" ");
         String _modelParam_6 = this._modelExtension.modelParam(it);
         _builder.append(_modelParam_6, "\t");
-        _builder.append(") {");
+        _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("return handle.createQuery(\"SELECT * FROM public.");
+        _builder.append("return handle.createQuery(\"SELECT * FROM \" + schema + \".");
         String _table_6 = this._modelExtension.table(it);
         _builder.append(_table_6, "\t\t");
         _builder.append(" WHERE id = :id\")");
@@ -606,10 +635,10 @@ public class JavaTemplate {
     _builder.append("public static List<");
     String _modelName_5 = this._modelExtension.modelName(it);
     _builder.append(_modelName_5, "\t");
-    _builder.append("> selectAll(Handle handle) {");
+    _builder.append("> selectAll(Handle handle, String schema) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("return handle.createQuery(\"SELECT * FROM public.");
+    _builder.append("return handle.createQuery(\"SELECT * FROM \" + schema + \".");
     String _table_7 = this._modelExtension.table(it);
     _builder.append(_table_7, "\t\t");
     _builder.append("\")");
@@ -719,8 +748,10 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ICommand;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     {
       Command _command = it.getCommand();
@@ -741,14 +772,22 @@ public class JavaTemplate {
     _builder.append("public abstract class ");
     String _abstractActionName = this._actionExtension.abstractActionName(it);
     _builder.append(_abstractActionName, "");
-    _builder.append(" extends Action {");
+    _builder.append(" extends Action<");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "");
+    _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
     String _abstractActionName_1 = this._actionExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
-    _builder.append("(IDataContainer actionParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_2 = it.getData();
+    String _dataParamType_1 = this._dataExtension.dataParamType(_data_2);
+    _builder.append(_dataParamType_1, "\t");
+    _builder.append(" actionParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -812,13 +851,22 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import com.anfelisa.ace.DatabaseService;");
     _builder.newLine();
+    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractCommandName = this._commandExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName, "");
-    _builder.append(" extends Command {");
+    _builder.append(" extends Command<");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "");
+    _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {
@@ -840,7 +888,11 @@ public class JavaTemplate {
     _builder.append("public ");
     String _abstractCommandName_1 = this._commandExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName_1, "\t");
-    _builder.append("(IDataContainer commandParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_2 = it.getData();
+    String _dataParamType_1 = this._dataExtension.dataParamType(_data_2);
+    _builder.append(_dataParamType_1, "\t");
+    _builder.append(" commandParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -887,13 +939,8 @@ public class JavaTemplate {
           for(final Action action : _actions) {
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("final ");
-            String _actionNameWithPackage = this._actionExtension.actionNameWithPackage(action);
-            _builder.append(_actionNameWithPackage, "\t\t\t");
-            _builder.append(" action = new ");
-            String _actionNameWithPackage_1 = this._actionExtension.actionNameWithPackage(action);
-            _builder.append(_actionNameWithPackage_1, "\t\t\t");
-            _builder.append("(this.commandData, DatabaseService.getDatabaseHandle());");
+            String _newAction = this._actionExtension.newAction(action);
+            _builder.append(_newAction, "\t\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
@@ -965,20 +1012,31 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Event;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractEventName = this._eventExtension.abstractEventName(it);
     _builder.append(_abstractEventName, "");
-    _builder.append(" extends Event {");
+    _builder.append(" extends Event<");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "");
+    _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
     String _abstractEventName_1 = this._eventExtension.abstractEventName(it);
     _builder.append(_abstractEventName_1, "\t");
-    _builder.append("(IDataContainer eventParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_2 = it.getData();
+    String _dataParamType_1 = this._dataExtension.dataParamType(_data_2);
+    _builder.append(_dataParamType_1, "\t");
+    _builder.append(" eventParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -1008,13 +1066,16 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
+    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
     String _actionName = this._actionExtension.actionName(it);
@@ -1036,7 +1097,11 @@ public class JavaTemplate {
     _builder.append("public ");
     String _actionName_2 = this._actionExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
-    _builder.append("(IDataContainer actionParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "\t");
+    _builder.append(" actionParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(actionParam, databaseHandle);");
@@ -1092,13 +1157,16 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
+    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
     String _commandName = this._commandExtension.commandName(it);
@@ -1120,7 +1188,11 @@ public class JavaTemplate {
     _builder.append("public ");
     String _commandName_2 = this._commandExtension.commandName(it);
     _builder.append(_commandName_2, "\t");
-    _builder.append("(IDataContainer commandParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "\t");
+    _builder.append(" commandParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(commandParam, databaseHandle);");
@@ -1160,13 +1232,16 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
+    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
     String _eventName = this._eventExtension.eventName(it);
@@ -1188,7 +1263,11 @@ public class JavaTemplate {
     _builder.append("public ");
     String _eventName_2 = this._eventExtension.eventName(it);
     _builder.append(_eventName_2, "\t");
-    _builder.append("(IDataContainer eventParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(");
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "\t");
+    _builder.append(" eventParam, DatabaseHandle databaseHandle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(eventParam, databaseHandle);");
@@ -1257,8 +1336,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseService;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
     _builder.append("import com.codahale.metrics.annotation.Timed;");
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
@@ -1271,6 +1348,11 @@ public class JavaTemplate {
     String _actionName = this._actionExtension.actionName(it);
     _builder.append(_actionName, "");
     _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    Data _data = it.getData();
+    String _dataImport = this._dataExtension.dataImport(_data);
+    _builder.append(_dataImport, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@Path(\"/path\")");
@@ -1314,8 +1396,11 @@ public class JavaTemplate {
     _builder.append("(/* params here */) throws JsonProcessingException {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("IDataContainer actionParam = null;  // init actionParam");
-    _builder.newLine();
+    Data _data_1 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    _builder.append(_dataParamType, "\t\t");
+    _builder.append(" actionParam = null;  // init actionParam");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return new ");
     String _actionName_1 = this._actionExtension.actionName(it);
@@ -1397,16 +1482,30 @@ public class JavaTemplate {
     _builder.append("import com.anfelisa.ace.AceController;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import ");
-    String _name_1 = it.getName();
-    _builder.append(_name_1, "");
-    _builder.append(".views.*;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("import ");
-    String _name_2 = it.getName();
-    _builder.append(_name_2, "");
-    _builder.append(".resources.*;");
-    _builder.newLineIfNotEmpty();
+    {
+      EList<View> _views = it.getViews();
+      int _size = _views.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import ");
+        String _name_1 = it.getName();
+        _builder.append(_name_1, "");
+        _builder.append(".views.*;");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Action> _actions = it.getActions();
+      int _size_1 = _actions.size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        _builder.append("import ");
+        String _name_2 = it.getName();
+        _builder.append(_name_2, "");
+        _builder.append(".resources.*;");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("public class AppRegistration {");
     _builder.newLine();
@@ -1415,8 +1514,8 @@ public class JavaTemplate {
     _builder.append("public static void registerResources(Environment environment) {");
     _builder.newLine();
     {
-      EList<Action> _actions = it.getActions();
-      for(final Action action : _actions) {
+      EList<Action> _actions_1 = it.getActions();
+      for(final Action action : _actions_1) {
         _builder.append("\t\t");
         _builder.append("environment.jersey().register(new ");
         String _resourceName = this._actionExtension.resourceName(action);
@@ -1433,8 +1532,8 @@ public class JavaTemplate {
     _builder.append("public static void registerConsumers() {");
     _builder.newLine();
     {
-      EList<View> _views = it.getViews();
-      for(final View view : _views) {
+      EList<View> _views_1 = it.getViews();
+      for(final View view : _views_1) {
         _builder.append("\t\t");
         String _viewName = this._viewExtension.viewName(view);
         _builder.append(_viewName, "\t\t");

@@ -361,13 +361,22 @@ public interface AcePackage extends EPackage
   int COMMAND__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Data</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMAND__DATA = 1;
+
+  /**
    * The feature id for the '<em><b>Events On Outcome</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMAND__EVENTS_ON_OUTCOME = 1;
+  int COMMAND__EVENTS_ON_OUTCOME = 2;
 
   /**
    * The number of structural features of the '<em>Command</em>' class.
@@ -376,7 +385,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMAND_FEATURE_COUNT = 2;
+  int COMMAND_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.EventOnOutcomeImpl <em>Event On Outcome</em>}' class.
@@ -444,13 +453,22 @@ public interface AcePackage extends EPackage
   int EVENT__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Data</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT__DATA = 1;
+
+  /**
    * The feature id for the '<em><b>Listeners</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT__LISTENERS = 1;
+  int EVENT__LISTENERS = 2;
 
   /**
    * The number of structural features of the '<em>Event</em>' class.
@@ -459,7 +477,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVENT_FEATURE_COUNT = 2;
+  int EVENT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.ViewImpl <em>View</em>}' class.
@@ -839,6 +857,17 @@ public interface AcePackage extends EPackage
   EAttribute getCommand_Name();
 
   /**
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.Command#getData <em>Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Data</em>'.
+   * @see com.anfelisa.ace.Command#getData()
+   * @see #getCommand()
+   * @generated
+   */
+  EReference getCommand_Data();
+
+  /**
    * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Command#getEventsOnOutcome <em>Events On Outcome</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -912,6 +941,17 @@ public interface AcePackage extends EPackage
    * @generated
    */
   EAttribute getEvent_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.Event#getData <em>Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Data</em>'.
+   * @see com.anfelisa.ace.Event#getData()
+   * @see #getEvent()
+   * @generated
+   */
+  EReference getEvent_Data();
 
   /**
    * Returns the meta object for the reference list '{@link com.anfelisa.ace.Event#getListeners <em>Listeners</em>}'.
@@ -1248,6 +1288,14 @@ public interface AcePackage extends EPackage
     EAttribute COMMAND__NAME = eINSTANCE.getCommand_Name();
 
     /**
+     * The meta object literal for the '<em><b>Data</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMMAND__DATA = eINSTANCE.getCommand_Data();
+
+    /**
      * The meta object literal for the '<em><b>Events On Outcome</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1306,6 +1354,14 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EAttribute EVENT__NAME = eINSTANCE.getEvent_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Data</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EVENT__DATA = eINSTANCE.getEvent_Data();
 
     /**
      * The meta object literal for the '<em><b>Listeners</b></em>' reference list feature.

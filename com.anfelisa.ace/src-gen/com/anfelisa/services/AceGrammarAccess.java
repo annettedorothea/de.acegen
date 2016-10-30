@@ -427,18 +427,23 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cEventsOnOutcomeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cEventsOnOutcomeEventOnOutcomeParserRuleCall_1_1_0 = (RuleCall)cEventsOnOutcomeAssignment_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cUsesKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cDataAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cDataDataCrossReference_1_1_0 = (CrossReference)cDataAssignment_1_1.eContents().get(0);
+		private final RuleCall cDataDataQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cDataDataCrossReference_1_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cEventsOnOutcomeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cEventsOnOutcomeEventOnOutcomeParserRuleCall_2_1_0 = (RuleCall)cEventsOnOutcomeAssignment_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//Command:
-		//	name=ID ('{'
+		//	name=ID ('uses' data=[Data|QualifiedName])? ('{'
 		//	eventsOnOutcome+=EventOnOutcome*
 		//	'}')*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('{' eventsOnOutcome+=EventOnOutcome* '}')*
+		//name=ID ('uses' data=[Data|QualifiedName])? ('{' eventsOnOutcome+=EventOnOutcome* '}')*
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -447,20 +452,35 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('{' eventsOnOutcome+=EventOnOutcome* '}')*
+		//('uses' data=[Data|QualifiedName])?
 		public Group getGroup_1() { return cGroup_1; }
 		
+		//'uses'
+		public Keyword getUsesKeyword_1_0() { return cUsesKeyword_1_0; }
+		
+		//data=[Data|QualifiedName]
+		public Assignment getDataAssignment_1_1() { return cDataAssignment_1_1; }
+		
+		//[Data|QualifiedName]
+		public CrossReference getDataDataCrossReference_1_1_0() { return cDataDataCrossReference_1_1_0; }
+		
+		//QualifiedName
+		public RuleCall getDataDataQualifiedNameParserRuleCall_1_1_0_1() { return cDataDataQualifiedNameParserRuleCall_1_1_0_1; }
+		
+		//('{' eventsOnOutcome+=EventOnOutcome* '}')*
+		public Group getGroup_2() { return cGroup_2; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_0() { return cLeftCurlyBracketKeyword_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 		
 		//eventsOnOutcome+=EventOnOutcome*
-		public Assignment getEventsOnOutcomeAssignment_1_1() { return cEventsOnOutcomeAssignment_1_1; }
+		public Assignment getEventsOnOutcomeAssignment_2_1() { return cEventsOnOutcomeAssignment_2_1; }
 		
 		//EventOnOutcome
-		public RuleCall getEventsOnOutcomeEventOnOutcomeParserRuleCall_1_1_0() { return cEventsOnOutcomeEventOnOutcomeParserRuleCall_1_1_0; }
+		public RuleCall getEventsOnOutcomeEventOnOutcomeParserRuleCall_2_1_0() { return cEventsOnOutcomeEventOnOutcomeParserRuleCall_2_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_2() { return cRightCurlyBracketKeyword_1_2; }
+		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 	public class EventOnOutcomeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.EventOnOutcome");
@@ -549,18 +569,23 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cListenedToByKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cListenersAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final CrossReference cListenersViewFunctionCrossReference_1_2_0 = (CrossReference)cListenersAssignment_1_2.eContents().get(0);
-		private final RuleCall cListenersViewFunctionQualifiedNameParserRuleCall_1_2_0_1 = (RuleCall)cListenersViewFunctionCrossReference_1_2_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Keyword cUsesKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cDataAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cDataDataCrossReference_1_1_0 = (CrossReference)cDataAssignment_1_1.eContents().get(0);
+		private final RuleCall cDataDataQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cDataDataCrossReference_1_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cListenedToByKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cListenersAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final CrossReference cListenersViewFunctionCrossReference_2_2_0 = (CrossReference)cListenersAssignment_2_2.eContents().get(0);
+		private final RuleCall cListenersViewFunctionQualifiedNameParserRuleCall_2_2_0_1 = (RuleCall)cListenersViewFunctionCrossReference_2_2_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
 		//Event:
-		//	name=ID ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?;
+		//	name=ID ('uses' data=[Data|QualifiedName])? ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?
+		//name=ID ('uses' data=[Data|QualifiedName])? ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -569,26 +594,41 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?
+		//('uses' data=[Data|QualifiedName])?
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//'listenedToBy'
-		public Keyword getListenedToByKeyword_1_0() { return cListenedToByKeyword_1_0; }
+		//'uses'
+		public Keyword getUsesKeyword_1_0() { return cUsesKeyword_1_0; }
 		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1_1() { return cLeftParenthesisKeyword_1_1; }
+		//data=[Data|QualifiedName]
+		public Assignment getDataAssignment_1_1() { return cDataAssignment_1_1; }
 		
-		//listeners+=[ViewFunction|QualifiedName]*
-		public Assignment getListenersAssignment_1_2() { return cListenersAssignment_1_2; }
-		
-		//[ViewFunction|QualifiedName]
-		public CrossReference getListenersViewFunctionCrossReference_1_2_0() { return cListenersViewFunctionCrossReference_1_2_0; }
+		//[Data|QualifiedName]
+		public CrossReference getDataDataCrossReference_1_1_0() { return cDataDataCrossReference_1_1_0; }
 		
 		//QualifiedName
-		public RuleCall getListenersViewFunctionQualifiedNameParserRuleCall_1_2_0_1() { return cListenersViewFunctionQualifiedNameParserRuleCall_1_2_0_1; }
+		public RuleCall getDataDataQualifiedNameParserRuleCall_1_1_0_1() { return cDataDataQualifiedNameParserRuleCall_1_1_0_1; }
+		
+		//('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'listenedToBy'
+		public Keyword getListenedToByKeyword_2_0() { return cListenedToByKeyword_2_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_1() { return cLeftParenthesisKeyword_2_1; }
+		
+		//listeners+=[ViewFunction|QualifiedName]*
+		public Assignment getListenersAssignment_2_2() { return cListenersAssignment_2_2; }
+		
+		//[ViewFunction|QualifiedName]
+		public CrossReference getListenersViewFunctionCrossReference_2_2_0() { return cListenersViewFunctionCrossReference_2_2_0; }
+		
+		//QualifiedName
+		public RuleCall getListenersViewFunctionQualifiedNameParserRuleCall_2_2_0_1() { return cListenersViewFunctionQualifiedNameParserRuleCall_2_2_0_1; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_1_3() { return cRightParenthesisKeyword_1_3; }
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 	}
 	public class ViewElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.View");
@@ -919,7 +959,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Command:
-	//	name=ID ('{'
+	//	name=ID ('uses' data=[Data|QualifiedName])? ('{'
 	//	eventsOnOutcome+=EventOnOutcome*
 	//	'}')*;
 	public CommandElements getCommandAccess() {
@@ -942,7 +982,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Event:
-	//	name=ID ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?;
+	//	name=ID ('uses' data=[Data|QualifiedName])? ('listenedToBy' '(' listeners+=[ViewFunction|QualifiedName]* ')')?;
 	public EventElements getEventAccess() {
 		return pEvent;
 	}

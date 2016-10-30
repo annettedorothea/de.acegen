@@ -102,7 +102,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Command returns Command
 	 *
 	 * Constraint:
-	 *     (name=ID eventsOnOutcome+=EventOnOutcome*)
+	 *     (name=ID data=[Data|QualifiedName]? eventsOnOutcome+=EventOnOutcome*)
 	 */
 	protected void sequence_Command(ISerializationContext context, Command semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -138,7 +138,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Event returns Event
 	 *
 	 * Constraint:
-	 *     (name=ID listeners+=[ViewFunction|QualifiedName]*)
+	 *     (name=ID data=[Data|QualifiedName]? listeners+=[ViewFunction|QualifiedName]*)
 	 */
 	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

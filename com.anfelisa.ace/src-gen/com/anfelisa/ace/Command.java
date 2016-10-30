@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.Command#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Command#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.Command#getEventsOnOutcome <em>Events On Outcome</em>}</li>
  * </ul>
  *
@@ -51,6 +52,32 @@ public interface Command extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Data</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Data</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Data</em>' reference.
+   * @see #setData(Data)
+   * @see com.anfelisa.ace.AcePackage#getCommand_Data()
+   * @model
+   * @generated
+   */
+  Data getData();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.Command#getData <em>Data</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Data</em>' reference.
+   * @see #getData()
+   * @generated
+   */
+  void setData(Data value);
 
   /**
    * Returns the value of the '<em><b>Events On Outcome</b></em>' containment reference list.
