@@ -6,7 +6,9 @@ package com.anfelisa.ace.impl;
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
+import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 
@@ -36,6 +38,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getModels <em>Models</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getCommands <em>Commands</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ProjectImpl#getEvents <em>Events</em>}</li>
@@ -85,6 +89,26 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * @ordered
    */
   protected String target = TARGET_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getModels() <em>Models</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getModels()
+   * @generated
+   * @ordered
+   */
+  protected EList<Model> models;
+
+  /**
+   * The cached value of the '{@link #getData() <em>Data</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getData()
+   * @generated
+   * @ordered
+   */
+  protected EList<Data> data;
 
   /**
    * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
@@ -198,6 +222,34 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Model> getModels()
+  {
+    if (models == null)
+    {
+      models = new EObjectContainmentEList<Model>(Model.class, this, AcePackage.PROJECT__MODELS);
+    }
+    return models;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Data> getData()
+  {
+    if (data == null)
+    {
+      data = new EObjectContainmentEList<Data>(Data.class, this, AcePackage.PROJECT__DATA);
+    }
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Action> getActions()
   {
     if (actions == null)
@@ -259,6 +311,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
+      case AcePackage.PROJECT__MODELS:
+        return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
+      case AcePackage.PROJECT__DATA:
+        return ((InternalEList<?>)getData()).basicRemove(otherEnd, msgs);
       case AcePackage.PROJECT__ACTIONS:
         return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
       case AcePackage.PROJECT__COMMANDS:
@@ -285,6 +341,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return getName();
       case AcePackage.PROJECT__TARGET:
         return getTarget();
+      case AcePackage.PROJECT__MODELS:
+        return getModels();
+      case AcePackage.PROJECT__DATA:
+        return getData();
       case AcePackage.PROJECT__ACTIONS:
         return getActions();
       case AcePackage.PROJECT__COMMANDS:
@@ -313,6 +373,14 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return;
       case AcePackage.PROJECT__TARGET:
         setTarget((String)newValue);
+        return;
+      case AcePackage.PROJECT__MODELS:
+        getModels().clear();
+        getModels().addAll((Collection<? extends Model>)newValue);
+        return;
+      case AcePackage.PROJECT__DATA:
+        getData().clear();
+        getData().addAll((Collection<? extends Data>)newValue);
         return;
       case AcePackage.PROJECT__ACTIONS:
         getActions().clear();
@@ -350,6 +418,12 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       case AcePackage.PROJECT__TARGET:
         setTarget(TARGET_EDEFAULT);
         return;
+      case AcePackage.PROJECT__MODELS:
+        getModels().clear();
+        return;
+      case AcePackage.PROJECT__DATA:
+        getData().clear();
+        return;
       case AcePackage.PROJECT__ACTIONS:
         getActions().clear();
         return;
@@ -380,6 +454,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AcePackage.PROJECT__TARGET:
         return TARGET_EDEFAULT == null ? target != null : !TARGET_EDEFAULT.equals(target);
+      case AcePackage.PROJECT__MODELS:
+        return models != null && !models.isEmpty();
+      case AcePackage.PROJECT__DATA:
+        return data != null && !data.isEmpty();
       case AcePackage.PROJECT__ACTIONS:
         return actions != null && !actions.isEmpty();
       case AcePackage.PROJECT__COMMANDS:

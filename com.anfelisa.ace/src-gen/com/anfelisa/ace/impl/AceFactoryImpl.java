@@ -66,6 +66,9 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
     switch (eClass.getClassifierID())
     {
       case AcePackage.PROJECT: return createProject();
+      case AcePackage.MODEL: return createModel();
+      case AcePackage.DATA: return createData();
+      case AcePackage.ATTRIBUTE: return createAttribute();
       case AcePackage.ACTION: return createAction();
       case AcePackage.COMMAND: return createCommand();
       case AcePackage.EVENT_ON_OUTCOME: return createEventOnOutcome();
@@ -86,6 +89,39 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
   {
     ProjectImpl project = new ProjectImpl();
     return project;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Model createModel()
+  {
+    ModelImpl model = new ModelImpl();
+    return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Data createData()
+  {
+    DataImpl data = new DataImpl();
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attribute createAttribute()
+  {
+    AttributeImpl attribute = new AttributeImpl();
+    return attribute;
   }
 
   /**

@@ -3,18 +3,20 @@
  */
 package com.anfelisa.generator
 
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.AbstractGenerator
-import org.eclipse.xtext.generator.IFileSystemAccess2
-import org.eclipse.xtext.generator.IGeneratorContext
 import com.anfelisa.ace.Project
-import javax.inject.Inject
-import org.eclipse.xtext.generator.IFileSystemAccess
 import com.anfelisa.extensions.ActionExtension
 import com.anfelisa.extensions.CommandExtension
+import com.anfelisa.extensions.DataExtension
 import com.anfelisa.extensions.EventExtension
-import com.anfelisa.extensions.ViewExtension
+import com.anfelisa.extensions.ModelExtension
 import com.anfelisa.extensions.ProjectExtension
+import com.anfelisa.extensions.ViewExtension
+import javax.inject.Inject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.AbstractGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IGeneratorContext
 
 /**
  * Generates code from your model files on save.
@@ -43,6 +45,12 @@ class AceGenerator extends AbstractGenerator {
 
 	@Inject
 	extension ProjectExtension
+
+	@Inject
+	extension ModelExtension
+
+	@Inject
+	extension DataExtension
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource != null && resource.contents != null && resource.contents.size > 0) {
@@ -90,6 +98,27 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile('ace/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateUUID());
 			} else if (project.target == 'JAVA') {
+				for (model : project.models) {
+					fsa.generateFile(project.packageFolder + '/models/' + model.modelName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateModel(model, project));
+					fsa.generateFile(project.packageFolder + '/models/' + model.modelClassName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateModelClass(model, project));
+					if (model.persistent) {
+						fsa.generateFile(project.packageFolder + '/models/' + model.modelDao + '.java',
+							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+							javaTemplate.generateDao(model, project));
+						fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
+							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+							javaTemplate.generateMapper(model, project));
+					}
+				}
+				for (data : project.data) {
+					fsa.generateFile(project.packageFolder + '/data/' + data.dataName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateData(data, project));
+				}
 				for (action : project.actions) {
 					fsa.generateFile(project.packageFolder + '/actions/' + action.abstractActionName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,

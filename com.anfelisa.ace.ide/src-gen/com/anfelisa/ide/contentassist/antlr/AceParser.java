@@ -37,13 +37,21 @@ public class AceParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getProjectAccess().getTargetAlternatives_2_0(), "rule__Project__TargetAlternatives_2_0");
 					put(grammarAccess.getFunctionTypeAccess().getAlternatives(), "rule__FunctionType__Alternatives");
+					put(grammarAccess.getModelTypeAccess().getAlternatives(), "rule__ModelType__Alternatives");
+					put(grammarAccess.getConstraintAccess().getAlternatives(), "rule__Constraint__Alternatives");
 					put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
 					put(grammarAccess.getProjectAccess().getGroup_3(), "rule__Project__Group_3__0");
 					put(grammarAccess.getProjectAccess().getGroup_4(), "rule__Project__Group_4__0");
 					put(grammarAccess.getProjectAccess().getGroup_5(), "rule__Project__Group_5__0");
 					put(grammarAccess.getProjectAccess().getGroup_6(), "rule__Project__Group_6__0");
+					put(grammarAccess.getProjectAccess().getGroup_7(), "rule__Project__Group_7__0");
+					put(grammarAccess.getProjectAccess().getGroup_8(), "rule__Project__Group_8__0");
+					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
+					put(grammarAccess.getDataAccess().getGroup(), "rule__Data__Group__0");
+					put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_2(), "rule__Action__Group_2__0");
+					put(grammarAccess.getActionAccess().getGroup_3(), "rule__Action__Group_3__0");
 					put(grammarAccess.getCommandAccess().getGroup(), "rule__Command__Group__0");
 					put(grammarAccess.getCommandAccess().getGroup_1(), "rule__Command__Group_1__0");
 					put(grammarAccess.getEventOnOutcomeAccess().getGroup(), "rule__EventOnOutcome__Group__0");
@@ -53,17 +61,31 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventAccess().getGroup_1(), "rule__Event__Group_1__0");
 					put(grammarAccess.getViewAccess().getGroup(), "rule__View__Group__0");
 					put(grammarAccess.getViewAccess().getGroup_1(), "rule__View__Group_1__0");
+					put(grammarAccess.getViewFunctionAccess().getGroup(), "rule__ViewFunction__Group__0");
+					put(grammarAccess.getViewFunctionAccess().getGroup_1(), "rule__ViewFunction__Group_1__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 					put(grammarAccess.getProjectAccess().getNameAssignment_0(), "rule__Project__NameAssignment_0");
 					put(grammarAccess.getProjectAccess().getTargetAssignment_2(), "rule__Project__TargetAssignment_2");
-					put(grammarAccess.getProjectAccess().getActionsAssignment_3_2(), "rule__Project__ActionsAssignment_3_2");
-					put(grammarAccess.getProjectAccess().getCommandsAssignment_4_2(), "rule__Project__CommandsAssignment_4_2");
-					put(grammarAccess.getProjectAccess().getEventsAssignment_5_2(), "rule__Project__EventsAssignment_5_2");
-					put(grammarAccess.getProjectAccess().getViewsAssignment_6_2(), "rule__Project__ViewsAssignment_6_2");
+					put(grammarAccess.getProjectAccess().getModelsAssignment_3_2(), "rule__Project__ModelsAssignment_3_2");
+					put(grammarAccess.getProjectAccess().getDataAssignment_4_2(), "rule__Project__DataAssignment_4_2");
+					put(grammarAccess.getProjectAccess().getActionsAssignment_5_2(), "rule__Project__ActionsAssignment_5_2");
+					put(grammarAccess.getProjectAccess().getCommandsAssignment_6_2(), "rule__Project__CommandsAssignment_6_2");
+					put(grammarAccess.getProjectAccess().getEventsAssignment_7_2(), "rule__Project__EventsAssignment_7_2");
+					put(grammarAccess.getProjectAccess().getViewsAssignment_8_2(), "rule__Project__ViewsAssignment_8_2");
+					put(grammarAccess.getModelAccess().getPersistentAssignment_0(), "rule__Model__PersistentAssignment_0");
+					put(grammarAccess.getModelAccess().getNameAssignment_1(), "rule__Model__NameAssignment_1");
+					put(grammarAccess.getModelAccess().getAttributesAssignment_3(), "rule__Model__AttributesAssignment_3");
+					put(grammarAccess.getDataAccess().getNameAssignment_0(), "rule__Data__NameAssignment_0");
+					put(grammarAccess.getDataAccess().getModelsAssignment_3(), "rule__Data__ModelsAssignment_3");
+					put(grammarAccess.getAttributeAccess().getUniqueAssignment_0(), "rule__Attribute__UniqueAssignment_0");
+					put(grammarAccess.getAttributeAccess().getConstraintAssignment_1(), "rule__Attribute__ConstraintAssignment_1");
+					put(grammarAccess.getAttributeAccess().getTypeAssignment_2(), "rule__Attribute__TypeAssignment_2");
+					put(grammarAccess.getAttributeAccess().getNameAssignment_3(), "rule__Attribute__NameAssignment_3");
 					put(grammarAccess.getActionAccess().getTypeAssignment_0(), "rule__Action__TypeAssignment_0");
 					put(grammarAccess.getActionAccess().getNameAssignment_1(), "rule__Action__NameAssignment_1");
-					put(grammarAccess.getActionAccess().getCommandAssignment_2_1(), "rule__Action__CommandAssignment_2_1");
+					put(grammarAccess.getActionAccess().getDataAssignment_2_1(), "rule__Action__DataAssignment_2_1");
+					put(grammarAccess.getActionAccess().getCommandAssignment_3_1(), "rule__Action__CommandAssignment_3_1");
 					put(grammarAccess.getCommandAccess().getNameAssignment_0(), "rule__Command__NameAssignment_0");
 					put(grammarAccess.getCommandAccess().getEventsOnOutcomeAssignment_1_1(), "rule__Command__EventsOnOutcomeAssignment_1_1");
 					put(grammarAccess.getEventOnOutcomeAccess().getOutcomeAssignment_1(), "rule__EventOnOutcome__OutcomeAssignment_1");
@@ -73,7 +95,8 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventAccess().getListenersAssignment_1_2(), "rule__Event__ListenersAssignment_1_2");
 					put(grammarAccess.getViewAccess().getNameAssignment_0(), "rule__View__NameAssignment_0");
 					put(grammarAccess.getViewAccess().getRenderFunctionsAssignment_1_1(), "rule__View__RenderFunctionsAssignment_1_1");
-					put(grammarAccess.getViewFunctionAccess().getNameAssignment(), "rule__ViewFunction__NameAssignment");
+					put(grammarAccess.getViewFunctionAccess().getNameAssignment_0(), "rule__ViewFunction__NameAssignment_0");
+					put(grammarAccess.getViewFunctionAccess().getModelAssignment_1_1(), "rule__ViewFunction__ModelAssignment_1_1");
 				}
 			};
 		}

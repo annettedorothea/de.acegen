@@ -4,32 +4,37 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Model;
-import com.anfelisa.ace.ViewFunction;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>View Function</b></em>'.
+ * An implementation of the model object '<em><b>Data</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getName <em>Name</em>}</li>
- *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getModel <em>Model</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.DataImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.DataImpl#getModels <em>Models</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements ViewFunction
+public class DataImpl extends MinimalEObjectImpl.Container implements Data
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -52,21 +57,21 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getModel() <em>Model</em>}' reference.
+   * The cached value of the '{@link #getModels() <em>Models</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModel()
+   * @see #getModels()
    * @generated
    * @ordered
    */
-  protected Model model;
+  protected EList<Model> models;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ViewFunctionImpl()
+  protected DataImpl()
   {
     super();
   }
@@ -79,7 +84,7 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   @Override
   protected EClass eStaticClass()
   {
-    return AcePackage.Literals.VIEW_FUNCTION;
+    return AcePackage.Literals.DATA;
   }
 
   /**
@@ -102,7 +107,7 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.VIEW_FUNCTION__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.DATA__NAME, oldName, name));
   }
 
   /**
@@ -110,42 +115,13 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
    * <!-- end-user-doc -->
    * @generated
    */
-  public Model getModel()
+  public EList<Model> getModels()
   {
-    if (model != null && model.eIsProxy())
+    if (models == null)
     {
-      InternalEObject oldModel = (InternalEObject)model;
-      model = (Model)eResolveProxy(oldModel);
-      if (model != oldModel)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.VIEW_FUNCTION__MODEL, oldModel, model));
-      }
+      models = new EObjectResolvingEList<Model>(Model.class, this, AcePackage.DATA__MODELS);
     }
-    return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Model basicGetModel()
-  {
-    return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setModel(Model newModel)
-  {
-    Model oldModel = model;
-    model = newModel;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.VIEW_FUNCTION__MODEL, oldModel, model));
+    return models;
   }
 
   /**
@@ -158,11 +134,10 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   {
     switch (featureID)
     {
-      case AcePackage.VIEW_FUNCTION__NAME:
+      case AcePackage.DATA__NAME:
         return getName();
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        if (resolve) return getModel();
-        return basicGetModel();
+      case AcePackage.DATA__MODELS:
+        return getModels();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -172,16 +147,18 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case AcePackage.VIEW_FUNCTION__NAME:
+      case AcePackage.DATA__NAME:
         setName((String)newValue);
         return;
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        setModel((Model)newValue);
+      case AcePackage.DATA__MODELS:
+        getModels().clear();
+        getModels().addAll((Collection<? extends Model>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -197,11 +174,11 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   {
     switch (featureID)
     {
-      case AcePackage.VIEW_FUNCTION__NAME:
+      case AcePackage.DATA__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        setModel((Model)null);
+      case AcePackage.DATA__MODELS:
+        getModels().clear();
         return;
     }
     super.eUnset(featureID);
@@ -217,10 +194,10 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   {
     switch (featureID)
     {
-      case AcePackage.VIEW_FUNCTION__NAME:
+      case AcePackage.DATA__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        return model != null;
+      case AcePackage.DATA__MODELS:
+        return models != null && !models.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -242,4 +219,4 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
     return result.toString();
   }
 
-} //ViewFunctionImpl
+} //DataImpl

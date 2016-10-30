@@ -10,6 +10,11 @@ import com.anfelisa.extensions.CommandExtension
 import com.anfelisa.extensions.EventExtension
 import com.anfelisa.extensions.ViewExtension
 import javax.inject.Inject
+import com.anfelisa.ace.Model
+import com.anfelisa.extensions.ModelExtension
+import com.anfelisa.ace.Data
+import com.anfelisa.extensions.DataExtension
+import com.anfelisa.extensions.AttributeExtension
 
 class JavaTemplate {
 	
@@ -24,6 +29,188 @@ class JavaTemplate {
 	
 	@Inject
 	extension ViewExtension
+	
+	@Inject
+	extension ModelExtension
+	
+	@Inject
+	extension DataExtension
+	
+	@Inject
+	extension AttributeExtension
+	
+	def generateModel(Model it, Project project) '''
+		package «project.name».models;
+		
+		import org.joda.time.DateTime;
+
+		@SuppressWarnings("unused")
+		public interface «modelName» {
+		
+			«FOR attribute : attributes»
+				«attribute.interfaceGetter»
+			«ENDFOR»
+
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateModelClass(Model it, Project project) '''
+		package «project.name».models;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		import org.joda.time.DateTime;
+
+		@SuppressWarnings("unused")
+		public class «modelClassName» implements «modelName» {
+		
+			«FOR attribute : attributes»
+				«attribute.declaration»
+				
+			«ENDFOR»
+		
+			public «modelClassName»(
+				«FOR attribute : attributes SEPARATOR ','»
+					«attribute.param»
+				«ENDFOR»
+			) {
+				«FOR attribute : attributes»
+					«attribute.assign»
+				«ENDFOR»
+			}
+		
+			«FOR attribute : attributes»
+				«attribute.getter»
+				«attribute.setter»
+				
+			«ENDFOR»
+		
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateData(Data it, Project project) '''
+		package «project.name».data;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		import org.joda.time.DateTime;
+		
+		«FOR model : models»
+			«model.importModel»
+		«ENDFOR»
+		
+		@SuppressWarnings("unused")
+		public class «dataName» implements «FOR model : models SEPARATOR ', '»«model.modelName»«ENDFOR» {
+			
+			«FOR attribute : allAttributes»
+				«attribute.declaration»
+				
+			«ENDFOR»
+		
+			public «dataName»(
+				«FOR attribute : allAttributes SEPARATOR ','»
+					«attribute.param»
+				«ENDFOR»
+			) {
+				«FOR attribute : allAttributes»
+					«attribute.assign»
+				«ENDFOR»
+			}
+		
+			«FOR attribute : allAttributes»
+				«attribute.getter»
+				«attribute.setter»
+				
+			«ENDFOR»
+		
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateDao(Model it, Project project) '''
+		package «project.name».models;
+		
+		import org.skife.jdbi.v2.Handle;
+		import org.skife.jdbi.v2.Update;
+		
+		import java.util.List;
+		
+		public class «modelDao» {
+			
+			public static void create(Handle handle) {
+				handle.execute("CREATE TABLE IF NOT EXISTS public.«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
+			}
+			
+			public static void insert(Handle handle, «modelName» «modelParam») {
+				Update statement = handle.createStatement("INSERT INTO public.«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+				«FOR attribute : attributes»
+					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+				«ENDFOR»
+				statement.execute();
+			}
+			
+			public static void update(Handle handle, «modelName» «modelParam») {
+				Update statement = handle.createStatement("UPDATE public.«table» SET «FOR attribute : attributes SEPARATOR ', '»«attribute.name» = :«attribute.name»«ENDFOR»");
+				«FOR attribute : attributes»
+					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+				«ENDFOR»
+				statement.execute();
+			}
+			
+			«IF findSerialAttribute != null»
+				public static void deleteById(Handle handle, «modelName» «modelParam») {
+					Update statement = handle.createStatement("DELETE FROM public.«table» WHERE id = :id");
+					statement.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»);
+					statement.execute();
+				}
+
+				public static «modelName» selectById(Handle handle, «modelName» «modelParam») {
+					return handle.createQuery("SELECT * FROM public.«table» WHERE id = :id")
+						.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»)
+						.map(new «modelMapper»())
+						.first();
+				}
+			«ENDIF»
+			
+			public static List<«modelName»> selectAll(Handle handle) {
+				return handle.createQuery("SELECT * FROM public.«table»")
+					.map(new «modelMapper»())
+					.list();
+			}
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateMapper(Model it, Project project) '''
+		package «project.name».models;
+		
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		
+		import org.skife.jdbi.v2.StatementContext;
+		import org.skife.jdbi.v2.tweak.ResultSetMapper;
+		
+		public class «modelMapper» implements ResultSetMapper<«modelName»> {
+			
+			public «modelName» map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+				return new «modelClassName»(
+					«FOR attribute : attributes SEPARATOR ','»
+						«attribute.mapperInit»
+					«ENDFOR»
+				);
+			}
+		}
+		
+		/*       S.D.G.       */
+	'''
 	
 	def generateAbstractActionFile(Action it, Project project) '''
 		package «project.name».actions;
@@ -64,7 +251,6 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.DatabaseService;
 		import com.anfelisa.ace.IDataContainer;
 
 		public abstract class «abstractCommandName» extends Command {
@@ -287,7 +473,7 @@ class JavaTemplate {
 		
 		import «name».views.*;
 		import «name».resources.*;
-		
+
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment) {

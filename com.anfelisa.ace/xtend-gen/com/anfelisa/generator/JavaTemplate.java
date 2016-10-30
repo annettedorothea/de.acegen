@@ -1,17 +1,24 @@
 package com.anfelisa.generator;
 
 import com.anfelisa.ace.Action;
+import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
+import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.extensions.ActionExtension;
+import com.anfelisa.extensions.AttributeExtension;
 import com.anfelisa.extensions.CommandExtension;
+import com.anfelisa.extensions.DataExtension;
 import com.anfelisa.extensions.EventExtension;
+import com.anfelisa.extensions.ModelExtension;
 import com.anfelisa.extensions.ViewExtension;
 import com.google.common.base.Objects;
+import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -34,6 +41,667 @@ public class JavaTemplate {
   @Inject
   @Extension
   private ViewExtension _viewExtension;
+  
+  @Inject
+  @Extension
+  private ModelExtension _modelExtension;
+  
+  @Inject
+  @Extension
+  private DataExtension _dataExtension;
+  
+  @Inject
+  @Extension
+  private AttributeExtension _attributeExtension;
+  
+  public CharSequence generateModel(final Model it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".models;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public interface ");
+    String _modelName = this._modelExtension.modelName(it);
+    _builder.append(_modelName, "");
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      for(final Attribute attribute : _attributes) {
+        _builder.append("\t");
+        String _interfaceGetter = this._attributeExtension.interfaceGetter(attribute);
+        _builder.append(_interfaceGetter, "\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateModelClass(final Model it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".models;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
+    _builder.newLine();
+    _builder.append("import javax.validation.constraints.NotNull;");
+    _builder.newLine();
+    _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public class ");
+    String _modelClassName = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName, "");
+    _builder.append(" implements ");
+    String _modelName = this._modelExtension.modelName(it);
+    _builder.append(_modelName, "");
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      for(final Attribute attribute : _attributes) {
+        _builder.append("\t");
+        String _declaration = this._attributeExtension.declaration(attribute);
+        _builder.append(_declaration, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _modelClassName_1 = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName_1, "\t");
+    _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _attributes_1 = it.getAttributes();
+      boolean _hasElements = false;
+      for(final Attribute attribute_1 : _attributes_1) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(",", "\t\t");
+        }
+        _builder.append("\t\t");
+        String _param = this._attributeExtension.param(attribute_1);
+        _builder.append(_param, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append(") {");
+    _builder.newLine();
+    {
+      EList<Attribute> _attributes_2 = it.getAttributes();
+      for(final Attribute attribute_2 : _attributes_2) {
+        _builder.append("\t\t");
+        String _assign = this._attributeExtension.assign(attribute_2);
+        _builder.append(_assign, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<Attribute> _attributes_3 = it.getAttributes();
+      for(final Attribute attribute_3 : _attributes_3) {
+        _builder.append("\t");
+        String _ter = this._attributeExtension.getter(attribute_3);
+        _builder.append(_ter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _setter = this._attributeExtension.setter(attribute_3);
+        _builder.append(_setter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateData(final Data it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".data;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
+    _builder.newLine();
+    _builder.append("import javax.validation.constraints.NotNull;");
+    _builder.newLine();
+    _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<Model> _models = it.getModels();
+      for(final Model model : _models) {
+        String _importModel = this._modelExtension.importModel(model);
+        _builder.append(_importModel, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public class ");
+    String _dataName = this._dataExtension.dataName(it);
+    _builder.append(_dataName, "");
+    _builder.append(" implements ");
+    {
+      EList<Model> _models_1 = it.getModels();
+      boolean _hasElements = false;
+      for(final Model model_1 : _models_1) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _modelName = this._modelExtension.modelName(model_1);
+        _builder.append(_modelName, "");
+      }
+    }
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      List<Attribute> _allAttributes = this._dataExtension.allAttributes(it);
+      for(final Attribute attribute : _allAttributes) {
+        _builder.append("\t");
+        String _declaration = this._attributeExtension.declaration(attribute);
+        _builder.append(_declaration, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _dataName_1 = this._dataExtension.dataName(it);
+    _builder.append(_dataName_1, "\t");
+    _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    {
+      List<Attribute> _allAttributes_1 = this._dataExtension.allAttributes(it);
+      boolean _hasElements_1 = false;
+      for(final Attribute attribute_1 : _allAttributes_1) {
+        if (!_hasElements_1) {
+          _hasElements_1 = true;
+        } else {
+          _builder.appendImmediate(",", "\t\t");
+        }
+        _builder.append("\t\t");
+        String _param = this._attributeExtension.param(attribute_1);
+        _builder.append(_param, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append(") {");
+    _builder.newLine();
+    {
+      List<Attribute> _allAttributes_2 = this._dataExtension.allAttributes(it);
+      for(final Attribute attribute_2 : _allAttributes_2) {
+        _builder.append("\t\t");
+        String _assign = this._attributeExtension.assign(attribute_2);
+        _builder.append(_assign, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      List<Attribute> _allAttributes_3 = this._dataExtension.allAttributes(it);
+      for(final Attribute attribute_3 : _allAttributes_3) {
+        _builder.append("\t");
+        String _ter = this._attributeExtension.getter(attribute_3);
+        _builder.append(_ter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _setter = this._attributeExtension.setter(attribute_3);
+        _builder.append(_setter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateDao(final Model it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".models;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.Handle;");
+    _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.Update;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import java.util.List;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("public class ");
+    String _modelDao = this._modelExtension.modelDao(it);
+    _builder.append(_modelDao, "");
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static void create(Handle handle) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("handle.execute(\"CREATE TABLE IF NOT EXISTS public.");
+    String _table = this._modelExtension.table(it);
+    _builder.append(_table, "\t\t");
+    _builder.append(" (");
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      boolean _hasElements = false;
+      for(final Attribute attribute : _attributes) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "\t\t");
+        }
+        String _tableDefinition = this._attributeExtension.tableDefinition(attribute);
+        _builder.append(_tableDefinition, "\t\t");
+      }
+    }
+    {
+      EList<Attribute> _attributes_1 = it.getAttributes();
+      for(final Attribute attribute_1 : _attributes_1) {
+        String _table_1 = this._modelExtension.table(it);
+        String _primaryKey = this._attributeExtension.primaryKey(attribute_1, _table_1);
+        _builder.append(_primaryKey, "\t\t");
+      }
+    }
+    {
+      EList<Attribute> _attributes_2 = it.getAttributes();
+      for(final Attribute attribute_2 : _attributes_2) {
+        String _table_2 = this._modelExtension.table(it);
+        String _uniqueConstraint = this._attributeExtension.uniqueConstraint(attribute_2, _table_2);
+        _builder.append(_uniqueConstraint, "\t\t");
+      }
+    }
+    _builder.append(")\");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static void insert(Handle handle, ");
+    String _modelName = this._modelExtension.modelName(it);
+    _builder.append(_modelName, "\t");
+    _builder.append(" ");
+    String _modelParam = this._modelExtension.modelParam(it);
+    _builder.append(_modelParam, "\t");
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("Update statement = handle.createStatement(\"INSERT INTO public.");
+    String _table_3 = this._modelExtension.table(it);
+    _builder.append(_table_3, "\t\t");
+    _builder.append(" (");
+    {
+      EList<Attribute> _attributes_3 = it.getAttributes();
+      boolean _hasElements_1 = false;
+      for(final Attribute attribute_3 : _attributes_3) {
+        if (!_hasElements_1) {
+          _hasElements_1 = true;
+        } else {
+          _builder.appendImmediate(", ", "\t\t");
+        }
+        String _name_1 = attribute_3.getName();
+        _builder.append(_name_1, "\t\t");
+      }
+    }
+    _builder.append(") VALUES (");
+    {
+      EList<Attribute> _attributes_4 = it.getAttributes();
+      boolean _hasElements_2 = false;
+      for(final Attribute attribute_4 : _attributes_4) {
+        if (!_hasElements_2) {
+          _hasElements_2 = true;
+        } else {
+          _builder.appendImmediate(", ", "\t\t");
+        }
+        _builder.append(":");
+        String _name_2 = attribute_4.getName();
+        _builder.append(_name_2, "\t\t");
+      }
+    }
+    _builder.append(")\");");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _attributes_5 = it.getAttributes();
+      for(final Attribute attribute_5 : _attributes_5) {
+        _builder.append("\t\t");
+        _builder.append("statement.bind(\"");
+        String _name_3 = attribute_5.getName();
+        _builder.append(_name_3, "\t\t");
+        _builder.append("\", ");
+        String _modelParam_1 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_1, "\t\t");
+        _builder.append(".");
+        String _terCall = this._attributeExtension.getterCall(attribute_5);
+        _builder.append(_terCall, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("statement.execute();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static void update(Handle handle, ");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" ");
+    String _modelParam_2 = this._modelExtension.modelParam(it);
+    _builder.append(_modelParam_2, "\t");
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("Update statement = handle.createStatement(\"UPDATE public.");
+    String _table_4 = this._modelExtension.table(it);
+    _builder.append(_table_4, "\t\t");
+    _builder.append(" SET ");
+    {
+      EList<Attribute> _attributes_6 = it.getAttributes();
+      boolean _hasElements_3 = false;
+      for(final Attribute attribute_6 : _attributes_6) {
+        if (!_hasElements_3) {
+          _hasElements_3 = true;
+        } else {
+          _builder.appendImmediate(", ", "\t\t");
+        }
+        String _name_4 = attribute_6.getName();
+        _builder.append(_name_4, "\t\t");
+        _builder.append(" = :");
+        String _name_5 = attribute_6.getName();
+        _builder.append(_name_5, "\t\t");
+      }
+    }
+    _builder.append("\");");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _attributes_7 = it.getAttributes();
+      for(final Attribute attribute_7 : _attributes_7) {
+        _builder.append("\t\t");
+        _builder.append("statement.bind(\"");
+        String _name_6 = attribute_7.getName();
+        _builder.append(_name_6, "\t\t");
+        _builder.append("\", ");
+        String _modelParam_3 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_3, "\t\t");
+        _builder.append(".");
+        String _terCall_1 = this._attributeExtension.getterCall(attribute_7);
+        _builder.append(_terCall_1, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("statement.execute();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      Attribute _findSerialAttribute = this._modelExtension.findSerialAttribute(it);
+      boolean _notEquals = (!Objects.equal(_findSerialAttribute, null));
+      if (_notEquals) {
+        _builder.append("\t");
+        _builder.append("public static void deleteById(Handle handle, ");
+        String _modelName_2 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_2, "\t");
+        _builder.append(" ");
+        String _modelParam_4 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_4, "\t");
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("Update statement = handle.createStatement(\"DELETE FROM public.");
+        String _table_5 = this._modelExtension.table(it);
+        _builder.append(_table_5, "\t\t");
+        _builder.append(" WHERE id = :id\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("statement.bind(\"");
+        Attribute _findSerialAttribute_1 = this._modelExtension.findSerialAttribute(it);
+        String _name_7 = _findSerialAttribute_1.getName();
+        _builder.append(_name_7, "\t\t");
+        _builder.append("\", ");
+        String _modelParam_5 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_5, "\t\t");
+        _builder.append(".");
+        Attribute _findSerialAttribute_2 = this._modelExtension.findSerialAttribute(it);
+        String _terCall_2 = this._attributeExtension.getterCall(_findSerialAttribute_2);
+        _builder.append(_terCall_2, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("statement.execute();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("public static ");
+        String _modelName_3 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_3, "\t");
+        _builder.append(" selectById(Handle handle, ");
+        String _modelName_4 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_4, "\t");
+        _builder.append(" ");
+        String _modelParam_6 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_6, "\t");
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("return handle.createQuery(\"SELECT * FROM public.");
+        String _table_6 = this._modelExtension.table(it);
+        _builder.append(_table_6, "\t\t");
+        _builder.append(" WHERE id = :id\")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append(".bind(\"");
+        Attribute _findSerialAttribute_3 = this._modelExtension.findSerialAttribute(it);
+        String _name_8 = _findSerialAttribute_3.getName();
+        _builder.append(_name_8, "\t\t\t");
+        _builder.append("\", ");
+        String _modelParam_7 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_7, "\t\t\t");
+        _builder.append(".");
+        Attribute _findSerialAttribute_4 = this._modelExtension.findSerialAttribute(it);
+        String _terCall_3 = this._attributeExtension.getterCall(_findSerialAttribute_4);
+        _builder.append(_terCall_3, "\t\t\t");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append(".map(new ");
+        String _modelMapper = this._modelExtension.modelMapper(it);
+        _builder.append(_modelMapper, "\t\t\t");
+        _builder.append("())");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append(".first();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static List<");
+    String _modelName_5 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_5, "\t");
+    _builder.append("> selectAll(Handle handle) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return handle.createQuery(\"SELECT * FROM public.");
+    String _table_7 = this._modelExtension.table(it);
+    _builder.append(_table_7, "\t\t");
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
+    _builder.append(".map(new ");
+    String _modelMapper_1 = this._modelExtension.modelMapper(it);
+    _builder.append(_modelMapper_1, "\t\t\t");
+    _builder.append("())");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
+    _builder.append(".list();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateMapper(final Model it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".models;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import java.sql.ResultSet;");
+    _builder.newLine();
+    _builder.append("import java.sql.SQLException;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.StatementContext;");
+    _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.tweak.ResultSetMapper;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("public class ");
+    String _modelMapper = this._modelExtension.modelMapper(it);
+    _builder.append(_modelMapper, "");
+    _builder.append(" implements ResultSetMapper<");
+    String _modelName = this._modelExtension.modelName(it);
+    _builder.append(_modelName, "");
+    _builder.append("> {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" map(int index, ResultSet r, StatementContext ctx) throws SQLException {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return new ");
+    String _modelClassName = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName, "\t\t");
+    _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      boolean _hasElements = false;
+      for(final Attribute attribute : _attributes) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(",", "\t\t\t");
+        }
+        _builder.append("\t\t\t");
+        String _mapperInit = this._attributeExtension.mapperInit(attribute);
+        _builder.append(_mapperInit, "\t\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append(");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
   
   public CharSequence generateAbstractActionFile(final Action it, final Project project) {
     StringConcatenation _builder = new StringConcatenation();
@@ -143,8 +811,6 @@ public class JavaTemplate {
     _builder.append("import com.anfelisa.ace.Command;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseService;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();

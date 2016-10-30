@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link com.anfelisa.ace.Project#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getTarget <em>Target</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Project#getModels <em>Models</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Project#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getActions <em>Actions</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getCommands <em>Commands</em>}</li>
  *   <li>{@link com.anfelisa.ace.Project#getEvents <em>Events</em>}</li>
@@ -81,6 +83,38 @@ public interface Project extends EObject
    * @generated
    */
   void setTarget(String value);
+
+  /**
+   * Returns the value of the '<em><b>Models</b></em>' containment reference list.
+   * The list contents are of type {@link com.anfelisa.ace.Model}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Models</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Models</em>' containment reference list.
+   * @see com.anfelisa.ace.AcePackage#getProject_Models()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Model> getModels();
+
+  /**
+   * Returns the value of the '<em><b>Data</b></em>' containment reference list.
+   * The list contents are of type {@link com.anfelisa.ace.Data}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Data</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Data</em>' containment reference list.
+   * @see com.anfelisa.ace.AcePackage#getProject_Data()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Data> getData();
 
   /**
    * Returns the value of the '<em><b>Actions</b></em>' containment reference list.

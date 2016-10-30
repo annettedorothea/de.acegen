@@ -5,12 +5,16 @@ package com.anfelisa.generator;
 
 import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
+import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.CommandExtension;
+import com.anfelisa.extensions.DataExtension;
 import com.anfelisa.extensions.EventExtension;
+import com.anfelisa.extensions.ModelExtension;
 import com.anfelisa.extensions.ProjectExtension;
 import com.anfelisa.extensions.ViewExtension;
 import com.anfelisa.generator.ACEOutputConfigurationProvider;
@@ -59,6 +63,14 @@ public class AceGenerator extends AbstractGenerator {
   @Inject
   @Extension
   private ProjectExtension _projectExtension;
+  
+  @Inject
+  @Extension
+  private ModelExtension _modelExtension;
+  
+  @Inject
+  @Extension
+  private DataExtension _dataExtension;
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
@@ -167,92 +179,143 @@ public class AceGenerator extends AbstractGenerator {
         String _target_1 = project.getTarget();
         boolean _equals_1 = Objects.equal(_target_1, "JAVA");
         if (_equals_1) {
+          EList<Model> _models = project.getModels();
+          for (final Model model : _models) {
+            {
+              String _packageFolder = this._projectExtension.packageFolder(project);
+              String _plus_5 = (_packageFolder + "/models/");
+              String _modelName = this._modelExtension.modelName(model);
+              String _plus_6 = (_plus_5 + _modelName);
+              String _plus_7 = (_plus_6 + ".java");
+              CharSequence _generateModel = this.javaTemplate.generateModel(model, project);
+              fsa.generateFile(_plus_7, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateModel);
+              String _packageFolder_1 = this._projectExtension.packageFolder(project);
+              String _plus_8 = (_packageFolder_1 + "/models/");
+              String _modelClassName = this._modelExtension.modelClassName(model);
+              String _plus_9 = (_plus_8 + _modelClassName);
+              String _plus_10 = (_plus_9 + ".java");
+              CharSequence _generateModelClass = this.javaTemplate.generateModelClass(model, project);
+              fsa.generateFile(_plus_10, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateModelClass);
+              boolean _isPersistent = model.isPersistent();
+              if (_isPersistent) {
+                String _packageFolder_2 = this._projectExtension.packageFolder(project);
+                String _plus_11 = (_packageFolder_2 + "/models/");
+                String _modelDao = this._modelExtension.modelDao(model);
+                String _plus_12 = (_plus_11 + _modelDao);
+                String _plus_13 = (_plus_12 + ".java");
+                CharSequence _generateDao = this.javaTemplate.generateDao(model, project);
+                fsa.generateFile(_plus_13, 
+                  ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateDao);
+                String _packageFolder_3 = this._projectExtension.packageFolder(project);
+                String _plus_14 = (_packageFolder_3 + "/models/");
+                String _modelMapper = this._modelExtension.modelMapper(model);
+                String _plus_15 = (_plus_14 + _modelMapper);
+                String _plus_16 = (_plus_15 + ".java");
+                CharSequence _generateMapper = this.javaTemplate.generateMapper(model, project);
+                fsa.generateFile(_plus_16, 
+                  ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateMapper);
+              }
+            }
+          }
+          EList<Data> _data = project.getData();
+          for (final Data data : _data) {
+            String _packageFolder = this._projectExtension.packageFolder(project);
+            String _plus_5 = (_packageFolder + "/data/");
+            String _dataName = this._dataExtension.dataName(data);
+            String _plus_6 = (_plus_5 + _dataName);
+            String _plus_7 = (_plus_6 + ".java");
+            CharSequence _generateData = this.javaTemplate.generateData(data, project);
+            fsa.generateFile(_plus_7, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateData);
+          }
           EList<Action> _actions_1 = project.getActions();
           for (final Action action_1 : _actions_1) {
             {
-              String _packageFolder = this._projectExtension.packageFolder(project);
-              String _plus_5 = (_packageFolder + "/actions/");
-              String _abstractActionName = this._actionExtension.abstractActionName(action_1);
-              String _plus_6 = (_plus_5 + _abstractActionName);
-              String _plus_7 = (_plus_6 + ".java");
-              CharSequence _generateAbstractActionFile = this.javaTemplate.generateAbstractActionFile(action_1, project);
-              fsa.generateFile(_plus_7, 
-                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractActionFile);
               String _packageFolder_1 = this._projectExtension.packageFolder(project);
               String _plus_8 = (_packageFolder_1 + "/actions/");
-              String _actionName = this._actionExtension.actionName(action_1);
-              String _plus_9 = (_plus_8 + _actionName);
+              String _abstractActionName = this._actionExtension.abstractActionName(action_1);
+              String _plus_9 = (_plus_8 + _abstractActionName);
               String _plus_10 = (_plus_9 + ".java");
-              CharSequence _generateInitialActionFile = this.javaTemplate.generateInitialActionFile(action_1, project);
+              CharSequence _generateAbstractActionFile = this.javaTemplate.generateAbstractActionFile(action_1, project);
               fsa.generateFile(_plus_10, 
-                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialActionFile);
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractActionFile);
               String _packageFolder_2 = this._projectExtension.packageFolder(project);
-              String _plus_11 = (_packageFolder_2 + "/resources/");
-              String _resourceName = this._actionExtension.resourceName(action_1);
-              String _plus_12 = (_plus_11 + _resourceName);
+              String _plus_11 = (_packageFolder_2 + "/actions/");
+              String _actionName = this._actionExtension.actionName(action_1);
+              String _plus_12 = (_plus_11 + _actionName);
               String _plus_13 = (_plus_12 + ".java");
-              CharSequence _generateInitialResourceFile = this.javaTemplate.generateInitialResourceFile(action_1, project);
+              CharSequence _generateInitialActionFile = this.javaTemplate.generateInitialActionFile(action_1, project);
               fsa.generateFile(_plus_13, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialActionFile);
+              String _packageFolder_3 = this._projectExtension.packageFolder(project);
+              String _plus_14 = (_packageFolder_3 + "/resources/");
+              String _resourceName = this._actionExtension.resourceName(action_1);
+              String _plus_15 = (_plus_14 + _resourceName);
+              String _plus_16 = (_plus_15 + ".java");
+              CharSequence _generateInitialResourceFile = this.javaTemplate.generateInitialResourceFile(action_1, project);
+              fsa.generateFile(_plus_16, 
                 ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialResourceFile);
             }
           }
           EList<Command> _commands_1 = project.getCommands();
           for (final Command command_1 : _commands_1) {
             {
-              String _packageFolder = this._projectExtension.packageFolder(project);
-              String _plus_5 = (_packageFolder + "/commands/");
-              String _abstractCommandName = this._commandExtension.abstractCommandName(command_1);
-              String _plus_6 = (_plus_5 + _abstractCommandName);
-              String _plus_7 = (_plus_6 + ".java");
-              CharSequence _generateAbstractCommandFile = this.javaTemplate.generateAbstractCommandFile(command_1, project);
-              fsa.generateFile(_plus_7, 
-                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractCommandFile);
               String _packageFolder_1 = this._projectExtension.packageFolder(project);
               String _plus_8 = (_packageFolder_1 + "/commands/");
-              String _commandName = this._commandExtension.commandName(command_1);
-              String _plus_9 = (_plus_8 + _commandName);
+              String _abstractCommandName = this._commandExtension.abstractCommandName(command_1);
+              String _plus_9 = (_plus_8 + _abstractCommandName);
               String _plus_10 = (_plus_9 + ".java");
-              CharSequence _generateInitialCommandFile = this.javaTemplate.generateInitialCommandFile(command_1, project);
+              CharSequence _generateAbstractCommandFile = this.javaTemplate.generateAbstractCommandFile(command_1, project);
               fsa.generateFile(_plus_10, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractCommandFile);
+              String _packageFolder_2 = this._projectExtension.packageFolder(project);
+              String _plus_11 = (_packageFolder_2 + "/commands/");
+              String _commandName = this._commandExtension.commandName(command_1);
+              String _plus_12 = (_plus_11 + _commandName);
+              String _plus_13 = (_plus_12 + ".java");
+              CharSequence _generateInitialCommandFile = this.javaTemplate.generateInitialCommandFile(command_1, project);
+              fsa.generateFile(_plus_13, 
                 ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialCommandFile);
             }
           }
           EList<Event> _events_1 = project.getEvents();
           for (final Event event_1 : _events_1) {
             {
-              String _packageFolder = this._projectExtension.packageFolder(project);
-              String _plus_5 = (_packageFolder + "/events/");
-              String _abstractEventName = this._eventExtension.abstractEventName(event_1);
-              String _plus_6 = (_plus_5 + _abstractEventName);
-              String _plus_7 = (_plus_6 + ".java");
-              CharSequence _generateAbstractEventFile = this.javaTemplate.generateAbstractEventFile(event_1, project);
-              fsa.generateFile(_plus_7, 
-                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractEventFile);
               String _packageFolder_1 = this._projectExtension.packageFolder(project);
               String _plus_8 = (_packageFolder_1 + "/events/");
-              String _eventName = this._eventExtension.eventName(event_1);
-              String _plus_9 = (_plus_8 + _eventName);
+              String _abstractEventName = this._eventExtension.abstractEventName(event_1);
+              String _plus_9 = (_plus_8 + _abstractEventName);
               String _plus_10 = (_plus_9 + ".java");
-              CharSequence _generateInitialEventFile = this.javaTemplate.generateInitialEventFile(event_1, project);
+              CharSequence _generateAbstractEventFile = this.javaTemplate.generateAbstractEventFile(event_1, project);
               fsa.generateFile(_plus_10, 
+                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAbstractEventFile);
+              String _packageFolder_2 = this._projectExtension.packageFolder(project);
+              String _plus_11 = (_packageFolder_2 + "/events/");
+              String _eventName = this._eventExtension.eventName(event_1);
+              String _plus_12 = (_plus_11 + _eventName);
+              String _plus_13 = (_plus_12 + ".java");
+              CharSequence _generateInitialEventFile = this.javaTemplate.generateInitialEventFile(event_1, project);
+              fsa.generateFile(_plus_13, 
                 ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialEventFile);
             }
           }
           EList<View> _views_1 = project.getViews();
           for (final View view_1 : _views_1) {
-            String _packageFolder = this._projectExtension.packageFolder(project);
-            String _plus_5 = (_packageFolder + "/views/");
+            String _packageFolder_1 = this._projectExtension.packageFolder(project);
+            String _plus_8 = (_packageFolder_1 + "/views/");
             String _viewName_1 = this._viewExtension.viewName(view_1);
-            String _plus_6 = (_plus_5 + _viewName_1);
-            String _plus_7 = (_plus_6 + ".java");
+            String _plus_9 = (_plus_8 + _viewName_1);
+            String _plus_10 = (_plus_9 + ".java");
             CharSequence _generateView_1 = this.javaTemplate.generateView(view_1, project);
-            fsa.generateFile(_plus_7, 
+            fsa.generateFile(_plus_10, 
               ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateView_1);
           }
-          String _packageFolder_1 = this._projectExtension.packageFolder(project);
-          String _plus_8 = (_packageFolder_1 + "/AppRegistration.java");
+          String _packageFolder_2 = this._projectExtension.packageFolder(project);
+          String _plus_11 = (_packageFolder_2 + "/AppRegistration.java");
           CharSequence _generateAppRegistration = this.javaTemplate.generateAppRegistration(project);
-          fsa.generateFile(_plus_8, 
+          fsa.generateFile(_plus_11, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateAppRegistration);
         }
       }

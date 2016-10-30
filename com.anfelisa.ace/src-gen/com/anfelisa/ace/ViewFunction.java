@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.ViewFunction#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.ViewFunction#getModel <em>Model</em>}</li>
  * </ul>
  *
  * @see com.anfelisa.ace.AcePackage#getViewFunction()
@@ -48,5 +49,31 @@ public interface ViewFunction extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Model</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Model</em>' reference.
+   * @see #setModel(Model)
+   * @see com.anfelisa.ace.AcePackage#getViewFunction_Model()
+   * @model
+   * @generated
+   */
+  Model getModel();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.ViewFunction#getModel <em>Model</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Model</em>' reference.
+   * @see #getModel()
+   * @generated
+   */
+  void setModel(Model value);
 
 } // ViewFunction

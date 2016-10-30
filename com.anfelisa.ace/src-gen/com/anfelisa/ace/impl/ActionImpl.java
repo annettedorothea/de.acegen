@@ -6,6 +6,7 @@ package com.anfelisa.ace.impl;
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getType <em>Type</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getData <em>Data</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ActionImpl#getCommand <em>Command</em>}</li>
  * </ul>
  *
@@ -71,6 +73,16 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getData() <em>Data</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getData()
+   * @generated
+   * @ordered
+   */
+  protected Data data;
 
   /**
    * The cached value of the '{@link #getCommand() <em>Command</em>}' reference.
@@ -154,6 +166,49 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  public Data getData()
+  {
+    if (data != null && data.eIsProxy())
+    {
+      InternalEObject oldData = (InternalEObject)data;
+      data = (Data)eResolveProxy(oldData);
+      if (data != oldData)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.ACTION__DATA, oldData, data));
+      }
+    }
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Data basicGetData()
+  {
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setData(Data newData)
+  {
+    Data oldData = data;
+    data = newData;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.ACTION__DATA, oldData, data));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Command getCommand()
   {
     if (command != null && command.eIsProxy())
@@ -206,6 +261,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return getType();
       case AcePackage.ACTION__NAME:
         return getName();
+      case AcePackage.ACTION__DATA:
+        if (resolve) return getData();
+        return basicGetData();
       case AcePackage.ACTION__COMMAND:
         if (resolve) return getCommand();
         return basicGetCommand();
@@ -228,6 +286,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return;
       case AcePackage.ACTION__NAME:
         setName((String)newValue);
+        return;
+      case AcePackage.ACTION__DATA:
+        setData((Data)newValue);
         return;
       case AcePackage.ACTION__COMMAND:
         setCommand((Command)newValue);
@@ -252,6 +313,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
       case AcePackage.ACTION__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case AcePackage.ACTION__DATA:
+        setData((Data)null);
+        return;
       case AcePackage.ACTION__COMMAND:
         setCommand((Command)null);
         return;
@@ -273,6 +337,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case AcePackage.ACTION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AcePackage.ACTION__DATA:
+        return data != null;
       case AcePackage.ACTION__COMMAND:
         return command != null;
     }

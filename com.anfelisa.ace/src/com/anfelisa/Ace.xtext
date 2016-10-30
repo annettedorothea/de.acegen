@@ -5,6 +5,12 @@ generate ace "http://www.anfelisa.com/Ace"
 Project: 
 	name = QualifiedName
 	'target' target = ('ES6' | 'JAVA')
+	('models' '{'
+		(models += Model)*
+	'}')*
+	('data' '{'
+		(data += Data)*
+	'}')*
 	('actions' '{'
 		(actions += Action)*
 	'}')*
@@ -19,8 +25,25 @@ Project:
 	'}')*
 ;
 
+Model:
+	persistent ?= 'persistent'? name = ID '('
+		(attributes += Attribute)*
+	')'
+;
+
+Data:
+	name = ID ':' '('
+		(models += [Model | QualifiedName])*
+	')'
+;
+
+Attribute:
+	unique ?= 'Unique'? (constraint = Constraint)? (type = ModelType) name = ID
+;
+
 Action:
 	(type = FunctionType)? name = ID 
+	('uses' data = [ Data | QualifiedName ])?
 	('executes' command = [Command | QualifiedName])? 
 ;
 
@@ -48,7 +71,7 @@ View:
 ;
 
 ViewFunction:
-	name = ID
+	name = ID ('(' model = [ Model | QualifiedName ] ')')?
 ;
 
 QualifiedName:
@@ -57,5 +80,13 @@ QualifiedName:
 
 FunctionType:
 	'POST' | 'PUT' | 'DELETE' | 'GET'
+;
+
+ModelType:
+	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime'
+;
+
+Constraint:
+	'NotEmpty' | 'NotNull'
 ;
 

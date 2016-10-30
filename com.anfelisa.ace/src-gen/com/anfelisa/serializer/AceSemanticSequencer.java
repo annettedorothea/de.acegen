@@ -4,9 +4,12 @@
 package com.anfelisa.serializer;
 
 import com.anfelisa.ace.AcePackage;
+import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
+import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 import com.anfelisa.ace.ViewFunction;
@@ -19,9 +22,7 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -40,14 +41,23 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case AcePackage.ACTION:
 				sequence_Action(context, (com.anfelisa.ace.Action) semanticObject); 
 				return; 
+			case AcePackage.ATTRIBUTE:
+				sequence_Attribute(context, (Attribute) semanticObject); 
+				return; 
 			case AcePackage.COMMAND:
 				sequence_Command(context, (Command) semanticObject); 
+				return; 
+			case AcePackage.DATA:
+				sequence_Data(context, (Data) semanticObject); 
 				return; 
 			case AcePackage.EVENT:
 				sequence_Event(context, (Event) semanticObject); 
 				return; 
 			case AcePackage.EVENT_ON_OUTCOME:
 				sequence_EventOnOutcome(context, (EventOnOutcome) semanticObject); 
+				return; 
+			case AcePackage.MODEL:
+				sequence_Model(context, (Model) semanticObject); 
 				return; 
 			case AcePackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
@@ -68,9 +78,21 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     (type=FunctionType? name=ID command=[Command|QualifiedName]?)
+	 *     (type=FunctionType? name=ID data=[Data|QualifiedName]? command=[Command|QualifiedName]?)
 	 */
 	protected void sequence_Action(ISerializationContext context, com.anfelisa.ace.Action semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Attribute returns Attribute
+	 *
+	 * Constraint:
+	 *     (unique?='Unique'? constraint=Constraint? type=ModelType name=ID)
+	 */
+	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -83,6 +105,18 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (name=ID eventsOnOutcome+=EventOnOutcome*)
 	 */
 	protected void sequence_Command(ISerializationContext context, Command semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Data returns Data
+	 *
+	 * Constraint:
+	 *     (name=ID models+=[Model|QualifiedName]*)
+	 */
+	protected void sequence_Data(ISerializationContext context, Data semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -113,12 +147,26 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Model returns Model
+	 *
+	 * Constraint:
+	 *     (persistent?='persistent'? name=ID attributes+=Attribute*)
+	 */
+	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Project returns Project
 	 *
 	 * Constraint:
 	 *     (
 	 *         name=QualifiedName 
 	 *         (target='ES6' | target='JAVA') 
+	 *         models+=Model* 
+	 *         data+=Data* 
 	 *         actions+=Action* 
 	 *         commands+=Command* 
 	 *         events+=Event* 
@@ -135,16 +183,10 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ViewFunction returns ViewFunction
 	 *
 	 * Constraint:
-	 *     name=ID
+	 *     (name=ID model=[Model|QualifiedName]?)
 	 */
 	protected void sequence_ViewFunction(ISerializationContext context, ViewFunction semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AcePackage.Literals.VIEW_FUNCTION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AcePackage.Literals.VIEW_FUNCTION__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getViewFunctionAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

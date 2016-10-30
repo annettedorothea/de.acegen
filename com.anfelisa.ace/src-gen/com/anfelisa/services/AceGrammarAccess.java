@@ -34,33 +34,49 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTargetES6Keyword_2_0_0 = (Keyword)cTargetAlternatives_2_0.eContents().get(0);
 		private final Keyword cTargetJAVAKeyword_2_0_1 = (Keyword)cTargetAlternatives_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cActionsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cModelsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
-		private final Assignment cActionsAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cActionsActionParserRuleCall_3_2_0 = (RuleCall)cActionsAssignment_3_2.eContents().get(0);
+		private final Assignment cModelsAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cModelsModelParserRuleCall_3_2_0 = (RuleCall)cModelsAssignment_3_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cCommandsKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cDataKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cCommandsAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cCommandsCommandParserRuleCall_4_2_0 = (RuleCall)cCommandsAssignment_4_2.eContents().get(0);
+		private final Assignment cDataAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cDataDataParserRuleCall_4_2_0 = (RuleCall)cDataAssignment_4_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEventsKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cActionsKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cEventsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cEventsEventParserRuleCall_5_2_0 = (RuleCall)cEventsAssignment_5_2.eContents().get(0);
+		private final Assignment cActionsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cActionsActionParserRuleCall_5_2_0 = (RuleCall)cActionsAssignment_5_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cViewsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cCommandsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Assignment cViewsAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
-		private final RuleCall cViewsViewParserRuleCall_6_2_0 = (RuleCall)cViewsAssignment_6_2.eContents().get(0);
+		private final Assignment cCommandsAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cCommandsCommandParserRuleCall_6_2_0 = (RuleCall)cCommandsAssignment_6_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cEventsKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
+		private final Assignment cEventsAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final RuleCall cEventsEventParserRuleCall_7_2_0 = (RuleCall)cEventsAssignment_7_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cViewsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
+		private final Assignment cViewsAssignment_8_2 = (Assignment)cGroup_8.eContents().get(2);
+		private final RuleCall cViewsViewParserRuleCall_8_2_0 = (RuleCall)cViewsAssignment_8_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_8_3 = (Keyword)cGroup_8.eContents().get(3);
 		
 		//Project:
 		//	name=QualifiedName
-		//	'target' target=('ES6' | 'JAVA') ('actions' '{'
+		//	'target' target=('ES6' | 'JAVA') ('models' '{'
+		//	models+=Model*
+		//	'}')* ('data' '{'
+		//	data+=Data*
+		//	'}')* ('actions' '{'
 		//	actions+=Action*
 		//	'}')* ('commands' '{'
 		//	commands+=Command*
@@ -71,8 +87,9 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}')*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=QualifiedName 'target' target=('ES6' | 'JAVA') ('actions' '{' actions+=Action* '}')* ('commands' '{'
-		//commands+=Command* '}')* ('events' '{' events+=Event* '}')* ('views' '{' views+=View* '}')*
+		//name=QualifiedName 'target' target=('ES6' | 'JAVA') ('models' '{' models+=Model* '}')* ('data' '{' data+=Data* '}')*
+		//('actions' '{' actions+=Action* '}')* ('commands' '{' commands+=Command* '}')* ('events' '{' events+=Event* '}')*
+		//('views' '{' views+=View* '}')*
 		public Group getGroup() { return cGroup; }
 		
 		//name=QualifiedName
@@ -96,77 +113,246 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//'JAVA'
 		public Keyword getTargetJAVAKeyword_2_0_1() { return cTargetJAVAKeyword_2_0_1; }
 		
-		//('actions' '{' actions+=Action* '}')*
+		//('models' '{' models+=Model* '}')*
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'actions'
-		public Keyword getActionsKeyword_3_0() { return cActionsKeyword_3_0; }
+		//'models'
+		public Keyword getModelsKeyword_3_0() { return cModelsKeyword_3_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3_1() { return cLeftCurlyBracketKeyword_3_1; }
 		
-		//actions+=Action*
-		public Assignment getActionsAssignment_3_2() { return cActionsAssignment_3_2; }
+		//models+=Model*
+		public Assignment getModelsAssignment_3_2() { return cModelsAssignment_3_2; }
 		
-		//Action
-		public RuleCall getActionsActionParserRuleCall_3_2_0() { return cActionsActionParserRuleCall_3_2_0; }
+		//Model
+		public RuleCall getModelsModelParserRuleCall_3_2_0() { return cModelsModelParserRuleCall_3_2_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
 		
-		//('commands' '{' commands+=Command* '}')*
+		//('data' '{' data+=Data* '}')*
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//'commands'
-		public Keyword getCommandsKeyword_4_0() { return cCommandsKeyword_4_0; }
+		//'data'
+		public Keyword getDataKeyword_4_0() { return cDataKeyword_4_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4_1() { return cLeftCurlyBracketKeyword_4_1; }
 		
-		//commands+=Command*
-		public Assignment getCommandsAssignment_4_2() { return cCommandsAssignment_4_2; }
+		//data+=Data*
+		public Assignment getDataAssignment_4_2() { return cDataAssignment_4_2; }
 		
-		//Command
-		public RuleCall getCommandsCommandParserRuleCall_4_2_0() { return cCommandsCommandParserRuleCall_4_2_0; }
+		//Data
+		public RuleCall getDataDataParserRuleCall_4_2_0() { return cDataDataParserRuleCall_4_2_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
 		
-		//('events' '{' events+=Event* '}')*
+		//('actions' '{' actions+=Action* '}')*
 		public Group getGroup_5() { return cGroup_5; }
 		
-		//'events'
-		public Keyword getEventsKeyword_5_0() { return cEventsKeyword_5_0; }
+		//'actions'
+		public Keyword getActionsKeyword_5_0() { return cActionsKeyword_5_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_5_1() { return cLeftCurlyBracketKeyword_5_1; }
 		
-		//events+=Event*
-		public Assignment getEventsAssignment_5_2() { return cEventsAssignment_5_2; }
+		//actions+=Action*
+		public Assignment getActionsAssignment_5_2() { return cActionsAssignment_5_2; }
 		
-		//Event
-		public RuleCall getEventsEventParserRuleCall_5_2_0() { return cEventsEventParserRuleCall_5_2_0; }
+		//Action
+		public RuleCall getActionsActionParserRuleCall_5_2_0() { return cActionsActionParserRuleCall_5_2_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5_3() { return cRightCurlyBracketKeyword_5_3; }
 		
-		//('views' '{' views+=View* '}')*
+		//('commands' '{' commands+=Command* '}')*
 		public Group getGroup_6() { return cGroup_6; }
 		
-		//'views'
-		public Keyword getViewsKeyword_6_0() { return cViewsKeyword_6_0; }
+		//'commands'
+		public Keyword getCommandsKeyword_6_0() { return cCommandsKeyword_6_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_6_1() { return cLeftCurlyBracketKeyword_6_1; }
 		
-		//views+=View*
-		public Assignment getViewsAssignment_6_2() { return cViewsAssignment_6_2; }
+		//commands+=Command*
+		public Assignment getCommandsAssignment_6_2() { return cCommandsAssignment_6_2; }
 		
-		//View
-		public RuleCall getViewsViewParserRuleCall_6_2_0() { return cViewsViewParserRuleCall_6_2_0; }
+		//Command
+		public RuleCall getCommandsCommandParserRuleCall_6_2_0() { return cCommandsCommandParserRuleCall_6_2_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6_3() { return cRightCurlyBracketKeyword_6_3; }
+		
+		//('events' '{' events+=Event* '}')*
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//'events'
+		public Keyword getEventsKeyword_7_0() { return cEventsKeyword_7_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_7_1() { return cLeftCurlyBracketKeyword_7_1; }
+		
+		//events+=Event*
+		public Assignment getEventsAssignment_7_2() { return cEventsAssignment_7_2; }
+		
+		//Event
+		public RuleCall getEventsEventParserRuleCall_7_2_0() { return cEventsEventParserRuleCall_7_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_7_3() { return cRightCurlyBracketKeyword_7_3; }
+		
+		//('views' '{' views+=View* '}')*
+		public Group getGroup_8() { return cGroup_8; }
+		
+		//'views'
+		public Keyword getViewsKeyword_8_0() { return cViewsKeyword_8_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_8_1() { return cLeftCurlyBracketKeyword_8_1; }
+		
+		//views+=View*
+		public Assignment getViewsAssignment_8_2() { return cViewsAssignment_8_2; }
+		
+		//View
+		public RuleCall getViewsViewParserRuleCall_8_2_0() { return cViewsViewParserRuleCall_8_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_8_3() { return cRightCurlyBracketKeyword_8_3; }
+	}
+	public class ModelElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Model");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cPersistentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cPersistentPersistentKeyword_0_0 = (Keyword)cPersistentAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cAttributesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAttributesAttributeParserRuleCall_3_0 = (RuleCall)cAttributesAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Model:
+		//	persistent?='persistent'? name=ID '('
+		//	attributes+=Attribute*
+		//	')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//persistent?='persistent'? name=ID '(' attributes+=Attribute* ')'
+		public Group getGroup() { return cGroup; }
+		
+		//persistent?='persistent'?
+		public Assignment getPersistentAssignment_0() { return cPersistentAssignment_0; }
+		
+		//'persistent'
+		public Keyword getPersistentPersistentKeyword_0_0() { return cPersistentPersistentKeyword_0_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		
+		//attributes+=Attribute*
+		public Assignment getAttributesAssignment_3() { return cAttributesAssignment_3; }
+		
+		//Attribute
+		public RuleCall getAttributesAttributeParserRuleCall_3_0() { return cAttributesAttributeParserRuleCall_3_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class DataElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Data");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cModelsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cModelsModelCrossReference_3_0 = (CrossReference)cModelsAssignment_3.eContents().get(0);
+		private final RuleCall cModelsModelQualifiedNameParserRuleCall_3_0_1 = (RuleCall)cModelsModelCrossReference_3_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Data:
+		//	name=ID ':' '('
+		//	models+=[Model|QualifiedName]*
+		//	')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=ID ':' '(' models+=[Model|QualifiedName]* ')'
+		public Group getGroup() { return cGroup; }
+		
+		//name=ID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		
+		//':'
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		
+		//models+=[Model|QualifiedName]*
+		public Assignment getModelsAssignment_3() { return cModelsAssignment_3; }
+		
+		//[Model|QualifiedName]
+		public CrossReference getModelsModelCrossReference_3_0() { return cModelsModelCrossReference_3_0; }
+		
+		//QualifiedName
+		public RuleCall getModelsModelQualifiedNameParserRuleCall_3_0_1() { return cModelsModelQualifiedNameParserRuleCall_3_0_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class AttributeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Attribute");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cUniqueAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cUniqueUniqueKeyword_0_0 = (Keyword)cUniqueAssignment_0.eContents().get(0);
+		private final Assignment cConstraintAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cConstraintConstraintParserRuleCall_1_0 = (RuleCall)cConstraintAssignment_1.eContents().get(0);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeModelTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		
+		//Attribute:
+		//	unique?='Unique'? constraint=Constraint? type=ModelType name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//unique?='Unique'? constraint=Constraint? type=ModelType name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//unique?='Unique'?
+		public Assignment getUniqueAssignment_0() { return cUniqueAssignment_0; }
+		
+		//'Unique'
+		public Keyword getUniqueUniqueKeyword_0_0() { return cUniqueUniqueKeyword_0_0; }
+		
+		//constraint=Constraint?
+		public Assignment getConstraintAssignment_1() { return cConstraintAssignment_1; }
+		
+		//Constraint
+		public RuleCall getConstraintConstraintParserRuleCall_1_0() { return cConstraintConstraintParserRuleCall_1_0; }
+		
+		//type=ModelType
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+		
+		//ModelType
+		public RuleCall getTypeModelTypeParserRuleCall_2_0() { return cTypeModelTypeParserRuleCall_2_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 	}
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Action");
@@ -176,16 +362,21 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cExecutesKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cCommandAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cCommandCommandCrossReference_2_1_0 = (CrossReference)cCommandAssignment_2_1.eContents().get(0);
-		private final RuleCall cCommandCommandQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cCommandCommandCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cUsesKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cDataAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cDataDataCrossReference_2_1_0 = (CrossReference)cDataAssignment_2_1.eContents().get(0);
+		private final RuleCall cDataDataQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cDataDataCrossReference_2_1_0.eContents().get(1);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cExecutesKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCommandAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final CrossReference cCommandCommandCrossReference_3_1_0 = (CrossReference)cCommandAssignment_3_1.eContents().get(0);
+		private final RuleCall cCommandCommandQualifiedNameParserRuleCall_3_1_0_1 = (RuleCall)cCommandCommandCrossReference_3_1_0.eContents().get(1);
 		
 		//Action:
-		//	type=FunctionType? name=ID ('executes' command=[Command|QualifiedName])?;
+		//	type=FunctionType? name=ID ('uses' data=[Data|QualifiedName])? ('executes' command=[Command|QualifiedName])?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=FunctionType? name=ID ('executes' command=[Command|QualifiedName])?
+		//type=FunctionType? name=ID ('uses' data=[Data|QualifiedName])? ('executes' command=[Command|QualifiedName])?
 		public Group getGroup() { return cGroup; }
 		
 		//type=FunctionType?
@@ -200,20 +391,35 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('executes' command=[Command|QualifiedName])?
+		//('uses' data=[Data|QualifiedName])?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'executes'
-		public Keyword getExecutesKeyword_2_0() { return cExecutesKeyword_2_0; }
+		//'uses'
+		public Keyword getUsesKeyword_2_0() { return cUsesKeyword_2_0; }
 		
-		//command=[Command|QualifiedName]
-		public Assignment getCommandAssignment_2_1() { return cCommandAssignment_2_1; }
+		//data=[Data|QualifiedName]
+		public Assignment getDataAssignment_2_1() { return cDataAssignment_2_1; }
 		
-		//[Command|QualifiedName]
-		public CrossReference getCommandCommandCrossReference_2_1_0() { return cCommandCommandCrossReference_2_1_0; }
+		//[Data|QualifiedName]
+		public CrossReference getDataDataCrossReference_2_1_0() { return cDataDataCrossReference_2_1_0; }
 		
 		//QualifiedName
-		public RuleCall getCommandCommandQualifiedNameParserRuleCall_2_1_0_1() { return cCommandCommandQualifiedNameParserRuleCall_2_1_0_1; }
+		public RuleCall getDataDataQualifiedNameParserRuleCall_2_1_0_1() { return cDataDataQualifiedNameParserRuleCall_2_1_0_1; }
+		
+		//('executes' command=[Command|QualifiedName])?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'executes'
+		public Keyword getExecutesKeyword_3_0() { return cExecutesKeyword_3_0; }
+		
+		//command=[Command|QualifiedName]
+		public Assignment getCommandAssignment_3_1() { return cCommandAssignment_3_1; }
+		
+		//[Command|QualifiedName]
+		public CrossReference getCommandCommandCrossReference_3_1_0() { return cCommandCommandCrossReference_3_1_0; }
+		
+		//QualifiedName
+		public RuleCall getCommandCommandQualifiedNameParserRuleCall_3_1_0_1() { return cCommandCommandQualifiedNameParserRuleCall_3_1_0_1; }
 	}
 	public class CommandElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Command");
@@ -427,18 +633,46 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class ViewFunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.ViewFunction");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cModelAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cModelModelCrossReference_1_1_0 = (CrossReference)cModelAssignment_1_1.eContents().get(0);
+		private final RuleCall cModelModelQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cModelModelCrossReference_1_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//ViewFunction:
-		//	name=ID;
+		//	name=ID ('(' model=[Model|QualifiedName] ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//name=ID ('(' model=[Model|QualifiedName] ')')?
+		public Group getGroup() { return cGroup; }
+		
 		//name=ID
-		public Assignment getNameAssignment() { return cNameAssignment; }
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		
+		//('(' model=[Model|QualifiedName] ')')?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		
+		//model=[Model|QualifiedName]
+		public Assignment getModelAssignment_1_1() { return cModelAssignment_1_1; }
+		
+		//[Model|QualifiedName]
+		public CrossReference getModelModelCrossReference_1_1_0() { return cModelModelCrossReference_1_1_0; }
+		
+		//QualifiedName
+		public RuleCall getModelModelQualifiedNameParserRuleCall_1_1_0_1() { return cModelModelQualifiedNameParserRuleCall_1_1_0_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.QualifiedName");
@@ -494,9 +728,66 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//'GET'
 		public Keyword getGETKeyword_3() { return cGETKeyword_3; }
 	}
+	public class ModelTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.ModelType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cSerialKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cIntegerKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cStringKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cFloatKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cBooleanKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cDateTimeKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		
+		//ModelType:
+		//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'Serial'
+		public Keyword getSerialKeyword_0() { return cSerialKeyword_0; }
+		
+		//'Integer'
+		public Keyword getIntegerKeyword_1() { return cIntegerKeyword_1; }
+		
+		//'String'
+		public Keyword getStringKeyword_2() { return cStringKeyword_2; }
+		
+		//'Float'
+		public Keyword getFloatKeyword_3() { return cFloatKeyword_3; }
+		
+		//'Boolean'
+		public Keyword getBooleanKeyword_4() { return cBooleanKeyword_4; }
+		
+		//'DateTime'
+		public Keyword getDateTimeKeyword_5() { return cDateTimeKeyword_5; }
+	}
+	public class ConstraintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Constraint");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cNotEmptyKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cNotNullKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//Constraint:
+		//	'NotEmpty' | 'NotNull';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'NotEmpty' | 'NotNull'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'NotEmpty'
+		public Keyword getNotEmptyKeyword_0() { return cNotEmptyKeyword_0; }
+		
+		//'NotNull'
+		public Keyword getNotNullKeyword_1() { return cNotNullKeyword_1; }
+	}
 	
 	
 	private final ProjectElements pProject;
+	private final ModelElements pModel;
+	private final DataElements pData;
+	private final AttributeElements pAttribute;
 	private final ActionElements pAction;
 	private final CommandElements pCommand;
 	private final EventOnOutcomeElements pEventOnOutcome;
@@ -505,6 +796,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	private final ViewFunctionElements pViewFunction;
 	private final QualifiedNameElements pQualifiedName;
 	private final FunctionTypeElements pFunctionType;
+	private final ModelTypeElements pModelType;
+	private final ConstraintElements pConstraint;
 	
 	private final Grammar grammar;
 	
@@ -516,6 +809,9 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pProject = new ProjectElements();
+		this.pModel = new ModelElements();
+		this.pData = new DataElements();
+		this.pAttribute = new AttributeElements();
 		this.pAction = new ActionElements();
 		this.pCommand = new CommandElements();
 		this.pEventOnOutcome = new EventOnOutcomeElements();
@@ -524,6 +820,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		this.pViewFunction = new ViewFunctionElements();
 		this.pQualifiedName = new QualifiedNameElements();
 		this.pFunctionType = new FunctionTypeElements();
+		this.pModelType = new ModelTypeElements();
+		this.pConstraint = new ConstraintElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -555,7 +853,11 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Project:
 	//	name=QualifiedName
-	//	'target' target=('ES6' | 'JAVA') ('actions' '{'
+	//	'target' target=('ES6' | 'JAVA') ('models' '{'
+	//	models+=Model*
+	//	'}')* ('data' '{'
+	//	data+=Data*
+	//	'}')* ('actions' '{'
 	//	actions+=Action*
 	//	'}')* ('commands' '{'
 	//	commands+=Command*
@@ -572,8 +874,42 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		return getProjectAccess().getRule();
 	}
 	
+	//Model:
+	//	persistent?='persistent'? name=ID '('
+	//	attributes+=Attribute*
+	//	')';
+	public ModelElements getModelAccess() {
+		return pModel;
+	}
+	
+	public ParserRule getModelRule() {
+		return getModelAccess().getRule();
+	}
+	
+	//Data:
+	//	name=ID ':' '('
+	//	models+=[Model|QualifiedName]*
+	//	')';
+	public DataElements getDataAccess() {
+		return pData;
+	}
+	
+	public ParserRule getDataRule() {
+		return getDataAccess().getRule();
+	}
+	
+	//Attribute:
+	//	unique?='Unique'? constraint=Constraint? type=ModelType name=ID;
+	public AttributeElements getAttributeAccess() {
+		return pAttribute;
+	}
+	
+	public ParserRule getAttributeRule() {
+		return getAttributeAccess().getRule();
+	}
+	
 	//Action:
-	//	type=FunctionType? name=ID ('executes' command=[Command|QualifiedName])?;
+	//	type=FunctionType? name=ID ('uses' data=[Data|QualifiedName])? ('executes' command=[Command|QualifiedName])?;
 	public ActionElements getActionAccess() {
 		return pAction;
 	}
@@ -628,7 +964,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ViewFunction:
-	//	name=ID;
+	//	name=ID ('(' model=[Model|QualifiedName] ')')?;
 	public ViewFunctionElements getViewFunctionAccess() {
 		return pViewFunction;
 	}
@@ -655,6 +991,26 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionTypeRule() {
 		return getFunctionTypeAccess().getRule();
+	}
+	
+	//ModelType:
+	//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime';
+	public ModelTypeElements getModelTypeAccess() {
+		return pModelType;
+	}
+	
+	public ParserRule getModelTypeRule() {
+		return getModelTypeAccess().getRule();
+	}
+	
+	//Constraint:
+	//	'NotEmpty' | 'NotNull';
+	public ConstraintElements getConstraintAccess() {
+		return pConstraint;
+	}
+	
+	public ParserRule getConstraintRule() {
+		return getConstraintAccess().getRule();
 	}
 	
 	//terminal ID:
