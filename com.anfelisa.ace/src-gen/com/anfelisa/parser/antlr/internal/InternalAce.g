@@ -1050,7 +1050,7 @@ ruleViewFunction returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0());
+						newCompositeNode(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0());
 					}
 					ruleQualifiedName
 					{

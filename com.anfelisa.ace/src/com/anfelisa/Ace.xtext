@@ -74,7 +74,7 @@ View:
 ;
 
 ViewFunction:
-	name = ID ('(' model = [ Model | QualifiedName ] ')')?
+	name = ID ('(' data = [ Data | QualifiedName ] ')')?
 ;
 
 QualifiedName:

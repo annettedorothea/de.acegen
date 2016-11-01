@@ -536,13 +536,13 @@ public interface AcePackage extends EPackage
   int VIEW_FUNCTION__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Model</b></em>' reference.
+   * The feature id for the '<em><b>Data</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VIEW_FUNCTION__MODEL = 1;
+  int VIEW_FUNCTION__DATA = 1;
 
   /**
    * The number of structural features of the '<em>View Function</em>' class.
@@ -1018,15 +1018,15 @@ public interface AcePackage extends EPackage
   EAttribute getViewFunction_Name();
 
   /**
-   * Returns the meta object for the reference '{@link com.anfelisa.ace.ViewFunction#getModel <em>Model</em>}'.
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.ViewFunction#getData <em>Data</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Model</em>'.
-   * @see com.anfelisa.ace.ViewFunction#getModel()
+   * @return the meta object for the reference '<em>Data</em>'.
+   * @see com.anfelisa.ace.ViewFunction#getData()
    * @see #getViewFunction()
    * @generated
    */
-  EReference getViewFunction_Model();
+  EReference getViewFunction_Data();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1416,12 +1416,12 @@ public interface AcePackage extends EPackage
     EAttribute VIEW_FUNCTION__NAME = eINSTANCE.getViewFunction_Name();
 
     /**
-     * The meta object literal for the '<em><b>Model</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Data</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VIEW_FUNCTION__MODEL = eINSTANCE.getViewFunction_Model();
+    EReference VIEW_FUNCTION__DATA = eINSTANCE.getViewFunction_Data();
 
   }
 

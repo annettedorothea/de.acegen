@@ -9407,31 +9407,31 @@ public class InternalAceParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ViewFunction__Group_1__1__Impl"
-    // InternalAce.g:3018:1: rule__ViewFunction__Group_1__1__Impl : ( ( rule__ViewFunction__ModelAssignment_1_1 ) ) ;
+    // InternalAce.g:3018:1: rule__ViewFunction__Group_1__1__Impl : ( ( rule__ViewFunction__DataAssignment_1_1 ) ) ;
     public final void rule__ViewFunction__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAce.g:3022:1: ( ( ( rule__ViewFunction__ModelAssignment_1_1 ) ) )
-            // InternalAce.g:3023:1: ( ( rule__ViewFunction__ModelAssignment_1_1 ) )
+            // InternalAce.g:3022:1: ( ( ( rule__ViewFunction__DataAssignment_1_1 ) ) )
+            // InternalAce.g:3023:1: ( ( rule__ViewFunction__DataAssignment_1_1 ) )
             {
-            // InternalAce.g:3023:1: ( ( rule__ViewFunction__ModelAssignment_1_1 ) )
-            // InternalAce.g:3024:2: ( rule__ViewFunction__ModelAssignment_1_1 )
+            // InternalAce.g:3023:1: ( ( rule__ViewFunction__DataAssignment_1_1 ) )
+            // InternalAce.g:3024:2: ( rule__ViewFunction__DataAssignment_1_1 )
             {
-             before(grammarAccess.getViewFunctionAccess().getModelAssignment_1_1()); 
-            // InternalAce.g:3025:2: ( rule__ViewFunction__ModelAssignment_1_1 )
-            // InternalAce.g:3025:3: rule__ViewFunction__ModelAssignment_1_1
+             before(grammarAccess.getViewFunctionAccess().getDataAssignment_1_1()); 
+            // InternalAce.g:3025:2: ( rule__ViewFunction__DataAssignment_1_1 )
+            // InternalAce.g:3025:3: rule__ViewFunction__DataAssignment_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__ViewFunction__ModelAssignment_1_1();
+            rule__ViewFunction__DataAssignment_1_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getViewFunctionAccess().getModelAssignment_1_1()); 
+             after(grammarAccess.getViewFunctionAccess().getDataAssignment_1_1()); 
 
             }
 
@@ -11236,9 +11236,9 @@ public class InternalAceParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ViewFunction__NameAssignment_0"
 
 
-    // $ANTLR start "rule__ViewFunction__ModelAssignment_1_1"
-    // InternalAce.g:3703:1: rule__ViewFunction__ModelAssignment_1_1 : ( ( ruleQualifiedName ) ) ;
-    public final void rule__ViewFunction__ModelAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__ViewFunction__DataAssignment_1_1"
+    // InternalAce.g:3703:1: rule__ViewFunction__DataAssignment_1_1 : ( ( ruleQualifiedName ) ) ;
+    public final void rule__ViewFunction__DataAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -11249,21 +11249,21 @@ public class InternalAceParser extends AbstractInternalContentAssistParser {
             // InternalAce.g:3708:2: ( ( ruleQualifiedName ) )
             // InternalAce.g:3709:3: ( ruleQualifiedName )
             {
-             before(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0()); 
+             before(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0()); 
             // InternalAce.g:3710:3: ( ruleQualifiedName )
             // InternalAce.g:3711:4: ruleQualifiedName
             {
-             before(grammarAccess.getViewFunctionAccess().getModelModelQualifiedNameParserRuleCall_1_1_0_1()); 
+             before(grammarAccess.getViewFunctionAccess().getDataDataQualifiedNameParserRuleCall_1_1_0_1()); 
             pushFollow(FOLLOW_2);
             ruleQualifiedName();
 
             state._fsp--;
 
-             after(grammarAccess.getViewFunctionAccess().getModelModelQualifiedNameParserRuleCall_1_1_0_1()); 
+             after(grammarAccess.getViewFunctionAccess().getDataDataQualifiedNameParserRuleCall_1_1_0_1()); 
 
             }
 
-             after(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0()); 
+             after(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0()); 
 
             }
 
@@ -11282,7 +11282,7 @@ public class InternalAceParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ViewFunction__ModelAssignment_1_1"
+    // $ANTLR end "rule__ViewFunction__DataAssignment_1_1"
 
     // Delegated rules
 

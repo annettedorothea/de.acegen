@@ -204,6 +204,7 @@ class JavaTemplate {
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
+		import org.joda.time.DateTime;
 		
 		import org.skife.jdbi.v2.StatementContext;
 		import org.skife.jdbi.v2.tweak.ResultSetMapper;
@@ -468,11 +469,14 @@ class JavaTemplate {
 		import org.skife.jdbi.v2.Handle;
 		
 		import com.anfelisa.ace.IDataContainer;
+		«FOR renderFunction : renderFunctions»
+			«renderFunction.data.dataImport»
+		«ENDFOR»
 		
 		public class «viewName» {
 		
 			«FOR renderFunction : renderFunctions»
-			    public BiConsumer<IDataContainer, Handle> «renderFunction.name» = (dataContainer, handle) -> {
+			    public BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
 			    	// update view
 			    };
 			«ENDFOR»

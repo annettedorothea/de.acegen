@@ -675,6 +675,8 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import java.sql.SQLException;");
     _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.StatementContext;");
     _builder.newLine();
@@ -1435,6 +1437,15 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();
+    {
+      EList<ViewFunction> _renderFunctions = it.getRenderFunctions();
+      for(final ViewFunction renderFunction : _renderFunctions) {
+        Data _data = renderFunction.getData();
+        String _dataImport = this._dataExtension.dataImport(_data);
+        _builder.append(_dataImport, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("public class ");
     String _viewName = this._viewExtension.viewName(it);
@@ -1443,11 +1454,15 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {
-      EList<ViewFunction> _renderFunctions = it.getRenderFunctions();
-      for(final ViewFunction renderFunction : _renderFunctions) {
+      EList<ViewFunction> _renderFunctions_1 = it.getRenderFunctions();
+      for(final ViewFunction renderFunction_1 : _renderFunctions_1) {
         _builder.append("\t");
-        _builder.append("public BiConsumer<IDataContainer, Handle> ");
-        String _name_1 = renderFunction.getName();
+        _builder.append("public BiConsumer<");
+        Data _data_1 = renderFunction_1.getData();
+        String _dataName = this._dataExtension.dataName(_data_1);
+        _builder.append(_dataName, "\t");
+        _builder.append(", Handle> ");
+        String _name_1 = renderFunction_1.getName();
         _builder.append(_name_1, "\t");
         _builder.append(" = (dataContainer, handle) -> {");
         _builder.newLineIfNotEmpty();

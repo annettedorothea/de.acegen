@@ -183,7 +183,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ViewFunction returns ViewFunction
 	 *
 	 * Constraint:
-	 *     (name=ID model=[Model|QualifiedName]?)
+	 *     (name=ID data=[Data|QualifiedName]?)
 	 */
 	protected void sequence_ViewFunction(ISerializationContext context, ViewFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -24,7 +24,7 @@ class AttributeExtension {
     	}
 	}
 	
-	def String mapperInit(Attribute it) '''r.get«javaType»("«name»")'''
+	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new DateTime(r.getDate("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
 	def String param(Attribute it) '''@JsonProperty("«name»") «javaType» «name»'''
 	

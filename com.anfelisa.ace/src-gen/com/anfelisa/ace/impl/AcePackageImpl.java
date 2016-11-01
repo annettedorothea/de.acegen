@@ -599,7 +599,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getViewFunction_Model()
+  public EReference getViewFunction_Data()
   {
     return (EReference)viewFunctionEClass.getEStructuralFeatures().get(1);
   }
@@ -686,7 +686,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     viewFunctionEClass = createEClass(VIEW_FUNCTION);
     createEAttribute(viewFunctionEClass, VIEW_FUNCTION__NAME);
-    createEReference(viewFunctionEClass, VIEW_FUNCTION__MODEL);
+    createEReference(viewFunctionEClass, VIEW_FUNCTION__DATA);
   }
 
   /**
@@ -772,7 +772,7 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     initEClass(viewFunctionEClass, ViewFunction.class, "ViewFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getViewFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, ViewFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getViewFunction_Model(), this.getModel(), null, "model", null, 0, 1, ViewFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getViewFunction_Data(), this.getData(), null, "data", null, 0, 1, ViewFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

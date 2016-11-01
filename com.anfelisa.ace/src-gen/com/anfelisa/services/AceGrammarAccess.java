@@ -678,16 +678,16 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cModelAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final CrossReference cModelModelCrossReference_1_1_0 = (CrossReference)cModelAssignment_1_1.eContents().get(0);
-		private final RuleCall cModelModelQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cModelModelCrossReference_1_1_0.eContents().get(1);
+		private final Assignment cDataAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cDataDataCrossReference_1_1_0 = (CrossReference)cDataAssignment_1_1.eContents().get(0);
+		private final RuleCall cDataDataQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cDataDataCrossReference_1_1_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//ViewFunction:
-		//	name=ID ('(' model=[Model|QualifiedName] ')')?;
+		//	name=ID ('(' data=[Data|QualifiedName] ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('(' model=[Model|QualifiedName] ')')?
+		//name=ID ('(' data=[Data|QualifiedName] ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -696,20 +696,20 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('(' model=[Model|QualifiedName] ')')?
+		//('(' data=[Data|QualifiedName] ')')?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
 		
-		//model=[Model|QualifiedName]
-		public Assignment getModelAssignment_1_1() { return cModelAssignment_1_1; }
+		//data=[Data|QualifiedName]
+		public Assignment getDataAssignment_1_1() { return cDataAssignment_1_1; }
 		
-		//[Model|QualifiedName]
-		public CrossReference getModelModelCrossReference_1_1_0() { return cModelModelCrossReference_1_1_0; }
+		//[Data|QualifiedName]
+		public CrossReference getDataDataCrossReference_1_1_0() { return cDataDataCrossReference_1_1_0; }
 		
 		//QualifiedName
-		public RuleCall getModelModelQualifiedNameParserRuleCall_1_1_0_1() { return cModelModelQualifiedNameParserRuleCall_1_1_0_1; }
+		public RuleCall getDataDataQualifiedNameParserRuleCall_1_1_0_1() { return cDataDataQualifiedNameParserRuleCall_1_1_0_1; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
@@ -1004,7 +1004,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ViewFunction:
-	//	name=ID ('(' model=[Model|QualifiedName] ')')?;
+	//	name=ID ('(' data=[Data|QualifiedName] ')')?;
 	public ViewFunctionElements getViewFunctionAccess() {
 		return pViewFunction;
 	}

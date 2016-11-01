@@ -73,13 +73,24 @@ public class AttributeExtension {
   
   public String mapperInit(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("r.get");
-    String _javaType = this.javaType(it);
-    _builder.append(_javaType, "");
-    _builder.append("(\"");
-    String _name = it.getName();
-    _builder.append(_name, "");
-    _builder.append("\")");
+    {
+      String _type = it.getType();
+      boolean _equals = _type.equals("DateTime");
+      if (_equals) {
+        _builder.append("new DateTime(r.getDate(\"");
+        String _name = it.getName();
+        _builder.append(_name, "");
+        _builder.append("\"))");
+      } else {
+        _builder.append("r.get");
+        String _javaType = this.javaType(it);
+        _builder.append(_javaType, "");
+        _builder.append("(\"");
+        String _name_1 = it.getName();
+        _builder.append(_name_1, "");
+        _builder.append("\")");
+      }
+    }
     return _builder.toString();
   }
   

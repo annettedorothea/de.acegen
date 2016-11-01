@@ -3021,9 +3021,9 @@ rule__ViewFunction__Group_1__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getViewFunctionAccess().getModelAssignment_1_1()); }
-	(rule__ViewFunction__ModelAssignment_1_1)
-	{ after(grammarAccess.getViewFunctionAccess().getModelAssignment_1_1()); }
+	{ before(grammarAccess.getViewFunctionAccess().getDataAssignment_1_1()); }
+	(rule__ViewFunction__DataAssignment_1_1)
+	{ after(grammarAccess.getViewFunctionAccess().getDataAssignment_1_1()); }
 )
 ;
 finally {
@@ -3700,19 +3700,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ViewFunction__ModelAssignment_1_1
+rule__ViewFunction__DataAssignment_1_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0()); }
+		{ before(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0()); }
 		(
-			{ before(grammarAccess.getViewFunctionAccess().getModelModelQualifiedNameParserRuleCall_1_1_0_1()); }
+			{ before(grammarAccess.getViewFunctionAccess().getDataDataQualifiedNameParserRuleCall_1_1_0_1()); }
 			ruleQualifiedName
-			{ after(grammarAccess.getViewFunctionAccess().getModelModelQualifiedNameParserRuleCall_1_1_0_1()); }
+			{ after(grammarAccess.getViewFunctionAccess().getDataDataQualifiedNameParserRuleCall_1_1_0_1()); }
 		)
-		{ after(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0()); }
+		{ after(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0()); }
 	)
 ;
 finally {

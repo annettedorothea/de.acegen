@@ -4,7 +4,7 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
-import com.anfelisa.ace.Model;
+import com.anfelisa.ace.Data;
 import com.anfelisa.ace.ViewFunction;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getName <em>Name</em>}</li>
- *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getModel <em>Model</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ViewFunctionImpl#getData <em>Data</em>}</li>
  * </ul>
  *
  * @generated
@@ -52,14 +52,14 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getModel() <em>Model</em>}' reference.
+   * The cached value of the '{@link #getData() <em>Data</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModel()
+   * @see #getData()
    * @generated
    * @ordered
    */
-  protected Model model;
+  protected Data data;
 
   /**
    * <!-- begin-user-doc -->
@@ -110,19 +110,19 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
    * <!-- end-user-doc -->
    * @generated
    */
-  public Model getModel()
+  public Data getData()
   {
-    if (model != null && model.eIsProxy())
+    if (data != null && data.eIsProxy())
     {
-      InternalEObject oldModel = (InternalEObject)model;
-      model = (Model)eResolveProxy(oldModel);
-      if (model != oldModel)
+      InternalEObject oldData = (InternalEObject)data;
+      data = (Data)eResolveProxy(oldData);
+      if (data != oldData)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.VIEW_FUNCTION__MODEL, oldModel, model));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.VIEW_FUNCTION__DATA, oldData, data));
       }
     }
-    return model;
+    return data;
   }
 
   /**
@@ -130,9 +130,9 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
    * <!-- end-user-doc -->
    * @generated
    */
-  public Model basicGetModel()
+  public Data basicGetData()
   {
-    return model;
+    return data;
   }
 
   /**
@@ -140,12 +140,12 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setModel(Model newModel)
+  public void setData(Data newData)
   {
-    Model oldModel = model;
-    model = newModel;
+    Data oldData = data;
+    data = newData;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.VIEW_FUNCTION__MODEL, oldModel, model));
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.VIEW_FUNCTION__DATA, oldData, data));
   }
 
   /**
@@ -160,9 +160,9 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
     {
       case AcePackage.VIEW_FUNCTION__NAME:
         return getName();
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        if (resolve) return getModel();
-        return basicGetModel();
+      case AcePackage.VIEW_FUNCTION__DATA:
+        if (resolve) return getData();
+        return basicGetData();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -180,8 +180,8 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
       case AcePackage.VIEW_FUNCTION__NAME:
         setName((String)newValue);
         return;
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        setModel((Model)newValue);
+      case AcePackage.VIEW_FUNCTION__DATA:
+        setData((Data)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -200,8 +200,8 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
       case AcePackage.VIEW_FUNCTION__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        setModel((Model)null);
+      case AcePackage.VIEW_FUNCTION__DATA:
+        setData((Data)null);
         return;
     }
     super.eUnset(featureID);
@@ -219,8 +219,8 @@ public class ViewFunctionImpl extends MinimalEObjectImpl.Container implements Vi
     {
       case AcePackage.VIEW_FUNCTION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AcePackage.VIEW_FUNCTION__MODEL:
-        return model != null;
+      case AcePackage.VIEW_FUNCTION__DATA:
+        return data != null;
     }
     return super.eIsSet(featureID);
   }

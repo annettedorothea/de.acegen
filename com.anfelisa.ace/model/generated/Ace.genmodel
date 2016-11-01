@@ -58,7 +58,7 @@
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ViewFunction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ViewFunction/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ViewFunction/model"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ViewFunction/data"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

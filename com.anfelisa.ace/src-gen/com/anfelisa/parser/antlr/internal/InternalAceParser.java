@@ -2660,7 +2660,7 @@ public class InternalAceParser extends AbstractInternalAntlrParser {
                     						}
                     					
 
-                    						newCompositeNode(grammarAccess.getViewFunctionAccess().getModelModelCrossReference_1_1_0());
+                    						newCompositeNode(grammarAccess.getViewFunctionAccess().getDataDataCrossReference_1_1_0());
                     					
                     pushFollow(FOLLOW_31);
                     ruleQualifiedName();
