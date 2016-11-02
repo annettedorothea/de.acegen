@@ -3,6 +3,8 @@ package com.anfelisa.extensions
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Model
 import com.anfelisa.ace.Project
+import java.util.ArrayList
+import java.util.List
 import javax.inject.Inject
 
 class ModelExtension {
@@ -23,5 +25,14 @@ class ModelExtension {
 				return attribute;
 			}
 		}
+	}
+	def List<Attribute> allNonSerialAttributes(Model it) {
+		var list = new ArrayList<Attribute>();
+		for (attribute : attributes) {
+			if (!attribute.primaryKey) {
+				list.add(attribute);
+			}
+		}
+		return list;
 	}
 }

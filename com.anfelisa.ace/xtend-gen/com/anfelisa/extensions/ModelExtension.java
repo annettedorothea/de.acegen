@@ -4,6 +4,8 @@ import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
 import com.anfelisa.extensions.AttributeExtension;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -93,5 +95,18 @@ public class ModelExtension {
       }
     }
     return null;
+  }
+  
+  public List<Attribute> allNonSerialAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _primaryKey = this._attributeExtension.primaryKey(attribute);
+      boolean _not = (!_primaryKey);
+      if (_not) {
+        list.add(attribute);
+      }
+    }
+    return list;
   }
 }

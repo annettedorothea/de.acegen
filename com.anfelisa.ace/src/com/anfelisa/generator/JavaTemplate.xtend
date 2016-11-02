@@ -158,9 +158,17 @@ class JavaTemplate {
 				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
+			public static void insertWithId(Handle handle, «modelName» «modelParam», String schema) {
 				Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 				«FOR attribute : attributes»
+					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+				«ENDFOR»
+				statement.execute();
+			}
+			
+			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
+				Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+				«FOR attribute : allNonSerialAttributes»
 					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 				«ENDFOR»
 				statement.execute();
