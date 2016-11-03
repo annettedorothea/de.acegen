@@ -249,6 +249,11 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private String schema;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
     {
       List<Attribute> _allAttributes = this._dataExtension.allAttributes(it);
       for(final Attribute attribute : _allAttributes) {
@@ -286,7 +291,10 @@ public class JavaTemplate {
       }
     }
     _builder.append("\t\t");
-    _builder.append("@JsonProperty(\"uuid\") String uuid");
+    _builder.append("@JsonProperty(\"uuid\") String uuid,");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("@JsonProperty(\"schema\") String schema");
     _builder.newLine();
     _builder.append("\t");
     _builder.append(") {");
@@ -302,6 +310,9 @@ public class JavaTemplate {
     }
     _builder.append("\t\t");
     _builder.append("this.uuid = uuid;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.schema = schema;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -330,6 +341,19 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return this.uuid;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public String getSchema() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return this.schema;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

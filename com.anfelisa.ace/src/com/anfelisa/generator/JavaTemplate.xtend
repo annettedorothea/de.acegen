@@ -112,6 +112,8 @@ class JavaTemplate {
 			
 			private String uuid;
 			
+			private String schema;
+			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
 				
@@ -121,12 +123,14 @@ class JavaTemplate {
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
 				«ENDFOR»
-				@JsonProperty("uuid") String uuid
+				@JsonProperty("uuid") String uuid,
+				@JsonProperty("schema") String schema
 			) {
 				«FOR attribute : allAttributes»
 					«attribute.assign»
 				«ENDFOR»
 				this.uuid = uuid;
+				this.schema = schema;
 			}
 		
 			«FOR attribute : allAttributes»
@@ -137,6 +141,11 @@ class JavaTemplate {
 			@JsonProperty
 			public String getUuid() {
 				return this.uuid;
+			}
+		
+			@JsonProperty
+			public String getSchema() {
+				return this.schema;
 			}
 		
 		}
