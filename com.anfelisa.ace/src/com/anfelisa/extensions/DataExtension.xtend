@@ -12,7 +12,7 @@ class DataExtension {
 	@Inject
 	extension AttributeExtension
 	
-	def String dataName(Data it) '''«name.toFirstUpper»Data'''
+	def String dataName(Data it) '''«IF it != null»«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataNameWithPackage(Data it) '''«(eContainer as Project).name».data.«name.toFirstUpper»Data'''
 	
 	def String dataImport(Data it) '''

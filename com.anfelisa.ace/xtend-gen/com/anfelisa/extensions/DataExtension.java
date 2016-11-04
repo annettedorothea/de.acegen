@@ -23,10 +23,17 @@ public class DataExtension {
   
   public String dataName(final Data it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = it.getName();
-    String _firstUpper = StringExtensions.toFirstUpper(_name);
-    _builder.append(_firstUpper, "");
-    _builder.append("Data");
+    {
+      boolean _notEquals = (!Objects.equal(it, null));
+      if (_notEquals) {
+        String _name = it.getName();
+        String _firstUpper = StringExtensions.toFirstUpper(_name);
+        _builder.append(_firstUpper, "");
+        _builder.append("Data");
+      } else {
+        _builder.append("IDataContainer");
+      }
+    }
     return _builder.toString();
   }
   

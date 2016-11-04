@@ -82,13 +82,22 @@ public class AttributeExtension {
         _builder.append(_name, "");
         _builder.append("\"))");
       } else {
-        _builder.append("r.get");
-        String _javaType = this.javaType(it);
-        _builder.append(_javaType, "");
-        _builder.append("(\"");
-        String _name_1 = it.getName();
-        _builder.append(_name_1, "");
-        _builder.append("\")");
+        String _type_1 = it.getType();
+        boolean _equals_1 = _type_1.equals("Integer");
+        if (_equals_1) {
+          _builder.append("r.getInt(\"");
+          String _name_1 = it.getName();
+          _builder.append(_name_1, "");
+          _builder.append("\")");
+        } else {
+          _builder.append("r.get");
+          String _javaType = this.javaType(it);
+          _builder.append(_javaType, "");
+          _builder.append("(\"");
+          String _name_2 = it.getName();
+          _builder.append(_name_2, "");
+          _builder.append("\")");
+        }
       }
     }
     return _builder.toString();

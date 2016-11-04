@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class JavaTemplate {
@@ -1470,9 +1471,15 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("@");
-    String _type = it.getType();
-    _builder.append(_type, "\t");
+    {
+      String _type = it.getType();
+      boolean _notEquals = (!Objects.equal(_type, null));
+      if (_notEquals) {
+        _builder.append("@");
+        String _type_1 = it.getType();
+        _builder.append(_type_1, "\t");
+      }
+    }
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("@Timed");
@@ -1485,9 +1492,19 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public Response ");
-    String _type_1 = it.getType();
-    String _lowerCase = _type_1.toLowerCase();
-    _builder.append(_lowerCase, "\t");
+    {
+      String _type_2 = it.getType();
+      boolean _notEquals_1 = (!Objects.equal(_type_2, null));
+      if (_notEquals_1) {
+        String _type_3 = it.getType();
+        String _lowerCase = _type_3.toLowerCase();
+        _builder.append(_lowerCase, "\t");
+      } else {
+        String _resourceName_2 = this._actionExtension.resourceName(it);
+        String _firstLower = StringExtensions.toFirstLower(_resourceName_2);
+        _builder.append(_firstLower, "\t");
+      }
+    }
     _builder.append("(/* params here */) throws JsonProcessingException {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");

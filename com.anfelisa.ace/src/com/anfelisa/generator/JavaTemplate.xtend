@@ -464,11 +464,11 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«resourceName».class);
 		
-			@«type»
+			«IF type != null»@«type»«ENDIF»
 			@Timed
 			@Path("/path")
 			@PermitAll // set permission
-			public Response «type.toLowerCase»(/* params here */) throws JsonProcessingException {
+			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
 				«data.dataParamType» actionParam = null;  // init actionParam
 				return new «actionName»(actionParam, DatabaseService.getDatabaseHandle()).apply();
 			}
