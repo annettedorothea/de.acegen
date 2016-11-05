@@ -316,18 +316,27 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cUniqueAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cUniqueUniqueKeyword_0_0 = (Keyword)cUniqueAssignment_0.eContents().get(0);
-		private final Assignment cConstraintAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cConstraintConstraintParserRuleCall_1_0 = (RuleCall)cConstraintAssignment_1.eContents().get(0);
-		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeModelTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
-		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Assignment cPrimaryKeyAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cPrimaryKeyPrimaryKeyKeyword_1_0 = (Keyword)cPrimaryKeyAssignment_1.eContents().get(0);
+		private final Assignment cConstraintAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cConstraintConstraintParserRuleCall_2_0 = (RuleCall)cConstraintAssignment_2.eContents().get(0);
+		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeModelTypeParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cReferencesKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cForeignKeyAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final CrossReference cForeignKeyAttributeCrossReference_5_1_0 = (CrossReference)cForeignKeyAssignment_5_1.eContents().get(0);
+		private final RuleCall cForeignKeyAttributeQualifiedNameParserRuleCall_5_1_0_1 = (RuleCall)cForeignKeyAttributeCrossReference_5_1_0.eContents().get(1);
 		
 		//Attribute:
-		//	unique?='Unique'? constraint=Constraint? type=ModelType name=ID;
+		//	unique?='Unique'? primaryKey?='PrimaryKey'? constraint=Constraint? type=ModelType name=ID ('references'
+		//	foreignKey=[Attribute|QualifiedName])?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//unique?='Unique'? constraint=Constraint? type=ModelType name=ID
+		//unique?='Unique'? primaryKey?='PrimaryKey'? constraint=Constraint? type=ModelType name=ID ('references'
+		//foreignKey=[Attribute|QualifiedName])?
 		public Group getGroup() { return cGroup; }
 		
 		//unique?='Unique'?
@@ -336,23 +345,44 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//'Unique'
 		public Keyword getUniqueUniqueKeyword_0_0() { return cUniqueUniqueKeyword_0_0; }
 		
+		//primaryKey?='PrimaryKey'?
+		public Assignment getPrimaryKeyAssignment_1() { return cPrimaryKeyAssignment_1; }
+		
+		//'PrimaryKey'
+		public Keyword getPrimaryKeyPrimaryKeyKeyword_1_0() { return cPrimaryKeyPrimaryKeyKeyword_1_0; }
+		
 		//constraint=Constraint?
-		public Assignment getConstraintAssignment_1() { return cConstraintAssignment_1; }
+		public Assignment getConstraintAssignment_2() { return cConstraintAssignment_2; }
 		
 		//Constraint
-		public RuleCall getConstraintConstraintParserRuleCall_1_0() { return cConstraintConstraintParserRuleCall_1_0; }
+		public RuleCall getConstraintConstraintParserRuleCall_2_0() { return cConstraintConstraintParserRuleCall_2_0; }
 		
 		//type=ModelType
-		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
 		
 		//ModelType
-		public RuleCall getTypeModelTypeParserRuleCall_2_0() { return cTypeModelTypeParserRuleCall_2_0; }
+		public RuleCall getTypeModelTypeParserRuleCall_3_0() { return cTypeModelTypeParserRuleCall_3_0; }
 		
 		//name=ID
-		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
+		public RuleCall getNameIDTerminalRuleCall_4_0() { return cNameIDTerminalRuleCall_4_0; }
+		
+		//('references' foreignKey=[Attribute|QualifiedName])?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'references'
+		public Keyword getReferencesKeyword_5_0() { return cReferencesKeyword_5_0; }
+		
+		//foreignKey=[Attribute|QualifiedName]
+		public Assignment getForeignKeyAssignment_5_1() { return cForeignKeyAssignment_5_1; }
+		
+		//[Attribute|QualifiedName]
+		public CrossReference getForeignKeyAttributeCrossReference_5_1_0() { return cForeignKeyAttributeCrossReference_5_1_0; }
+		
+		//QualifiedName
+		public RuleCall getForeignKeyAttributeQualifiedNameParserRuleCall_5_1_0_1() { return cForeignKeyAttributeQualifiedNameParserRuleCall_5_1_0_1; }
 	}
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Action");
@@ -777,12 +807,13 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFloatKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 		private final Keyword cBooleanKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
 		private final Keyword cDateTimeKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cLongKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
 		
 		//ModelType:
-		//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime';
+		//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime'
+		//'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'Serial'
@@ -802,6 +833,9 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'DateTime'
 		public Keyword getDateTimeKeyword_5() { return cDateTimeKeyword_5; }
+		
+		//'Long'
+		public Keyword getLongKeyword_6() { return cLongKeyword_6; }
 	}
 	public class ConstraintElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Constraint");
@@ -939,7 +973,8 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Attribute:
-	//	unique?='Unique'? constraint=Constraint? type=ModelType name=ID;
+	//	unique?='Unique'? primaryKey?='PrimaryKey'? constraint=Constraint? type=ModelType name=ID ('references'
+	//	foreignKey=[Attribute|QualifiedName])?;
 	public AttributeElements getAttributeAccess() {
 		return pAttribute;
 	}
@@ -1034,7 +1069,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ModelType:
-	//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime';
+	//	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long';
 	public ModelTypeElements getModelTypeAccess() {
 		return pModelType;
 	}

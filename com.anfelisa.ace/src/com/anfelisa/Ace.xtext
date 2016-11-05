@@ -38,7 +38,7 @@ Data:
 ;
 
 Attribute:
-	unique ?= 'Unique'? (constraint = Constraint)? (type = ModelType) name = ID
+	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? (type = ModelType) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
 ;
 
 Action:
@@ -86,7 +86,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime'
+	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
 ;
 
 Constraint:

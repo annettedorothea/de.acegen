@@ -164,23 +164,31 @@ class JavaTemplate {
 		public class «modelDao» {
 			
 			public static void create(Handle handle, String schema) {
-				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
-			}
-			
-			public static void insertWithId(Handle handle, «modelName» «modelParam», String schema) {
-				Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
-				«FOR attribute : attributes»
-					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
-				«ENDFOR»
-				statement.execute();
+				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
 			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
-				Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
-				«FOR attribute : allNonSerialAttributes»
-					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
-				«ENDFOR»
-				statement.execute();
+				«IF findSerialAttribute != null»
+					if («modelParam».«findSerialAttribute.getterCall» != null) {
+						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+						«FOR attribute : attributes»
+							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+						«ENDFOR»
+						statement.execute();
+					} else {
+						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+						«FOR attribute : allNonSerialAttributes»
+							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+						«ENDFOR»
+						statement.execute();
+					}
+				«ELSE»
+					Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+					«FOR attribute : allNonSerialAttributes»
+						statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+					«ENDFOR»
+					statement.execute();
+				«ENDIF»
 			}
 			
 			public static void update(Handle handle, «modelName» «modelParam», String schema) {
@@ -191,20 +199,20 @@ class JavaTemplate {
 				statement.execute();
 			}
 			
-			«IF findSerialAttribute != null»
-				public static void deleteById(Handle handle, «modelName» «modelParam», String schema) {
-					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE id = :id");
-					statement.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»);
+			«FOR attribute : allUniqueAttributes»
+				public static void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
+					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»");
+					statement.bind("«attribute.name»", «attribute.name»);
 					statement.execute();
 				}
 
-				public static «modelName» selectById(Handle handle, «modelName» «modelParam», String schema) {
-					return handle.createQuery("SELECT * FROM " + schema + ".«table» WHERE id = :id")
-						.bind("«findSerialAttribute.name»", «modelParam».«findSerialAttribute.getterCall»)
+				public static «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
+					return handle.createQuery("SELECT * FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»")
+						.bind("«attribute.name»", «attribute.name»)
 						.map(new «modelMapper»())
 						.first();
 				}
-			«ENDIF»
+			«ENDFOR»
 			
 			public static List<«modelName»> selectAll(Handle handle, String schema) {
 				return handle.createQuery("SELECT * FROM " + schema + ".«table»")
@@ -396,6 +404,10 @@ class JavaTemplate {
 			@Override
 			protected void executeCommand() {
 				// execute command and set outcome
+				this.commandData = this.commandParam;
+				«IF eventsOnOutcome.size > 0»
+					this.outcome = «eventsOnOutcome.get(0).outcome»;
+				«ENDIF»
 			}
 		
 		}

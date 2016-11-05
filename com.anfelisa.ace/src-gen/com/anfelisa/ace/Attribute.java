@@ -15,9 +15,11 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.Attribute#isUnique <em>Unique</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Attribute#isPrimaryKey <em>Primary Key</em>}</li>
  *   <li>{@link com.anfelisa.ace.Attribute#getConstraint <em>Constraint</em>}</li>
  *   <li>{@link com.anfelisa.ace.Attribute#getType <em>Type</em>}</li>
  *   <li>{@link com.anfelisa.ace.Attribute#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Attribute#getForeignKey <em>Foreign Key</em>}</li>
  * </ul>
  *
  * @see com.anfelisa.ace.AcePackage#getAttribute()
@@ -51,6 +53,32 @@ public interface Attribute extends EObject
    * @generated
    */
   void setUnique(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Primary Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Primary Key</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Primary Key</em>' attribute.
+   * @see #setPrimaryKey(boolean)
+   * @see com.anfelisa.ace.AcePackage#getAttribute_PrimaryKey()
+   * @model
+   * @generated
+   */
+  boolean isPrimaryKey();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.Attribute#isPrimaryKey <em>Primary Key</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Primary Key</em>' attribute.
+   * @see #isPrimaryKey()
+   * @generated
+   */
+  void setPrimaryKey(boolean value);
 
   /**
    * Returns the value of the '<em><b>Constraint</b></em>' attribute.
@@ -129,5 +157,31 @@ public interface Attribute extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Foreign Key</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Foreign Key</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Foreign Key</em>' reference.
+   * @see #setForeignKey(Attribute)
+   * @see com.anfelisa.ace.AcePackage#getAttribute_ForeignKey()
+   * @model
+   * @generated
+   */
+  Attribute getForeignKey();
+
+  /**
+   * Sets the value of the '{@link com.anfelisa.ace.Attribute#getForeignKey <em>Foreign Key</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Foreign Key</em>' reference.
+   * @see #getForeignKey()
+   * @generated
+   */
+  void setForeignKey(Attribute value);
 
 } // Attribute

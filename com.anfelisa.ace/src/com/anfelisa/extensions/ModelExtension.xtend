@@ -26,6 +26,15 @@ class ModelExtension {
 			}
 		}
 	}
+	def List<Attribute> allUniqueAttributes(Model it) {
+		var list = new ArrayList<Attribute>();
+		for (attribute : attributes) {
+			if (attribute.unique) {
+				list.add(attribute);
+			}
+		}
+		return list;
+	}
 	def List<Attribute> allNonSerialAttributes(Model it) {
 		var list = new ArrayList<Attribute>();
 		for (attribute : attributes) {

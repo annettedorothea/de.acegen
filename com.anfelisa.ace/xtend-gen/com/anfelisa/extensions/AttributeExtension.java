@@ -1,12 +1,21 @@
 package com.anfelisa.extensions;
 
 import com.anfelisa.ace.Attribute;
+import com.anfelisa.ace.Model;
+import com.anfelisa.extensions.ModelExtension;
 import com.google.common.base.Objects;
+import com.google.inject.Inject;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AttributeExtension {
+  @Inject
+  @Extension
+  private ModelExtension _modelExtension;
+  
   public String declaration(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -36,7 +45,7 @@ public class AttributeExtension {
       String _type = it.getType();
       boolean _equals = _type.equals("Serial");
       if (_equals) {
-        _builder.append("Long");
+        _builder.append("Integer");
       } else {
         String _type_1 = it.getType();
         _builder.append(_type_1, "");
@@ -54,6 +63,9 @@ public class AttributeExtension {
         break;
       case "Integer":
         _switchResult = "integer";
+        break;
+      case "Long":
+        _switchResult = "bigint";
         break;
       case "String":
         _switchResult = "character varying";
@@ -90,13 +102,22 @@ public class AttributeExtension {
           _builder.append(_name_1, "");
           _builder.append("\")");
         } else {
-          _builder.append("r.get");
-          String _javaType = this.javaType(it);
-          _builder.append(_javaType, "");
-          _builder.append("(\"");
-          String _name_2 = it.getName();
-          _builder.append(_name_2, "");
-          _builder.append("\")");
+          String _type_2 = it.getType();
+          boolean _equals_2 = _type_2.equals("Serial");
+          if (_equals_2) {
+            _builder.append("r.getInt(\"");
+            String _name_2 = it.getName();
+            _builder.append(_name_2, "");
+            _builder.append("\")");
+          } else {
+            _builder.append("r.get");
+            String _javaType = this.javaType(it);
+            _builder.append(_javaType, "");
+            _builder.append("(\"");
+            String _name_3 = it.getName();
+            _builder.append(_name_3, "");
+            _builder.append("\")");
+          }
         }
       }
     }
@@ -133,6 +154,14 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
+  public String tableName(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = it.eContainer();
+    String _table = this._modelExtension.table(((Model) _eContainer));
+    _builder.append(_table, "");
+    return _builder.toString();
+  }
+  
   public String tableDefinition(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = it.getName();
@@ -142,7 +171,7 @@ public class AttributeExtension {
     _builder.append(_sqlType, "");
     _builder.append(" ");
     {
-      if ((Boolean.valueOf(it.isUnique()).equals("NotNull") || Boolean.valueOf(it.isUnique()).equals("NotEmpty"))) {
+      if (((!Objects.equal(it.getConstraint(), null)) && it.getConstraint().equals("NotNull"))) {
         _builder.append("NOT NULL ");
       }
     }
@@ -152,15 +181,42 @@ public class AttributeExtension {
   public String primaryKey(final Attribute it, final String tableName) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      String _type = it.getType();
-      boolean _equals = _type.equals("Serial");
-      if (_equals) {
+      boolean _isPrimaryKey = it.isPrimaryKey();
+      if (_isPrimaryKey) {
         _builder.append(", CONSTRAINT ");
         _builder.append(tableName, "");
         _builder.append("_pkey PRIMARY KEY (");
         String _name = it.getName();
         _builder.append(_name, "");
         _builder.append(")");
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String foreignKey(final Attribute it, final String tableName) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      Attribute _foreignKey = it.getForeignKey();
+      boolean _notEquals = (!Objects.equal(_foreignKey, null));
+      if (_notEquals) {
+        _builder.append(", CONSTRAINT ");
+        _builder.append(tableName, "");
+        _builder.append("_");
+        String _name = it.getName();
+        _builder.append(_name, "");
+        _builder.append("_fkey FOREIGN KEY (");
+        String _name_1 = it.getName();
+        _builder.append(_name_1, "");
+        _builder.append(") REFERENCES \" + schema + \".");
+        Attribute _foreignKey_1 = it.getForeignKey();
+        String _tableName = this.tableName(_foreignKey_1);
+        _builder.append(_tableName, "");
+        _builder.append(" ( ");
+        Attribute _foreignKey_2 = it.getForeignKey();
+        String _name_2 = _foreignKey_2.getName();
+        _builder.append(_name_2, "");
+        _builder.append(" ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE");
       }
     }
     return _builder.toString();

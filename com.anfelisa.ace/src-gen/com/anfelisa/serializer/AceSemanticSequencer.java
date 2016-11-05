@@ -90,7 +90,14 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Attribute returns Attribute
 	 *
 	 * Constraint:
-	 *     (unique?='Unique'? constraint=Constraint? type=ModelType name=ID)
+	 *     (
+	 *         unique?='Unique'? 
+	 *         primaryKey?='PrimaryKey'? 
+	 *         constraint=Constraint? 
+	 *         type=ModelType 
+	 *         name=ID 
+	 *         foreignKey=[Attribute|QualifiedName]?
+	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -89,20 +89,32 @@ public class ModelExtension {
   public Attribute findSerialAttribute(final Model it) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
-      boolean _primaryKey = this._attributeExtension.primaryKey(attribute);
-      if (_primaryKey) {
+      boolean _isPrimaryKey = attribute.isPrimaryKey();
+      if (_isPrimaryKey) {
         return attribute;
       }
     }
     return null;
   }
   
+  public List<Attribute> allUniqueAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _isUnique = attribute.isUnique();
+      if (_isUnique) {
+        list.add(attribute);
+      }
+    }
+    return list;
+  }
+  
   public List<Attribute> allNonSerialAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
-      boolean _primaryKey = this._attributeExtension.primaryKey(attribute);
-      boolean _not = (!_primaryKey);
+      boolean _isPrimaryKey = attribute.isPrimaryKey();
+      boolean _not = (!_isPrimaryKey);
       if (_not) {
         list.add(attribute);
       }

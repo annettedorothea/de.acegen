@@ -9,6 +9,7 @@ import com.anfelisa.ace.Attribute;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -22,9 +23,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#isUnique <em>Unique</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#isPrimaryKey <em>Primary Key</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#getConstraint <em>Constraint</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#getType <em>Type</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,6 +53,26 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @ordered
    */
   protected boolean unique = UNIQUE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isPrimaryKey() <em>Primary Key</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isPrimaryKey()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean PRIMARY_KEY_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isPrimaryKey() <em>Primary Key</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isPrimaryKey()
+   * @generated
+   * @ordered
+   */
+  protected boolean primaryKey = PRIMARY_KEY_EDEFAULT;
 
   /**
    * The default value of the '{@link #getConstraint() <em>Constraint</em>}' attribute.
@@ -112,6 +135,16 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected String name = NAME_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getForeignKey() <em>Foreign Key</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getForeignKey()
+   * @generated
+   * @ordered
+   */
+  protected Attribute foreignKey;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -153,6 +186,29 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     unique = newUnique;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.ATTRIBUTE__UNIQUE, oldUnique, unique));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isPrimaryKey()
+  {
+    return primaryKey;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPrimaryKey(boolean newPrimaryKey)
+  {
+    boolean oldPrimaryKey = primaryKey;
+    primaryKey = newPrimaryKey;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.ATTRIBUTE__PRIMARY_KEY, oldPrimaryKey, primaryKey));
   }
 
   /**
@@ -229,6 +285,49 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * <!-- end-user-doc -->
    * @generated
    */
+  public Attribute getForeignKey()
+  {
+    if (foreignKey != null && foreignKey.eIsProxy())
+    {
+      InternalEObject oldForeignKey = (InternalEObject)foreignKey;
+      foreignKey = (Attribute)eResolveProxy(oldForeignKey);
+      if (foreignKey != oldForeignKey)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.ATTRIBUTE__FOREIGN_KEY, oldForeignKey, foreignKey));
+      }
+    }
+    return foreignKey;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attribute basicGetForeignKey()
+  {
+    return foreignKey;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setForeignKey(Attribute newForeignKey)
+  {
+    Attribute oldForeignKey = foreignKey;
+    foreignKey = newForeignKey;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.ATTRIBUTE__FOREIGN_KEY, oldForeignKey, foreignKey));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -236,12 +335,17 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     {
       case AcePackage.ATTRIBUTE__UNIQUE:
         return isUnique();
+      case AcePackage.ATTRIBUTE__PRIMARY_KEY:
+        return isPrimaryKey();
       case AcePackage.ATTRIBUTE__CONSTRAINT:
         return getConstraint();
       case AcePackage.ATTRIBUTE__TYPE:
         return getType();
       case AcePackage.ATTRIBUTE__NAME:
         return getName();
+      case AcePackage.ATTRIBUTE__FOREIGN_KEY:
+        if (resolve) return getForeignKey();
+        return basicGetForeignKey();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -259,6 +363,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AcePackage.ATTRIBUTE__UNIQUE:
         setUnique((Boolean)newValue);
         return;
+      case AcePackage.ATTRIBUTE__PRIMARY_KEY:
+        setPrimaryKey((Boolean)newValue);
+        return;
       case AcePackage.ATTRIBUTE__CONSTRAINT:
         setConstraint((String)newValue);
         return;
@@ -267,6 +374,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AcePackage.ATTRIBUTE__NAME:
         setName((String)newValue);
+        return;
+      case AcePackage.ATTRIBUTE__FOREIGN_KEY:
+        setForeignKey((Attribute)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -285,6 +395,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AcePackage.ATTRIBUTE__UNIQUE:
         setUnique(UNIQUE_EDEFAULT);
         return;
+      case AcePackage.ATTRIBUTE__PRIMARY_KEY:
+        setPrimaryKey(PRIMARY_KEY_EDEFAULT);
+        return;
       case AcePackage.ATTRIBUTE__CONSTRAINT:
         setConstraint(CONSTRAINT_EDEFAULT);
         return;
@@ -293,6 +406,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AcePackage.ATTRIBUTE__NAME:
         setName(NAME_EDEFAULT);
+        return;
+      case AcePackage.ATTRIBUTE__FOREIGN_KEY:
+        setForeignKey((Attribute)null);
         return;
     }
     super.eUnset(featureID);
@@ -310,12 +426,16 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     {
       case AcePackage.ATTRIBUTE__UNIQUE:
         return unique != UNIQUE_EDEFAULT;
+      case AcePackage.ATTRIBUTE__PRIMARY_KEY:
+        return primaryKey != PRIMARY_KEY_EDEFAULT;
       case AcePackage.ATTRIBUTE__CONSTRAINT:
         return CONSTRAINT_EDEFAULT == null ? constraint != null : !CONSTRAINT_EDEFAULT.equals(constraint);
       case AcePackage.ATTRIBUTE__TYPE:
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case AcePackage.ATTRIBUTE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AcePackage.ATTRIBUTE__FOREIGN_KEY:
+        return foreignKey != null;
     }
     return super.eIsSet(featureID);
   }
@@ -333,6 +453,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (unique: ");
     result.append(unique);
+    result.append(", primaryKey: ");
+    result.append(primaryKey);
     result.append(", constraint: ");
     result.append(constraint);
     result.append(", type: ");

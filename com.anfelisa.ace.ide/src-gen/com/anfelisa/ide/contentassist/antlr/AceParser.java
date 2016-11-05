@@ -49,6 +49,7 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
 					put(grammarAccess.getDataAccess().getGroup(), "rule__Data__Group__0");
 					put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
+					put(grammarAccess.getAttributeAccess().getGroup_5(), "rule__Attribute__Group_5__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_2(), "rule__Action__Group_2__0");
 					put(grammarAccess.getActionAccess().getGroup_3(), "rule__Action__Group_3__0");
@@ -81,9 +82,11 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataAccess().getNameAssignment_0(), "rule__Data__NameAssignment_0");
 					put(grammarAccess.getDataAccess().getModelsAssignment_3(), "rule__Data__ModelsAssignment_3");
 					put(grammarAccess.getAttributeAccess().getUniqueAssignment_0(), "rule__Attribute__UniqueAssignment_0");
-					put(grammarAccess.getAttributeAccess().getConstraintAssignment_1(), "rule__Attribute__ConstraintAssignment_1");
-					put(grammarAccess.getAttributeAccess().getTypeAssignment_2(), "rule__Attribute__TypeAssignment_2");
-					put(grammarAccess.getAttributeAccess().getNameAssignment_3(), "rule__Attribute__NameAssignment_3");
+					put(grammarAccess.getAttributeAccess().getPrimaryKeyAssignment_1(), "rule__Attribute__PrimaryKeyAssignment_1");
+					put(grammarAccess.getAttributeAccess().getConstraintAssignment_2(), "rule__Attribute__ConstraintAssignment_2");
+					put(grammarAccess.getAttributeAccess().getTypeAssignment_3(), "rule__Attribute__TypeAssignment_3");
+					put(grammarAccess.getAttributeAccess().getNameAssignment_4(), "rule__Attribute__NameAssignment_4");
+					put(grammarAccess.getAttributeAccess().getForeignKeyAssignment_5_1(), "rule__Attribute__ForeignKeyAssignment_5_1");
 					put(grammarAccess.getActionAccess().getTypeAssignment_0(), "rule__Action__TypeAssignment_0");
 					put(grammarAccess.getActionAccess().getNameAssignment_1(), "rule__Action__NameAssignment_1");
 					put(grammarAccess.getActionAccess().getDataAssignment_2_1(), "rule__Action__DataAssignment_2_1");

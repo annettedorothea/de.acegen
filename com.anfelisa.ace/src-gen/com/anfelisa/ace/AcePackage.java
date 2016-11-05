@@ -251,13 +251,22 @@ public interface AcePackage extends EPackage
   int ATTRIBUTE__UNIQUE = 0;
 
   /**
+   * The feature id for the '<em><b>Primary Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE__PRIMARY_KEY = 1;
+
+  /**
    * The feature id for the '<em><b>Constraint</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__CONSTRAINT = 1;
+  int ATTRIBUTE__CONSTRAINT = 2;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -266,7 +275,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__TYPE = 2;
+  int ATTRIBUTE__TYPE = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -275,7 +284,16 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__NAME = 3;
+  int ATTRIBUTE__NAME = 4;
+
+  /**
+   * The feature id for the '<em><b>Foreign Key</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE__FOREIGN_KEY = 5;
 
   /**
    * The number of structural features of the '<em>Attribute</em>' class.
@@ -284,7 +302,7 @@ public interface AcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_FEATURE_COUNT = 4;
+  int ATTRIBUTE_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.ActionImpl <em>Action</em>}' class.
@@ -749,6 +767,17 @@ public interface AcePackage extends EPackage
   EAttribute getAttribute_Unique();
 
   /**
+   * Returns the meta object for the attribute '{@link com.anfelisa.ace.Attribute#isPrimaryKey <em>Primary Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Primary Key</em>'.
+   * @see com.anfelisa.ace.Attribute#isPrimaryKey()
+   * @see #getAttribute()
+   * @generated
+   */
+  EAttribute getAttribute_PrimaryKey();
+
+  /**
    * Returns the meta object for the attribute '{@link com.anfelisa.ace.Attribute#getConstraint <em>Constraint</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -780,6 +809,17 @@ public interface AcePackage extends EPackage
    * @generated
    */
   EAttribute getAttribute_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.Attribute#getForeignKey <em>Foreign Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Foreign Key</em>'.
+   * @see com.anfelisa.ace.Attribute#getForeignKey()
+   * @see #getAttribute()
+   * @generated
+   */
+  EReference getAttribute_ForeignKey();
 
   /**
    * Returns the meta object for class '{@link com.anfelisa.ace.Action <em>Action</em>}'.
@@ -1204,6 +1244,14 @@ public interface AcePackage extends EPackage
     EAttribute ATTRIBUTE__UNIQUE = eINSTANCE.getAttribute_Unique();
 
     /**
+     * The meta object literal for the '<em><b>Primary Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE__PRIMARY_KEY = eINSTANCE.getAttribute_PrimaryKey();
+
+    /**
      * The meta object literal for the '<em><b>Constraint</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1226,6 +1274,14 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EAttribute ATTRIBUTE__NAME = eINSTANCE.getAttribute_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Foreign Key</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE__FOREIGN_KEY = eINSTANCE.getAttribute_ForeignKey();
 
     /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.ActionImpl <em>Action</em>}' class.

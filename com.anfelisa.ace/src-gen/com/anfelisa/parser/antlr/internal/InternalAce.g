@@ -502,10 +502,24 @@ ruleAttribute returns [EObject current=null]
 		)?
 		(
 			(
+				lv_primaryKey_1_0='PrimaryKey'
 				{
-					newCompositeNode(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_1_0());
+					newLeafNode(lv_primaryKey_1_0, grammarAccess.getAttributeAccess().getPrimaryKeyPrimaryKeyKeyword_1_0());
 				}
-				lv_constraint_1_0=ruleConstraint
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getAttributeRule());
+					}
+					setWithLastConsumed($current, "primaryKey", true, "PrimaryKey");
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_2_0());
+				}
+				lv_constraint_2_0=ruleConstraint
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getAttributeRule());
@@ -513,7 +527,7 @@ ruleAttribute returns [EObject current=null]
 					set(
 						$current,
 						"constraint",
-						lv_constraint_1_0,
+						lv_constraint_2_0,
 						"com.anfelisa.Ace.Constraint");
 					afterParserOrEnumRuleCall();
 				}
@@ -522,9 +536,9 @@ ruleAttribute returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getAttributeAccess().getTypeModelTypeParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getAttributeAccess().getTypeModelTypeParserRuleCall_3_0());
 				}
-				lv_type_2_0=ruleModelType
+				lv_type_3_0=ruleModelType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getAttributeRule());
@@ -532,7 +546,7 @@ ruleAttribute returns [EObject current=null]
 					set(
 						$current,
 						"type",
-						lv_type_2_0,
+						lv_type_3_0,
 						"com.anfelisa.Ace.ModelType");
 					afterParserOrEnumRuleCall();
 				}
@@ -540,9 +554,9 @@ ruleAttribute returns [EObject current=null]
 		)
 		(
 			(
-				lv_name_3_0=RULE_ID
+				lv_name_4_0=RULE_ID
 				{
-					newLeafNode(lv_name_3_0, grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_3_0());
+					newLeafNode(lv_name_4_0, grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_4_0());
 				}
 				{
 					if ($current==null) {
@@ -551,11 +565,33 @@ ruleAttribute returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_3_0,
+						lv_name_4_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
+		(
+			otherlv_5='references'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getAttributeAccess().getReferencesKeyword_5_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getAttributeRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getAttributeAccess().getForeignKeyAttributeCrossReference_5_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
 	)
 ;
 
@@ -1198,6 +1234,12 @@ ruleModelType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 		{
 			$current.merge(kw);
 			newLeafNode(kw, grammarAccess.getModelTypeAccess().getDateTimeKeyword_5());
+		}
+		    |
+		kw='Long'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getModelTypeAccess().getLongKeyword_6());
 		}
 	)
 ;
