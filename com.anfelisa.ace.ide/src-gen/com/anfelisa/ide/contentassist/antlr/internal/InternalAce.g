@@ -124,6 +124,31 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+// Entry rule entryRuleModelRef
+entryRuleModelRef
+:
+{ before(grammarAccess.getModelRefRule()); }
+	 ruleModelRef
+{ after(grammarAccess.getModelRefRule()); } 
+	 EOF 
+;
+
+// Rule ModelRef
+ruleModelRef 
+	@init {
+		int stackSize = keepStackSize();
+	}
+	:
+	(
+		{ before(grammarAccess.getModelRefAccess().getGroup()); }
+		(rule__ModelRef__Group__0)
+		{ after(grammarAccess.getModelRefAccess().getGroup()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 // Entry rule entryRuleAttribute
 entryRuleAttribute
 :
@@ -1679,6 +1704,60 @@ rule__Data__Group__4__Impl
 	{ before(grammarAccess.getDataAccess().getRightParenthesisKeyword_4()); }
 	')'
 	{ after(grammarAccess.getDataAccess().getRightParenthesisKeyword_4()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ModelRef__Group__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ModelRef__Group__0__Impl
+	rule__ModelRef__Group__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ModelRef__Group__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getModelRefAccess().getListAssignment_0()); }
+	(rule__ModelRef__ListAssignment_0)?
+	{ after(grammarAccess.getModelRefAccess().getListAssignment_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ModelRef__Group__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ModelRef__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ModelRef__Group__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getModelRefAccess().getModelAssignment_1()); }
+	(rule__ModelRef__ModelAssignment_1)
+	{ after(grammarAccess.getModelRefAccess().getModelAssignment_1()); }
 )
 ;
 finally {
@@ -3469,13 +3548,47 @@ rule__Data__ModelsAssignment_3
 	}
 :
 	(
-		{ before(grammarAccess.getDataAccess().getModelsModelCrossReference_3_0()); }
+		{ before(grammarAccess.getDataAccess().getModelsModelRefParserRuleCall_3_0()); }
+		ruleModelRef
+		{ after(grammarAccess.getDataAccess().getModelsModelRefParserRuleCall_3_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ModelRef__ListAssignment_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getModelRefAccess().getListListKeyword_0_0()); }
 		(
-			{ before(grammarAccess.getDataAccess().getModelsModelQualifiedNameParserRuleCall_3_0_1()); }
-			ruleQualifiedName
-			{ after(grammarAccess.getDataAccess().getModelsModelQualifiedNameParserRuleCall_3_0_1()); }
+			{ before(grammarAccess.getModelRefAccess().getListListKeyword_0_0()); }
+			'List'
+			{ after(grammarAccess.getModelRefAccess().getListListKeyword_0_0()); }
 		)
-		{ after(grammarAccess.getDataAccess().getModelsModelCrossReference_3_0()); }
+		{ after(grammarAccess.getModelRefAccess().getListListKeyword_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ModelRef__ModelAssignment_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getModelRefAccess().getModelModelCrossReference_1_0()); }
+		(
+			{ before(grammarAccess.getModelRefAccess().getModelModelQualifiedNameParserRuleCall_1_0_1()); }
+			ruleQualifiedName
+			{ after(grammarAccess.getModelRefAccess().getModelModelQualifiedNameParserRuleCall_1_0_1()); }
+		)
+		{ after(grammarAccess.getModelRefAccess().getModelModelCrossReference_1_0()); }
 	)
 ;
 finally {

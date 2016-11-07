@@ -53,19 +53,19 @@ public interface Data extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Models</b></em>' reference list.
-   * The list contents are of type {@link com.anfelisa.ace.Model}.
+   * Returns the value of the '<em><b>Models</b></em>' containment reference list.
+   * The list contents are of type {@link com.anfelisa.ace.ModelRef}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Models</em>' reference list isn't clear,
+   * If the meaning of the '<em>Models</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Models</em>' reference list.
+   * @return the value of the '<em>Models</em>' containment reference list.
    * @see com.anfelisa.ace.AcePackage#getData_Models()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  EList<Model> getModels();
+  EList<ModelRef> getModels();
 
 } // Data

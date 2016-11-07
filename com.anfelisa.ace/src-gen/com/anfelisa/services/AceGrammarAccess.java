@@ -274,17 +274,16 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cModelsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cModelsModelCrossReference_3_0 = (CrossReference)cModelsAssignment_3.eContents().get(0);
-		private final RuleCall cModelsModelQualifiedNameParserRuleCall_3_0_1 = (RuleCall)cModelsModelCrossReference_3_0.eContents().get(1);
+		private final RuleCall cModelsModelRefParserRuleCall_3_0 = (RuleCall)cModelsAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Data:
 		//	name=ID ':' '('
-		//	models+=[Model|QualifiedName]*
+		//	models+=ModelRef*
 		//	')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ':' '(' models+=[Model|QualifiedName]* ')'
+		//name=ID ':' '(' models+=ModelRef* ')'
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -299,17 +298,45 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
-		//models+=[Model|QualifiedName]*
+		//models+=ModelRef*
 		public Assignment getModelsAssignment_3() { return cModelsAssignment_3; }
 		
-		//[Model|QualifiedName]
-		public CrossReference getModelsModelCrossReference_3_0() { return cModelsModelCrossReference_3_0; }
-		
-		//QualifiedName
-		public RuleCall getModelsModelQualifiedNameParserRuleCall_3_0_1() { return cModelsModelQualifiedNameParserRuleCall_3_0_1; }
+		//ModelRef
+		public RuleCall getModelsModelRefParserRuleCall_3_0() { return cModelsModelRefParserRuleCall_3_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class ModelRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.ModelRef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cListAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cListListKeyword_0_0 = (Keyword)cListAssignment_0.eContents().get(0);
+		private final Assignment cModelAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cModelModelCrossReference_1_0 = (CrossReference)cModelAssignment_1.eContents().get(0);
+		private final RuleCall cModelModelQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cModelModelCrossReference_1_0.eContents().get(1);
+		
+		//ModelRef:
+		//	list?='List'? model=[Model|QualifiedName];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//list?='List'? model=[Model|QualifiedName]
+		public Group getGroup() { return cGroup; }
+		
+		//list?='List'?
+		public Assignment getListAssignment_0() { return cListAssignment_0; }
+		
+		//'List'
+		public Keyword getListListKeyword_0_0() { return cListListKeyword_0_0; }
+		
+		//model=[Model|QualifiedName]
+		public Assignment getModelAssignment_1() { return cModelAssignment_1; }
+		
+		//[Model|QualifiedName]
+		public CrossReference getModelModelCrossReference_1_0() { return cModelModelCrossReference_1_0; }
+		
+		//QualifiedName
+		public RuleCall getModelModelQualifiedNameParserRuleCall_1_0_1() { return cModelModelQualifiedNameParserRuleCall_1_0_1; }
 	}
 	public class AttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Attribute");
@@ -861,6 +888,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	private final ProjectElements pProject;
 	private final ModelElements pModel;
 	private final DataElements pData;
+	private final ModelRefElements pModelRef;
 	private final AttributeElements pAttribute;
 	private final ActionElements pAction;
 	private final CommandElements pCommand;
@@ -885,6 +913,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		this.pProject = new ProjectElements();
 		this.pModel = new ModelElements();
 		this.pData = new DataElements();
+		this.pModelRef = new ModelRefElements();
 		this.pAttribute = new AttributeElements();
 		this.pAction = new ActionElements();
 		this.pCommand = new CommandElements();
@@ -962,7 +991,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Data:
 	//	name=ID ':' '('
-	//	models+=[Model|QualifiedName]*
+	//	models+=ModelRef*
 	//	')';
 	public DataElements getDataAccess() {
 		return pData;
@@ -970,6 +999,16 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDataRule() {
 		return getDataAccess().getRule();
+	}
+	
+	//ModelRef:
+	//	list?='List'? model=[Model|QualifiedName];
+	public ModelRefElements getModelRefAccess() {
+		return pModelRef;
+	}
+	
+	public ParserRule getModelRefRule() {
+		return getModelRefAccess().getRule();
 	}
 	
 	//Attribute:

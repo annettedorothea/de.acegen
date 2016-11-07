@@ -214,7 +214,7 @@ public interface AcePackage extends EPackage
   int DATA__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Models</b></em>' reference list.
+   * The feature id for the '<em><b>Models</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -232,6 +232,43 @@ public interface AcePackage extends EPackage
   int DATA_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see com.anfelisa.ace.impl.ModelRefImpl
+   * @see com.anfelisa.ace.impl.AcePackageImpl#getModelRef()
+   * @generated
+   */
+  int MODEL_REF = 3;
+
+  /**
+   * The feature id for the '<em><b>List</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_REF__LIST = 0;
+
+  /**
+   * The feature id for the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_REF__MODEL = 1;
+
+  /**
+   * The number of structural features of the '<em>Model Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_REF_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.AttributeImpl <em>Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -239,7 +276,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 3;
+  int ATTRIBUTE = 4;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -312,7 +349,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getAction()
    * @generated
    */
-  int ACTION = 4;
+  int ACTION = 5;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -367,7 +404,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getCommand()
    * @generated
    */
-  int COMMAND = 5;
+  int COMMAND = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -413,7 +450,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getEventOnOutcome()
    * @generated
    */
-  int EVENT_ON_OUTCOME = 6;
+  int EVENT_ON_OUTCOME = 7;
 
   /**
    * The feature id for the '<em><b>Outcome</b></em>' attribute.
@@ -459,7 +496,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getEvent()
    * @generated
    */
-  int EVENT = 7;
+  int EVENT = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -505,7 +542,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getView()
    * @generated
    */
-  int VIEW = 8;
+  int VIEW = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -542,7 +579,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getViewFunction()
    * @generated
    */
-  int VIEW_FUNCTION = 9;
+  int VIEW_FUNCTION = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -735,15 +772,47 @@ public interface AcePackage extends EPackage
   EAttribute getData_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link com.anfelisa.ace.Data#getModels <em>Models</em>}'.
+   * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Data#getModels <em>Models</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Models</em>'.
+   * @return the meta object for the containment reference list '<em>Models</em>'.
    * @see com.anfelisa.ace.Data#getModels()
    * @see #getData()
    * @generated
    */
   EReference getData_Models();
+
+  /**
+   * Returns the meta object for class '{@link com.anfelisa.ace.ModelRef <em>Model Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Model Ref</em>'.
+   * @see com.anfelisa.ace.ModelRef
+   * @generated
+   */
+  EClass getModelRef();
+
+  /**
+   * Returns the meta object for the attribute '{@link com.anfelisa.ace.ModelRef#isList <em>List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>List</em>'.
+   * @see com.anfelisa.ace.ModelRef#isList()
+   * @see #getModelRef()
+   * @generated
+   */
+  EAttribute getModelRef_List();
+
+  /**
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.ModelRef#getModel <em>Model</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Model</em>'.
+   * @see com.anfelisa.ace.ModelRef#getModel()
+   * @see #getModelRef()
+   * @generated
+   */
+  EReference getModelRef_Model();
 
   /**
    * Returns the meta object for class '{@link com.anfelisa.ace.Attribute <em>Attribute</em>}'.
@@ -1218,12 +1287,38 @@ public interface AcePackage extends EPackage
     EAttribute DATA__NAME = eINSTANCE.getData_Name();
 
     /**
-     * The meta object literal for the '<em><b>Models</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Models</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference DATA__MODELS = eINSTANCE.getData_Models();
+
+    /**
+     * The meta object literal for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see com.anfelisa.ace.impl.ModelRefImpl
+     * @see com.anfelisa.ace.impl.AcePackageImpl#getModelRef()
+     * @generated
+     */
+    EClass MODEL_REF = eINSTANCE.getModelRef();
+
+    /**
+     * The meta object literal for the '<em><b>List</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MODEL_REF__LIST = eINSTANCE.getModelRef_List();
+
+    /**
+     * The meta object literal for the '<em><b>Model</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODEL_REF__MODEL = eINSTANCE.getModelRef_Model();
 
     /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.AttributeImpl <em>Attribute</em>}' class.

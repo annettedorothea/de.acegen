@@ -12,6 +12,7 @@ import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Model;
+import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 import com.anfelisa.ace.ViewFunction;
@@ -51,6 +52,13 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * @generated
    */
   private EClass dataEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass modelRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -322,6 +330,36 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
   public EReference getData_Models()
   {
     return (EReference)dataEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getModelRef()
+  {
+    return modelRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getModelRef_List()
+  {
+    return (EAttribute)modelRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModelRef_Model()
+  {
+    return (EReference)modelRefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -673,6 +711,10 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     createEAttribute(dataEClass, DATA__NAME);
     createEReference(dataEClass, DATA__MODELS);
 
+    modelRefEClass = createEClass(MODEL_REF);
+    createEAttribute(modelRefEClass, MODEL_REF__LIST);
+    createEReference(modelRefEClass, MODEL_REF__MODEL);
+
     attributeEClass = createEClass(ATTRIBUTE);
     createEAttribute(attributeEClass, ATTRIBUTE__UNIQUE);
     createEAttribute(attributeEClass, ATTRIBUTE__PRIMARY_KEY);
@@ -759,7 +801,11 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
 
     initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getData_Name(), ecorePackage.getEString(), "name", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getData_Models(), this.getModel(), null, "models", null, 0, -1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getData_Models(), this.getModelRef(), null, "models", null, 0, -1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(modelRefEClass, ModelRef.class, "ModelRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getModelRef_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, ModelRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModelRef_Model(), this.getModel(), null, "model", null, 0, 1, ModelRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttribute_Unique(), ecorePackage.getEBoolean(), "unique", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

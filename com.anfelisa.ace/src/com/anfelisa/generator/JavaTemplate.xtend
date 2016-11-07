@@ -100,15 +100,16 @@ class JavaTemplate {
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
+		import java.util.List;
 		
 		import com.anfelisa.ace.IDataContainer;
 		
 		«FOR model : models»
-			«model.importModel»
+			«model.model.importModel»
 		«ENDFOR»
 		
 		@SuppressWarnings("unused")
-		public class «dataName» implements «FOR model : models SEPARATOR ', '»«model.modelName»«ENDFOR», IDataContainer {
+		public class «dataName» implements «FOR model : allNonListModels SEPARATOR ', ' AFTER ','»«model.modelName»«ENDFOR» IDataContainer {
 			
 			private String uuid;
 			
@@ -116,6 +117,11 @@ class JavaTemplate {
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
+				
+			«ENDFOR»
+		
+			«FOR model : allListModels»
+				List<«model.modelName»> «model.modelListAttributeName»;
 				
 			«ENDFOR»
 		
@@ -136,6 +142,11 @@ class JavaTemplate {
 			«FOR attribute : allAttributes»
 				«attribute.getter»
 				«attribute.setter»
+				
+			«ENDFOR»
+			«FOR model : allListModels»
+				«model.listGetter»
+				«model.listSetter»
 				
 			«ENDFOR»
 			@JsonProperty

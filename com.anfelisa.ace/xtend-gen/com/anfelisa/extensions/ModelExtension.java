@@ -3,22 +3,15 @@ package com.anfelisa.extensions;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
 import com.anfelisa.ace.Project;
-import com.anfelisa.extensions.AttributeExtension;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class ModelExtension {
-  @Inject
-  @Extension
-  private AttributeExtension _attributeExtension;
-  
   public String modelName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -26,6 +19,14 @@ public class ModelExtension {
     String _firstUpper = StringExtensions.toFirstUpper(_name);
     _builder.append(_firstUpper, "");
     _builder.append("Model");
+    return _builder.toString();
+  }
+  
+  public String modelListAttributeName(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    _builder.append(_name, "");
+    _builder.append("List");
     return _builder.toString();
   }
   
@@ -120,5 +121,55 @@ public class ModelExtension {
       }
     }
     return list;
+  }
+  
+  public String listGetter(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("public List<");
+    String _modelName = this.modelName(it);
+    _builder.append(_modelName, "");
+    _builder.append("> get");
+    String _modelListAttributeName = this.modelListAttributeName(it);
+    String _firstUpper = StringExtensions.toFirstUpper(_modelListAttributeName);
+    _builder.append(_firstUpper, "");
+    _builder.append("() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return this.");
+    String _modelListAttributeName_1 = this.modelListAttributeName(it);
+    _builder.append(_modelListAttributeName_1, "\t");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public String listSetter(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public void set");
+    String _modelListAttributeName = this.modelListAttributeName(it);
+    String _firstUpper = StringExtensions.toFirstUpper(_modelListAttributeName);
+    _builder.append(_firstUpper, "");
+    _builder.append("(List<");
+    String _modelName = this.modelName(it);
+    _builder.append(_modelName, "");
+    _builder.append("> ");
+    String _modelListAttributeName_1 = this.modelListAttributeName(it);
+    _builder.append(_modelListAttributeName_1, "");
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("this.");
+    String _modelListAttributeName_2 = this.modelListAttributeName(it);
+    _builder.append(_modelListAttributeName_2, "\t");
+    _builder.append(" = ");
+    String _modelListAttributeName_3 = this.modelListAttributeName(it);
+    _builder.append(_modelListAttributeName_3, "\t");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
   }
 }

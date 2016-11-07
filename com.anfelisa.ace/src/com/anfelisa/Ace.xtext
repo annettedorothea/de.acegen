@@ -33,8 +33,12 @@ Model:
 
 Data:
 	name = ID ':' '('
-		(models += [Model | QualifiedName])*
+		(models += ModelRef)*
 	')'
+;
+
+ModelRef: 
+	list ?= 'List'? model = [Model | QualifiedName]
 ;
 
 Attribute:

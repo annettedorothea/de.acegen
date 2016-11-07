@@ -450,15 +450,18 @@ ruleData returns [EObject current=null]
 		(
 			(
 				{
+					newCompositeNode(grammarAccess.getDataAccess().getModelsModelRefParserRuleCall_3_0());
+				}
+				lv_models_3_0=ruleModelRef
+				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getDataRule());
+						$current = createModelElementForParent(grammarAccess.getDataRule());
 					}
-				}
-				{
-					newCompositeNode(grammarAccess.getDataAccess().getModelsModelCrossReference_3_0());
-				}
-				ruleQualifiedName
-				{
+					add(
+						$current,
+						"models",
+						lv_models_3_0,
+						"com.anfelisa.Ace.ModelRef");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -467,6 +470,55 @@ ruleData returns [EObject current=null]
 		{
 			newLeafNode(otherlv_4, grammarAccess.getDataAccess().getRightParenthesisKeyword_4());
 		}
+	)
+;
+
+// Entry rule entryRuleModelRef
+entryRuleModelRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getModelRefRule()); }
+	iv_ruleModelRef=ruleModelRef
+	{ $current=$iv_ruleModelRef.current; }
+	EOF;
+
+// Rule ModelRef
+ruleModelRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_list_0_0='List'
+				{
+					newLeafNode(lv_list_0_0, grammarAccess.getModelRefAccess().getListListKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getModelRefRule());
+					}
+					setWithLastConsumed($current, "list", true, "List");
+				}
+			)
+		)?
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getModelRefRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getModelRefAccess().getModelModelCrossReference_1_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 	)
 ;
 

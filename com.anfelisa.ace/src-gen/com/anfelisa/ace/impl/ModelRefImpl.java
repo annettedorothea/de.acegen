@@ -4,15 +4,10 @@
 package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
-import com.anfelisa.ace.Data;
+import com.anfelisa.ace.Model;
 import com.anfelisa.ace.ModelRef;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -20,61 +15,58 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Data</b></em>'.
+ * An implementation of the model object '<em><b>Model Ref</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.anfelisa.ace.impl.DataImpl#getName <em>Name</em>}</li>
- *   <li>{@link com.anfelisa.ace.impl.DataImpl#getModels <em>Models</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ModelRefImpl#isList <em>List</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ModelRefImpl#getModel <em>Model</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class DataImpl extends MinimalEObjectImpl.Container implements Data
+public class ModelRefImpl extends MinimalEObjectImpl.Container implements ModelRef
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #isList() <em>List</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isList()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final boolean LIST_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #isList() <em>List</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isList()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected boolean list = LIST_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getModels() <em>Models</em>}' containment reference list.
+   * The cached value of the '{@link #getModel() <em>Model</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModels()
+   * @see #getModel()
    * @generated
    * @ordered
    */
-  protected EList<ModelRef> models;
+  protected Model model;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected DataImpl()
+  protected ModelRefImpl()
   {
     super();
   }
@@ -87,7 +79,7 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   @Override
   protected EClass eStaticClass()
   {
-    return AcePackage.Literals.DATA;
+    return AcePackage.Literals.MODEL_REF;
   }
 
   /**
@@ -95,9 +87,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public boolean isList()
   {
-    return name;
+    return list;
   }
 
   /**
@@ -105,12 +97,12 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setList(boolean newList)
   {
-    String oldName = name;
-    name = newName;
+    boolean oldList = list;
+    list = newList;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.DATA__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.MODEL_REF__LIST, oldList, list));
   }
 
   /**
@@ -118,13 +110,19 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ModelRef> getModels()
+  public Model getModel()
   {
-    if (models == null)
+    if (model != null && model.eIsProxy())
     {
-      models = new EObjectContainmentEList<ModelRef>(ModelRef.class, this, AcePackage.DATA__MODELS);
+      InternalEObject oldModel = (InternalEObject)model;
+      model = (Model)eResolveProxy(oldModel);
+      if (model != oldModel)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AcePackage.MODEL_REF__MODEL, oldModel, model));
+      }
     }
-    return models;
+    return model;
   }
 
   /**
@@ -132,15 +130,22 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  public Model basicGetModel()
   {
-    switch (featureID)
-    {
-      case AcePackage.DATA__MODELS:
-        return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+    return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setModel(Model newModel)
+  {
+    Model oldModel = model;
+    model = newModel;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AcePackage.MODEL_REF__MODEL, oldModel, model));
   }
 
   /**
@@ -153,10 +158,11 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case AcePackage.DATA__NAME:
-        return getName();
-      case AcePackage.DATA__MODELS:
-        return getModels();
+      case AcePackage.MODEL_REF__LIST:
+        return isList();
+      case AcePackage.MODEL_REF__MODEL:
+        if (resolve) return getModel();
+        return basicGetModel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -166,18 +172,16 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case AcePackage.DATA__NAME:
-        setName((String)newValue);
+      case AcePackage.MODEL_REF__LIST:
+        setList((Boolean)newValue);
         return;
-      case AcePackage.DATA__MODELS:
-        getModels().clear();
-        getModels().addAll((Collection<? extends ModelRef>)newValue);
+      case AcePackage.MODEL_REF__MODEL:
+        setModel((Model)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -193,11 +197,11 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case AcePackage.DATA__NAME:
-        setName(NAME_EDEFAULT);
+      case AcePackage.MODEL_REF__LIST:
+        setList(LIST_EDEFAULT);
         return;
-      case AcePackage.DATA__MODELS:
-        getModels().clear();
+      case AcePackage.MODEL_REF__MODEL:
+        setModel((Model)null);
         return;
     }
     super.eUnset(featureID);
@@ -213,10 +217,10 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
   {
     switch (featureID)
     {
-      case AcePackage.DATA__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AcePackage.DATA__MODELS:
-        return models != null && !models.isEmpty();
+      case AcePackage.MODEL_REF__LIST:
+        return list != LIST_EDEFAULT;
+      case AcePackage.MODEL_REF__MODEL:
+        return model != null;
     }
     return super.eIsSet(featureID);
   }
@@ -232,10 +236,10 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (list: ");
+    result.append(list);
     result.append(')');
     return result.toString();
   }
 
-} //DataImpl
+} //ModelRefImpl

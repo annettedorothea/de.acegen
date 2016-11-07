@@ -10,6 +10,7 @@ import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Model;
+import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
 import com.anfelisa.ace.View;
 import com.anfelisa.ace.ViewFunction;
@@ -58,6 +59,9 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case AcePackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case AcePackage.MODEL_REF:
+				sequence_ModelRef(context, (ModelRef) semanticObject); 
 				return; 
 			case AcePackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
@@ -121,7 +125,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Data returns Data
 	 *
 	 * Constraint:
-	 *     (name=ID models+=[Model|QualifiedName]*)
+	 *     (name=ID models+=ModelRef*)
 	 */
 	protected void sequence_Data(ISerializationContext context, Data semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -148,6 +152,18 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (name=ID data=[Data|QualifiedName]? listeners+=[ViewFunction|QualifiedName]*)
 	 */
 	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ModelRef returns ModelRef
+	 *
+	 * Constraint:
+	 *     (list?='List'? model=[Model|QualifiedName])
+	 */
+	protected void sequence_ModelRef(ISerializationContext context, ModelRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

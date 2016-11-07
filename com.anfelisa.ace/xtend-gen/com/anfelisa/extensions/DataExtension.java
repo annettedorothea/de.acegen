@@ -3,6 +3,7 @@ package com.anfelisa.extensions;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Model;
+import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
 import com.anfelisa.extensions.AttributeExtension;
 import com.google.common.base.Objects;
@@ -88,18 +89,50 @@ public class DataExtension {
   
   public List<Attribute> allAttributes(final Data it) {
     final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
-    EList<Model> _models = it.getModels();
-    for (final Model model : _models) {
-      EList<Attribute> _attributes = model.getAttributes();
-      for (final Attribute attribute : _attributes) {
-        boolean _contains = this.contains(attribute, attrs);
-        boolean _not = (!_contains);
-        if (_not) {
-          attrs.add(attribute);
+    EList<ModelRef> _models = it.getModels();
+    for (final ModelRef model : _models) {
+      boolean _isList = model.isList();
+      boolean _not = (!_isList);
+      if (_not) {
+        Model _model = model.getModel();
+        EList<Attribute> _attributes = _model.getAttributes();
+        for (final Attribute attribute : _attributes) {
+          boolean _contains = this.contains(attribute, attrs);
+          boolean _not_1 = (!_contains);
+          if (_not_1) {
+            attrs.add(attribute);
+          }
         }
       }
     }
     return attrs;
+  }
+  
+  public List<Model> allListModels(final Data it) {
+    final ArrayList<Model> listModels = new ArrayList<Model>();
+    EList<ModelRef> _models = it.getModels();
+    for (final ModelRef model : _models) {
+      boolean _isList = model.isList();
+      if (_isList) {
+        Model _model = model.getModel();
+        listModels.add(_model);
+      }
+    }
+    return listModels;
+  }
+  
+  public List<Model> allNonListModels(final Data it) {
+    final ArrayList<Model> nonListModels = new ArrayList<Model>();
+    EList<ModelRef> _models = it.getModels();
+    for (final ModelRef model : _models) {
+      boolean _isList = model.isList();
+      boolean _not = (!_isList);
+      if (_not) {
+        Model _model = model.getModel();
+        nonListModels.add(_model);
+      }
+    }
+    return nonListModels;
   }
   
   private boolean contains(final Attribute attribute, final List<Attribute> attributes) {

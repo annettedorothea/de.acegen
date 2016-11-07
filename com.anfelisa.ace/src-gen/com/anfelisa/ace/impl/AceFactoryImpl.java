@@ -68,6 +68,7 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
       case AcePackage.PROJECT: return createProject();
       case AcePackage.MODEL: return createModel();
       case AcePackage.DATA: return createData();
+      case AcePackage.MODEL_REF: return createModelRef();
       case AcePackage.ATTRIBUTE: return createAttribute();
       case AcePackage.ACTION: return createAction();
       case AcePackage.COMMAND: return createCommand();
@@ -111,6 +112,17 @@ public class AceFactoryImpl extends EFactoryImpl implements AceFactory
   {
     DataImpl data = new DataImpl();
     return data;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ModelRef createModelRef()
+  {
+    ModelRefImpl modelRef = new ModelRefImpl();
+    return modelRef;
   }
 
   /**
