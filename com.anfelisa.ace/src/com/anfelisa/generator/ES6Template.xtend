@@ -69,7 +69,10 @@ class ES6Template {
 			        this.actionParam.schema = localStorage.schema;
 			    }
 		    	if (localStorage.role) {
-			        this.actionParam.schema = localStorage.role;
+			        this.actionParam.role = localStorage.role;
+			    }
+		    	if (localStorage.language) {
+			        this.actionParam.language = localStorage.language;
 			    }
 		    	// capture user input
 		    }
@@ -87,6 +90,9 @@ class ES6Template {
 		    	if (this.actionParam.role) {
 		    		this.actionData.role = this.actionParam.role;
 		    	}
+		    	if (this.actionParam.language) {
+		    		this.actionData.language = this.actionParam.language;
+		    	}
 		    	// bind action parameters to action data
 		    }
 		
@@ -102,6 +108,9 @@ class ES6Template {
 		    	}
 		    	if (this.actionParam.role) {
 		    		localStorage.role = this.actionParam.role;
+		    	}
+		    	if (this.actionParam.language) {
+		    		localStorage.language = this.actionParam.language;
 		    	}
 		    	// release action params during replay
 		    }
@@ -773,7 +782,7 @@ class ES6Template {
 		    }
 		
 		    static finishReplay() {
-		        App.completeReplay();
+		        //App.completeReplay();
 		        ACEController.passed = true;
 		        if (document.getElementById("replayResultDiv")) {
 		            let table = document.getElementById("replayResultDiv");
