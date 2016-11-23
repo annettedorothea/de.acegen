@@ -371,11 +371,7 @@ class ES6Template {
 		                    resolve(data);
 		                },
 		                error: function (jqxhr, textStatus, error) {
-		                    if (jqxhr.status === 401) {
-		                        reject(this.httpUnauthorized);
-		                    } else {
-		                        reject(this.httpServerError);
-		                    }
+		                	reject(error);
 		                }
 		            });
 		        });
@@ -401,11 +397,7 @@ class ES6Template {
 		                    resolve();
 		                },
 		                error: function (jqxhr, textStatus, error) {
-		                    if (jqxhr.status === 401) {
-		                        reject(this.httpUnauthorized);
-		                    } else {
-		                        reject(this.httpServerError);
-		                    }
+		                	reject(error);
 		                }
 		            });
 		        });
@@ -431,11 +423,7 @@ class ES6Template {
 		                    resolve();
 		                },
 		                error: function (jqxhr, textStatus, error) {
-		                    if (jqxhr.status === 401) {
-		                        reject(this.httpUnauthorized);
-		                    } else {
-		                        reject(this.httpServerError);
-		                    }
+		                	reject(error);
 		                }
 		            });
 		        });
@@ -461,11 +449,7 @@ class ES6Template {
 		                    resolve();
 		                },
 		                error: function (jqxhr, textStatus, error) {
-		                    if (jqxhr.status === 401) {
-		                        reject(this.httpUnauthorized);
-		                    } else {
-		                        reject(this.httpServerError);
-		                    }
+		                	reject(error);
 		                }
 		            });
 		        });
