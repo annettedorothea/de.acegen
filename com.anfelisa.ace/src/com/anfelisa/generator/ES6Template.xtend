@@ -212,7 +212,7 @@ class ES6Template {
 		
 		class «viewName» {
 		    «FOR renderFunction : renderFunctions»
-		    	static «renderFunction.name»(data) {
+		    	static «renderFunction.name»(eventData) {
 		    	};
 		    	
 		    «ENDFOR»

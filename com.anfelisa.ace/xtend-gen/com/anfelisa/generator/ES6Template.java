@@ -558,7 +558,7 @@ public class ES6Template {
         _builder.append("static ");
         String _name = renderFunction.getName();
         _builder.append(_name, "    ");
-        _builder.append("(data) {");
+        _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
         _builder.append("    ");
         _builder.append("};");
