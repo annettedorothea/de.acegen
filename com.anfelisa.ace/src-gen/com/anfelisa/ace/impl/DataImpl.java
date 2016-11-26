@@ -5,6 +5,7 @@ package com.anfelisa.ace.impl;
 
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Data;
+import com.anfelisa.ace.DataRef;
 import com.anfelisa.ace.ModelRef;
 
 import java.util.Collection;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link com.anfelisa.ace.impl.DataImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.DataImpl#getModels <em>Models</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.DataImpl#getDataLists <em>Data Lists</em>}</li>
  * </ul>
  *
  * @generated
@@ -68,6 +70,16 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * @ordered
    */
   protected EList<ModelRef> models;
+
+  /**
+   * The cached value of the '{@link #getDataLists() <em>Data Lists</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDataLists()
+   * @generated
+   * @ordered
+   */
+  protected EList<DataRef> dataLists;
 
   /**
    * <!-- begin-user-doc -->
@@ -132,6 +144,20 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<DataRef> getDataLists()
+  {
+    if (dataLists == null)
+    {
+      dataLists = new EObjectContainmentEList<DataRef>(DataRef.class, this, AcePackage.DATA__DATA_LISTS);
+    }
+    return dataLists;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -139,6 +165,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
     {
       case AcePackage.DATA__MODELS:
         return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
+      case AcePackage.DATA__DATA_LISTS:
+        return ((InternalEList<?>)getDataLists()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -157,6 +185,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
         return getName();
       case AcePackage.DATA__MODELS:
         return getModels();
+      case AcePackage.DATA__DATA_LISTS:
+        return getDataLists();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -179,6 +209,10 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
         getModels().clear();
         getModels().addAll((Collection<? extends ModelRef>)newValue);
         return;
+      case AcePackage.DATA__DATA_LISTS:
+        getDataLists().clear();
+        getDataLists().addAll((Collection<? extends DataRef>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -199,6 +233,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
       case AcePackage.DATA__MODELS:
         getModels().clear();
         return;
+      case AcePackage.DATA__DATA_LISTS:
+        getDataLists().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -217,6 +254,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AcePackage.DATA__MODELS:
         return models != null && !models.isEmpty();
+      case AcePackage.DATA__DATA_LISTS:
+        return dataLists != null && !dataLists.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -23,6 +23,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AceGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Command___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__a;
 	protected AbstractElementAlias match_Command___RightCurlyBracketKeyword_2_2_LeftCurlyBracketKeyword_2_0__a;
+	protected AbstractElementAlias match_Data___ColonKeyword_5_0_LeftParenthesisKeyword_5_1_RightParenthesisKeyword_5_3__q;
 	protected AbstractElementAlias match_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q;
 	protected AbstractElementAlias match_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_Event___ListenedToByKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q;
@@ -46,6 +47,7 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 		grammarAccess = (AceGrammarAccess) access;
 		match_Command___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getCommandAccess().getLeftCurlyBracketKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getCommandAccess().getRightCurlyBracketKeyword_2_2()));
 		match_Command___RightCurlyBracketKeyword_2_2_LeftCurlyBracketKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getCommandAccess().getRightCurlyBracketKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getCommandAccess().getLeftCurlyBracketKeyword_2_0()));
+		match_Data___ColonKeyword_5_0_LeftParenthesisKeyword_5_1_RightParenthesisKeyword_5_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDataAccess().getColonKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getDataAccess().getLeftParenthesisKeyword_5_1()), new TokenAlias(false, false, grammarAccess.getDataAccess().getRightParenthesisKeyword_5_3()));
 		match_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getPublishesKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getLeftParenthesisKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getRightParenthesisKeyword_2_3()));
 		match_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getEventOnOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_Event___ListenedToByKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEventAccess().getListenedToByKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getEventAccess().getLeftParenthesisKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getEventAccess().getRightParenthesisKeyword_2_3()));
@@ -81,6 +83,8 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Command___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Command___RightCurlyBracketKeyword_2_2_LeftCurlyBracketKeyword_2_0__a.equals(syntax))
 				emit_Command___RightCurlyBracketKeyword_2_2_LeftCurlyBracketKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Data___ColonKeyword_5_0_LeftParenthesisKeyword_5_1_RightParenthesisKeyword_5_3__q.equals(syntax))
+				emit_Data___ColonKeyword_5_0_LeftParenthesisKeyword_5_1_RightParenthesisKeyword_5_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q.equals(syntax))
 				emit_EventOnOutcome___PublishesKeyword_2_0_LeftParenthesisKeyword_2_1_RightParenthesisKeyword_2_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_EventOnOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q.equals(syntax))
@@ -142,6 +146,18 @@ public class AceSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID '{' (ambiguity) eventsOnOutcome+=EventOnOutcome
 	 */
 	protected void emit_Command___RightCurlyBracketKeyword_2_2_LeftCurlyBracketKeyword_2_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     (':' '(' ')')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     models+=ModelRef ')' (ambiguity) (rule end)
+	 *     name=ID ':' '(' ')' (ambiguity) (rule end)
+	 */
+	protected void emit_Data___ColonKeyword_5_0_LeftParenthesisKeyword_5_1_RightParenthesisKeyword_5_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

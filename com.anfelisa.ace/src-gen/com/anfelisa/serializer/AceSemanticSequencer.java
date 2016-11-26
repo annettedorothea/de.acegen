@@ -7,6 +7,7 @@ import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Data;
+import com.anfelisa.ace.DataRef;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Model;
@@ -23,7 +24,9 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -50,6 +53,9 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case AcePackage.DATA:
 				sequence_Data(context, (Data) semanticObject); 
+				return; 
+			case AcePackage.DATA_REF:
+				sequence_DataRef(context, (DataRef) semanticObject); 
 				return; 
 			case AcePackage.EVENT:
 				sequence_Event(context, (Event) semanticObject); 
@@ -122,10 +128,28 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     DataRef returns DataRef
+	 *
+	 * Constraint:
+	 *     data=[Data|QualifiedName]
+	 */
+	protected void sequence_DataRef(ISerializationContext context, DataRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AcePackage.Literals.DATA_REF__DATA) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AcePackage.Literals.DATA_REF__DATA));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDataRefAccess().getDataDataQualifiedNameParserRuleCall_1_0_1(), semanticObject.getData());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Data returns Data
 	 *
 	 * Constraint:
-	 *     (name=ID models+=ModelRef*)
+	 *     (name=ID models+=ModelRef* dataLists+=DataRef*)
 	 */
 	protected void sequence_Data(ISerializationContext context, Data semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

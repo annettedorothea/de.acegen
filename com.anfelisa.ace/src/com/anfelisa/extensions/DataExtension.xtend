@@ -79,4 +79,17 @@ class DataExtension {
 			this.commandData.getUuid()
 		)'''
 	
+	def String listGetter(Data it) '''
+		@JsonProperty
+		public List<«dataNameWithPackage»> get«dataName.toFirstUpper»List() {
+			return this.«dataName.toFirstLower»List;
+		}'''
+	
+	def String listSetter(Data it) '''
+		public void set«dataName.toFirstUpper»List(List<«dataNameWithPackage»> «dataName.toFirstLower»List) {
+			this.«dataName.toFirstLower»List = «dataName.toFirstLower»List;
+		}'''
+	
+	
+	
 }

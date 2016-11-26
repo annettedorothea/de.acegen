@@ -223,13 +223,22 @@ public interface AcePackage extends EPackage
   int DATA__MODELS = 1;
 
   /**
+   * The feature id for the '<em><b>Data Lists</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA__DATA_LISTS = 2;
+
+  /**
    * The number of structural features of the '<em>Data</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DATA_FEATURE_COUNT = 2;
+  int DATA_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.
@@ -269,6 +278,34 @@ public interface AcePackage extends EPackage
   int MODEL_REF_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link com.anfelisa.ace.impl.DataRefImpl <em>Data Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see com.anfelisa.ace.impl.DataRefImpl
+   * @see com.anfelisa.ace.impl.AcePackageImpl#getDataRef()
+   * @generated
+   */
+  int DATA_REF = 4;
+
+  /**
+   * The feature id for the '<em><b>Data</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_REF__DATA = 0;
+
+  /**
+   * The number of structural features of the '<em>Data Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_REF_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.AttributeImpl <em>Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -276,7 +313,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 4;
+  int ATTRIBUTE = 5;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -349,7 +386,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getAction()
    * @generated
    */
-  int ACTION = 5;
+  int ACTION = 6;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -404,7 +441,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getCommand()
    * @generated
    */
-  int COMMAND = 6;
+  int COMMAND = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -450,7 +487,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getEventOnOutcome()
    * @generated
    */
-  int EVENT_ON_OUTCOME = 7;
+  int EVENT_ON_OUTCOME = 8;
 
   /**
    * The feature id for the '<em><b>Outcome</b></em>' attribute.
@@ -496,7 +533,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getEvent()
    * @generated
    */
-  int EVENT = 8;
+  int EVENT = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -542,7 +579,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getView()
    * @generated
    */
-  int VIEW = 9;
+  int VIEW = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -579,7 +616,7 @@ public interface AcePackage extends EPackage
    * @see com.anfelisa.ace.impl.AcePackageImpl#getViewFunction()
    * @generated
    */
-  int VIEW_FUNCTION = 10;
+  int VIEW_FUNCTION = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -783,6 +820,17 @@ public interface AcePackage extends EPackage
   EReference getData_Models();
 
   /**
+   * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Data#getDataLists <em>Data Lists</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Data Lists</em>'.
+   * @see com.anfelisa.ace.Data#getDataLists()
+   * @see #getData()
+   * @generated
+   */
+  EReference getData_DataLists();
+
+  /**
    * Returns the meta object for class '{@link com.anfelisa.ace.ModelRef <em>Model Ref</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -813,6 +861,27 @@ public interface AcePackage extends EPackage
    * @generated
    */
   EReference getModelRef_Model();
+
+  /**
+   * Returns the meta object for class '{@link com.anfelisa.ace.DataRef <em>Data Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Data Ref</em>'.
+   * @see com.anfelisa.ace.DataRef
+   * @generated
+   */
+  EClass getDataRef();
+
+  /**
+   * Returns the meta object for the reference '{@link com.anfelisa.ace.DataRef#getData <em>Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Data</em>'.
+   * @see com.anfelisa.ace.DataRef#getData()
+   * @see #getDataRef()
+   * @generated
+   */
+  EReference getDataRef_Data();
 
   /**
    * Returns the meta object for class '{@link com.anfelisa.ace.Attribute <em>Attribute</em>}'.
@@ -1295,6 +1364,14 @@ public interface AcePackage extends EPackage
     EReference DATA__MODELS = eINSTANCE.getData_Models();
 
     /**
+     * The meta object literal for the '<em><b>Data Lists</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DATA__DATA_LISTS = eINSTANCE.getData_DataLists();
+
+    /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1319,6 +1396,24 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EReference MODEL_REF__MODEL = eINSTANCE.getModelRef_Model();
+
+    /**
+     * The meta object literal for the '{@link com.anfelisa.ace.impl.DataRefImpl <em>Data Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see com.anfelisa.ace.impl.DataRefImpl
+     * @see com.anfelisa.ace.impl.AcePackageImpl#getDataRef()
+     * @generated
+     */
+    EClass DATA_REF = eINSTANCE.getDataRef();
+
+    /**
+     * The meta object literal for the '<em><b>Data</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DATA_REF__DATA = eINSTANCE.getDataRef_Data();
 
     /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.AttributeImpl <em>Attribute</em>}' class.

@@ -35,10 +35,17 @@ Data:
 	name = ID ':' '('
 		(models += ModelRef)*
 	')'
+	(':' '('
+		(dataLists += DataRef)*
+	')')?
 ;
 
 ModelRef: 
 	list ?= 'List'? model = [Model | QualifiedName]
+;
+
+DataRef: 
+	'List' data = [Data | QualifiedName]
 ;
 
 Attribute:
@@ -90,7 +97,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
+	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
 ;
 
 Constraint:

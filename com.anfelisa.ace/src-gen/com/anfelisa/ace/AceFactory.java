@@ -60,6 +60,15 @@ public interface AceFactory extends EFactory
   ModelRef createModelRef();
 
   /**
+   * Returns a new object of class '<em>Data Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Ref</em>'.
+   * @generated
+   */
+  DataRef createDataRef();
+
+  /**
    * Returns a new object of class '<em>Attribute</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

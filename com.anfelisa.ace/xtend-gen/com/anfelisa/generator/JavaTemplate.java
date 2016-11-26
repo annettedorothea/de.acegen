@@ -4,6 +4,7 @@ import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Data;
+import com.anfelisa.ace.DataRef;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Model;
@@ -291,10 +292,30 @@ public class JavaTemplate {
       }
     }
     _builder.newLine();
+    {
+      EList<DataRef> _dataLists = it.getDataLists();
+      for(final DataRef data : _dataLists) {
+        _builder.append("\t");
+        _builder.append("List<");
+        Data _data = data.getData();
+        String _dataNameWithPackage = this._dataExtension.dataNameWithPackage(_data);
+        _builder.append(_dataNameWithPackage, "\t");
+        _builder.append("> ");
+        Data _data_1 = data.getData();
+        String _dataName_1 = this._dataExtension.dataName(_data_1);
+        String _firstLower = StringExtensions.toFirstLower(_dataName_1);
+        _builder.append(_firstLower, "\t");
+        _builder.append("List;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _dataName_1 = this._dataExtension.dataName(it);
-    _builder.append(_dataName_1, "\t");
+    String _dataName_2 = this._dataExtension.dataName(it);
+    _builder.append(_dataName_2, "\t");
     _builder.append("(");
     _builder.newLineIfNotEmpty();
     {
@@ -368,6 +389,23 @@ public class JavaTemplate {
         _builder.append("\t");
         String _listSetter = this._modelExtension.listSetter(model_3);
         _builder.append(_listSetter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    {
+      EList<DataRef> _dataLists_1 = it.getDataLists();
+      for(final DataRef data_1 : _dataLists_1) {
+        _builder.append("\t");
+        Data _data_2 = data_1.getData();
+        String _listGetter_1 = this._dataExtension.listGetter(_data_2);
+        _builder.append(_listGetter_1, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        Data _data_3 = data_1.getData();
+        String _listSetter_1 = this._dataExtension.listSetter(_data_3);
+        _builder.append(_listSetter_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
@@ -1683,6 +1721,9 @@ public class JavaTemplate {
     _builder.append("(/* params here */) throws JsonProcessingException {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
+    _builder.append("DatabaseHandle handle = this.createDatabaseHandle();");
+    _builder.newLine();
+    _builder.append("\t\t");
     Data _data_1 = it.getData();
     String _dataParamType = this._dataExtension.dataParamType(_data_1);
     _builder.append(_dataParamType, "\t\t");
@@ -1692,7 +1733,7 @@ public class JavaTemplate {
     _builder.append("return new ");
     String _actionName_1 = this._actionExtension.actionName(it);
     _builder.append(_actionName_1, "\t\t");
-    _builder.append("(actionParam, this.createDatabaseHandle()).apply();");
+    _builder.append("(actionParam, handle).apply();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");

@@ -101,6 +101,13 @@ public class AceSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AcePackage.DATA_REF:
+      {
+        DataRef dataRef = (DataRef)theEObject;
+        T result = caseDataRef(dataRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AcePackage.ATTRIBUTE:
       {
         Attribute attribute = (Attribute)theEObject;
@@ -214,6 +221,22 @@ public class AceSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModelRef(ModelRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataRef(DataRef object)
   {
     return null;
   }

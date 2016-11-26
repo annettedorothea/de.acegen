@@ -187,4 +187,58 @@ public class DataExtension {
     _builder.append(")");
     return _builder;
   }
+  
+  public String listGetter(final Data it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("public List<");
+    String _dataNameWithPackage = this.dataNameWithPackage(it);
+    _builder.append(_dataNameWithPackage, "");
+    _builder.append("> get");
+    String _dataName = this.dataName(it);
+    String _firstUpper = StringExtensions.toFirstUpper(_dataName);
+    _builder.append(_firstUpper, "");
+    _builder.append("List() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return this.");
+    String _dataName_1 = this.dataName(it);
+    String _firstLower = StringExtensions.toFirstLower(_dataName_1);
+    _builder.append(_firstLower, "\t");
+    _builder.append("List;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public String listSetter(final Data it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public void set");
+    String _dataName = this.dataName(it);
+    String _firstUpper = StringExtensions.toFirstUpper(_dataName);
+    _builder.append(_firstUpper, "");
+    _builder.append("List(List<");
+    String _dataNameWithPackage = this.dataNameWithPackage(it);
+    _builder.append(_dataNameWithPackage, "");
+    _builder.append("> ");
+    String _dataName_1 = this.dataName(it);
+    String _firstLower = StringExtensions.toFirstLower(_dataName_1);
+    _builder.append(_firstLower, "");
+    _builder.append("List) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("this.");
+    String _dataName_2 = this.dataName(it);
+    String _firstLower_1 = StringExtensions.toFirstLower(_dataName_2);
+    _builder.append(_firstLower_1, "\t");
+    _builder.append("List = ");
+    String _dataName_3 = this.dataName(it);
+    String _firstLower_2 = StringExtensions.toFirstLower(_dataName_3);
+    _builder.append(_firstLower_2, "\t");
+    _builder.append("List;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
+  }
 }

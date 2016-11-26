@@ -96,6 +96,11 @@ public class AceAdapterFactory extends AdapterFactoryImpl
         return createModelRefAdapter();
       }
       @Override
+      public Adapter caseDataRef(DataRef object)
+      {
+        return createDataRefAdapter();
+      }
+      @Override
       public Adapter caseAttribute(Attribute object)
       {
         return createAttributeAdapter();
@@ -208,6 +213,21 @@ public class AceAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link com.anfelisa.ace.DataRef <em>Data Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see com.anfelisa.ace.DataRef
+   * @generated
+   */
+  public Adapter createDataRefAdapter()
   {
     return null;
   }

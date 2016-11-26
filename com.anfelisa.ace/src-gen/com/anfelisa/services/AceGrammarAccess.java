@@ -276,14 +276,22 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModelsAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cModelsModelRefParserRuleCall_3_0 = (RuleCall)cModelsAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cColonKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cDataListsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cDataListsDataRefParserRuleCall_5_2_0 = (RuleCall)cDataListsAssignment_5_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
 		
 		//Data:
 		//	name=ID ':' '('
 		//	models+=ModelRef*
-		//	')';
+		//	')' (':' '('
+		//	dataLists+=DataRef*
+		//	')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ':' '(' models+=ModelRef* ')'
+		//name=ID ':' '(' models+=ModelRef* ')' (':' '(' dataLists+=DataRef* ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -306,6 +314,24 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		
+		//(':' '(' dataLists+=DataRef* ')')?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//':'
+		public Keyword getColonKeyword_5_0() { return cColonKeyword_5_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_5_1() { return cLeftParenthesisKeyword_5_1; }
+		
+		//dataLists+=DataRef*
+		public Assignment getDataListsAssignment_5_2() { return cDataListsAssignment_5_2; }
+		
+		//DataRef
+		public RuleCall getDataListsDataRefParserRuleCall_5_2_0() { return cDataListsDataRefParserRuleCall_5_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_5_3() { return cRightParenthesisKeyword_5_3; }
 	}
 	public class ModelRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.ModelRef");
@@ -337,6 +363,33 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//QualifiedName
 		public RuleCall getModelModelQualifiedNameParserRuleCall_1_0_1() { return cModelModelQualifiedNameParserRuleCall_1_0_1; }
+	}
+	public class DataRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.DataRef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cListKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cDataAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cDataDataCrossReference_1_0 = (CrossReference)cDataAssignment_1.eContents().get(0);
+		private final RuleCall cDataDataQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cDataDataCrossReference_1_0.eContents().get(1);
+		
+		//DataRef:
+		//	'List' data=[Data|QualifiedName];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'List' data=[Data|QualifiedName]
+		public Group getGroup() { return cGroup; }
+		
+		//'List'
+		public Keyword getListKeyword_0() { return cListKeyword_0; }
+		
+		//data=[Data|QualifiedName]
+		public Assignment getDataAssignment_1() { return cDataAssignment_1; }
+		
+		//[Data|QualifiedName]
+		public CrossReference getDataDataCrossReference_1_0() { return cDataDataCrossReference_1_0; }
+		
+		//QualifiedName
+		public RuleCall getDataDataQualifiedNameParserRuleCall_1_0_1() { return cDataDataQualifiedNameParserRuleCall_1_0_1; }
 	}
 	public class AttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "com.anfelisa.Ace.Attribute");
@@ -889,6 +942,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	private final ModelElements pModel;
 	private final DataElements pData;
 	private final ModelRefElements pModelRef;
+	private final DataRefElements pDataRef;
 	private final AttributeElements pAttribute;
 	private final ActionElements pAction;
 	private final CommandElements pCommand;
@@ -914,6 +968,7 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 		this.pModel = new ModelElements();
 		this.pData = new DataElements();
 		this.pModelRef = new ModelRefElements();
+		this.pDataRef = new DataRefElements();
 		this.pAttribute = new AttributeElements();
 		this.pAction = new ActionElements();
 		this.pCommand = new CommandElements();
@@ -992,7 +1047,9 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	//Data:
 	//	name=ID ':' '('
 	//	models+=ModelRef*
-	//	')';
+	//	')' (':' '('
+	//	dataLists+=DataRef*
+	//	')')?;
 	public DataElements getDataAccess() {
 		return pData;
 	}
@@ -1009,6 +1066,16 @@ public class AceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getModelRefRule() {
 		return getModelRefAccess().getRule();
+	}
+	
+	//DataRef:
+	//	'List' data=[Data|QualifiedName];
+	public DataRefElements getDataRefAccess() {
+		return pDataRef;
+	}
+	
+	public ParserRule getDataRefRule() {
+		return getDataRefAccess().getRule();
 	}
 	
 	//Attribute:

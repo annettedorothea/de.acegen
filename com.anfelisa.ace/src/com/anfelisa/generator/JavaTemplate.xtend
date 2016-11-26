@@ -125,6 +125,11 @@ class JavaTemplate {
 				
 			«ENDFOR»
 		
+			«FOR data : dataLists»
+				List<«data.data.dataNameWithPackage»> «data.data.dataName.toFirstLower»List;
+				
+			«ENDFOR»
+		
 			public «dataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
@@ -147,6 +152,11 @@ class JavaTemplate {
 			«FOR model : allListModels»
 				«model.listGetter»
 				«model.listSetter»
+				
+			«ENDFOR»
+			«FOR data : dataLists»
+				«data.data.listGetter»
+				«data.data.listSetter»
 				
 			«ENDFOR»
 			@JsonProperty
@@ -496,8 +506,9 @@ class JavaTemplate {
 			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
 			@PermitAll // set permission
 			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
+				DatabaseHandle handle = this.createDatabaseHandle();
 				«data.dataParamType» actionParam = null;  // init actionParam
-				return new «actionName»(actionParam, this.createDatabaseHandle()).apply();
+				return new «actionName»(actionParam, handle).apply();
 			}
 		
 		}
