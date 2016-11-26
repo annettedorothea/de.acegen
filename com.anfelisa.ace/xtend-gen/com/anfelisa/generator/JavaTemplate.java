@@ -1073,8 +1073,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseService;");
-    _builder.newLine();
     _builder.newLine();
     Data _data = it.getData();
     String _dataImport = this._dataExtension.dataImport(_data);
@@ -1574,7 +1572,7 @@ public class JavaTemplate {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseService;");
+    _builder.append("import com.anfelisa.ace.Resource;");
     _builder.newLine();
     _builder.append("import com.codahale.metrics.annotation.Timed;");
     _builder.newLine();
@@ -1595,24 +1593,41 @@ public class JavaTemplate {
     _builder.append(_dataImport, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("@Path(\"/path\")");
-    _builder.newLine();
+    _builder.append("@Path(\"/");
+    String _resourceName = this._actionExtension.resourceName(it);
+    String _lowerCase = _resourceName.toLowerCase();
+    _builder.append(_lowerCase, "");
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     _builder.append("public class ");
-    String _resourceName = this._actionExtension.resourceName(it);
-    _builder.append(_resourceName, "");
-    _builder.append(" {");
+    String _resourceName_1 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_1, "");
+    _builder.append(" extends Resource {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _resourceName_1 = this._actionExtension.resourceName(it);
-    _builder.append(_resourceName_1, "\t");
+    String _resourceName_2 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_2, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _resourceName_3 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_3, "\t");
+    _builder.append("DBI jdbi) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("super(jdbi);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     {
@@ -1629,23 +1644,37 @@ public class JavaTemplate {
     _builder.append("@Timed");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("@Path(\"/path\")");
-    _builder.newLine();
+    _builder.append("@Path(\"/");
+    {
+      String _type_2 = it.getType();
+      boolean _notEquals_1 = (!Objects.equal(_type_2, null));
+      if (_notEquals_1) {
+        String _type_3 = it.getType();
+        String _lowerCase_1 = _type_3.toLowerCase();
+        _builder.append(_lowerCase_1, "\t");
+      } else {
+        String _resourceName_4 = this._actionExtension.resourceName(it);
+        String _lowerCase_2 = _resourceName_4.toLowerCase();
+        _builder.append(_lowerCase_2, "\t");
+      }
+    }
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("@PermitAll // set permission");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public Response ");
     {
-      String _type_2 = it.getType();
-      boolean _notEquals_1 = (!Objects.equal(_type_2, null));
-      if (_notEquals_1) {
-        String _type_3 = it.getType();
-        String _lowerCase = _type_3.toLowerCase();
-        _builder.append(_lowerCase, "\t");
+      String _type_4 = it.getType();
+      boolean _notEquals_2 = (!Objects.equal(_type_4, null));
+      if (_notEquals_2) {
+        String _type_5 = it.getType();
+        String _lowerCase_3 = _type_5.toLowerCase();
+        _builder.append(_lowerCase_3, "\t");
       } else {
-        String _resourceName_2 = this._actionExtension.resourceName(it);
-        String _firstLower = StringExtensions.toFirstLower(_resourceName_2);
+        String _resourceName_5 = this._actionExtension.resourceName(it);
+        String _firstLower = StringExtensions.toFirstLower(_resourceName_5);
         _builder.append(_firstLower, "\t");
       }
     }
@@ -1661,7 +1690,7 @@ public class JavaTemplate {
     _builder.append("return new ");
     String _actionName_1 = this._actionExtension.actionName(it);
     _builder.append(_actionName_1, "\t\t");
-    _builder.append("(actionParam, DatabaseService.getDatabaseHandle()).apply();");
+    _builder.append("(actionParam, this.createDatabaseHandle()).apply();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -1751,6 +1780,9 @@ public class JavaTemplate {
     _builder.append("import com.anfelisa.ace.AceController;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.DBI;");
+    _builder.newLine();
+    _builder.newLine();
     {
       EList<View> _views = it.getViews();
       int _size = _views.size();
@@ -1780,7 +1812,7 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerResources(Environment environment) {");
+    _builder.append("public static void registerResources(Environment environment, DBI jdbi) {");
     _builder.newLine();
     {
       EList<Action> _actions_1 = it.getActions();
@@ -1789,7 +1821,7 @@ public class JavaTemplate {
         _builder.append("environment.jersey().register(new ");
         String _resourceName = this._actionExtension.resourceName(action);
         _builder.append(_resourceName, "\t\t");
-        _builder.append("());");
+        _builder.append("(jdbi));");
         _builder.newLineIfNotEmpty();
       }
     }

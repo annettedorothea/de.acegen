@@ -298,7 +298,6 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.DatabaseService;
 
 		«data.dataImport»
 
@@ -472,7 +471,7 @@ class JavaTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.DatabaseService;
+		import com.anfelisa.ace.Resource;
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
@@ -480,20 +479,24 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
-		@Path("/path")
+		@Path("/«resourceName.toLowerCase»")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class «resourceName» {
+		public class «resourceName» extends Resource {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«resourceName».class);
 		
+			public «resourceName»DBI jdbi) {
+				super(jdbi);
+			}
+		
 			«IF type != null»@«type»«ENDIF»
 			@Timed
-			@Path("/path")
+			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
 			@PermitAll // set permission
 			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
 				«data.dataParamType» actionParam = null;  // init actionParam
-				return new «actionName»(actionParam, DatabaseService.getDatabaseHandle()).apply();
+				return new «actionName»(actionParam, this.createDatabaseHandle()).apply();
 			}
 		
 		}
@@ -532,6 +535,8 @@ class JavaTemplate {
 		import io.dropwizard.setup.Environment;
 		import com.anfelisa.ace.AceController;
 		
+		import org.skife.jdbi.v2.DBI;
+		
 		«IF views.size > 0»
 			import «name».views.*;
 		«ENDIF»
@@ -541,9 +546,9 @@ class JavaTemplate {
 
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment) {
+			public static void registerResources(Environment environment, DBI jdbi) {
 				«FOR action : actions»
-					environment.jersey().register(new «action.resourceName»());
+					environment.jersey().register(new «action.resourceName»(jdbi));
 				«ENDFOR»
 			}
 		
