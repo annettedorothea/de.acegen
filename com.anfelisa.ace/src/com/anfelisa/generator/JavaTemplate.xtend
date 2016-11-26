@@ -470,6 +470,7 @@ class JavaTemplate {
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		import org.skife.jdbi.v2.DBI;
 		
 		import com.anfelisa.ace.Resource;
 		import com.codahale.metrics.annotation.Timed;
@@ -486,7 +487,7 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«resourceName».class);
 		
-			public «resourceName»DBI jdbi) {
+			public «resourceName»( DBI jdbi ) {
 				super(jdbi);
 			}
 		

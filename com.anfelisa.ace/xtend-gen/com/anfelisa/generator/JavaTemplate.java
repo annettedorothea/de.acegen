@@ -1571,6 +1571,8 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.DBI;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Resource;");
     _builder.newLine();
@@ -1620,7 +1622,7 @@ public class JavaTemplate {
     _builder.append("public ");
     String _resourceName_3 = this._actionExtension.resourceName(it);
     _builder.append(_resourceName_3, "\t");
-    _builder.append("DBI jdbi) {");
+    _builder.append("( DBI jdbi ) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(jdbi);");
