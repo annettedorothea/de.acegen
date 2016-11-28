@@ -315,6 +315,16 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getModel_Models()
+  {
+    return (EReference)modelEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getData()
   {
     return dataEClass;
@@ -338,16 +348,6 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
   public EReference getData_Models()
   {
     return (EReference)dataEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getData_DataLists()
-  {
-    return (EReference)dataEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -744,11 +744,11 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     createEAttribute(modelEClass, MODEL__PERSISTENT);
     createEAttribute(modelEClass, MODEL__NAME);
     createEReference(modelEClass, MODEL__ATTRIBUTES);
+    createEReference(modelEClass, MODEL__MODELS);
 
     dataEClass = createEClass(DATA);
     createEAttribute(dataEClass, DATA__NAME);
     createEReference(dataEClass, DATA__MODELS);
-    createEReference(dataEClass, DATA__DATA_LISTS);
 
     modelRefEClass = createEClass(MODEL_REF);
     createEAttribute(modelRefEClass, MODEL_REF__LIST);
@@ -840,11 +840,11 @@ public class AcePackageImpl extends EPackageImpl implements AcePackage
     initEAttribute(getModel_Persistent(), ecorePackage.getEBoolean(), "persistent", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Models(), this.getModelRef(), null, "models", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getData_Name(), ecorePackage.getEString(), "name", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getData_Models(), this.getModelRef(), null, "models", null, 0, -1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getData_DataLists(), this.getDataRef(), null, "dataLists", null, 0, -1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(modelRefEClass, ModelRef.class, "ModelRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModelRef_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, ModelRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

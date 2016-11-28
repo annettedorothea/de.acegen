@@ -4,7 +4,6 @@ import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
 import com.anfelisa.ace.Data;
-import com.anfelisa.ace.DataRef;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
 import com.anfelisa.ace.Model;
@@ -65,11 +64,6 @@ public class JavaTemplate {
     _builder.append(".models;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
-    _builder.newLine();
     _builder.append("public interface ");
     String _modelName = this._modelExtension.modelName(it);
     _builder.append(_modelName, "");
@@ -82,6 +76,16 @@ public class JavaTemplate {
         _builder.append("\t");
         String _interfaceGetter = this._attributeExtension.interfaceGetter(attribute);
         _builder.append(_interfaceGetter, "\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    {
+      EList<ModelRef> _models = it.getModels();
+      for(final ModelRef model : _models) {
+        _builder.append("\t");
+        String _interfaceGetter_1 = this._modelExtension.interfaceGetter(model);
+        _builder.append(_interfaceGetter_1, "\t");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -108,10 +112,8 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
     String _modelClassName = this._modelExtension.modelClassName(it);
@@ -128,6 +130,18 @@ public class JavaTemplate {
         _builder.append("\t");
         String _declaration = this._attributeExtension.declaration(attribute);
         _builder.append(_declaration, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    {
+      EList<ModelRef> _models = it.getModels();
+      for(final ModelRef modelRef : _models) {
+        _builder.append("\t");
+        String _declaration_1 = this._modelExtension.declaration(modelRef);
+        _builder.append(_declaration_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
@@ -181,6 +195,22 @@ public class JavaTemplate {
         _builder.append("\t");
         String _setter = this._attributeExtension.setter(attribute_3);
         _builder.append(_setter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    {
+      EList<ModelRef> _models_1 = it.getModels();
+      for(final ModelRef modelRef_1 : _models_1) {
+        _builder.append("\t");
+        String _ter_1 = this._modelExtension.getter(modelRef_1);
+        _builder.append(_ter_1, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _setter_1 = this._modelExtension.setter(modelRef_1);
+        _builder.append(_setter_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
@@ -279,7 +309,7 @@ public class JavaTemplate {
       List<Model> _allListModels = this._dataExtension.allListModels(it);
       for(final Model model_2 : _allListModels) {
         _builder.append("\t");
-        _builder.append("List<");
+        _builder.append("java.util.List<");
         String _modelName_1 = this._modelExtension.modelName(model_2);
         _builder.append(_modelName_1, "\t");
         _builder.append("> ");
@@ -293,20 +323,18 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      EList<DataRef> _dataLists = it.getDataLists();
-      for(final DataRef data : _dataLists) {
-        _builder.append("\t");
-        _builder.append("List<");
-        Data _data = data.getData();
-        String _dataNameWithPackage = this._dataExtension.dataNameWithPackage(_data);
-        _builder.append(_dataNameWithPackage, "\t");
-        _builder.append("> ");
-        Data _data_1 = data.getData();
-        String _dataName_1 = this._dataExtension.dataName(_data_1);
-        String _firstLower = StringExtensions.toFirstLower(_dataName_1);
-        _builder.append(_firstLower, "\t");
-        _builder.append("List;");
-        _builder.newLineIfNotEmpty();
+      EList<ModelRef> _models_1 = it.getModels();
+      for(final ModelRef modelRef : _models_1) {
+        {
+          Model _model_1 = modelRef.getModel();
+          EList<ModelRef> _models_2 = _model_1.getModels();
+          for(final ModelRef modelModelRef : _models_2) {
+            _builder.append("\t");
+            String _declaration_1 = this._modelExtension.declaration(modelModelRef);
+            _builder.append(_declaration_1, "\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
         _builder.newLine();
       }
@@ -314,8 +342,8 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _dataName_2 = this._dataExtension.dataName(it);
-    _builder.append(_dataName_2, "\t");
+    String _dataName_1 = this._dataExtension.dataName(it);
+    _builder.append(_dataName_1, "\t");
     _builder.append("(");
     _builder.newLineIfNotEmpty();
     {
@@ -394,23 +422,29 @@ public class JavaTemplate {
         _builder.newLine();
       }
     }
+    _builder.newLine();
     {
-      EList<DataRef> _dataLists_1 = it.getDataLists();
-      for(final DataRef data_1 : _dataLists_1) {
-        _builder.append("\t");
-        Data _data_2 = data_1.getData();
-        String _listGetter_1 = this._dataExtension.listGetter(_data_2);
-        _builder.append(_listGetter_1, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        Data _data_3 = data_1.getData();
-        String _listSetter_1 = this._dataExtension.listSetter(_data_3);
-        _builder.append(_listSetter_1, "\t");
-        _builder.newLineIfNotEmpty();
+      EList<ModelRef> _models_3 = it.getModels();
+      for(final ModelRef modelRef_1 : _models_3) {
+        {
+          Model _model_2 = modelRef_1.getModel();
+          EList<ModelRef> _models_4 = _model_2.getModels();
+          for(final ModelRef modelModelRef_1 : _models_4) {
+            _builder.append("\t");
+            String _ter_1 = this._modelExtension.getter(modelModelRef_1);
+            _builder.append(_ter_1, "\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _setter_1 = this._modelExtension.setter(modelModelRef_1);
+            _builder.append(_setter_1, "\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
         _builder.newLine();
       }
     }
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("@JsonProperty");
     _builder.newLine();

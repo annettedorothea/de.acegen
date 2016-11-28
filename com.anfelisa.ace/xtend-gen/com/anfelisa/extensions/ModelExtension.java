@@ -2,6 +2,7 @@ package com.anfelisa.extensions;
 
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
+import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +78,20 @@ public class ModelExtension {
   public String importModel(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import ");
+    String _modelInterfaceWithPackage = this.modelInterfaceWithPackage(it);
+    _builder.append(_modelInterfaceWithPackage, "");
+    _builder.append(";");
+    return _builder.toString();
+  }
+  
+  public String modelInterfaceWithPackage(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
     String _name = ((Project) _eContainer).getName();
     _builder.append(_name, "");
     _builder.append(".models.");
     String _modelName = this.modelName(it);
     _builder.append(_modelName, "");
-    _builder.append(";");
     return _builder.toString();
   }
   
@@ -127,7 +135,7 @@ public class ModelExtension {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@JsonProperty");
     _builder.newLine();
-    _builder.append("public List<");
+    _builder.append("public java.util.List<");
     String _modelName = this.modelName(it);
     _builder.append(_modelName, "");
     _builder.append("> get");
@@ -152,7 +160,7 @@ public class ModelExtension {
     String _modelListAttributeName = this.modelListAttributeName(it);
     String _firstUpper = StringExtensions.toFirstUpper(_modelListAttributeName);
     _builder.append(_firstUpper, "");
-    _builder.append("(List<");
+    _builder.append("(java.util.List<");
     String _modelName = this.modelName(it);
     _builder.append(_modelName, "");
     _builder.append("> ");
@@ -170,6 +178,128 @@ public class ModelExtension {
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public String interfaceGetter(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _interfaceWithPackage = this.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage, "");
+    _builder.append(" get");
+    String _modelRefToUpper = this.modelRefToUpper(it);
+    _builder.append(_modelRefToUpper, "");
+    _builder.append("();");
+    return _builder.toString();
+  }
+  
+  public String declaration(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("private ");
+    String _interfaceWithPackage = this.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage, "");
+    _builder.append(" ");
+    String _modelRefToLower = this.modelRefToLower(it);
+    _builder.append(_modelRefToLower, "");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+  
+  public String interfaceWithPackage(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isList = it.isList();
+      if (_isList) {
+        _builder.append("java.util.List<");
+      }
+    }
+    Model _model = it.getModel();
+    String _modelInterfaceWithPackage = this.modelInterfaceWithPackage(_model);
+    _builder.append(_modelInterfaceWithPackage, "");
+    {
+      boolean _isList_1 = it.isList();
+      if (_isList_1) {
+        _builder.append(">");
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String getter(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("public ");
+    String _interfaceWithPackage = this.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage, "");
+    _builder.append(" get");
+    String _modelRefToUpper = this.modelRefToUpper(it);
+    _builder.append(_modelRefToUpper, "");
+    _builder.append("() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return this.");
+    String _modelRefToLower = this.modelRefToLower(it);
+    _builder.append(_modelRefToLower, "\t");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public String setter(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public void set");
+    String _modelRefToUpper = this.modelRefToUpper(it);
+    _builder.append(_modelRefToUpper, "");
+    _builder.append("(");
+    String _interfaceWithPackage = this.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage, "");
+    _builder.append(" ");
+    String _modelRefToLower = this.modelRefToLower(it);
+    _builder.append(_modelRefToLower, "");
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("this.");
+    String _modelRefToLower_1 = this.modelRefToLower(it);
+    _builder.append(_modelRefToLower_1, "\t");
+    _builder.append(" = ");
+    String _modelRefToLower_2 = this.modelRefToLower(it);
+    _builder.append(_modelRefToLower_2, "\t");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public String modelRefToLower(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    Model _model = it.getModel();
+    String _name = _model.getName();
+    String _firstLower = StringExtensions.toFirstLower(_name);
+    _builder.append(_firstLower, "");
+    {
+      boolean _isList = it.isList();
+      if (_isList) {
+        _builder.append("List");
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String modelRefToUpper(final ModelRef it) {
+    StringConcatenation _builder = new StringConcatenation();
+    Model _model = it.getModel();
+    String _modelName = this.modelName(_model);
+    String _firstUpper = StringExtensions.toFirstUpper(_modelName);
+    _builder.append(_firstUpper, "");
+    {
+      boolean _isList = it.isList();
+      if (_isList) {
+        _builder.append("List");
+      }
+    }
     return _builder.toString();
   }
 }

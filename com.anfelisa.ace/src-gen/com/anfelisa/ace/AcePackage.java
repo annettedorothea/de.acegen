@@ -186,13 +186,22 @@ public interface AcePackage extends EPackage
   int MODEL__ATTRIBUTES = 2;
 
   /**
+   * The feature id for the '<em><b>Models</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL__MODELS = 3;
+
+  /**
    * The number of structural features of the '<em>Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 3;
+  int MODEL_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.DataImpl <em>Data</em>}' class.
@@ -223,22 +232,13 @@ public interface AcePackage extends EPackage
   int DATA__MODELS = 1;
 
   /**
-   * The feature id for the '<em><b>Data Lists</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DATA__DATA_LISTS = 2;
-
-  /**
    * The number of structural features of the '<em>Data</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DATA_FEATURE_COUNT = 3;
+  int DATA_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.
@@ -788,6 +788,17 @@ public interface AcePackage extends EPackage
   EReference getModel_Attributes();
 
   /**
+   * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Model#getModels <em>Models</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Models</em>'.
+   * @see com.anfelisa.ace.Model#getModels()
+   * @see #getModel()
+   * @generated
+   */
+  EReference getModel_Models();
+
+  /**
    * Returns the meta object for class '{@link com.anfelisa.ace.Data <em>Data</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -818,17 +829,6 @@ public interface AcePackage extends EPackage
    * @generated
    */
   EReference getData_Models();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link com.anfelisa.ace.Data#getDataLists <em>Data Lists</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Data Lists</em>'.
-   * @see com.anfelisa.ace.Data#getDataLists()
-   * @see #getData()
-   * @generated
-   */
-  EReference getData_DataLists();
 
   /**
    * Returns the meta object for class '{@link com.anfelisa.ace.ModelRef <em>Model Ref</em>}'.
@@ -1338,6 +1338,14 @@ public interface AcePackage extends EPackage
     EReference MODEL__ATTRIBUTES = eINSTANCE.getModel_Attributes();
 
     /**
+     * The meta object literal for the '<em><b>Models</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODEL__MODELS = eINSTANCE.getModel_Models();
+
+    /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.DataImpl <em>Data</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1362,14 +1370,6 @@ public interface AcePackage extends EPackage
      * @generated
      */
     EReference DATA__MODELS = eINSTANCE.getData_Models();
-
-    /**
-     * The meta object literal for the '<em><b>Data Lists</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DATA__DATA_LISTS = eINSTANCE.getData_DataLists();
 
     /**
      * The meta object literal for the '{@link com.anfelisa.ace.impl.ModelRefImpl <em>Model Ref</em>}' class.

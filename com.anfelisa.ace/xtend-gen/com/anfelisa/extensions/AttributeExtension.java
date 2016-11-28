@@ -48,7 +48,13 @@ public class AttributeExtension {
         _builder.append("Integer");
       } else {
         String _type_1 = it.getType();
-        _builder.append(_type_1, "");
+        boolean _equals_1 = _type_1.equals("DateTime");
+        if (_equals_1) {
+          _builder.append("org.joda.time.DateTime");
+        } else {
+          String _type_2 = it.getType();
+          _builder.append(_type_2, "");
+        }
       }
     }
     return _builder.toString();

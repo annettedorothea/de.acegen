@@ -42,13 +42,14 @@ class JavaTemplate {
 	def generateModel(Model it, Project project) '''
 		package «project.name».models;
 		
-		import org.joda.time.DateTime;
-
-		@SuppressWarnings("unused")
 		public interface «modelName» {
 		
 			«FOR attribute : attributes»
 				«attribute.interfaceGetter»
+			«ENDFOR»
+
+			«FOR model : models»
+				«model.interfaceGetter»
 			«ENDFOR»
 
 		}
@@ -62,13 +63,17 @@ class JavaTemplate {
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
-		import org.joda.time.DateTime;
 
-		@SuppressWarnings("unused")
+		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
 		
 			«FOR attribute : attributes»
 				«attribute.declaration»
+				
+			«ENDFOR»
+		
+			«FOR modelRef : models»
+				«modelRef.declaration»
 				
 			«ENDFOR»
 		
@@ -85,6 +90,12 @@ class JavaTemplate {
 			«FOR attribute : attributes»
 				«attribute.getter»
 				«attribute.setter»
+				
+			«ENDFOR»
+		
+			«FOR modelRef : models»
+				«modelRef.getter»
+				«modelRef.setter»
 				
 			«ENDFOR»
 		
@@ -121,12 +132,14 @@ class JavaTemplate {
 			«ENDFOR»
 		
 			«FOR model : allListModels»
-				List<«model.modelName»> «model.modelListAttributeName»;
+				java.util.List<«model.modelName»> «model.modelListAttributeName»;
 				
 			«ENDFOR»
 		
-			«FOR data : dataLists»
-				List<«data.data.dataNameWithPackage»> «data.data.dataName.toFirstLower»List;
+			«FOR modelRef : models»
+				«FOR modelModelRef : modelRef.model.models»
+					«modelModelRef.declaration»
+				«ENDFOR»
 				
 			«ENDFOR»
 		
@@ -154,11 +167,15 @@ class JavaTemplate {
 				«model.listSetter»
 				
 			«ENDFOR»
-			«FOR data : dataLists»
-				«data.data.listGetter»
-				«data.data.listSetter»
+		
+			«FOR modelRef : models»
+				«FOR modelModelRef : modelRef.model.models»
+					«modelModelRef.getter»
+					«modelModelRef.setter»
+				«ENDFOR»
 				
 			«ENDFOR»
+		
 			@JsonProperty
 			public String getUuid() {
 				return this.uuid;

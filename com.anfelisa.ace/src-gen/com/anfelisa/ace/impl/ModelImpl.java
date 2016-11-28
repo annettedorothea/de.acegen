@@ -6,6 +6,7 @@ package com.anfelisa.ace.impl;
 import com.anfelisa.ace.AcePackage;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
+import com.anfelisa.ace.ModelRef;
 
 import java.util.Collection;
 
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.anfelisa.ace.impl.ModelImpl#isPersistent <em>Persistent</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ModelImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.impl.ModelImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link com.anfelisa.ace.impl.ModelImpl#getModels <em>Models</em>}</li>
  * </ul>
  *
  * @generated
@@ -89,6 +91,16 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @ordered
    */
   protected EList<Attribute> attributes;
+
+  /**
+   * The cached value of the '{@link #getModels() <em>Models</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getModels()
+   * @generated
+   * @ordered
+   */
+  protected EList<ModelRef> models;
 
   /**
    * <!-- begin-user-doc -->
@@ -176,6 +188,20 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<ModelRef> getModels()
+  {
+    if (models == null)
+    {
+      models = new EObjectContainmentEList<ModelRef>(ModelRef.class, this, AcePackage.MODEL__MODELS);
+    }
+    return models;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -183,6 +209,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case AcePackage.MODEL__ATTRIBUTES:
         return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
+      case AcePackage.MODEL__MODELS:
+        return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -203,6 +231,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return getName();
       case AcePackage.MODEL__ATTRIBUTES:
         return getAttributes();
+      case AcePackage.MODEL__MODELS:
+        return getModels();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -228,6 +258,10 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         getAttributes().clear();
         getAttributes().addAll((Collection<? extends Attribute>)newValue);
         return;
+      case AcePackage.MODEL__MODELS:
+        getModels().clear();
+        getModels().addAll((Collection<? extends ModelRef>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -251,6 +285,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case AcePackage.MODEL__ATTRIBUTES:
         getAttributes().clear();
         return;
+      case AcePackage.MODEL__MODELS:
+        getModels().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -271,6 +308,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AcePackage.MODEL__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
+      case AcePackage.MODEL__MODELS:
+        return models != null && !models.isEmpty();
     }
     return super.eIsSet(featureID);
   }

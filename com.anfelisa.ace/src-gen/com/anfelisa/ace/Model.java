@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.anfelisa.ace.Model#isPersistent <em>Persistent</em>}</li>
  *   <li>{@link com.anfelisa.ace.Model#getName <em>Name</em>}</li>
  *   <li>{@link com.anfelisa.ace.Model#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link com.anfelisa.ace.Model#getModels <em>Models</em>}</li>
  * </ul>
  *
  * @see com.anfelisa.ace.AcePackage#getModel()
@@ -94,5 +95,21 @@ public interface Model extends EObject
    * @generated
    */
   EList<Attribute> getAttributes();
+
+  /**
+   * Returns the value of the '<em><b>Models</b></em>' containment reference list.
+   * The list contents are of type {@link com.anfelisa.ace.ModelRef}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Models</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Models</em>' containment reference list.
+   * @see com.anfelisa.ace.AcePackage#getModel_Models()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ModelRef> getModels();
 
 } // Model

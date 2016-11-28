@@ -149,7 +149,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Data returns Data
 	 *
 	 * Constraint:
-	 *     (name=ID models+=ModelRef* dataLists+=DataRef*)
+	 *     (name=ID models+=ModelRef*)
 	 */
 	protected void sequence_Data(ISerializationContext context, Data semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -197,7 +197,7 @@ public class AceSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Model returns Model
 	 *
 	 * Constraint:
-	 *     (persistent?='persistent'? name=ID attributes+=Attribute*)
+	 *     (persistent?='persistent'? name=ID attributes+=Attribute* models+=ModelRef*)
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

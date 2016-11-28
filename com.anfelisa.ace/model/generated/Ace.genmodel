@@ -20,11 +20,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Model/persistent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Model/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Model/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Model/models"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Data">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Data/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Data/models"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Data/dataLists"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ModelRef">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ModelRef/list"/>

@@ -17,7 +17,7 @@ class AttributeExtension {
 		private «javaType» «name»;
 	'''
 	
-	def String javaType(Attribute it) '''«IF type.equals('Serial')»Integer«ELSE»«type»«ENDIF»'''
+	def String javaType(Attribute it) '''«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»'''
 
 	def String sqlType(Attribute it) {
 		switch type {

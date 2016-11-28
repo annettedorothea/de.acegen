@@ -47,8 +47,8 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProjectAccess().getGroup_7(), "rule__Project__Group_7__0");
 					put(grammarAccess.getProjectAccess().getGroup_8(), "rule__Project__Group_8__0");
 					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
+					put(grammarAccess.getModelAccess().getGroup_5(), "rule__Model__Group_5__0");
 					put(grammarAccess.getDataAccess().getGroup(), "rule__Data__Group__0");
-					put(grammarAccess.getDataAccess().getGroup_5(), "rule__Data__Group_5__0");
 					put(grammarAccess.getModelRefAccess().getGroup(), "rule__ModelRef__Group__0");
 					put(grammarAccess.getDataRefAccess().getGroup(), "rule__DataRef__Group__0");
 					put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
@@ -82,9 +82,9 @@ public class AceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModelAccess().getPersistentAssignment_0(), "rule__Model__PersistentAssignment_0");
 					put(grammarAccess.getModelAccess().getNameAssignment_1(), "rule__Model__NameAssignment_1");
 					put(grammarAccess.getModelAccess().getAttributesAssignment_3(), "rule__Model__AttributesAssignment_3");
+					put(grammarAccess.getModelAccess().getModelsAssignment_5_1(), "rule__Model__ModelsAssignment_5_1");
 					put(grammarAccess.getDataAccess().getNameAssignment_0(), "rule__Data__NameAssignment_0");
 					put(grammarAccess.getDataAccess().getModelsAssignment_3(), "rule__Data__ModelsAssignment_3");
-					put(grammarAccess.getDataAccess().getDataListsAssignment_5_2(), "rule__Data__DataListsAssignment_5_2");
 					put(grammarAccess.getModelRefAccess().getListAssignment_0(), "rule__ModelRef__ListAssignment_0");
 					put(grammarAccess.getModelRefAccess().getModelAssignment_1(), "rule__ModelRef__ModelAssignment_1");
 					put(grammarAccess.getDataRefAccess().getDataAssignment_1(), "rule__DataRef__DataAssignment_1");

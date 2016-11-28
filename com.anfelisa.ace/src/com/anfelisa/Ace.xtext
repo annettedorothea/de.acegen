@@ -29,15 +29,15 @@ Model:
 	persistent ?= 'persistent'? name = ID '('
 		(attributes += Attribute)*
 	')'
+	('('
+		(models += ModelRef)*
+	')')?
 ;
 
 Data:
 	name = ID ':' '('
 		(models += ModelRef)*
 	')'
-	(':' '('
-		(dataLists += DataRef)*
-	')')?
 ;
 
 ModelRef: 
