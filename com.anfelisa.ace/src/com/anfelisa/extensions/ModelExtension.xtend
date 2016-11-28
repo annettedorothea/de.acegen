@@ -87,6 +87,6 @@ class ModelExtension {
 	
 	def String modelRefToLower(ModelRef it) '''«model.name.toFirstLower»«IF list»List«ENDIF»'''
 	
-	def String modelRefToUpper(ModelRef it) '''«model.modelName.toFirstUpper»«IF list»List«ENDIF»'''
+	def String modelRefToUpper(ModelRef it) '''«model.name.toFirstUpper»«IF list»List«ENDIF»'''
 	
 }

@@ -291,8 +291,8 @@ public class ModelExtension {
   public String modelRefToUpper(final ModelRef it) {
     StringConcatenation _builder = new StringConcatenation();
     Model _model = it.getModel();
-    String _modelName = this.modelName(_model);
-    String _firstUpper = StringExtensions.toFirstUpper(_modelName);
+    String _name = _model.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
     _builder.append(_firstUpper, "");
     {
       boolean _isList = it.isList();
