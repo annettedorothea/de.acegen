@@ -3,10 +3,12 @@
  */
 package com.anfelisa.ui.contentassist;
 
+import com.anfelisa.ui.contentassist.AbstractAceProposalProvider;
+
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 @SuppressWarnings("all")
-public class AceProposalProvider /* implements AbstractAceProposalProvider  */{
+public class AceProposalProvider extends AbstractAceProposalProvider {
 }

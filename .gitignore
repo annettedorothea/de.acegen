@@ -5,3 +5,8 @@
 com.anfelisa.ace/bin/com/anfelisa/generator/*.xtend
 com.anfelisa.ace.ide/bin
 com.anfelisa.ace/bin
+com.anfelisa.ace.ide/src-gen
+com.anfelisa.ace.tests/src-gen
+com.anfelisa.ace.ui.tests/src-gen
+com.anfelisa.ace.ui/src-gen
+com.anfelisa.ace/src-gen

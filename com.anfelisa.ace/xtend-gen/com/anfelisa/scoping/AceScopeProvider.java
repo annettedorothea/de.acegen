@@ -3,6 +3,8 @@
  */
 package com.anfelisa.scoping;
 
+import com.anfelisa.scoping.AbstractAceScopeProvider;
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,5 +12,5 @@ package com.anfelisa.scoping;
  * on how and when to use it.
  */
 @SuppressWarnings("all")
-public class AceScopeProvider /* implements AbstractAceScopeProvider  */{
+public class AceScopeProvider extends AbstractAceScopeProvider {
 }

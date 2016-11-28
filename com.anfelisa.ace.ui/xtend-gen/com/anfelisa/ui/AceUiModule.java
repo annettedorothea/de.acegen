@@ -3,23 +3,29 @@
  */
 package com.anfelisa.ui;
 
+import com.anfelisa.generator.ACEOutputConfigurationProvider;
+import com.anfelisa.ui.AbstractAceUiModule;
 import com.google.inject.Binder;
+import com.google.inject.Singleton;
+import com.google.inject.binder.AnnotatedBindingBuilder;
+import com.google.inject.binder.ScopedBindingBuilder;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.generator.IOutputConfigurationProvider;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
 @SuppressWarnings("all")
-public class AceUiModule /* implements AbstractAceUiModule  */{
+public class AceUiModule extends AbstractAceUiModule {
   public AceUiModule(final AbstractUIPlugin plugin) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method super(AbstractUIPlugin) is undefined");
+    super(plugin);
   }
   
   @Override
   public void configure(final Binder binder) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field super is undefined"
-      + "\nconfigure cannot be resolved");
+    super.configure(binder);
+    AnnotatedBindingBuilder<IOutputConfigurationProvider> _bind = binder.<IOutputConfigurationProvider>bind(IOutputConfigurationProvider.class);
+    ScopedBindingBuilder _to = _bind.to(ACEOutputConfigurationProvider.class);
+    _to.in(Singleton.class);
   }
 }

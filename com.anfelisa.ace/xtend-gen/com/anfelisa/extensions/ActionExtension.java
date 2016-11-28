@@ -1,8 +1,14 @@
 package com.anfelisa.extensions;
 
+import com.anfelisa.ace.Action;
+import com.anfelisa.ace.Data;
+import com.anfelisa.ace.Project;
 import com.anfelisa.extensions.DataExtension;
 import javax.inject.Inject;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class ActionExtension {
@@ -10,49 +16,75 @@ public class ActionExtension {
   @Extension
   private DataExtension _dataExtension;
   
-  public String abstractActionName(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field name is undefined"
-      + "\ntoFirstUpper cannot be resolved");
+  public String abstractActionName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Abstract");
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    _builder.append("Action");
+    return _builder.toString();
   }
   
-  public String actionName(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field name is undefined"
-      + "\ntoFirstUpper cannot be resolved");
+  public String actionName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    _builder.append("Action");
+    return _builder.toString();
   }
   
-  public String abstractName(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field name is undefined"
-      + "\ntoFirstUpper cannot be resolved");
+  public String abstractName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Abstract");
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    return _builder.toString();
   }
   
-  public String nameUppercase(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field name is undefined"
-      + "\ntoFirstUpper cannot be resolved");
+  public String nameUppercase(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    return _builder.toString();
   }
   
-  public String resourceName(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field name is undefined"
-      + "\ntoFirstUpper cannot be resolved");
+  public String resourceName(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    _builder.append("Resource");
+    return _builder.toString();
   }
   
-  public String actionNameWithPackage(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nProject cannot be resolved to a type."
-      + "\nThe method or field eContainer is undefined"
-      + "\nThe method actionName(Action) from the type ActionExtension refers to the missing type Action"
-      + "\nname cannot be resolved");
+  public String actionNameWithPackage(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = it.eContainer();
+    String _name = ((Project) _eContainer).getName();
+    _builder.append(_name, "");
+    _builder.append(".actions.");
+    String _actionName = this.actionName(it);
+    _builder.append(_actionName, "");
+    return _builder.toString();
   }
   
-  public String newAction(final /* Action */Object it) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field data is undefined"
-      + "\nThe method actionNameWithPackage(Action) from the type ActionExtension refers to the missing type Action"
-      + "\nThe method actionNameWithPackage(Action) from the type ActionExtension refers to the missing type Action"
-      + "\nnewFromCommandData cannot be resolved");
+  public String newAction(final Action it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("final ");
+    String _actionNameWithPackage = this.actionNameWithPackage(it);
+    _builder.append(_actionNameWithPackage, "");
+    _builder.append(" action = new ");
+    String _actionNameWithPackage_1 = this.actionNameWithPackage(it);
+    _builder.append(_actionNameWithPackage_1, "");
+    _builder.append("(");
+    Data _data = it.getData();
+    CharSequence _newFromCommandData = this._dataExtension.newFromCommandData(_data);
+    _builder.append(_newFromCommandData, "");
+    _builder.append(", DatabaseService.getDatabaseHandle());");
+    return _builder.toString();
   }
 }
