@@ -3,15 +3,13 @@
  */
 package com.anfelisa;
 
-import com.anfelisa.AceStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class AceStandaloneSetup extends AceStandaloneSetupGenerated {
+public class AceStandaloneSetup /* implements AceStandaloneSetupGenerated  */{
   public static void doSetup() {
-    AceStandaloneSetup _aceStandaloneSetup = new AceStandaloneSetup();
-    _aceStandaloneSetup.createInjectorAndDoEMFRegistration();
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method createInjectorAndDoEMFRegistration() is undefined for the type AceStandaloneSetup");
   }
 }

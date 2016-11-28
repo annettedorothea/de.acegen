@@ -3,11 +3,9 @@
  */
 package com.anfelisa;
 
-import com.anfelisa.AbstractAceRuntimeModule;
-
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class AceRuntimeModule extends AbstractAceRuntimeModule {
+public class AceRuntimeModule /* implements AbstractAceRuntimeModule  */{
 }

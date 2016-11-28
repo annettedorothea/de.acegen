@@ -3,13 +3,11 @@
  */
 package com.anfelisa.validation;
 
-import com.anfelisa.validation.AbstractAceValidator;
-
 /**
  * This class contains custom validation rules.
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 @SuppressWarnings("all")
-public class AceValidator extends AbstractAceValidator {
+public class AceValidator /* implements AbstractAceValidator  */{
 }
