@@ -68,6 +68,12 @@ class AttributeExtension {
 			this.«name» = «name»;
 		}'''
 	
+	def String initializer(Attribute it, String className) '''
+		public «className» with«name.toFirstUpper»(«javaType» «name») {
+			this.«name» = «name»;
+			return this;
+		}'''
+	
 	def String assign(Attribute it) '''this.«name» = «name»;'''
 	
 }

@@ -324,6 +324,38 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
+  public String initializer(final Attribute it, final String className) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public ");
+    _builder.append(className, "");
+    _builder.append(" with");
+    String _name = it.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    _builder.append(_firstUpper, "");
+    _builder.append("(");
+    String _javaType = this.javaType(it);
+    _builder.append(_javaType, "");
+    _builder.append(" ");
+    String _name_1 = it.getName();
+    _builder.append(_name_1, "");
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("this.");
+    String _name_2 = it.getName();
+    _builder.append(_name_2, "\t");
+    _builder.append(" = ");
+    String _name_3 = it.getName();
+    _builder.append(_name_3, "\t");
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("return this;");
+    _builder.newLine();
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
   public String assign(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("this.");

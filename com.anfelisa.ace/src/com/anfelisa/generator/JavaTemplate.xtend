@@ -157,9 +157,20 @@ class JavaTemplate {
 				this.schema = schema;
 			}
 		
+			«IF allAttributes.length > 0»
+				public «dataName»(
+					@JsonProperty("uuid") String uuid,
+					@JsonProperty("schema") String schema
+				) {
+					this.uuid = uuid;
+					this.schema = schema;
+				}
+			«ENDIF»
+		
 			«FOR attribute : allAttributes»
 				«attribute.getter»
 				«attribute.setter»
+				«attribute.initializer(dataName)»
 				
 			«ENDFOR»
 			«FOR model : allListModels»

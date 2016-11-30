@@ -23,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -394,7 +395,43 @@ public class JavaTemplate {
     _builder.newLine();
     {
       List<Attribute> _allAttributes_3 = this._dataExtension.allAttributes(it);
-      for(final Attribute attribute_3 : _allAttributes_3) {
+      int _length = ((Object[])Conversions.unwrapArray(_allAttributes_3, Object.class)).length;
+      boolean _greaterThan = (_length > 0);
+      if (_greaterThan) {
+        _builder.append("\t");
+        _builder.append("public ");
+        String _dataName_2 = this._dataExtension.dataName(it);
+        _builder.append(_dataName_2, "\t");
+        _builder.append("(");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("@JsonProperty(\"uuid\") String uuid,");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("@JsonProperty(\"schema\") String schema");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append(") {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("this.uuid = uuid;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("this.schema = schema;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    {
+      List<Attribute> _allAttributes_4 = this._dataExtension.allAttributes(it);
+      for(final Attribute attribute_3 : _allAttributes_4) {
         _builder.append("\t");
         String _ter = this._attributeExtension.getter(attribute_3);
         _builder.append(_ter, "\t");
@@ -402,6 +439,11 @@ public class JavaTemplate {
         _builder.append("\t");
         String _setter = this._attributeExtension.setter(attribute_3);
         _builder.append(_setter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _dataName_3 = this._dataExtension.dataName(it);
+        String _initializer = this._attributeExtension.initializer(attribute_3, _dataName_3);
+        _builder.append(_initializer, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
