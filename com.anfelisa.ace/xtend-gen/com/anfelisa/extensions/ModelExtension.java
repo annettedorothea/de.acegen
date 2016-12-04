@@ -207,21 +207,9 @@ public class ModelExtension {
   
   public String interfaceWithPackage(final ModelRef it) {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      boolean _isList = it.isList();
-      if (_isList) {
-        _builder.append("java.util.List<");
-      }
-    }
     Model _model = it.getModel();
     String _modelInterfaceWithPackage = this.modelInterfaceWithPackage(_model);
     _builder.append(_modelInterfaceWithPackage, "");
-    {
-      boolean _isList_1 = it.isList();
-      if (_isList_1) {
-        _builder.append(">");
-      }
-    }
     return _builder.toString();
   }
   
@@ -279,12 +267,6 @@ public class ModelExtension {
     String _name = _model.getName();
     String _firstLower = StringExtensions.toFirstLower(_name);
     _builder.append(_firstLower, "");
-    {
-      boolean _isList = it.isList();
-      if (_isList) {
-        _builder.append("List");
-      }
-    }
     return _builder.toString();
   }
   
@@ -294,12 +276,6 @@ public class ModelExtension {
     String _name = _model.getName();
     String _firstUpper = StringExtensions.toFirstUpper(_name);
     _builder.append(_firstUpper, "");
-    {
-      boolean _isList = it.isList();
-      if (_isList) {
-        _builder.append("List");
-      }
-    }
     return _builder.toString();
   }
 }

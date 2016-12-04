@@ -72,7 +72,7 @@ class ModelExtension {
 		private «interfaceWithPackage» «modelRefToLower»;
 	'''
 	
-	def String interfaceWithPackage(ModelRef it) '''«IF list»java.util.List<«ENDIF»«model.modelInterfaceWithPackage»«IF list»>«ENDIF»'''
+	def String interfaceWithPackage(ModelRef it) '''«model.modelInterfaceWithPackage»'''
 	
 	def String getter(ModelRef it) '''
 		@JsonProperty
@@ -85,8 +85,8 @@ class ModelExtension {
 			this.«modelRefToLower» = «modelRefToLower»;
 		}'''
 	
-	def String modelRefToLower(ModelRef it) '''«model.name.toFirstLower»«IF list»List«ENDIF»'''
+	def String modelRefToLower(ModelRef it) '''«model.name.toFirstLower»'''
 	
-	def String modelRefToUpper(ModelRef it) '''«model.name.toFirstUpper»«IF list»List«ENDIF»'''
+	def String modelRefToUpper(ModelRef it) '''«model.name.toFirstUpper»'''
 	
 }

@@ -2,19 +2,20 @@ package com.anfelisa.generator
 
 import com.anfelisa.ace.Action
 import com.anfelisa.ace.Command
+import com.anfelisa.ace.Data
 import com.anfelisa.ace.Event
+import com.anfelisa.ace.Model
 import com.anfelisa.ace.Project
 import com.anfelisa.ace.View
 import com.anfelisa.extensions.ActionExtension
+import com.anfelisa.extensions.AttributeExtension
 import com.anfelisa.extensions.CommandExtension
+import com.anfelisa.extensions.ComplexAttributeExtension
+import com.anfelisa.extensions.DataExtension
 import com.anfelisa.extensions.EventExtension
+import com.anfelisa.extensions.ModelExtension
 import com.anfelisa.extensions.ViewExtension
 import javax.inject.Inject
-import com.anfelisa.ace.Model
-import com.anfelisa.extensions.ModelExtension
-import com.anfelisa.ace.Data
-import com.anfelisa.extensions.DataExtension
-import com.anfelisa.extensions.AttributeExtension
 
 class JavaTemplate {
 	
@@ -39,6 +40,9 @@ class JavaTemplate {
 	@Inject
 	extension AttributeExtension
 	
+	@Inject
+	extension ComplexAttributeExtension
+	
 	def generateModel(Model it, Project project) '''
 		package «project.name».models;
 		
@@ -48,8 +52,8 @@ class JavaTemplate {
 				«attribute.interfaceGetter»
 			«ENDFOR»
 
-			«FOR model : models»
-				«model.interfaceGetter»
+			«FOR complexAttribute : models»
+				«complexAttribute.interfaceGetter»
 			«ENDFOR»
 
 		}
@@ -120,7 +124,7 @@ class JavaTemplate {
 		«ENDFOR»
 		
 		@SuppressWarnings("unused")
-		public class «dataName» implements «FOR model : allNonListModels SEPARATOR ', ' AFTER ','»«model.modelName»«ENDFOR» IDataContainer {
+		public class «dataName» implements «FOR modelRef : models SEPARATOR ', ' AFTER ','»«modelRef.model.modelName»«ENDFOR» IDataContainer {
 			
 			private String uuid;
 			
@@ -128,11 +132,6 @@ class JavaTemplate {
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
-				
-			«ENDFOR»
-		
-			«FOR model : allListModels»
-				java.util.List<«model.modelName»> «model.modelListAttributeName»;
 				
 			«ENDFOR»
 		
@@ -173,12 +172,6 @@ class JavaTemplate {
 				«attribute.initializer(dataName)»
 				
 			«ENDFOR»
-			«FOR model : allListModels»
-				«model.listGetter»
-				«model.listSetter»
-				
-			«ENDFOR»
-		
 			«FOR modelRef : models»
 				«FOR modelModelRef : modelRef.model.models»
 					«modelModelRef.getter»
@@ -278,7 +271,6 @@ class JavaTemplate {
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
-		import org.joda.time.DateTime;
 		
 		import org.skife.jdbi.v2.StatementContext;
 		import org.skife.jdbi.v2.tweak.ResultSetMapper;

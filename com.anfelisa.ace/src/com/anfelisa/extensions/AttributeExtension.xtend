@@ -9,7 +9,6 @@ class AttributeExtension {
 	@Inject
 	extension ModelExtension
 	
-	
 	def String declaration(Attribute it) '''
 		«IF constraint != null»
 			@«constraint»
@@ -17,7 +16,7 @@ class AttributeExtension {
 		private «javaType» «name»;
 	'''
 	
-	def String javaType(Attribute it) '''«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»'''
+	def String javaType(Attribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
 
 	def String sqlType(Attribute it) {
 		switch type {
@@ -31,7 +30,7 @@ class AttributeExtension {
     	}
 	}
 	
-	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new DateTime(r.getDate("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new org.joda.time.DateTime(r.getDate("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
 	def String param(Attribute it) '''@JsonProperty("«name»") «javaType» «name»'''
 	

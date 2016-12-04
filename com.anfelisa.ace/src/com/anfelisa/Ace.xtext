@@ -26,12 +26,15 @@ Project:
 ;
 
 Model:
-	persistent ?= 'persistent'? name = ID '('
-		(attributes += Attribute)*
-	')'
-	('('
-		(models += ModelRef)*
-	')')?
+	persistent ?= 'persistent'? name = ID ('{'
+		('primitiveAttributes' '{' 
+			attributes += Attribute*
+			
+		'}')?
+		('complexAttributes' '{' 
+			models += ComplexAttribute*
+		'}')?
+	'}')?
 ;
 
 Data:
@@ -40,16 +43,16 @@ Data:
 	')'
 ;
 
-ModelRef: 
-	list ?= 'List'? model = [Model | QualifiedName]
+ComplexAttribute: 
+	list ?= 'List'? model = [Model | QualifiedName] name = ID
 ;
 
-DataRef: 
-	'List' data = [Data | QualifiedName]
+ModelRef: 
+	model = [Model | QualifiedName]
 ;
 
 Attribute:
-	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? (type = ModelType) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
+	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = ModelType) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
 ;
 
 Action:

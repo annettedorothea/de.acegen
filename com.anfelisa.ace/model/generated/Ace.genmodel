@@ -26,17 +26,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Data/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Data/models"/>
     </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//ModelRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ModelRef/list"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ModelRef/model"/>
+    <genClasses ecoreClass="Ace.ecore#//ComplexAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ComplexAttribute/list"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ComplexAttribute/model"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ComplexAttribute/name"/>
     </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//DataRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//DataRef/data"/>
+    <genClasses ecoreClass="Ace.ecore#//ModelRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ModelRef/model"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/unique"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/primaryKey"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Attribute/foreignKey"/>

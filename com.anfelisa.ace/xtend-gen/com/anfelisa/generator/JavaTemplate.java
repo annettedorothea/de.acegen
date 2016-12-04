@@ -3,6 +3,7 @@ package com.anfelisa.generator;
 import com.anfelisa.ace.Action;
 import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Command;
+import com.anfelisa.ace.ComplexAttribute;
 import com.anfelisa.ace.Data;
 import com.anfelisa.ace.Event;
 import com.anfelisa.ace.EventOnOutcome;
@@ -14,6 +15,7 @@ import com.anfelisa.ace.ViewFunction;
 import com.anfelisa.extensions.ActionExtension;
 import com.anfelisa.extensions.AttributeExtension;
 import com.anfelisa.extensions.CommandExtension;
+import com.anfelisa.extensions.ComplexAttributeExtension;
 import com.anfelisa.extensions.DataExtension;
 import com.anfelisa.extensions.EventExtension;
 import com.anfelisa.extensions.ModelExtension;
@@ -57,6 +59,10 @@ public class JavaTemplate {
   @Extension
   private AttributeExtension _attributeExtension;
   
+  @Inject
+  @Extension
+  private ComplexAttributeExtension _complexAttributeExtension;
+  
   public CharSequence generateModel(final Model it, final Project project) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
@@ -82,10 +88,10 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      EList<ModelRef> _models = it.getModels();
-      for(final ModelRef model : _models) {
+      EList<ComplexAttribute> _models = it.getModels();
+      for(final ComplexAttribute complexAttribute : _models) {
         _builder.append("\t");
-        String _interfaceGetter_1 = this._modelExtension.interfaceGetter(model);
+        String _interfaceGetter_1 = this._complexAttributeExtension.interfaceGetter(complexAttribute);
         _builder.append(_interfaceGetter_1, "\t");
         _builder.newLineIfNotEmpty();
       }
@@ -138,10 +144,10 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      EList<ModelRef> _models = it.getModels();
-      for(final ModelRef modelRef : _models) {
+      EList<ComplexAttribute> _models = it.getModels();
+      for(final ComplexAttribute modelRef : _models) {
         _builder.append("\t");
-        String _declaration_1 = this._modelExtension.declaration(modelRef);
+        String _declaration_1 = this._complexAttributeExtension.declaration(modelRef);
         _builder.append(_declaration_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -203,14 +209,14 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      EList<ModelRef> _models_1 = it.getModels();
-      for(final ModelRef modelRef_1 : _models_1) {
+      EList<ComplexAttribute> _models_1 = it.getModels();
+      for(final ComplexAttribute modelRef_1 : _models_1) {
         _builder.append("\t");
-        String _ter_1 = this._modelExtension.getter(modelRef_1);
+        String _ter_1 = this._complexAttributeExtension.getter(modelRef_1);
         _builder.append(_ter_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        String _setter_1 = this._modelExtension.setter(modelRef_1);
+        String _setter_1 = this._complexAttributeExtension.setter(modelRef_1);
         _builder.append(_setter_1, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -265,15 +271,16 @@ public class JavaTemplate {
     _builder.append(_dataName, "");
     _builder.append(" implements ");
     {
-      List<Model> _allNonListModels = this._dataExtension.allNonListModels(it);
+      EList<ModelRef> _models_1 = it.getModels();
       boolean _hasElements = false;
-      for(final Model model_1 : _allNonListModels) {
+      for(final ModelRef modelRef : _models_1) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
           _builder.appendImmediate(", ", "");
         }
-        String _modelName = this._modelExtension.modelName(model_1);
+        Model _model_1 = modelRef.getModel();
+        String _modelName = this._modelExtension.modelName(_model_1);
         _builder.append(_modelName, "");
       }
       if (_hasElements) {
@@ -307,31 +314,14 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      List<Model> _allListModels = this._dataExtension.allListModels(it);
-      for(final Model model_2 : _allListModels) {
-        _builder.append("\t");
-        _builder.append("java.util.List<");
-        String _modelName_1 = this._modelExtension.modelName(model_2);
-        _builder.append(_modelName_1, "\t");
-        _builder.append("> ");
-        String _modelListAttributeName = this._modelExtension.modelListAttributeName(model_2);
-        _builder.append(_modelListAttributeName, "\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
-    {
-      EList<ModelRef> _models_1 = it.getModels();
-      for(final ModelRef modelRef : _models_1) {
+      EList<ModelRef> _models_2 = it.getModels();
+      for(final ModelRef modelRef_1 : _models_2) {
         {
-          Model _model_1 = modelRef.getModel();
-          EList<ModelRef> _models_2 = _model_1.getModels();
-          for(final ModelRef modelModelRef : _models_2) {
+          Model _model_2 = modelRef_1.getModel();
+          EList<ComplexAttribute> _models_3 = _model_2.getModels();
+          for(final ComplexAttribute modelModelRef : _models_3) {
             _builder.append("\t");
-            String _declaration_1 = this._modelExtension.declaration(modelModelRef);
+            String _declaration_1 = this._complexAttributeExtension.declaration(modelModelRef);
             _builder.append(_declaration_1, "\t");
             _builder.newLineIfNotEmpty();
           }
@@ -450,34 +440,18 @@ public class JavaTemplate {
       }
     }
     {
-      List<Model> _allListModels_1 = this._dataExtension.allListModels(it);
-      for(final Model model_3 : _allListModels_1) {
-        _builder.append("\t");
-        String _listGetter = this._modelExtension.listGetter(model_3);
-        _builder.append(_listGetter, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        String _listSetter = this._modelExtension.listSetter(model_3);
-        _builder.append(_listSetter, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
-    {
-      EList<ModelRef> _models_3 = it.getModels();
-      for(final ModelRef modelRef_1 : _models_3) {
+      EList<ModelRef> _models_4 = it.getModels();
+      for(final ModelRef modelRef_2 : _models_4) {
         {
-          Model _model_2 = modelRef_1.getModel();
-          EList<ModelRef> _models_4 = _model_2.getModels();
-          for(final ModelRef modelModelRef_1 : _models_4) {
+          Model _model_3 = modelRef_2.getModel();
+          EList<ComplexAttribute> _models_5 = _model_3.getModels();
+          for(final ComplexAttribute modelModelRef_1 : _models_5) {
             _builder.append("\t");
-            String _ter_1 = this._modelExtension.getter(modelModelRef_1);
+            String _ter_1 = this._complexAttributeExtension.getter(modelModelRef_1);
             _builder.append(_ter_1, "\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            String _setter_1 = this._modelExtension.setter(modelModelRef_1);
+            String _setter_1 = this._complexAttributeExtension.setter(modelModelRef_1);
             _builder.append(_setter_1, "\t");
             _builder.newLineIfNotEmpty();
           }
@@ -1008,8 +982,6 @@ public class JavaTemplate {
     _builder.append("import java.sql.ResultSet;");
     _builder.newLine();
     _builder.append("import java.sql.SQLException;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.StatementContext;");

@@ -42,6 +42,12 @@ public class AttributeExtension {
   public String javaType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
+      boolean _isList = it.isList();
+      if (_isList) {
+        _builder.append("java.util.List<");
+      }
+    }
+    {
       String _type = it.getType();
       boolean _equals = _type.equals("Serial");
       if (_equals) {
@@ -55,6 +61,12 @@ public class AttributeExtension {
           String _type_2 = it.getType();
           _builder.append(_type_2, "");
         }
+      }
+    }
+    {
+      boolean _isList_1 = it.isList();
+      if (_isList_1) {
+        _builder.append(">");
       }
     }
     return _builder.toString();
@@ -95,7 +107,7 @@ public class AttributeExtension {
       String _type = it.getType();
       boolean _equals = _type.equals("DateTime");
       if (_equals) {
-        _builder.append("new DateTime(r.getDate(\"");
+        _builder.append("new org.joda.time.DateTime(r.getDate(\"");
         String _name = it.getName();
         _builder.append(_name, "");
         _builder.append("\"))");
