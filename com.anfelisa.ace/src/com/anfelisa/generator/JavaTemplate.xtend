@@ -157,10 +157,7 @@ class JavaTemplate {
 			}
 		
 			«IF allAttributes.length > 0»
-				public «dataName»(
-					@JsonProperty("uuid") String uuid,
-					@JsonProperty("schema") String schema
-				) {
+				public «dataName»( String uuid,	String schema ) {
 					this.uuid = uuid;
 					this.schema = schema;
 				}
