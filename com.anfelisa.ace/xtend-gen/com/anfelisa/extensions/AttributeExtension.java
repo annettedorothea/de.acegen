@@ -180,7 +180,7 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String tableDefinition(final Attribute it) {
+  public String tableDefinition(final Attribute it, final String tableName) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = it.getName();
     _builder.append(_name, "");
@@ -193,6 +193,7 @@ public class AttributeExtension {
         _builder.append("NOT NULL ");
       }
     }
+    _builder.append(" ");
     return _builder.toString();
   }
   

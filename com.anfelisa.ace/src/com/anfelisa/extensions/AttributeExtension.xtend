@@ -40,7 +40,7 @@ class AttributeExtension {
 	
 	def String tableName(Attribute it) '''«(eContainer as Model).table»'''
 	
-	def String tableDefinition(Attribute it) '''«name» «sqlType» «IF constraint != null && constraint.equals('NotNull')»NOT NULL «ENDIF»'''
+	def String tableDefinition(Attribute it, String tableName) '''«name» «sqlType» «IF constraint != null && constraint.equals('NotNull')»NOT NULL «ENDIF» '''
 	
 	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name»)«ENDIF»'''
 	

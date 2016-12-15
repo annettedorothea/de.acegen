@@ -27,9 +27,17 @@ class ModelExtension {
 	
 	def String modelInterfaceWithPackage(Model it) '''«(eContainer as Project).name».models.«modelName»'''
 	
-	def Attribute findSerialAttribute(Model it) {
+	def Attribute findPrimaryKeyAttribute(Model it) {
 		for (attribute : attributes) {
 			if (attribute.primaryKey) {
+				return attribute;
+			}
+		}
+	}
+	
+	def Attribute findSerialAttribute(Model it) {
+		for (attribute : attributes) {
+			if (attribute.type == 'Serial') {
 				return attribute;
 			}
 		}

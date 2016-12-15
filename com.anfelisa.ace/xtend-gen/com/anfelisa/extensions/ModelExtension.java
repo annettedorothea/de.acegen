@@ -4,6 +4,7 @@ import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
 import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
+import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
@@ -95,11 +96,23 @@ public class ModelExtension {
     return _builder.toString();
   }
   
-  public Attribute findSerialAttribute(final Model it) {
+  public Attribute findPrimaryKeyAttribute(final Model it) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
       boolean _isPrimaryKey = attribute.isPrimaryKey();
       if (_isPrimaryKey) {
+        return attribute;
+      }
+    }
+    return null;
+  }
+  
+  public Attribute findSerialAttribute(final Model it) {
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      String _type = attribute.getType();
+      boolean _equals = Objects.equal(_type, "Serial");
+      if (_equals) {
         return attribute;
       }
     }

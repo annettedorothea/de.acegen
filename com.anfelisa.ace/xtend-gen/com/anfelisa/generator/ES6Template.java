@@ -1662,7 +1662,7 @@ public class ES6Template {
     _builder.append("if (!listener) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new Error(\'cannot register undefined listener\');");
+    _builder.append("throw new Error(\'cannot register undefined listener for event \' + eventName);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");

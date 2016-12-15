@@ -203,17 +203,18 @@ class JavaTemplate {
 		public class «modelDao» {
 			
 			public static void create(Handle handle, String schema) {
-				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
+				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
 			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
-				«IF findSerialAttribute != null»
-					if («modelParam».«findSerialAttribute.getterCall» != null) {
+				«IF findPrimaryKeyAttribute != null»
+					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
 						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 						«FOR attribute : attributes»
 							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
 						statement.execute();
+						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('" + schema + ".«table»_«findSerialAttribute.name»_seq', (SELECT MAX(«findSerialAttribute.name») FROM " + schema + ".«table»));").execute();«ENDIF»
 					} else {
 						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 						«FOR attribute : allNonSerialAttributes»
