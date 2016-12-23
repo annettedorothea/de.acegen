@@ -536,6 +536,12 @@ public class ES6Template {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("EventListenerRegistration");
+    String _projectName_1 = this._projectExtension.projectName(it);
+    _builder.append(_projectName_1, "");
+    _builder.append(".init();");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
     _builder.append("/*       S.D.G.       */");
     _builder.newLine();
     return _builder;
@@ -577,6 +583,8 @@ public class ES6Template {
   
   public CharSequence generateAceHtmlDevSnippet(final Project it) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/UUID.js\"></script>");
+    _builder.newLine();
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Action.es6\"></script>");
     _builder.newLine();
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Command.es6\"></script>");
@@ -586,8 +594,6 @@ public class ES6Template {
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/ACEController.es6\"></script>");
     _builder.newLine();
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/TriggerAction.es6\"></script>");
-    _builder.newLine();
-    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/UUID.js\"></script>");
     _builder.newLine();
     return _builder;
   }
@@ -657,17 +663,12 @@ public class ES6Template {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
-    String _name_6 = it.getName();
-    _builder.append(_name_6, "");
-    _builder.append("/EventListenerRegistration.es6\"></script>");
-    _builder.newLineIfNotEmpty();
     {
       EList<View> _views = it.getViews();
       for(final View view : _views) {
         _builder.append("<script type=\"text/javascript\" src=\"es6/src/");
-        String _name_7 = it.getName();
-        _builder.append(_name_7, "");
+        String _name_6 = it.getName();
+        _builder.append(_name_6, "");
         _builder.append("/");
         String _viewName = this._viewExtension.viewName(view);
         _builder.append(_viewName, "");
@@ -675,6 +676,17 @@ public class ES6Template {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
+    String _name_7 = it.getName();
+    _builder.append(_name_7, "");
+    _builder.append("/EventListenerRegistration.es6\"></script>");
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
   
@@ -2276,6 +2288,9 @@ public class ES6Template {
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("ACEController.init();");
     _builder.newLine();
     _builder.newLine();
     _builder.append("/*       S.D.G.       */");

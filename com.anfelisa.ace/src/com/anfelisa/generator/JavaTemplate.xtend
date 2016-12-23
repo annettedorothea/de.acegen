@@ -304,15 +304,16 @@ class JavaTemplate {
 				«ENDIF»
 			}
 			
-			public static void update(Handle handle, «modelName» «modelParam», String schema) {
-				Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attribute : attributes SEPARATOR ', '»«attribute.name» = :«attribute.name»«ENDFOR»");
-				«FOR attribute : attributes»
-					statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
-				«ENDFOR»
-				statement.execute();
-			}
 			
 			«FOR attribute : allUniqueAttributes»
+				public static void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam», String schema) {
+					Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
+					«FOR attr : attributes»
+						statement.bind("«attr.name»", «modelParam».«attribute.getterCall»);
+					«ENDFOR»
+					statement.execute();
+				}
+
 				public static void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
 					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»");
 					statement.bind("«attribute.name»", «attribute.name»);

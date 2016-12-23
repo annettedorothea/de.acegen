@@ -205,6 +205,8 @@ class ES6Template {
 		
 		}
 		
+		EventListenerRegistration«projectName».init();
+		
 		/*       S.D.G.       */
 	'''
 	def generateView(View it) '''
@@ -222,12 +224,12 @@ class ES6Template {
 	'''
 
 	def generateAceHtmlDevSnippet(Project it) '''
+		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
 		<script type="text/javascript" src="es6/gen/ace/Action.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Command.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Event.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/ACEController.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/TriggerAction.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
 	'''
 
 	def generateHtmlDevSnippet(Project it) '''
@@ -243,10 +245,16 @@ class ES6Template {
 			<script type="text/javascript" src="es6/gen/«name»/events/«event.abstractEventName».es6"></script>
 			<script type="text/javascript" src="es6/src/«name»/events/«event.eventName».es6"></script>
 		«ENDFOR»
-		<script type="text/javascript" src="es6/gen/«name»/EventListenerRegistration.es6"></script>
 		«FOR view: views»
 			<script type="text/javascript" src="es6/src/«name»/«view.viewName».es6"></script>
 		«ENDFOR»
+
+
+
+
+
+
+		<script type="text/javascript" src="es6/gen/«name»/EventListenerRegistration.es6"></script>
 	'''
 
 	def generateAction() '''
@@ -833,6 +841,8 @@ class ES6Template {
 		    }
 		
 		}
+		
+		ACEController.init();
 		
 		/*       S.D.G.       */
 		

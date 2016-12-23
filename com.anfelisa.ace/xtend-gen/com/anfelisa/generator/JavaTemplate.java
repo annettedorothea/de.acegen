@@ -1122,76 +1122,90 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void update(Handle handle, ");
-    String _modelName_1 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_1, "\t");
-    _builder.append(" ");
-    String _modelParam_5 = this._modelExtension.modelParam(it);
-    _builder.append(_modelParam_5, "\t");
-    _builder.append(", String schema) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("Update statement = handle.createStatement(\"UPDATE \" + schema + \".");
-    String _table_10 = this._modelExtension.table(it);
-    _builder.append(_table_10, "\t\t");
-    _builder.append(" SET ");
-    {
-      EList<Attribute> _attributes_7 = it.getAttributes();
-      boolean _hasElements_7 = false;
-      for(final Attribute attribute_13 : _attributes_7) {
-        if (!_hasElements_7) {
-          _hasElements_7 = true;
-        } else {
-          _builder.appendImmediate(", ", "\t\t");
-        }
-        String _name_12 = attribute_13.getName();
-        _builder.append(_name_12, "\t\t");
-        _builder.append(" = :");
-        String _name_13 = attribute_13.getName();
-        _builder.append(_name_13, "\t\t");
-      }
-    }
-    _builder.append("\");");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _attributes_8 = it.getAttributes();
-      for(final Attribute attribute_14 : _attributes_8) {
-        _builder.append("\t\t");
-        _builder.append("statement.bind(\"");
-        String _name_14 = attribute_14.getName();
-        _builder.append(_name_14, "\t\t");
-        _builder.append("\", ");
-        String _modelParam_6 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_6, "\t\t");
-        _builder.append(".");
-        String _terCall_4 = this._attributeExtension.getterCall(attribute_14);
-        _builder.append(_terCall_4, "\t\t");
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append("statement.execute();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.newLine();
     {
       List<Attribute> _allUniqueAttributes = this._modelExtension.allUniqueAttributes(it);
-      for(final Attribute attribute_15 : _allUniqueAttributes) {
+      for(final Attribute attribute_13 : _allUniqueAttributes) {
         _builder.append("\t");
-        _builder.append("public static void deleteBy");
-        String _name_15 = attribute_15.getName();
-        String _firstUpper = StringExtensions.toFirstUpper(_name_15);
+        _builder.append("public static void updateBy");
+        String _name_12 = attribute_13.getName();
+        String _firstUpper = StringExtensions.toFirstUpper(_name_12);
         _builder.append(_firstUpper, "\t");
         _builder.append("(Handle handle, ");
-        String _javaType = this._attributeExtension.javaType(attribute_15);
+        String _modelName_1 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_1, "\t");
+        _builder.append(" ");
+        String _modelParam_5 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_5, "\t");
+        _builder.append(", String schema) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("Update statement = handle.createStatement(\"UPDATE \" + schema + \".");
+        String _table_10 = this._modelExtension.table(it);
+        _builder.append(_table_10, "\t\t");
+        _builder.append(" SET ");
+        {
+          EList<Attribute> _attributes_7 = it.getAttributes();
+          boolean _hasElements_7 = false;
+          for(final Attribute attr : _attributes_7) {
+            if (!_hasElements_7) {
+              _hasElements_7 = true;
+            } else {
+              _builder.appendImmediate(", ", "\t\t");
+            }
+            String _name_13 = attr.getName();
+            _builder.append(_name_13, "\t\t");
+            _builder.append(" = :");
+            String _name_14 = attr.getName();
+            _builder.append(_name_14, "\t\t");
+          }
+        }
+        _builder.append(" WHERE ");
+        String _name_15 = attribute_13.getName();
+        _builder.append(_name_15, "\t\t");
+        _builder.append(" = :");
+        String _name_16 = attribute_13.getName();
+        _builder.append(_name_16, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        {
+          EList<Attribute> _attributes_8 = it.getAttributes();
+          for(final Attribute attr_1 : _attributes_8) {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("statement.bind(\"");
+            String _name_17 = attr_1.getName();
+            _builder.append(_name_17, "\t\t");
+            _builder.append("\", ");
+            String _modelParam_6 = this._modelExtension.modelParam(it);
+            _builder.append(_modelParam_6, "\t\t");
+            _builder.append(".");
+            String _terCall_4 = this._attributeExtension.getterCall(attribute_13);
+            _builder.append(_terCall_4, "\t\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("statement.execute();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("public static void deleteBy");
+        String _name_18 = attribute_13.getName();
+        String _firstUpper_1 = StringExtensions.toFirstUpper(_name_18);
+        _builder.append(_firstUpper_1, "\t");
+        _builder.append("(Handle handle, ");
+        String _javaType = this._attributeExtension.javaType(attribute_13);
         _builder.append(_javaType, "\t");
         _builder.append(" ");
-        String _name_16 = attribute_15.getName();
-        _builder.append(_name_16, "\t");
+        String _name_19 = attribute_13.getName();
+        _builder.append(_name_19, "\t");
         _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1200,21 +1214,21 @@ public class JavaTemplate {
         String _table_11 = this._modelExtension.table(it);
         _builder.append(_table_11, "\t\t");
         _builder.append(" WHERE ");
-        String _name_17 = attribute_15.getName();
-        _builder.append(_name_17, "\t\t");
+        String _name_20 = attribute_13.getName();
+        _builder.append(_name_20, "\t\t");
         _builder.append(" = :");
-        String _name_18 = attribute_15.getName();
-        _builder.append(_name_18, "\t\t");
+        String _name_21 = attribute_13.getName();
+        _builder.append(_name_21, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("statement.bind(\"");
-        String _name_19 = attribute_15.getName();
-        _builder.append(_name_19, "\t\t");
+        String _name_22 = attribute_13.getName();
+        _builder.append(_name_22, "\t\t");
         _builder.append("\", ");
-        String _name_20 = attribute_15.getName();
-        _builder.append(_name_20, "\t\t");
+        String _name_23 = attribute_13.getName();
+        _builder.append(_name_23, "\t\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1230,15 +1244,15 @@ public class JavaTemplate {
         String _modelName_2 = this._modelExtension.modelName(it);
         _builder.append(_modelName_2, "\t");
         _builder.append(" selectBy");
-        String _name_21 = attribute_15.getName();
-        String _firstUpper_1 = StringExtensions.toFirstUpper(_name_21);
-        _builder.append(_firstUpper_1, "\t");
+        String _name_24 = attribute_13.getName();
+        String _firstUpper_2 = StringExtensions.toFirstUpper(_name_24);
+        _builder.append(_firstUpper_2, "\t");
         _builder.append("(Handle handle, ");
-        String _javaType_1 = this._attributeExtension.javaType(attribute_15);
+        String _javaType_1 = this._attributeExtension.javaType(attribute_13);
         _builder.append(_javaType_1, "\t");
         _builder.append(" ");
-        String _name_22 = attribute_15.getName();
-        _builder.append(_name_22, "\t");
+        String _name_25 = attribute_13.getName();
+        _builder.append(_name_25, "\t");
         _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1247,21 +1261,21 @@ public class JavaTemplate {
         String _table_12 = this._modelExtension.table(it);
         _builder.append(_table_12, "\t\t");
         _builder.append(" WHERE ");
-        String _name_23 = attribute_15.getName();
-        _builder.append(_name_23, "\t\t");
+        String _name_26 = attribute_13.getName();
+        _builder.append(_name_26, "\t\t");
         _builder.append(" = :");
-        String _name_24 = attribute_15.getName();
-        _builder.append(_name_24, "\t\t");
+        String _name_27 = attribute_13.getName();
+        _builder.append(_name_27, "\t\t");
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".bind(\"");
-        String _name_25 = attribute_15.getName();
-        _builder.append(_name_25, "\t\t\t");
+        String _name_28 = attribute_13.getName();
+        _builder.append(_name_28, "\t\t\t");
         _builder.append("\", ");
-        String _name_26 = attribute_15.getName();
-        _builder.append(_name_26, "\t\t\t");
+        String _name_29 = attribute_13.getName();
+        _builder.append(_name_29, "\t\t\t");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
