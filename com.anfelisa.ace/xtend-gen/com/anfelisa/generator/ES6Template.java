@@ -575,7 +575,7 @@ public class ES6Template {
     return _builder;
   }
   
-  public CharSequence generateHtmlDevSnippet(final Project it) {
+  public CharSequence generateAceHtmlDevSnippet(final Project it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Action.es6\"></script>");
     _builder.newLine();
@@ -589,7 +589,11 @@ public class ES6Template {
     _builder.newLine();
     _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/UUID.js\"></script>");
     _builder.newLine();
-    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateHtmlDevSnippet(final Project it) {
+    StringConcatenation _builder = new StringConcatenation();
     {
       EList<Action> _actions = it.getActions();
       for(final Action action : _actions) {

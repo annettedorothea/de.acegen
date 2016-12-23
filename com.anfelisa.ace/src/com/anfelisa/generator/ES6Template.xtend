@@ -221,14 +221,16 @@ class ES6Template {
 		/*                    S.D.G.                    */
 	'''
 
-	def generateHtmlDevSnippet(Project it) '''
+	def generateAceHtmlDevSnippet(Project it) '''
 		<script type="text/javascript" src="es6/gen/ace/Action.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Command.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/Event.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/ACEController.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/TriggerAction.es6"></script>
 		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
-		
+	'''
+
+	def generateHtmlDevSnippet(Project it) '''
 		«FOR action: actions»
 			<script type="text/javascript" src="es6/gen/«name»/actions/«action.abstractActionName».es6"></script>
 			<script type="text/javascript" src="es6/src/«name»/actions/«action.actionName».es6"></script>

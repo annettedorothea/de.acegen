@@ -85,6 +85,8 @@ class AceGenerator extends AbstractGenerator {
 				}
 				fsa.generateFile(project.name + '/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateHtmlDevSnippet(project));
+				fsa.generateFile('ace/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateAceHtmlDevSnippet(project));
 				fsa.generateFile('ace/Action.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateAction());
 				fsa.generateFile('ace/Command.es6', IFileSystemAccess.DEFAULT_OUTPUT,
@@ -105,6 +107,9 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelClassName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateModelClass(model, project));
+					fsa.generateFile(project.packageFolder + '/' + model.name + '.html',
+						ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+						javaTemplate.generateModelResource(model));
 					if (model.persistent) {
 						fsa.generateFile(project.packageFolder + '/models/' + model.modelDao + '.java',
 							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,

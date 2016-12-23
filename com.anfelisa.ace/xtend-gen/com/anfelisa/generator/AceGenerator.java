@@ -163,6 +163,8 @@ public class AceGenerator extends AbstractGenerator {
         String _plus_4 = (_name_2 + "/htmlDev.snippet");
         CharSequence _generateHtmlDevSnippet = this.es6Template.generateHtmlDevSnippet(project);
         fsa.generateFile(_plus_4, IFileSystemAccess.DEFAULT_OUTPUT, _generateHtmlDevSnippet);
+        CharSequence _generateAceHtmlDevSnippet = this.es6Template.generateAceHtmlDevSnippet(project);
+        fsa.generateFile("ace/htmlDev.snippet", IFileSystemAccess.DEFAULT_OUTPUT, _generateAceHtmlDevSnippet);
         CharSequence _generateAction = this.es6Template.generateAction();
         fsa.generateFile("ace/Action.es6", IFileSystemAccess.DEFAULT_OUTPUT, _generateAction);
         CharSequence _generateCommand = this.es6Template.generateCommand();
@@ -198,23 +200,31 @@ public class AceGenerator extends AbstractGenerator {
               CharSequence _generateModelClass = this.javaTemplate.generateModelClass(model, project);
               fsa.generateFile(_plus_10, 
                 ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateModelClass);
+              String _packageFolder_2 = this._projectExtension.packageFolder(project);
+              String _plus_11 = (_packageFolder_2 + "/");
+              String _name_3 = model.getName();
+              String _plus_12 = (_plus_11 + _name_3);
+              String _plus_13 = (_plus_12 + ".html");
+              CharSequence _generateModelResource = this.javaTemplate.generateModelResource(model);
+              fsa.generateFile(_plus_13, 
+                ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, _generateModelResource);
               boolean _isPersistent = model.isPersistent();
               if (_isPersistent) {
-                String _packageFolder_2 = this._projectExtension.packageFolder(project);
-                String _plus_11 = (_packageFolder_2 + "/models/");
-                String _modelDao = this._modelExtension.modelDao(model);
-                String _plus_12 = (_plus_11 + _modelDao);
-                String _plus_13 = (_plus_12 + ".java");
-                CharSequence _generateDao = this.javaTemplate.generateDao(model, project);
-                fsa.generateFile(_plus_13, 
-                  ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateDao);
                 String _packageFolder_3 = this._projectExtension.packageFolder(project);
                 String _plus_14 = (_packageFolder_3 + "/models/");
-                String _modelMapper = this._modelExtension.modelMapper(model);
-                String _plus_15 = (_plus_14 + _modelMapper);
+                String _modelDao = this._modelExtension.modelDao(model);
+                String _plus_15 = (_plus_14 + _modelDao);
                 String _plus_16 = (_plus_15 + ".java");
-                CharSequence _generateMapper = this.javaTemplate.generateMapper(model, project);
+                CharSequence _generateDao = this.javaTemplate.generateDao(model, project);
                 fsa.generateFile(_plus_16, 
+                  ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateDao);
+                String _packageFolder_4 = this._projectExtension.packageFolder(project);
+                String _plus_17 = (_packageFolder_4 + "/models/");
+                String _modelMapper = this._modelExtension.modelMapper(model);
+                String _plus_18 = (_plus_17 + _modelMapper);
+                String _plus_19 = (_plus_18 + ".java");
+                CharSequence _generateMapper = this.javaTemplate.generateMapper(model, project);
+                fsa.generateFile(_plus_19, 
                   ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateMapper);
               }
             }

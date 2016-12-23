@@ -61,6 +61,79 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
+	def generateModelResource(Model it) '''
+		<form class="form-horizontal">
+
+		    <div class="form-group">
+		        <label class="col-sm-3 control-label"></label>
+		        <div class="col-sm-9">
+		            <h4>{{texts.«name.toFirstLower»}}</h4>
+		        </div>
+		    </div>
+
+			«FOR attribute : attributes»
+			    <div class="form-group" id="«attribute.name»Div">
+			        <label for="«attribute.name»" class="col-sm-3 control-label">«IF attribute.constraint != null»* «ENDIF»{{texts.«attribute.name»}}</label>
+			        <div class="col-sm-9">
+			            <input type="text" class="form-control" id="«attribute.name»" placeholder="{{texts.«attribute.name»}}" value="{{«attribute.name»}}"«IF attribute.constraint != null» onblur="new ValidateRequiredFieldAction({id : '«attribute.name»'}).apply()"«ENDIF»>
+			            <span class="help-block notEmpty" style="display: none">{{texts.«attribute.name»NotEmpty}}</span>
+			        </div>
+			    </div>
+			    
+			«ENDFOR»
+			«FOR modelRef : models»
+				«IF modelRef.list»
+					{{#«modelRef.name»}}
+					<div class="panel panel-default">
+					    <div class="panel-heading">
+							«FOR attribute : modelRef.model.attributes»
+								<h4 class="panel-title">{{texts.«attribute.name»}}: {{«attribute.name»}}</h4>
+							«ENDFOR»
+					    </div>
+					    <div class="panel-body">
+							«FOR attribute : modelRef.model.attributes»
+								{{texts.«attribute.name»}}: {{«attribute.name»}}<br>
+							«ENDFOR»
+					    </div>
+					</div>
+					{{/«modelRef.name»}}
+					{{^«modelRef.name»}}
+					<div class="panel panel-default">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">{{texts.empty«modelRef.name.toFirstUpper»}}</h3>
+					    </div>
+					</div>
+					{{/«modelRef.name»}}
+					
+					<div class="table-responsive">
+					    <table class="table table-bordered table-hover table-responsive">
+					        <tr>
+								«FOR attribute : modelRef.model.attributes»
+									<th>{{texts.«attribute.name»}}</th>
+								«ENDFOR»
+					        </tr>
+					        {{#«modelRef.name»}}
+					        <tr>
+								«FOR attribute : modelRef.model.attributes»
+									<td>{{«attribute.name»}}</td>
+								«ENDFOR»
+					        </tr>
+					        {{/«modelRef.name»}}
+					        {{^«modelRef.name»}}
+					        <tr>
+					            <td colspan="«modelRef.model.attributes.size»">{{texts.empty«modelRef.name.toFirstUpper»}}</td>
+					        </tr>
+					        {{/«modelRef.name»}}
+					    </table>
+					</div>
+					
+				«ENDIF»
+				
+			«ENDFOR»
+			
+		</form>
+	'''
+	
 	def generateModelClass(Model it, Project project) '''
 		package «project.name».models;
 		
@@ -500,6 +573,7 @@ class JavaTemplate {
 		import org.slf4j.LoggerFactory;
 		import org.skife.jdbi.v2.DBI;
 		
+		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Resource;
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;

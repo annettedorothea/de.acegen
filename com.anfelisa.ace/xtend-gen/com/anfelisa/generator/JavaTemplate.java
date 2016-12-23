@@ -105,6 +105,335 @@ public class JavaTemplate {
     return _builder;
   }
   
+  public CharSequence generateModelResource(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<form class=\"form-horizontal\">");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<div class=\"form-group\">");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<label class=\"col-sm-3 control-label\"></label>");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("<div class=\"col-sm-9\">");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("<h4>{{texts.");
+    String _name = it.getName();
+    String _firstLower = StringExtensions.toFirstLower(_name);
+    _builder.append(_firstLower, "            ");
+    _builder.append("}}</h4>");
+    _builder.newLineIfNotEmpty();
+    _builder.append("        ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("</div>");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      for(final Attribute attribute : _attributes) {
+        _builder.append("\t");
+        _builder.append("<div class=\"form-group\" id=\"");
+        String _name_1 = attribute.getName();
+        _builder.append(_name_1, "\t");
+        _builder.append("Div\">");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("    ");
+        _builder.append("<label for=\"");
+        String _name_2 = attribute.getName();
+        _builder.append(_name_2, "\t    ");
+        _builder.append("\" class=\"col-sm-3 control-label\">");
+        {
+          String _constraint = attribute.getConstraint();
+          boolean _notEquals = (!Objects.equal(_constraint, null));
+          if (_notEquals) {
+            _builder.append("* ");
+          }
+        }
+        _builder.append("{{texts.");
+        String _name_3 = attribute.getName();
+        _builder.append(_name_3, "\t    ");
+        _builder.append("}}</label>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("    ");
+        _builder.append("<div class=\"col-sm-9\">");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("        ");
+        _builder.append("<input type=\"text\" class=\"form-control\" id=\"");
+        String _name_4 = attribute.getName();
+        _builder.append(_name_4, "\t        ");
+        _builder.append("\" placeholder=\"{{texts.");
+        String _name_5 = attribute.getName();
+        _builder.append(_name_5, "\t        ");
+        _builder.append("}}\" value=\"{{");
+        String _name_6 = attribute.getName();
+        _builder.append(_name_6, "\t        ");
+        _builder.append("}}\"");
+        {
+          String _constraint_1 = attribute.getConstraint();
+          boolean _notEquals_1 = (!Objects.equal(_constraint_1, null));
+          if (_notEquals_1) {
+            _builder.append(" onblur=\"new ValidateRequiredFieldAction({id : \'");
+            String _name_7 = attribute.getName();
+            _builder.append(_name_7, "\t        ");
+            _builder.append("\'}).apply()\"");
+          }
+        }
+        _builder.append(">");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("        ");
+        _builder.append("<span class=\"help-block notEmpty\" style=\"display: none\">{{texts.");
+        String _name_8 = attribute.getName();
+        _builder.append(_name_8, "\t        ");
+        _builder.append("NotEmpty}}</span>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("    ");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("</div>");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    {
+      EList<ComplexAttribute> _models = it.getModels();
+      for(final ComplexAttribute modelRef : _models) {
+        {
+          boolean _isList = modelRef.isList();
+          if (_isList) {
+            _builder.append("\t");
+            _builder.append("{{#");
+            String _name_9 = modelRef.getName();
+            _builder.append(_name_9, "\t");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("<div class=\"panel panel-default\">");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("<div class=\"panel-heading\">");
+            _builder.newLine();
+            {
+              Model _model = modelRef.getModel();
+              EList<Attribute> _attributes_1 = _model.getAttributes();
+              for(final Attribute attribute_1 : _attributes_1) {
+                _builder.append("\t");
+                _builder.append("\t\t");
+                _builder.append("<h4 class=\"panel-title\">{{texts.");
+                String _name_10 = attribute_1.getName();
+                _builder.append(_name_10, "\t\t\t");
+                _builder.append("}}: {{");
+                String _name_11 = attribute_1.getName();
+                _builder.append(_name_11, "\t\t\t");
+                _builder.append("}}</h4>");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("<div class=\"panel-body\">");
+            _builder.newLine();
+            {
+              Model _model_1 = modelRef.getModel();
+              EList<Attribute> _attributes_2 = _model_1.getAttributes();
+              for(final Attribute attribute_2 : _attributes_2) {
+                _builder.append("\t");
+                _builder.append("\t\t");
+                _builder.append("{{texts.");
+                String _name_12 = attribute_2.getName();
+                _builder.append(_name_12, "\t\t\t");
+                _builder.append("}}: {{");
+                String _name_13 = attribute_2.getName();
+                _builder.append(_name_13, "\t\t\t");
+                _builder.append("}}<br>");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("{{/");
+            String _name_14 = modelRef.getName();
+            _builder.append(_name_14, "\t");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("{{^");
+            String _name_15 = modelRef.getName();
+            _builder.append(_name_15, "\t");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("<div class=\"panel panel-default\">");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("<div class=\"panel-heading\">");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("<h3 class=\"panel-title\">{{texts.empty");
+            String _name_16 = modelRef.getName();
+            String _firstUpper = StringExtensions.toFirstUpper(_name_16);
+            _builder.append(_firstUpper, "\t        ");
+            _builder.append("}}</h3>");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("{{/");
+            String _name_17 = modelRef.getName();
+            _builder.append(_name_17, "\t");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("<div class=\"table-responsive\">");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("<table class=\"table table-bordered table-hover table-responsive\">");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("<tr>");
+            _builder.newLine();
+            {
+              Model _model_2 = modelRef.getModel();
+              EList<Attribute> _attributes_3 = _model_2.getAttributes();
+              for(final Attribute attribute_3 : _attributes_3) {
+                _builder.append("\t");
+                _builder.append("\t\t\t");
+                _builder.append("<th>{{texts.");
+                String _name_18 = attribute_3.getName();
+                _builder.append(_name_18, "\t\t\t\t");
+                _builder.append("}}</th>");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("</tr>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("{{#");
+            String _name_19 = modelRef.getName();
+            _builder.append(_name_19, "\t        ");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("<tr>");
+            _builder.newLine();
+            {
+              Model _model_3 = modelRef.getModel();
+              EList<Attribute> _attributes_4 = _model_3.getAttributes();
+              for(final Attribute attribute_4 : _attributes_4) {
+                _builder.append("\t");
+                _builder.append("\t\t\t");
+                _builder.append("<td>{{");
+                String _name_20 = attribute_4.getName();
+                _builder.append(_name_20, "\t\t\t\t");
+                _builder.append("}}</td>");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("</tr>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("{{/");
+            String _name_21 = modelRef.getName();
+            _builder.append(_name_21, "\t        ");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("{{^");
+            String _name_22 = modelRef.getName();
+            _builder.append(_name_22, "\t        ");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("<tr>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("            ");
+            _builder.append("<td colspan=\"");
+            Model _model_4 = modelRef.getModel();
+            EList<Attribute> _attributes_5 = _model_4.getAttributes();
+            int _size = _attributes_5.size();
+            _builder.append(_size, "\t            ");
+            _builder.append("\">{{texts.empty");
+            String _name_23 = modelRef.getName();
+            String _firstUpper_1 = StringExtensions.toFirstUpper(_name_23);
+            _builder.append(_firstUpper_1, "\t            ");
+            _builder.append("}}</td>");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("</tr>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("{{/");
+            String _name_24 = modelRef.getName();
+            _builder.append(_name_24, "\t        ");
+            _builder.append("}}");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("    ");
+            _builder.append("</table>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("</div>");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.newLine();
+          }
+        }
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("</form>");
+    _builder.newLine();
+    return _builder;
+  }
+  
   public CharSequence generateModelClass(final Model it, final Project project) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
@@ -1673,6 +2002,8 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.DBI;");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Resource;");
     _builder.newLine();
