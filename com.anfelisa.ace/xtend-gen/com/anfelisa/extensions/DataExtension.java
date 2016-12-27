@@ -38,6 +38,23 @@ public class DataExtension {
     return _builder.toString();
   }
   
+  public String dataInterfaceName(final Data it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _notEquals = (!Objects.equal(it, null));
+      if (_notEquals) {
+        _builder.append("I");
+        String _name = it.getName();
+        String _firstUpper = StringExtensions.toFirstUpper(_name);
+        _builder.append(_firstUpper, "");
+        _builder.append("Data");
+      } else {
+        _builder.append("IDataContainer");
+      }
+    }
+    return _builder.toString();
+  }
+  
   public String dataNameWithPackage(final Data it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();

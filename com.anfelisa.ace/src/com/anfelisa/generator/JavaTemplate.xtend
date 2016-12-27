@@ -184,6 +184,25 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
+	def generateDataInterface(Data it, Project project) '''
+		package «project.name».data;
+		
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+		
+		import com.anfelisa.ace.IDataContainer;
+		
+		«FOR model : models»
+			«model.model.importModel»
+		«ENDFOR»
+		
+		@JsonDeserialize(as=«dataName».class)
+		public interface «dataInterfaceName» extends «FOR modelRef : models SEPARATOR ', ' AFTER ','»«modelRef.model.modelName»«ENDFOR» IDataContainer {
+		
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
 	def generateData(Data it, Project project) '''
 		package «project.name».data;
 		
@@ -200,7 +219,7 @@ class JavaTemplate {
 		«ENDFOR»
 		
 		@SuppressWarnings("unused")
-		public class «dataName» implements «FOR modelRef : models SEPARATOR ', ' AFTER ','»«modelRef.model.modelName»«ENDFOR» IDataContainer {
+		public class «dataName» implements «dataInterfaceName» {
 			
 			private String uuid;
 			

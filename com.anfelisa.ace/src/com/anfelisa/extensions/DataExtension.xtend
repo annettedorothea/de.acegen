@@ -13,6 +13,7 @@ class DataExtension {
 	extension AttributeExtension
 	
 	def String dataName(Data it) '''«IF it != null»«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
+	def String dataInterfaceName(Data it) '''«IF it != null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataNameWithPackage(Data it) '''«(eContainer as Project).name».data.«name.toFirstUpper»Data'''
 	
 	def String dataImport(Data it) '''

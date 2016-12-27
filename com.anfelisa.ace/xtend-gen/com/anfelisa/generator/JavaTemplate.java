@@ -569,6 +569,67 @@ public class JavaTemplate {
     return _builder;
   }
   
+  public CharSequence generateDataInterface(final Data it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package ");
+    String _name = project.getName();
+    _builder.append(_name, "");
+    _builder.append(".data;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<ModelRef> _models = it.getModels();
+      for(final ModelRef model : _models) {
+        Model _model = model.getModel();
+        String _importModel = this._modelExtension.importModel(_model);
+        _builder.append(_importModel, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    _builder.append("@JsonDeserialize(as=");
+    String _dataName = this._dataExtension.dataName(it);
+    _builder.append(_dataName, "");
+    _builder.append(".class)");
+    _builder.newLineIfNotEmpty();
+    _builder.append("public interface ");
+    String _dataInterfaceName = this._dataExtension.dataInterfaceName(it);
+    _builder.append(_dataInterfaceName, "");
+    _builder.append(" extends ");
+    {
+      EList<ModelRef> _models_1 = it.getModels();
+      boolean _hasElements = false;
+      for(final ModelRef modelRef : _models_1) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        Model _model_1 = modelRef.getModel();
+        String _modelName = this._modelExtension.modelName(_model_1);
+        _builder.append(_modelName, "");
+      }
+      if (_hasElements) {
+        _builder.append(",", "");
+      }
+    }
+    _builder.append(" IDataContainer {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("/*       S.D.G.       */");
+    _builder.newLine();
+    return _builder;
+  }
+  
   public CharSequence generateData(final Data it, final Project project) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
@@ -607,24 +668,9 @@ public class JavaTemplate {
     String _dataName = this._dataExtension.dataName(it);
     _builder.append(_dataName, "");
     _builder.append(" implements ");
-    {
-      EList<ModelRef> _models_1 = it.getModels();
-      boolean _hasElements = false;
-      for(final ModelRef modelRef : _models_1) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate(", ", "");
-        }
-        Model _model_1 = modelRef.getModel();
-        String _modelName = this._modelExtension.modelName(_model_1);
-        _builder.append(_modelName, "");
-      }
-      if (_hasElements) {
-        _builder.append(",", "");
-      }
-    }
-    _builder.append(" IDataContainer {");
+    String _dataInterfaceName = this._dataExtension.dataInterfaceName(it);
+    _builder.append(_dataInterfaceName, "");
+    _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();
@@ -651,12 +697,12 @@ public class JavaTemplate {
     }
     _builder.newLine();
     {
-      EList<ModelRef> _models_2 = it.getModels();
-      for(final ModelRef modelRef_1 : _models_2) {
+      EList<ModelRef> _models_1 = it.getModels();
+      for(final ModelRef modelRef : _models_1) {
         {
-          Model _model_2 = modelRef_1.getModel();
-          EList<ComplexAttribute> _models_3 = _model_2.getModels();
-          for(final ComplexAttribute modelModelRef : _models_3) {
+          Model _model_1 = modelRef.getModel();
+          EList<ComplexAttribute> _models_2 = _model_1.getModels();
+          for(final ComplexAttribute modelModelRef : _models_2) {
             _builder.append("\t");
             String _declaration_1 = this._complexAttributeExtension.declaration(modelModelRef);
             _builder.append(_declaration_1, "\t");
@@ -676,10 +722,10 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     {
       List<Attribute> _allAttributes_1 = this._dataExtension.allAttributes(it);
-      boolean _hasElements_1 = false;
+      boolean _hasElements = false;
       for(final Attribute attribute_1 : _allAttributes_1) {
-        if (!_hasElements_1) {
-          _hasElements_1 = true;
+        if (!_hasElements) {
+          _hasElements = true;
         } else {
           _builder.appendImmediate(",", "\t\t");
         }
@@ -688,7 +734,7 @@ public class JavaTemplate {
         _builder.append(_param, "\t\t");
         _builder.newLineIfNotEmpty();
       }
-      if (_hasElements_1) {
+      if (_hasElements) {
         _builder.append(",", "\t\t");
       }
     }
@@ -766,12 +812,12 @@ public class JavaTemplate {
       }
     }
     {
-      EList<ModelRef> _models_4 = it.getModels();
-      for(final ModelRef modelRef_2 : _models_4) {
+      EList<ModelRef> _models_3 = it.getModels();
+      for(final ModelRef modelRef_1 : _models_3) {
         {
-          Model _model_3 = modelRef_2.getModel();
-          EList<ComplexAttribute> _models_5 = _model_3.getModels();
-          for(final ComplexAttribute modelModelRef_1 : _models_5) {
+          Model _model_2 = modelRef_1.getModel();
+          EList<ComplexAttribute> _models_4 = _model_2.getModels();
+          for(final ComplexAttribute modelModelRef_1 : _models_4) {
             _builder.append("\t");
             String _ter_1 = this._complexAttributeExtension.getter(modelModelRef_1);
             _builder.append(_ter_1, "\t");

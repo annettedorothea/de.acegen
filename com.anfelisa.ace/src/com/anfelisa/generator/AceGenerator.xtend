@@ -120,6 +120,9 @@ class AceGenerator extends AbstractGenerator {
 					}
 				}
 				for (data : project.data) {
+					fsa.generateFile(project.packageFolder + '/data/' + data.dataInterfaceName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateDataInterface(data, project));
 					fsa.generateFile(project.packageFolder + '/data/' + data.dataName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateData(data, project));
