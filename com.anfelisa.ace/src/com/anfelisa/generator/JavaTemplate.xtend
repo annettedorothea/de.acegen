@@ -46,6 +46,9 @@ class JavaTemplate {
 	def generateModel(Model it, Project project) '''
 		package «project.name».models;
 		
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+		
+		@JsonDeserialize(as=«modelClassName».class)
 		public interface «modelName» {
 		
 			«FOR attribute : attributes»

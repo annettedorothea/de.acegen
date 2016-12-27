@@ -71,6 +71,14 @@ public class JavaTemplate {
     _builder.append(".models;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@JsonDeserialize(as=");
+    String _modelClassName = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName, "");
+    _builder.append(".class)");
+    _builder.newLineIfNotEmpty();
     _builder.append("public interface ");
     String _modelName = this._modelExtension.modelName(it);
     _builder.append(_modelName, "");
