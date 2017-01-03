@@ -291,17 +291,20 @@ class JavaTemplate {
 		package «project.name».models;
 		
 		import org.skife.jdbi.v2.Handle;
+		import org.skife.jdbi.v2.Query;
 		import org.skife.jdbi.v2.Update;
 		
 		import java.util.List;
+		import java.util.Map;
 		
+		@SuppressWarnings("all")
 		public class «modelDao» {
 			
 			public static void create(Handle handle, String schema) {
 				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public static void insert(Handle handle, «modelName» «modelParam», String schema) {
+			public static «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam», String schema) {
 				«IF findPrimaryKeyAttribute != null»
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
 						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
@@ -310,12 +313,14 @@ class JavaTemplate {
 						«ENDFOR»
 						statement.execute();
 						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('" + schema + ".«table»_«findSerialAttribute.name»_seq', (SELECT MAX(«findSerialAttribute.name») FROM " + schema + ".«table»));").execute();«ENDIF»
+						return «modelParam».«findPrimaryKeyAttribute.getterCall»;
 					} else {
-						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name»");
 						«FOR attribute : allNonSerialAttributes»
 							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
-						statement.execute();
+						Map<String, Object> first = statement.first();
+						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name»");
 					}
 				«ELSE»
 					Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
@@ -331,7 +336,7 @@ class JavaTemplate {
 				public static void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam», String schema) {
 					Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
 					«FOR attr : attributes»
-						statement.bind("«attr.name»", «modelParam».«attribute.getterCall»);
+						statement.bind("«attr.name»", «modelParam».«attr.getterCall»);
 					«ENDFOR»
 					statement.execute();
 				}

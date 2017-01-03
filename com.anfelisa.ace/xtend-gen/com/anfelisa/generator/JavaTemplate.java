@@ -877,11 +877,17 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.Handle;");
     _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.Query;");
+    _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.Update;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
+    _builder.append("import java.util.Map;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
     String _modelDao = this._modelExtension.modelDao(it);
@@ -944,7 +950,19 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void insert(Handle handle, ");
+    _builder.append("public static ");
+    {
+      Attribute _findPrimaryKeyAttribute = this._modelExtension.findPrimaryKeyAttribute(it);
+      boolean _notEquals = (!Objects.equal(_findPrimaryKeyAttribute, null));
+      if (_notEquals) {
+        Attribute _findPrimaryKeyAttribute_1 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _javaType = this._attributeExtension.javaType(_findPrimaryKeyAttribute_1);
+        _builder.append(_javaType, "\t");
+      } else {
+        _builder.append("void");
+      }
+    }
+    _builder.append(" insert(Handle handle, ");
     String _modelName = this._modelExtension.modelName(it);
     _builder.append(_modelName, "\t");
     _builder.append(" ");
@@ -953,16 +971,16 @@ public class JavaTemplate {
     _builder.append(", String schema) {");
     _builder.newLineIfNotEmpty();
     {
-      Attribute _findPrimaryKeyAttribute = this._modelExtension.findPrimaryKeyAttribute(it);
-      boolean _notEquals = (!Objects.equal(_findPrimaryKeyAttribute, null));
-      if (_notEquals) {
+      Attribute _findPrimaryKeyAttribute_2 = this._modelExtension.findPrimaryKeyAttribute(it);
+      boolean _notEquals_1 = (!Objects.equal(_findPrimaryKeyAttribute_2, null));
+      if (_notEquals_1) {
         _builder.append("\t\t");
         _builder.append("if (");
         String _modelParam_1 = this._modelExtension.modelParam(it);
         _builder.append(_modelParam_1, "\t\t");
         _builder.append(".");
-        Attribute _findPrimaryKeyAttribute_1 = this._modelExtension.findPrimaryKeyAttribute(it);
-        String _terCall = this._attributeExtension.getterCall(_findPrimaryKeyAttribute_1);
+        Attribute _findPrimaryKeyAttribute_3 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _terCall = this._attributeExtension.getterCall(_findPrimaryKeyAttribute_3);
         _builder.append(_terCall, "\t\t");
         _builder.append(" != null) {");
         _builder.newLineIfNotEmpty();
@@ -1028,8 +1046,8 @@ public class JavaTemplate {
         _builder.append("\t");
         {
           Attribute _findSerialAttribute = this._modelExtension.findSerialAttribute(it);
-          boolean _notEquals_1 = (!Objects.equal(_findSerialAttribute, null));
-          if (_notEquals_1) {
+          boolean _notEquals_2 = (!Objects.equal(_findSerialAttribute, null));
+          if (_notEquals_2) {
             _builder.append("handle.createStatement(\"SELECT setval(\'\" + schema + \".");
             String _table_6 = this._modelExtension.table(it);
             _builder.append(_table_6, "\t\t\t");
@@ -1049,11 +1067,22 @@ public class JavaTemplate {
         }
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
+        _builder.append("\t");
+        _builder.append("return ");
+        String _modelParam_3 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_3, "\t\t\t");
+        _builder.append(".");
+        Attribute _findPrimaryKeyAttribute_4 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _terCall_2 = this._attributeExtension.getterCall(_findPrimaryKeyAttribute_4);
+        _builder.append(_terCall_2, "\t\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
         _builder.append("} else {");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("Update statement = handle.createStatement(\"INSERT INTO \" + schema + \".");
+        _builder.append("Query<Map<String, Object>> statement = handle.createQuery(\"INSERT INTO \" + schema + \".");
         String _table_8 = this._modelExtension.table(it);
         _builder.append(_table_8, "\t\t\t");
         _builder.append(" (");
@@ -1085,7 +1114,11 @@ public class JavaTemplate {
             _builder.append(_name_7, "\t\t\t");
           }
         }
-        _builder.append(")\");");
+        _builder.append(") RETURNING ");
+        Attribute _findPrimaryKeyAttribute_5 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _name_8 = _findPrimaryKeyAttribute_5.getName();
+        _builder.append(_name_8, "\t\t\t");
+        _builder.append("\");");
         _builder.newLineIfNotEmpty();
         {
           List<Attribute> _allNonSerialAttributes_2 = this._modelExtension.allNonSerialAttributes(it);
@@ -1093,22 +1126,34 @@ public class JavaTemplate {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("statement.bind(\"");
-            String _name_8 = attribute_9.getName();
-            _builder.append(_name_8, "\t\t\t");
+            String _name_9 = attribute_9.getName();
+            _builder.append(_name_9, "\t\t\t");
             _builder.append("\", ");
-            String _modelParam_3 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_3, "\t\t\t");
+            String _modelParam_4 = this._modelExtension.modelParam(it);
+            _builder.append(_modelParam_4, "\t\t\t");
             _builder.append(".");
-            String _terCall_2 = this._attributeExtension.getterCall(attribute_9);
-            _builder.append(_terCall_2, "\t\t\t");
+            String _terCall_3 = this._attributeExtension.getterCall(attribute_9);
+            _builder.append(_terCall_3, "\t\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
         }
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("statement.execute();");
+        _builder.append("Map<String, Object> first = statement.first();");
         _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("\t");
+        _builder.append("return (");
+        Attribute _findPrimaryKeyAttribute_6 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _javaType_1 = this._attributeExtension.javaType(_findPrimaryKeyAttribute_6);
+        _builder.append(_javaType_1, "\t\t\t");
+        _builder.append(") first.get(\"");
+        Attribute _findPrimaryKeyAttribute_7 = this._modelExtension.findPrimaryKeyAttribute(it);
+        String _name_10 = _findPrimaryKeyAttribute_7.getName();
+        _builder.append(_name_10, "\t\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("}");
         _builder.newLine();
@@ -1127,8 +1172,8 @@ public class JavaTemplate {
             } else {
               _builder.appendImmediate(", ", "\t\t");
             }
-            String _name_9 = attribute_10.getName();
-            _builder.append(_name_9, "\t\t");
+            String _name_11 = attribute_10.getName();
+            _builder.append(_name_11, "\t\t");
           }
         }
         _builder.append(") VALUES (");
@@ -1142,8 +1187,8 @@ public class JavaTemplate {
               _builder.appendImmediate(", ", "\t\t");
             }
             _builder.append(":");
-            String _name_10 = attribute_11.getName();
-            _builder.append(_name_10, "\t\t");
+            String _name_12 = attribute_11.getName();
+            _builder.append(_name_12, "\t\t");
           }
         }
         _builder.append(")\");");
@@ -1153,14 +1198,14 @@ public class JavaTemplate {
           for(final Attribute attribute_12 : _allNonSerialAttributes_5) {
             _builder.append("\t\t");
             _builder.append("statement.bind(\"");
-            String _name_11 = attribute_12.getName();
-            _builder.append(_name_11, "\t\t");
+            String _name_13 = attribute_12.getName();
+            _builder.append(_name_13, "\t\t");
             _builder.append("\", ");
-            String _modelParam_4 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_4, "\t\t");
+            String _modelParam_5 = this._modelExtension.modelParam(it);
+            _builder.append(_modelParam_5, "\t\t");
             _builder.append(".");
-            String _terCall_3 = this._attributeExtension.getterCall(attribute_12);
-            _builder.append(_terCall_3, "\t\t");
+            String _terCall_4 = this._attributeExtension.getterCall(attribute_12);
+            _builder.append(_terCall_4, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1182,15 +1227,15 @@ public class JavaTemplate {
       for(final Attribute attribute_13 : _allUniqueAttributes) {
         _builder.append("\t");
         _builder.append("public static void updateBy");
-        String _name_12 = attribute_13.getName();
-        String _firstUpper = StringExtensions.toFirstUpper(_name_12);
+        String _name_14 = attribute_13.getName();
+        String _firstUpper = StringExtensions.toFirstUpper(_name_14);
         _builder.append(_firstUpper, "\t");
         _builder.append("(Handle handle, ");
         String _modelName_1 = this._modelExtension.modelName(it);
         _builder.append(_modelName_1, "\t");
         _builder.append(" ");
-        String _modelParam_5 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_5, "\t");
+        String _modelParam_6 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_6, "\t");
         _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1208,19 +1253,19 @@ public class JavaTemplate {
             } else {
               _builder.appendImmediate(", ", "\t\t");
             }
-            String _name_13 = attr.getName();
-            _builder.append(_name_13, "\t\t");
+            String _name_15 = attr.getName();
+            _builder.append(_name_15, "\t\t");
             _builder.append(" = :");
-            String _name_14 = attr.getName();
-            _builder.append(_name_14, "\t\t");
+            String _name_16 = attr.getName();
+            _builder.append(_name_16, "\t\t");
           }
         }
         _builder.append(" WHERE ");
-        String _name_15 = attribute_13.getName();
-        _builder.append(_name_15, "\t\t");
+        String _name_17 = attribute_13.getName();
+        _builder.append(_name_17, "\t\t");
         _builder.append(" = :");
-        String _name_16 = attribute_13.getName();
-        _builder.append(_name_16, "\t\t");
+        String _name_18 = attribute_13.getName();
+        _builder.append(_name_18, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         {
@@ -1229,14 +1274,14 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("statement.bind(\"");
-            String _name_17 = attr_1.getName();
-            _builder.append(_name_17, "\t\t");
+            String _name_19 = attr_1.getName();
+            _builder.append(_name_19, "\t\t");
             _builder.append("\", ");
-            String _modelParam_6 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_6, "\t\t");
+            String _modelParam_7 = this._modelExtension.modelParam(it);
+            _builder.append(_modelParam_7, "\t\t");
             _builder.append(".");
-            String _terCall_4 = this._attributeExtension.getterCall(attribute_13);
-            _builder.append(_terCall_4, "\t\t");
+            String _terCall_5 = this._attributeExtension.getterCall(attr_1);
+            _builder.append(_terCall_5, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1251,15 +1296,15 @@ public class JavaTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public static void deleteBy");
-        String _name_18 = attribute_13.getName();
-        String _firstUpper_1 = StringExtensions.toFirstUpper(_name_18);
+        String _name_20 = attribute_13.getName();
+        String _firstUpper_1 = StringExtensions.toFirstUpper(_name_20);
         _builder.append(_firstUpper_1, "\t");
         _builder.append("(Handle handle, ");
-        String _javaType = this._attributeExtension.javaType(attribute_13);
-        _builder.append(_javaType, "\t");
+        String _javaType_2 = this._attributeExtension.javaType(attribute_13);
+        _builder.append(_javaType_2, "\t");
         _builder.append(" ");
-        String _name_19 = attribute_13.getName();
-        _builder.append(_name_19, "\t");
+        String _name_21 = attribute_13.getName();
+        _builder.append(_name_21, "\t");
         _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1268,21 +1313,21 @@ public class JavaTemplate {
         String _table_11 = this._modelExtension.table(it);
         _builder.append(_table_11, "\t\t");
         _builder.append(" WHERE ");
-        String _name_20 = attribute_13.getName();
-        _builder.append(_name_20, "\t\t");
+        String _name_22 = attribute_13.getName();
+        _builder.append(_name_22, "\t\t");
         _builder.append(" = :");
-        String _name_21 = attribute_13.getName();
-        _builder.append(_name_21, "\t\t");
+        String _name_23 = attribute_13.getName();
+        _builder.append(_name_23, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("statement.bind(\"");
-        String _name_22 = attribute_13.getName();
-        _builder.append(_name_22, "\t\t");
+        String _name_24 = attribute_13.getName();
+        _builder.append(_name_24, "\t\t");
         _builder.append("\", ");
-        String _name_23 = attribute_13.getName();
-        _builder.append(_name_23, "\t\t");
+        String _name_25 = attribute_13.getName();
+        _builder.append(_name_25, "\t\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1298,15 +1343,15 @@ public class JavaTemplate {
         String _modelName_2 = this._modelExtension.modelName(it);
         _builder.append(_modelName_2, "\t");
         _builder.append(" selectBy");
-        String _name_24 = attribute_13.getName();
-        String _firstUpper_2 = StringExtensions.toFirstUpper(_name_24);
+        String _name_26 = attribute_13.getName();
+        String _firstUpper_2 = StringExtensions.toFirstUpper(_name_26);
         _builder.append(_firstUpper_2, "\t");
         _builder.append("(Handle handle, ");
-        String _javaType_1 = this._attributeExtension.javaType(attribute_13);
-        _builder.append(_javaType_1, "\t");
+        String _javaType_3 = this._attributeExtension.javaType(attribute_13);
+        _builder.append(_javaType_3, "\t");
         _builder.append(" ");
-        String _name_25 = attribute_13.getName();
-        _builder.append(_name_25, "\t");
+        String _name_27 = attribute_13.getName();
+        _builder.append(_name_27, "\t");
         _builder.append(", String schema) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1315,21 +1360,21 @@ public class JavaTemplate {
         String _table_12 = this._modelExtension.table(it);
         _builder.append(_table_12, "\t\t");
         _builder.append(" WHERE ");
-        String _name_26 = attribute_13.getName();
-        _builder.append(_name_26, "\t\t");
+        String _name_28 = attribute_13.getName();
+        _builder.append(_name_28, "\t\t");
         _builder.append(" = :");
-        String _name_27 = attribute_13.getName();
-        _builder.append(_name_27, "\t\t");
+        String _name_29 = attribute_13.getName();
+        _builder.append(_name_29, "\t\t");
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".bind(\"");
-        String _name_28 = attribute_13.getName();
-        _builder.append(_name_28, "\t\t\t");
+        String _name_30 = attribute_13.getName();
+        _builder.append(_name_30, "\t\t\t");
         _builder.append("\", ");
-        String _name_29 = attribute_13.getName();
-        _builder.append(_name_29, "\t\t\t");
+        String _name_31 = attribute_13.getName();
+        _builder.append(_name_31, "\t\t\t");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
