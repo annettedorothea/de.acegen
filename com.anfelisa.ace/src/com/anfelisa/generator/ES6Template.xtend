@@ -403,8 +403,8 @@ class ES6Template {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
 		                },
-		                success: function () {
-		                    resolve();
+		                success: function (data) {
+		                    resolve(data);
 		                },
 		                error: function (jqxhr, textStatus, error) {
 		                	reject(error);
@@ -429,8 +429,8 @@ class ES6Template {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
 		                },
-		                success: function () {
-		                    resolve();
+		                success: function (data) {
+		                    resolve(data);
 		                },
 		                error: function (jqxhr, textStatus, error) {
 		                	reject(error);
@@ -455,8 +455,8 @@ class ES6Template {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
 		                },
-		                success: function () {
-		                    resolve();
+		                success: function (data) {
+		                    resolve(data);
 		                },
 		                error: function (jqxhr, textStatus, error) {
 		                	reject(error);
