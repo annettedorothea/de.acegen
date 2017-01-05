@@ -58,23 +58,23 @@ class AceGenerator extends AbstractGenerator {
 
 			if (project.target == 'ES6') {
 				for (action : project.actions) {
-					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.es6',
+					fsa.generateFile('app/' + project.name + '/actions/' + action.abstractActionName + '.es6',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractActionFile(action));
 					fsa.generateFile(project.name + '/actions/' + action.actionName + '.es6',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialActionFile(action));
 				}
 				for (command : project.commands) {
-					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.es6',
+					fsa.generateFile('app/' + project.name + '/commands/' + command.abstractCommandName + '.es6',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(command));
 					fsa.generateFile(project.name + '/commands/' + command.commandName + '.es6',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialCommandFile(command));
 				}
-				fsa.generateFile(project.name + '/EventListenerRegistration.es6', IFileSystemAccess.DEFAULT_OUTPUT,
+				fsa.generateFile('/elr/' + project.name + '/EventListenerRegistration.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateEventListenerRegistration(project));
 				for (event : project.events) {
-					fsa.generateFile(project.name + '/events/' + event.abstractEventName + '.es6',
+					fsa.generateFile('app/' + project.name + '/events/' + event.abstractEventName + '.es6',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(event));
 					fsa.generateFile(project.name + '/events/' + event.eventName + '.es6',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(event));
@@ -97,7 +97,7 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateACEController());
 				fsa.generateFile('ace/TriggerAction.es6', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateTriggerAction());
-				fsa.generateFile('ace/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				fsa.generateFile('lib/UUID.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateUUID());
 			} else if (project.target == 'JAVA') {
 				for (model : project.models) {

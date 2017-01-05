@@ -603,7 +603,7 @@ public class ES6Template {
     {
       EList<Action> _actions = it.getActions();
       for(final Action action : _actions) {
-        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
         String _name = it.getName();
         _builder.append(_name, "");
         _builder.append("/actions/");
@@ -624,7 +624,7 @@ public class ES6Template {
     {
       EList<Command> _commands = it.getCommands();
       for(final Command command : _commands) {
-        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
         String _name_2 = it.getName();
         _builder.append(_name_2, "");
         _builder.append("/commands/");
@@ -645,7 +645,7 @@ public class ES6Template {
     {
       EList<Event> _events = it.getEvents();
       for(final Event event : _events) {
-        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
         String _name_4 = it.getName();
         _builder.append(_name_4, "");
         _builder.append("/events/");
@@ -682,7 +682,7 @@ public class ES6Template {
     _builder.newLine();
     _builder.newLine();
     _builder.newLine();
-    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/");
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/elr/");
     String _name_7 = it.getName();
     _builder.append(_name_7, "");
     _builder.append("/EventListenerRegistration.es6\"></script>");
@@ -988,7 +988,7 @@ public class ES6Template {
     _builder.append("$.ajax({");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("url: urlPrefix + url + this.queryParamString(url, queryParams),");
+    _builder.append("url: url + this.queryParamString(url, queryParams),");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("type: \'get\',");
@@ -1061,7 +1061,7 @@ public class ES6Template {
     _builder.append("$.ajax({");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("url: urlPrefix + url + this.queryParamString(url, queryParams),");
+    _builder.append("url: url + this.queryParamString(url, queryParams),");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("type: \'post\',");
@@ -1137,7 +1137,7 @@ public class ES6Template {
     _builder.append("$.ajax({");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("url: urlPrefix + url + this.queryParamString(url, queryParams),");
+    _builder.append("url: url + this.queryParamString(url, queryParams),");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("type: \'put\',");
@@ -1213,7 +1213,7 @@ public class ES6Template {
     _builder.append("$.ajax({");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("url: urlPrefix + url + this.queryParamString(url, queryParams),");
+    _builder.append("url: url + this.queryParamString(url, queryParams),");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("type: \'delete\',");

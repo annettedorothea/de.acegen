@@ -234,15 +234,15 @@ class ES6Template {
 
 	def generateHtmlDevSnippet(Project it) '''
 		«FOR action: actions»
-			<script type="text/javascript" src="es6/gen/«name»/actions/«action.abstractActionName».es6"></script>
+			<script type="text/javascript" src="es6/gen/app/«name»/actions/«action.abstractActionName».es6"></script>
 			<script type="text/javascript" src="es6/src/«name»/actions/«action.actionName».es6"></script>
 		«ENDFOR»
 		«FOR command: commands»
-			<script type="text/javascript" src="es6/gen/«name»/commands/«command.abstractCommandName».es6"></script>
+			<script type="text/javascript" src="es6/gen/app/«name»/commands/«command.abstractCommandName».es6"></script>
 			<script type="text/javascript" src="es6/src/«name»/commands/«command.commandName».es6"></script>
 		«ENDFOR»
 		«FOR event: events»
-			<script type="text/javascript" src="es6/gen/«name»/events/«event.abstractEventName».es6"></script>
+			<script type="text/javascript" src="es6/gen/app/«name»/events/«event.abstractEventName».es6"></script>
 			<script type="text/javascript" src="es6/src/«name»/events/«event.eventName».es6"></script>
 		«ENDFOR»
 		«FOR view: views»
@@ -254,7 +254,7 @@ class ES6Template {
 
 
 
-		<script type="text/javascript" src="es6/gen/«name»/EventListenerRegistration.es6"></script>
+		<script type="text/javascript" src="es6/gen/elr/«name»/EventListenerRegistration.es6"></script>
 	'''
 
 	def generateAction() '''
@@ -369,7 +369,7 @@ class ES6Template {
 		        queryParams = this.addSchemaToQueryParams(queryParams);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
-		                url: urlPrefix + url + this.queryParamString(url, queryParams),
+		                url: url + this.queryParamString(url, queryParams),
 		                type: 'get',
 		                username: this.usernameString(),
 		                password: this.commandParam.password,
@@ -394,7 +394,7 @@ class ES6Template {
 		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
-		                url: urlPrefix + url + this.queryParamString(url, queryParams),
+		                url: url + this.queryParamString(url, queryParams),
 		                type: 'post',
 		                data: JSON.stringify(data),
 		                username: this.usernameString(),
@@ -420,7 +420,7 @@ class ES6Template {
 		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
-		                url: urlPrefix + url + this.queryParamString(url, queryParams),
+		                url: url + this.queryParamString(url, queryParams),
 		                type: 'put',
 		                data: JSON.stringify(data),
 		                username: this.usernameString(),
@@ -446,7 +446,7 @@ class ES6Template {
 		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
-		                url: urlPrefix + url + this.queryParamString(url, queryParams),
+		                url: url + this.queryParamString(url, queryParams),
 		                type: 'delete',
 		                data: JSON.stringify(data),
 		                username: this.usernameString(),
