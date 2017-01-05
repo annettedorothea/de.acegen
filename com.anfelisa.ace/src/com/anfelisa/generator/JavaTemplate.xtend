@@ -508,12 +508,10 @@ class JavaTemplate {
 		
 			@Override
 			protected void captureActionParam() {
-				// capture all stuff that we need to replay this action (e.g. system time)
 			}
 		
 			@Override
 			protected void applyAction() {
-				// init actionData
 				this.actionData = this.actionParam;
 			}
 		
@@ -542,7 +540,6 @@ class JavaTemplate {
 		
 			@Override
 			protected void executeCommand() {
-				// execute command and set outcome
 				this.commandData = this.commandParam;
 				«IF eventsOnOutcome.size > 0»
 					this.outcome = «eventsOnOutcome.get(0).outcome»;
@@ -574,7 +571,6 @@ class JavaTemplate {
 		
 			@Override
 			protected void prepareDataForView() {
-				// prepare data for view
 				this.eventData = this.eventParam;
 			}
 		
@@ -624,10 +620,10 @@ class JavaTemplate {
 			«IF type != null»@«type»«ENDIF»
 			@Timed
 			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
-			@PermitAll // set permission
+			@PermitAll
 			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
 				DatabaseHandle handle = this.createDatabaseHandle();
-				«data.dataParamType» actionParam = null;  // init actionParam
+				«data.dataParamType» actionParam = null;
 				return new «actionName»(actionParam, handle).apply();
 			}
 		
@@ -652,7 +648,6 @@ class JavaTemplate {
 		
 			«FOR renderFunction : renderFunctions»
 			    public BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
-			    	// update view
 			    };
 			«ENDFOR»
 		

@@ -1878,9 +1878,6 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.append("protected void captureActionParam() {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("// capture all stuff that we need to replay this action (e.g. system time)");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -1890,9 +1887,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected void applyAction() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("// init actionData");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.actionData = this.actionParam;");
@@ -1968,9 +1962,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected void executeCommand() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("// execute command and set outcome");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.commandData = this.commandParam;");
@@ -2061,9 +2052,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected void prepareDataForView() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("// prepare data for view");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.eventData = this.eventParam;");
@@ -2207,7 +2195,7 @@ public class JavaTemplate {
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("@PermitAll // set permission");
+    _builder.append("@PermitAll");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public Response ");
@@ -2233,7 +2221,7 @@ public class JavaTemplate {
     Data _data_1 = it.getData();
     String _dataParamType = this._dataExtension.dataParamType(_data_1);
     _builder.append(_dataParamType, "\t\t");
-    _builder.append(" actionParam = null;  // init actionParam");
+    _builder.append(" actionParam = null;");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return new ");
@@ -2298,10 +2286,6 @@ public class JavaTemplate {
         _builder.append(_name_1, "\t");
         _builder.append(" = (dataContainer, handle) -> {");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("// update view");
-        _builder.newLine();
         _builder.append("\t");
         _builder.append("};");
         _builder.newLine();
