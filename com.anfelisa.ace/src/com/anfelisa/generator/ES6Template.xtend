@@ -390,8 +390,8 @@ class ES6Template {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
 		                },
-		                success: function (data) {
-		                    resolve(data);
+		                success: function () {
+		                    resolve();
 		                },
 		                error: function (jqxhr, textStatus, error) {
 		                	reject(error);
@@ -416,8 +416,8 @@ class ES6Template {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
 		                },
-		                success: function (data) {
-		                    resolve(data);
+		                success: function () {
+		                    resolve();
 		                },
 		                error: function (jqxhr, textStatus, error) {
 		                	reject(error);

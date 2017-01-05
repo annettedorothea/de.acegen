@@ -1047,10 +1047,10 @@ public class ES6Template {
     _builder.append("},");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("success: function (data) {");
+    _builder.append("success: function () {");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("resolve(data);");
+    _builder.append("resolve();");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("},");
@@ -1123,10 +1123,10 @@ public class ES6Template {
     _builder.append("},");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("success: function (data) {");
+    _builder.append("success: function () {");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("resolve(data);");
+    _builder.append("resolve();");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("},");
