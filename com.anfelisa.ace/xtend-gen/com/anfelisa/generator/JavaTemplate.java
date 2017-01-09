@@ -2164,8 +2164,14 @@ public class JavaTemplate {
     _builder.append(_lowerCase, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
-    _builder.append("@Produces(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
+    {
+      if (((!Objects.equal(it.getType(), null)) && Objects.equal(it.getType(), "POST"))) {
+        _builder.append("@Produces(MediaType.TEXT_PLAIN)");
+      } else {
+        _builder.append("@Produces(MediaType.APPLICATION_JSON)");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     _builder.append("public class ");

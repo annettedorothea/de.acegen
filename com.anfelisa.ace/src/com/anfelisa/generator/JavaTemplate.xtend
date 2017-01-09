@@ -620,7 +620,7 @@ class JavaTemplate {
 		«data.dataImport»
 		
 		@Path("/«resourceName.toLowerCase»")
-		@Produces(MediaType.APPLICATION_JSON)
+		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
 		@Consumes(MediaType.APPLICATION_JSON)
 		public class «resourceName» extends Resource {
 		
