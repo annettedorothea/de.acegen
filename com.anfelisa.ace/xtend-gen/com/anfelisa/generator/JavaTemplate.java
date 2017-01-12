@@ -1581,11 +1581,7 @@ public class JavaTemplate {
     _builder.append("public ");
     String _abstractActionName_1 = this._actionExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
-    _builder.append("(");
-    Data _data_2 = it.getData();
-    String _dataParamType_1 = this._dataExtension.dataParamType(_data_2);
-    _builder.append(_dataParamType_1, "\t");
-    _builder.append(" actionParam, DBI jdbi) {");
+    _builder.append("(DBI jdbi) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -1594,7 +1590,7 @@ public class JavaTemplate {
     _builder.append("\", HttpMethod.");
     String _type = it.getType();
     _builder.append(_type, "\t\t");
-    _builder.append(", actionParam, jdbi);");
+    _builder.append(", jdbi);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -1860,12 +1856,40 @@ public class JavaTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("import javax.annotation.security.PermitAll;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Consumes;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.POST;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.PUT;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.DELETE;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.GET;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Path;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Produces;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.MediaType;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.Timed;");
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
+    _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.DBI;");
     _builder.newLine();
     _builder.newLine();
     Data _data = it.getData();
@@ -1879,6 +1903,16 @@ public class JavaTemplate {
     _builder.append(_name_1, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
+    {
+      if (((!Objects.equal(it.getType(), null)) && Objects.equal(it.getType(), "POST"))) {
+        _builder.append("@Produces(MediaType.TEXT_PLAIN)");
+      } else {
+        _builder.append("@Produces(MediaType.APPLICATION_JSON)");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
+    _builder.newLine();
     _builder.append("public class ");
     String _actionName = this._actionExtension.actionName(it);
     _builder.append(_actionName, "");
@@ -2416,7 +2450,7 @@ public class JavaTemplate {
         _builder.append("import ");
         String _name_2 = it.getName();
         _builder.append(_name_2, "");
-        _builder.append(".resources.*;");
+        _builder.append(".actions.*;");
         _builder.newLineIfNotEmpty();
       }
     }

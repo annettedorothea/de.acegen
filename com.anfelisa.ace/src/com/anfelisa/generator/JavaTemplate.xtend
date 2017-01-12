@@ -418,8 +418,8 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(«data.dataParamType» actionParam, DBI jdbi) {
-				super("«actionName»", HttpMethod.«type», actionParam, jdbi);
+			public «abstractActionName»(DBI jdbi) {
+				super("«actionName»", HttpMethod.«type», jdbi);
 			}
 		
 			@Override
@@ -506,14 +506,31 @@ class JavaTemplate {
 	def generateInitialActionFile(Action it, Project project) '''
 		package «project.name».actions;
 		
+		import javax.annotation.security.PermitAll;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.POST;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
 		import com.anfelisa.ace.DatabaseHandle;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		import org.skife.jdbi.v2.DBI;
 		
 		«data.dataImport»
 		
 		@Path("/«data.name»")
+		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
+		@Consumes(MediaType.APPLICATION_JSON)
 		public class «actionName» extends «abstractActionName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
@@ -683,7 +700,7 @@ class JavaTemplate {
 			import «name».views.*;
 		«ENDIF»
 		«IF actions.size > 0»
-			import «name».resources.*;
+			import «name».actions.*;
 		«ENDIF»
 
 		public class AppRegistration {
