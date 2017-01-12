@@ -962,7 +962,7 @@ public class ES6Template {
     _builder.append("headers: {");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("\'Accept\': \'application/json\',");
+    _builder.append("\'Accept\': \'text/plain\',");
     _builder.newLine();
     _builder.append("                    ");
     _builder.append("\'Content-Type\': \'application/json\'");

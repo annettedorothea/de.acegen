@@ -361,7 +361,7 @@ class ES6Template {
 		                username: this.usernameString(),
 		                password: this.commandParam.password,
 		                headers: {
-		                    'Accept': 'application/json',
+		                    'Accept': 'text/plain',
 		                    'Content-Type': 'application/json'
 		                },
 		                success: function (data) {
