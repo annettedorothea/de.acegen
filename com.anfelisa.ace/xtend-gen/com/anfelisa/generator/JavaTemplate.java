@@ -1535,6 +1535,9 @@ public class JavaTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("import org.skife.jdbi.v2.DBI;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import com.anfelisa.ace.Action;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.DatabaseHandle;");
@@ -1582,7 +1585,7 @@ public class JavaTemplate {
     Data _data_2 = it.getData();
     String _dataParamType_1 = this._dataExtension.dataParamType(_data_2);
     _builder.append(_dataParamType_1, "\t");
-    _builder.append(" actionParam, DatabaseHandle databaseHandle) {");
+    _builder.append(" actionParam, DBI jdbi) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -1591,7 +1594,7 @@ public class JavaTemplate {
     _builder.append("\", HttpMethod.");
     String _type = it.getType();
     _builder.append(_type, "\t\t");
-    _builder.append(", actionParam, databaseHandle);");
+    _builder.append(", actionParam, jdbi);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -1870,6 +1873,12 @@ public class JavaTemplate {
     _builder.append(_dataImport, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("@Path(\"/");
+    Data _data_1 = it.getData();
+    String _name_1 = _data_1.getName();
+    _builder.append(_name_1, "");
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
     _builder.append("public class ");
     String _actionName = this._actionExtension.actionName(it);
     _builder.append(_actionName, "");
@@ -1890,37 +1899,74 @@ public class JavaTemplate {
     _builder.append("public ");
     String _actionName_2 = this._actionExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
-    _builder.append("(");
-    Data _data_1 = it.getData();
-    String _dataParamType = this._dataExtension.dataParamType(_data_1);
-    _builder.append(_dataParamType, "\t");
-    _builder.append(" actionParam, DatabaseHandle databaseHandle) {");
+    _builder.append("(DBI jdbi) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("super(actionParam, databaseHandle);");
+    _builder.append("super(jdbi);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("@Override");
+    {
+      String _type = it.getType();
+      boolean _notEquals = (!Objects.equal(_type, null));
+      if (_notEquals) {
+        _builder.append("@");
+        String _type_1 = it.getType();
+        _builder.append(_type_1, "\t");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("@Timed");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected void captureActionParam() {");
+    _builder.append("@Path(\"/");
+    {
+      String _type_2 = it.getType();
+      boolean _notEquals_1 = (!Objects.equal(_type_2, null));
+      if (_notEquals_1) {
+        String _type_3 = it.getType();
+        String _lowerCase = _type_3.toLowerCase();
+        _builder.append(_lowerCase, "\t");
+      } else {
+        String _resourceName = this._actionExtension.resourceName(it);
+        String _lowerCase_1 = _resourceName.toLowerCase();
+        _builder.append(_lowerCase_1, "\t");
+      }
+    }
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("@PermitAll");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected void applyAction() {");
-    _builder.newLine();
+    _builder.append("public Response ");
+    {
+      String _type_4 = it.getType();
+      boolean _notEquals_2 = (!Objects.equal(_type_4, null));
+      if (_notEquals_2) {
+        String _type_5 = it.getType();
+        String _lowerCase_2 = _type_5.toLowerCase();
+        _builder.append(_lowerCase_2, "\t");
+      } else {
+        String _resourceName_1 = this._actionExtension.resourceName(it);
+        String _firstLower = StringExtensions.toFirstLower(_resourceName_1);
+        _builder.append(_firstLower, "\t");
+      }
+    }
+    _builder.append("(/* params here */) throws JsonProcessingException {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("this.actionData = this.actionParam;");
+    Data _data_2 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_2);
+    _builder.append(_dataParamType, "\t\t");
+    _builder.append(" actionData = null;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return this.apply();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -1993,9 +2039,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected void executeCommand() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.commandData = this.commandParam;");
     _builder.newLine();
     {
       EList<EventOnOutcome> _eventsOnOutcome = it.getEventsOnOutcome();
@@ -2159,9 +2202,9 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@Path(\"/");
-    String _resourceName = this._actionExtension.resourceName(it);
-    String _lowerCase = _resourceName.toLowerCase();
-    _builder.append(_lowerCase, "");
+    Data _data_1 = it.getData();
+    String _name_2 = _data_1.getName();
+    _builder.append(_name_2, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
     {
@@ -2175,22 +2218,22 @@ public class JavaTemplate {
     _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     _builder.append("public class ");
-    String _resourceName_1 = this._actionExtension.resourceName(it);
-    _builder.append(_resourceName_1, "");
+    String _resourceName = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName, "");
     _builder.append(" extends Resource {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _resourceName_2 = this._actionExtension.resourceName(it);
-    _builder.append(_resourceName_2, "\t");
+    String _resourceName_1 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _resourceName_3 = this._actionExtension.resourceName(it);
-    _builder.append(_resourceName_3, "\t");
+    String _resourceName_2 = this._actionExtension.resourceName(it);
+    _builder.append(_resourceName_2, "\t");
     _builder.append("( DBI jdbi ) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -2221,12 +2264,12 @@ public class JavaTemplate {
       boolean _notEquals_1 = (!Objects.equal(_type_2, null));
       if (_notEquals_1) {
         String _type_3 = it.getType();
-        String _lowerCase_1 = _type_3.toLowerCase();
-        _builder.append(_lowerCase_1, "\t");
+        String _lowerCase = _type_3.toLowerCase();
+        _builder.append(_lowerCase, "\t");
       } else {
-        String _resourceName_4 = this._actionExtension.resourceName(it);
-        String _lowerCase_2 = _resourceName_4.toLowerCase();
-        _builder.append(_lowerCase_2, "\t");
+        String _resourceName_3 = this._actionExtension.resourceName(it);
+        String _lowerCase_1 = _resourceName_3.toLowerCase();
+        _builder.append(_lowerCase_1, "\t");
       }
     }
     _builder.append("\")");
@@ -2241,11 +2284,11 @@ public class JavaTemplate {
       boolean _notEquals_2 = (!Objects.equal(_type_4, null));
       if (_notEquals_2) {
         String _type_5 = it.getType();
-        String _lowerCase_3 = _type_5.toLowerCase();
-        _builder.append(_lowerCase_3, "\t");
+        String _lowerCase_2 = _type_5.toLowerCase();
+        _builder.append(_lowerCase_2, "\t");
       } else {
-        String _resourceName_5 = this._actionExtension.resourceName(it);
-        String _firstLower = StringExtensions.toFirstLower(_resourceName_5);
+        String _resourceName_4 = this._actionExtension.resourceName(it);
+        String _firstLower = StringExtensions.toFirstLower(_resourceName_4);
         _builder.append(_firstLower, "\t");
       }
     }
@@ -2255,8 +2298,8 @@ public class JavaTemplate {
     _builder.append("DatabaseHandle handle = this.createDatabaseHandle();");
     _builder.newLine();
     _builder.append("\t\t");
-    Data _data_1 = it.getData();
-    String _dataParamType = this._dataExtension.dataParamType(_data_1);
+    Data _data_2 = it.getData();
+    String _dataParamType = this._dataExtension.dataParamType(_data_2);
     _builder.append(_dataParamType, "\t\t");
     _builder.append(" actionParam = null;");
     _builder.newLineIfNotEmpty();
@@ -2389,8 +2432,8 @@ public class JavaTemplate {
       for(final Action action : _actions_1) {
         _builder.append("\t\t");
         _builder.append("environment.jersey().register(new ");
-        String _resourceName = this._actionExtension.resourceName(action);
-        _builder.append(_resourceName, "\t\t");
+        String _actionName = this._actionExtension.actionName(action);
+        _builder.append(_actionName, "\t\t");
         _builder.append("(jdbi));");
         _builder.newLineIfNotEmpty();
       }

@@ -404,6 +404,8 @@ class JavaTemplate {
 	def generateAbstractActionFile(Action it, Project project) '''
 		package «project.name».actions;
 		
+		import org.skife.jdbi.v2.DBI;
+		
 		import com.anfelisa.ace.Action;
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.HttpMethod;
@@ -416,8 +418,8 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(«data.dataParamType» actionParam, DatabaseHandle databaseHandle) {
-				super("«actionName»", HttpMethod.«type», actionParam, databaseHandle);
+			public «abstractActionName»(«data.dataParamType» actionParam, DBI jdbi) {
+				super("«actionName»", HttpMethod.«type», actionParam, jdbi);
 			}
 		
 			@Override
@@ -511,21 +513,22 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
+		@Path("/«data.name»")
 		public class «actionName» extends «abstractActionName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(«data.dataParamType» actionParam, DatabaseHandle databaseHandle) {
-				super(actionParam, databaseHandle);
+			public «actionName»(DBI jdbi) {
+				super(jdbi);
 			}
 		
-			@Override
-			protected void captureActionParam() {
-			}
-		
-			@Override
-			protected void applyAction() {
-				this.actionData = this.actionParam;
+			«IF type != null»@«type»«ENDIF»
+			@Timed
+			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
+			@PermitAll
+			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
+				«data.dataParamType» actionData = null;
+				return this.apply();
 			}
 		
 		}
@@ -553,7 +556,6 @@ class JavaTemplate {
 		
 			@Override
 			protected void executeCommand() {
-				this.commandData = this.commandParam;
 				«IF eventsOnOutcome.size > 0»
 					this.outcome = «eventsOnOutcome.get(0).outcome»;
 				«ENDIF»
@@ -619,7 +621,7 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
-		@Path("/«resourceName.toLowerCase»")
+		@Path("/«data.name»")
 		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
 		@Consumes(MediaType.APPLICATION_JSON)
 		public class «resourceName» extends Resource {
@@ -688,7 +690,7 @@ class JavaTemplate {
 		
 			public static void registerResources(Environment environment, DBI jdbi) {
 				«FOR action : actions»
-					environment.jersey().register(new «action.resourceName»(jdbi));
+					environment.jersey().register(new «action.actionName»(jdbi));
 				«ENDFOR»
 			}
 		
