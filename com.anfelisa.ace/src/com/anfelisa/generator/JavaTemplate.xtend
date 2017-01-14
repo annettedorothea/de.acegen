@@ -405,6 +405,8 @@ class JavaTemplate {
 		package «project.name».actions;
 		
 		import org.skife.jdbi.v2.DBI;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.Action;
 		import com.anfelisa.ace.DatabaseHandle;
@@ -430,6 +432,16 @@ class JavaTemplate {
 					return null;
 				«ENDIF»
 			}
+		
+			«IF !type.equals("GET")»
+				protected final void loadDataForGetRequest() {
+				}
+			«ENDIF»
+		
+			protected void throwUnauthorized() {
+				throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+			}
+		
 		}
 		
 		/*       S.D.G.       */
@@ -439,7 +451,7 @@ class JavaTemplate {
 		package «project.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
@@ -552,6 +564,12 @@ class JavaTemplate {
 				«data.dataParamType» actionData = null;
 				return this.apply();
 			}
+		
+			«IF type.equals("GET")»
+				protected final void loadDataForGetRequest() {
+					// load data for get request
+				}
+			«ENDIF»
 		
 		}
 		

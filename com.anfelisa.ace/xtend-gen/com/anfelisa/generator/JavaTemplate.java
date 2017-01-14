@@ -1537,6 +1537,10 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.DBI;");
     _builder.newLine();
+    _builder.append("import javax.ws.rs.WebApplicationException;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Action;");
     _builder.newLine();
@@ -1622,6 +1626,31 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    {
+      String _type_1 = it.getType();
+      boolean _equals = _type_1.equals("GET");
+      boolean _not = (!_equals);
+      if (_not) {
+        _builder.append("\t");
+        _builder.append("protected final void loadDataForGetRequest() {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected void throwUnauthorized() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throw new WebApplicationException(Response.Status.UNAUTHORIZED);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1640,7 +1669,7 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import javax.ws.rs.WebApplicationException;");
     _builder.newLine();
-    _builder.append("import javax.ws.rs.WebApplicationException;");
+    _builder.append("import javax.ws.rs.core.Response;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Command;");
@@ -2019,6 +2048,23 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    {
+      String _type_6 = it.getType();
+      boolean _equals = _type_6.equals("GET");
+      if (_equals) {
+        _builder.append("\t");
+        _builder.append("protected final void loadDataForGetRequest() {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("// load data for get request");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
