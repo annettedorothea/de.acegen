@@ -409,7 +409,6 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.Action;
-		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;
 		«data.dataImport»
@@ -440,6 +439,10 @@ class JavaTemplate {
 		
 			protected void throwUnauthorized() {
 				throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+			}
+		
+			protected void throwBadRequest() {
+				throw new WebApplicationException(Response.Status.BAD_REQUEST);
 			}
 		
 		}
@@ -496,6 +499,11 @@ class JavaTemplate {
 			protected void throwUnauthorized() {
 				throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 			}
+
+			protected void throwBadRequest() {
+				throw new WebApplicationException(Response.Status.BAD_REQUEST);
+			}
+		
 		}
 		
 		/*       S.D.G.       */
@@ -561,7 +569,7 @@ class JavaTemplate {
 			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
 			@PermitAll
 			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
-				«data.dataParamType» actionData = null;
+				this.actionData = null;
 				return this.apply();
 			}
 		
