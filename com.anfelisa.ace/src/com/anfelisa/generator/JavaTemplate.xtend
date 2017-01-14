@@ -568,14 +568,13 @@ class JavaTemplate {
 			@Timed
 			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
 			@PermitAll
-			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
+			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»() throws JsonProcessingException {
 				this.actionData = null;
 				return this.apply();
 			}
 		
 			«IF type.equals("GET")»
 				protected final void loadDataForGetRequest() {
-					// load data for get request
 				}
 			«ENDIF»
 		

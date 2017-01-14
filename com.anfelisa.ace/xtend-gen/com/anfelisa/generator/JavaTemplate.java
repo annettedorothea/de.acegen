@@ -2053,7 +2053,7 @@ public class JavaTemplate {
         _builder.append(_firstLower, "\t");
       }
     }
-    _builder.append("(/* params here */) throws JsonProcessingException {");
+    _builder.append("() throws JsonProcessingException {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("this.actionData = null;");
@@ -2071,10 +2071,6 @@ public class JavaTemplate {
       if (_equals) {
         _builder.append("\t");
         _builder.append("protected final void loadDataForGetRequest() {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("// load data for get request");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
