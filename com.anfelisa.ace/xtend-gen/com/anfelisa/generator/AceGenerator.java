@@ -273,14 +273,6 @@ public class AceGenerator extends AbstractGenerator {
               CharSequence _generateInitialActionFile = this.javaTemplate.generateInitialActionFile(action_1, project);
               fsa.generateFile(_plus_11, 
                 ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialActionFile);
-              String _packageFolder_2 = this._projectExtension.packageFolder(project);
-              String _plus_12 = (_packageFolder_2 + "/resources/");
-              String _resourceName = this._actionExtension.resourceName(action_1);
-              String _plus_13 = (_plus_12 + _resourceName);
-              String _plus_14 = (_plus_13 + ".java");
-              CharSequence _generateInitialResourceFile = this.javaTemplate.generateInitialResourceFile(action_1, project);
-              fsa.generateFile(_plus_14, 
-                ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, _generateInitialResourceFile);
             }
           }
           EList<Command> _commands_1 = project.getCommands();

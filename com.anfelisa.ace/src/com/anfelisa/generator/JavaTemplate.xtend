@@ -439,6 +439,7 @@ class JavaTemplate {
 		package «project.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.WebApplicationException;
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
@@ -478,6 +479,10 @@ class JavaTemplate {
 				default:
 					throw new WebApplicationException("unhandled outcome " + outcome);
 				}
+			}
+			
+			protected void throwUnauthorized() {
+				throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 			}
 		}
 		
@@ -531,7 +536,7 @@ class JavaTemplate {
 		@Path("/«data.name»")
 		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class «actionName» extends «abstractActionName» {
+			public class «actionName» extends «abstractActionName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 

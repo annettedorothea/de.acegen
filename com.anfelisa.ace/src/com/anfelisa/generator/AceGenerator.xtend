@@ -134,9 +134,9 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/actions/' + action.actionName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateInitialActionFile(action, project));
-					fsa.generateFile(project.packageFolder + '/resources/' + action.resourceName + '.java',
+					/*fsa.generateFile(project.packageFolder + '/resources/' + action.resourceName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateInitialResourceFile(action, project));
+						javaTemplate.generateInitialResourceFile(action, project));*/
 				}
 				for (command : project.commands) {
 					fsa.generateFile(project.packageFolder + '/commands/' + command.abstractCommandName + '.java',
