@@ -310,14 +310,17 @@ class JavaTemplate {
 		import java.util.List;
 		import java.util.Map;
 		
+		import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
 		@SuppressWarnings("all")
+		@JsonIgnoreType
 		public class «modelDao» {
 			
-			public static void create(Handle handle, String schema) {
+			public void create(Handle handle, String schema) {
 				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public static «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam», String schema) {
+			public «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam», String schema) {
 				«IF findPrimaryKeyAttribute != null»
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
 						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
@@ -346,7 +349,7 @@ class JavaTemplate {
 			
 			
 			«FOR attribute : allUniqueAttributes»
-				public static void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam», String schema) {
+				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam», String schema) {
 					Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
 					«FOR attr : attributes»
 						statement.bind("«attr.name»", «modelParam».«attr.getterCall»);
@@ -354,13 +357,13 @@ class JavaTemplate {
 					statement.execute();
 				}
 
-				public static void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
+				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
 					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»");
 					statement.bind("«attribute.name»", «attribute.name»);
 					statement.execute();
 				}
 
-				public static «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
+				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
 					return handle.createQuery("SELECT * FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»")
 						.bind("«attribute.name»", «attribute.name»)
 						.map(new «modelMapper»())
@@ -368,7 +371,7 @@ class JavaTemplate {
 				}
 			«ENDFOR»
 			
-			public static List<«modelName»> selectAll(Handle handle, String schema) {
+			public List<«modelName»> selectAll(Handle handle, String schema) {
 				return handle.createQuery("SELECT * FROM " + schema + ".«table»")
 					.map(new «modelMapper»())
 					.list();
@@ -634,59 +637,6 @@ class JavaTemplate {
 			@Override
 			protected void prepareDataForView() {
 				this.eventData = this.eventParam;
-			}
-		
-		}
-		
-		/*       S.D.G.       */
-	'''
-	
-	def generateInitialResourceFile(Action it, Project project) '''
-		package «project.name».resources;
-		
-		import javax.annotation.security.PermitAll;
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.POST;
-		import javax.ws.rs.PUT;
-		import javax.ws.rs.DELETE;
-		import javax.ws.rs.GET;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		import org.skife.jdbi.v2.DBI;
-		
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.Resource;
-		import com.codahale.metrics.annotation.Timed;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		import «project.name».actions.«actionName»;
-		
-		«data.dataImport»
-		
-		@Path("/«data.name»")
-		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
-		@Consumes(MediaType.APPLICATION_JSON)
-		public class «resourceName» extends Resource {
-		
-			static final Logger LOG = LoggerFactory.getLogger(«resourceName».class);
-		
-			public «resourceName»( DBI jdbi ) {
-				super(jdbi);
-			}
-		
-			«IF type != null»@«type»«ENDIF»
-			@Timed
-			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
-			@PermitAll
-			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»(/* params here */) throws JsonProcessingException {
-				DatabaseHandle handle = this.createDatabaseHandle();
-				«data.dataParamType» actionParam = null;
-				return new «actionName»(actionParam, handle).apply();
 			}
 		
 		}
