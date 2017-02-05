@@ -154,3 +154,51 @@
 [2016-10-31 18:15:59] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
 [2016-10-31 18:15:59] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
 [2016-10-31 18:15:59] 
+[2017-02-04 17:37:03] Executing startup tasks
+[2017-02-04 17:37:04] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2017-02-04 17:37:04] Product self.product.version
+[2017-02-04 17:37:04] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:37:04] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:37:04] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:37:04] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2017-02-04 17:37:04] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2017-02-04 17:37:04] Performing Preference /instance/org.eclipse.debug.ui/Console.highWaterMark = 88000
+[2017-02-04 17:37:04] Performing Preference /instance/org.eclipse.debug.ui/Console.limitConsoleOutput = false
+[2017-02-04 17:37:04] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2017-02-04 17:37:04] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2017-02-04 17:37:04] 
+[2017-02-04 17:38:22] Executing startup tasks
+[2017-02-04 17:38:22] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2017-02-04 17:38:22] Product self.product.version
+[2017-02-04 17:38:22] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:38:22] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:38:22] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:38:22] Performing Preference /instance/org.eclipse.debug.ui/Console.highWaterMark = 88000
+[2017-02-04 17:38:22] Performing Preference /instance/org.eclipse.debug.ui/Console.limitConsoleOutput = false
+[2017-02-04 17:38:22] 
+[2017-02-04 17:40:41] Executing startup tasks
+[2017-02-04 17:40:41] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2017-02-04 17:40:41] Product self.product.version
+[2017-02-04 17:40:41] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:40:41] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:40:41] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:40:41] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2017-02-04 17:40:41] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2017-02-04 17:40:41] Performing Preference /instance/org.eclipse.debug.ui/Console.highWaterMark = 88000
+[2017-02-04 17:40:41] Performing Preference /instance/org.eclipse.debug.ui/Console.limitConsoleOutput = false
+[2017-02-04 17:40:41] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2017-02-04 17:40:41] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2017-02-04 17:40:41] 
+[2017-02-04 17:56:17] Executing startup tasks
+[2017-02-04 17:56:17] Java(TM) SE Runtime Environment 1.8.0_91-b14
+[2017-02-04 17:56:17] Product self.product.version
+[2017-02-04 17:56:17] Bundle org.eclipse.oomph.setup 1.4.0.v20160530-1355, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:56:17] Bundle org.eclipse.oomph.setup.core 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:56:17] Bundle org.eclipse.oomph.setup.p2 1.4.0.v20160530-1200, build=2444, branch=d2a285619d608146f2b29fa5d42db7d6201863c2
+[2017-02-04 17:56:17] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_JAVASCRIPT_OUTPUT_ONCE.directory = es6/src/
+[2017-02-04 17:56:17] Performing Preference /instance/com.anfelisa.Ace/outlet.DEFAULT_OUTPUT.directory = es6/gen/
+[2017-02-04 17:56:17] Performing Preference /instance/org.eclipse.debug.ui/Console.highWaterMark = 88000
+[2017-02-04 17:56:17] Performing Preference /instance/org.eclipse.debug.ui/Console.limitConsoleOutput = false
+[2017-02-04 17:56:17] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.layout = 2
+[2017-02-04 17:56:17] Performing Preference /instance/org.eclipse.jdt.ui/org.eclipse.jdt.internal.ui.navigator.librariesnode = true
+[2017-02-04 17:56:18] 
