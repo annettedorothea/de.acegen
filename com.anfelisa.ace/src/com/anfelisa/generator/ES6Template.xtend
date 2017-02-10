@@ -571,7 +571,11 @@ class ES6Template {
 		        ACEController.E2E = 3;
 		        ACEController.execution = ACEController.LIVE;
 		        ACEController.replayTimeLine = [];
-		        sessionStorage.clear();
+		        try {
+		        	sessionStorage.clear();
+		        } catch (exception) {
+		        	ACEController.writeTimeLine = false;
+				}
 		    }
 		
 			static registerListener(eventName, listener) {
@@ -616,11 +620,15 @@ class ES6Template {
 		
 		    static getCompleteTimeline() {
 		        var completeTimeline = [];
-		        for(var i=0; i<ACEController.timeLineLocalStorageChunks.length; i++) {
-		            let timelineChunk = sessionStorage[ACEController.timeLineLocalStorageChunks[i]];
-		            completeTimeline.push.apply(completeTimeline, JSON.parse(timelineChunk));
-		        }
-		        completeTimeline.push.apply(completeTimeline, ACEController.timeLine);
+		        try {
+			        for(var i=0; i<ACEController.timeLineLocalStorageChunks.length; i++) {
+			            let timelineChunk = sessionStorage[ACEController.timeLineLocalStorageChunks[i]];
+			            completeTimeline.push.apply(completeTimeline, JSON.parse(timelineChunk));
+			        }
+			        completeTimeline.push.apply(completeTimeline, ACEController.timeLine);
+		        } catch (exception) {
+		        	ACEController.writeTimeLine = false;
+				}
 		        return completeTimeline;
 		    }
 		
