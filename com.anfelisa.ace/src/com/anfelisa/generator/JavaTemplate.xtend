@@ -178,7 +178,7 @@ class JavaTemplate {
 				«modelRef.setter»
 				
 			«ENDFOR»
-		
+				
 		}
 		
 		/*       S.D.G.       */
@@ -241,6 +241,10 @@ class JavaTemplate {
 				
 			«ENDFOR»
 		
+			private org.joda.time.DateTime systemTime;
+			
+			private boolean replay;
+
 			public «dataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
@@ -295,6 +299,26 @@ class JavaTemplate {
 				this.createdId = createdId;
 			}
 		
+			@JsonProperty
+			public org.joda.time.DateTime getSystemTime() {
+				return systemTime;
+			}
+		
+			@JsonProperty
+			public void setSystemTime(org.joda.time.DateTime systemTime) {
+				this.systemTime = systemTime;
+			}
+		
+			@JsonProperty
+			public boolean isReplay() {
+				return replay;
+			}
+		
+			@JsonProperty
+			public void setReplay(boolean replay) {
+				this.replay = replay;
+			}
+
 		}
 		
 		/*       S.D.G.       */
