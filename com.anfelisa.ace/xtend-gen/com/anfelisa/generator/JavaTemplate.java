@@ -684,11 +684,6 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private String schema;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("private String createdId;");
     _builder.newLine();
     _builder.append("\t");
@@ -722,15 +717,10 @@ public class JavaTemplate {
         _builder.newLine();
       }
     }
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("private org.joda.time.DateTime systemTime;");
     _builder.newLine();
     _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private boolean replay;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
@@ -757,10 +747,7 @@ public class JavaTemplate {
       }
     }
     _builder.append("\t\t");
-    _builder.append("@JsonProperty(\"uuid\") String uuid,");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("@JsonProperty(\"schema\") String schema");
+    _builder.append("@JsonProperty(\"uuid\") String uuid");
     _builder.newLine();
     _builder.append("\t");
     _builder.append(") {");
@@ -777,9 +764,6 @@ public class JavaTemplate {
     _builder.append("\t\t");
     _builder.append("this.uuid = uuid;");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.schema = schema;");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -793,15 +777,11 @@ public class JavaTemplate {
         _builder.append("public ");
         String _dataName_2 = this._dataExtension.dataName(it);
         _builder.append(_dataName_2, "\t");
-        _builder.append("( String uuid,\tString schema ) {");
+        _builder.append("( String uuid ) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("this.uuid = uuid;");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("this.schema = schema;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
@@ -865,19 +845,6 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public String getSchema() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return this.schema;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("@JsonIgnore");
     _builder.newLine();
     _builder.append("\t");
@@ -926,32 +893,6 @@ public class JavaTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public boolean isReplay() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return replay;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public void setReplay(boolean replay) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.replay = replay;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -995,10 +936,13 @@ public class JavaTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void create(Handle handle, String schema) {");
+    _builder.append("public void create(Handle handle) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("handle.execute(\"CREATE TABLE IF NOT EXISTS \" + schema + \".");
+    _builder.append("handle.execute(\"CREATE TABLE IF NOT EXISTS ");
+    String _schema = project.getSchema();
+    _builder.append(_schema, "\t\t");
+    _builder.append(".");
     String _table = this._modelExtension.table(it);
     _builder.append(_table, "\t\t");
     _builder.append(" (");
@@ -1028,7 +972,8 @@ public class JavaTemplate {
       EList<Attribute> _attributes_2 = it.getAttributes();
       for(final Attribute attribute_2 : _attributes_2) {
         String _table_3 = this._modelExtension.table(it);
-        String _foreignKey = this._attributeExtension.foreignKey(attribute_2, _table_3);
+        String _schema_1 = project.getSchema();
+        String _foreignKey = this._attributeExtension.foreignKey(attribute_2, _table_3, _schema_1);
         _builder.append(_foreignKey, "\t\t");
       }
     }
@@ -1066,7 +1011,7 @@ public class JavaTemplate {
     _builder.append(" ");
     String _modelParam = this._modelExtension.modelParam(it);
     _builder.append(_modelParam, "\t");
-    _builder.append(", String schema) {");
+    _builder.append(") {");
     _builder.newLineIfNotEmpty();
     {
       Attribute _findPrimaryKeyAttribute_2 = this._modelExtension.findPrimaryKeyAttribute(it);
@@ -1084,7 +1029,10 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("Update statement = handle.createStatement(\"INSERT INTO \" + schema + \".");
+        _builder.append("Update statement = handle.createStatement(\"INSERT INTO ");
+        String _schema_2 = project.getSchema();
+        _builder.append(_schema_2, "\t\t\t");
+        _builder.append(".");
         String _table_5 = this._modelExtension.table(it);
         _builder.append(_table_5, "\t\t\t");
         _builder.append(" (");
@@ -1146,7 +1094,10 @@ public class JavaTemplate {
           Attribute _findSerialAttribute = this._modelExtension.findSerialAttribute(it);
           boolean _notEquals_2 = (!Objects.equal(_findSerialAttribute, null));
           if (_notEquals_2) {
-            _builder.append("handle.createStatement(\"SELECT setval(\'\" + schema + \".");
+            _builder.append("handle.createStatement(\"SELECT setval(\'");
+            String _schema_3 = project.getSchema();
+            _builder.append(_schema_3, "\t\t\t");
+            _builder.append(".");
             String _table_6 = this._modelExtension.table(it);
             _builder.append(_table_6, "\t\t\t");
             _builder.append("_");
@@ -1157,7 +1108,10 @@ public class JavaTemplate {
             Attribute _findSerialAttribute_2 = this._modelExtension.findSerialAttribute(it);
             String _name_5 = _findSerialAttribute_2.getName();
             _builder.append(_name_5, "\t\t\t");
-            _builder.append(") FROM \" + schema + \".");
+            _builder.append(") FROM ");
+            String _schema_4 = project.getSchema();
+            _builder.append(_schema_4, "\t\t\t");
+            _builder.append(".");
             String _table_7 = this._modelExtension.table(it);
             _builder.append(_table_7, "\t\t\t");
             _builder.append("));\").execute();");
@@ -1180,7 +1134,10 @@ public class JavaTemplate {
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("Query<Map<String, Object>> statement = handle.createQuery(\"INSERT INTO \" + schema + \".");
+        _builder.append("Query<Map<String, Object>> statement = handle.createQuery(\"INSERT INTO ");
+        String _schema_5 = project.getSchema();
+        _builder.append(_schema_5, "\t\t\t");
+        _builder.append(".");
         String _table_8 = this._modelExtension.table(it);
         _builder.append(_table_8, "\t\t\t");
         _builder.append(" (");
@@ -1257,7 +1214,10 @@ public class JavaTemplate {
         _builder.newLine();
       } else {
         _builder.append("\t\t");
-        _builder.append("Update statement = handle.createStatement(\"INSERT INTO \" + schema + \".");
+        _builder.append("Update statement = handle.createStatement(\"INSERT INTO ");
+        String _schema_6 = project.getSchema();
+        _builder.append(_schema_6, "\t\t");
+        _builder.append(".");
         String _table_9 = this._modelExtension.table(it);
         _builder.append(_table_9, "\t\t");
         _builder.append(" (");
@@ -1334,11 +1294,14 @@ public class JavaTemplate {
         _builder.append(" ");
         String _modelParam_6 = this._modelExtension.modelParam(it);
         _builder.append(_modelParam_6, "\t");
-        _builder.append(", String schema) {");
+        _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("Update statement = handle.createStatement(\"UPDATE \" + schema + \".");
+        _builder.append("Update statement = handle.createStatement(\"UPDATE ");
+        String _schema_7 = project.getSchema();
+        _builder.append(_schema_7, "\t\t");
+        _builder.append(".");
         String _table_10 = this._modelExtension.table(it);
         _builder.append(_table_10, "\t\t");
         _builder.append(" SET ");
@@ -1403,11 +1366,14 @@ public class JavaTemplate {
         _builder.append(" ");
         String _name_21 = attribute_13.getName();
         _builder.append(_name_21, "\t");
-        _builder.append(", String schema) {");
+        _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("Update statement = handle.createStatement(\"DELETE FROM \" + schema + \".");
+        _builder.append("Update statement = handle.createStatement(\"DELETE FROM ");
+        String _schema_8 = project.getSchema();
+        _builder.append(_schema_8, "\t\t");
+        _builder.append(".");
         String _table_11 = this._modelExtension.table(it);
         _builder.append(_table_11, "\t\t");
         _builder.append(" WHERE ");
@@ -1450,11 +1416,14 @@ public class JavaTemplate {
         _builder.append(" ");
         String _name_27 = attribute_13.getName();
         _builder.append(_name_27, "\t");
-        _builder.append(", String schema) {");
+        _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("return handle.createQuery(\"SELECT * FROM \" + schema + \".");
+        _builder.append("return handle.createQuery(\"SELECT * FROM ");
+        String _schema_9 = project.getSchema();
+        _builder.append(_schema_9, "\t\t");
+        _builder.append(".");
         String _table_12 = this._modelExtension.table(it);
         _builder.append(_table_12, "\t\t");
         _builder.append(" WHERE ");
@@ -1497,10 +1466,13 @@ public class JavaTemplate {
     _builder.append("public List<");
     String _modelName_3 = this._modelExtension.modelName(it);
     _builder.append(_modelName_3, "\t");
-    _builder.append("> selectAll(Handle handle, String schema) {");
+    _builder.append("> selectAll(Handle handle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("return handle.createQuery(\"SELECT * FROM \" + schema + \".");
+    _builder.append("return handle.createQuery(\"SELECT * FROM ");
+    String _schema_10 = project.getSchema();
+    _builder.append(_schema_10, "\t\t");
+    _builder.append(".");
     String _table_13 = this._modelExtension.table(it);
     _builder.append(_table_13, "\t\t");
     _builder.append("\")");

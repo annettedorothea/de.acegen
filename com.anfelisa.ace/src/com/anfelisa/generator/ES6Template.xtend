@@ -61,19 +61,16 @@ class ES6Template {
 		    captureActionParam() {
 		        this.actionParam.username = localStorage.username;
 		        this.actionParam.password = localStorage.password;
-		        this.actionParam.schema = localStorage.schema;
 		    }
 		
 		    initActionData() {
 		    	this.actionData.username = this.actionParam.username;
 		    	this.actionData.password = this.actionParam.password;
-		    	this.actionData.schema = this.actionParam.schema;
 		    }
 		
 		    releaseActionParam() {
 		    	localStorage.username = this.actionParam.username;
 		    	localStorage.password = this.actionParam.password;
-		    	localStorage.schema = this.actionParam.schema;
 		    }
 		}
 		
@@ -327,12 +324,11 @@ class ES6Template {
 		
 		    httpGet(url, queryParams) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
-		        queryParams = this.addSchemaToQueryParams(queryParams);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'get',
-		                username: this.usernameString(),
+		                username: this.commandParam.username,
 		                password: this.commandParam.password,
 		                headers: {
 		                    'Accept': 'application/json',
@@ -350,15 +346,13 @@ class ES6Template {
 		
 		    httpPost(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
-		        queryParams = this.addSchemaToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
-		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'post',
 		                data: JSON.stringify(data),
-		                username: this.usernameString(),
+		                username: this.commandParam.username,
 		                password: this.commandParam.password,
 		                headers: {
 		                    'Accept': 'text/plain',
@@ -376,15 +370,13 @@ class ES6Template {
 		
 		    httpPut(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
-		        queryParams = this.addSchemaToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
-		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'put',
 		                data: JSON.stringify(data),
-		                username: this.usernameString(),
+		                username: this.commandParam.username,
 		                password: this.commandParam.password,
 		                headers: {
 		                    'Accept': 'application/json',
@@ -402,15 +394,13 @@ class ES6Template {
 		
 		    httpDelete(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
-		        queryParams = this.addSchemaToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
-		        data = this.addSchemaToData(data);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'delete',
 		                data: JSON.stringify(data),
-		                username: this.usernameString(),
+		                username: this.commandParam.username,
 		                password: this.commandParam.password,
 		                headers: {
 		                    'Accept': 'application/json',
@@ -439,35 +429,12 @@ class ES6Template {
 		        return queryParams;
 		    }
 		
-		    addSchemaToQueryParams(queryParams) {
-		        if (!queryParams) {
-		            queryParams = [];
-		        }
-		        if (this.commandParam.schema) {
-		            queryParams.push({
-		                key: "schema",
-		                value: this.commandParam.schema
-		            });
-		        }
-		        return queryParams;
-		    }
-		
 		    addUuidToData(data) {
 		        if (!data) {
 		            data = {};
 		        }
 		        if (this.commandParam.uuid) {
 		            data.uuid = this.commandParam.uuid;
-		        }
-		        return data;
-		    }
-		
-		    addSchemaToData(data) {
-		        if (!data) {
-		            data = {};
-		        }
-		        if (this.commandParam.schema) {
-		            data.schema = this.commandParam.schema;
 		        }
 		        return data;
 		    }
@@ -487,20 +454,6 @@ class ES6Template {
 		        return queryString;
 		    }
 		
-		    usernameString() {
-		        var username = undefined;
-		        if (this.commandParam.schema) {
-		            username = this.commandParam.schema;
-		            if (this.commandParam.username) {
-		                username += "_";
-		            }
-		        }
-		        if (this.commandParam.username) {
-		            username += this.commandParam.username;
-		        }
-		        return username;
-		    }
-		    
 		}
 		
 		/*       S.D.G.       */

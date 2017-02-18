@@ -44,7 +44,7 @@ class AttributeExtension {
 	
 	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name»)«ENDIF»'''
 	
-	def String foreignKey(Attribute it, String tableName) '''«IF foreignKey != null», CONSTRAINT «tableName»_«name»_fkey FOREIGN KEY («name») REFERENCES " + schema + ".«foreignKey.tableName» ( «foreignKey.name» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
+	def String foreignKey(Attribute it, String tableName, String schema) '''«IF foreignKey != null», CONSTRAINT «tableName»_«name»_fkey FOREIGN KEY («name») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
 	
 	def boolean primaryKey(Attribute it) {
 		return type.equals('Serial');

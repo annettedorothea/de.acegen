@@ -225,8 +225,6 @@ class JavaTemplate {
 			
 			private String uuid;
 			
-			private String schema;
-			
 			private String createdId;
 			
 			«FOR attribute : allAttributes»
@@ -240,29 +238,23 @@ class JavaTemplate {
 				«ENDFOR»
 				
 			«ENDFOR»
-		
 			private org.joda.time.DateTime systemTime;
 			
-			private boolean replay;
-
 			public «dataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
 				«ENDFOR»
-				@JsonProperty("uuid") String uuid,
-				@JsonProperty("schema") String schema
+				@JsonProperty("uuid") String uuid
 			) {
 				«FOR attribute : allAttributes»
 					«attribute.assign»
 				«ENDFOR»
 				this.uuid = uuid;
-				this.schema = schema;
 			}
 		
 			«IF allAttributes.length > 0»
-				public «dataName»( String uuid,	String schema ) {
+				public «dataName»( String uuid ) {
 					this.uuid = uuid;
-					this.schema = schema;
 				}
 			«ENDIF»
 		
@@ -285,11 +277,6 @@ class JavaTemplate {
 				return this.uuid;
 			}
 		
-			@JsonProperty
-			public String getSchema() {
-				return this.schema;
-			}
-
 			@JsonIgnore
 			public String getCreatedId() {
 				return createdId;
@@ -309,16 +296,6 @@ class JavaTemplate {
 				this.systemTime = systemTime;
 			}
 		
-			@JsonProperty
-			public boolean isReplay() {
-				return replay;
-			}
-		
-			@JsonProperty
-			public void setReplay(boolean replay) {
-				this.replay = replay;
-			}
-
 		}
 		
 		/*       S.D.G.       */
@@ -340,22 +317,22 @@ class JavaTemplate {
 		@JsonIgnoreType
 		public class «modelDao» {
 			
-			public void create(Handle handle, String schema) {
-				handle.execute("CREATE TABLE IF NOT EXISTS " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
+			public void create(Handle handle) {
+				handle.execute("CREATE TABLE IF NOT EXISTS «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table, project.schema)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam», String schema) {
+			public «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
 				«IF findPrimaryKeyAttribute != null»
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
-						Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 						«FOR attribute : attributes»
 							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
 						statement.execute();
-						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('" + schema + ".«table»_«findSerialAttribute.name»_seq', (SELECT MAX(«findSerialAttribute.name») FROM " + schema + ".«table»));").execute();«ENDIF»
+						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name»_seq', (SELECT MAX(«findSerialAttribute.name») FROM «project.schema».«table»));").execute();«ENDIF»
 						return «modelParam».«findPrimaryKeyAttribute.getterCall»;
 					} else {
-						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name»");
+						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name»");
 						«FOR attribute : allNonSerialAttributes»
 							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
@@ -363,7 +340,7 @@ class JavaTemplate {
 						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name»");
 					}
 				«ELSE»
-					Update statement = handle.createStatement("INSERT INTO " + schema + ".«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
 					«FOR attribute : allNonSerialAttributes»
 						statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
 					«ENDFOR»
@@ -373,30 +350,30 @@ class JavaTemplate {
 			
 			
 			«FOR attribute : allUniqueAttributes»
-				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam», String schema) {
-					Update statement = handle.createStatement("UPDATE " + schema + ".«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
+				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
+					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
 					«FOR attr : attributes»
 						statement.bind("«attr.name»", «modelParam».«attr.getterCall»);
 					«ENDFOR»
 					statement.execute();
 				}
 
-				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
-					Update statement = handle.createStatement("DELETE FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»");
+				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
+					Update statement = handle.createStatement("DELETE FROM «project.schema».«table» WHERE «attribute.name» = :«attribute.name»");
 					statement.bind("«attribute.name»", «attribute.name»);
 					statement.execute();
 				}
 
-				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name», String schema) {
-					return handle.createQuery("SELECT * FROM " + schema + ".«table» WHERE «attribute.name» = :«attribute.name»")
+				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
+					return handle.createQuery("SELECT * FROM «project.schema».«table» WHERE «attribute.name» = :«attribute.name»")
 						.bind("«attribute.name»", «attribute.name»)
 						.map(new «modelMapper»())
 						.first();
 				}
 			«ENDFOR»
 			
-			public List<«modelName»> selectAll(Handle handle, String schema) {
-				return handle.createQuery("SELECT * FROM " + schema + ".«table»")
+			public List<«modelName»> selectAll(Handle handle) {
+				return handle.createQuery("SELECT * FROM «project.schema».«table»")
 					.map(new «modelMapper»())
 					.list();
 			}
@@ -434,7 +411,7 @@ class JavaTemplate {
 		import org.skife.jdbi.v2.DBI;
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
-		
+
 		import com.anfelisa.ace.Action;
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;

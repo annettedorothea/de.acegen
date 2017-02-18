@@ -213,7 +213,7 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String foreignKey(final Attribute it, final String tableName) {
+  public String foreignKey(final Attribute it, final String tableName, final String schema) {
     StringConcatenation _builder = new StringConcatenation();
     {
       Attribute _foreignKey = it.getForeignKey();
@@ -227,7 +227,9 @@ public class AttributeExtension {
         _builder.append("_fkey FOREIGN KEY (");
         String _name_1 = it.getName();
         _builder.append(_name_1, "");
-        _builder.append(") REFERENCES \" + schema + \".");
+        _builder.append(") REFERENCES ");
+        _builder.append(schema, "");
+        _builder.append(".");
         Attribute _foreignKey_1 = it.getForeignKey();
         String _tableName = this.tableName(_foreignKey_1);
         _builder.append(_tableName, "");

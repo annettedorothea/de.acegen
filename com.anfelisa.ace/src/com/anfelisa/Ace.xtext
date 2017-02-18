@@ -6,23 +6,24 @@ Project:
 	name = QualifiedName
 	'target' target = ('ES6' | 'JAVA')
 	('models' '{'
+		'schema' schema = ID
 		(models += Model)*
-	'}')*
+	'}')?
 	('data' '{'
 		(data += Data)*
-	'}')*
+	'}')?
 	('actions' '{'
 		(actions += Action)*
-	'}')*
+	'}')?
 	('commands' '{'
 		(commands += Command)*
-	'}')*
+	'}')?
 	('events' '{'
 		(events += Event)*
-	'}')*
+	'}')?
 	('views' '{'
 		(views += View)*
-	'}')*
+	'}')?
 ;
 
 Model:
