@@ -117,6 +117,9 @@ class AceGenerator extends AbstractGenerator {
 						fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
 							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 							javaTemplate.generateMapper(model, project));
+						fsa.generateFile(project.packageFolder + '/' + model.name + '_creation.xml',
+							ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+							javaTemplate.generateMigration(model, project));
 					}
 				}
 				for (data : project.data) {

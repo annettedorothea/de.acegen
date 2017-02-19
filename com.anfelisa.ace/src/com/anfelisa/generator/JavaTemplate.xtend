@@ -382,6 +382,16 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
+	def generateMigration(Model it, Project project) '''
+		        <createTable tableName="«table»">
+		        	«FOR attribute : attributes»
+		        		<column name="«attribute.name»" type="«attribute.sqlType»">
+		        			<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint != null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
+		        		</column>
+		        	«ENDFOR»
+		        </createTable>
+	'''
+	
 	def generateMapper(Model it, Project project) '''
 		package «project.name».models;
 		

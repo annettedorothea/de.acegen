@@ -230,6 +230,14 @@ public class AceGenerator extends AbstractGenerator {
                 CharSequence _generateMapper = this.javaTemplate.generateMapper(model, project);
                 fsa.generateFile(_plus_20, 
                   ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _generateMapper);
+                String _packageFolder_5 = this._projectExtension.packageFolder(project);
+                String _plus_21 = (_packageFolder_5 + "/");
+                String _name_4 = model.getName();
+                String _plus_22 = (_plus_21 + _name_4);
+                String _plus_23 = (_plus_22 + "_creation.xml");
+                CharSequence _generateMigration = this.javaTemplate.generateMigration(model, project);
+                fsa.generateFile(_plus_23, 
+                  ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, _generateMigration);
               }
             }
           }

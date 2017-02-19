@@ -1497,6 +1497,52 @@ public class JavaTemplate {
     return _builder;
   }
   
+  public CharSequence generateMigration(final Model it, final Project project) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<createTable tableName=\"");
+    String _table = this._modelExtension.table(it);
+    _builder.append(_table, "");
+    _builder.append("\">");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _attributes = it.getAttributes();
+      for(final Attribute attribute : _attributes) {
+        _builder.append("\t");
+        _builder.append("<column name=\"");
+        String _name = attribute.getName();
+        _builder.append(_name, "\t");
+        _builder.append("\" type=\"");
+        String _sqlType = this._attributeExtension.sqlType(attribute);
+        _builder.append(_sqlType, "\t");
+        _builder.append("\">");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("<constraints ");
+        {
+          boolean _isPrimaryKey = attribute.isPrimaryKey();
+          if (_isPrimaryKey) {
+            _builder.append("primaryKey=\"true\"");
+          }
+        }
+        _builder.append(" ");
+        {
+          if (((!Objects.equal(attribute.getConstraint(), null)) && attribute.getConstraint().equals("NotNull"))) {
+            _builder.append("nullable=\"false\"");
+          }
+        }
+        _builder.append("/>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("</column>");
+        _builder.newLine();
+      }
+    }
+    _builder.append("</createTable>");
+    _builder.newLine();
+    return _builder;
+  }
+  
   public CharSequence generateMapper(final Model it, final Project project) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package ");
