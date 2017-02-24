@@ -198,10 +198,16 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("        ");
-        _builder.append("<span class=\"help-block notEmpty\" style=\"display: none\">{{texts.");
-        String _name_8 = attribute.getName();
-        _builder.append(_name_8, "\t        ");
-        _builder.append("NotEmpty}}</span>");
+        {
+          String _constraint_2 = attribute.getConstraint();
+          boolean _notEquals_2 = (!Objects.equal(_constraint_2, null));
+          if (_notEquals_2) {
+            _builder.append("<span class=\"help-block notEmpty\" style=\"display: none\">{{texts.");
+            String _name_8 = attribute.getName();
+            _builder.append(_name_8, "\t        ");
+            _builder.append("NotEmpty}}</span>");
+          }
+        }
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("    ");

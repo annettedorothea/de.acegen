@@ -79,7 +79,7 @@ class JavaTemplate {
 			        <label for="«attribute.name»" class="col-sm-3 control-label">«IF attribute.constraint != null»* «ENDIF»{{texts.«attribute.name»}}</label>
 			        <div class="col-sm-9">
 			            <input type="text" class="form-control" id="«attribute.name»" placeholder="{{texts.«attribute.name»}}" value="{{«attribute.name»}}"«IF attribute.constraint != null» onblur="new ValidateRequiredFieldAction({id : '«attribute.name»'}).apply()"«ENDIF»>
-			            <span class="help-block notEmpty" style="display: none">{{texts.«attribute.name»NotEmpty}}</span>
+			            «IF attribute.constraint != null»<span class="help-block notEmpty" style="display: none">{{texts.«attribute.name»NotEmpty}}</span>«ENDIF»
 			        </div>
 			    </div>
 			    
