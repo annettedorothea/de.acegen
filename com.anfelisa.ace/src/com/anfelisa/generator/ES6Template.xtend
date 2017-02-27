@@ -756,6 +756,41 @@ class ES6Template {
 		/*       S.D.G.       */
 		
 	'''
+
+	def generateAceHtmlDevSnippet(Project it) '''
+		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
+		<script type="text/javascript" src="es6/gen/ace/Action.es6"></script>
+		<script type="text/javascript" src="es6/gen/ace/Command.es6"></script>
+		<script type="text/javascript" src="es6/gen/ace/Event.es6"></script>
+		<script type="text/javascript" src="es6/gen/ace/ACEController.es6"></script>
+		<script type="text/javascript" src="es6/gen/ace/TriggerAction.es6"></script>
+	'''
+
+	def generateHtmlDevSnippet(Project it) '''
+		«FOR action: actions»
+			<script type="text/javascript" src="es6/gen/app/«name»/actions/«action.abstractActionName».es6"></script>
+			<script type="text/javascript" src="es6/src/«name»/actions/«action.actionName».es6"></script>
+		«ENDFOR»
+		«FOR command: commands»
+			<script type="text/javascript" src="es6/gen/app/«name»/commands/«command.abstractCommandName».es6"></script>
+			<script type="text/javascript" src="es6/src/«name»/commands/«command.commandName».es6"></script>
+		«ENDFOR»
+		«FOR event: events»
+			<script type="text/javascript" src="es6/gen/app/«name»/events/«event.abstractEventName».es6"></script>
+			<script type="text/javascript" src="es6/src/«name»/events/«event.eventName».es6"></script>
+		«ENDFOR»
+		«FOR view: views»
+			<script type="text/javascript" src="es6/src/«name»/«view.viewName».es6"></script>
+		«ENDFOR»
+
+
+
+
+
+
+		<script type="text/javascript" src="es6/gen/elr/«name»/EventListenerRegistration.es6"></script>
+	'''
+
 	
 	def generateUUID() '''
 		/*

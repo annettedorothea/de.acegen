@@ -75,11 +75,11 @@ class JavaTemplate {
 		    </div>
 
 			«FOR attribute : attributes»
-			    <div class="form-group" id="«attribute.name»Div">
-			        <label for="«attribute.name»" class="col-sm-3 control-label">«IF attribute.constraint != null»* «ENDIF»{{texts.«attribute.name»}}</label>
+			    <div class="form-group" id="«name.toFirstLower»«attribute.name.toFirstUpper»Div">
+			        <label for="«name.toFirstLower»«attribute.name.toFirstUpper»" class="col-sm-3 control-label">«IF attribute.constraint != null»* «ENDIF»{{texts.«name.toLowerCase».«attribute.name»}}</label>
 			        <div class="col-sm-9">
-			            <input type="text" class="form-control" id="«attribute.name»" placeholder="{{texts.«attribute.name»}}" value="{{«attribute.name»}}"«IF attribute.constraint != null» onblur="new ValidateRequiredFieldAction({id : '«attribute.name»'}).apply()"«ENDIF»>
-			            «IF attribute.constraint != null»<span class="help-block notEmpty" style="display: none">{{texts.«attribute.name»NotEmpty}}</span>«ENDIF»
+			            <input type="text" class="form-control" id="«name.toFirstLower»«attribute.name.toFirstUpper»" placeholder="{{texts.«name.toLowerCase».«attribute.name»}}" value="{{«name.toFirstLower».«attribute.name»}}"«IF attribute.constraint != null» onblur="new ValidateRequiredFieldAction({id : '«name.toFirstLower»«attribute.name.toFirstUpper»'}).apply()"«ENDIF»>
+			            «IF attribute.constraint != null»<span class="help-block notEmpty" style="display: none">{{texts.«name.toLowerCase».«attribute.name»NotEmpty}}</span>«ENDIF»
 			        </div>
 			    </div>
 			    

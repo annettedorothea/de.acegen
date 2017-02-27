@@ -146,15 +146,23 @@ public class JavaTemplate {
       for(final Attribute attribute : _attributes) {
         _builder.append("\t");
         _builder.append("<div class=\"form-group\" id=\"");
-        String _name_1 = attribute.getName();
-        _builder.append(_name_1, "\t");
+        String _name_1 = it.getName();
+        String _firstLower_1 = StringExtensions.toFirstLower(_name_1);
+        _builder.append(_firstLower_1, "\t");
+        String _name_2 = attribute.getName();
+        String _firstUpper = StringExtensions.toFirstUpper(_name_2);
+        _builder.append(_firstUpper, "\t");
         _builder.append("Div\">");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("    ");
         _builder.append("<label for=\"");
-        String _name_2 = attribute.getName();
-        _builder.append(_name_2, "\t    ");
+        String _name_3 = it.getName();
+        String _firstLower_2 = StringExtensions.toFirstLower(_name_3);
+        _builder.append(_firstLower_2, "\t    ");
+        String _name_4 = attribute.getName();
+        String _firstUpper_1 = StringExtensions.toFirstUpper(_name_4);
+        _builder.append(_firstUpper_1, "\t    ");
         _builder.append("\" class=\"col-sm-3 control-label\">");
         {
           String _constraint = attribute.getConstraint();
@@ -164,8 +172,12 @@ public class JavaTemplate {
           }
         }
         _builder.append("{{texts.");
-        String _name_3 = attribute.getName();
-        _builder.append(_name_3, "\t    ");
+        String _name_5 = it.getName();
+        String _lowerCase = _name_5.toLowerCase();
+        _builder.append(_lowerCase, "\t    ");
+        _builder.append(".");
+        String _name_6 = attribute.getName();
+        _builder.append(_name_6, "\t    ");
         _builder.append("}}</label>");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -175,22 +187,38 @@ public class JavaTemplate {
         _builder.append("\t");
         _builder.append("        ");
         _builder.append("<input type=\"text\" class=\"form-control\" id=\"");
-        String _name_4 = attribute.getName();
-        _builder.append(_name_4, "\t        ");
+        String _name_7 = it.getName();
+        String _firstLower_3 = StringExtensions.toFirstLower(_name_7);
+        _builder.append(_firstLower_3, "\t        ");
+        String _name_8 = attribute.getName();
+        String _firstUpper_2 = StringExtensions.toFirstUpper(_name_8);
+        _builder.append(_firstUpper_2, "\t        ");
         _builder.append("\" placeholder=\"{{texts.");
-        String _name_5 = attribute.getName();
-        _builder.append(_name_5, "\t        ");
+        String _name_9 = it.getName();
+        String _lowerCase_1 = _name_9.toLowerCase();
+        _builder.append(_lowerCase_1, "\t        ");
+        _builder.append(".");
+        String _name_10 = attribute.getName();
+        _builder.append(_name_10, "\t        ");
         _builder.append("}}\" value=\"{{");
-        String _name_6 = attribute.getName();
-        _builder.append(_name_6, "\t        ");
+        String _name_11 = it.getName();
+        String _firstLower_4 = StringExtensions.toFirstLower(_name_11);
+        _builder.append(_firstLower_4, "\t        ");
+        _builder.append(".");
+        String _name_12 = attribute.getName();
+        _builder.append(_name_12, "\t        ");
         _builder.append("}}\"");
         {
           String _constraint_1 = attribute.getConstraint();
           boolean _notEquals_1 = (!Objects.equal(_constraint_1, null));
           if (_notEquals_1) {
             _builder.append(" onblur=\"new ValidateRequiredFieldAction({id : \'");
-            String _name_7 = attribute.getName();
-            _builder.append(_name_7, "\t        ");
+            String _name_13 = it.getName();
+            String _firstLower_5 = StringExtensions.toFirstLower(_name_13);
+            _builder.append(_firstLower_5, "\t        ");
+            String _name_14 = attribute.getName();
+            String _firstUpper_3 = StringExtensions.toFirstUpper(_name_14);
+            _builder.append(_firstUpper_3, "\t        ");
             _builder.append("\'}).apply()\"");
           }
         }
@@ -203,8 +231,12 @@ public class JavaTemplate {
           boolean _notEquals_2 = (!Objects.equal(_constraint_2, null));
           if (_notEquals_2) {
             _builder.append("<span class=\"help-block notEmpty\" style=\"display: none\">{{texts.");
-            String _name_8 = attribute.getName();
-            _builder.append(_name_8, "\t        ");
+            String _name_15 = it.getName();
+            String _lowerCase_2 = _name_15.toLowerCase();
+            _builder.append(_lowerCase_2, "\t        ");
+            _builder.append(".");
+            String _name_16 = attribute.getName();
+            _builder.append(_name_16, "\t        ");
             _builder.append("NotEmpty}}</span>");
           }
         }
@@ -228,8 +260,8 @@ public class JavaTemplate {
           if (_isList) {
             _builder.append("\t");
             _builder.append("{{#");
-            String _name_9 = modelRef.getName();
-            _builder.append(_name_9, "\t");
+            String _name_17 = modelRef.getName();
+            _builder.append(_name_17, "\t");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -246,11 +278,11 @@ public class JavaTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t");
                 _builder.append("<h4 class=\"panel-title\">{{texts.");
-                String _name_10 = attribute_1.getName();
-                _builder.append(_name_10, "\t\t\t");
+                String _name_18 = attribute_1.getName();
+                _builder.append(_name_18, "\t\t\t");
                 _builder.append("}}: {{");
-                String _name_11 = attribute_1.getName();
-                _builder.append(_name_11, "\t\t\t");
+                String _name_19 = attribute_1.getName();
+                _builder.append(_name_19, "\t\t\t");
                 _builder.append("}}</h4>");
                 _builder.newLineIfNotEmpty();
               }
@@ -270,11 +302,11 @@ public class JavaTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t");
                 _builder.append("{{texts.");
-                String _name_12 = attribute_2.getName();
-                _builder.append(_name_12, "\t\t\t");
+                String _name_20 = attribute_2.getName();
+                _builder.append(_name_20, "\t\t\t");
                 _builder.append("}}: {{");
-                String _name_13 = attribute_2.getName();
-                _builder.append(_name_13, "\t\t\t");
+                String _name_21 = attribute_2.getName();
+                _builder.append(_name_21, "\t\t\t");
                 _builder.append("}}<br>");
                 _builder.newLineIfNotEmpty();
               }
@@ -288,14 +320,14 @@ public class JavaTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("{{/");
-            String _name_14 = modelRef.getName();
-            _builder.append(_name_14, "\t");
+            String _name_22 = modelRef.getName();
+            _builder.append(_name_22, "\t");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("{{^");
-            String _name_15 = modelRef.getName();
-            _builder.append(_name_15, "\t");
+            String _name_23 = modelRef.getName();
+            _builder.append(_name_23, "\t");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -308,9 +340,9 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("        ");
             _builder.append("<h3 class=\"panel-title\">{{texts.empty");
-            String _name_16 = modelRef.getName();
-            String _firstUpper = StringExtensions.toFirstUpper(_name_16);
-            _builder.append(_firstUpper, "\t        ");
+            String _name_24 = modelRef.getName();
+            String _firstUpper_4 = StringExtensions.toFirstUpper(_name_24);
+            _builder.append(_firstUpper_4, "\t        ");
             _builder.append("}}</h3>");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -322,8 +354,8 @@ public class JavaTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("{{/");
-            String _name_17 = modelRef.getName();
-            _builder.append(_name_17, "\t");
+            String _name_25 = modelRef.getName();
+            _builder.append(_name_25, "\t");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -346,8 +378,8 @@ public class JavaTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t\t");
                 _builder.append("<th>{{texts.");
-                String _name_18 = attribute_3.getName();
-                _builder.append(_name_18, "\t\t\t\t");
+                String _name_26 = attribute_3.getName();
+                _builder.append(_name_26, "\t\t\t\t");
                 _builder.append("}}</th>");
                 _builder.newLineIfNotEmpty();
               }
@@ -359,8 +391,8 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("        ");
             _builder.append("{{#");
-            String _name_19 = modelRef.getName();
-            _builder.append(_name_19, "\t        ");
+            String _name_27 = modelRef.getName();
+            _builder.append(_name_27, "\t        ");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -374,8 +406,8 @@ public class JavaTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t\t");
                 _builder.append("<td>{{");
-                String _name_20 = attribute_4.getName();
-                _builder.append(_name_20, "\t\t\t\t");
+                String _name_28 = attribute_4.getName();
+                _builder.append(_name_28, "\t\t\t\t");
                 _builder.append("}}</td>");
                 _builder.newLineIfNotEmpty();
               }
@@ -387,15 +419,15 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("        ");
             _builder.append("{{/");
-            String _name_21 = modelRef.getName();
-            _builder.append(_name_21, "\t        ");
+            String _name_29 = modelRef.getName();
+            _builder.append(_name_29, "\t        ");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("        ");
             _builder.append("{{^");
-            String _name_22 = modelRef.getName();
-            _builder.append(_name_22, "\t        ");
+            String _name_30 = modelRef.getName();
+            _builder.append(_name_30, "\t        ");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -410,9 +442,9 @@ public class JavaTemplate {
             int _size = _attributes_5.size();
             _builder.append(_size, "\t            ");
             _builder.append("\">{{texts.empty");
-            String _name_23 = modelRef.getName();
-            String _firstUpper_1 = StringExtensions.toFirstUpper(_name_23);
-            _builder.append(_firstUpper_1, "\t            ");
+            String _name_31 = modelRef.getName();
+            String _firstUpper_5 = StringExtensions.toFirstUpper(_name_31);
+            _builder.append(_firstUpper_5, "\t            ");
             _builder.append("}}</td>");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -422,8 +454,8 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("        ");
             _builder.append("{{/");
-            String _name_24 = modelRef.getName();
-            _builder.append(_name_24, "\t        ");
+            String _name_32 = modelRef.getName();
+            _builder.append(_name_32, "\t        ");
             _builder.append("}}");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");

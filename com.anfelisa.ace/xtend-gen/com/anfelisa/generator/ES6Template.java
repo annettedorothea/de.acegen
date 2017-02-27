@@ -2010,6 +2010,115 @@ public class ES6Template {
     return _builder;
   }
   
+  public CharSequence generateAceHtmlDevSnippet(final Project it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/UUID.js\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Action.es6\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Command.es6\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/Event.es6\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/ACEController.es6\"></script>");
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/ace/TriggerAction.es6\"></script>");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateHtmlDevSnippet(final Project it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      EList<Action> _actions = it.getActions();
+      for(final Action action : _actions) {
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
+        String _name = it.getName();
+        _builder.append(_name, "");
+        _builder.append("/actions/");
+        String _abstractActionName = this._actionExtension.abstractActionName(action);
+        _builder.append(_abstractActionName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("<script type=\"text/javascript\" src=\"es6/src/");
+        String _name_1 = it.getName();
+        _builder.append(_name_1, "");
+        _builder.append("/actions/");
+        String _actionName = this._actionExtension.actionName(action);
+        _builder.append(_actionName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Command> _commands = it.getCommands();
+      for(final Command command : _commands) {
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
+        String _name_2 = it.getName();
+        _builder.append(_name_2, "");
+        _builder.append("/commands/");
+        String _abstractCommandName = this._commandExtension.abstractCommandName(command);
+        _builder.append(_abstractCommandName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("<script type=\"text/javascript\" src=\"es6/src/");
+        String _name_3 = it.getName();
+        _builder.append(_name_3, "");
+        _builder.append("/commands/");
+        String _commandName = this._commandExtension.commandName(command);
+        _builder.append(_commandName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Event> _events = it.getEvents();
+      for(final Event event : _events) {
+        _builder.append("<script type=\"text/javascript\" src=\"es6/gen/app/");
+        String _name_4 = it.getName();
+        _builder.append(_name_4, "");
+        _builder.append("/events/");
+        String _abstractEventName = this._eventExtension.abstractEventName(event);
+        _builder.append(_abstractEventName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+        _builder.append("<script type=\"text/javascript\" src=\"es6/src/");
+        String _name_5 = it.getName();
+        _builder.append(_name_5, "");
+        _builder.append("/events/");
+        String _eventName = this._eventExtension.eventName(event);
+        _builder.append(_eventName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<View> _views = it.getViews();
+      for(final View view : _views) {
+        _builder.append("<script type=\"text/javascript\" src=\"es6/src/");
+        String _name_6 = it.getName();
+        _builder.append(_name_6, "");
+        _builder.append("/");
+        String _viewName = this._viewExtension.viewName(view);
+        _builder.append(_viewName, "");
+        _builder.append(".es6\"></script>");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("<script type=\"text/javascript\" src=\"es6/gen/elr/");
+    String _name_7 = it.getName();
+    _builder.append(_name_7, "");
+    _builder.append("/EventListenerRegistration.es6\"></script>");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
   public CharSequence generateUUID() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/*");
