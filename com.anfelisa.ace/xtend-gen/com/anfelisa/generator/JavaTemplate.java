@@ -704,7 +704,7 @@ public class JavaTemplate {
       }
     }
     _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
     String _dataName = this._dataExtension.dataName(it);
@@ -2470,6 +2470,8 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class AppRegistration {");
     _builder.newLine();

@@ -220,7 +220,7 @@ class JavaTemplate {
 			«model.model.importModel»
 		«ENDFOR»
 		
-		@SuppressWarnings("unused")
+		@SuppressWarnings("all")
 		public class «dataName» implements «dataInterfaceName» {
 			
 			private String uuid;
@@ -694,6 +694,7 @@ class JavaTemplate {
 			import «name».actions.*;
 		«ENDIF»
 
+		@SuppressWarnings("all")
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, DBI jdbi) {
