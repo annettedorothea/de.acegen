@@ -183,7 +183,8 @@ public class AttributeExtension {
   public String tableDefinition(final Attribute it, final String tableName) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = it.getName();
-    _builder.append(_name, "");
+    String _lowerCase = _name.toLowerCase();
+    _builder.append(_lowerCase, "");
     _builder.append(" ");
     String _sqlType = this.sqlType(it);
     _builder.append(_sqlType, "");
@@ -206,7 +207,8 @@ public class AttributeExtension {
         _builder.append(tableName, "");
         _builder.append("_pkey PRIMARY KEY (");
         String _name = it.getName();
-        _builder.append(_name, "");
+        String _lowerCase = _name.toLowerCase();
+        _builder.append(_lowerCase, "");
         _builder.append(")");
       }
     }
@@ -223,10 +225,12 @@ public class AttributeExtension {
         _builder.append(tableName, "");
         _builder.append("_");
         String _name = it.getName();
-        _builder.append(_name, "");
+        String _lowerCase = _name.toLowerCase();
+        _builder.append(_lowerCase, "");
         _builder.append("_fkey FOREIGN KEY (");
         String _name_1 = it.getName();
-        _builder.append(_name_1, "");
+        String _lowerCase_1 = _name_1.toLowerCase();
+        _builder.append(_lowerCase_1, "");
         _builder.append(") REFERENCES ");
         _builder.append(schema, "");
         _builder.append(".");
@@ -236,7 +240,8 @@ public class AttributeExtension {
         _builder.append(" ( ");
         Attribute _foreignKey_2 = it.getForeignKey();
         String _name_2 = _foreignKey_2.getName();
-        _builder.append(_name_2, "");
+        String _lowerCase_2 = _name_2.toLowerCase();
+        _builder.append(_lowerCase_2, "");
         _builder.append(" ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE");
       }
     }

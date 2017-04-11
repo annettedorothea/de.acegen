@@ -40,11 +40,11 @@ class AttributeExtension {
 	
 	def String tableName(Attribute it) '''«(eContainer as Model).table»'''
 	
-	def String tableDefinition(Attribute it, String tableName) '''«name» «sqlType» «IF constraint != null && constraint.equals('NotNull')»NOT NULL «ENDIF» '''
+	def String tableDefinition(Attribute it, String tableName) '''«name.toLowerCase» «sqlType» «IF constraint != null && constraint.equals('NotNull')»NOT NULL «ENDIF» '''
 	
-	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name»)«ENDIF»'''
+	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name.toLowerCase»)«ENDIF»'''
 	
-	def String foreignKey(Attribute it, String tableName, String schema) '''«IF foreignKey != null», CONSTRAINT «tableName»_«name»_fkey FOREIGN KEY («name») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
+	def String foreignKey(Attribute it, String tableName, String schema) '''«IF foreignKey != null», CONSTRAINT «tableName»_«name.toLowerCase»_fkey FOREIGN KEY («name.toLowerCase») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name.toLowerCase» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
 	
 	def boolean primaryKey(Attribute it) {
 		return type.equals('Serial');

@@ -1084,7 +1084,8 @@ public class JavaTemplate {
               _builder.appendImmediate(", ", "\t\t\t");
             }
             String _name_1 = attribute_4.getName();
-            _builder.append(_name_1, "\t\t\t");
+            String _lowerCase = _name_1.toLowerCase();
+            _builder.append(_lowerCase, "\t\t\t");
           }
         }
         _builder.append(") VALUES (");
@@ -1099,7 +1100,8 @@ public class JavaTemplate {
             }
             _builder.append(":");
             String _name_2 = attribute_5.getName();
-            _builder.append(_name_2, "\t\t\t");
+            String _lowerCase_1 = _name_2.toLowerCase();
+            _builder.append(_lowerCase_1, "\t\t\t");
           }
         }
         _builder.append(")\");");
@@ -1111,7 +1113,8 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("statement.bind(\"");
             String _name_3 = attribute_6.getName();
-            _builder.append(_name_3, "\t\t\t");
+            String _lowerCase_2 = _name_3.toLowerCase();
+            _builder.append(_lowerCase_2, "\t\t\t");
             _builder.append("\", ");
             String _modelParam_2 = this._modelExtension.modelParam(it);
             _builder.append(_modelParam_2, "\t\t\t");
@@ -1141,11 +1144,13 @@ public class JavaTemplate {
             _builder.append("_");
             Attribute _findSerialAttribute_1 = this._modelExtension.findSerialAttribute(it);
             String _name_4 = _findSerialAttribute_1.getName();
-            _builder.append(_name_4, "\t\t\t");
+            String _lowerCase_3 = _name_4.toLowerCase();
+            _builder.append(_lowerCase_3, "\t\t\t");
             _builder.append("_seq\', (SELECT MAX(");
             Attribute _findSerialAttribute_2 = this._modelExtension.findSerialAttribute(it);
             String _name_5 = _findSerialAttribute_2.getName();
-            _builder.append(_name_5, "\t\t\t");
+            String _lowerCase_4 = _name_5.toLowerCase();
+            _builder.append(_lowerCase_4, "\t\t\t");
             _builder.append(") FROM ");
             String _schema_4 = project.getSchema();
             _builder.append(_schema_4, "\t\t\t");
@@ -1189,7 +1194,8 @@ public class JavaTemplate {
               _builder.appendImmediate(", ", "\t\t\t");
             }
             String _name_6 = attribute_7.getName();
-            _builder.append(_name_6, "\t\t\t");
+            String _lowerCase_5 = _name_6.toLowerCase();
+            _builder.append(_lowerCase_5, "\t\t\t");
           }
         }
         _builder.append(") VALUES (");
@@ -1204,13 +1210,15 @@ public class JavaTemplate {
             }
             _builder.append(":");
             String _name_7 = attribute_8.getName();
-            _builder.append(_name_7, "\t\t\t");
+            String _lowerCase_6 = _name_7.toLowerCase();
+            _builder.append(_lowerCase_6, "\t\t\t");
           }
         }
         _builder.append(") RETURNING ");
         Attribute _findPrimaryKeyAttribute_5 = this._modelExtension.findPrimaryKeyAttribute(it);
         String _name_8 = _findPrimaryKeyAttribute_5.getName();
-        _builder.append(_name_8, "\t\t\t");
+        String _lowerCase_7 = _name_8.toLowerCase();
+        _builder.append(_lowerCase_7, "\t\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         {
@@ -1220,7 +1228,8 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("statement.bind(\"");
             String _name_9 = attribute_9.getName();
-            _builder.append(_name_9, "\t\t\t");
+            String _lowerCase_8 = _name_9.toLowerCase();
+            _builder.append(_lowerCase_8, "\t\t\t");
             _builder.append("\", ");
             String _modelParam_4 = this._modelExtension.modelParam(it);
             _builder.append(_modelParam_4, "\t\t\t");
@@ -1244,7 +1253,8 @@ public class JavaTemplate {
         _builder.append(") first.get(\"");
         Attribute _findPrimaryKeyAttribute_7 = this._modelExtension.findPrimaryKeyAttribute(it);
         String _name_10 = _findPrimaryKeyAttribute_7.getName();
-        _builder.append(_name_10, "\t\t\t");
+        String _lowerCase_9 = _name_10.toLowerCase();
+        _builder.append(_lowerCase_9, "\t\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -1269,7 +1279,8 @@ public class JavaTemplate {
               _builder.appendImmediate(", ", "\t\t");
             }
             String _name_11 = attribute_10.getName();
-            _builder.append(_name_11, "\t\t");
+            String _lowerCase_10 = _name_11.toLowerCase();
+            _builder.append(_lowerCase_10, "\t\t");
           }
         }
         _builder.append(") VALUES (");
@@ -1284,7 +1295,8 @@ public class JavaTemplate {
             }
             _builder.append(":");
             String _name_12 = attribute_11.getName();
-            _builder.append(_name_12, "\t\t");
+            String _lowerCase_11 = _name_12.toLowerCase();
+            _builder.append(_lowerCase_11, "\t\t");
           }
         }
         _builder.append(")\");");
@@ -1295,7 +1307,8 @@ public class JavaTemplate {
             _builder.append("\t\t");
             _builder.append("statement.bind(\"");
             String _name_13 = attribute_12.getName();
-            _builder.append(_name_13, "\t\t");
+            String _lowerCase_12 = _name_13.toLowerCase();
+            _builder.append(_lowerCase_12, "\t\t");
             _builder.append("\", ");
             String _modelParam_5 = this._modelExtension.modelParam(it);
             _builder.append(_modelParam_5, "\t\t");
@@ -1353,18 +1366,22 @@ public class JavaTemplate {
               _builder.appendImmediate(", ", "\t\t");
             }
             String _name_15 = attr.getName();
-            _builder.append(_name_15, "\t\t");
+            String _lowerCase_13 = _name_15.toLowerCase();
+            _builder.append(_lowerCase_13, "\t\t");
             _builder.append(" = :");
             String _name_16 = attr.getName();
-            _builder.append(_name_16, "\t\t");
+            String _lowerCase_14 = _name_16.toLowerCase();
+            _builder.append(_lowerCase_14, "\t\t");
           }
         }
         _builder.append(" WHERE ");
         String _name_17 = attribute_13.getName();
-        _builder.append(_name_17, "\t\t");
+        String _lowerCase_15 = _name_17.toLowerCase();
+        _builder.append(_lowerCase_15, "\t\t");
         _builder.append(" = :");
         String _name_18 = attribute_13.getName();
-        _builder.append(_name_18, "\t\t");
+        String _lowerCase_16 = _name_18.toLowerCase();
+        _builder.append(_lowerCase_16, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         {
@@ -1374,7 +1391,8 @@ public class JavaTemplate {
             _builder.append("\t");
             _builder.append("statement.bind(\"");
             String _name_19 = attr_1.getName();
-            _builder.append(_name_19, "\t\t");
+            String _lowerCase_17 = _name_19.toLowerCase();
+            _builder.append(_lowerCase_17, "\t\t");
             _builder.append("\", ");
             String _modelParam_7 = this._modelExtension.modelParam(it);
             _builder.append(_modelParam_7, "\t\t");
@@ -1416,17 +1434,20 @@ public class JavaTemplate {
         _builder.append(_table_11, "\t\t");
         _builder.append(" WHERE ");
         String _name_22 = attribute_13.getName();
-        _builder.append(_name_22, "\t\t");
+        String _lowerCase_18 = _name_22.toLowerCase();
+        _builder.append(_lowerCase_18, "\t\t");
         _builder.append(" = :");
         String _name_23 = attribute_13.getName();
-        _builder.append(_name_23, "\t\t");
+        String _lowerCase_19 = _name_23.toLowerCase();
+        _builder.append(_lowerCase_19, "\t\t");
         _builder.append("\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("statement.bind(\"");
         String _name_24 = attribute_13.getName();
-        _builder.append(_name_24, "\t\t");
+        String _lowerCase_20 = _name_24.toLowerCase();
+        _builder.append(_lowerCase_20, "\t\t");
         _builder.append("\", ");
         String _name_25 = attribute_13.getName();
         _builder.append(_name_25, "\t\t");
@@ -1466,17 +1487,20 @@ public class JavaTemplate {
         _builder.append(_table_12, "\t\t");
         _builder.append(" WHERE ");
         String _name_28 = attribute_13.getName();
-        _builder.append(_name_28, "\t\t");
+        String _lowerCase_21 = _name_28.toLowerCase();
+        _builder.append(_lowerCase_21, "\t\t");
         _builder.append(" = :");
         String _name_29 = attribute_13.getName();
-        _builder.append(_name_29, "\t\t");
+        String _lowerCase_22 = _name_29.toLowerCase();
+        _builder.append(_lowerCase_22, "\t\t");
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t\t");
         _builder.append(".bind(\"");
         String _name_30 = attribute_13.getName();
-        _builder.append(_name_30, "\t\t\t");
+        String _lowerCase_23 = _name_30.toLowerCase();
+        _builder.append(_lowerCase_23, "\t\t\t");
         _builder.append("\", ");
         String _name_31 = attribute_13.getName();
         _builder.append(_name_31, "\t\t\t");
@@ -1548,7 +1572,8 @@ public class JavaTemplate {
         _builder.append("\t");
         _builder.append("<column name=\"");
         String _name = attribute.getName();
-        _builder.append(_name, "\t");
+        String _lowerCase = _name.toLowerCase();
+        _builder.append(_lowerCase, "\t");
         _builder.append("\" type=\"");
         String _sqlType = this._attributeExtension.sqlType(attribute);
         _builder.append(_sqlType, "\t");

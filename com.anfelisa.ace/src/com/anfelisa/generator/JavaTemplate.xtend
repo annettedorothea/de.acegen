@@ -324,25 +324,25 @@ class JavaTemplate {
 			public «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
 				«IF findPrimaryKeyAttribute != null»
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
-						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
 						«FOR attribute : attributes»
-							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+							statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
 						statement.execute();
-						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name»_seq', (SELECT MAX(«findSerialAttribute.name») FROM «project.schema».«table»));").execute();«ENDIF»
+						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name.toLowerCase»_seq', (SELECT MAX(«findSerialAttribute.name.toLowerCase») FROM «project.schema».«table»));").execute();«ENDIF»
 						return «modelParam».«findPrimaryKeyAttribute.getterCall»;
 					} else {
-						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name»");
+						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
 						«FOR attribute : allNonSerialAttributes»
-							statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+							statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
 						«ENDFOR»
 						Map<String, Object> first = statement.first();
-						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name»");
+						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
 					}
 				«ELSE»
-					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name»«ENDFOR»)");
+					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
 					«FOR attribute : allNonSerialAttributes»
-						statement.bind("«attribute.name»", «modelParam».«attribute.getterCall»);
+						statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
 					«ENDFOR»
 					statement.execute();
 				«ENDIF»
@@ -351,22 +351,22 @@ class JavaTemplate {
 			
 			«FOR attribute : allUniqueAttributes»
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name» = :«attr.name»«ENDFOR» WHERE «attribute.name» = :«attribute.name»");
+					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
-						statement.bind("«attr.name»", «modelParam».«attr.getterCall»);
+						statement.bind("«attr.name.toLowerCase»", «modelParam».«attr.getterCall»);
 					«ENDFOR»
 					statement.execute();
 				}
 
 				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Update statement = handle.createStatement("DELETE FROM «project.schema».«table» WHERE «attribute.name» = :«attribute.name»");
-					statement.bind("«attribute.name»", «attribute.name»);
+					Update statement = handle.createStatement("DELETE FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					statement.bind("«attribute.name.toLowerCase»", «attribute.name»);
 					statement.execute();
 				}
 
 				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					return handle.createQuery("SELECT * FROM «project.schema».«table» WHERE «attribute.name» = :«attribute.name»")
-						.bind("«attribute.name»", «attribute.name»)
+					return handle.createQuery("SELECT * FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
 						.first();
 				}
@@ -385,7 +385,7 @@ class JavaTemplate {
 	def generateMigration(Model it, Project project) '''
 		        <createTable tableName="«table»">
 		        	«FOR attribute : attributes»
-		        		<column name="«attribute.name»" type="«attribute.sqlType»">
+		        		<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
 		        			<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint != null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
 		        		</column>
 		        	«ENDFOR»
