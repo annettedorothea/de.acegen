@@ -272,7 +272,7 @@ class ES6Template {
 		                    reject(error + " when executing command " + this.commandName);
 		                });
 		            } else {
-		                var timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
+		                let timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents().then(() => {
@@ -288,11 +288,15 @@ class ES6Template {
 		    httpGet(url, queryParams) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
 		        return new Promise((resolve, reject) => {
+		            let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'get',
-		                username: this.commandParam.username,
-		                password: this.commandParam.password,
+		                beforeSend : function(req) {
+		                    if (authorization !== undefined) {
+		                        req.setRequestHeader('Authorization', authorization);
+		                    }
+		                },
 		                headers: {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
@@ -310,13 +314,17 @@ class ES6Template {
 		    httpPost(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
+		        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'post',
 		                data: JSON.stringify(data),
-		                username: this.commandParam.username,
-		                password: this.commandParam.password,
+		                beforeSend : function(req) {
+		                    if (authorization !== undefined) {
+		                        req.setRequestHeader('Authorization', authorization);
+		                    }
+		                },
 		                headers: {
 		                    'Accept': 'text/plain',
 		                    'Content-Type': 'application/json'
@@ -334,13 +342,17 @@ class ES6Template {
 		    httpPut(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
+		        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'put',
 		                data: JSON.stringify(data),
-		                username: this.commandParam.username,
-		                password: this.commandParam.password,
+		                beforeSend : function(req) {
+		                    if (authorization !== undefined) {
+		                        req.setRequestHeader('Authorization', authorization);
+		                    }
+		                },
 		                headers: {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
@@ -358,13 +370,17 @@ class ES6Template {
 		    httpDelete(url, queryParams, data) {
 		        queryParams = this.addUuidToQueryParams(queryParams);
 		        data = this.addUuidToData(data);
+		        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 		        return new Promise((resolve, reject) => {
 		            $.ajax({
 		                url: url + this.queryParamString(url, queryParams),
 		                type: 'delete',
 		                data: JSON.stringify(data),
-		                username: this.commandParam.username,
-		                password: this.commandParam.password,
+		                beforeSend : function(req) {
+		                    if (authorization !== undefined) {
+		                        req.setRequestHeader('Authorization', authorization);
+		                    }
+		                },
 		                headers: {
 		                    'Accept': 'application/json',
 		                    'Content-Type': 'application/json'
