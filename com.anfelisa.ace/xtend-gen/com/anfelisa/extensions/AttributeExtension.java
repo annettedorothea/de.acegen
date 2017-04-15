@@ -107,7 +107,7 @@ public class AttributeExtension {
       String _type = it.getType();
       boolean _equals = _type.equals("DateTime");
       if (_equals) {
-        _builder.append("new org.joda.time.DateTime(r.getDate(\"");
+        _builder.append("new org.joda.time.DateTime(r.getTimestamp(\"");
         String _name = it.getName();
         _builder.append(_name, "");
         _builder.append("\"))");

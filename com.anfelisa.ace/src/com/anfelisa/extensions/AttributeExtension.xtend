@@ -30,7 +30,7 @@ class AttributeExtension {
     	}
 	}
 	
-	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new org.joda.time.DateTime(r.getDate("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new org.joda.time.DateTime(r.getTimestamp("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
 	def String param(Attribute it) '''@JsonProperty("«name»") «javaType» «name»'''
 	
