@@ -434,7 +434,7 @@ class JavaTemplate {
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
 			public «abstractActionName»(DBI jdbi) {
-				super("«actionName»", HttpMethod.«type», jdbi);
+				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi);
 			}
 		
 			@Override
@@ -482,7 +482,7 @@ class JavaTemplate {
 			«ENDFOR»
 		
 			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle) {
-				super("«commandName»", commandParam, databaseHandle);
+				super("«project.name».commands.«commandName»", commandParam, databaseHandle);
 			}
 		
 			@Override
@@ -534,7 +534,7 @@ class JavaTemplate {
 		public abstract class «abstractEventName» extends Event<«data.dataParamType»> {
 		
 			public «abstractEventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
-				super("«eventName»", eventParam, databaseHandle);
+				super("«project.name».events.«eventName»", eventParam, databaseHandle);
 			}
 		
 		}

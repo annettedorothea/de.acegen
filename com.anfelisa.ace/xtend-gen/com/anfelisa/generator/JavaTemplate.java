@@ -1735,6 +1735,9 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
+    String _name_2 = project.getName();
+    _builder.append(_name_2, "\t\t");
+    _builder.append(".actions.");
     String _actionName = this._actionExtension.actionName(it);
     _builder.append(_actionName, "\t\t");
     _builder.append("\", HttpMethod.");
@@ -1875,6 +1878,9 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
+    String _name_1 = project.getName();
+    _builder.append(_name_1, "\t\t");
+    _builder.append(".commands.");
     String _commandName = this._commandExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
     _builder.append("\", commandParam, databaseHandle);");
@@ -2041,6 +2047,9 @@ public class JavaTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
+    String _name_1 = project.getName();
+    _builder.append(_name_1, "\t\t");
+    _builder.append(".events.");
     String _eventName = this._eventExtension.eventName(it);
     _builder.append(_eventName, "\t\t");
     _builder.append("\", eventParam, databaseHandle);");
