@@ -16,7 +16,7 @@ class AttributeExtension {
 		private «javaType» «name»;
 	'''
 	
-	def String javaType(Attribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
+	def String javaType(Attribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSEIF type.equals('Encrypted')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
 
 	def String sqlType(Attribute it) {
 		switch type {
@@ -24,13 +24,14 @@ class AttributeExtension {
       		case 'Integer' : "integer"
       		case 'Long' : "bigint"
       		case 'String' : "character varying"
+      		case 'Encrypted' : "character varying"
       		case 'Float' : "numeric"
       		case 'Boolean' : "boolean"
       		case 'DateTime' : "timestamp with time zone"
     	}
 	}
 	
-	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new org.joda.time.DateTime(r.getTimestamp("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+	def String mapperInit(Attribute it) '''«IF type.equals("DateTime")»new org.joda.time.DateTime(r.getTimestamp("«name»"))«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSEIF type.equals("Encrypted")»EncryptionService.decrypt(r.getString("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
 	def String param(Attribute it) '''@JsonProperty("«name»") «javaType» «name»'''
 	

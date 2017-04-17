@@ -59,7 +59,13 @@ public class AttributeExtension {
           _builder.append("org.joda.time.DateTime");
         } else {
           String _type_2 = it.getType();
-          _builder.append(_type_2, "");
+          boolean _equals_2 = _type_2.equals("Encrypted");
+          if (_equals_2) {
+            _builder.append("String");
+          } else {
+            String _type_3 = it.getType();
+            _builder.append(_type_3, "");
+          }
         }
       }
     }
@@ -86,6 +92,9 @@ public class AttributeExtension {
         _switchResult = "bigint";
         break;
       case "String":
+        _switchResult = "character varying";
+        break;
+      case "Encrypted":
         _switchResult = "character varying";
         break;
       case "Float":
@@ -128,13 +137,22 @@ public class AttributeExtension {
             _builder.append(_name_2, "");
             _builder.append("\")");
           } else {
-            _builder.append("r.get");
-            String _javaType = this.javaType(it);
-            _builder.append(_javaType, "");
-            _builder.append("(\"");
-            String _name_3 = it.getName();
-            _builder.append(_name_3, "");
-            _builder.append("\")");
+            String _type_3 = it.getType();
+            boolean _equals_3 = _type_3.equals("Encrypted");
+            if (_equals_3) {
+              _builder.append("EncryptionService.decrypt(r.getString(\"");
+              String _name_3 = it.getName();
+              _builder.append(_name_3, "");
+              _builder.append("\"))");
+            } else {
+              _builder.append("r.get");
+              String _javaType = this.javaType(it);
+              _builder.append(_javaType, "");
+              _builder.append("(\"");
+              String _name_4 = it.getName();
+              _builder.append(_name_4, "");
+              _builder.append("\")");
+            }
           }
         }
       }

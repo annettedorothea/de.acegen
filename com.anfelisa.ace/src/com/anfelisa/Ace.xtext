@@ -101,7 +101,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Serial' | 'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
+	'Serial' | 'Integer' | 'String' | 'Encrypted' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
 ;
 
 Constraint:

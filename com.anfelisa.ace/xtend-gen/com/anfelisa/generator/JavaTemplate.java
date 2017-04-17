@@ -962,6 +962,9 @@ public class JavaTemplate {
     _builder.append("import com.fasterxml.jackson.annotation.JsonIgnoreType;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.encryption.EncryptionService;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("@JsonIgnoreType");
@@ -1116,11 +1119,8 @@ public class JavaTemplate {
             String _lowerCase_2 = _name_3.toLowerCase();
             _builder.append(_lowerCase_2, "\t\t\t");
             _builder.append("\", ");
-            String _modelParam_2 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_2, "\t\t\t");
-            _builder.append(".");
-            String _terCall_1 = this._attributeExtension.getterCall(attribute_6);
-            _builder.append(_terCall_1, "\t\t\t");
+            String _modelGetAttribute = this._modelExtension.modelGetAttribute(it, attribute_6);
+            _builder.append(_modelGetAttribute, "\t\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1164,12 +1164,12 @@ public class JavaTemplate {
         _builder.append("\t\t");
         _builder.append("\t");
         _builder.append("return ");
-        String _modelParam_3 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_3, "\t\t\t");
+        String _modelParam_2 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_2, "\t\t\t");
         _builder.append(".");
         Attribute _findPrimaryKeyAttribute_4 = this._modelExtension.findPrimaryKeyAttribute(it);
-        String _terCall_2 = this._attributeExtension.getterCall(_findPrimaryKeyAttribute_4);
-        _builder.append(_terCall_2, "\t\t\t");
+        String _terCall_1 = this._attributeExtension.getterCall(_findPrimaryKeyAttribute_4);
+        _builder.append(_terCall_1, "\t\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -1231,11 +1231,8 @@ public class JavaTemplate {
             String _lowerCase_8 = _name_9.toLowerCase();
             _builder.append(_lowerCase_8, "\t\t\t");
             _builder.append("\", ");
-            String _modelParam_4 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_4, "\t\t\t");
-            _builder.append(".");
-            String _terCall_3 = this._attributeExtension.getterCall(attribute_9);
-            _builder.append(_terCall_3, "\t\t\t");
+            String _modelGetAttribute_1 = this._modelExtension.modelGetAttribute(it, attribute_9);
+            _builder.append(_modelGetAttribute_1, "\t\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1310,11 +1307,8 @@ public class JavaTemplate {
             String _lowerCase_12 = _name_13.toLowerCase();
             _builder.append(_lowerCase_12, "\t\t");
             _builder.append("\", ");
-            String _modelParam_5 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_5, "\t\t");
-            _builder.append(".");
-            String _terCall_4 = this._attributeExtension.getterCall(attribute_12);
-            _builder.append(_terCall_4, "\t\t");
+            String _modelGetAttribute_2 = this._modelExtension.modelGetAttribute(it, attribute_12);
+            _builder.append(_modelGetAttribute_2, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1343,8 +1337,8 @@ public class JavaTemplate {
         String _modelName_1 = this._modelExtension.modelName(it);
         _builder.append(_modelName_1, "\t");
         _builder.append(" ");
-        String _modelParam_6 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_6, "\t");
+        String _modelParam_3 = this._modelExtension.modelParam(it);
+        _builder.append(_modelParam_3, "\t");
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1394,11 +1388,8 @@ public class JavaTemplate {
             String _lowerCase_17 = _name_19.toLowerCase();
             _builder.append(_lowerCase_17, "\t\t");
             _builder.append("\", ");
-            String _modelParam_7 = this._modelExtension.modelParam(it);
-            _builder.append(_modelParam_7, "\t\t");
-            _builder.append(".");
-            String _terCall_5 = this._attributeExtension.getterCall(attr_1);
-            _builder.append(_terCall_5, "\t\t");
+            String _modelGetAttribute_3 = this._modelExtension.modelGetAttribute(it, attribute_13);
+            _builder.append(_modelGetAttribute_3, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
@@ -1623,6 +1614,11 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.append("import org.skife.jdbi.v2.tweak.ResultSetMapper;");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.encryption.EncryptionService;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
     String _modelMapper = this._modelExtension.modelMapper(it);
@@ -2430,6 +2426,8 @@ public class JavaTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
     String _viewName = this._viewExtension.viewName(it);

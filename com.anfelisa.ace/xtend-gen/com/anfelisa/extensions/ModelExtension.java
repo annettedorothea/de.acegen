@@ -4,16 +4,23 @@ import com.anfelisa.ace.Attribute;
 import com.anfelisa.ace.Model;
 import com.anfelisa.ace.ModelRef;
 import com.anfelisa.ace.Project;
+import com.anfelisa.extensions.AttributeExtension;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class ModelExtension {
+  @Inject
+  @Extension
+  private AttributeExtension _attributeExtension;
+  
   public String modelName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -93,6 +100,32 @@ public class ModelExtension {
     _builder.append(".models.");
     String _modelName = this.modelName(it);
     _builder.append(_modelName, "");
+    return _builder.toString();
+  }
+  
+  public String modelGetAttribute(final Model it, final Attribute attribute) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _type = attribute.getType();
+      boolean _equals = _type.equals("Encrypted");
+      if (_equals) {
+        _builder.append("EncryptionService.encrypt(");
+      }
+    }
+    _builder.append(" ");
+    String _modelParam = this.modelParam(it);
+    _builder.append(_modelParam, "");
+    _builder.append(".");
+    String _terCall = this._attributeExtension.getterCall(attribute);
+    _builder.append(_terCall, "");
+    _builder.append(" ");
+    {
+      String _type_1 = attribute.getType();
+      boolean _equals_1 = _type_1.equals("Encrypted");
+      if (_equals_1) {
+        _builder.append(")");
+      }
+    }
     return _builder.toString();
   }
   

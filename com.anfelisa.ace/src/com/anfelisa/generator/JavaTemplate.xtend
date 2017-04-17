@@ -313,6 +313,8 @@ class JavaTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
+		import com.anfelisa.ace.encryption.EncryptionService;
+
 		@SuppressWarnings("all")
 		@JsonIgnoreType
 		public class «modelDao» {
@@ -326,7 +328,7 @@ class JavaTemplate {
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
 						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
 						«FOR attribute : attributes»
-							statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
+							statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 						«ENDFOR»
 						statement.execute();
 						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name.toLowerCase»_seq', (SELECT MAX(«findSerialAttribute.name.toLowerCase») FROM «project.schema».«table»));").execute();«ENDIF»
@@ -334,7 +336,7 @@ class JavaTemplate {
 					} else {
 						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
 						«FOR attribute : allNonSerialAttributes»
-							statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
+							statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 						«ENDFOR»
 						Map<String, Object> first = statement.first();
 						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
@@ -342,7 +344,7 @@ class JavaTemplate {
 				«ELSE»
 					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
 					«FOR attribute : allNonSerialAttributes»
-						statement.bind("«attribute.name.toLowerCase»", «modelParam».«attribute.getterCall»);
+						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 					«ENDFOR»
 					statement.execute();
 				«ENDIF»
@@ -353,7 +355,7 @@ class JavaTemplate {
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
 					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
-						statement.bind("«attr.name.toLowerCase»", «modelParam».«attr.getterCall»);
+						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attribute)»);
 					«ENDFOR»
 					statement.execute();
 				}
@@ -401,6 +403,9 @@ class JavaTemplate {
 		import org.skife.jdbi.v2.StatementContext;
 		import org.skife.jdbi.v2.tweak.ResultSetMapper;
 		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
 		public class «modelMapper» implements ResultSetMapper<«modelName»> {
 			
 			public «modelName» map(int index, ResultSet r, StatementContext ctx) throws SQLException {
@@ -667,6 +672,7 @@ class JavaTemplate {
 			«renderFunction.data.dataImport»
 		«ENDFOR»
 		
+		@SuppressWarnings("all")
 		public class «viewName» {
 		
 			«FOR renderFunction : renderFunctions»
