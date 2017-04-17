@@ -710,7 +710,7 @@ class JavaTemplate {
 				
 				«FOR event : events»
 					«FOR renderFunction : event.listeners»
-						AceController.addConsumer("«event.eventName»", «renderFunction.viewFunctionWithViewNameAsVariable»);
+						AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewNameAsVariable»);
 			    	«ENDFOR»
 		    	«ENDFOR»
 		    }

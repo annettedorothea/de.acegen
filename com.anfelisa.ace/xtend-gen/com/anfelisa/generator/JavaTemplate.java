@@ -2557,6 +2557,9 @@ public class JavaTemplate {
           for(final ViewFunction renderFunction : _listeners) {
             _builder.append("\t\t");
             _builder.append("AceController.addConsumer(\"");
+            String _name_3 = it.getName();
+            _builder.append(_name_3, "\t\t");
+            _builder.append(".events.");
             String _eventName = this._eventExtension.eventName(event);
             _builder.append(_eventName, "\t\t");
             _builder.append("\", ");
