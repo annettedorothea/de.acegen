@@ -2,7 +2,7 @@
 *._trace
 *.xtendbin
 *.class
-com.anfelisa.ace/bin/com/anfelisa/generator/*.xtend
+com.anfelisa.ace/bin
 com.anfelisa.ace.ide/bin
 com.anfelisa.ace/bin
 com.anfelisa.ace.ide/src-gen
