@@ -1388,7 +1388,7 @@ public class JavaTemplate {
             String _lowerCase_17 = _name_19.toLowerCase();
             _builder.append(_lowerCase_17, "\t\t");
             _builder.append("\", ");
-            String _modelGetAttribute_3 = this._modelExtension.modelGetAttribute(it, attribute_13);
+            String _modelGetAttribute_3 = this._modelExtension.modelGetAttribute(it, attr_1);
             _builder.append(_modelGetAttribute_3, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();

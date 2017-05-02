@@ -355,7 +355,7 @@ class JavaTemplate {
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
 					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
-						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attribute)»);
+						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
 					statement.execute();
 				}
