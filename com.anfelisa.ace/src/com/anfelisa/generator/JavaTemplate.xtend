@@ -379,6 +379,12 @@ class JavaTemplate {
 					.map(new «modelMapper»())
 					.list();
 			}
+
+			public void truncate(Handle handle) {
+				Update statement = handle.createStatement("TRUNCATE «project.schema».«table»");
+				statement.execute();
+			}
+
 		}
 		
 		/*       S.D.G.       */
@@ -462,6 +468,14 @@ class JavaTemplate {
 		
 			protected void throwBadRequest() {
 				throw new WebApplicationException(Response.Status.BAD_REQUEST);
+			}
+
+			public void initActionData(String json) {
+				try {
+					this.actionData = mapper.readValue(json, «data.dataParamType».class);
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				}
 			}
 		
 		}
