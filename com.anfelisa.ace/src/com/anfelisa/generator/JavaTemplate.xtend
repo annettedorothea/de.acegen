@@ -444,8 +444,8 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi) {
-				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi);
+			public «abstractActionName»(DBI jdbi, DBI jdbiTimeline) {
+				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, jdbiTimeline);
 			}
 		
 			@Override
@@ -593,8 +593,8 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi) {
-				super(jdbi);
+			public «actionName»(DBI jdbi, DBI jdbiTimeline) {
+				super(jdbi, jdbiTimeline);
 			}
 		
 			«IF type != null»@«type»«ENDIF»
@@ -717,9 +717,9 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, DBI jdbi) {
+			public static void registerResources(Environment environment, DBI jdbi, DBI jdbiTimeline) {
 				«FOR action : actions»
-					environment.jersey().register(new «action.actionName»(jdbi));
+					environment.jersey().register(new «action.actionName»(jdbi, jdbiTimeline));
 				«ENDFOR»
 			}
 		

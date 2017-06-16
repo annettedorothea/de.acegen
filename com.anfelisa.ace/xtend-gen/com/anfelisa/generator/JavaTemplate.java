@@ -1747,7 +1747,7 @@ public class JavaTemplate {
     _builder.append("public ");
     String _abstractActionName_1 = this._actionExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
-    _builder.append("(DBI jdbi) {");
+    _builder.append("(DBI jdbi, DBI jdbiTimeline) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -1759,7 +1759,7 @@ public class JavaTemplate {
     _builder.append("\", HttpMethod.");
     String _type = it.getType();
     _builder.append(_type, "\t\t");
-    _builder.append(", jdbi);");
+    _builder.append(", jdbi, jdbiTimeline);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -2194,10 +2194,10 @@ public class JavaTemplate {
     _builder.append("public ");
     String _actionName_2 = this._actionExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
-    _builder.append("(DBI jdbi) {");
+    _builder.append("(DBI jdbi, DBI jdbiTimeline) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("super(jdbi);");
+    _builder.append("super(jdbi, jdbiTimeline);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -2555,7 +2555,7 @@ public class JavaTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerResources(Environment environment, DBI jdbi) {");
+    _builder.append("public static void registerResources(Environment environment, DBI jdbi, DBI jdbiTimeline) {");
     _builder.newLine();
     {
       EList<Action> _actions_1 = it.getActions();
@@ -2564,7 +2564,7 @@ public class JavaTemplate {
         _builder.append("environment.jersey().register(new ");
         String _actionName = this._actionExtension.actionName(action);
         _builder.append(_actionName, "\t\t");
-        _builder.append("(jdbi));");
+        _builder.append("(jdbi, jdbiTimeline));");
         _builder.newLineIfNotEmpty();
       }
     }
