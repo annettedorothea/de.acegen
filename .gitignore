@@ -10,3 +10,6 @@ com.anfelisa.ace.tests/src-gen
 com.anfelisa.ace.ui.tests/src-gen
 com.anfelisa.ace.ui/src-gen
 com.anfelisa.ace/src-gen
+com.anfelisa.ace.tests/xtend-gen
+com.anfelisa.ace.ui/xtend-gen
+com.anfelisa.ace/xtend-gen
