@@ -38,9 +38,9 @@ class ES6Template {
 		        super(actionParam, '«actionName»');
 		    }
 		
-			«IF command != null»
+			«IF command !== null»
 			    getCommand() {
-			    	«IF command != null»
+			    	«IF command !== null»
 			    		return new «command.commandName»(this.actionData);
 			    	«ELSE»
 			    		return null;
@@ -260,7 +260,7 @@ class ES6Template {
 		
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
-		            if (ACEController.execution !== ACEController.REPLAY) {
+		            if (ACEController.execution !=== ACEController.REPLAY) {
 		                this.execute().then(() => {
 		                    ACEController.addItemToTimeLine({command: this});
 		                    this.publishEvents().then(() => {
@@ -320,7 +320,7 @@ class ES6Template {
 			                url: url + this.queryParamString(url, queryParams),
 			                type: 'get',
 			                beforeSend : function(req) {
-			                    if (authorization !== undefined) {
+			                    if (authorization !=== undefined) {
 			                        req.setRequestHeader('Authorization', authorization);
 			                    }
 			                },
@@ -352,7 +352,7 @@ class ES6Template {
 			                type: 'post',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
-			                    if (authorization !== undefined) {
+			                    if (authorization !=== undefined) {
 			                        req.setRequestHeader('Authorization', authorization);
 			                    }
 			                },
@@ -384,7 +384,7 @@ class ES6Template {
 			                type: 'put',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
-			                    if (authorization !== undefined) {
+			                    if (authorization !=== undefined) {
 			                        req.setRequestHeader('Authorization', authorization);
 			                    }
 			                },
@@ -416,7 +416,7 @@ class ES6Template {
 			                type: 'delete',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
-			                    if (authorization !== undefined) {
+			                    if (authorization !=== undefined) {
 			                        req.setRequestHeader('Authorization', authorization);
 			                    }
 			                },
@@ -508,9 +508,9 @@ class ES6Template {
 		    notifyListeners() {
 		        let promises = [];
 		        var i, listener;
-		        if (this.eventName !== undefined) {
+		        if (this.eventName !=== undefined) {
 		            var listenersForEvent = ACEController.listeners[this.eventName];
-		            if (listenersForEvent !== undefined) {
+		            if (listenersForEvent !=== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
 		                    promises.push(listener(this.eventData));
@@ -652,7 +652,7 @@ class ES6Template {
 		            });
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
-		            if (ACEController.execution !== ACEController.LIVE) {
+		            if (ACEController.execution !=== ACEController.LIVE) {
 		                ACEController.finishReplay();
 		            }
 		        }

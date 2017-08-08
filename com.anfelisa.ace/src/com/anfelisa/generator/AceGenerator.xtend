@@ -53,7 +53,7 @@ class AceGenerator extends AbstractGenerator {
 	extension DataExtension
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		if (resource != null && resource.contents != null && resource.contents.size > 0) {
+		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {
 			val project = resource.contents.get(0) as Project
 
 			if (project.target == 'ES6') {

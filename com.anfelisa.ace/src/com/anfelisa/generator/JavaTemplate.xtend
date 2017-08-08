@@ -76,10 +76,10 @@ class JavaTemplate {
 
 			«FOR attribute : attributes»
 			    <div class="form-group" id="«name.toFirstLower»«attribute.name.toFirstUpper»Div">
-			        <label for="«name.toFirstLower»«attribute.name.toFirstUpper»" class="col-sm-3 control-label">«IF attribute.constraint != null»* «ENDIF»{{texts.«name.toLowerCase».«attribute.name»}}</label>
+			        <label for="«name.toFirstLower»«attribute.name.toFirstUpper»" class="col-sm-3 control-label">«IF attribute.constraint !== null»* «ENDIF»{{texts.«name.toLowerCase».«attribute.name»}}</label>
 			        <div class="col-sm-9">
-			            <input type="text" class="form-control" id="«name.toFirstLower»«attribute.name.toFirstUpper»" placeholder="{{texts.«name.toLowerCase».«attribute.name»}}" value="{{«name.toFirstLower».«attribute.name»}}"«IF attribute.constraint != null» onblur="new ValidateRequiredFieldAction({id : '«name.toFirstLower»«attribute.name.toFirstUpper»'}).apply()"«ENDIF»>
-			            «IF attribute.constraint != null»<span class="help-block notEmpty" style="display: none">{{texts.«name.toLowerCase».«attribute.name»NotEmpty}}</span>«ENDIF»
+			            <input type="text" class="form-control" id="«name.toFirstLower»«attribute.name.toFirstUpper»" placeholder="{{texts.«name.toLowerCase».«attribute.name»}}" value="{{«name.toFirstLower».«attribute.name»}}"«IF attribute.constraint !== null» onblur="new ValidateRequiredFieldAction({id : '«name.toFirstLower»«attribute.name.toFirstUpper»'}).apply()"«ENDIF»>
+			            «IF attribute.constraint !== null»<span class="help-block notEmpty" style="display: none">{{texts.«name.toLowerCase».«attribute.name»NotEmpty}}</span>«ENDIF»
 			        </div>
 			    </div>
 			    
@@ -323,15 +323,15 @@ class JavaTemplate {
 				handle.execute("CREATE TABLE IF NOT EXISTS «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table, project.schema)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
 			}
 			
-			public «IF findPrimaryKeyAttribute != null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
-				«IF findPrimaryKeyAttribute != null»
+			public «IF findPrimaryKeyAttribute !== null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
+				«IF findPrimaryKeyAttribute !== null»
 					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
 						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
 						«FOR attribute : attributes»
 							statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 						«ENDFOR»
 						statement.execute();
-						«IF findSerialAttribute != null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name.toLowerCase»_seq', (SELECT MAX(«findSerialAttribute.name.toLowerCase») FROM «project.schema».«table»));").execute();«ENDIF»
+						«IF findSerialAttribute !== null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name.toLowerCase»_seq', (SELECT MAX(«findSerialAttribute.name.toLowerCase») FROM «project.schema».«table»));").execute();«ENDIF»
 						return «modelParam».«findPrimaryKeyAttribute.getterCall»;
 					} else {
 						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
@@ -394,7 +394,7 @@ class JavaTemplate {
 		        <createTable tableName="«table»">
 		        	«FOR attribute : attributes»
 		        		<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-		        			<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint != null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
+		        			<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
 		        		</column>
 		        	«ENDFOR»
 		        </createTable>
@@ -438,7 +438,7 @@ class JavaTemplate {
 		import com.anfelisa.ace.ICommand;
 		«data.dataImport»
 		
-		«IF command != null»
+		«IF command !== null»
 			import «project.name».commands.«command.commandName»;
 		«ENDIF»
 		
@@ -450,7 +450,7 @@ class JavaTemplate {
 		
 			@Override
 			public ICommand getCommand() {
-				«IF command != null»
+				«IF command !== null»
 					return new «command.commandName»(this.actionData, databaseHandle);
 				«ELSE»
 					return null;
@@ -587,7 +587,7 @@ class JavaTemplate {
 		«data.dataImport»
 		
 		@Path("/«data.name»")
-		«IF type != null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
+		«IF type !== null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
 		@Consumes(MediaType.APPLICATION_JSON)
 			public class «actionName» extends «abstractActionName» {
 		
@@ -597,11 +597,11 @@ class JavaTemplate {
 				super(jdbi, jdbiTimeline);
 			}
 		
-			«IF type != null»@«type»«ENDIF»
+			«IF type !== null»@«type»«ENDIF»
 			@Timed
-			@Path("/«IF type != null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
+			@Path("/«IF type !== null»«type.toLowerCase»«ELSE»«resourceName.toLowerCase»«ENDIF»")
 			@PermitAll
-			public Response «IF type != null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»() throws JsonProcessingException {
+			public Response «IF type !== null»«type.toLowerCase»«ELSE»«resourceName.toFirstLower»«ENDIF»() throws JsonProcessingException {
 				this.actionData = null;
 				return this.apply();
 			}
