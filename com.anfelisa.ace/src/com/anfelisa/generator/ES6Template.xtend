@@ -290,7 +290,7 @@ class ES6Template {
 		        if (ACEController.execution === ACEController.E2E) {
 		            return new Promise((resolve, reject) => {
 		                $.ajax({
-		                    url: 'api/database/prepare?uuid=' + this.commandParam.uuid,
+		                    url: 'replay/database/prepare?uuid=' + this.commandParam.uuid,
 		                    type: 'put',
 		                    headers: {
 		                        'Accept': 'application/json',
@@ -316,8 +316,9 @@ class ES6Template {
 			        queryParams = this.addUuidToQueryParams(queryParams);
 			        return new Promise((resolve, reject) => {
 			            let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
+						const adjustedUrl = this.url(url);
 			            $.ajax({
-			                url: url + this.queryParamString(url, queryParams),
+			                url: adjustedUrl + this.queryParamString(adjustedUrl, queryParams),
 			                type: 'get',
 			                beforeSend : function(req) {
 			                    if (authorization !== undefined) {
@@ -347,8 +348,9 @@ class ES6Template {
 			        data = this.addUuidToData(data);
 			        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 			        return new Promise((resolve, reject) => {
+						const adjustedUrl = this.url(url);
 			            $.ajax({
-			                url: url + this.queryParamString(url, queryParams),
+			                url: adjustedUrl + this.queryParamString(adjustedUrl, queryParams),
 			                type: 'post',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
@@ -379,8 +381,9 @@ class ES6Template {
 			        data = this.addUuidToData(data);
 			        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 			        return new Promise((resolve, reject) => {
+						const adjustedUrl = this.url(url);
 			            $.ajax({
-			                url: url + this.queryParamString(url, queryParams),
+			                url: adjustedUrl + this.queryParamString(adjustedUrl, queryParams),
 			                type: 'put',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
@@ -411,8 +414,9 @@ class ES6Template {
 			        data = this.addUuidToData(data);
 			        let authorization = basicAuth(this.commandParam.username, this.commandParam.password);
 			        return new Promise((resolve, reject) => {
+						const adjustedUrl = this.url(url);
 			            $.ajax({
-			                url: url + this.queryParamString(url, queryParams),
+			                url: adjustedUrl + this.queryParamString(adjustedUrl, queryParams),
 			                type: 'delete',
 			                data: JSON.stringify(data),
 			                beforeSend : function(req) {
@@ -461,9 +465,9 @@ class ES6Template {
 		    }
 		
 		    queryParamString(url, queryParams) {
-		        var queryString = "";
+		        let queryString = "";
 		        if (queryParams && queryParams.length > 0) {
-		            for (var i = 0; i < queryParams.length; i++) {
+		            for (let i = 0; i < queryParams.length; i++) {
 		                if (url.indexOf('?') < 0 && i === 0) {
 		                    queryString += '?'
 		                } else {
@@ -474,6 +478,14 @@ class ES6Template {
 		        }
 		        return queryString;
 		    }
+		    
+		    url(url) {
+				if (ACEController.execution !== ACEController.E2E) {
+					return url;
+				} else {
+					return url.replace('api', 'replay');
+				}
+			}
 		
 		}
 		
@@ -694,7 +706,7 @@ class ES6Template {
 		            ACEController.readTimelineAndCreateReplayActions();
 		        } else {
 		            $.ajax({
-		                url: 'api/database/reset',
+		                url: 'replay/database/reset',
 		                type: 'delete',
 		                headers: {
 		                    'Accept': 'application/json',
