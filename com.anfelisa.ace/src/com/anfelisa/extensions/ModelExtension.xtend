@@ -31,14 +31,18 @@ class ModelExtension {
 	
 	def String modelInterfaceWithPackage(Model it) '''«(eContainer as Project).name».models.«modelName»'''
 	
-	def String modelGetAttribute(Model it, Attribute attribute) '''«IF attribute.type.equals("Encrypted")»EncryptionService.encrypt(«ENDIF» «modelParam».«attribute.getterCall» «IF attribute.type.equals("Encrypted")»)«ENDIF»'''
+	def String modelGetAttribute(Model it, Attribute attribute) 
+	'''«IF attribute.type.equals("Encrypted")»EncryptionService.encrypt(«ENDIF» «modelParam».«attribute.getterCall» «IF attribute.type.equals("Encrypted")»)«ENDIF»'''
+	
+	def String modelAttributeSqlValue(Model it, Project project, Attribute attribute) 
+	'''«IF attribute.type.equals("Serial")» (SELECT COALESCE(MAX(«attribute.name.toLowerCase»),0) + 1 FROM «project.schema».«table»)«ELSE»:«attribute.name.toLowerCase»«ENDIF»'''
 	
 	def Attribute findPrimaryKeyAttribute(Model it) {
-		for (attribute : attributes) {
-			if (attribute.primaryKey) {
-				return attribute;
-			}
+		var primaryKeys = attributes.filter[a | a.primaryKey];
+		if (primaryKeys.size == 1) {
+			return primaryKeys.get(0);
 		}
+		return null;
 	}
 	
 	def Attribute findSerialAttribute(Model it) {

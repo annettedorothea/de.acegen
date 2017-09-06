@@ -20,7 +20,7 @@ class AttributeExtension {
 
 	def String sqlType(Attribute it) {
 		switch type {
-      		case 'Serial' : "serial"
+      		case 'Serial' : "integer"
       		case 'Integer' : "integer"
       		case 'Long' : "bigint"
       		case 'String' : "character varying"

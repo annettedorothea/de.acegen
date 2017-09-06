@@ -325,24 +325,14 @@ class JavaTemplate {
 			
 			public «IF findPrimaryKeyAttribute !== null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
 				«IF findPrimaryKeyAttribute !== null»
-					if («modelParam».«findPrimaryKeyAttribute.getterCall» != null) {
-						Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
-						«FOR attribute : attributes»
-							statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
-						«ENDFOR»
-						statement.execute();
-						«IF findSerialAttribute !== null»handle.createStatement("SELECT setval('«project.schema».«table»_«findSerialAttribute.name.toLowerCase»_seq', (SELECT MAX(«findSerialAttribute.name.toLowerCase») FROM «project.schema».«table»));").execute();«ENDIF»
-						return «modelParam».«findPrimaryKeyAttribute.getterCall»;
-					} else {
-						Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
-						«FOR attribute : allNonSerialAttributes»
-							statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
-						«ENDFOR»
-						Map<String, Object> first = statement.first();
-						return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
-					}
+					Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
+					«FOR attribute : allNonSerialAttributes»
+						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
+					«ENDFOR»
+					Map<String, Object> first = statement.first();
+					return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
 				«ELSE»
-					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»:«attribute.name.toLowerCase»«ENDFOR»)");
+					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
 					«FOR attribute : allNonSerialAttributes»
 						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 					«ENDFOR»
