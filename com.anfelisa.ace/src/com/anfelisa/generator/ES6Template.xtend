@@ -220,7 +220,7 @@ class ES6Template {
 		            }
 		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
-		            let command = this.getCommand()
+		            let command = this.getCommand();
 		            if (command) {
 		                command.executeCommand().then(() => {
 		                    resolve();
@@ -333,7 +333,7 @@ class ES6Template {
 			                    resolve(data);
 			                },
 			                error: function (jqxhr, textStatus, error) {
-			                	reject(error);
+			                    reject(`GET failed with ${jqxhr.status}: ${jqxhr.statusText} - ${jqxhr.responseText}`);
 			                }
 			            });
 		            });
@@ -366,7 +366,7 @@ class ES6Template {
 			                    resolve(data);
 			                },
 			                error: function (jqxhr, textStatus, error) {
-			                	reject(error);
+			                    reject(`POST failed with ${jqxhr.status}: ${jqxhr.statusText} - ${jqxhr.responseText}`);
 			                }
 			            });
 			        });
@@ -399,7 +399,7 @@ class ES6Template {
 			                    resolve();
 			                },
 			                error: function (jqxhr, textStatus, error) {
-			                	reject(error);
+			                    reject(`PUT failed with ${jqxhr.status}: ${jqxhr.statusText} - ${jqxhr.responseText}`);
 			                }
 			            });
 			        });
@@ -432,7 +432,7 @@ class ES6Template {
 			                    resolve();
 			                },
 			                error: function (jqxhr, textStatus, error) {
-			                	reject(error);
+			                    reject(`DELETE failed with ${jqxhr.status}: ${jqxhr.statusText} - ${jqxhr.responseText}`);
 			                }
 			            });
 			        });
