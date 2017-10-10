@@ -457,8 +457,8 @@ class ES6Template {
 		class ReplayUtils {
 		
 		    static replayVerification(actualIndex, expectedIndexStart, expectedIndexEnd) {
-				const actualTimelineItems = ACEController.replayTimeline.slice(actualIndex);
-				const expectedTimelineItems = ACEController.timeline.slice(expectedIndexStart, expectedIndexEnd);
+				const actualTimelineItems = ACEController.actualTimeline.slice(actualIndex);
+				const expectedTimelineItems = ACEController.expectedTimeLine.slice(expectedIndexStart, expectedIndexEnd);
 		    }
 		
 		    static resetDatabase() {
@@ -522,7 +522,7 @@ class ES6Template {
 		        ACEController.E2E = 3;
 		        ACEController.execution = ACEController.LIVE;
 		        ACEController.actualTimeline = [];
-		        ACEController.expectedTimeLine = [];
+		        ACEController.expectedTimeline = [];
 		        ACEController.timelineSize = 200;
 		    }
 		
@@ -579,7 +579,7 @@ class ES6Template {
 		    }
 		
 		    static initTimeline(timelineJson) {
-		        ACEController.expectedTimeLine = timelineJson;
+		        ACEController.expectedTimeline = timelineJson;
 		    }
 		
 		    static addActionToQueue(action) {
@@ -598,7 +598,7 @@ class ES6Template {
 		            action.applyAction().then(() => {
 		                if (ACEController.execution !== ACEController.LIVE) {
 		                    const actualIndices = ACEController.getActionIndicesByUuid(action.actionData.uuid, ACEController.actualTimeline);
-		                    const expectedIndices = ACEController.getActionIndicesByUuid(action.actionData.uuid, ACEController.expectedTimeLine);
+		                    const expectedIndices = ACEController.getActionIndicesByUuid(action.actionData.uuid, ACEController.expectedTimeline);
 		                    ReplayUtils.replayVerification(actualIndices.start, actualIndices.end, expectedIndices.start, expectedIndices.end);
 		                }
 		            }, (error) => {
@@ -609,7 +609,10 @@ class ES6Template {
 		            ACEController.actionIsProcessing = false;
 		            if (ACEController.execution !== ACEController.LIVE) {
 		                ReplayUtils.finishReplay();
-		                ACEController.timeline = [];
+						ACEController.timeline = [];
+						ACEController.actionIsProcessing = false;
+						ACEController.actionQueue = [];
+						ACEController.execution = ACEController.LIVE;
 		                AppUtils.start();
 		            }
 		        }
@@ -651,16 +654,17 @@ class ES6Template {
 		
 		    static readTimelineAndCreateReplayActions() {
 		        let actions = [];
-		        if (ACEController.expectedTimeLine.length === 0) {
+		        if (ACEController.expectedTimeline.length === 0) {
 		            for (let i = 0; i < ACEController.timeline.length; i++) {
 		                let item = ACEController.timeline[i];
-		                ACEController.expectedTimeLine.push(item);
+		                ACEController.expectedTimeline.push(item);
 		            }
 		        }
-		        for (let i = 0; i < ACEController.expectedTimeLine.length; i++) {
-		            let item = ACEController.expectedTimeLine[i];
+		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
+		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
-		                let action = eval('new ' + item.action.actionName + '(item.action.actionParam)');
+						const actionParam = item.action.actionParam;
+						let action = eval('new ' + item.action.actionName + '(actionParam)');
 		                action.actionData.uuid = item.action.actionData.uuid;
 		                actions.push(action);
 		            }
@@ -672,8 +676,8 @@ class ES6Template {
 		    }
 		
 		    static getCommandByUuid(uuid) {
-		        for (let i = 0; i < ACEController.expectedTimeLine.length; i++) {
-		            let item = ACEController.expectedTimeLine[i];
+		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
+		            let item = ACEController.expectedTimeline[i];
 		            if (item.command && item.command.commandParam.uuid === uuid) {
 		                return item.command;
 		            }

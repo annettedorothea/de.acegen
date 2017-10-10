@@ -83,11 +83,11 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.name + '/' + view.viewName + '.es6',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateView(view));
 				}
-				fsa.generateFile('/app/App.es6',
+				fsa.generateFile('./../app/App.es6',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateAppStub());
-				fsa.generateFile('/app/AppUtils.es6',
+				fsa.generateFile('./../app/AppUtils.es6',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateAppUtilsStub());
-				fsa.generateFile('/app/ReplayUtils.es6',
+				fsa.generateFile('./../app/ReplayUtils.es6',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateReplayUtilsStub());
 				fsa.generateFile(project.name + '/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateHtmlDevSnippet(project));
