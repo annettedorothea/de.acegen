@@ -57,6 +57,7 @@ Attribute:
 ;
 
 Action:
+	init ?= 'init'?
 	(type = FunctionType)? name = ID 
 	('uses' data = [ Data | QualifiedName ])?
 	('executes' command = [Command | QualifiedName])? 

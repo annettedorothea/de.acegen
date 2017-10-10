@@ -45,6 +45,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Attribute/foreignKey"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/init"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/data"/>

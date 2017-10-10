@@ -468,7 +468,6 @@ class JavaTemplate {
 		package «project.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
@@ -560,7 +559,7 @@ class JavaTemplate {
 		«data.dataImport»
 		
 		@Path("/«data.name»")
-		«IF type !== null && type == "POST"»@Produces(MediaType.TEXT_PLAIN)«ELSE»@Produces(MediaType.APPLICATION_JSON)«ENDIF»
+		«IF type !== null && type == "GET"»@Produces(MediaType.APPLICATION_JSON)«ELSE»@Produces(MediaType.TEXT_PLAIN)«ENDIF»
 		@Consumes(MediaType.APPLICATION_JSON)
 			public class «actionName» extends «abstractActionName» {
 		
