@@ -183,11 +183,11 @@ class ES6Template {
 		
 		class Action {
 		    constructor(actionParam, actionName, isInitAction) {
+		        this.actionName = actionName;
 		        if (actionParam === undefined) {
 		            actionParam = {};
 		        }
 		        this.actionParam = JSON.parse(JSON.stringify(actionParam));
-		        this.actionName = actionName;
 		        this.actionData = {};
 		        this.isInitAction = isInitAction === true;
 		        
@@ -247,8 +247,8 @@ class ES6Template {
 		
 		class Command {
 		    constructor(commandParam, commandName) {
-		        this.commandParam = JSON.parse(JSON.stringify(commandParam));
 		        this.commandName = commandName;
+		        this.commandParam = JSON.parse(JSON.stringify(commandParam));
 		        this.commandData = {};
 		    }
 		
@@ -409,7 +409,7 @@ class ES6Template {
 		    static start() {
 		    }
 		
-		    static itemAddedToTimelineCallback(item) {
+		    static timelineChanged(items) {
 		    }
 		
 		    static httpGet(url, queryParams, commandParam) {
@@ -456,9 +456,10 @@ class ES6Template {
 		
 		class ReplayUtils {
 		
-		    static replayVerification(actualIndex, expectedIndexStart, expectedIndexEnd) {
-				const actualTimelineItems = ACEController.actualTimeline.slice(actualIndex);
-				const expectedTimelineItems = ACEController.expectedTimeLine.slice(expectedIndexStart, expectedIndexEnd);
+		    static actualTimelineChanged(items) {
+		    }
+		
+		    static expectedTimelineChanged(items) {
 		    }
 		
 		    static resetDatabase() {
@@ -546,7 +547,6 @@ class ES6Template {
 		        item.timestamp = timestamp.getTime();
 		        if (ACEController.execution === ACEController.LIVE) {
 		            ACEController.timeline.push(JSON.parse(JSON.stringify(item)));
-		            AppUtils.itemAddedToTimelineCallback(item);
 		            if (ACEController.timeline.length > ACEController.timelineSize) {
 		                let i;
 		                for (i = 1; i < ACEController.timeline.length; i++) {
@@ -560,8 +560,10 @@ class ES6Template {
 		                    }
 		                }
 		            }
+		            AppUtils.timelineChanged([item]);
 		        } else {
 		            ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
+		            ReplayUtils.actualTimelineChanged([item]);
 		        }
 		    }
 		
@@ -580,6 +582,9 @@ class ES6Template {
 		
 		    static initTimeline(timelineJson) {
 		        ACEController.expectedTimeline = timelineJson;
+		        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
+				ACEController.actualTimeline = [];
+				ReplayUtils.actualTimelineChanged([]);
 		    }
 		
 		    static addActionToQueue(action) {
@@ -596,11 +601,6 @@ class ES6Template {
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
 		            action.applyAction().then(() => {
-		                if (ACEController.execution !== ACEController.LIVE) {
-		                    const actualIndices = ACEController.getActionIndicesByUuid(action.actionData.uuid, ACEController.actualTimeline);
-		                    const expectedIndices = ACEController.getActionIndicesByUuid(action.actionData.uuid, ACEController.expectedTimeline);
-		                    ReplayUtils.replayVerification(actualIndices.start, actualIndices.end, expectedIndices.start, expectedIndices.end);
-		                }
 		            }, (error) => {
 		                ACEController.actionIsProcessing = false;
 		                throw new Error(error + " when applying action " + action.actionName);
@@ -636,6 +636,8 @@ class ES6Template {
 		        ACEController.pauseInMillis = undefined;
 		        ACEController.execution = level;
 		        ACEController.pauseInMillis = pauseInMillis;
+		        
+		        ReplayUtils.actualTimelineChanged([]);
 		
 		        if (ACEController.execution === ACEController.REPLAY) {
 		            ACEController.readTimelineAndCreateReplayActions();
@@ -658,8 +660,11 @@ class ES6Template {
 		            for (let i = 0; i < ACEController.timeline.length; i++) {
 		                let item = ACEController.timeline[i];
 		                ACEController.expectedTimeline.push(item);
-		            }
+			        	}
 		        }
+		        
+		        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
+		        
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
@@ -681,27 +686,6 @@ class ES6Template {
 		            if (item.command && item.command.commandParam.uuid === uuid) {
 		                return item.command;
 		            }
-		        }
-		    }
-		
-		    static getActionIndicesByUuid(uuid, timeline) {
-		        let start = -1;
-		        let end = -1;
-		        for (let i = 0; i < timeline.length; i++) {
-		            let item = timeline[i];
-		            if (item.action && item.action.actionData.uuid === uuid) {
-		                start = i;
-		            } else if (start !== -1 && item.action) {
-		                end = i - 1;
-		                break;
-		            }
-		        }
-		        if (start !== -1 && end === -1) {
-		            end = timeline.length;
-		        }
-		        return {
-		            start: start,
-		            end: end
 		        }
 		    }
 		
