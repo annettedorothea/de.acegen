@@ -66,7 +66,7 @@ class ModelExtension {
 	def List<Attribute> allNonSerialAttributes(Model it) {
 		var list = new ArrayList<Attribute>();
 		for (attribute : attributes) {
-			if (!attribute.primaryKey) {
+			if (!'Serial'.equals(attribute.type)) {
 				list.add(attribute);
 			}
 		}
