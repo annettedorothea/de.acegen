@@ -29,10 +29,15 @@ class ES6Template {
 	@Inject
 	extension ProjectExtension
 	
-	def generateAbstractActionFile(Action it) '''
-		'use strict';
+	def generateAbstractActionFile(Action it, Project project) '''
+		«IF project.generateModules»
+			import Action from "../../../ace/Action";
+			«IF command !== null»
+				import «command.commandName» from "../../../../src/«project.name»/commands/«command.commandName»";
+		    «ENDIF»
+		«ENDIF»
 		
-		class «abstractActionName» extends Action {
+		«IF project.generateModules»export default «ENDIF»class «abstractActionName» extends Action {
 		
 		    constructor(actionParam) {
 		        super(actionParam, '«actionName»', «IF init»true«ELSE»false«ENDIF»);
@@ -40,11 +45,7 @@ class ES6Template {
 		
 			«IF command !== null»
 			    getCommand() {
-			    	«IF command !== null»
 			    		return new «command.commandName»(this.actionData);
-			    	«ELSE»
-			    		return null;
-			        «ENDIF»
 			    }
 		    «ENDIF»
 		
@@ -53,10 +54,12 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 
-	def generateInitialActionFile(Action it) '''
-		'use strict';
+	def generateInitialActionFile(Action it, Project project) '''
+		«IF project.generateModules»
+			import «abstractActionName» from "../../../gen/app/«project.name»/actions/«abstractActionName»";
+		«ENDIF»
 		
-		class «actionName» extends «abstractActionName» {
+		«IF project.generateModules»export default «ENDIF»class «actionName» extends «abstractActionName» {
 		
 		    captureActionParam() {
 		    }
@@ -71,10 +74,19 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractCommandFile(Command it) '''
-		'use strict';
+	def generateAbstractCommandFile(Command it, Project project) '''
+		«IF project.generateModules»
+			import Command from "../../../../gen/ace/Command";
+			import TriggerAction from "../../../../gen/ace/TriggerAction";
+			«FOR event : eventsOfCommand»
+				import «event.eventName» from "../../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
+			«ENDFOR»
+			«FOR action : triggeredActionsOfCommand»
+				import «action.actionName» from "../../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
+			«ENDFOR»
+		«ENDIF»
 		
-		class «abstractCommandName» extends Command {
+		«IF project.generateModules»export default «ENDIF»class «abstractCommandName» extends Command {
 		    constructor(commandParam) {
 		        super(commandParam, "«commandName»");
 		        «FOR eventOnOutcome : eventsOnOutcome»
@@ -106,10 +118,12 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateInitialCommandFile(Command it) '''
-		'use strict';
+	def generateInitialCommandFile(Command it, Project project) '''
+		«IF project.generateModules»
+			import «abstractCommandName» from "../../../gen/app/«project.name»/commands/«abstractCommandName»";
+		«ENDIF»
 		
-		class «commandName» extends «abstractCommandName» {
+		«IF project.generateModules»export default «ENDIF»class «commandName» extends «abstractCommandName» {
 		    execute() {
 		        return new Promise((resolve) => {
 					resolve();
@@ -120,10 +134,12 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractEventFile(Event it) '''
-		'use strict';
+	def generateAbstractEventFile(Event it, Project project) '''
+		«IF project.generateModules»
+			import Event from "../../../../gen/ace/Event";
+		«ENDIF»
 		
-		class «abstractEventName» extends Event {
+		«IF project.generateModules»export default «ENDIF»class «abstractEventName» extends Event {
 		    constructor(eventParam) {
 		        super(eventParam, '«eventName»');
 		    }
@@ -131,10 +147,12 @@ class ES6Template {
 		
 		/*       S.D.G.       */
 	'''
-	def generateInitialEventFile(Event it) '''
-		'use strict';
+	def generateInitialEventFile(Event it, Project project) '''
+		«IF project.generateModules»
+			import «abstractEventName» from "../../../gen/app/«project.name»/events/«abstractEventName»";
+		«ENDIF»
 		
-		class «eventName» extends «abstractEventName» {
+		«IF project.generateModules»export default «ENDIF»class «eventName» extends «abstractEventName» {
 		    prepareDataForView() {
 		        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
 		        if (this.eventData.data === undefined) {
@@ -146,9 +164,14 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateEventListenerRegistration(Project it) '''
-		'use strict';
+		«IF generateModules»
+			import ACEController from "../../ace/ACEController";
+			«FOR view : referencedViews»
+				import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/«view.viewName»";
+			«ENDFOR»
+		«ENDIF»
 		
-		class EventListenerRegistration«projectName» {
+		«IF generateModules»export default «ENDIF»class EventListenerRegistration«projectName» {
 		
 			static init() {
 		    	«FOR event : events»
@@ -160,14 +183,11 @@ class ES6Template {
 		
 		}
 		
-		EventListenerRegistration«projectName».init();
-		
 		/*       S.D.G.       */
 	'''
-	def generateView(View it) '''
-		'use strict';
-		
-		class «viewName» {
+	def generateView(View it, Project project) '''
+
+		«IF project.generateModules»export default «ENDIF»class «viewName» {
 		    «FOR renderFunction : renderFunctions»
 		    	static «renderFunction.name»(eventData) {
 		    	};
@@ -178,10 +198,13 @@ class ES6Template {
 		/*                    S.D.G.                    */
 	'''
 
-	def generateAction() '''
-		'use strict';
+	def generateAction(Project it) '''
+		«IF generateModules»
+			import ACEController from "./ACEController";
+			import AppUtils from "../../app/AppUtils";
+		«ENDIF»
 		
-		class Action {
+		«IF generateModules»export default «ENDIF»class Action {
 		    constructor(actionParam, actionName, isInitAction) {
 		        this.actionName = actionName;
 		        if (actionParam === undefined) {
@@ -213,7 +236,7 @@ class ES6Template {
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
 		            if (ACEController.execution === ACEController.LIVE) {
-		                this.actionData.uuid = ACEController.uuidGenerator.createUUID();
+		                this.actionData.uuid = AppUtils.createUUID();
 		            }
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.captureActionParam();
@@ -242,10 +265,14 @@ class ES6Template {
 		
 	'''
 
-	def generateCommand() '''
-		'use strict';
+	def generateCommand(Project it) '''
+		«IF generateModules»
+			import ACEController from "./ACEController";
+			import AppUtils from "../../app/AppUtils";
+			import ReplayUtils from "../../app/ReplayUtils";
+		«ENDIF»
 		
-		class Command {
+		«IF generateModules»export default «ENDIF»class Command {
 		    constructor(commandParam, commandName) {
 		        this.commandName = commandName;
 		        this.commandParam = JSON.parse(JSON.stringify(commandParam));
@@ -356,10 +383,12 @@ class ES6Template {
 		
 	'''
 	
-	def generateEvent() '''
-		'use strict';
+	def generateEvent(Project it) '''
+		«IF generateModules»
+			import ACEController from "./ACEController";
+		«ENDIF»
 		
-		class Event {
+		«IF generateModules»export default «ENDIF»class Event {
 		    constructor(eventParam, eventName) {
 		        this.eventName = eventName;
 		        this.eventParam = eventParam;
@@ -401,10 +430,12 @@ class ES6Template {
 		
 	'''
 	
-	def generateAppUtilsStub() '''
-		'use strict';
+	def generateAppUtilsStub(Project it) '''
+		«IF generateModules»
+			import ACEController from "ACEController";
+		«ENDIF»
 		
-		class AppUtils {
+		«IF generateModules»export default «ENDIF»class AppUtils {
 		
 		    static start() {
 		    }
@@ -435,6 +466,12 @@ class ES6Template {
 		            resolve();
 		        });
 		    }
+		    
+			static createUUID() {
+			    //return some kind of uuid
+			}
+		    
+		    
 		
 		}
 		
@@ -442,19 +479,26 @@ class ES6Template {
 		
 	'''
 	
-	def generateAppStub() '''
-		'use strict';
+	def generateAppStub(Project it) '''
+		«IF generateModules»
+			import ACEController from "ACEController";
+			import AppUtils from "AppUtils";
+		«ENDIF»
 		
 		AppUtils.start();
+		
+		// add EventListenerRegistration.init() of all modules
 		
 		/*       S.D.G.       */
 		
 	'''
 	
-	def generateReplayUtilsStub() '''
-		'use strict';
+	def generateReplayUtilsStub(Project it) '''
+		«IF generateModules»
+			import ACEController from "ACEController";
+		«ENDIF»
 		
-		class ReplayUtils {
+		«IF generateModules»export default «ENDIF»class ReplayUtils {
 		
 		    static actualTimelineChanged(items) {
 		    }
@@ -506,10 +550,13 @@ class ES6Template {
 		
 	'''
 	
-	def generateACEController() '''
-		'use strict';
+	def generateACEController(Project it) '''
+		«IF generateModules»
+			import AppUtils from "../../app/AppUtils";
+			import ReplayUtils from "../../app/ReplayUtils";
+		«ENDIF»
 		
-		class ACEController {
+		«IF generateModules»export default «ENDIF»class ACEController {
 		
 		    static init() {
 		        ACEController.timeline = [];
@@ -517,7 +564,6 @@ class ES6Template {
 		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
 		        ACEController.actionIsProcessing = false;
 		        ACEController.actionQueue = [];
-		        ACEController.uuidGenerator = new UUID();
 		        ACEController.LIVE = 1;
 		        ACEController.REPLAY = 2;
 		        ACEController.E2E = 3;
@@ -697,10 +743,12 @@ class ES6Template {
 		
 	'''
 	
-	def generateTriggerAction() '''
-		'use strict';
+	def generateTriggerAction(Project it) '''
+		«IF generateModules»
+			import Event from "./Event";
+		«ENDIF»
 		
-		class TriggerAction extends Event {
+		«IF generateModules»export default «ENDIF»class TriggerAction extends Event {
 		    constructor(action) {
 		        super(action, 'TriggerAction');
 		        this.eventData = action;
@@ -748,128 +796,4 @@ class ES6Template {
 	'''
 
 	
-	def generateUUID() '''
-		/*
-		 uuid.js - Version 0.3
-		 JavaScript Class to create a UUID like identifier
-		
-		 Copyright (C) 2006-2008, Erik Giberti (AF-Design), All rights reserved.
-		
-		 This program is free software; you can redistribute it and/or modify it under
-		 the terms of the GNU General Public License as published by the Free Software
-		 Foundation; either version 2 of the License, or (at your option) any later
-		 version.
-		
-		 This program is distributed in the hope that it will be useful, but WITHOUT ANY
-		 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-		 PARTICULAR PURPOSE. See the GNU General Public License for more details.
-		
-		 You should have received a copy of the GNU General Public License along with
-		 this program; if not, write to the Free Software Foundation, Inc., 59 Temple
-		 Place, Suite 330, Boston, MA 02111-1307 USA
-		
-		 The latest version of this file can be downloaded from
-		 http://www.af-design.com/resources/javascript_uuid.php
-		
-		 HISTORY:
-		 6/5/06 	- Initial Release
-		 5/22/08 - Updated code to run faster, removed randrange(min,max) in favor of
-		 a simpler rand(max) function. Reduced overhead by using getTime()
-		 method of date class (suggestion by James Hall).
-		 9/5/08	- Fixed a bug with rand(max) and additional efficiencies pointed out
-		 by Robert Kieffer http://broofa.com/
-		
-		 KNOWN ISSUES:
-		 - Still no way to get MAC address in JavaScript
-		 - Research into other versions of UUID show promising possibilities
-		 (more research needed)
-		 - Documentation needs improvement
-		
-		 */
-		
-		// On creation of a UUID object, set it's initial value
-		function UUID(){
-		    this.id = this.createUUID();
-		}
-		
-		// When asked what this Object is, lie and return it's value
-		UUID.prototype.valueOf = function(){ return this.id; }
-		UUID.prototype.toString = function(){ return this.id; }
-		
-		//
-		// INSTANCE SPECIFIC METHODS
-		//
-		
-		UUID.prototype.createUUID = function(){
-		    //
-		    // Loose interpretation of the specification DCE 1.1: Remote Procedure Call
-		    // described at http://www.opengroup.org/onlinepubs/009629399/apdxa.htm#tagtcjh_37
-		    // since JavaScript doesn't allow access to internal systems, the last 48 bits
-		    // of the node section is made up using a series of random numbers (6 octets long).
-		    //
-		    var dg = new Date(1582, 10, 15, 0, 0, 0, 0);
-		    var dc = new Date();
-		    var t = dc.getTime() - dg.getTime();
-		    var h = '-';
-		    var tl = UUID.getIntegerBits(t,0,31);
-		    var tm = UUID.getIntegerBits(t,32,47);
-		    var thv = UUID.getIntegerBits(t,48,59) + '1'; // version 1, security version is 2
-		    var csar = UUID.getIntegerBits(UUID.rand(4095),0,7);
-		    var csl = UUID.getIntegerBits(UUID.rand(4095),0,7);
-		
-		    // since detection of anything about the machine/browser is far to buggy,
-		    // include some more random numbers here
-		    // if NIC or an IP can be obtained reliably, that should be put in
-		    // here instead.
-		    var n = UUID.getIntegerBits(UUID.rand(8191),0,7) +
-		        UUID.getIntegerBits(UUID.rand(8191),8,15) +
-		        UUID.getIntegerBits(UUID.rand(8191),0,7) +
-		        UUID.getIntegerBits(UUID.rand(8191),8,15) +
-		        UUID.getIntegerBits(UUID.rand(8191),0,15); // this last number is two octets long
-		    return tl + h + tm + h + thv + h + csar + csl + h + n;
-		}
-		
-		
-		//
-		// GENERAL METHODS (Not instance specific)
-		//
-		
-		
-		// Pull out only certain bits from a very large integer, used to get the time
-		// code information for the first part of a UUID. Will return zero's if there
-		// aren't enough bits to shift where it needs to.
-		UUID.getIntegerBits = function(val,start,end){
-		    var base16 = UUID.returnBase(val,16);
-		    var quadArray = new Array();
-		    var quadString = '';
-		    var i = 0;
-		    for(i=0;i<base16.length;i++){
-		        quadArray.push(base16.substring(i,i+1));
-		    }
-		    for(i=Math.floor(start/4);i<=Math.floor(end/4);i++){
-		        if(!quadArray[i] || quadArray[i] == '') quadString += '0';
-		        else quadString += quadArray[i];
-		    }
-		    return quadString;
-		}
-		
-		// Replaced from the original function to leverage the built in methods in
-		// JavaScript. Thanks to Robert Kieffer for pointing this one out
-		UUID.returnBase = function(number, base){
-		    return (number).toString(base).toUpperCase();
-		}
-		
-		// pick a random number within a range of numbers
-		// int b rand(int a); where 0 <= b <= a
-		UUID.rand = function(max){
-		    return Math.floor(Math.random() * (max + 1));
-		}
-		
-		// end of UUID class file
-		
-		
-		
-	'''
-
-
 }

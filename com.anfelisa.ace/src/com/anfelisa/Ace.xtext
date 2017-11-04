@@ -4,7 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = QualifiedName
-	'target' target = ('ES6' | 'JAVA')
+	'target' target = ('ES6' | 'JAVA') generateModules ?= 'generateModules'?
 	('models' '{'
 		'schema' schema = ID
 		(models += Model)*
@@ -84,7 +84,7 @@ Event:
 ;
 
 View: 
-	name = ID ('{'
+	external ?= 'external'? name = ID ('{'
 		(renderFunctions += ViewFunction)*
 	'}')*
 ;
