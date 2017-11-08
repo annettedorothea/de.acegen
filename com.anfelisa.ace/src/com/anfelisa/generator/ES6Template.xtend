@@ -31,16 +31,16 @@ class ES6Template {
 	
 	def generateAbstractActionFile(Action it, Project project) '''
 		«IF project.generateModules»
-			import Action from "../../../ace/Action";
+			import Action from "../../ace/Action";
 			«IF command !== null»
-				import «command.commandName» from "../../../../src/«project.name»/commands/«command.commandName»";
+				import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
 		    «ENDIF»
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «abstractActionName» extends Action {
 		
 		    constructor(actionParam) {
-		        super(actionParam, '«actionName»', «IF init»true«ELSE»false«ENDIF»);
+		        super(actionParam, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
 		    }
 		
 			«IF command !== null»
@@ -76,19 +76,19 @@ class ES6Template {
 	
 	def generateAbstractCommandFile(Command it, Project project) '''
 		«IF project.generateModules»
-			import Command from "../../../../gen/ace/Command";
-			import TriggerAction from "../../../../gen/ace/TriggerAction";
+			import Command from "../../../gen/ace/Command";
+			import TriggerAction from "../../../gen/ace/TriggerAction";
 			«FOR event : eventsOfCommand»
-				import «event.eventName» from "../../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
+				import «event.eventName» from "../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
 			«ENDFOR»
 			«FOR action : triggeredActionsOfCommand»
-				import «action.actionName» from "../../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
+				import «action.actionName» from "../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
 			«ENDFOR»
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «abstractCommandName» extends Command {
 		    constructor(commandParam) {
-		        super(commandParam, "«commandName»");
+		        super(commandParam, "«project.name».«commandName»");
 		        «FOR eventOnOutcome : eventsOnOutcome»
 		        	this.«eventOnOutcome.outcome» = "«eventOnOutcome.outcome»";
 		        «ENDFOR»
@@ -136,12 +136,12 @@ class ES6Template {
 	
 	def generateAbstractEventFile(Event it, Project project) '''
 		«IF project.generateModules»
-			import Event from "../../../../gen/ace/Event";
+			import Event from "../../../gen/ace/Event";
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «abstractEventName» extends Event {
 		    constructor(eventParam) {
-		        super(eventParam, '«eventName»');
+		        super(eventParam, '«project.name».«eventName»');
 		    }
 		}
 		
@@ -165,20 +165,40 @@ class ES6Template {
 	'''
 	def generateEventListenerRegistration(Project it) '''
 		«IF generateModules»
-			import ACEController from "../../ace/ACEController";
+			import ACEController from "../ace/ACEController";
 			«FOR view : referencedViews»
-				import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/«view.viewName»";
+				import «view.viewName» from "../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
 			«ENDFOR»
 		«ENDIF»
 		
 		«IF generateModules»export default «ENDIF»class EventListenerRegistration«projectName» {
 		
 			static init() {
-		    	«FOR event : events»
-		    		«FOR renderFunction : event.listeners»
-		    			ACEController.registerListener('«event.eventName»', «renderFunction.viewFunctionWithViewName»);
-		    		«ENDFOR»
-		    	«ENDFOR»
+			    	«FOR event : events»
+			    		«FOR renderFunction : event.listeners»
+			    			ACEController.registerListener('«name».«event.eventName»', «renderFunction.viewFunctionWithViewName»);
+			    		«ENDFOR»
+			    	«ENDFOR»
+			}
+		
+		}
+		
+		/*       S.D.G.       */
+	'''
+	def generateActionFactoryRegistration(Project it) '''
+		«IF generateModules»
+			import ACEController from "../ace/ACEController";
+			«FOR action : actions»
+				import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+			«ENDFOR»
+		«ENDIF»
+		
+		«IF generateModules»export default «ENDIF»class ActionFactoryRegistration«projectName» {
+		
+			static init() {
+				«FOR action : actions»
+					ACEController.registerFactory('«name».«action.actionName»', (actionParam) => new «action.actionName»(actionParam));
+				«ENDFOR»
 			}
 		
 		}
@@ -201,7 +221,7 @@ class ES6Template {
 	def generateAction(Project it) '''
 		«IF generateModules»
 			import ACEController from "./ACEController";
-			import AppUtils from "../../app/AppUtils";
+			import AppUtils from "../../src/app/AppUtils";
 		«ENDIF»
 		
 		«IF generateModules»export default «ENDIF»class Action {
@@ -268,8 +288,8 @@ class ES6Template {
 	def generateCommand(Project it) '''
 		«IF generateModules»
 			import ACEController from "./ACEController";
-			import AppUtils from "../../app/AppUtils";
-			import ReplayUtils from "../../app/ReplayUtils";
+			import AppUtils from "../../src/app/AppUtils";
+			import ReplayUtils from "../../src/app/ReplayUtils";
 		«ENDIF»
 		
 		«IF generateModules»export default «ENDIF»class Command {
@@ -293,7 +313,11 @@ class ES6Template {
 		                this.execute().then(() => {
 		                    ACEController.addItemToTimeLine({command: this});
 		                    this.publishEvents().then(() => {
-		                        ACEController.applyNextActions();
+								if (ACEController.execution === ACEController.LIVE) {
+								    ACEController.applyNextActions();
+								} else {
+								    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+								}
 		                        resolve();
 		                    }, (error) => {
 		                        reject(error + " when publishing events of command " + this.commandName);
@@ -525,13 +549,11 @@ class ES6Template {
 				}
 		    }
 		
-		    static replay() {
-		    		const pauseInMillis = 0;
+		    static replay(pauseInMillis) {
 		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
 		    }
 		
 		    static e2e() {
-		    		const pauseInMillis = 0;
 		        ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		    }
 
@@ -552,8 +574,8 @@ class ES6Template {
 	
 	def generateACEController(Project it) '''
 		«IF generateModules»
-			import AppUtils from "../../app/AppUtils";
-			import ReplayUtils from "../../app/ReplayUtils";
+			import AppUtils from "../../src/app/AppUtils";
+			import ReplayUtils from "../../src/app/ReplayUtils";
 		«ENDIF»
 		
 		«IF generateModules»export default «ENDIF»class ACEController {
@@ -561,6 +583,7 @@ class ES6Template {
 		    static init() {
 		        ACEController.timeline = [];
 		        ACEController.listeners = {};
+				ACEController.factories = {};
 		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
 		        ACEController.actionIsProcessing = false;
 		        ACEController.actionQueue = [];
@@ -586,6 +609,16 @@ class ES6Template {
 		        }
 		        listenersForEventName = ACEController.listeners[eventName];
 		        listenersForEventName.push(listener);
+		    }
+		
+		    static registerFactory(actionName, factory) {
+		        if (!actionName.trim()) {
+		            throw new Error('cannot register factory for empty actionName');
+		        }
+		        if (!factory) {
+		            throw new Error('cannot register undefined factory for action ' + actionName);
+		        }
+		        ACEController.factories[actionName] = factory;
 		    }
 		
 		    static addItemToTimeLine(item) {
@@ -679,7 +712,6 @@ class ES6Template {
 		    static startReplay(level, pauseInMillis) {
 		        ACEController.passed = undefined;
 		        ACEController.actualTimeline = [];
-		        ACEController.pauseInMillis = undefined;
 		        ACEController.execution = level;
 		        ACEController.pauseInMillis = pauseInMillis;
 		        
@@ -715,7 +747,7 @@ class ES6Template {
 		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
 						const actionParam = item.action.actionParam;
-						let action = eval('new ' + item.action.actionName + '(actionParam)');
+						let action = ACEController.factories[item.action.actionName](actionParam);
 		                action.actionData.uuid = item.action.actionData.uuid;
 		                actions.push(action);
 		            }
@@ -760,40 +792,4 @@ class ES6Template {
 		/*       S.D.G.       */
 		
 	'''
-
-	def generateAceHtmlDevSnippet(Project it) '''
-		<script type="text/javascript" src="es6/gen/ace/UUID.js"></script>
-		<script type="text/javascript" src="es6/gen/ace/Action.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/Command.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/Event.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/ACEController.es6"></script>
-		<script type="text/javascript" src="es6/gen/ace/TriggerAction.es6"></script>
-	'''
-
-	def generateHtmlDevSnippet(Project it) '''
-		«FOR action: actions»
-			<script type="text/javascript" src="es6/gen/app/«name»/actions/«action.abstractActionName».es6"></script>
-			<script type="text/javascript" src="es6/src/«name»/actions/«action.actionName».es6"></script>
-		«ENDFOR»
-		«FOR command: commands»
-			<script type="text/javascript" src="es6/gen/app/«name»/commands/«command.abstractCommandName».es6"></script>
-			<script type="text/javascript" src="es6/src/«name»/commands/«command.commandName».es6"></script>
-		«ENDFOR»
-		«FOR event: events»
-			<script type="text/javascript" src="es6/gen/app/«name»/events/«event.abstractEventName».es6"></script>
-			<script type="text/javascript" src="es6/src/«name»/events/«event.eventName».es6"></script>
-		«ENDFOR»
-		«FOR view: views»
-			<script type="text/javascript" src="es6/src/«name»/«view.viewName».es6"></script>
-		«ENDFOR»
-
-
-
-
-
-
-		<script type="text/javascript" src="es6/gen/elr/«name»/EventListenerRegistration.es6"></script>
-	'''
-
-	
 }

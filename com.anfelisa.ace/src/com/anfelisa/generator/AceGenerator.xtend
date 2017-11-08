@@ -58,41 +58,39 @@ class AceGenerator extends AbstractGenerator {
 
 			if (project.target == 'ES6') {
 				for (action : project.actions) {
-					fsa.generateFile('app/' + project.name + '/actions/' + action.abstractActionName + '.js',
+					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.js',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractActionFile(action, project));
 					fsa.generateFile(project.name + '/actions/' + action.actionName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialActionFile(action, project));
 				}
 				for (command : project.commands) {
-					fsa.generateFile('app/' + project.name + '/commands/' + command.abstractCommandName + '.js',
+					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.js',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(command, project));
 					fsa.generateFile(project.name + '/commands/' + command.commandName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialCommandFile(command, project));
 				}
-				fsa.generateFile('/elr/' + project.name + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				fsa.generateFile(project.name + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateEventListenerRegistration(project));
+				fsa.generateFile(project.name + '/ActionFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateActionFactoryRegistration(project));
 				for (event : project.events) {
-					fsa.generateFile('app/' + project.name + '/events/' + event.abstractEventName + '.js',
+					fsa.generateFile(project.name + '/events/' + event.abstractEventName + '.js',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(event, project));
 					fsa.generateFile(project.name + '/events/' + event.eventName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(event, project));
 				}
 				for (view : project.views) {
-					fsa.generateFile(project.name + '/' + view.viewName + '.js',
+					fsa.generateFile(project.name + '/views/' + view.viewName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateView(view, project));
 				}
-				fsa.generateFile('./../app/App.js',
+				fsa.generateFile('app/App.js',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateAppStub(project));
-				fsa.generateFile('./../app/AppUtils.js',
+				fsa.generateFile('app/AppUtils.js',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateAppUtilsStub(project));
-				fsa.generateFile('./../app/ReplayUtils.js',
+				fsa.generateFile('app/ReplayUtils.js',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateReplayUtilsStub(project));
-				fsa.generateFile(project.name + '/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateHtmlDevSnippet(project));
-				fsa.generateFile('ace/htmlDev.snippet', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateAceHtmlDevSnippet(project));
 				fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateAction(project));
 				fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT,

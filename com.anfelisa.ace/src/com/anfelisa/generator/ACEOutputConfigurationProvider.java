@@ -29,7 +29,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 
 		OutputConfiguration onceOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_OUTPUT_ONCE);
 		onceOutput.setDescription("initial JavaScript sources");
-		onceOutput.setOutputDirectory("./es6/");
+		onceOutput.setOutputDirectory("./es6/src/");
 		onceOutput.setOverrideExistingResources(false);
 		onceOutput.setCreateOutputDirectory(true);
 		onceOutput.setCleanUpDerivedResources(false);
