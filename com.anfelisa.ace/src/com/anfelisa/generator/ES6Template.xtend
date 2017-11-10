@@ -35,8 +35,11 @@ class ES6Template {
 			«IF command !== null»
 				import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
 		    «ENDIF»
+			«FOR view : preAndPostUpdateUIViews»
+				import «view.viewName» from "../../../src/«project.name»/views/«view.viewName»";
+			«ENDFOR»
 		«ENDIF»
-		
+
 		«IF project.generateModules»export default «ENDIF»class «abstractActionName» extends Action {
 		
 		    constructor(actionParam) {
@@ -47,7 +50,20 @@ class ES6Template {
 			    getCommand() {
 			    		return new «command.commandName»(this.actionData);
 			    }
-		    «ENDIF»
+			«ENDIF»
+		
+			
+		    preUpdateUI() {
+				«FOR viewFunction : preUpdateUI»
+					«viewFunction.viewFunctionWithViewName»(this.actionParam);
+				«ENDFOR»
+		    }
+		
+		    postUpdateUI() {
+				«FOR viewFunction : postUpdateUI»
+					«viewFunction.viewFunctionWithViewName»(this.actionParam);
+				«ENDFOR»
+		    }
 		
 		}
 		
@@ -233,7 +249,7 @@ class ES6Template {
 		        this.actionParam = JSON.parse(JSON.stringify(actionParam));
 		        this.actionData = {};
 		        this.isInitAction = isInitAction === true;
-		        
+		        this.postUpdateUI = this.postUpdateUI.bind(this);
 		    }
 		
 		    captureActionParam() {
@@ -255,6 +271,7 @@ class ES6Template {
 		
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
+		        		this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
 		            }
@@ -267,13 +284,15 @@ class ES6Template {
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
-		                command.executeCommand().then(() => {
-		                    resolve();
-		                },
-		                (error) => {
-		                    reject(error + " when executing command " + command.commandName);
-		                });
+						command.executeCommand(this.postUpdateUI).then(() => {
+							resolve();
+						},
+						(error) => {
+							this.postUpdateUI();
+							reject(error + " when executing command " + command.commandName);
+						});
 		            } else {
+		            		this.postUpdateUI();
 		                resolve();
 		            }
 		        });
@@ -307,18 +326,19 @@ class ES6Template {
 		        throw "no publishEvents method defined for " + this.commandName;
 		    }
 		
-		    executeCommand() {
+		    executeCommand(postUpdateUI) {
 		        return new Promise((resolve, reject) => {
 		            if (ACEController.execution !== ACEController.REPLAY) {
 		                this.execute().then(() => {
 		                    ACEController.addItemToTimeLine({command: this});
 		                    this.publishEvents().then(() => {
+								postUpdateUI();
 								if (ACEController.execution === ACEController.LIVE) {
 								    ACEController.applyNextActions();
 								} else {
 								    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 								}
-		                        resolve();
+								resolve();
 		                    }, (error) => {
 		                        reject(error + " when publishing events of command " + this.commandName);
 		                    });
@@ -330,8 +350,9 @@ class ES6Template {
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents().then(() => {
-		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                    resolve();
+							postUpdateUI();
+							setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+							resolve();
 		                }, (error) => {
 		                    reject(error + " when publishing events of command " + this.commandName);
 		                });

@@ -60,7 +60,9 @@ Action:
 	init ?= 'init'?
 	(type = FunctionType)? name = ID 
 	('uses' data = [ Data | QualifiedName ])?
+	('preUpdateUI' '(' (PreUpdateUI += [ViewFunction | QualifiedName])* ')')? 
 	('executes' command = [Command | QualifiedName])? 
+	('postUpdateUI' '(' (PostUpdateUI += [ViewFunction | QualifiedName])* ')')? 
 ;
 
 Command:

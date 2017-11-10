@@ -50,7 +50,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/data"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/PreUpdateUI"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/command"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/PostUpdateUI"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Command">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Command/name"/>

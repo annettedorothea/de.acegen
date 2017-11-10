@@ -54,7 +54,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PreUpdateUI" unique="false"
+        upperBound="-1" eType="#//ViewFunction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//Command"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PostUpdateUI" unique="false"
+        upperBound="-1" eType="#//ViewFunction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Command">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

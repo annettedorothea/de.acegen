@@ -16,9 +16,13 @@ import com.anfelisa.extensions.EventExtension
 import com.anfelisa.extensions.ModelExtension
 import com.anfelisa.extensions.ViewExtension
 import javax.inject.Inject
+import com.anfelisa.extensions.ProjectExtension
 
 class JavaTemplate {
 	
+	@Inject
+	extension ProjectExtension
+
 	@Inject
 	extension ActionExtension
 
@@ -519,6 +523,7 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
+		import javax.ws.rs.WebApplicationException;
 		
 		«data.dataImport»
 		
@@ -527,6 +532,15 @@ class JavaTemplate {
 			public «abstractEventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
 				super("«project.name».events.«eventName»", eventParam, databaseHandle);
 			}
+			
+			public void initEventData(String json) {
+				try {
+					this.eventData = mapper.readValue(json, «data.dataParamType».class);
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				}
+			}
+			
 		
 		}
 		
@@ -636,6 +650,10 @@ class JavaTemplate {
 				super(eventParam, databaseHandle);
 			}
 		
+			public «eventName»(DatabaseHandle databaseHandle) {
+				this(null, databaseHandle);
+			}
+		
 			@Override
 			protected void prepareDataForView() {
 				this.eventData = this.eventParam;
@@ -662,7 +680,7 @@ class JavaTemplate {
 		public class «viewName» {
 		
 			«FOR renderFunction : renderFunctions»
-			    public BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
+			    public static BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
 			    };
 			«ENDFOR»
 		
@@ -680,9 +698,9 @@ class JavaTemplate {
 		
 		import org.skife.jdbi.v2.DBI;
 		
-		«IF views.size > 0»
-			import «name».views.*;
-		«ENDIF»
+		«FOR view : it.referencedViews()»
+			import «view.viewNameWithPackage»;
+	    	«ENDFOR»
 		«IF actions.size > 0»
 			import «name».actions.*;
 		«ENDIF»
@@ -697,20 +715,13 @@ class JavaTemplate {
 			}
 		
 			public static void registerConsumers() {
-				«FOR view : views»
-					«view.viewName» «view.viewNameAsVariable» = null;
-					«IF view.isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.REPLAY) {«ENDIF»
-						«view.viewNameAsVariable» = new «view.viewName»();
-					«IF view.isExternal»}«ENDIF»
-				«ENDFOR»
-				
 				«FOR event : events»
 					«FOR renderFunction : event.listeners»
-						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.REPLAY) {«ENDIF»
-							AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewNameAsVariable»);
+						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.MIGRATE) {«ENDIF»
+							AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
 						«IF (renderFunction.eContainer as View).isExternal»}«ENDIF»
-			    	«ENDFOR»
-		    	«ENDFOR»
+					«ENDFOR»
+				«ENDFOR»
 		    }
 		}
 		
@@ -932,6 +943,22 @@ class JavaTemplate {
 						+ "where uuid = :uuid").bind("uuid", uuid).map(new TimelineItemMapper()).first();
 			}
 		
+			public ITimelineItem selectNextEvent(Handle handle, String uuid) {
+				if (uuid != null) {
+					return handle
+							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+									+ "where id > " + "(select id from " + timelineTable()
+									+ " where uuid = :uuid and type = 'event' limit 1) " + "and type = 'event' "
+									+ "order by time asc " + "limit 1")
+							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+				} else {
+					return handle
+							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+									+ "where type = 'event' " + "order by time asc " + "limit 1")
+							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+				}
+			}
+		
 		}
 	'''
 	
@@ -939,7 +966,7 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		public enum AceExecutionMode {
-			LIVE, REPLAY
+			LIVE, REPLAY, MIGRATE
 		}
 		
 	'''
@@ -995,6 +1022,9 @@ class JavaTemplate {
 			protected abstract void loadDataForGetRequest();
 		
 			public Response apply() {
+				if (AceController.getAceExecutionMode() == AceExecutionMode.MIGRATE) {
+					this.throwServiceUnavailable("service is in maintenance mode");
+				}
 				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				Handle timelineHandle = null;
 				databaseHandle.beginTransaction();
@@ -1085,6 +1115,10 @@ class JavaTemplate {
 				throw new WebApplicationException(error, Response.Status.FORBIDDEN);
 			}
 			
+			protected void throwServiceUnavailable(String error) {
+				throw new WebApplicationException(error, Response.Status.SERVICE_UNAVAILABLE);
+			}
+
 			protected void throwInternalServerError(Exception x) {
 				String message = x.getMessage();
 				StackTraceElement[] stackTrace = x.getStackTrace();
@@ -1344,19 +1378,21 @@ class JavaTemplate {
 			private String eventName;
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
+			protected JodaObjectMapper mapper;
 		
 			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle) {
 				super();
 				this.eventParam = eventParam;
 				this.eventName = eventName;
 				this.databaseHandle = databaseHandle;
+				mapper = new JodaObjectMapper();
 			}
-		
+
 			protected void prepareDataForView() {
 			}
 		
 			@SuppressWarnings("unchecked")
-			protected void notifyListeners() {
+			public void notifyListeners() {
 				List<BiConsumer<? extends IDataContainer, Handle>> consumerList = AceController.getConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (BiConsumer<? extends IDataContainer, Handle> consumer : consumerList) {
@@ -1463,7 +1499,7 @@ class JavaTemplate {
 			DateTime getSystemTime();
 			
 			void setSystemTime(DateTime systemTime);
-			
+		
 		}
 		
 	'''
@@ -1485,6 +1521,10 @@ class JavaTemplate {
 			DatabaseHandle getDatabaseHandle();
 			
 			void publish();
+			
+			void initEventData(String json);
+			
+			void notifyListeners();
 		
 		}
 		
