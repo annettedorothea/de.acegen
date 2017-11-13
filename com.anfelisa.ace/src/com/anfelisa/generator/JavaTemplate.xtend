@@ -791,6 +791,15 @@ class JavaTemplate {
 				}
 			}
 		
+			public static void addPreparingEventToTimeline(IEvent event, String uuid) {
+				try {
+					addItemToTimeline("preparing event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
+							uuid, event.getDatabaseHandle());
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
 			public static void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
 				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), "exception", null, x.getClass().getName(),
 						x.getMessage(), uuid);
@@ -959,6 +968,13 @@ class JavaTemplate {
 				}
 			}
 		
+			public ITimelineItem selectEvent(Handle handle, String uuid) {
+				return handle
+						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+								+ "where uuid = :uuid and type = 'event'")
+						.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+			}
+
 		}
 	'''
 	
@@ -1170,7 +1186,9 @@ class JavaTemplate {
 		
 			public void execute() {
 				this.executeCommand();
-				AceController.addCommandToTimeline(this);
+				if (AceController.getAceExecutionMode() != AceExecutionMode.MIGRATE) {
+					AceController.addCommandToTimeline(this);
+				}
 				this.publishEvents();
 			}
 		
@@ -1420,7 +1438,9 @@ class JavaTemplate {
 		
 			public void publish() {
 				this.prepareDataForView();
-				AceController.addEventToTimeline(this);
+				if (AceController.getAceExecutionMode() != AceExecutionMode.MIGRATE) {
+					AceController.addEventToTimeline(this);
+				}
 				this.notifyListeners();
 			}
 		
