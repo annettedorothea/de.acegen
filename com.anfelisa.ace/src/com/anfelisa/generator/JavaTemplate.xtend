@@ -323,20 +323,16 @@ class JavaTemplate {
 		@JsonIgnoreType
 		public class «modelDao» {
 			
-			public void create(Handle handle) {
-				handle.execute("CREATE TABLE IF NOT EXISTS «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.tableDefinition(table)»«ENDFOR»«FOR attribute : attributes»«attribute.primaryKey(table)»«ENDFOR»«FOR attribute : attributes»«attribute.foreignKey(table, project.schema)»«ENDFOR»«FOR attribute : attributes»«attribute.uniqueConstraint(table)»«ENDFOR»)");
-			}
-			
 			public «IF findPrimaryKeyAttribute !== null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
 				«IF findPrimaryKeyAttribute !== null»
-					Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
+					Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
 					«FOR attribute : allNonSerialAttributes»
 						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 					«ENDFOR»
 					Map<String, Object> first = statement.first();
 					return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
 				«ELSE»
-					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
+					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
 					«FOR attribute : allNonSerialAttributes»
 						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 					«ENDFOR»
@@ -361,7 +357,7 @@ class JavaTemplate {
 				}
 
 				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					return handle.createQuery("SELECT * FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+					return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
 						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
 						.first();
@@ -369,7 +365,7 @@ class JavaTemplate {
 			«ENDFOR»
 			
 			public List<«modelName»> selectAll(Handle handle) {
-				return handle.createQuery("SELECT * FROM «project.schema».«table»")
+				return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «project.schema».«table»")
 					.map(new «modelMapper»())
 					.list();
 			}
@@ -377,6 +373,10 @@ class JavaTemplate {
 			public void truncate(Handle handle) {
 				Update statement = handle.createStatement("TRUNCATE «project.schema».«table»");
 				statement.execute();
+				«IF findSerialAttribute !== null»
+					statement = handle.createStatement("ALTER SEQUENCE «project.schema».«table»_«findSerialAttribute.name»_seq RESTART");
+					statement.execute();
+				«ENDIF»
 			}
 
 		}
@@ -385,13 +385,13 @@ class JavaTemplate {
 	'''
 	
 	def generateMigration(Model it, Project project) '''
-		        <createTable tableName="«table»">
-		        	«FOR attribute : attributes»
-		        		<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-		        			<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
-		        		</column>
-		        	«ENDFOR»
-		        </createTable>
+		<createTable tableName="«table»">
+			«FOR attribute : attributes»
+				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
+				</column>
+			«ENDFOR»
+		</createTable>
 	'''
 	
 	def generateMapper(Model it, Project project) '''
@@ -863,32 +863,19 @@ class JavaTemplate {
 				}
 			}
 		
-			public void createTimelineTable(Handle handle) {
-				handle.execute("CREATE TABLE if not exists " + timelineTable() + " ( id serial NOT NULL, "
-						+ "type character varying NOT NULL, method character varying, name character varying, "
-						+ "time timestamp with time zone NOT NULL, data character varying NOT NULL, "
-						+ "uuid character varying NOT NULL, CONSTRAINT \"TimelinePkey\" PRIMARY KEY (id))");
-			}
-		
-			public void createErrorTimelineTable(Handle handle) {
-				handle.execute("CREATE TABLE if not exists " + errorTimelineTable() + " ( id serial NOT NULL, "
-						+ "type character varying NOT NULL, method character varying, name character varying, "
-						+ "time timestamp with time zone NOT NULL, data character varying NOT NULL, "
-						+ "uuid character varying NOT NULL, CONSTRAINT \"ErrorTimelinePkey\" PRIMARY KEY (id))");
-			}
-		
 			public void truncateTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE " + timelineTable());
+				handle.execute("ALTER SEQUENCE " + timelineTable() + "_id_seq RESTART");
 			}
 		
 			public void truncateErrorTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE " + errorTimelineTable());
+				handle.execute("ALTER SEQUENCE " + errorTimelineTable() + "_id_seq RESTART");
 			}
 		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
 				Update statement = handle.createStatement("INSERT INTO " + timelineTable()
-						+ " (id, type, method, name, time, data, uuid) " + "VALUES ((select COALESCE(MAX(id),0) + 1 from " + timelineTable()
-						+ "), :type, :method, :name, NOW(), :data, :uuid);");
+						+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
 				statement.bind("type", type);
 				if (method != null) {
 					statement.bind("method", method);
@@ -905,8 +892,7 @@ class JavaTemplate {
 					String uuid) {
 				if (handle != null) {
 					Update statement = handle.createStatement("INSERT INTO " + errorTimelineTable()
-							+ " (id, type, method, name, time, data, uuid) " + "VALUES ((select COALESCE(MAX(id),0) + 1 from " + errorTimelineTable()
-							+ "), :type, :method, :name, NOW(), :data, :uuid);");
+							+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
 					statement.bind("type", type);
 					if (method != null) {
 						statement.bind("method", method);
@@ -1908,6 +1894,73 @@ class JavaTemplate {
 		}
 		
 	'''
+	
+	def generateAceMigration() '''
+		<createTable tableName="timeline">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="type" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="method" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="time" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="character varying">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="errortimeline">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="type" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="method" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="time" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="character varying">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="scenario">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="description" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="createddatetime" type="timestamp with time zone">
+				<constraints />
+			</column>
+		</createTable>
+		
+	'''
+	
+	
+	
 	
 	
 }

@@ -35,7 +35,7 @@ class ModelExtension {
 	'''«IF attribute.type.equals("Encrypted")»EncryptionService.encrypt(«ENDIF» «modelParam».«attribute.getterCall» «IF attribute.type.equals("Encrypted")»)«ENDIF»'''
 	
 	def String modelAttributeSqlValue(Model it, Project project, Attribute attribute) 
-	'''«IF attribute.type.equals("Serial")» (SELECT COALESCE(MAX(«attribute.name.toLowerCase»),0) + 1 FROM «project.schema».«table»)«ELSE»:«attribute.name.toLowerCase»«ENDIF»'''
+	''':«attribute.name.toLowerCase»'''
 	
 	def Attribute findPrimaryKeyAttribute(Model it) {
 		var primaryKeys = attributes.filter[a | a.primaryKey];

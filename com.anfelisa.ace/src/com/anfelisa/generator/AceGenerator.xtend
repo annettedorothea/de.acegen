@@ -139,9 +139,6 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/actions/' + action.actionName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateInitialActionFile(action, project));
-					/*fsa.generateFile(project.packageFolder + '/resources/' + action.resourceName + '.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateInitialResourceFile(action, project));*/
 				}
 				for (command : project.commands) {
 					fsa.generateFile(project.packageFolder + '/commands/' + command.abstractCommandName + '.java',
@@ -213,6 +210,11 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateKeystoreUtils());
 				fsa.generateFile("com/anfelisa/ace/encryption" + '/NoEncryption.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateNoEncryption());
+					
+				fsa.generateFile('ace_creation.xml',
+					ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+					javaTemplate.generateAceMigration());
+					
 			}
 		}
 	}

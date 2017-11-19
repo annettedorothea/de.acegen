@@ -584,7 +584,38 @@ class ES6Template {
 		        ACEController.initTimeline(JSON.parse(json));
 			}
 		
+			static initFinishReplayCallback(callback) {
+			    ReplayUtils.finishReplayCallback = callback;
+			}
+
 			static finishReplay() {
+			    const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
+			    const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+			    if (ReplayUtils.finishReplayCallback) {
+			        ReplayUtils.finishReplayCallback(result);
+			    }
+			}
+
+			static saveScenario(description) {
+			    const data = {
+			        description: description,
+			        data: JSON.stringify(ACEController.expectedTimeline)
+			    };
+			    return AppUtils.httpPost('api/scenario/create', null, data);
+			}
+			
+			static deleteScenario(id) {
+			    let queryParams = [
+			        {
+			            key: "id",
+			            value: id
+			        }
+			    ];
+			    return AppUtils.httpDelete('api/scenario/delete', queryParams);
+			}
+
+			static loadScenarios() {
+			    return AppUtils.httpGet('api/scenario/all');
 			}
 
 		}

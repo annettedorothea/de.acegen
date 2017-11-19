@@ -20,7 +20,7 @@ class AttributeExtension {
 
 	def String sqlType(Attribute it) {
 		switch type {
-      		case 'Serial' : "integer"
+      		case 'Serial' : "serial"
       		case 'Integer' : "integer"
       		case 'Long' : "bigint"
       		case 'String' : "character varying"
@@ -46,10 +46,6 @@ class AttributeExtension {
 	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name.toLowerCase»)«ENDIF»'''
 	
 	def String foreignKey(Attribute it, String tableName, String schema) '''«IF foreignKey !== null», CONSTRAINT «tableName»_«name.toLowerCase»_fkey FOREIGN KEY («name.toLowerCase») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name.toLowerCase» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
-	
-	def boolean primaryKey(Attribute it) {
-		return type.equals('Serial');
-	}
 	
 	def String uniqueConstraint(Attribute it, String tableName) '''«IF unique», CONSTRAINT «tableName»_«name»_unique UNIQUE («name»)«ENDIF»'''
 
