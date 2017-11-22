@@ -72,7 +72,7 @@ class ES6Template {
 
 	def generateInitialActionFile(Action it, Project project) '''
 		«IF project.generateModules»
-			import «abstractActionName» from "../../../gen/app/«project.name»/actions/«abstractActionName»";
+			import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «actionName» extends «abstractActionName» {
@@ -136,7 +136,7 @@ class ES6Template {
 	
 	def generateInitialCommandFile(Command it, Project project) '''
 		«IF project.generateModules»
-			import «abstractCommandName» from "../../../gen/app/«project.name»/commands/«abstractCommandName»";
+			import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «commandName» extends «abstractCommandName» {
@@ -165,7 +165,7 @@ class ES6Template {
 	'''
 	def generateInitialEventFile(Event it, Project project) '''
 		«IF project.generateModules»
-			import «abstractEventName» from "../../../gen/app/«project.name»/events/«abstractEventName»";
+			import «abstractEventName» from "../../../gen/«project.name»/events/«abstractEventName»";
 		«ENDIF»
 		
 		«IF project.generateModules»export default «ENDIF»class «eventName» extends «abstractEventName» {
@@ -698,26 +698,6 @@ class ES6Template {
 		        }
 		    }
 		
-		    static downloadTimeline() {
-		        let timelineJson = JSON.stringify(ACEController.timeline, null, 2);
-		
-		        let a = window.document.createElement('a');
-		        a.href = window.URL.createObjectURL(new Blob([timelineJson], {type: 'text/json'}));
-		        a.download = 'scenario.json';
-		
-		        document.body.appendChild(a);
-		        a.click();
-		
-		        document.body.removeChild(a);
-		    }
-		
-		    static initTimeline(timelineJson) {
-		        ACEController.expectedTimeline = timelineJson;
-		        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
-				ACEController.actualTimeline = [];
-				ReplayUtils.actualTimelineChanged([]);
-		    }
-		
 		    static addActionToQueue(action) {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            ACEController.actionQueue.push(action);
@@ -739,7 +719,7 @@ class ES6Template {
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
 		            if (ACEController.execution !== ACEController.LIVE) {
-		                ReplayUtils.finishReplay();
+		                ReplayUtils.finishReplay(ACEController.execution);
 						ACEController.timeline = [];
 						ACEController.actionIsProcessing = false;
 						ACEController.actionQueue = [];
@@ -753,16 +733,7 @@ class ES6Template {
 		        ACEController.addActionToQueue(action);
 		    }
 		
-		    static replay(pauseInMillis) {
-		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
-		    }
-		
-		    static e2e(pauseInMillis) {
-		        ACEController.startReplay(ACEController.E2E, pauseInMillis)
-		    }
-		
 		    static startReplay(level, pauseInMillis) {
-		        ACEController.passed = undefined;
 		        ACEController.actualTimeline = [];
 		        ACEController.execution = level;
 		        ACEController.pauseInMillis = pauseInMillis;
