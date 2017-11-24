@@ -343,8 +343,8 @@ class JavaTemplate {
 			
 			«FOR attribute : allUniqueAttributes»
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
-					«FOR attr : attributes»
+					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : allNonSerialAttributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					«FOR attr : allNonSerialAttributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
 					statement.execute();
@@ -1953,6 +1953,29 @@ class JavaTemplate {
 				<constraints nullable="false" />
 			</column>
 			<column name="createddatetime" type="timestamp with time zone">
+				<constraints />
+			</column>
+		</createTable>
+		<createTable tableName="bug">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="description" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="reporter" type="character varying">
+				<constraints nullable="false" />
+			</column>
+			<column name="resolved" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="createddatetime" type="timestamp with time zone">
+				<constraints />
+			</column>
+			<column name="updateddatetime" type="timestamp with time zone">
 				<constraints />
 			</column>
 		</createTable>
