@@ -75,6 +75,8 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateEventListenerRegistration(project));
 				fsa.generateFile(project.name + '/ActionFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateActionFactoryRegistration(project));
+				fsa.generateFile(project.name + '/ActionFunctionExports.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateActionFunctionExports(project));
 				for (event : project.events) {
 					fsa.generateFile(project.name + '/events/' + event.abstractEventName + '.js',
 						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(event, project));

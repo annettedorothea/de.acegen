@@ -347,6 +347,7 @@ class JavaTemplate {
 					«FOR attr : allNonSerialAttributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
+					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)» );
 					statement.execute();
 				}
 

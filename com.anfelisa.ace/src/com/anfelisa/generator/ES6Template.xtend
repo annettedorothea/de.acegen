@@ -221,6 +221,24 @@ class ES6Template {
 		
 		/*       S.D.G.       */
 	'''
+	def generateActionFunctionExports(Project it) '''
+		«IF generateModules»
+			«FOR action : actions»
+				import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+			«ENDFOR»
+		«ENDIF»
+		
+		«IF generateModules»
+			«FOR action : actions»
+				export function «action.name.toFirstLower»(actionParam) {
+				    new «action.actionName»(actionParam).apply();
+				}
+				
+			«ENDFOR»
+		«ENDIF»
+		
+		/*       S.D.G.       */
+	'''
 	def generateView(View it, Project project) '''
 
 		«IF project.generateModules»export default «ENDIF»class «viewName» {
@@ -574,7 +592,7 @@ class ES6Template {
 		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
 		    }
 		
-		    static e2e() {
+		    static e2e(pauseInMillis) {
 		        ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		    }
 
