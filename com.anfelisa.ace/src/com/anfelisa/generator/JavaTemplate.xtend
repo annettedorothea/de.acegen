@@ -729,6 +729,400 @@ class JavaTemplate {
 		/*                    S.D.G.                    */
 	'''
 	
+	def generateApp() '''
+		package com.anfelisa.ace;
+		
+		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+		import org.skife.jdbi.v2.DBI;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.anfelisa.ace.bug.CreateBugResource;
+		import com.anfelisa.ace.bug.DeleteBugResource;
+		import com.anfelisa.ace.bug.GetAllBugsResource;
+		import com.anfelisa.ace.bug.ResolveBugResource;
+		import com.anfelisa.ace.scenario.CreateScenarioResource;
+		import com.anfelisa.ace.scenario.DeleteScenarioResource;
+		import com.anfelisa.ace.scenario.GetAllScenariosResource;
+		
+		import com.anfelisa.ace.AceController;
+		import com.anfelisa.ace.AceDao;
+		import com.anfelisa.ace.AceExecutionMode;
+		
+		import io.dropwizard.Application;
+		import io.dropwizard.db.DataSourceFactory;
+		import io.dropwizard.jdbi.DBIFactory;
+		import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
+		import io.dropwizard.migrations.MigrationsBundle;
+		import io.dropwizard.setup.Bootstrap;
+		import io.dropwizard.setup.Environment;
+		
+		public class App extends Application<AppConfiguration> {
+		
+			static final Logger LOG = LoggerFactory.getLogger(App.class);
+		
+			public static void main(String[] args) throws Exception {
+				new App().run(args);
+			}
+		
+			@Override
+			public String getName() {
+				return "app name";
+			}
+		
+			public String getVersion() {
+				return "app version";
+			}
+		
+			@Override
+			public void initialize(Bootstrap<AppConfiguration> bootstrap) {
+				bootstrap.addBundle(new MigrationsBundle<AppConfiguration>() {
+					@Override
+					public DataSourceFactory getDataSourceFactory(AppConfiguration configuration) {
+						return configuration.getDataSourceFactory();
+					}
+				});
+			}
+		
+			@Override
+			public void run(AppConfiguration configuration, Environment environment) throws ClassNotFoundException {
+				LOG.info("running version {}", getVersion());
+		
+				AceDao.setSchemaName(null);
+		
+				final DBIFactory factory = new DBIFactory();
+		
+				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
+				DBI jdbiTimeline = null;
+		
+				if (configuration.getTimelineDataSourceFactory().getUrl() != null) {
+					AceController.setAceExecutionMode(AceExecutionMode.REPLAY);
+					jdbiTimeline = factory.build(environment, configuration.getTimelineDataSourceFactory(),
+							"replay-data-source-name");
+					environment.jersey().register(new ClearDatabaseResource(jdbi));
+					environment.jersey().register(new PrepareDatabaseResource(jdbi, jdbiTimeline));
+				} else {
+					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
+					
+					environment.jersey().register(new MigrateDatabaseResource(jdbi));
+					
+					environment.jersey().register(new CreateScenarioResource(jdbi));
+					environment.jersey().register(new DeleteScenarioResource(jdbi));
+					environment.jersey().register(new GetAllScenariosResource(jdbi));
+					
+					environment.jersey().register(new CreateBugResource(jdbi));
+					environment.jersey().register(new DeleteBugResource(jdbi));
+					environment.jersey().register(new GetAllBugsResource(jdbi));
+					environment.jersey().register(new ResolveBugResource(jdbi));
+				}
+		
+				DBIExceptionsBundle dbiExceptionsBundle = new DBIExceptionsBundle();
+				environment.jersey().register(dbiExceptionsBundle);
+		
+				environment.jersey().register(RolesAllowedDynamicFeature.class);
+		
+				// register resources
+				// register consumers
+		
+			}
+		
+		}
+	'''
+	
+	def generateAppConfiguration() '''
+		package com.anfelisa.ace;
+		
+		import javax.validation.Valid;
+		import javax.validation.constraints.NotNull;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		import io.dropwizard.Configuration;
+		import io.dropwizard.db.DataSourceFactory;
+		
+		public class AppConfiguration extends Configuration {
+		
+			@Valid
+			@NotNull
+			private DataSourceFactory database = new DataSourceFactory();
+		
+			private DataSourceFactory timelineDatabase = new DataSourceFactory();
+			
+			@JsonProperty("database")
+			public DataSourceFactory getDataSourceFactory() {
+				return database;
+			}
+		
+			@JsonProperty("database")
+			public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
+				this.database = dataSourceFactory;
+			}
+		
+			@JsonProperty("timelineDatabase")
+			public DataSourceFactory getTimelineDataSourceFactory() {
+				return timelineDatabase;
+			}
+			
+			@JsonProperty("timelineDatabase")
+			public void setTimelineDataSourceFactory(DataSourceFactory dataSourceFactory) {
+				this.timelineDatabase = dataSourceFactory;
+			}
+			
+		}
+	'''
+	
+	def generateClearDatabaseResource() '''
+		package com.anfelisa.ace;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		
+		import com.anfelisa.ace.AceDao;
+
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/database")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class ClearDatabaseResource {
+		
+			private DBI jdbi;
+		
+			private AceDao aceDao = new AceDao();
+		
+			public ClearDatabaseResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@DELETE
+			@Timed
+			@Path("/reset")
+			public Response put() {
+				Handle handle = jdbi.open();
+				try {
+					aceDao.truncateErrorTimelineTable(handle);
+					aceDao.truncateTimelineTable(handle);
+
+					//truncate all tables
+
+					return Response.ok().build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+	'''
+	
+	def generateMigrateDatabaseResource() '''
+		package com.anfelisa.ace;
+		
+		import java.lang.reflect.Constructor;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.anfelisa.ace.AceController;
+		import com.anfelisa.ace.AceDao;
+		import com.anfelisa.ace.AceExecutionMode;
+		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.IAction;
+		import com.anfelisa.ace.ICommand;
+		import com.anfelisa.ace.IEvent;
+		import com.anfelisa.ace.ITimelineItem;
+
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/database")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class MigrateDatabaseResource {
+		
+			private DBI jdbi;
+		
+			static final Logger LOG = LoggerFactory.getLogger(MigrateDatabaseResource.class);
+			
+			private AceDao aceDao = new AceDao();
+		
+			public MigrateDatabaseResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@PUT
+			@Timed
+			@Path("/migrate")
+			// We should protect this resource!
+			public Response put(@QueryParam("uuid") String uuid) {
+				AceController.setAceExecutionMode(AceExecutionMode.MIGRATE);
+				
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				LOG.info("START MIGRATION");
+				try {
+					databaseHandle.beginTransaction();
+		
+					// truncate all tables
+		
+					ITimelineItem nextItem = aceDao.selectNextEvent(databaseHandle.getHandle(), null);
+					while (nextItem != null && !nextItem.getUuid().equals(uuid)) {
+						LOG.info("PUBLISH EVENT " + nextItem);
+						Class<?> cl = Class.forName(nextItem.getName());
+						Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
+						IEvent event = (IEvent) con.newInstance(databaseHandle);
+						event.initEventData(nextItem.getData());
+						event.notifyListeners();
+						nextItem = aceDao.selectNextEvent(databaseHandle.getHandle(), nextItem.getUuid());
+					}
+					if (uuid != null) {
+						ITimelineItem lastItem = nextItem;
+		
+						nextItem = aceDao.selectNextAction(databaseHandle.getHandle(),
+								lastItem != null ? lastItem.getUuid() : null);
+						while (nextItem != null && !nextItem.getUuid().equals(uuid)) {
+							if (!nextItem.getMethod().equalsIgnoreCase("GET")) {
+								LOG.info("APPLY ACTION " + nextItem);
+								Class<?> cl = Class.forName(nextItem.getName());
+								Constructor<?> con = cl.getConstructor(DBI.class, DBI.class);
+								IAction action = (IAction) con.newInstance(jdbi, null);
+								action.initActionData(nextItem.getData());
+								action.setDatabaseHandle(databaseHandle);
+		
+								ICommand command = action.getCommand();
+								if (command != null) {
+									command.execute();
+								}
+							}
+							nextItem = aceDao.selectNextAction(databaseHandle.getHandle(), nextItem.getUuid());
+						}
+					}
+					databaseHandle.commitTransaction();
+					LOG.info("MIGRATION FINISHED");
+					return Response.ok().build();
+				} catch (Exception e) {
+					databaseHandle.rollbackTransaction();
+					LOG.info("MIGRATION ABORTED " +  e.getMessage());
+					throw new WebApplicationException(e);
+				} finally {
+					databaseHandle.close();
+					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
+				}
+			}
+		
+		}
+		
+	'''
+	
+	def generatePrepareDatabaseResource() '''
+		package com.anfelisa.ace;
+		
+		import java.lang.reflect.Constructor;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.anfelisa.ace.AceController;
+		import com.anfelisa.ace.AceDao;
+		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.IEvent;
+		import com.anfelisa.ace.ITimelineItem;
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/database")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class PrepareDatabaseResource {
+		
+			private DBI jdbi;
+			private DBI jdbiTimeline;
+		
+			static final Logger LOG = LoggerFactory.getLogger(PrepareDatabaseResource.class);
+			
+			private AceDao aceDao = new AceDao();
+		
+			public PrepareDatabaseResource(DBI jdbi, DBI jdbiTimeline) {
+				super();
+				this.jdbi = jdbi;
+				this.jdbiTimeline = jdbiTimeline;
+			}
+		
+			@PUT
+			@Timed
+			@Path("/prepare")
+			public Response put(@NotNull @QueryParam("uuid") String uuid) {
+				Handle timelineHandle = jdbiTimeline.open();
+				ITimelineItem actionToBePrepared = aceDao.selectTimelineItem(timelineHandle, uuid);
+				
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				LOG.info("PREPARE ACTION " + actionToBePrepared);
+				try {
+					databaseHandle.beginTransaction();
+		
+					ITimelineItem lastAction = aceDao.selectLastAction(databaseHandle.getHandle());
+		
+					ITimelineItem nextAction = aceDao.selectNextAction(timelineHandle,
+							lastAction != null ? lastAction.getUuid() : null);
+					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
+						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
+							ITimelineItem nextEvent = aceDao.selectEvent(timelineHandle, nextAction.getUuid());
+							LOG.info("PUBLISH EVENT " + nextEvent);
+							Class<?> cl = Class.forName(nextEvent.getName());
+							Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
+							IEvent event = (IEvent) con.newInstance(databaseHandle);
+							event.initEventData(nextEvent.getData());
+							event.notifyListeners();
+							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
+						}
+						nextAction = aceDao.selectNextAction(timelineHandle, nextAction.getUuid());
+					}
+		
+					databaseHandle.commitTransaction();
+					return Response.ok().build();
+				} catch (Exception e) {
+					databaseHandle.rollbackTransaction();
+					throw new WebApplicationException(e);
+				} finally {
+					timelineHandle.close();
+					databaseHandle.close();
+				}
+			}
+		
+		}
+		
+	'''
+	
 	def generateAceController() '''
 		package com.anfelisa.ace;
 		
@@ -1983,8 +2377,864 @@ class JavaTemplate {
 		
 	'''
 	
+	def generateBugDao() '''
+		package com.anfelisa.ace.bug;
+		
+		import java.util.List;
+		import java.util.Map;
+		
+		import org.joda.time.DateTime;
+		import org.skife.jdbi.v2.Handle;
+		import org.skife.jdbi.v2.Query;
+		import org.skife.jdbi.v2.Update;
+		
+		import com.fasterxml.jackson.annotation.JsonIgnoreType;
+		
+		@SuppressWarnings("all")
+		@JsonIgnoreType
+		public class BugDao {
+			
+			public Integer insert(Handle handle, IBugModel bugModel) {
+				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.bug (description, data, reporter, resolved, createddatetime, updateddatetime) VALUES (:description, :data, :reporter, :resolved, :createddatetime, :updateddatetime) RETURNING id");
+				statement.bind("description",  bugModel.getDescription() );
+				statement.bind("data",  bugModel.getData() );
+				statement.bind("reporter",  bugModel.getReporter() );
+				statement.bind("resolved",  bugModel.getResolved() );
+				statement.bind("createddatetime",  bugModel.getCreatedDateTime() );
+				statement.bind("updateddatetime",  bugModel.getUpdatedDateTime() );
+				Map<String, Object> first = statement.first();
+				return (Integer) first.get("id");
+			}
+			
+			
+			public void updateById(Handle handle, IBugModel bugModel) {
+				Update statement = handle.createStatement("UPDATE public.bug SET description = :description, data = :data, reporter = :reporter, resolved = :resolved, createddatetime = :createddatetime, updateddatetime = :updateddatetime WHERE id = :id");
+				statement.bind("description",  bugModel.getDescription() );
+				statement.bind("data",  bugModel.getData() );
+				statement.bind("reporter",  bugModel.getReporter() );
+				statement.bind("resolved",  bugModel.getResolved() );
+				statement.bind("createddatetime",  bugModel.getCreatedDateTime() );
+				statement.bind("updateddatetime",  bugModel.getUpdatedDateTime() );
+				statement.execute();
+			}
+		
+			public void updateResolvedById(Handle handle, Integer id, DateTime updateddatetime) {
+				Update statement = handle.createStatement("UPDATE public.bug SET resolved = true, updateddatetime = :updateddatetime WHERE id = :id");
+				statement.bind("id",  id );
+				statement.bind("updateddatetime",  updateddatetime );
+				statement.execute();
+			}
+			
+			public void deleteById(Handle handle, Integer id) {
+				Update statement = handle.createStatement("DELETE FROM public.bug WHERE id = :id");
+				statement.bind("id", id);
+				statement.execute();
+			}
+		
+			public IBugModel selectById(Handle handle, Integer id) {
+				return handle.createQuery("SELECT id, description, data, reporter, resolved, createddatetime, updateddatetime FROM public.bug WHERE id = :id")
+					.bind("id", id)
+					.map(new BugMapper())
+					.first();
+			}
+			
+			public List<IBugModel> selectAll(Handle handle) {
+				return handle.createQuery("SELECT id, description, data, reporter, resolved, createddatetime, updateddatetime FROM public.bug order by createddatetime")
+					.map(new BugMapper())
+					.list();
+			}
+		
+			public void truncate(Handle handle) {
+				Update statement = handle.createStatement("TRUNCATE public.bug");
+				statement.execute();
+				statement = handle.createStatement("ALTER SEQUENCE public.bug_id_seq RESTART");
+				statement.execute();
+			}
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
 	
+	def generateBugMapper() '''
+		package com.anfelisa.ace.bug;
+		
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		
+		import org.skife.jdbi.v2.StatementContext;
+		import org.skife.jdbi.v2.tweak.ResultSetMapper;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
+		public class BugMapper implements ResultSetMapper<IBugModel> {
+			
+			public IBugModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+				return new BugModel(
+					r.getInt("id"),
+					r.getString("description"),
+					r.getString("data"),
+					r.getString("reporter"),
+					r.getBoolean("resolved"),
+					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null,
+					r.getTimestamp("updatedDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("updatedDateTime")) : null
+				);
+			}
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
 	
+	def generateBugModel() '''
+		package com.anfelisa.ace.bug;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		
+		@SuppressWarnings("all")
+		public class BugModel implements IBugModel {
+		
+			@NotNull
+			private Integer id;
+			
+			@NotNull
+			private String description;
+			
+			@NotNull
+			private String data;
+			
+			@NotNull
+			private String reporter;
+			
+			@NotNull
+			private Boolean resolved;
+			
+			private org.joda.time.DateTime createdDateTime;
+			
+			private org.joda.time.DateTime updatedDateTime;
+			
+		
+		
+			public BugModel(
+				@JsonProperty("id") Integer id,
+				@JsonProperty("description") String description,
+				@JsonProperty("data") String data,
+				@JsonProperty("reporter") String reporter,
+				@JsonProperty("resolved") Boolean resolved,
+				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime,
+				@JsonProperty("updatedDateTime") org.joda.time.DateTime updatedDateTime
+			) {
+				this.id = id;
+				this.description = description;
+				this.data = data;
+				this.reporter = reporter;
+				this.resolved = resolved;
+				this.createdDateTime = createdDateTime;
+				this.updatedDateTime = updatedDateTime;
+			}
+		
+			@JsonProperty
+			public Integer getId() {
+				return this.id;
+			}
+			public void setId(Integer id) {
+				this.id = id;
+			}
+			
+			@JsonProperty
+			public String getDescription() {
+				return this.description;
+			}
+			public void setDescription(String description) {
+				this.description = description;
+			}
+			
+			@JsonProperty
+			public String getData() {
+				return this.data;
+			}
+			public void setData(String data) {
+				this.data = data;
+			}
+			
+			@JsonProperty
+			public String getReporter() {
+				return this.reporter;
+			}
+			public void setReporter(String reporter) {
+				this.reporter = reporter;
+			}
+			
+			@JsonProperty
+			public Boolean getResolved() {
+				return this.resolved;
+			}
+			public void setResolved(Boolean resolved) {
+				this.resolved = resolved;
+			}
+			
+			@JsonProperty
+			public org.joda.time.DateTime getCreatedDateTime() {
+				return this.createdDateTime;
+			}
+			public void setCreatedDateTime(org.joda.time.DateTime createdDateTime) {
+				this.createdDateTime = createdDateTime;
+			}
+			
+			@JsonProperty
+			public org.joda.time.DateTime getUpdatedDateTime() {
+				return this.updatedDateTime;
+			}
+			public void setUpdatedDateTime(org.joda.time.DateTime updatedDateTime) {
+				this.updatedDateTime = updatedDateTime;
+			}
+			
+		
+				
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
 	
+	def generateIBugModel() '''
+		package com.anfelisa.ace.bug;
+		
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+		
+		@JsonDeserialize(as=BugModel.class)
+		public interface IBugModel {
+		
+			Integer getId();
+			String getDescription();
+			String getData();
+			String getReporter();
+			Boolean getResolved();
+			org.joda.time.DateTime getCreatedDateTime();
+			org.joda.time.DateTime getUpdatedDateTime();
+		
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateIScenarioModel() '''
+		package com.anfelisa.ace.scenario;
+		
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+		
+		@JsonDeserialize(as=ScenarioModel.class)
+		public interface IScenarioModel {
+		
+			Integer getId();
+			String getDescription();
+			String getData();
+			org.joda.time.DateTime getCreatedDateTime();
+		
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioModel() '''
+		package com.anfelisa.ace.scenario;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		
+		@SuppressWarnings("all")
+		public class ScenarioModel implements IScenarioModel {
+		
+			@NotNull
+			private Integer id;
+			
+			@NotNull
+			private String description;
+			
+			@NotNull
+			private String data;
+			
+			private org.joda.time.DateTime createdDateTime;
+			
+		
+		
+			public ScenarioModel(
+				@JsonProperty("id") Integer id,
+				@JsonProperty("description") String description,
+				@JsonProperty("data") String data,
+				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime
+			) {
+				this.id = id;
+				this.description = description;
+				this.data = data;
+				this.createdDateTime = createdDateTime;
+			}
+		
+			@JsonProperty
+			public Integer getId() {
+				return this.id;
+			}
+			public void setId(Integer id) {
+				this.id = id;
+			}
+			
+			@JsonProperty
+			public String getDescription() {
+				return this.description;
+			}
+			public void setDescription(String description) {
+				this.description = description;
+			}
+			
+			@JsonProperty
+			public String getData() {
+				return this.data;
+			}
+			public void setData(String data) {
+				this.data = data;
+			}
+			
+			@JsonProperty
+			public org.joda.time.DateTime getCreatedDateTime() {
+				return this.createdDateTime;
+			}
+			public void setCreatedDateTime(org.joda.time.DateTime createdDateTime) {
+				this.createdDateTime = createdDateTime;
+			}
+			
+		
+				
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioDao() '''
+		package com.anfelisa.ace.scenario;
+		
+		import org.skife.jdbi.v2.Handle;
+		import org.skife.jdbi.v2.Query;
+		import org.skife.jdbi.v2.Update;
+		
+		import java.util.List;
+		import java.util.Map;
+		
+		import com.fasterxml.jackson.annotation.JsonIgnoreType;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
+		@JsonIgnoreType
+		public class ScenarioDao {
+			
+			public Integer insert(Handle handle, IScenarioModel scenarioModel) {
+				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.scenario (description, data, createddatetime) VALUES ( :description, :data, :createddatetime) RETURNING id");
+				statement.bind("description",  scenarioModel.getDescription() );
+				statement.bind("data",  scenarioModel.getData() );
+				statement.bind("createddatetime",  scenarioModel.getCreatedDateTime() );
+				Map<String, Object> first = statement.first();
+				return (Integer) first.get("id");
+			}
+			
+			
+			public void updateById(Handle handle, IScenarioModel scenarioModel) {
+				Update statement = handle.createStatement("UPDATE public.scenario SET description = :description, data = :data, createddatetime = :createddatetime WHERE id = :id");
+				statement.bind("description",  scenarioModel.getDescription() );
+				statement.bind("data",  scenarioModel.getData() );
+				statement.bind("createddatetime",  scenarioModel.getCreatedDateTime() );
+				statement.execute();
+			}
+		
+			public void deleteById(Handle handle, Integer id) {
+				Update statement = handle.createStatement("DELETE FROM public.scenario WHERE id = :id");
+				statement.bind("id", id);
+				statement.execute();
+			}
+		
+			public IScenarioModel selectById(Handle handle, Integer id) {
+				return handle.createQuery("SELECT id, description, data, createddatetime FROM public.scenario WHERE id = :id")
+					.bind("id", id)
+					.map(new ScenarioMapper())
+					.first();
+			}
+			
+			public List<IScenarioModel> selectAll(Handle handle) {
+				return handle.createQuery("SELECT id, description, data, createddatetime FROM public.scenario order by createddatetime")
+					.map(new ScenarioMapper())
+					.list();
+			}
+		
+			public void truncate(Handle handle) {
+				Update statement = handle.createStatement("TRUNCATE public.scenario");
+				statement.execute();
+				statement = handle.createStatement("ALTER SEQUENCE public.scenario_id_seq RESTART");
+				statement.execute();
+			}
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioMapper() '''
+		package com.anfelisa.ace.scenario;
+		
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		
+		import org.skife.jdbi.v2.StatementContext;
+		import org.skife.jdbi.v2.tweak.ResultSetMapper;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
+		public class ScenarioMapper implements ResultSetMapper<IScenarioModel> {
+			
+			public IScenarioModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+				return new ScenarioModel(
+					r.getInt("id"),
+					r.getString("description"),
+					r.getString("data"),
+					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null
+				);
+			}
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateCreateBugResource() '''
+		package com.anfelisa.ace.bug;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.POST;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/bug")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class CreateBugResource {
+			static final Logger LOG = LoggerFactory.getLogger(CreateBugResource.class);
+		
+			private DBI jdbi;
+		
+			private BugDao bugDao = new BugDao();
+		
+			public CreateBugResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@POST
+			@Timed
+			@Path("/create")
+			// We might want to protect this resource!
+			public Response post(@NotNull BugModel data) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					data.setCreatedDateTime(new DateTime());
+					data.setResolved(false);
+					Integer id = bugDao.insert(handle, data);
+					return Response.ok(id).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateDeleteBugResource() '''
+		package com.anfelisa.ace.bug;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/bug")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class DeleteBugResource {
+			static final Logger LOG = LoggerFactory.getLogger(DeleteBugResource.class);
+		
+			private DBI jdbi;
+			
+			private BugDao bugDao = new BugDao();
+		
+			public DeleteBugResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@DELETE
+			@Timed
+			@Path("/delete")
+			// We should protect this resource!
+			public Response delete(@NotNull @QueryParam("id") int id) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					IBugModel bug = bugDao.selectById(handle, id);
+					if (bug == null) {
+						throw new WebApplicationException(Response.Status.BAD_REQUEST);
+					}
+					bugDao.deleteById(handle, id);
+					return Response.ok().build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateGetAllBugsResource() '''
+		package com.anfelisa.ace.bug;
+		
+		import java.util.List;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/bug")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class GetAllBugsResource {
+			static final Logger LOG = LoggerFactory.getLogger(GetAllBugsResource.class);
+		
+			private DBI jdbi;
+		
+			private BugDao bugDao = new BugDao();
+		
+			public GetAllBugsResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@GET
+			@Timed
+			@Path("/all")
+			// We should protect this resource!
+			public Response get() throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					List<IBugModel> bugs = bugDao.selectAll(handle);
+					return Response.ok(bugs).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateResolveBugResource() '''
+		package com.anfelisa.ace.bug;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/bug")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class ResolveBugResource {
+			static final Logger LOG = LoggerFactory.getLogger(ResolveBugResource.class);
+		
+			private DBI jdbi;
+			
+			private BugDao bugDao = new BugDao();
+		
+			public ResolveBugResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@DELETE
+			@Timed
+			@Path("/resolve")
+			// We should protect this resource!
+			public Response delete(@NotNull @QueryParam("id") int id) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					IBugModel bug = bugDao.selectById(handle, id);
+					if (bug == null) {
+						throw new WebApplicationException(Response.Status.BAD_REQUEST);
+					}
+					bugDao.updateResolvedById(handle, id, new DateTime());
+					return Response.ok().build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateCreateScenarioResource() '''
+		package com.anfelisa.ace.scenario;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.POST;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/scenario")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class CreateScenarioResource {
+			static final Logger LOG = LoggerFactory.getLogger(CreateScenarioResource.class);
+		
+			private DBI jdbi;
+		
+			private ScenarioDao scenarioDao = new ScenarioDao();
+		
+			public CreateScenarioResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@POST
+			@Timed
+			@Path("/create")
+			// We should protect this resource!
+			public Response post(@NotNull ScenarioModel data) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					data.setCreatedDateTime(new DateTime());
+					Integer id = scenarioDao.insert(handle, data);
+					return Response.ok(id).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateDeleteScenarioResource() '''
+		package com.anfelisa.ace.scenario;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/scenario")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class DeleteScenarioResource {
+			static final Logger LOG = LoggerFactory.getLogger(DeleteScenarioResource.class);
+		
+			private DBI jdbi;
+			
+			private ScenarioDao scenarioDao = new ScenarioDao();
+		
+			public DeleteScenarioResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@DELETE
+			@Timed
+			@Path("/delete")
+			// We should protect this resource!
+			public Response delete(@NotNull @QueryParam("id") int id) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					IScenarioModel scenario = scenarioDao.selectById(handle, id);
+					if (scenario == null) {
+						throw new WebApplicationException(Response.Status.BAD_REQUEST);
+					}
+					scenarioDao.deleteById(handle, id);
+					return Response.ok().build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateGetAllScenariosResource() '''
+		package com.anfelisa.ace.scenario;
+		
+		import java.util.List;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/scenario")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class GetAllScenariosResource {
+			static final Logger LOG = LoggerFactory.getLogger(GetAllScenariosResource.class);
+		
+			private DBI jdbi;
+		
+			private ScenarioDao scenarioDao = new ScenarioDao();
+		
+			public GetAllScenariosResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@GET
+			@Timed
+			@Path("/all")
+			// We should protect this resource!
+			public Response get() throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					List<IScenarioModel> scenarios = scenarioDao.selectAll(handle);
+					return Response.ok(scenarios).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
 	
 }
