@@ -36,7 +36,7 @@ class ES6Template {
 				import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
 		    «ENDIF»
 			«FOR view : preAndPostUpdateUIViews»
-				import «view.viewName» from "../../../src/«project.name»/views/«view.viewName»";
+				import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
 			«ENDFOR»
 		«ENDIF»
 
@@ -494,10 +494,6 @@ class ES6Template {
 	'''
 	
 	def generateAppUtilsStub(Project it) '''
-		«IF generateModules»
-			import ACEController from "ACEController";
-		«ENDIF»
-		
 		«IF generateModules»export default «ENDIF»class AppUtils {
 		
 		    static start() {
@@ -558,7 +554,8 @@ class ES6Template {
 	
 	def generateReplayUtilsStub(Project it) '''
 		«IF generateModules»
-			import ACEController from "ACEController";
+			import ACEController from "../../gen/ace/ACEController";
+			import AppUtils from './AppUtils';
 		«ENDIF»
 		
 		«IF generateModules»export default «ENDIF»class ReplayUtils {

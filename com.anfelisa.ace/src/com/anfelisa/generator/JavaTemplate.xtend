@@ -718,7 +718,7 @@ class JavaTemplate {
 			public static void registerConsumers() {
 				«FOR event : events»
 					«FOR renderFunction : event.listeners»
-						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.MIGRATE) {«ENDIF»
+						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE) {«ENDIF»
 							AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
 						«IF (renderFunction.eContainer as View).isExternal»}«ENDIF»
 					«ENDFOR»
