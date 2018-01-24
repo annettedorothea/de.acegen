@@ -191,6 +191,8 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateDeleteScenarioResource());
 				fsa.generateFile("com/anfelisa/ace/scenario" + '/GetAllScenariosResource.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateGetAllScenariosResource());
+				fsa.generateFile("com/anfelisa/ace/scenario" + '/GetScenarioResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateGetScenarioResource());
 
 				fsa.generateFile("com/anfelisa/ace" + '/AceController.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceController());
@@ -246,6 +248,15 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioDao());
 				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioMapper.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioMapper());
+
+				fsa.generateFile("com/anfelisa/ace/scenario" + '/IScenarioResultModel.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIScenarioResultModel());
+				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultModel.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultModel());
+				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultDao.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultDao());
+				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultMapper.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultMapper());
 
 				fsa.generateFile("com/anfelisa/ace/encryption" + '/AESEncryption.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAESEncryption());

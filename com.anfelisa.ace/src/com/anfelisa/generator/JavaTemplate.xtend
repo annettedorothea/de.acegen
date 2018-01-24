@@ -389,7 +389,7 @@ class JavaTemplate {
 		<createTable tableName="«table»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF»/>
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«attribute.tableName»_«attribute.foreignKey.tableName»"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>
@@ -2314,6 +2314,7 @@ class JavaTemplate {
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		
 		<createTable tableName="errortimeline">
 			<column name="id" type="serial">
 				<constraints primaryKey="true" nullable="false" />
@@ -2337,41 +2338,104 @@ class JavaTemplate {
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+
 		<createTable tableName="scenario">
 			<column name="id" type="serial">
-				<constraints primaryKey="true" nullable="false" />
+				<constraints primaryKey="true" nullable="false"/>
 			</column>
 			<column name="description" type="character varying">
-				<constraints nullable="false" />
+				<constraints  nullable="false"/>
 			</column>
-			<column name="data" type="character varying">
-				<constraints nullable="false" />
+			<column name="timeline" type="character varying">
+				<constraints  nullable="false"/>
 			</column>
-			<column name="createddatetime" type="timestamp with time zone">
-				<constraints />
-			</column>
-		</createTable>
-		<createTable tableName="bug">
-			<column name="id" type="serial">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="description" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="data" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="reporter" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="resolved" type="boolean">
-				<constraints nullable="false" />
+			<column name="creator" type="character varying">
+				<constraints  nullable="false"/>
 			</column>
 			<column name="createddatetime" type="timestamp with time zone">
-				<constraints />
+				<constraints  />
 			</column>
 			<column name="updateddatetime" type="timestamp with time zone">
-				<constraints />
+				<constraints  />
+			</column>
+			<column name="serverversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="clientversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="device" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createTable tableName="bug">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="description" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="timeline" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="reporter" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="resolved" type="boolean">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="createddatetime" type="timestamp with time zone">
+				<constraints  />
+			</column>
+			<column name="updateddatetime" type="timestamp with time zone">
+				<constraints  />
+			</column>
+			<column name="serverversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="clientversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="device" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createTable tableName="scenarioresult">
+			<column name="id" type="serial">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="scenarioid" type="integer">
+				<constraints nullable="false" references="scenario(id)"
+					deleteCascade="true" foreignKeyName="fk_scenarioresult_scenario" />
+			</column>
+			<column name="description" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="timeline" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="executor" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="createddatetime" type="timestamp with time zone">
+				<constraints  />
+			</column>
+			<column name="serverversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="clientversion" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="device" type="character varying">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="result" type="boolean">
+				<constraints  nullable="false"/>
+			</column>
+			<column name="e2e" type="boolean">
+				<constraints  nullable="false"/>
 			</column>
 		</createTable>
 		
@@ -2380,51 +2444,59 @@ class JavaTemplate {
 	def generateBugDao() '''
 		package com.anfelisa.ace.bug;
 		
-		import java.util.List;
-		import java.util.Map;
-		
-		import org.joda.time.DateTime;
 		import org.skife.jdbi.v2.Handle;
 		import org.skife.jdbi.v2.Query;
 		import org.skife.jdbi.v2.Update;
 		
+		import java.util.List;
+		import java.util.Map;
+		
 		import com.fasterxml.jackson.annotation.JsonIgnoreType;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
 		
 		@SuppressWarnings("all")
 		@JsonIgnoreType
 		public class BugDao {
 			
 			public Integer insert(Handle handle, IBugModel bugModel) {
-				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.bug (description, data, reporter, resolved, createddatetime, updateddatetime) VALUES (:description, :data, :reporter, :resolved, :createddatetime, :updateddatetime) RETURNING id");
+				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.bug (description, timeline, reporter, resolved, createddatetime, updateddatetime, serverversion, clientversion, device) VALUES (:description, :timeline, :reporter, :resolved, :createddatetime, :updateddatetime, :serverversion, :clientversion, :device) RETURNING id");
 				statement.bind("description",  bugModel.getDescription() );
-				statement.bind("data",  bugModel.getData() );
+				statement.bind("timeline",  bugModel.getTimeline() );
 				statement.bind("reporter",  bugModel.getReporter() );
 				statement.bind("resolved",  bugModel.getResolved() );
 				statement.bind("createddatetime",  bugModel.getCreatedDateTime() );
 				statement.bind("updateddatetime",  bugModel.getUpdatedDateTime() );
+				statement.bind("serverversion",  bugModel.getServerVersion() );
+				statement.bind("clientversion",  bugModel.getClientVersion() );
+				statement.bind("device",  bugModel.getDevice() );
 				Map<String, Object> first = statement.first();
 				return (Integer) first.get("id");
 			}
 			
 			
 			public void updateById(Handle handle, IBugModel bugModel) {
-				Update statement = handle.createStatement("UPDATE public.bug SET description = :description, data = :data, reporter = :reporter, resolved = :resolved, createddatetime = :createddatetime, updateddatetime = :updateddatetime WHERE id = :id");
+				Update statement = handle.createStatement("UPDATE public.bug SET description = :description, timeline = :timeline, reporter = :reporter, resolved = :resolved, createddatetime = :createddatetime, updateddatetime = :updateddatetime, serverversion = :serverversion, clientversion = :clientversion, device = :device WHERE id = :id");
 				statement.bind("description",  bugModel.getDescription() );
-				statement.bind("data",  bugModel.getData() );
+				statement.bind("timeline",  bugModel.getTimeline() );
 				statement.bind("reporter",  bugModel.getReporter() );
 				statement.bind("resolved",  bugModel.getResolved() );
 				statement.bind("createddatetime",  bugModel.getCreatedDateTime() );
 				statement.bind("updateddatetime",  bugModel.getUpdatedDateTime() );
+				statement.bind("serverversion",  bugModel.getServerVersion() );
+				statement.bind("clientversion",  bugModel.getClientVersion() );
+				statement.bind("device",  bugModel.getDevice() );
+				statement.bind("id",  bugModel.getId()  );
 				statement.execute();
 			}
-		
-			public void updateResolvedById(Handle handle, Integer id, DateTime updateddatetime) {
+
+			public void updateResolvedById(Handle handle, Integer id, org.joda.time.DateTime updateddatetime) {
 				Update statement = handle.createStatement("UPDATE public.bug SET resolved = true, updateddatetime = :updateddatetime WHERE id = :id");
 				statement.bind("id",  id );
 				statement.bind("updateddatetime",  updateddatetime );
 				statement.execute();
 			}
-			
+		
 			public void deleteById(Handle handle, Integer id) {
 				Update statement = handle.createStatement("DELETE FROM public.bug WHERE id = :id");
 				statement.bind("id", id);
@@ -2432,14 +2504,14 @@ class JavaTemplate {
 			}
 		
 			public IBugModel selectById(Handle handle, Integer id) {
-				return handle.createQuery("SELECT id, description, data, reporter, resolved, createddatetime, updateddatetime FROM public.bug WHERE id = :id")
+				return handle.createQuery("SELECT id, description, timeline, reporter, resolved, createddatetime, updateddatetime, serverversion, clientversion, device FROM public.bug WHERE id = :id")
 					.bind("id", id)
 					.map(new BugMapper())
 					.first();
 			}
 			
 			public List<IBugModel> selectAll(Handle handle) {
-				return handle.createQuery("SELECT id, description, data, reporter, resolved, createddatetime, updateddatetime FROM public.bug order by createddatetime")
+				return handle.createQuery("SELECT id, description, timeline, reporter, resolved, createddatetime, updateddatetime, serverversion, clientversion, device FROM public.bug")
 					.map(new BugMapper())
 					.list();
 			}
@@ -2454,6 +2526,7 @@ class JavaTemplate {
 		}
 		
 		/*       S.D.G.       */
+				
 		
 	'''
 	
@@ -2475,22 +2548,25 @@ class JavaTemplate {
 				return new BugModel(
 					r.getInt("id"),
 					r.getString("description"),
-					r.getString("data"),
+					r.getString("timeline"),
 					r.getString("reporter"),
 					r.getBoolean("resolved"),
 					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null,
-					r.getTimestamp("updatedDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("updatedDateTime")) : null
+					r.getTimestamp("updatedDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("updatedDateTime")) : null,
+					r.getString("serverVersion"),
+					r.getString("clientVersion"),
+					r.getString("device")
 				);
 			}
 		}
 		
 		/*       S.D.G.       */
-		
+				
 	'''
 	
 	def generateBugModel() '''
 		package com.anfelisa.ace.bug;
-		
+
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -2498,43 +2574,49 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class BugModel implements IBugModel {
 		
-			@NotNull
 			private Integer id;
 			
-			@NotNull
 			private String description;
 			
 			@NotNull
-			private String data;
+			private String timeline;
 			
-			@NotNull
 			private String reporter;
 			
-			@NotNull
 			private Boolean resolved;
 			
 			private org.joda.time.DateTime createdDateTime;
 			
 			private org.joda.time.DateTime updatedDateTime;
 			
-		
+			private String serverVersion;
+			
+			private String clientVersion;
+			
+			private String device;
 		
 			public BugModel(
 				@JsonProperty("id") Integer id,
 				@JsonProperty("description") String description,
-				@JsonProperty("data") String data,
+				@JsonProperty("timeline") String timeline,
 				@JsonProperty("reporter") String reporter,
 				@JsonProperty("resolved") Boolean resolved,
 				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime,
-				@JsonProperty("updatedDateTime") org.joda.time.DateTime updatedDateTime
+				@JsonProperty("updatedDateTime") org.joda.time.DateTime updatedDateTime,
+				@JsonProperty("serverVersion") String serverVersion,
+				@JsonProperty("clientVersion") String clientVersion,
+				@JsonProperty("device") String device
 			) {
 				this.id = id;
 				this.description = description;
-				this.data = data;
+				this.timeline = timeline;
 				this.reporter = reporter;
 				this.resolved = resolved;
 				this.createdDateTime = createdDateTime;
 				this.updatedDateTime = updatedDateTime;
+				this.serverVersion = serverVersion;
+				this.clientVersion = clientVersion;
+				this.device = device;
 			}
 		
 			@JsonProperty
@@ -2554,11 +2636,11 @@ class JavaTemplate {
 			}
 			
 			@JsonProperty
-			public String getData() {
-				return this.data;
+			public String getTimeline() {
+				return this.timeline;
 			}
-			public void setData(String data) {
-				this.data = data;
+			public void setTimeline(String timeline) {
+				this.timeline = timeline;
 			}
 			
 			@JsonProperty
@@ -2593,6 +2675,30 @@ class JavaTemplate {
 				this.updatedDateTime = updatedDateTime;
 			}
 			
+			@JsonProperty
+			public String getServerVersion() {
+				return this.serverVersion;
+			}
+			public void setServerVersion(String serverVersion) {
+				this.serverVersion = serverVersion;
+			}
+			
+			@JsonProperty
+			public String getClientVersion() {
+				return this.clientVersion;
+			}
+			public void setClientVersion(String clientVersion) {
+				this.clientVersion = clientVersion;
+			}
+			
+			@JsonProperty
+			public String getDevice() {
+				return this.device;
+			}
+			public void setDevice(String device) {
+				this.device = device;
+			}
+			
 		
 				
 		}
@@ -2603,7 +2709,7 @@ class JavaTemplate {
 	
 	def generateIBugModel() '''
 		package com.anfelisa.ace.bug;
-		
+
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		@JsonDeserialize(as=BugModel.class)
@@ -2611,11 +2717,14 @@ class JavaTemplate {
 		
 			Integer getId();
 			String getDescription();
-			String getData();
+			String getTimeline();
 			String getReporter();
 			Boolean getResolved();
 			org.joda.time.DateTime getCreatedDateTime();
 			org.joda.time.DateTime getUpdatedDateTime();
+			String getServerVersion();
+			String getClientVersion();
+			String getDevice();
 		
 		
 		}
@@ -2634,14 +2743,19 @@ class JavaTemplate {
 		
 			Integer getId();
 			String getDescription();
-			String getData();
+			String getTimeline();
+			String getCreator();
 			org.joda.time.DateTime getCreatedDateTime();
+			org.joda.time.DateTime getUpdatedDateTime();
+			String getServerVersion();
+			String getClientVersion();
+			String getDevice();
 		
 		
 		}
 		
 		/*       S.D.G.       */
-		
+
 	'''
 	
 	def generateScenarioModel() '''
@@ -2654,29 +2768,47 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class ScenarioModel implements IScenarioModel {
 		
-			@NotNull
 			private Integer id;
 			
-			@NotNull
 			private String description;
 			
 			@NotNull
-			private String data;
+			private String timeline;
+			
+			private String creator;
 			
 			private org.joda.time.DateTime createdDateTime;
+			
+			private org.joda.time.DateTime updatedDateTime;
+			
+			private String serverVersion;
+			
+			private String clientVersion;
+			
+			private String device;
 			
 		
 		
 			public ScenarioModel(
 				@JsonProperty("id") Integer id,
 				@JsonProperty("description") String description,
-				@JsonProperty("data") String data,
-				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime
+				@JsonProperty("timeline") String timeline,
+				@JsonProperty("creator") String creator,
+				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime,
+				@JsonProperty("updatedDateTime") org.joda.time.DateTime updatedDateTime,
+				@JsonProperty("serverVersion") String serverVersion,
+				@JsonProperty("clientVersion") String clientVersion,
+				@JsonProperty("device") String device
 			) {
 				this.id = id;
 				this.description = description;
-				this.data = data;
+				this.timeline = timeline;
+				this.creator = creator;
 				this.createdDateTime = createdDateTime;
+				this.updatedDateTime = updatedDateTime;
+				this.serverVersion = serverVersion;
+				this.clientVersion = clientVersion;
+				this.device = device;
 			}
 		
 			@JsonProperty
@@ -2696,11 +2828,19 @@ class JavaTemplate {
 			}
 			
 			@JsonProperty
-			public String getData() {
-				return this.data;
+			public String getTimeline() {
+				return this.timeline;
 			}
-			public void setData(String data) {
-				this.data = data;
+			public void setTimeline(String timeline) {
+				this.timeline = timeline;
+			}
+			
+			@JsonProperty
+			public String getCreator() {
+				return this.creator;
+			}
+			public void setCreator(String creator) {
+				this.creator = creator;
 			}
 			
 			@JsonProperty
@@ -2711,11 +2851,44 @@ class JavaTemplate {
 				this.createdDateTime = createdDateTime;
 			}
 			
+			@JsonProperty
+			public org.joda.time.DateTime getUpdatedDateTime() {
+				return this.updatedDateTime;
+			}
+			public void setUpdatedDateTime(org.joda.time.DateTime updatedDateTime) {
+				this.updatedDateTime = updatedDateTime;
+			}
+			
+			@JsonProperty
+			public String getServerVersion() {
+				return this.serverVersion;
+			}
+			public void setServerVersion(String serverVersion) {
+				this.serverVersion = serverVersion;
+			}
+			
+			@JsonProperty
+			public String getClientVersion() {
+				return this.clientVersion;
+			}
+			public void setClientVersion(String clientVersion) {
+				this.clientVersion = clientVersion;
+			}
+			
+			@JsonProperty
+			public String getDevice() {
+				return this.device;
+			}
+			public void setDevice(String device) {
+				this.device = device;
+			}
+			
 		
 				
 		}
 		
 		/*       S.D.G.       */
+		
 		
 	'''
 	
@@ -2738,20 +2911,31 @@ class JavaTemplate {
 		public class ScenarioDao {
 			
 			public Integer insert(Handle handle, IScenarioModel scenarioModel) {
-				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.scenario (description, data, createddatetime) VALUES ( :description, :data, :createddatetime) RETURNING id");
+				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.scenario (description, timeline, creator, createddatetime, updateddatetime, serverversion, clientversion, device) VALUES (:description, :timeline, :creator, :createddatetime, :updateddatetime, :serverversion, :clientversion, :device) RETURNING id");
 				statement.bind("description",  scenarioModel.getDescription() );
-				statement.bind("data",  scenarioModel.getData() );
+				statement.bind("timeline",  scenarioModel.getTimeline() );
+				statement.bind("creator",  scenarioModel.getCreator() );
 				statement.bind("createddatetime",  scenarioModel.getCreatedDateTime() );
+				statement.bind("updateddatetime",  scenarioModel.getUpdatedDateTime() );
+				statement.bind("serverversion",  scenarioModel.getServerVersion() );
+				statement.bind("clientversion",  scenarioModel.getClientVersion() );
+				statement.bind("device",  scenarioModel.getDevice() );
 				Map<String, Object> first = statement.first();
 				return (Integer) first.get("id");
 			}
 			
 			
 			public void updateById(Handle handle, IScenarioModel scenarioModel) {
-				Update statement = handle.createStatement("UPDATE public.scenario SET description = :description, data = :data, createddatetime = :createddatetime WHERE id = :id");
+				Update statement = handle.createStatement("UPDATE public.scenario SET description = :description, timeline = :timeline, creator = :creator, createddatetime = :createddatetime, updateddatetime = :updateddatetime, serverversion = :serverversion, clientversion = :clientversion, device = :device WHERE id = :id");
 				statement.bind("description",  scenarioModel.getDescription() );
-				statement.bind("data",  scenarioModel.getData() );
+				statement.bind("timeline",  scenarioModel.getTimeline() );
+				statement.bind("creator",  scenarioModel.getCreator() );
 				statement.bind("createddatetime",  scenarioModel.getCreatedDateTime() );
+				statement.bind("updateddatetime",  scenarioModel.getUpdatedDateTime() );
+				statement.bind("serverversion",  scenarioModel.getServerVersion() );
+				statement.bind("clientversion",  scenarioModel.getClientVersion() );
+				statement.bind("device",  scenarioModel.getDevice() );
+				statement.bind("id",  scenarioModel.getId()  );
 				statement.execute();
 			}
 		
@@ -2762,14 +2946,14 @@ class JavaTemplate {
 			}
 		
 			public IScenarioModel selectById(Handle handle, Integer id) {
-				return handle.createQuery("SELECT id, description, data, createddatetime FROM public.scenario WHERE id = :id")
+				return handle.createQuery("SELECT id, description, timeline, creator, createddatetime, updateddatetime, serverversion, clientversion, device FROM public.scenario WHERE id = :id")
 					.bind("id", id)
 					.map(new ScenarioMapper())
 					.first();
 			}
 			
 			public List<IScenarioModel> selectAll(Handle handle) {
-				return handle.createQuery("SELECT id, description, data, createddatetime FROM public.scenario order by createddatetime")
+				return handle.createQuery("SELECT id, description, timeline, creator, createddatetime, updateddatetime, serverversion, clientversion, device FROM public.scenario")
 					.map(new ScenarioMapper())
 					.list();
 			}
@@ -2805,14 +2989,326 @@ class JavaTemplate {
 				return new ScenarioModel(
 					r.getInt("id"),
 					r.getString("description"),
-					r.getString("data"),
-					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null
+					r.getString("timeline"),
+					r.getString("creator"),
+					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null,
+					r.getTimestamp("updatedDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("updatedDateTime")) : null,
+					r.getString("serverVersion"),
+					r.getString("clientVersion"),
+					r.getString("device")
 				);
 			}
 		}
 		
 		/*       S.D.G.       */
 		
+	'''
+	
+	def generateIScenarioResultModel() '''
+		package com.anfelisa.ace.scenario;
+
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+		
+		@JsonDeserialize(as=ScenarioResultModel.class)
+		public interface IScenarioResultModel {
+		
+			Integer getId();
+			Integer getScenarioId();
+			String getDescription();
+			String getTimeline();
+			String getExecutor();
+			org.joda.time.DateTime getCreatedDateTime();
+			String getServerVersion();
+			String getClientVersion();
+			String getDevice();
+			Boolean getResult();
+			Boolean getE2E();
+		
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioResultModel() '''
+		package com.anfelisa.ace.scenario;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		
+		@SuppressWarnings("all")
+		public class ScenarioResultModel implements IScenarioResultModel {
+		
+			@NotNull
+			private Integer id;
+			
+			@NotNull
+			private Integer scenarioId;
+			
+			@NotNull
+			private String description;
+			
+			@NotNull
+			private String timeline;
+			
+			@NotNull
+			private String executor;
+			
+			private org.joda.time.DateTime createdDateTime;
+			
+			@NotNull
+			private String serverVersion;
+			
+			@NotNull
+			private String clientVersion;
+			
+			@NotNull
+			private String device;
+			
+			@NotNull
+			private Boolean result;
+		
+			@NotNull
+			private Boolean e2e;
+		
+			public ScenarioResultModel(
+				@JsonProperty("id") Integer id,
+				@JsonProperty("scenarioId") Integer scenarioId,
+				@JsonProperty("description") String description,
+				@JsonProperty("timeline") String timeline,
+				@JsonProperty("executor") String executor,
+				@JsonProperty("createdDateTime") org.joda.time.DateTime createdDateTime,
+				@JsonProperty("serverVersion") String serverVersion,
+				@JsonProperty("clientVersion") String clientVersion,
+				@JsonProperty("device") String device,
+				@JsonProperty("result") Boolean result,
+				@JsonProperty("e2e") Boolean e2e
+			) {
+				this.id = id;
+				this.scenarioId = scenarioId;
+				this.description = description;
+				this.timeline = timeline;
+				this.executor = executor;
+				this.createdDateTime = createdDateTime;
+				this.serverVersion = serverVersion;
+				this.clientVersion = clientVersion;
+				this.device = device;
+				this.result = result;
+				this.e2e = e2e;
+			}
+		
+			@JsonProperty
+			public Integer getId() {
+				return this.id;
+			}
+			public void setId(Integer id) {
+				this.id = id;
+			}
+			
+			@JsonProperty
+			public Integer getScenarioId() {
+				return this.scenarioId;
+			}
+			public void setScenarioId(Integer scenarioId) {
+				this.scenarioId = scenarioId;
+			}
+			
+			@JsonProperty
+			public String getDescription() {
+				return this.description;
+			}
+			public void setDescription(String description) {
+				this.description = description;
+			}
+			
+			@JsonProperty
+			public String getTimeline() {
+				return this.timeline;
+			}
+			public void setTimeline(String timeline) {
+				this.timeline = timeline;
+			}
+			
+			@JsonProperty
+			public String getExecutor() {
+				return this.executor;
+			}
+			public void setExecutor(String executor) {
+				this.executor = executor;
+			}
+			
+			@JsonProperty
+			public org.joda.time.DateTime getCreatedDateTime() {
+				return this.createdDateTime;
+			}
+			public void setCreatedDateTime(org.joda.time.DateTime createdDateTime) {
+				this.createdDateTime = createdDateTime;
+			}
+			
+			@JsonProperty
+			public String getServerVersion() {
+				return this.serverVersion;
+			}
+			public void setServerVersion(String serverVersion) {
+				this.serverVersion = serverVersion;
+			}
+			
+			@JsonProperty
+			public String getClientVersion() {
+				return this.clientVersion;
+			}
+			public void setClientVersion(String clientVersion) {
+				this.clientVersion = clientVersion;
+			}
+			
+			@JsonProperty
+			public String getDevice() {
+				return this.device;
+			}
+			public void setDevice(String device) {
+				this.device = device;
+			}
+			
+			@JsonProperty
+			public Boolean getResult() {
+				return this.result;
+			}
+			public void setResult(Boolean result) {
+				this.result = result;
+			}
+			
+			@JsonProperty
+			public Boolean getE2E() {
+				return this.e2e;
+			}
+			public void setE2E(Boolean e2e) {
+				this.e2e = e2e;
+			}
+			
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioResultDao() '''
+		package com.anfelisa.ace.scenario;
+		
+		import org.skife.jdbi.v2.Handle;
+		import org.skife.jdbi.v2.Query;
+		import org.skife.jdbi.v2.Update;
+		
+		import java.util.List;
+		import java.util.Map;
+		
+		import com.fasterxml.jackson.annotation.JsonIgnoreType;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
+		@JsonIgnoreType
+		public class ScenarioResultDao {
+			
+			public Integer insert(Handle handle, IScenarioResultModel scenarioResultModel) {
+				Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO public.scenarioresult (scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device, result, e2e) VALUES (:scenarioid, :description, :timeline, :executor, :createddatetime, :serverversion, :clientversion, :device, :result, :e2e) RETURNING id");
+				statement.bind("scenarioid",  scenarioResultModel.getScenarioId() );
+				statement.bind("description",  scenarioResultModel.getDescription() );
+				statement.bind("timeline",  scenarioResultModel.getTimeline() );
+				statement.bind("executor",  scenarioResultModel.getExecutor() );
+				statement.bind("createddatetime",  scenarioResultModel.getCreatedDateTime() );
+				statement.bind("serverversion",  scenarioResultModel.getServerVersion() );
+				statement.bind("clientversion",  scenarioResultModel.getClientVersion() );
+				statement.bind("device",  scenarioResultModel.getDevice() );
+				statement.bind("result",  scenarioResultModel.getResult() );
+				statement.bind("e2e",  scenarioResultModel.getE2E() );
+				Map<String, Object> first = statement.first();
+				return (Integer) first.get("id");
+			}
+			
+			
+			public void updateById(Handle handle, IScenarioResultModel scenarioResultModel) {
+				Update statement = handle.createStatement("UPDATE public.scenarioresult SET scenarioid = :scenarioid, description = :description, timeline = :timeline, executor = :executor, createddatetime = :createddatetime, serverversion = :serverversion, clientversion = :clientversion, device = :device, result = :result, e2e = :e2e WHERE id = :id");
+				statement.bind("scenarioid",  scenarioResultModel.getScenarioId() );
+				statement.bind("description",  scenarioResultModel.getDescription() );
+				statement.bind("timeline",  scenarioResultModel.getTimeline() );
+				statement.bind("executor",  scenarioResultModel.getExecutor() );
+				statement.bind("createddatetime",  scenarioResultModel.getCreatedDateTime() );
+				statement.bind("serverversion",  scenarioResultModel.getServerVersion() );
+				statement.bind("clientversion",  scenarioResultModel.getClientVersion() );
+				statement.bind("device",  scenarioResultModel.getDevice() );
+				statement.bind("result",  scenarioResultModel.getResult()  );
+				statement.bind("e2e",  scenarioResultModel.getE2E()  );
+				statement.bind("id",  scenarioResultModel.getId()  );
+				statement.execute();
+			}
+		
+			public void deleteById(Handle handle, Integer id) {
+				Update statement = handle.createStatement("DELETE FROM public.scenarioresult WHERE id = :id");
+				statement.bind("id", id);
+				statement.execute();
+			}
+		
+			public IScenarioResultModel selectById(Handle handle, Integer id) {
+				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device FROM public.scenarioresult WHERE id = :id")
+					.bind("id", id)
+					.map(new ScenarioResultMapper())
+					.first();
+			}
+			
+			public List<IScenarioResultModel> selectAll(Handle handle) {
+				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device FROM public.scenarioresult")
+					.map(new ScenarioResultMapper())
+					.list();
+			}
+		
+			public void truncate(Handle handle) {
+				Update statement = handle.createStatement("TRUNCATE public.scenarioresult");
+				statement.execute();
+				statement = handle.createStatement("ALTER SEQUENCE public.scenarioresult_id_seq RESTART");
+				statement.execute();
+			}
+		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateScenarioResultMapper() '''
+		package com.anfelisa.ace.scenario;
+		
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		
+		import org.skife.jdbi.v2.StatementContext;
+		import org.skife.jdbi.v2.tweak.ResultSetMapper;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		
+		@SuppressWarnings("all")
+		public class ScenarioResultMapper implements ResultSetMapper<IScenarioResultModel> {
+			
+			public IScenarioResultModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+				return new ScenarioResultModel(
+					r.getInt("id"),
+					r.getInt("scenarioId"),
+					r.getString("description"),
+					r.getString("timeline"),
+					r.getString("executor"),
+					r.getTimestamp("createdDateTime") != null ? new org.joda.time.DateTime(r.getTimestamp("createdDateTime")) : null,
+					r.getString("serverVersion"),
+					r.getString("clientVersion"),
+					r.getString("device"),
+					r.getBoolean("result"),
+					r.getBoolean("e2e")
+				);
+			}
+		}
+		
+		/*       S.D.G.       */
+				
 	'''
 	
 	def generateCreateBugResource() '''
@@ -2833,6 +3329,7 @@ class JavaTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		import com.anfelisa.ace.App;
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
@@ -2860,6 +3357,19 @@ class JavaTemplate {
 				try {
 					data.setCreatedDateTime(new DateTime());
 					data.setResolved(false);
+					if (data.getClientVersion() == null) {
+						data.setClientVersion("unknown");
+					}
+					if (data.getReporter() == null) {
+						data.setReporter("unknown");
+					}
+					if (data.getDescription() == null) {
+						data.setDescription("unknown");
+					}
+					if (data.getDevice() == null) {
+						data.setDevice("unknown");
+					}
+					data.setServerVersion(App.getVersion());
 					Integer id = bugDao.insert(handle, data);
 					return Response.ok(id).build();
 				} catch (Exception e) {
@@ -3076,6 +3586,7 @@ class JavaTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		import com.anfelisa.ace.App;
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
@@ -3102,6 +3613,19 @@ class JavaTemplate {
 				Handle handle = jdbi.open();
 				try {
 					data.setCreatedDateTime(new DateTime());
+					if (data.getClientVersion() == null) {
+						data.setClientVersion("unknown");
+					}
+					if (data.getCreator() == null) {
+						data.setCreator("unknown");
+					}
+					if (data.getDescription() == null) {
+						data.setDescription("unknown");
+					}
+					if (data.getDevice() == null) {
+						data.setDevice("unknown");
+					}
+					data.setServerVersion(App.getVersion());
 					Integer id = scenarioDao.insert(handle, data);
 					return Response.ok(id).build();
 				} catch (Exception e) {
@@ -3224,6 +3748,64 @@ class JavaTemplate {
 				try {
 					List<IScenarioModel> scenarios = scenarioDao.selectAll(handle);
 					return Response.ok(scenarios).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					handle.close();
+				}
+			}
+		
+		}
+		
+		/* S.D.G. */
+		
+	'''
+	
+	def generateGetScenarioResource() '''
+		package com.anfelisa.ace.scenario;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/scenario")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class GetScenarioResource {
+			static final Logger LOG = LoggerFactory.getLogger(GetScenarioResource.class);
+		
+			private DBI jdbi;
+		
+			private ScenarioDao scenarioDao = new ScenarioDao();
+		
+			public GetScenarioResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@GET
+			@Timed
+			@Path("/all")
+			// We should protect this resource!
+			public Response get(@NotNull @QueryParam("id") int id) throws JsonProcessingException {
+				Handle handle = jdbi.open();
+				try {
+					IScenarioModel scenario = scenarioDao.selectById(handle, id);
+					return Response.ok(scenario).build();
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				} finally {
