@@ -206,8 +206,6 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateCommand());
 				fsa.generateFile("com/anfelisa/ace" + '/DatabaseHandle.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateDatabaseHandle());
-				fsa.generateFile("com/anfelisa/ace" + '/DataContainer.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateDataContainer());
 				fsa.generateFile("com/anfelisa/ace" + '/Event.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateEvent());
 				fsa.generateFile("com/anfelisa/ace" + '/HttpMethod.java',

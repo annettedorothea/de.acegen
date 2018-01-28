@@ -229,6 +229,8 @@ class JavaTemplate {
 			
 			private String uuid;
 			
+			private String outcome;
+			
 			private String createdId;
 			
 			«FOR attribute : allAttributes»
@@ -298,6 +300,16 @@ class JavaTemplate {
 			@JsonProperty
 			public void setSystemTime(org.joda.time.DateTime systemTime) {
 				this.systemTime = systemTime;
+			}
+		
+			@JsonProperty
+			public String getOutcome() {
+				return outcome;
+			}
+		
+			@JsonProperty
+			public void setOutcome(String outcome) {
+				this.outcome = outcome;
 			}
 		
 		}
@@ -372,7 +384,7 @@ class JavaTemplate {
 			}
 
 			public void truncate(Handle handle) {
-				Update statement = handle.createStatement("TRUNCATE «project.schema».«table»");
+				Update statement = handle.createStatement("TRUNCATE «project.schema».«table» CASCADE");
 				statement.execute();
 				«IF findSerialAttribute !== null»
 					statement = handle.createStatement("ALTER SEQUENCE «project.schema».«table»_«findSerialAttribute.name»_seq RESTART");
@@ -489,9 +501,13 @@ class JavaTemplate {
 				super("«project.name».commands.«commandName»", commandParam, databaseHandle);
 			}
 		
+			public «abstractCommandName»(DatabaseHandle databaseHandle) {
+				super("«project.name».commands.«commandName»", null, databaseHandle);
+			}
+		
 			@Override
-			protected void publishEvents() {
-				switch (this.outcome) {
+			public void publishEvents() {
+				switch (this.commandData.getOutcome()) {
 				«FOR eventOnOutcome : eventsOnOutcome»
 					case «eventOnOutcome.outcome»:
 						«FOR event : eventOnOutcome.events»
@@ -510,7 +526,15 @@ class JavaTemplate {
 						break;
 				«ENDFOR»
 				default:
-					throw new WebApplicationException("unhandled outcome " + outcome);
+					throw new WebApplicationException("unhandled outcome " + this.commandData.getOutcome());
+				}
+			}
+			
+			public void initCommandData(String json) {
+				try {
+					this.commandData = mapper.readValue(json, «data.dataParamType».class);
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
 				}
 			}
 		
@@ -532,6 +556,10 @@ class JavaTemplate {
 		
 			public «abstractEventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
 				super("«project.name».events.«eventName»", eventParam, databaseHandle);
+			}
+			
+			public «abstractEventName»(DatabaseHandle databaseHandle) {
+				super("«project.name».events.«eventName»", null, databaseHandle);
 			}
 			
 			public void initEventData(String json) {
@@ -621,10 +649,14 @@ class JavaTemplate {
 				super(commandParam, databaseHandle);
 			}
 		
+			public «commandName»(DatabaseHandle databaseHandle) {
+				super(null, databaseHandle);
+			}
+		
 			@Override
 			protected void executeCommand() {
 				«IF eventsOnOutcome.size > 0»
-					this.outcome = «eventsOnOutcome.get(0).outcome»;
+					this.commandData.setOutcome(«eventsOnOutcome.get(0).outcome»);
 				«ENDIF»
 			}
 		
@@ -1333,6 +1365,29 @@ class JavaTemplate {
 						+ "where uuid = :uuid").bind("uuid", uuid).map(new TimelineItemMapper()).first();
 			}
 		
+			public ITimelineItem selectNextCommand(Handle handle, String uuid) {
+				if (uuid != null) {
+					return handle
+							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+									+ "where id > " + "(select id from " + timelineTable()
+									+ " where uuid = :uuid and type = 'command' limit 1) " + "and type = 'command' "
+									+ "order by time asc " + "limit 1")
+							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+				} else {
+					return handle
+							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+									+ "where type = 'command' " + "order by time asc " + "limit 1")
+							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+				}
+			}
+		
+			public ITimelineItem selectCommand(Handle handle, String uuid) {
+				return handle
+						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+								+ "where uuid = :uuid and type = 'command'")
+						.bind("uuid", uuid).map(new TimelineItemMapper()).first();
+			}
+
 			public ITimelineItem selectNextEvent(Handle handle, String uuid) {
 				if (uuid != null) {
 					return handle
@@ -1548,21 +1603,19 @@ class JavaTemplate {
 		
 			protected T commandData;
 			private String commandName;
-			protected String outcome;
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
+			protected JodaObjectMapper mapper;
 		
 			public Command(String commandName, T commandData, DatabaseHandle databaseHandle) {
 				super();
 				this.commandData = commandData;
 				this.commandName = commandName;
 				this.databaseHandle = databaseHandle;
+				mapper = new JodaObjectMapper();
 			}
 		
 			protected void executeCommand() {
-			}
-		
-			protected void publishEvents() {
 			}
 		
 			public void execute() {
@@ -1708,54 +1761,6 @@ class JavaTemplate {
 		
 	'''
 	
-	def generateDataContainer() '''
-		package com.anfelisa.ace;
-		
-		import org.joda.time.DateTime;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		
-		public class DataContainer implements IDataContainer {
-		
-			private String uuid;
-		
-			private String createdId;
-			
-			private DateTime systemTime;
-			
-			public DataContainer(@JsonProperty("uuid") String uuid) {
-				super();
-				this.uuid = uuid;
-			}
-		
-			@JsonProperty
-			public String getUuid() {
-				return uuid;
-			}
-		
-			@JsonProperty
-			public String getCreatedId() {
-				return createdId;
-			}
-		
-			public void setCreatedId(String createdId) {
-				this.createdId = createdId;
-			}
-		
-			@JsonProperty
-			public DateTime getSystemTime() {
-				return systemTime;
-			}
-		
-			@JsonProperty
-			public void setSystemTime(DateTime systemTime) {
-				this.systemTime = systemTime;
-			}
-		
-		}
-		
-	'''
-	
 	def generateEvent() '''
 		package com.anfelisa.ace;
 		
@@ -1873,13 +1878,17 @@ class JavaTemplate {
 		public interface ICommand {
 		
 			String getCommandName();
-			
+
 			IDataContainer getCommandData();
-			
+
 			@JsonIgnore
 			DatabaseHandle getDatabaseHandle();
-			
+
+			void initCommandData(String json);
+
 			void execute();
+		
+			void publishEvents();
 		}
 		
 	'''
@@ -1892,6 +1901,10 @@ class JavaTemplate {
 		public interface IDataContainer {
 		
 			String getUuid();
+
+			String getOutcome();
+
+			void setOutcome(String outcome);
 			
 			String getCreatedId();
 			
@@ -3251,14 +3264,14 @@ class JavaTemplate {
 			}
 		
 			public IScenarioResultModel selectById(Handle handle, Integer id) {
-				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device FROM public.scenarioresult WHERE id = :id")
+				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device, result, e2e FROM public.scenarioresult WHERE id = :id")
 					.bind("id", id)
 					.map(new ScenarioResultMapper())
 					.first();
 			}
 			
 			public List<IScenarioResultModel> selectAll(Handle handle) {
-				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device FROM public.scenarioresult")
+				return handle.createQuery("SELECT id, scenarioid, description, timeline, executor, createddatetime, serverversion, clientversion, device, result, e2e FROM public.scenarioresult")
 					.map(new ScenarioResultMapper())
 					.list();
 			}
