@@ -546,9 +546,10 @@ class JavaTemplate {
 	def generateAbstractEventFile(Event it, Project project) '''
 		package «project.name».events;
 		
+		import javax.ws.rs.WebApplicationException;
+
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
-		import javax.ws.rs.WebApplicationException;
 		
 		«data.dataImport»
 		
@@ -835,17 +836,7 @@ class JavaTemplate {
 					environment.jersey().register(new PrepareDatabaseResource(jdbi, jdbiTimeline));
 				} else {
 					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
-					
 					environment.jersey().register(new MigrateDatabaseResource(jdbi));
-					
-					environment.jersey().register(new CreateScenarioResource(jdbi));
-					environment.jersey().register(new DeleteScenarioResource(jdbi));
-					environment.jersey().register(new GetAllScenariosResource(jdbi));
-					
-					environment.jersey().register(new CreateBugResource(jdbi));
-					environment.jersey().register(new DeleteBugResource(jdbi));
-					environment.jersey().register(new GetAllBugsResource(jdbi));
-					environment.jersey().register(new ResolveBugResource(jdbi));
 				}
 		
 				DBIExceptionsBundle dbiExceptionsBundle = new DBIExceptionsBundle();
@@ -941,13 +932,18 @@ class JavaTemplate {
 			public Response put() {
 				Handle handle = jdbi.open();
 				try {
+					handle.getConnection().setAutoCommit(false);
+					
 					aceDao.truncateErrorTimelineTable(handle);
 					aceDao.truncateTimelineTable(handle);
 
 					//truncate all tables
 
+					handle.commit();
+
 					return Response.ok().build();
 				} catch (Exception e) {
+					handle.rollback();
 					throw new WebApplicationException(e);
 				} finally {
 					handle.close();
@@ -972,18 +968,10 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.AceController;
-		import com.anfelisa.ace.AceDao;
-		import com.anfelisa.ace.AceExecutionMode;
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.ICommand;
-		import com.anfelisa.ace.IEvent;
-		import com.anfelisa.ace.ITimelineItem;
-
 		import com.codahale.metrics.annotation.Timed;
 		
 		@Path("/database")
@@ -994,8 +982,11 @@ class JavaTemplate {
 			private DBI jdbi;
 		
 			static final Logger LOG = LoggerFactory.getLogger(MigrateDatabaseResource.class);
-			
+		
 			private AceDao aceDao = new AceDao();
+		
+			private TodoDao todoDao = new TodoDao();
+			private TodoHistoryDao todoHistoryDao = new TodoHistoryDao();
 		
 			public MigrateDatabaseResource(DBI jdbi) {
 				super();
@@ -1008,52 +999,38 @@ class JavaTemplate {
 			// We should protect this resource!
 			public Response put(@QueryParam("uuid") String uuid) {
 				AceController.setAceExecutionMode(AceExecutionMode.MIGRATE);
-				
+		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				LOG.info("START MIGRATION");
 				try {
 					databaseHandle.beginTransaction();
 		
-					// truncate all tables
+					Handle handle = databaseHandle.getHandle();
+					
+					// truncate all view-tables
 		
-					ITimelineItem nextItem = aceDao.selectNextEvent(databaseHandle.getHandle(), null);
-					while (nextItem != null && !nextItem.getUuid().equals(uuid)) {
-						LOG.info("PUBLISH EVENT " + nextItem);
-						Class<?> cl = Class.forName(nextItem.getName());
-						Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
-						IEvent event = (IEvent) con.newInstance(databaseHandle);
-						event.initEventData(nextItem.getData());
-						event.notifyListeners();
-						nextItem = aceDao.selectNextEvent(databaseHandle.getHandle(), nextItem.getUuid());
-					}
-					if (uuid != null) {
-						ITimelineItem lastItem = nextItem;
-		
-						nextItem = aceDao.selectNextAction(databaseHandle.getHandle(),
-								lastItem != null ? lastItem.getUuid() : null);
-						while (nextItem != null && !nextItem.getUuid().equals(uuid)) {
-							if (!nextItem.getMethod().equalsIgnoreCase("GET")) {
-								LOG.info("APPLY ACTION " + nextItem);
-								Class<?> cl = Class.forName(nextItem.getName());
-								Constructor<?> con = cl.getConstructor(DBI.class, DBI.class);
-								IAction action = (IAction) con.newInstance(jdbi, null);
-								action.initActionData(nextItem.getData());
-								action.setDatabaseHandle(databaseHandle);
-		
-								ICommand command = action.getCommand();
-								if (command != null) {
-									command.execute();
-								}
-							}
-							nextItem = aceDao.selectNextAction(databaseHandle.getHandle(), nextItem.getUuid());
+					ITimelineItem nextAction = aceDao.selectNextAction(handle, null);
+					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
+						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
+							ITimelineItem nextEvent = aceDao.selectEvent(handle, nextAction.getUuid());
+							LOG.info("PUBLISH EVENT " + nextEvent);
+							Class<?> cl = Class.forName(nextEvent.getName());
+							Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
+							IEvent event = (IEvent) con.newInstance(databaseHandle);
+							event.initEventData(nextEvent.getData());
+							event.notifyListeners();
+							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
 						}
+						nextAction = aceDao.selectNextAction(handle, nextAction.getUuid());
 					}
+		
 					databaseHandle.commitTransaction();
+		
 					LOG.info("MIGRATION FINISHED");
 					return Response.ok().build();
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
-					LOG.info("MIGRATION ABORTED " +  e.getMessage());
+					LOG.info("MIGRATION ABORTED " + e.getMessage());
 					throw new WebApplicationException(e);
 				} finally {
 					databaseHandle.close();

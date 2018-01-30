@@ -9,7 +9,6 @@
     <genClasses ecoreClass="Ace.ecore#//Project">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/target"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/generateModules"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/schema"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/models"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/data"/>

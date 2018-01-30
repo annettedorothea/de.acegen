@@ -4,7 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = QualifiedName
-	'target' target = ('ES6' | 'JAVA') generateModules ?= 'generateModules'?
+	'target' target = ('ES6' | 'JAVA')
 	('models' '{'
 		'schema' schema = ID
 		(models += Model)*

@@ -30,40 +30,37 @@ class ES6Template {
 	extension ProjectExtension
 	
 	def generateAbstractActionFile(Action it, Project project) '''
-		«IF project.generateModules»
-			import Action from "../../ace/Action";
-			«IF command !== null»
-				import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
-		    «ENDIF»
-			«FOR view : preAndPostUpdateUIViews»
-				import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
-			«ENDFOR»
-		«ENDIF»
+		import Action from "../../ace/Action";
+		«IF command !== null»
+			import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
+	    «ENDIF»
+		«FOR view : preAndPostUpdateUIViews»
+			import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
+		«ENDFOR»
 
-		«IF project.generateModules»export default «ENDIF»class «abstractActionName» extends Action {
+		export default class «abstractActionName» extends Action {
 		
 		    constructor(actionParam) {
 		        super(actionParam, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
 		    }
 		
 			«IF command !== null»
-			    getCommand() {
-			    		return new «command.commandName»(this.actionData);
-			    }
+				getCommand() {
+					return new «command.commandName»(this.actionData);
+				}
 			«ENDIF»
 		
-			
-		    preUpdateUI() {
+			preUpdateUI() {
 				«FOR viewFunction : preUpdateUI»
 					«viewFunction.viewFunctionWithViewName»(this.actionParam);
 				«ENDFOR»
-		    }
+			}
 		
-		    postUpdateUI() {
+			postUpdateUI() {
 				«FOR viewFunction : postUpdateUI»
 					«viewFunction.viewFunctionWithViewName»(this.actionParam);
 				«ENDFOR»
-		    }
+			}
 		
 		}
 		
@@ -71,11 +68,9 @@ class ES6Template {
 	'''
 
 	def generateInitialActionFile(Action it, Project project) '''
-		«IF project.generateModules»
-			import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
-		«ENDIF»
+		import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
 		
-		«IF project.generateModules»export default «ENDIF»class «actionName» extends «abstractActionName» {
+		export default class «actionName» extends «abstractActionName» {
 		
 		    captureActionParam() {
 		    }
@@ -91,18 +86,16 @@ class ES6Template {
 	'''
 	
 	def generateAbstractCommandFile(Command it, Project project) '''
-		«IF project.generateModules»
-			import Command from "../../../gen/ace/Command";
-			import TriggerAction from "../../../gen/ace/TriggerAction";
-			«FOR event : eventsOfCommand»
-				import «event.eventName» from "../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
-			«ENDFOR»
-			«FOR action : triggeredActionsOfCommand»
-				import «action.actionName» from "../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
-			«ENDFOR»
-		«ENDIF»
+		import Command from "../../../gen/ace/Command";
+		import TriggerAction from "../../../gen/ace/TriggerAction";
+		«FOR event : eventsOfCommand»
+			import «event.eventName» from "../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
+		«ENDFOR»
+		«FOR action : triggeredActionsOfCommand»
+			import «action.actionName» from "../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
+		«ENDFOR»
 		
-		«IF project.generateModules»export default «ENDIF»class «abstractCommandName» extends Command {
+		export default class «abstractCommandName» extends Command {
 		    constructor(commandParam) {
 		        super(commandParam, "«project.name».«commandName»");
 		        «FOR eventOnOutcome : eventsOnOutcome»
@@ -111,23 +104,23 @@ class ES6Template {
 		    }
 		
 		    publishEvents() {
-		    	let promises = [];
-		    	
-		        switch (this.commandData.outcome) {
-		        «FOR eventOnOutcome : eventsOnOutcome»
-		        	case this.«eventOnOutcome.outcome»:
-		        		«FOR event : eventOnOutcome.events»
-		        			promises.push(new «event.eventName»(this.commandData).publish());
-		        		«ENDFOR»
-		        		«FOR action : eventOnOutcome.actions»
-		        			promises.push(new TriggerAction(new «action.actionName»(this.commandData)).publish());
-		        		«ENDFOR»
-		        		break;
-		        «ENDFOR»
-		    	default:
-		    		throw 'unhandled outcome: ' + this.commandData.outcome;
-		    	}
-		    	return Promise.all(promises);
+				let promises = [];
+			    	
+				switch (this.commandData.outcome) {
+				«FOR eventOnOutcome : eventsOnOutcome»
+					case this.«eventOnOutcome.outcome»:
+						«FOR event : eventOnOutcome.events»
+							promises.push(new «event.eventName»(this.commandData).publish());
+						«ENDFOR»
+						«FOR action : eventOnOutcome.actions»
+							promises.push(new TriggerAction(new «action.actionName»(this.commandData)).publish());
+						«ENDFOR»
+						break;
+				«ENDFOR»
+				default:
+					throw 'unhandled outcome: ' + this.commandData.outcome;
+				}
+				return Promise.all(promises);
 		    }
 		}
 		
@@ -135,11 +128,9 @@ class ES6Template {
 	'''
 	
 	def generateInitialCommandFile(Command it, Project project) '''
-		«IF project.generateModules»
-			import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
-		«ENDIF»
+		import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
 		
-		«IF project.generateModules»export default «ENDIF»class «commandName» extends «abstractCommandName» {
+		export default class «commandName» extends «abstractCommandName» {
 		    execute() {
 		        return new Promise((resolve) => {
 					resolve();
@@ -151,11 +142,9 @@ class ES6Template {
 	'''
 	
 	def generateAbstractEventFile(Event it, Project project) '''
-		«IF project.generateModules»
-			import Event from "../../../gen/ace/Event";
-		«ENDIF»
+		import Event from "../../../gen/ace/Event";
 		
-		«IF project.generateModules»export default «ENDIF»class «abstractEventName» extends Event {
+		export default class «abstractEventName» extends Event {
 		    constructor(eventParam) {
 		        super(eventParam, '«project.name».«eventName»');
 		    }
@@ -164,11 +153,9 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateInitialEventFile(Event it, Project project) '''
-		«IF project.generateModules»
-			import «abstractEventName» from "../../../gen/«project.name»/events/«abstractEventName»";
-		«ENDIF»
+		import «abstractEventName» from "../../../gen/«project.name»/events/«abstractEventName»";
 		
-		«IF project.generateModules»export default «ENDIF»class «eventName» extends «abstractEventName» {
+		export default class «eventName» extends «abstractEventName» {
 		    prepareDataForView() {
 		        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
 		        if (this.eventData.data === undefined) {
@@ -180,21 +167,19 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateEventListenerRegistration(Project it) '''
-		«IF generateModules»
-			import ACEController from "../ace/ACEController";
-			«FOR view : referencedViews»
-				import «view.viewName» from "../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
-			«ENDFOR»
-		«ENDIF»
+		import ACEController from "../ace/ACEController";
+		«FOR view : referencedViews»
+			import «view.viewName» from "../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
+		«ENDFOR»
 		
-		«IF generateModules»export default «ENDIF»class EventListenerRegistration«projectName» {
+		export default class EventListenerRegistration«projectName» {
 		
 			static init() {
-			    	«FOR event : events»
-			    		«FOR renderFunction : event.listeners»
-			    			ACEController.registerListener('«name».«event.eventName»', «renderFunction.viewFunctionWithViewName»);
-			    		«ENDFOR»
-			    	«ENDFOR»
+				«FOR event : events»
+					«FOR renderFunction : event.listeners»
+						ACEController.registerListener('«name».«event.eventName»', «renderFunction.viewFunctionWithViewName»);
+					«ENDFOR»
+				«ENDFOR»
 			}
 		
 		}
@@ -202,14 +187,12 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateActionFactoryRegistration(Project it) '''
-		«IF generateModules»
-			import ACEController from "../ace/ACEController";
-			«FOR action : actions»
-				import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
-			«ENDFOR»
-		«ENDIF»
+		import ACEController from "../ace/ACEController";
+		«FOR action : actions»
+			import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+		«ENDFOR»
 		
-		«IF generateModules»export default «ENDIF»class ActionFactoryRegistration«projectName» {
+		export default class ActionFactoryRegistration«projectName» {
 		
 			static init() {
 				«FOR action : actions»
@@ -222,43 +205,37 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateActionFunctionExports(Project it) '''
-		«IF generateModules»
-			«FOR action : actions»
-				import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
-			«ENDFOR»
-		«ENDIF»
+		«FOR action : actions»
+			import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+		«ENDFOR»
 		
-		«IF generateModules»
-			«FOR action : actions»
-				export function «action.name.toFirstLower»(actionParam) {
-				    new «action.actionName»(actionParam).apply();
-				}
-				
-			«ENDFOR»
-		«ENDIF»
+		«FOR action : actions»
+			export function «action.name.toFirstLower»(actionParam) {
+			    new «action.actionName»(actionParam).apply();
+			}
+			
+		«ENDFOR»
 		
 		/*       S.D.G.       */
 	'''
 	def generateView(View it, Project project) '''
 
-		«IF project.generateModules»export default «ENDIF»class «viewName» {
-		    «FOR renderFunction : renderFunctions»
-		    	static «renderFunction.name»(eventData) {
-		    	};
-		    	
-		    «ENDFOR»
+		export default class «viewName» {
+			«FOR renderFunction : renderFunctions»
+				static «renderFunction.name»(eventData) {
+				};
+				
+			«ENDFOR»
 		}
 		
 		/*                    S.D.G.                    */
 	'''
 
-	def generateAction(Project it) '''
-		«IF generateModules»
-			import ACEController from "./ACEController";
-			import AppUtils from "../../src/app/AppUtils";
-		«ENDIF»
+	def generateAction() '''
+		import ACEController from "./ACEController";
+		import AppUtils from "../../src/app/AppUtils";
 		
-		«IF generateModules»export default «ENDIF»class Action {
+		export default class Action {
 		    constructor(actionParam, actionName, isInitAction) {
 		        this.actionName = actionName;
 		        if (actionParam === undefined) {
@@ -289,7 +266,7 @@ class ES6Template {
 		
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
-		        		this.preUpdateUI();
+		            this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
 		            }
@@ -302,15 +279,15 @@ class ES6Template {
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
-						command.executeCommand(this.postUpdateUI).then(() => {
-							resolve();
-						},
-						(error) => {
-							this.postUpdateUI();
-							reject(error + " when executing command " + command.commandName);
-						});
+		                command.executeCommand(this.postUpdateUI).then(() => {
+		                        resolve();
+		                    },
+		                    (error) => {
+		                        this.postUpdateUI();
+		                        reject(error + " when executing command " + command.commandName);
+		                    });
 		            } else {
-		            		this.postUpdateUI();
+		                this.postUpdateUI();
 		                resolve();
 		            }
 		        });
@@ -322,14 +299,12 @@ class ES6Template {
 		
 	'''
 
-	def generateCommand(Project it) '''
-		«IF generateModules»
-			import ACEController from "./ACEController";
-			import AppUtils from "../../src/app/AppUtils";
-			import ReplayUtils from "../../src/app/ReplayUtils";
-		«ENDIF»
+	def generateCommand() '''
+		import ACEController from "./ACEController";
+		import AppUtils from "../../src/app/AppUtils";
+		import ReplayUtils from "../../src/app/ReplayUtils";
 		
-		«IF generateModules»export default «ENDIF»class Command {
+		export default class Command {
 		    constructor(commandParam, commandName) {
 		        this.commandName = commandName;
 		        this.commandParam = JSON.parse(JSON.stringify(commandParam));
@@ -350,13 +325,13 @@ class ES6Template {
 		                this.execute().then(() => {
 		                    ACEController.addItemToTimeLine({command: this});
 		                    this.publishEvents().then(() => {
-								postUpdateUI();
-								if (ACEController.execution === ACEController.LIVE) {
-								    ACEController.applyNextActions();
-								} else {
-								    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-								}
-								resolve();
+		                        postUpdateUI();
+		                        if (ACEController.execution === ACEController.LIVE) {
+		                            ACEController.applyNextActions();
+		                        } else {
+		                            setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                        }
+		                        resolve();
 		                    }, (error) => {
 		                        reject(error + " when publishing events of command " + this.commandName);
 		                    });
@@ -368,9 +343,9 @@ class ES6Template {
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents().then(() => {
-							postUpdateUI();
-							setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-							resolve();
+		                    postUpdateUI();
+		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                    resolve();
 		                }, (error) => {
 		                    reject(error + " when publishing events of command " + this.commandName);
 		                });
@@ -446,20 +421,20 @@ class ES6Template {
 		
 	'''
 	
-	def generateEvent(Project it) '''
-		«IF generateModules»
-			import ACEController from "./ACEController";
-		«ENDIF»
+	def generateEvent() '''
+		import ACEController from "./ACEController";
 		
-		«IF generateModules»export default «ENDIF»class Event {
+		export default class Event {
 		    constructor(eventParam, eventName) {
 		        this.eventName = eventName;
 		        this.eventParam = eventParam;
 		    }
+		
 		    prepareDataForView() {
 		        throw "no prepareDataForView method defined for " + this.eventName;
 		
 		    }
+		
 		    publish() {
 		        return new Promise((resolve, reject) => {
 		            this.prepareDataForView();
@@ -474,9 +449,9 @@ class ES6Template {
 		
 		    notifyListeners() {
 		        let promises = [];
-		        var i, listener;
+		        let i, listener;
 		        if (this.eventName !== undefined) {
-		            var listenersForEvent = ACEController.listeners[this.eventName];
+		            const listenersForEvent = ACEController.listeners[this.eventName];
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
@@ -494,43 +469,177 @@ class ES6Template {
 	'''
 	
 	def generateAppUtilsStub(Project it) '''
-		«IF generateModules»export default «ENDIF»class AppUtils {
+		import ACEController from "../../gen/ace/ACEController";
+		import uuid from "uuid";
+		
+		export default class AppUtils {
 		
 		    static start() {
+		    		// call initial action
 		    }
 		
-		    static timelineChanged(items) {
+		    static getClientVersion() {
+		        return "1.0.0";
 		    }
 		
 		    static httpGet(url, queryParams, commandParam) {
-		        return new Promise((resolve) => {
-		            resolve();
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		
+		            const options = {
+		                method: 'GET',
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache'
+		            };
+		
+		            const adjustedUrl = AppUtils.url(url);
+		            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
+		            const request = new Request(completeUrl, options);
+		
+		            fetch(request).then(function (response) {
+		                return response.json();
+		            }).then(function (data) {
+		                if (data.code && data.code >= 400) {
+		                    throw new Error(`status code ${data.code} and message ${data.message}`);
+		                } else {
+		                    resolve(data);
+		                }
+		            }).catch(function (error) {
+		                reject(`GET failed with ${error.message}`);
+		            });
+		        });
+		    }
+		
+		    static httpChange(methodType, url, queryParams, data, commandParam) {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "text/plain");
+		
+		            const options = {
+		                method: methodType,
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache',
+		                body: JSON.stringify(data)
+		            };
+		
+		            const adjustedUrl = AppUtils.url(url);
+		            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
+		            const request = new Request(completeUrl, options);
+		
+		            fetch(request).then(function (response) {
+		                return response.text();
+		            }).then(function (data) {
+		                if (data.code && data.code >= 400) {
+		                    throw new Error(`status code ${data.code} and message ${data.message}`);
+		                } else {
+		                    resolve(data);
+		                }
+		            }).catch(function (error) {
+		                reject(`${methodType} failed with ${error.message}`);
+		            });
 		        });
 		    }
 		
 		    static httpPost(url, queryParams, data, commandParam) {
-		        return new Promise((resolve) => {
-		            resolve();
-		        });
+		        return AppUtils.httpChange("POST", url, queryParams, data, commandParam);
 		    }
 		
 		    static httpPut(url, queryParams, data, commandParam) {
-		        return new Promise((resolve) => {
-		            resolve();
-		        });
+		        return AppUtils.httpChange("PUT", url, queryParams, data, commandParam);
 		    }
 		
 		    static httpDelete(url, queryParams, data, commandParam) {
-		        return new Promise((resolve) => {
-		            resolve();
-		        });
+		        return AppUtils.httpChange("DELETE", url, queryParams, data, commandParam);
 		    }
-		    
-			static createUUID() {
-			    //return some kind of uuid
-			}
-		    
-		    
+		
+		    static queryParamString(url, queryParams) {
+		        let queryString = "";
+		        if (queryParams && queryParams.length > 0) {
+		            for (let i = 0; i < queryParams.length; i++) {
+		                if (url.indexOf('?') < 0 && i === 0) {
+		                    queryString += '?'
+		                } else {
+		                    queryString += '&'
+		                }
+		                queryString += queryParams[i].key + "=" + queryParams[i].value;
+		            }
+		        }
+		        return queryString;
+		    }
+		
+		    static url(url) {
+		        if (ACEController.execution !== ACEController.E2E) {
+		            return url;
+		        } else {
+		            return url.replace('api', 'replay');
+		        }
+		    }
+		
+		    static createUUID() {
+		    		// return a uuid, you could use npm package uuid
+		        //return uuid.v4();
+		    }
+		
+		    static saveBug(description, reporter) {
+		        const data = {
+		            description: description,
+		            reporter: reporter,
+		            timeline: JSON.stringify(ACEController.timeline)
+		        };
+		        return AppUtils.httpPost('api/bug/create', null, data);
+		    }
+		
+		    static deleteBug(id) {
+		        let queryParams = [
+		            {
+		                key: "id",
+		                value: id
+		            }
+		        ];
+		        return AppUtils.httpDelete('api/bug/delete', queryParams);
+		    }
+		
+		    static resolveBug(id) {
+		        let queryParams = [
+		            {
+		                key: "id",
+		                value: id
+		            }
+		        ];
+		        return AppUtils.httpDelete('api/bug/resolve', queryParams);
+		    }
+		
+		    static loadBugs() {
+		        return AppUtils.httpGet('api/bug/all');
+		    }
+		
+		    static getBrowserInfo() {
+		        let ua = navigator.userAgent, tem,
+		            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+		        if (/trident/i.test(M[1])) {
+		            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+		            return {name: 'IE ', version: (tem[1] || '')};
+		        }
+		        if (M[1] === 'Chrome') {
+		            tem = ua.match(/\bOPR\/(\d+)/)
+		            if (tem != null) {
+		                return {name: 'Opera', version: tem[1]};
+		            }
+		        }
+		        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+		        if ((tem = ua.match(/version\/(\d+)/i)) != null) {
+		            M.splice(1, 1, tem[1]);
+		        }
+		        return {
+		            name: M[0],
+		            version: M[1]
+		        };
+		    }
 		
 		}
 		
@@ -539,50 +648,74 @@ class ES6Template {
 	'''
 	
 	def generateAppStub(Project it) '''
-		«IF generateModules»
-			import ACEController from "ACEController";
-			import AppUtils from "AppUtils";
-		«ENDIF»
+		import ACEController from "ACEController";
+		import AppUtils from "AppUtils";
+		
+		export * from "../../gen/ace/Scenario";
 		
 		AppUtils.start();
 		
 		// add EventListenerRegistration.init() of all modules
+		// add ActionFactoryRegistrationTodo.init() of all modules
 		
 		/*       S.D.G.       */
 		
 	'''
 	
 	def generateReplayUtilsStub(Project it) '''
-		«IF generateModules»
-			import ACEController from "../../gen/ace/ACEController";
-			import AppUtils from './AppUtils';
-		«ENDIF»
+		import ACEController from "../../gen/ace/ACEController";
+		import AppUtils from "./AppUtils";
 		
-		«IF generateModules»export default «ENDIF»class ReplayUtils {
+		export default class ReplayUtils {
 		
-		    static actualTimelineChanged(items) {
-		    }
-		
-		    static expectedTimelineChanged(items) {
+		    static normalizeTimelines(expected, actual) {
+		        let normalizedExpected = [];
+		        let normalizedActual = [];
+		        let expectedIndex = 0;
+		        let actualIndex = 0;
+		        while (expectedIndex < expected.length) {
+		            if (actualIndex >= actual.length) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push({});
+		                expectedIndex++;
+		            } else if (expected[expectedIndex].action && actual[actualIndex].action || !expected[expectedIndex].action && !actual[actualIndex].action) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push(actual[actualIndex]);
+		                expectedIndex++;
+		                actualIndex++;
+		            } else if (expected[expectedIndex].action && !actual[actualIndex].action) {
+		                normalizedExpected.push({});
+		                normalizedActual.push(actual[actualIndex]);
+		                actualIndex++;
+		            } else if (!expected[expectedIndex].action && actual[actualIndex].action) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push({});
+		                expectedIndex++;
+		            }
+		        }
+		        while (actualIndex < actual.length) {
+		            normalizedExpected.push({});
+		            normalizedActual.push(actual[actualIndex]);
+		            actualIndex++;
+		        }
+		        return {
+		            expected: normalizedExpected,
+		            actual: normalizedActual
+		        };
 		    }
 		
 		    static resetDatabase() {
-		        return new Promise((resolve) => {
-		            resolve();
-		        });
+		        return AppUtils.httpDelete('replay/database/reset');
 		    }
 		
 		    static prepareAction(uuid) {
-				if (ACEController.execution === ACEController.E2E) {
-				    return new Promise((resolve) => {
-				    		// prepare action
-				    		resolve();
-				    });
-				} else {
-				    return new Promise((resolve) => {
-				        resolve();
-				    });
-				}
+		        if (ACEController.execution === ACEController.E2E) {
+		            return AppUtils.httpPut('replay/database/prepare?uuid=' + uuid);
+		        } else {
+		            return new Promise((resolve) => {
+		                resolve();
+		            });
+		        }
 		    }
 		
 		    static replay(pauseInMillis) {
@@ -592,65 +725,122 @@ class ES6Template {
 		    static e2e(pauseInMillis) {
 		        ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		    }
-
-			static uploadTimeline() {
-				// upload timeline
-				const json = '';
-		        ACEController.initTimeline(JSON.parse(json));
-			}
 		
-			static initFinishReplayCallback(callback) {
-			    ReplayUtils.finishReplayCallback = callback;
-			}
-
-			static finishReplay() {
-			    const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
-			    const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
-			    if (ReplayUtils.finishReplayCallback) {
-			        ReplayUtils.finishReplayCallback(result);
-			    }
-			}
-
-			static saveScenario(description) {
-			    const data = {
-			        description: description,
-			        data: JSON.stringify(ACEController.expectedTimeline)
-			    };
-			    return AppUtils.httpPost('api/scenario/create', null, data);
-			}
-			
-			static deleteScenario(id) {
-			    let queryParams = [
-			        {
-			            key: "id",
-			            value: id
-			        }
-			    ];
-			    return AppUtils.httpDelete('api/scenario/delete', queryParams);
-			}
-
-			static loadScenarios() {
-			    return AppUtils.httpGet('api/scenario/all');
-			}
-
+		    static finishReplay() {
+		        const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
+		        const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+		
+		        if (normalized.expected && normalized.actual) {
+		            const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
+		            for (let i = 0; i < size; i++) {
+		                const expected = normalized.expected[i] ? normalized.expected[i] : null;
+		                const actual = normalized.actual[i] ? normalized.actual[i] : null;
+		                const result = ReplayUtils.compareItems(expected, actual);
+		                const item = {
+		                    expected,
+		                    actual,
+		                    result
+		                };
+		                if (result === true) {
+		                    console.log("%cSUCCESS", "color: green;", item);
+		                } else {
+		                    console.log("%cFAILURE", "color: red;", item);
+		                }
+		            }
+		        }
+		        if (result === true) {
+		            console.log("%c===============", "color: green;");
+		            console.log("%c=== SUCCESS ===", "color: green;");
+		            console.log("%c===============", "color: green;");
+		        } else {
+		            console.log("%c===============", "color: red;");
+		            console.log("%c=== FAILURE ===", "color: red;");
+		            console.log("%c===============", "color: red;");
+		        }
+		        ReplayUtils.saveScenarioResult(normalized, result);
+		    }
+		
+		    static compareItems(expected, actual) {
+		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
+		    }
+		
+		
+		    static itemStringifyReplacer(key, value) {
+		        if (key === 'timestamp') {
+		            return undefined;
+		        } else {
+		            return value;
+		        }
+		    }
+		
+		    static saveScenario(description, creator) {
+		        const browser = AppUtils.getBrowserInfo();
+		        const data = {
+		            description,
+		            timeline: JSON.stringify(ACEController.timeline),
+		            creator,
+		            clientVersion: AppUtils.getClientVersion(),
+		            device: browser.name + " " + browser.version
+		        };
+		        return AppUtils.httpPost('api/scenario/create', null, data);
+		    }
+		
+		    static deleteScenario(id) {
+		        let queryParams = [
+		            {
+		                key: "id",
+		                value: id
+		            }
+		        ];
+		        return AppUtils.httpDelete('api/scenario/delete', queryParams);
+		    }
+		
+		    static loadScenarios() {
+		        return AppUtils.httpGet('api/scenario/all');
+		    }
+		
+		    static loadScenario(id) {
+		        let queryParams = [];
+		        queryParams.push({
+		            key: "id",
+		            value: id
+		        });
+		        return AppUtils.httpGet('api/scenario/single', queryParams);
+		    }
+		
+		    static saveScenarioResult(normalized, result) {
+		        const browser = AppUtils.getBrowserInfo();
+		        const data = {
+		            description: ReplayUtils.scenarioConfig.description,
+		            scenarioId: ReplayUtils.scenarioConfig.scenarioId,
+		            timeline: JSON.stringify(normalized),
+		            executor: ReplayUtils.scenarioConfig.executor,
+		            e2e: ReplayUtils.scenarioConfig.e2e,
+		            result,
+		            clientVersion: AppUtils.getClientVersion(),
+		            device: browser.name + " " + browser.version
+		        };
+		        return AppUtils.httpPost('api/scenario-result/create', null, data);
+		    }
+		
+		
 		}
 		
 		/*       S.D.G.       */
 		
 	'''
 	
-	def generateACEController(Project it) '''
-		«IF generateModules»
-			import AppUtils from "../../src/app/AppUtils";
-			import ReplayUtils from "../../src/app/ReplayUtils";
-		«ENDIF»
+	def generateACEController() '''
+		import AppUtils from "../../src/app/AppUtils";
+		import ReplayUtils from "../../src/app/ReplayUtils";
+		import {runScenario} from "./Scenario";
 		
-		«IF generateModules»export default «ENDIF»class ACEController {
+		export default class ACEController {
 		
 		    static init() {
 		        ACEController.timeline = [];
 		        ACEController.listeners = {};
-				ACEController.factories = {};
+		        ACEController.factories = {};
 		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
 		        ACEController.actionIsProcessing = false;
 		        ACEController.actionQueue = [];
@@ -706,10 +896,8 @@ class ES6Template {
 		                    }
 		                }
 		            }
-		            AppUtils.timelineChanged([item]);
 		        } else {
 		            ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
-		            ReplayUtils.actualTimelineChanged([item]);
 		        }
 		    }
 		
@@ -729,16 +917,16 @@ class ES6Template {
 		            action.applyAction().then(() => {
 		            }, (error) => {
 		                ACEController.actionIsProcessing = false;
-		                throw new Error(error + " when applying action " + action.actionName);
+		                console.error(error + " when applying action " + action.actionName);
 		            });
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
 		            if (ACEController.execution !== ACEController.LIVE) {
-		                ReplayUtils.finishReplay(ACEController.execution);
-						ACEController.timeline = [];
-						ACEController.actionIsProcessing = false;
-						ACEController.actionQueue = [];
-						ACEController.execution = ACEController.LIVE;
+		                ACEController.timeline = [];
+		                ACEController.actionIsProcessing = false;
+		                ACEController.actionQueue = [];
+		                ACEController.execution = ACEController.LIVE;
+		                ReplayUtils.finishReplay();
 		                AppUtils.start();
 		            }
 		        }
@@ -752,8 +940,6 @@ class ES6Template {
 		        ACEController.actualTimeline = [];
 		        ACEController.execution = level;
 		        ACEController.pauseInMillis = pauseInMillis;
-		        
-		        ReplayUtils.actualTimelineChanged([]);
 		
 		        if (ACEController.execution === ACEController.REPLAY) {
 		            ACEController.readTimelineAndCreateReplayActions();
@@ -776,16 +962,14 @@ class ES6Template {
 		            for (let i = 0; i < ACEController.timeline.length; i++) {
 		                let item = ACEController.timeline[i];
 		                ACEController.expectedTimeline.push(item);
-			        	}
+		            }
 		        }
-		        
-		        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
-		        
+		
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
-						const actionParam = item.action.actionParam;
-						let action = ACEController.factories[item.action.actionName](actionParam);
+		                const actionParam = item.action.actionParam;
+		                let action = ACEController.factories[item.action.actionName](actionParam);
 		                action.actionData.uuid = item.action.actionData.uuid;
 		                actions.push(action);
 		            }
@@ -813,16 +997,61 @@ class ES6Template {
 		
 	'''
 	
-	def generateTriggerAction(Project it) '''
-		«IF generateModules»
-			import Event from "./Event";
-		«ENDIF»
+	def generateScenario() '''
+		import ReplayUtils from "../../src/app/ReplayUtils";
+		import ACEController from "./ACEController";
 		
-		«IF generateModules»export default «ENDIF»class TriggerAction extends Event {
+		export function runScenarioE2E(scenarioId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
+		        ReplayUtils.scenarioConfig = {
+		            executor,
+		            scenarioId,
+		            description,
+		            e2e: true
+		        };
+		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+		        ReplayUtils.e2e(pauseInMillis);
+		    });
+		}
+		
+		export function runScenarioReplay(scenarioId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
+		        ReplayUtils.scenarioConfig = {
+		            executor,
+		            scenarioId,
+		            description,
+		            e2e: false
+		        };
+		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+		        ReplayUtils.replay(pauseInMillis);
+		    });
+		}
+		
+		export function saveScenario(description, creator) {
+		    ReplayUtils.saveScenario(description, creator);
+		}
+		
+		export function displayScenarios(description, creator) {
+		    ReplayUtils.loadScenarios().then((scenarios) => {
+		        scenarios.forEach((scenario) => {
+		            console.log("scenario", scenario)
+		        })
+		    });
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+
+	def generateTriggerAction() '''
+		import Event from "./Event";
+		
+		export default class TriggerAction extends Event {
 		    constructor(action) {
 		        super(action, 'TriggerAction');
 		        this.eventData = action;
 		    }
+		
 		    prepareDataForView() {
 		    }
 		}

@@ -94,15 +94,17 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile('app/ReplayUtils.js',
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateReplayUtilsStub(project));
 				fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateAction(project));
+					es6Template.generateAction());
 				fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateCommand(project));
+					es6Template.generateCommand());
 				fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateEvent(project));
+					es6Template.generateEvent());
 				fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateACEController(project));
+					es6Template.generateACEController());
 				fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT,
-					es6Template.generateTriggerAction(project));
+					es6Template.generateTriggerAction());
+				fsa.generateFile('ace/Scenario.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateScenario());
 			} else if (project.target == 'JAVA') {
 				for (model : project.models) {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelName + '.java',
