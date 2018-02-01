@@ -500,7 +500,11 @@ class ES6Template {
 		            const request = new Request(completeUrl, options);
 		
 		            fetch(request).then(function (response) {
-		                return response.json();
+		                if (response.status >= 500) {
+		                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
+		                } else {
+		                    return response.json();
+		                }
 		            }).then(function (data) {
 		                if (data.code && data.code >= 400) {
 		                    throw new Error(`status code ${data.code} and message ${data.message}`);
@@ -532,7 +536,11 @@ class ES6Template {
 		            const request = new Request(completeUrl, options);
 		
 		            fetch(request).then(function (response) {
-		                return response.text();
+						if (response.status >= 500) {
+						    throw new Error(`status code ${response.status} and message ${response.statusText}`);
+						} else {
+						    return response.text();
+						}
 		            }).then(function (data) {
 		                if (data.code && data.code >= 400) {
 		                    throw new Error(`status code ${data.code} and message ${data.message}`);
@@ -586,10 +594,13 @@ class ES6Template {
 		    }
 		
 		    static saveBug(description, reporter) {
+				const browser = AppUtils.getBrowserInfo();
 		        const data = {
 		            description: description,
 		            reporter: reporter,
-		            timeline: JSON.stringify(ACEController.timeline)
+		            timeline: JSON.stringify(ACEController.timeline),
+					clientVersion: AppUtils.getClientVersion(),
+					device: browser.name + " " + browser.version
 		        };
 		        return AppUtils.httpPost('api/bug/create', null, data);
 		    }
@@ -618,6 +629,16 @@ class ES6Template {
 		        return AppUtils.httpGet('api/bug/all');
 		    }
 		
+			static loadBug(id) {
+			    let queryParams = [
+			        {
+			            key: "id",
+			            value: id
+			        }
+			    ];
+			    return AppUtils.httpGet('api/bug/single', queryParams);
+			}
+
 		    static getBrowserInfo() {
 		        let ua = navigator.userAgent, tem,
 		            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -641,6 +662,9 @@ class ES6Template {
 		        };
 		    }
 		
+		    static displayUnexpectedError(error) {
+		    }
+		
 		}
 		
 		/*       S.D.G.       */
@@ -652,6 +676,7 @@ class ES6Template {
 		import AppUtils from "AppUtils";
 		
 		export * from "../../gen/ace/Scenario";
+		export * from "../../gen/ace/Bug";
 		
 		AppUtils.start();
 		
@@ -757,7 +782,9 @@ class ES6Template {
 		            console.log("%c=== FAILURE ===", "color: red;");
 		            console.log("%c===============", "color: red;");
 		        }
-		        ReplayUtils.saveScenarioResult(normalized, result);
+				if (ReplayUtils.scenarioConfig.finishReplay) {
+				    ReplayUtils.scenarioConfig.finishReplay(normalized, result);
+				}
 		    }
 		
 		    static compareItems(expected, actual) {
@@ -918,6 +945,7 @@ class ES6Template {
 		            }, (error) => {
 		                ACEController.actionIsProcessing = false;
 		                console.error(error + " when applying action " + action.actionName);
+		                AppUtils.displayUnexpectedError(error + " when applying action " + action.actionName);
 		            });
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
@@ -1007,7 +1035,8 @@ class ES6Template {
 		            executor,
 		            scenarioId,
 		            description,
-		            e2e: true
+		            e2e: true,
+					finishReplay: ReplayUtils.saveScenarioResult
 		        };
 		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
 		        ReplayUtils.e2e(pauseInMillis);
@@ -1020,7 +1049,8 @@ class ES6Template {
 		            executor,
 		            scenarioId,
 		            description,
-		            e2e: false
+		            e2e: false,
+					finishReplay: ReplayUtils.saveScenarioResult
 		        };
 		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
 		        ReplayUtils.replay(pauseInMillis);
@@ -1031,10 +1061,65 @@ class ES6Template {
 		    ReplayUtils.saveScenario(description, creator);
 		}
 		
-		export function displayScenarios(description, creator) {
+		export function displayScenarios() {
 		    ReplayUtils.loadScenarios().then((scenarios) => {
 		        scenarios.forEach((scenario) => {
 		            console.log("scenario", scenario)
+		        })
+		    });
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+
+	def generateBug() '''
+		import ReplayUtils from "../../src/app/ReplayUtils";
+		import AppUtils from "../../src/app/AppUtils";
+		import ACEController from "./ACEController";
+		
+		export function runBugE2E(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		    AppUtils.loadBug(bugId).then((bug) => {
+		        ReplayUtils.scenarioConfig = {
+		            executor,
+		            bugId,
+		            description,
+		            e2e: true
+		        };
+		        ACEController.expectedTimeline = JSON.parse(bug.timeline);
+		        ReplayUtils.e2e(pauseInMillis);
+		    });
+		}
+		
+		export function runBugReplay(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		    AppUtils.loadBug(bugId).then((bug) => {
+		        ReplayUtils.scenarioConfig = {
+		            executor,
+		            bugId,
+		            description,
+		            e2e: false
+		        };
+		        ACEController.expectedTimeline = JSON.parse(bug.timeline);
+		        ReplayUtils.replay(pauseInMillis);
+		    });
+		}
+		
+		export function saveBug(description, creator) {
+		    AppUtils.saveBug(description, creator);
+		}
+		
+		export function deleteBug(id) {
+		    AppUtils.deleteBug(id);
+		}
+		
+		export function resolveBug(id) {
+		    AppUtils.resolveBug(id);
+		}
+		
+		export function displayBugs() {
+		    AppUtils.loadBugs().then((bugs) => {
+		        bugs.forEach((bug) => {
+		            console.log("bug", bug)
 		        })
 		    });
 		}

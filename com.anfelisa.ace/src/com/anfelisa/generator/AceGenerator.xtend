@@ -105,6 +105,8 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateTriggerAction());
 				fsa.generateFile('ace/Scenario.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateScenario());
+				fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateBug());
 			} else if (project.target == 'JAVA') {
 				for (model : project.models) {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelName + '.java',
