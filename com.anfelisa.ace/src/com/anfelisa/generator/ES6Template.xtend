@@ -284,7 +284,7 @@ class ES6Template {
 		                    },
 		                    (error) => {
 		                        this.postUpdateUI();
-		                        reject(error + " when executing command " + command.commandName);
+		                        reject(error + "\n" + command.commandName);
 		                    });
 		            } else {
 		                this.postUpdateUI();
@@ -333,10 +333,10 @@ class ES6Template {
 		                        }
 		                        resolve();
 		                    }, (error) => {
-		                        reject(error + " when publishing events of command " + this.commandName);
+		                        reject(error + "\n" + this.commandName);
 		                    });
 		                }, (error) => {
-		                    reject(error + " when executing command " + this.commandName);
+		                    reject(error + "\n" + this.commandName);
 		                });
 		            } else {
 		                const timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
@@ -347,7 +347,7 @@ class ES6Template {
 		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 		                    resolve();
 		                }, (error) => {
-		                    reject(error + " when publishing events of command " + this.commandName);
+		                    reject(error + "\n" + this.commandName);
 		                });
 		            }
 		        });
@@ -442,7 +442,7 @@ class ES6Template {
 		            Promise.all(this.notifyListeners()).then(() => {
 		                resolve();
 		            }, (error) => {
-		                reject(error + " when notifying listeners of event " + this.eventName);
+		                reject(error + "\n" + this.eventName);
 		            });
 		        });
 		    }
@@ -483,74 +483,90 @@ class ES6Template {
 		    }
 		
 		    static httpGet(url, queryParams, commandParam) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		
-		            const options = {
-		                method: 'GET',
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache'
-		            };
-		
-		            const adjustedUrl = AppUtils.url(url);
-		            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
-		            const request = new Request(completeUrl, options);
-		
-		            fetch(request).then(function (response) {
-		                if (response.status >= 500) {
-		                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
-		                } else {
-		                    return response.json();
-		                }
-		            }).then(function (data) {
-		                if (data.code && data.code >= 400) {
-		                    throw new Error(`status code ${data.code} and message ${data.message}`);
-		                } else {
-		                    resolve(data);
-		                }
-		            }).catch(function (error) {
-		                reject(`GET failed with ${error.message}`);
-		            });
-		        });
+				return new Promise((resolve, reject) => {
+				    let authorization = commandParam ? AppUtils.basicAuth(commandParam.username, commandParam.password) : undefined;
+				    const headers = new Headers();
+				    headers.append("Content-Type", "application/json");
+				    headers.append("Accept", "application/json");
+				    if (authorization !== undefined) {
+				        headers.append("Authorization", authorization);
+				    }
+				
+				    const options = {
+				        method: 'GET',
+				        headers: headers,
+				        mode: 'cors',
+				        cache: 'no-cache'
+				    };
+				
+				    const adjustedUrl = AppUtils.url(url);
+				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
+				    const request = new Request(completeUrl, options);
+				
+				    fetch(request).then(function (response) {
+				        if (response.status >= 300) {
+				            const status = {
+				                code: response.status,
+				                text: response.statusText
+				            };
+				            reject(status);
+				        } else {
+				            return response.json();
+				        }
+				    }).then(function (data) {
+				        resolve(data);
+				    }).catch(function (error) {
+				        const status = {
+				            code: error.name,
+				            text: error.message
+				        };
+				        reject(status);
+				    });
+				});
 		    }
 		
 		    static httpChange(methodType, url, queryParams, data, commandParam) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "text/plain");
-		
-		            const options = {
-		                method: methodType,
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache',
-		                body: JSON.stringify(data)
-		            };
-		
-		            const adjustedUrl = AppUtils.url(url);
-		            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
-		            const request = new Request(completeUrl, options);
-		
-		            fetch(request).then(function (response) {
-						if (response.status >= 500) {
-						    throw new Error(`status code ${response.status} and message ${response.statusText}`);
-						} else {
-						    return response.text();
-						}
-		            }).then(function (data) {
-		                if (data.code && data.code >= 400) {
-		                    throw new Error(`status code ${data.code} and message ${data.message}`);
-		                } else {
-		                    resolve(data);
-		                }
-		            }).catch(function (error) {
-		                reject(`${methodType} failed with ${error.message}`);
-		            });
-		        });
+				return new Promise((resolve, reject) => {
+				    let authorization = commandParam ? AppUtils.basicAuth(commandParam.username, commandParam.password) : undefined;
+				    const headers = new Headers();
+				    headers.append("Content-Type", "application/json");
+				    headers.append("Accept", "text/plain");
+				    if (authorization !== undefined) {
+				        headers.append("Authorization", authorization);
+				    }
+				
+				    const options = {
+				        method: methodType,
+				        headers: headers,
+				        mode: 'cors',
+				        cache: 'no-cache',
+				        body: JSON.stringify(data)
+				    };
+				
+				    const adjustedUrl = AppUtils.url(url);
+				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
+				    const request = new Request(completeUrl, options);
+				
+				    fetch(request).then(function (response) {
+				        if (response.status >= 300) {
+				            const status = {
+				                code: response.status,
+				                text: response.statusText
+				            };
+				            reject(status);
+				        } else {
+				            return response.text();
+				        }
+				    }).then(function (data) {
+				        resolve(data);
+				    }).catch(function (error) {
+				        const status = {
+				            code: error.name,
+				            text: error.message
+				        };
+				        reject(status);
+				    });
+				});
 		    }
 		
 		    static httpPost(url, queryParams, data, commandParam) {
@@ -588,6 +604,11 @@ class ES6Template {
 		        }
 		    }
 		
+			static basicAuth(user, password) {
+				// implement your basic auth
+			    return undefined;
+			}
+
 		    static createUUID() {
 		    		// return a uuid, you could use npm package uuid
 		        //return uuid.v4();
@@ -672,7 +693,6 @@ class ES6Template {
 	'''
 	
 	def generateAppStub(Project it) '''
-		import ACEController from "ACEController";
 		import AppUtils from "AppUtils";
 		
 		export * from "../../gen/ace/Scenario";
@@ -944,8 +964,8 @@ class ES6Template {
 		            action.applyAction().then(() => {
 		            }, (error) => {
 		                ACEController.actionIsProcessing = false;
-		                console.error(error + " when applying action " + action.actionName);
-		                AppUtils.displayUnexpectedError(error + " when applying action " + action.actionName);
+		                console.error(error + "\n" + action.actionName);
+		                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
 		            });
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
@@ -1058,7 +1078,9 @@ class ES6Template {
 		}
 		
 		export function saveScenario(description, creator) {
-		    ReplayUtils.saveScenario(description, creator);
+			ReplayUtils.saveScenario(description, creator).then((id) => {
+			    console.log(`saved scenario with id ${id}`);
+			});
 		}
 		
 		export function displayScenarios() {
@@ -1105,7 +1127,9 @@ class ES6Template {
 		}
 		
 		export function saveBug(description, creator) {
-		    AppUtils.saveBug(description, creator);
+			AppUtils.saveBug(description, creator).then((id) => {
+			    console.log(`saved bug with id ${id}`);
+			});
 		}
 		
 		export function deleteBug(id) {

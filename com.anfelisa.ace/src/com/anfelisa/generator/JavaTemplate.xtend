@@ -985,9 +985,6 @@ class JavaTemplate {
 		
 			private AceDao aceDao = new AceDao();
 		
-			private TodoDao todoDao = new TodoDao();
-			private TodoHistoryDao todoHistoryDao = new TodoHistoryDao();
-		
 			public MigrateDatabaseResource(DBI jdbi) {
 				super();
 				this.jdbi = jdbi;
