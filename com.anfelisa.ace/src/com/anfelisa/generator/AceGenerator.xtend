@@ -118,13 +118,13 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/' + model.name + '.html',
 						ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 						javaTemplate.generateModelResource(model));
+					fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateMapper(model, project));
 					if (model.persistent) {
 						fsa.generateFile(project.packageFolder + '/models/' + model.modelDao + '.java',
 							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 							javaTemplate.generateDao(model, project));
-						fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generateMapper(model, project));
 						fsa.generateFile(project.packageFolder + '/' + model.name + '_creation.xml',
 							ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 							javaTemplate.generateMigration(model, project));
