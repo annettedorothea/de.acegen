@@ -180,24 +180,6 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile("com/anfelisa/ace" + '/PrepareDatabaseResource.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generatePrepareDatabaseResource());
 
-				fsa.generateFile("com/anfelisa/ace/bug" + '/CreateBugResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateCreateBugResource());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/DeleteBugResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateDeleteBugResource());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/GetAllBugsResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateGetAllBugsResource());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/ResolveBugResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateResolveBugResource());
-
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/CreateScenarioResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateCreateScenarioResource());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/DeleteScenarioResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateDeleteScenarioResource());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/GetAllScenariosResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateGetAllScenariosResource());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/GetScenarioResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateGetScenarioResource());
-
 				fsa.generateFile("com/anfelisa/ace" + '/AceController.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceController());
 				fsa.generateFile("com/anfelisa/ace" + '/AceDao.java',
@@ -232,33 +214,6 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateTimelineItem());
 				fsa.generateFile("com/anfelisa/ace" + '/TimelineItemMapper.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateTimelineItemMapper());
-
-				fsa.generateFile("com/anfelisa/ace/bug" + '/BugDao.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateBugDao());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/BugMapper.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateBugMapper());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/BugModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateBugModel());
-				fsa.generateFile("com/anfelisa/ace/bug" + '/IBugModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIBugModel());
-
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/IScenarioModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIScenarioModel());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioModel());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioDao.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioDao());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioMapper.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioMapper());
-
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/IScenarioResultModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIScenarioResultModel());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultModel.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultModel());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultDao.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultDao());
-				fsa.generateFile("com/anfelisa/ace/scenario" + '/ScenarioResultMapper.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateScenarioResultMapper());
 
 				fsa.generateFile("com/anfelisa/ace/encryption" + '/AESEncryption.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAESEncryption());

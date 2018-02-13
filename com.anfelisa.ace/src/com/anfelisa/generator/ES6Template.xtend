@@ -118,7 +118,7 @@ class ES6Template {
 						break;
 				«ENDFOR»
 				default:
-					throw 'unhandled outcome: ' + this.commandData.outcome;
+					throw '«commandName»" unhandled outcome: ' + this.commandData.outcome;
 				}
 				return Promise.all(promises);
 		    }
@@ -693,7 +693,7 @@ class ES6Template {
 	'''
 	
 	def generateAppStub(Project it) '''
-		import AppUtils from "AppUtils";
+		import AppUtils from "./AppUtils";
 		
 		export * from "../../gen/ace/Scenario";
 		export * from "../../gen/ace/Bug";
