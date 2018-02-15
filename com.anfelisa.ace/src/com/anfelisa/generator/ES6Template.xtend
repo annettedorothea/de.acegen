@@ -118,7 +118,7 @@ class ES6Template {
 						break;
 				«ENDFOR»
 				default:
-					throw '«commandName»" unhandled outcome: ' + this.commandData.outcome;
+					throw '«commandName» unhandled outcome: ' + this.commandData.outcome;
 				}
 				return Promise.all(promises);
 		    }
@@ -279,13 +279,16 @@ class ES6Template {
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
-		                command.executeCommand(this.postUpdateUI).then(() => {
-		                        resolve();
-		                    },
-		                    (error) => {
-		                        this.postUpdateUI();
-		                        reject(error + "\n" + command.commandName);
-		                    });
+						command.executeCommand().then(
+						    () => {
+						        this.postUpdateUI();
+						        resolve();
+						    },
+						    (error) => {
+						        this.postUpdateUI();
+						        reject(error + "\n" + command.commandName);
+						    }
+						);
 		            } else {
 		                this.postUpdateUI();
 		                resolve();
@@ -319,13 +322,12 @@ class ES6Template {
 		        throw "no publishEvents method defined for " + this.commandName;
 		    }
 		
-		    executeCommand(postUpdateUI) {
+		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 		            if (ACEController.execution !== ACEController.REPLAY) {
 		                this.execute().then(() => {
 		                    ACEController.addItemToTimeLine({command: this});
 		                    this.publishEvents().then(() => {
-		                        postUpdateUI();
 		                        if (ACEController.execution === ACEController.LIVE) {
 		                            ACEController.applyNextActions();
 		                        } else {
@@ -333,9 +335,19 @@ class ES6Template {
 		                        }
 		                        resolve();
 		                    }, (error) => {
+								if (ACEController.execution === ACEController.LIVE) {
+								    ACEController.applyNextActions();
+								} else {
+								    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+								}
 		                        reject(error + "\n" + this.commandName);
 		                    });
 		                }, (error) => {
+							if (ACEController.execution === ACEController.LIVE) {
+							    ACEController.applyNextActions();
+							} else {
+							    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+							}
 		                    reject(error + "\n" + this.commandName);
 		                });
 		            } else {
@@ -343,10 +355,10 @@ class ES6Template {
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents().then(() => {
-		                    postUpdateUI();
 		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 		                    resolve();
 		                }, (error) => {
+							setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 		                    reject(error + "\n" + this.commandName);
 		                });
 		            }
@@ -1049,12 +1061,11 @@ class ES6Template {
 		import ReplayUtils from "../../src/app/ReplayUtils";
 		import ACEController from "./ACEController";
 		
-		export function runScenarioE2E(scenarioId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		export function runScenarioE2E(scenarioId, pauseInMillis = 250, executor = "unknown") {
 		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
 		        ReplayUtils.scenarioConfig = {
 		            executor,
 		            scenarioId,
-		            description,
 		            e2e: true,
 					finishReplay: ReplayUtils.saveScenarioResult
 		        };
@@ -1063,12 +1074,11 @@ class ES6Template {
 		    });
 		}
 		
-		export function runScenarioReplay(scenarioId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
+		export function runScenarioReplay(scenarioId, pauseInMillis = 250, executor = "unknown") {
 		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
 		        ReplayUtils.scenarioConfig = {
 		            executor,
 		            scenarioId,
-		            description,
 		            e2e: false,
 					finishReplay: ReplayUtils.saveScenarioResult
 		        };
@@ -1080,6 +1090,8 @@ class ES6Template {
 		export function saveScenario(description, creator) {
 			ReplayUtils.saveScenario(description, creator).then((id) => {
 			    console.log(`saved scenario with id ${id}`);
+				ACEController.timeline = [];
+				AppUtils.start();
 			});
 		}
 		
