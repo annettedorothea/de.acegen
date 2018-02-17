@@ -118,7 +118,7 @@ class ES6Template {
 						break;
 				«ENDFOR»
 				default:
-					throw '«commandName» unhandled outcome: ' + this.commandData.outcome;
+					return new Promise((resolve, reject) => {reject('«commandName» unhandled outcome: ' + this.commandData.outcome)});
 				}
 				return Promise.all(promises);
 		    }
@@ -132,7 +132,7 @@ class ES6Template {
 		
 		export default class «commandName» extends «abstractCommandName» {
 		    execute() {
-		        return new Promise((resolve) => {
+		        return new Promise((resolve, reject) => {
 					resolve();
 		        });
 		    }
@@ -1059,6 +1059,7 @@ class ES6Template {
 	
 	def generateScenario() '''
 		import ReplayUtils from "../../src/app/ReplayUtils";
+		import AppUtils from "../../src/app/AppUtils";
 		import ACEController from "./ACEController";
 		
 		export function runScenarioE2E(scenarioId, pauseInMillis = 250, executor = "unknown") {
