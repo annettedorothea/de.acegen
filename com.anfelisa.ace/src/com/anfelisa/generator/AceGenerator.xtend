@@ -172,13 +172,23 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile("com/anfelisa/ace" + '/App.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateApp());
 				fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateAppConfiguration());
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAppConfiguration());
+				fsa.generateFile("com/anfelisa/ace" + '/E2E.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateE2E());
+				fsa.generateFile("com/anfelisa/ace" + '/ServerConfiguration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerConfiguration());
 				fsa.generateFile("com/anfelisa/ace" + '/ClearDatabaseResource.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateClearDatabaseResource());
 				fsa.generateFile("com/anfelisa/ace" + '/MigrateDatabaseResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateMigrateDatabaseResource());
-				fsa.generateFile("com/anfelisa/ace" + '/PrepareDatabaseResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generatePrepareDatabaseResource());
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateMigrateDatabaseResource());
+				fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateStartE2ESessionResource());
+				fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateStopE2ESessionResource());
+				fsa.generateFile("com/anfelisa/ace" + '/PrepareE2EResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generatePrepareE2EResource());
+				fsa.generateFile("com/anfelisa/ace" + '/GetServerTimelineResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateGetServerTimelineResource());
 
 				fsa.generateFile("com/anfelisa/ace" + '/AceController.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceController());

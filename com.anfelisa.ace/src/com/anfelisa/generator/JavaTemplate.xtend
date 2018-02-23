@@ -450,8 +450,8 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi, DBI jdbiTimeline) {
-				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, jdbiTimeline);
+			public «abstractActionName»(DBI jdbi) {
+				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi);
 			}
 		
 			@Override
@@ -609,8 +609,8 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi, DBI jdbiTimeline) {
-				super(jdbi, jdbiTimeline);
+			public «actionName»(DBI jdbi) {
+				super(jdbi);
 			}
 		
 			«IF type !== null»@«type»«ENDIF»
@@ -742,9 +742,9 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, DBI jdbi, DBI jdbiTimeline) {
+			public static void registerResources(Environment environment, DBI jdbi) {
 				«FOR action : actions»
-					environment.jersey().register(new «action.actionName»(jdbi, jdbiTimeline));
+					environment.jersey().register(new «action.actionName»(jdbi));
 				«ENDFOR»
 			}
 		
@@ -818,14 +818,13 @@ class JavaTemplate {
 				final DBIFactory factory = new DBIFactory();
 		
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
-				DBI jdbiTimeline = null;
 		
-				if (configuration.getTimelineDataSourceFactory().getUrl() != null) {
+				if (configuration.getMode().equals("REPLAY")) {
 					AceController.setAceExecutionMode(AceExecutionMode.REPLAY);
-					jdbiTimeline = factory.build(environment, configuration.getTimelineDataSourceFactory(),
-							"replay-data-source-name");
 					environment.jersey().register(new ClearDatabaseResource(jdbi));
-					environment.jersey().register(new PrepareDatabaseResource(jdbi, jdbiTimeline));
+					environment.jersey().register(new PrepareE2EResource(jdbi));
+					environment.jersey().register(new StartE2ESessionResource());
+					environment.jersey().register(new StopE2ESessionResource());
 				} else {
 					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
 					environment.jersey().register(new MigrateDatabaseResource(jdbi));
@@ -841,6 +840,90 @@ class JavaTemplate {
 		
 			}
 		
+		}
+	'''
+	
+	def generateE2E() '''
+		package com.anfelisa.ace;
+		
+		import java.util.List;
+		
+		import org.joda.time.DateTime;
+		
+		public class E2E {
+			
+			public static boolean sessionIsRunning;
+			
+			public static DateTime sessionStartedAt;
+			
+			public static List<ITimelineItem> timeline;
+			
+			public static ITimelineItem selectAction(String uuid) {
+				for (ITimelineItem timelineItem : timeline) {
+					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("action")) {
+						return timelineItem;
+					}
+				}
+				return null;
+			}
+			
+			public static ITimelineItem selectEvent(String uuid) {
+				for (ITimelineItem timelineItem : timeline) {
+					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("event")) {
+						return timelineItem;
+					}
+				}
+				return null;
+			}
+		
+			
+			public static ITimelineItem selectNextAction(String uuid) {
+				if (uuid != null) {
+					boolean returnNextAction = false;
+					for (ITimelineItem timelineItem : timeline) {
+						if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("action")) {
+							if (returnNextAction) {
+								return timelineItem;
+							}
+							returnNextAction = true;
+						}
+					}
+				} else {
+					for (ITimelineItem timelineItem : timeline) {
+						if (timelineItem.getType().equals("action")) {
+							return timelineItem;
+						}
+					}
+				}
+				return null;
+			}
+		
+			
+		}
+	'''
+	
+	def generateServerConfiguration() '''
+		package com.anfelisa.ace;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		public class ServerConfiguration {
+			public static final String REPLAY = "REPLAY";
+			public static final String LIVE = "LIVE";
+			public static final String DEV = "DEV";
+			
+			private String mode = DEV;
+		
+			@JsonProperty("mode")
+			public String getMode() {
+				return mode;
+			}
+		
+			@JsonProperty("mode")
+			public void setMode(String mode) {
+				this.mode = mode;
+			}
+			
 		}
 	'''
 	
@@ -861,8 +944,10 @@ class JavaTemplate {
 			@NotNull
 			private DataSourceFactory database = new DataSourceFactory();
 		
-			private DataSourceFactory timelineDatabase = new DataSourceFactory();
-			
+			@Valid
+			@NotNull
+			private ServerConfiguration serverConfiguration = new ServerConfiguration();
+		
 			@JsonProperty("database")
 			public DataSourceFactory getDataSourceFactory() {
 				return database;
@@ -873,16 +958,16 @@ class JavaTemplate {
 				this.database = dataSourceFactory;
 			}
 		
-			@JsonProperty("timelineDatabase")
-			public DataSourceFactory getTimelineDataSourceFactory() {
-				return timelineDatabase;
+			@JsonProperty("config")
+			public ServerConfiguration getServerConfiguration() {
+				return serverConfiguration;
 			}
-			
-			@JsonProperty("timelineDatabase")
-			public void setTimelineDataSourceFactory(DataSourceFactory dataSourceFactory) {
-				this.timelineDatabase = dataSourceFactory;
+		
+			@JsonProperty("config")
+			public void setServerConfiguration(ServerConfiguration serverConfiguration) {
+				this.serverConfiguration = serverConfiguration;
 			}
-			
+		
 		}
 	'''
 	
@@ -987,7 +1072,7 @@ class JavaTemplate {
 			@Path("/migrate")
 			// We should protect this resource!
 			public Response put(@QueryParam("uuid") String uuid) {
-				AceController.setAceExecutionMode(AceExecutionMode.MIGRATE);
+				//AceController.setAceExecutionMode(AceExecutionMode.MIGRATE);
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				LOG.info("START MIGRATION");
@@ -1031,7 +1116,110 @@ class JavaTemplate {
 		
 	'''
 	
-	def generatePrepareDatabaseResource() '''
+	def generateStartE2ESessionResource() '''
+		package com.anfelisa.ace;
+		
+		import java.util.List;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/e2e")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class StartE2ESessionResource {
+		
+			static final Logger LOG = LoggerFactory.getLogger(StartE2ESessionResource.class);
+		
+			public StartE2ESessionResource() {
+				super();
+			}
+		
+			@PUT
+			@Timed
+			@Path("/start")
+			public Response put(@NotNull List<TimelineItem> timeline) throws JsonProcessingException {
+				if (E2E.sessionIsRunning) {
+					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
+				}
+				E2E.sessionIsRunning = true;
+				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
+				E2E.timeline = timeline;
+				return Response.ok().build();
+			}
+		
+		}
+	'''
+	
+	def generateGetServerTimelineResource() '''
+		package com.anfelisa.ace;
+		
+		import java.util.List;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.skife.jdbi.v2.DBI;
+		import org.skife.jdbi.v2.Handle;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/e2e")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class GetServerTimelineResource {
+		
+			private DBI jdbi;
+		
+			static final Logger LOG = LoggerFactory.getLogger(GetServerTimelineResource.class);
+		
+			private AceDao aceDao = new AceDao();
+		
+			public GetServerTimelineResource(DBI jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			@GET
+			@Timed
+			@Path("/timeline")
+			public Response get() {
+				Handle timelineHandle = jdbi.open();
+				try {
+					List<ITimelineItem> serverTimeline = aceDao.selectServerTimeline(timelineHandle);
+					return Response.ok(serverTimeline).build();
+				} catch (Exception e) {
+					throw new WebApplicationException(e);
+				} finally {
+					timelineHandle.close();
+				}
+			}
+		
+		}
+		
+	'''
+	
+	def generatePrepareE2EResource() '''
 		package com.anfelisa.ace;
 		
 		import java.lang.reflect.Constructor;
@@ -1047,42 +1235,33 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.skife.jdbi.v2.DBI;
-		import org.skife.jdbi.v2.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.AceController;
-		import com.anfelisa.ace.AceDao;
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IEvent;
-		import com.anfelisa.ace.ITimelineItem;
 		import com.codahale.metrics.annotation.Timed;
 		
-		@Path("/database")
+		@Path("/e2e")
 		@Produces(MediaType.TEXT_PLAIN)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class PrepareDatabaseResource {
+		public class PrepareE2EResource {
 		
 			private DBI jdbi;
-			private DBI jdbiTimeline;
 		
-			static final Logger LOG = LoggerFactory.getLogger(PrepareDatabaseResource.class);
-			
+			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
+		
 			private AceDao aceDao = new AceDao();
 		
-			public PrepareDatabaseResource(DBI jdbi, DBI jdbiTimeline) {
+			public PrepareE2EResource(DBI jdbi) {
 				super();
 				this.jdbi = jdbi;
-				this.jdbiTimeline = jdbiTimeline;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/prepare")
 			public Response put(@NotNull @QueryParam("uuid") String uuid) {
-				Handle timelineHandle = jdbiTimeline.open();
-				ITimelineItem actionToBePrepared = aceDao.selectTimelineItem(timelineHandle, uuid);
-				
+				ITimelineItem actionToBePrepared = E2E.selectAction(uuid);
+		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				LOG.info("PREPARE ACTION " + actionToBePrepared);
 				try {
@@ -1090,11 +1269,10 @@ class JavaTemplate {
 		
 					ITimelineItem lastAction = aceDao.selectLastAction(databaseHandle.getHandle());
 		
-					ITimelineItem nextAction = aceDao.selectNextAction(timelineHandle,
-							lastAction != null ? lastAction.getUuid() : null);
+					ITimelineItem nextAction = E2E.selectNextAction(lastAction != null ? lastAction.getUuid() : null);
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
-							ITimelineItem nextEvent = aceDao.selectEvent(timelineHandle, nextAction.getUuid());
+							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
 							LOG.info("PUBLISH EVENT " + nextEvent);
 							Class<?> cl = Class.forName(nextEvent.getName());
 							Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
@@ -1103,7 +1281,7 @@ class JavaTemplate {
 							event.notifyListeners();
 							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
 						}
-						nextAction = aceDao.selectNextAction(timelineHandle, nextAction.getUuid());
+						nextAction = E2E.selectNextAction(nextAction.getUuid());
 					}
 		
 					databaseHandle.commitTransaction();
@@ -1112,13 +1290,51 @@ class JavaTemplate {
 					databaseHandle.rollbackTransaction();
 					throw new WebApplicationException(e);
 				} finally {
-					timelineHandle.close();
 					databaseHandle.close();
 				}
 			}
 		
 		}
 		
+	'''
+	
+	def generateStopE2ESessionResource() '''
+		package com.anfelisa.ace;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/e2e")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class StopE2ESessionResource {
+		
+			static final Logger LOG = LoggerFactory.getLogger(StopE2ESessionResource.class);
+		
+			public StopE2ESessionResource() {
+				super();
+			}
+		
+			@PUT
+			@Timed
+			@Path("/stop")
+			public Response put() {
+				E2E.sessionIsRunning = false;
+				E2E.sessionStartedAt = null;
+				E2E.timeline = null;
+				return Response.ok().build();
+			}
+		
+		}
 	'''
 	
 	def generateAceController() '''
@@ -1228,6 +1444,8 @@ class JavaTemplate {
 	def generateAceDao() '''
 		package com.anfelisa.ace;
 		
+		import java.util.List;
+
 		import org.apache.commons.lang3.StringUtils;
 		import org.skife.jdbi.v2.Handle;
 		import org.skife.jdbi.v2.Update;
@@ -1376,6 +1594,13 @@ class JavaTemplate {
 								+ "where uuid = :uuid and type = 'event'")
 						.bind("uuid", uuid).map(new TimelineItemMapper()).first();
 			}
+			
+			public List<ITimelineItem> selectServerTimeline(Handle handle) {
+				return handle
+						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+								+ "where method != 'GET' order by id asc ")
+						.map(new TimelineItemMapper()).list();
+			}
 
 		}
 	'''
@@ -1384,7 +1609,7 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		public enum AceExecutionMode {
-			LIVE, REPLAY, MIGRATE
+			LIVE, REPLAY, DEV
 		}
 		
 	'''
@@ -1412,16 +1637,13 @@ class JavaTemplate {
 			private HttpMethod httpMethod;
 			protected DatabaseHandle databaseHandle;
 			private DBI jdbi;
-			private DBI jdbiTimeline;
 			protected JodaObjectMapper mapper;
-			private AceDao aceDao = new AceDao();
 		
-			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, DBI jdbiTimeline) {
+			public Action(String actionName, HttpMethod httpMethod, DBI jdbi) {
 				super();
 				this.actionName = actionName;
 				this.httpMethod = httpMethod;
 				this.jdbi = jdbi;
-				this.jdbiTimeline = jdbiTimeline;
 				mapper = new JodaObjectMapper();
 			}
 		
@@ -1440,22 +1662,18 @@ class JavaTemplate {
 			protected abstract void loadDataForGetRequest();
 		
 			public Response apply() {
-				if (AceController.getAceExecutionMode() == AceExecutionMode.MIGRATE) {
-					this.throwServiceUnavailable("service is in maintenance mode");
-				}
 				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				Handle timelineHandle = null;
 				databaseHandle.beginTransaction();
 				try {
-					if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE) {
+					if (AceController.getAceExecutionMode() != AceExecutionMode.REPLAY) {
 						this.actionData.setSystemTime(new DateTime());
 					} else {
-						timelineHandle = jdbiTimeline.open();
-						ITimelineItem timelineItem = aceDao.selectTimelineItem(timelineHandle, this.actionData.getUuid());
+						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
 							Constructor<?> con = cl.getConstructor(DBI.class, DBI.class);
-							IAction action = (IAction) con.newInstance(jdbi, jdbiTimeline);
+							IAction action = (IAction) con.newInstance(jdbi);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());
 						} else {
@@ -1586,9 +1804,7 @@ class JavaTemplate {
 		
 			public void execute() {
 				this.executeCommand();
-				if (AceController.getAceExecutionMode() != AceExecutionMode.MIGRATE) {
-					AceController.addCommandToTimeline(this);
-				}
+				AceController.addCommandToTimeline(this);
 				this.publishEvents();
 			}
 		
@@ -1790,9 +2006,7 @@ class JavaTemplate {
 		
 			public void publish() {
 				this.prepareDataForView();
-				if (AceController.getAceExecutionMode() != AceExecutionMode.MIGRATE) {
-					AceController.addEventToTimeline(this);
-				}
+				AceController.addEventToTimeline(this);
 				this.notifyListeners();
 			}
 		
