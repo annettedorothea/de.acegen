@@ -305,7 +305,7 @@ class ES6Template {
 	def generateCommand() '''
 		import ACEController from "./ACEController";
 		import AppUtils from "../../src/app/AppUtils";
-		import ReplayUtils from "../../src/app/ReplayUtils";
+		import Utils from "./Utils";
 		
 		export default class Command {
 		    constructor(commandParam, commandName) {
@@ -366,7 +366,7 @@ class ES6Template {
 		    }
 		
 		    httpGet(url, queryParams) {
-		        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            return AppUtils.httpGet(url, queryParams, this.commandParam);
 		        }, (error) => {
@@ -375,7 +375,7 @@ class ES6Template {
 		    }
 		
 		    httpPost(url, queryParams, data) {
-		        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpPost(url, queryParams, data, this.commandParam);
@@ -385,7 +385,7 @@ class ES6Template {
 		    }
 		
 		    httpPut(url, queryParams, data) {
-		        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpPut(url, queryParams, data, this.commandParam);
@@ -395,7 +395,7 @@ class ES6Template {
 		    }
 		
 		    httpDelete(url, queryParams, data) {
-		        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpDelete(url, queryParams, data, this.commandParam);
@@ -492,6 +492,14 @@ class ES6Template {
 		
 		    static getClientVersion() {
 		        return "1.0.0";
+		    }
+		
+		    static getApiKey() {
+		        return "API-KEY";
+		    }
+		
+		    static getAceScenariosBaseUrl() {
+		        return "http://127.0.0.1:8070/";
 		    }
 		
 		    static httpGet(url, queryParams, commandParam) {
@@ -623,76 +631,7 @@ class ES6Template {
 
 		    static createUUID() {
 		    		// return a uuid, you could use npm package uuid
-		        //return uuid.v4();
-		    }
-		
-		    static saveBug(description, reporter) {
-				const browser = AppUtils.getBrowserInfo();
-		        const data = {
-		            description: description,
-		            reporter: reporter,
-		            timeline: JSON.stringify(ACEController.timeline),
-					clientVersion: AppUtils.getClientVersion(),
-					device: browser.name + " " + browser.version
-		        };
-		        return AppUtils.httpPost('api/bug/create', null, data);
-		    }
-		
-		    static deleteBug(id) {
-		        let queryParams = [
-		            {
-		                key: "id",
-		                value: id
-		            }
-		        ];
-		        return AppUtils.httpDelete('api/bug/delete', queryParams);
-		    }
-		
-		    static resolveBug(id) {
-		        let queryParams = [
-		            {
-		                key: "id",
-		                value: id
-		            }
-		        ];
-		        return AppUtils.httpDelete('api/bug/resolve', queryParams);
-		    }
-		
-		    static loadBugs() {
-		        return AppUtils.httpGet('api/bug/all');
-		    }
-		
-			static loadBug(id) {
-			    let queryParams = [
-			        {
-			            key: "id",
-			            value: id
-			        }
-			    ];
-			    return AppUtils.httpGet('api/bug/single', queryParams);
-			}
-
-		    static getBrowserInfo() {
-		        let ua = navigator.userAgent, tem,
-		            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-		        if (/trident/i.test(M[1])) {
-		            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-		            return {name: 'IE ', version: (tem[1] || '')};
-		        }
-		        if (M[1] === 'Chrome') {
-		            tem = ua.match(/\bOPR\/(\d+)/)
-		            if (tem != null) {
-		                return {name: 'Opera', version: tem[1]};
-		            }
-		        }
-		        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-		        if ((tem = ua.match(/version\/(\d+)/i)) != null) {
-		            M.splice(1, 1, tem[1]);
-		        }
-		        return {
-		            name: M[0],
-		            version: M[1]
-		        };
+		        // return uuid.v4();
 		    }
 		
 		    static displayUnexpectedError(error) {
@@ -720,109 +659,7 @@ class ES6Template {
 	'''
 	
 	def generateReplayUtilsStub(Project it) '''
-		import ACEController from "../../gen/ace/ACEController";
-		import AppUtils from "./AppUtils";
-		
 		export default class ReplayUtils {
-		
-		    static normalizeTimelines(expected, actual) {
-		        let normalizedExpected = [];
-		        let normalizedActual = [];
-		        let expectedIndex = 0;
-		        let actualIndex = 0;
-		        while (expectedIndex < expected.length) {
-		            if (actualIndex >= actual.length) {
-		                normalizedExpected.push(expected[expectedIndex]);
-		                normalizedActual.push({});
-		                expectedIndex++;
-		            } else if (expected[expectedIndex].action && actual[actualIndex].action || !expected[expectedIndex].action && !actual[actualIndex].action) {
-		                normalizedExpected.push(expected[expectedIndex]);
-		                normalizedActual.push(actual[actualIndex]);
-		                expectedIndex++;
-		                actualIndex++;
-		            } else if (expected[expectedIndex].action && !actual[actualIndex].action) {
-		                normalizedExpected.push({});
-		                normalizedActual.push(actual[actualIndex]);
-		                actualIndex++;
-		            } else if (!expected[expectedIndex].action && actual[actualIndex].action) {
-		                normalizedExpected.push(expected[expectedIndex]);
-		                normalizedActual.push({});
-		                expectedIndex++;
-		            }
-		        }
-		        while (actualIndex < actual.length) {
-		            normalizedExpected.push({});
-		            normalizedActual.push(actual[actualIndex]);
-		            actualIndex++;
-		        }
-		        return {
-		            expected: normalizedExpected,
-		            actual: normalizedActual
-		        };
-		    }
-		
-		    static resetDatabase() {
-		        return AppUtils.httpDelete('replay/database/reset');
-		    }
-		
-		    static prepareAction(uuid) {
-		        if (ACEController.execution === ACEController.E2E) {
-		            return AppUtils.httpPut('replay/database/prepare?uuid=' + uuid);
-		        } else {
-		            return new Promise((resolve) => {
-		                resolve();
-		            });
-		        }
-		    }
-		
-		    static replay(pauseInMillis) {
-		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
-		    }
-		
-		    static e2e(pauseInMillis) {
-		        ACEController.startReplay(ACEController.E2E, pauseInMillis)
-		    }
-		
-		    static finishReplay() {
-		        const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
-		        const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
-		
-		        if (normalized.expected && normalized.actual) {
-		            const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
-		            for (let i = 0; i < size; i++) {
-		                const expected = normalized.expected[i] ? normalized.expected[i] : null;
-		                const actual = normalized.actual[i] ? normalized.actual[i] : null;
-		                const result = ReplayUtils.compareItems(expected, actual);
-		                const item = {
-		                    expected,
-		                    actual,
-		                    result
-		                };
-		                if (result === true) {
-		                    console.log("%cSUCCESS", "color: green;", item);
-		                } else {
-		                    console.log("%cFAILURE", "color: red;", item);
-		                }
-		            }
-		        }
-		        if (result === true) {
-		            console.log("%c===============", "color: green;");
-		            console.log("%c=== SUCCESS ===", "color: green;");
-		            console.log("%c===============", "color: green;");
-		        } else {
-		            console.log("%c===============", "color: red;");
-		            console.log("%c=== FAILURE ===", "color: red;");
-		            console.log("%c===============", "color: red;");
-		        }
-				if (ReplayUtils.scenarioConfig.finishReplay) {
-				    ReplayUtils.scenarioConfig.finishReplay(normalized, result);
-				}
-		    }
-		
-		    static compareItems(expected, actual) {
-		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
-		    }
-		
 		
 		    static itemStringifyReplacer(key, value) {
 		        if (key === 'timestamp') {
@@ -831,58 +668,6 @@ class ES6Template {
 		            return value;
 		        }
 		    }
-		
-		    static saveScenario(description, creator) {
-		        const browser = AppUtils.getBrowserInfo();
-		        const data = {
-		            description,
-		            timeline: JSON.stringify(ACEController.timeline),
-		            creator,
-		            clientVersion: AppUtils.getClientVersion(),
-		            device: browser.name + " " + browser.version
-		        };
-		        return AppUtils.httpPost('api/scenario/create', null, data);
-		    }
-		
-		    static deleteScenario(id) {
-		        let queryParams = [
-		            {
-		                key: "id",
-		                value: id
-		            }
-		        ];
-		        return AppUtils.httpDelete('api/scenario/delete', queryParams);
-		    }
-		
-		    static loadScenarios() {
-		        return AppUtils.httpGet('api/scenario/all');
-		    }
-		
-		    static loadScenario(id) {
-		        let queryParams = [];
-		        queryParams.push({
-		            key: "id",
-		            value: id
-		        });
-		        return AppUtils.httpGet('api/scenario/single', queryParams);
-		    }
-		
-		    static saveScenarioResult(normalized, result) {
-		        const browser = AppUtils.getBrowserInfo();
-		        const data = {
-		            description: ReplayUtils.scenarioConfig.description,
-		            scenarioId: ReplayUtils.scenarioConfig.scenarioId,
-		            timeline: JSON.stringify(normalized),
-		            executor: ReplayUtils.scenarioConfig.executor,
-		            e2e: ReplayUtils.scenarioConfig.e2e,
-		            result,
-		            clientVersion: AppUtils.getClientVersion(),
-		            device: browser.name + " " + browser.version
-		        };
-		        return AppUtils.httpPost('api/scenario-result/create', null, data);
-		    }
-		
-		
 		}
 		
 		/*       S.D.G.       */
@@ -891,8 +676,7 @@ class ES6Template {
 	
 	def generateACEController() '''
 		import AppUtils from "../../src/app/AppUtils";
-		import ReplayUtils from "../../src/app/ReplayUtils";
-		import {runScenario} from "./Scenario";
+		import Utils from "./Utils";
 		
 		export default class ACEController {
 		
@@ -986,7 +770,7 @@ class ES6Template {
 		                ACEController.actionIsProcessing = false;
 		                ACEController.actionQueue = [];
 		                ACEController.execution = ACEController.LIVE;
-		                ReplayUtils.finishReplay();
+		                Utils.finishReplay();
 		                AppUtils.start();
 		            }
 		        }
@@ -1000,20 +784,7 @@ class ES6Template {
 		        ACEController.actualTimeline = [];
 		        ACEController.execution = level;
 		        ACEController.pauseInMillis = pauseInMillis;
-		
-		        if (ACEController.execution === ACEController.REPLAY) {
-		            ACEController.readTimelineAndCreateReplayActions();
-		        } else {
-		            ReplayUtils.resetDatabase().then(
-		                () => {
-		                    ACEController.readTimelineAndCreateReplayActions();
-		                },
-		                (error) => {
-		                    throw error;
-		                }
-		            );
-		        }
-		
+		        ACEController.readTimelineAndCreateReplayActions();
 		    }
 		
 		    static readTimelineAndCreateReplayActions() {
@@ -1058,106 +829,68 @@ class ES6Template {
 	'''
 	
 	def generateScenario() '''
-		import ReplayUtils from "../../src/app/ReplayUtils";
 		import AppUtils from "../../src/app/AppUtils";
+		import ReplayUtils from "../../src/app/ReplayUtils";
 		import ACEController from "./ACEController";
+		import Utils from "./Utils";
 		
-		export function runScenarioE2E(scenarioId, pauseInMillis = 250, executor = "unknown") {
-		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
+		export function runScenario(scenarioId, executor = "unknown", pauseInMillis = 0) {
+		    Utils.loadScenario(scenarioId).then((scenario) => {
 		        ReplayUtils.scenarioConfig = {
 		            executor,
 		            scenarioId,
-		            e2e: true,
-					finishReplay: ReplayUtils.saveScenarioResult
+		            saveScenarioResult: true
 		        };
 		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
-		        ReplayUtils.e2e(pauseInMillis);
+		        Utils.replayE2E(pauseInMillis, scenario.serverTimeline);
 		    });
 		}
 		
-		export function runScenarioReplay(scenarioId, pauseInMillis = 250, executor = "unknown") {
-		    ReplayUtils.loadScenario(scenarioId).then((scenario) => {
-		        ReplayUtils.scenarioConfig = {
-		            executor,
-		            scenarioId,
-		            e2e: false,
-					finishReplay: ReplayUtils.saveScenarioResult
-		        };
-		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
-		        ReplayUtils.replay(pauseInMillis);
+		export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
+		    Utils.loadNextScenario(-1).then((scenario) => {
+		        if (scenario) {
+		            ReplayUtils.scenarioConfig = {
+		                executor,
+		                scenarioId: scenario.id,
+		                saveScenarioResult: true,
+		                runAllScenarios: true,
+		                pauseInMillis
+		            };
+		            ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+		            Utils.replayE2E(pauseInMillis, scenario.serverTimeline);
+		        }
 		    });
 		}
 		
 		export function saveScenario(description, creator) {
-			ReplayUtils.saveScenario(description, creator).then((id) => {
-			    console.log(`saved scenario with id ${id}`);
-				ACEController.timeline = [];
-				AppUtils.start();
-			});
-		}
-		
-		export function displayScenarios() {
-		    ReplayUtils.loadScenarios().then((scenarios) => {
-		        scenarios.forEach((scenario) => {
-		            console.log("scenario", scenario)
-		        })
+		    Utils.saveScenario(description, creator).then((id) => {
+		        console.log(`saved scenario with id ${id}`);
+		        ACEController.timeline = [];
+		        AppUtils.start();
 		    });
 		}
 		
 		/*       S.D.G.       */
 		
+		
 	'''
 
 	def generateBug() '''
 		import ReplayUtils from "../../src/app/ReplayUtils";
-		import AppUtils from "../../src/app/AppUtils";
 		import ACEController from "./ACEController";
+		import Utils from "./Utils";
 		
-		export function runBugE2E(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
-		    AppUtils.loadBug(bugId).then((bug) => {
-		        ReplayUtils.scenarioConfig = {
-		            executor,
-		            bugId,
-		            description,
-		            e2e: true
-		        };
-		        ACEController.expectedTimeline = JSON.parse(bug.timeline);
-		        ReplayUtils.e2e(pauseInMillis);
-		    });
-		}
-		
-		export function runBugReplay(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
-		    AppUtils.loadBug(bugId).then((bug) => {
-		        ReplayUtils.scenarioConfig = {
-		            executor,
-		            bugId,
-		            description,
-		            e2e: false
-		        };
-		        ACEController.expectedTimeline = JSON.parse(bug.timeline);
-		        ReplayUtils.replay(pauseInMillis);
+		export function runBug(bugId, pauseInMillis = 0) {
+		    Utils.loadBug(bugId).then((scenario) => {
+		        ReplayUtils.scenarioConfig = {};
+		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+		        Utils.replayServerless(pauseInMillis);
 		    });
 		}
 		
 		export function saveBug(description, creator) {
-			AppUtils.saveBug(description, creator).then((id) => {
-			    console.log(`saved bug with id ${id}`);
-			});
-		}
-		
-		export function deleteBug(id) {
-		    AppUtils.deleteBug(id);
-		}
-		
-		export function resolveBug(id) {
-		    AppUtils.resolveBug(id);
-		}
-		
-		export function displayBugs() {
-		    AppUtils.loadBugs().then((bugs) => {
-		        bugs.forEach((bug) => {
-		            console.log("bug", bug)
-		        })
+		    Utils.saveBug(description, creator).then((id) => {
+		        console.log(`saved bug with id ${id}`);
 		    });
 		}
 		
@@ -1179,6 +912,283 @@ class ES6Template {
 		}
 		
 		/*       S.D.G.       */
+		
+	'''
+	
+	def generateUtils() '''
+		import AppUtils from "../../src/app/AppUtils";
+		import ACEController from "./ACEController";
+		import ReplayUtils from "../../src/app/ReplayUtils";
+		
+		export default class Utils {
+		
+		    static getServerInfo() {
+		        return AppUtils.httpGet('api/server/info');
+		    }
+		
+		    static saveBug(description, creator) {
+		        return Utils.getServerInfo().then((serverInfo) => {
+		            const browser = Utils.getBrowserInfo();
+		            const uuid = AppUtils.createUUID();
+		            const data = {
+		                description,
+		                timeline: JSON.stringify(ACEController.timeline),
+		                creator,
+		                clientVersion: AppUtils.getClientVersion(),
+		                device: browser.name + " " + browser.version,
+		                uuid,
+		                apiKey: AppUtils.getApiKey(),
+		                serverVersion: serverInfo.serverVersion
+		            };
+		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data);
+		        });
+		    }
+		
+		    static loadBug(id) {
+		        const uuid = AppUtils.createUUID();
+		        let queryParams = [];
+		        queryParams.push({
+		            key: "id",
+		            value: id
+		        });
+		        queryParams.push({
+		            key: "apiKey",
+		            value: AppUtils.getApiKey()
+		        });
+		        queryParams.push({
+		            key: "uuid",
+		            value: uuid
+		        });
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams);
+		    }
+		
+		    static saveScenario(description, creator) {
+		        return AppUtils.httpGet('api/e2e/timeline').then((serverTimeline) => {
+		            return Utils.getServerInfo().then((serverInfo) => {
+		                const browser = Utils.getBrowserInfo();
+		                const uuid = AppUtils.createUUID();
+		                const data = {
+		                    description,
+		                    timeline: JSON.stringify(ACEController.timeline),
+		                    serverTimeline: JSON.stringify(serverTimeline),
+		                    creator,
+		                    clientVersion: AppUtils.getClientVersion(),
+		                    device: browser.name + " " + browser.version,
+		                    uuid,
+		                    apiKey: AppUtils.getApiKey(),
+		                    serverVersion: serverInfo.serverVersion
+		                };
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+		            });
+		        });
+		    }
+		
+		    static saveScenarioResult(normalized, result) {
+		        return AppUtils.httpGet('replay/e2e/timeline').then((serverTimeline) => {
+		            return Utils.getServerInfo().then((serverInfo) => {
+		                const browser = Utils.getBrowserInfo();
+		                const uuid = AppUtils.createUUID();
+		                const data = {
+		                    scenarioId: ReplayUtils.scenarioConfig.scenarioId,
+		                    timeline: JSON.stringify(normalized),
+		                    executor: ReplayUtils.scenarioConfig.executor,
+		                    result,
+		                    uuid,
+		                    clientVersion: AppUtils.getClientVersion(),
+		                    device: browser.name + " " + browser.version,
+		                    apiKey: AppUtils.getApiKey(),
+		                    serverVersion: serverInfo.serverVersion,
+		                    serverTimeline: JSON.stringify(serverTimeline)
+		                };
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data);
+		            });
+		        });
+		    }
+		
+		    static loadScenario(id) {
+		        const uuid = AppUtils.createUUID();
+		        let queryParams = [];
+		        queryParams.push({
+		            key: "id",
+		            value: id
+		        });
+		        queryParams.push({
+		            key: "apiKey",
+		            value: AppUtils.getApiKey()
+		        });
+		        queryParams.push({
+		            key: "uuid",
+		            value: uuid
+		        });
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams);
+		    }
+		
+		    static loadNextScenario(lastId) {
+		        const uuid = AppUtils.createUUID();
+		        let queryParams = [];
+		        queryParams.push({
+		            key: "lastId",
+		            value: lastId
+		        });
+		        queryParams.push({
+		            key: "apiKey",
+		            value: AppUtils.getApiKey()
+		        });
+		        queryParams.push({
+		            key: "uuid",
+		            value: uuid
+		        });
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams);
+		    }
+		
+		    static getBrowserInfo() {
+		        let ua = navigator.userAgent, tem,
+		            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+		        if (/trident/i.test(M[1])) {
+		            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+		            return {name: 'IE ', version: (tem[1] || '')};
+		        }
+		        if (M[1] === 'Chrome') {
+		            tem = ua.match(/\bOPR\/(\d+)/)
+		            if (tem != null) {
+		                return {name: 'Opera', version: tem[1]};
+		            }
+		        }
+		        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+		        if ((tem = ua.match(/version\/(\d+)/i)) != null) {
+		            M.splice(1, 1, tem[1]);
+		        }
+		        return {
+		            name: M[0],
+		            version: M[1]
+		        };
+		    }
+		
+		    static prepareAction(uuid) {
+		        if (ACEController.execution === ACEController.E2E) {
+		            return AppUtils.httpPut('replay/e2e/prepare?uuid=' + uuid);
+		        } else {
+		            return new Promise((resolve) => {
+		                resolve();
+		            });
+		        }
+		    }
+		
+		    static replayServerless(pauseInMillis) {
+		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
+		    }
+		
+		    static replayE2E(pauseInMillis, serverTimeline) {
+		        AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
+		            ACEController.startReplay(ACEController.E2E, pauseInMillis)
+		        });
+		    }
+		
+		    static normalizeTimelines(expected, actual) {
+		        let normalizedExpected = [];
+		        let normalizedActual = [];
+		        let expectedIndex = 0;
+		        let actualIndex = 0;
+		        while (expectedIndex < expected.length) {
+		            if (actualIndex >= actual.length) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push({});
+		                expectedIndex++;
+		            } else if (expected[expectedIndex].action && actual[actualIndex].action || !expected[expectedIndex].action && !actual[actualIndex].action) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push(actual[actualIndex]);
+		                expectedIndex++;
+		                actualIndex++;
+		            } else if (expected[expectedIndex].action && !actual[actualIndex].action) {
+		                normalizedExpected.push({});
+		                normalizedActual.push(actual[actualIndex]);
+		                actualIndex++;
+		            } else if (!expected[expectedIndex].action && actual[actualIndex].action) {
+		                normalizedExpected.push(expected[expectedIndex]);
+		                normalizedActual.push({});
+		                expectedIndex++;
+		            }
+		        }
+		        while (actualIndex < actual.length) {
+		            normalizedExpected.push({});
+		            normalizedActual.push(actual[actualIndex]);
+		            actualIndex++;
+		        }
+		        return {
+		            expected: normalizedExpected,
+		            actual: normalizedActual
+		        };
+		    }
+		
+		    static finishReplay() {
+		        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
+		            const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
+		            const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+		
+		            if (normalized.expected && normalized.actual) {
+		                const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
+		                for (let i = 0; i < size; i++) {
+		                    const expected = normalized.expected[i] ? normalized.expected[i] : null;
+		                    const actual = normalized.actual[i] ? normalized.actual[i] : null;
+		                    const result = Utils.compareItems(expected, actual);
+		                    const item = {
+		                        expected,
+		                        actual,
+		                        result
+		                    };
+		                    if (result === true) {
+		                        console.log("%cSUCCESS expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: green;", item);
+		                    } else {
+		                        console.log("%cFAILURE expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: red;", item);
+		                    }
+		                }
+		            }
+		            if (result === true) {
+		                console.log("%c===============", "color: green;");
+		                console.log("%c=== SUCCESS ===", "color: green;");
+		                console.log("%c===============", "color: green;");
+		            } else {
+		                console.log("%c===============", "color: red;");
+		                console.log("%c=== FAILURE ===", "color: red;");
+		                console.log("%c===============", "color: red;");
+		            }
+		            Utils.saveScenarioResult(normalized, result);
+		            AppUtils.httpPut('replay/e2e/stop').then(() => {
+		                if (ReplayUtils.scenarioConfig.runAllScenarios === true) {
+		                    console.log("executed scenario with id " + ReplayUtils.scenarioConfig.scenarioId);
+		                    Utils.loadNextScenario(ReplayUtils.scenarioConfig.scenarioId).then((scenario) => {
+		                        if (scenario.id) {
+		                            ReplayUtils.scenarioConfig.scenarioId = scenario.id;
+		                            ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+		                            Utils.replayE2E(ReplayUtils.scenarioConfig.pauseInMillis, scenario.serverTimeline);
+		                        }
+		                    });
+		                }
+		            });
+		        }
+		    }
+		
+		    static name(item) {
+		        if (item.action) {
+		            return item.action.actionName;
+		        }
+		        if (item.command) {
+		            return item.command.commandName;
+		        }
+		        if (item.event) {
+		            return item.event.eventName;
+		        }
+		    }
+		
+		    static compareItems(expected, actual) {
+		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
+		    }
+		
+		
+		}
+		
+		/*       S.D.G.       */
+		
 		
 	'''
 }

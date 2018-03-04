@@ -107,6 +107,8 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateScenario());
 				fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateBug());
+				fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateUtils());
 			} else if (project.target == 'JAVA') {
 				for (model : project.models) {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelName + '.java',
@@ -171,16 +173,14 @@ class AceGenerator extends AbstractGenerator {
 
 				fsa.generateFile("com/anfelisa/ace" + '/App.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateApp());
+				fsa.generateFile("com/anfelisa/ace" + '/AppUtils.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateAppUtils());
 				fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAppConfiguration());
 				fsa.generateFile("com/anfelisa/ace" + '/E2E.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateE2E());
 				fsa.generateFile("com/anfelisa/ace" + '/ServerConfiguration.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerConfiguration());
-				fsa.generateFile("com/anfelisa/ace" + '/ClearDatabaseResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateClearDatabaseResource());
-				fsa.generateFile("com/anfelisa/ace" + '/MigrateDatabaseResource.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateMigrateDatabaseResource());
 				fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateStartE2ESessionResource());
 				fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
@@ -189,6 +189,12 @@ class AceGenerator extends AbstractGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generatePrepareE2EResource());
 				fsa.generateFile("com/anfelisa/ace" + '/GetServerTimelineResource.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateGetServerTimelineResource());
+				fsa.generateFile("com/anfelisa/ace" + '/ServerInfo.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerInfo());
+				fsa.generateFile("com/anfelisa/ace" + '/GetServerInfoResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateGetServerInfoResource());
+				fsa.generateFile("com/anfelisa/ace" + '/EventReplayCommand.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateEventReplayCommand());
 
 				fsa.generateFile("com/anfelisa/ace" + '/AceController.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceController());

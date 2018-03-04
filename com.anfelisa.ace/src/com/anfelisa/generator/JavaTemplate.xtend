@@ -751,15 +751,34 @@ class JavaTemplate {
 			public static void registerConsumers() {
 				«FOR event : events»
 					«FOR renderFunction : event.listeners»
-						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE) {«ENDIF»
+						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE || AceController.getAceExecutionMode() == AceExecutionMode.DEV) {
 							AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
-						«IF (renderFunction.eContainer as View).isExternal»}«ENDIF»
+						}
+						
+						«ELSE»
+				AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
+				
+						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
 		    }
 		}
 		
 		/*                    S.D.G.                    */
+	'''
+	
+	def generateAppUtils() '''
+		package com.anfelisa.ace;
+		
+		import org.skife.jdbi.v2.Handle;
+		
+		public class AppUtils {
+		
+			public static void truncateAllViews(Handle handle) {
+			}
+		
+		}
+		
 	'''
 	
 	def generateApp() '''
@@ -795,7 +814,7 @@ class JavaTemplate {
 				return "app name";
 			}
 		
-			public String getVersion() {
+			public static String getVersion() {
 				return "app version";
 			}
 		
@@ -807,6 +826,8 @@ class JavaTemplate {
 						return configuration.getDataSourceFactory();
 					}
 				});
+				
+				bootstrap.addCommand(new EventReplayCommand(this));
 			}
 		
 			@Override
@@ -819,17 +840,21 @@ class JavaTemplate {
 		
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
-				if (configuration.getMode().equals("REPLAY")) {
+				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
 					AceController.setAceExecutionMode(AceExecutionMode.REPLAY);
-					environment.jersey().register(new ClearDatabaseResource(jdbi));
 					environment.jersey().register(new PrepareE2EResource(jdbi));
-					environment.jersey().register(new StartE2ESessionResource());
+					environment.jersey().register(new StartE2ESessionResource(jdbi));
 					environment.jersey().register(new StopE2ESessionResource());
+					environment.jersey().register(new GetServerTimelineResource(jdbi));
+				} else if (ServerConfiguration.DEV.equals(configuration.getServerConfiguration().getMode())) {
+					AceController.setAceExecutionMode(AceExecutionMode.DEV);
+					environment.jersey().register(new GetServerTimelineResource(jdbi));
 				} else {
 					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
-					environment.jersey().register(new MigrateDatabaseResource(jdbi));
 				}
-		
+
+				environment.jersey().register(new GetServerInfoResource());
+
 				DBIExceptionsBundle dbiExceptionsBundle = new DBIExceptionsBundle();
 				environment.jersey().register(dbiExceptionsBundle);
 		
@@ -881,10 +906,10 @@ class JavaTemplate {
 				if (uuid != null) {
 					boolean returnNextAction = false;
 					for (ITimelineItem timelineItem : timeline) {
+						if (returnNextAction && timelineItem.getType().equals("action")) {
+							return timelineItem;
+						}
 						if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("action")) {
-							if (returnNextAction) {
-								return timelineItem;
-							}
 							returnNextAction = true;
 						}
 					}
@@ -971,11 +996,14 @@ class JavaTemplate {
 		}
 	'''
 	
-	def generateClearDatabaseResource() '''
+	def generateStartE2ESessionResource() '''
 		package com.anfelisa.ace;
 		
+		import java.util.List;
+		
+		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
-		import javax.ws.rs.DELETE;
+		import javax.ws.rs.PUT;
 		import javax.ws.rs.Path;
 		import javax.ws.rs.Produces;
 		import javax.ws.rs.WebApplicationException;
@@ -984,29 +1012,41 @@ class JavaTemplate {
 		
 		import org.skife.jdbi.v2.DBI;
 		import org.skife.jdbi.v2.Handle;
-		
-		import com.anfelisa.ace.AceDao;
 
-		import com.codahale.metrics.annotation.Timed;
+		import org.joda.time.DateTime;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
 		
-		@Path("/database")
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		@Path("/e2e")
 		@Produces(MediaType.TEXT_PLAIN)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class ClearDatabaseResource {
+		public class StartE2ESessionResource {
+		
+			static final Logger LOG = LoggerFactory.getLogger(StartE2ESessionResource.class);
 		
 			private DBI jdbi;
 		
 			private AceDao aceDao = new AceDao();
-		
-			public ClearDatabaseResource(DBI jdbi) {
+
+			public StartE2ESessionResource(DBI jdbi) {
 				super();
 				this.jdbi = jdbi;
 			}
 		
-			@DELETE
+			@PUT
 			@Timed
-			@Path("/reset")
-			public Response put() {
+			@Path("/start")
+			public Response put(@NotNull List<ITimelineItem> timeline) throws JsonProcessingException {
+				if (E2E.sessionIsRunning) {
+					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
+				}
+				E2E.sessionIsRunning = true;
+				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
+				E2E.timeline = timeline;
+				
 				Handle handle = jdbi.open();
 				try {
 					handle.getConnection().setAutoCommit(false);
@@ -1014,7 +1054,7 @@ class JavaTemplate {
 					aceDao.truncateErrorTimelineTable(handle);
 					aceDao.truncateTimelineTable(handle);
 
-					//truncate all tables
+					AppUtils.truncateAllViews(handle);
 
 					handle.commit();
 
@@ -1030,61 +1070,59 @@ class JavaTemplate {
 		}
 	'''
 	
-	def generateMigrateDatabaseResource() '''
+	def generateEventReplayCommand() '''
 		package com.anfelisa.ace;
 		
 		import java.lang.reflect.Constructor;
-		
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.PUT;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.QueryParam;
-		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
 		
 		import org.skife.jdbi.v2.DBI;
 		import org.skife.jdbi.v2.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
+		import io.dropwizard.Application;
+		import io.dropwizard.cli.EnvironmentCommand;
+		import io.dropwizard.jdbi.DBIFactory;
+		import io.dropwizard.setup.Environment;
+		import net.sourceforge.argparse4j.inf.Namespace;
 		
-		@Path("/database")
-		@Produces(MediaType.TEXT_PLAIN)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public class MigrateDatabaseResource {
+		public class EventReplayCommand extends EnvironmentCommand<AppConfiguration> {
 		
-			private DBI jdbi;
-		
-			static final Logger LOG = LoggerFactory.getLogger(MigrateDatabaseResource.class);
+			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
 			private AceDao aceDao = new AceDao();
 		
-			public MigrateDatabaseResource(DBI jdbi) {
-				super();
-				this.jdbi = jdbi;
+			protected EventReplayCommand(Application<AppConfiguration> application) {
+				super(application, "replay", "truncates views and replays events");
 			}
 		
-			@PUT
-			@Timed
-			@Path("/migrate")
-			// We should protect this resource!
-			public Response put(@QueryParam("uuid") String uuid) {
-				//AceController.setAceExecutionMode(AceExecutionMode.MIGRATE);
+			@Override
+			protected void run(Environment environment, Namespace namespace, AppConfiguration configuration) throws Exception {
+				if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE) {	
+					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
+				}
+				if (AceController.getAceExecutionMode() == AceExecutionMode.REPLAY) {	
+					throw new RuntimeException("replay events in a replay environment doesn't make sense");
+				}
+				
+				AceDao.setSchemaName(null);
+		
+				final DBIFactory factory = new DBIFactory();
+		
+				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "todo");
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
-				LOG.info("START MIGRATION");
+				LOG.info("START EVENT REPLAY");
 				try {
 					databaseHandle.beginTransaction();
 		
 					Handle handle = databaseHandle.getHandle();
-					
-					// truncate all view-tables
 		
+					AppUtils.truncateAllViews(handle);
+		
+					int eventCount = 0;
 					ITimelineItem nextAction = aceDao.selectNextAction(handle, null);
-					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
+					while (nextAction != null) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
 							ITimelineItem nextEvent = aceDao.selectEvent(handle, nextAction.getUuid());
 							LOG.info("PUBLISH EVENT " + nextEvent);
@@ -1093,75 +1131,81 @@ class JavaTemplate {
 							IEvent event = (IEvent) con.newInstance(databaseHandle);
 							event.initEventData(nextEvent.getData());
 							event.notifyListeners();
-							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
+							eventCount++;
 						}
 						nextAction = aceDao.selectNextAction(handle, nextAction.getUuid());
 					}
 		
 					databaseHandle.commitTransaction();
 		
-					LOG.info("MIGRATION FINISHED");
-					return Response.ok().build();
+					LOG.info("EVENT REPLAY FINISHED: successfully replayed " +  eventCount + " events");
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
-					LOG.info("MIGRATION ABORTED " + e.getMessage());
-					throw new WebApplicationException(e);
+					LOG.info("EVENT REPLAY ABORTED " + e.getMessage());
+					throw e;
 				} finally {
 					databaseHandle.close();
-					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
 				}
+		
 			}
 		
 		}
 		
 	'''
 	
-	def generateStartE2ESessionResource() '''
+	def generateGetServerInfoResource() '''
 		package com.anfelisa.ace;
 		
-		import java.util.List;
-		
-		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
-		import javax.ws.rs.PUT;
+		import javax.ws.rs.GET;
 		import javax.ws.rs.Path;
 		import javax.ws.rs.Produces;
-		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.joda.time.DateTime;
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
 		import com.codahale.metrics.annotation.Timed;
-		import com.fasterxml.jackson.core.JsonProcessingException;
 		
-		@Path("/e2e")
-		@Produces(MediaType.TEXT_PLAIN)
+		@Path("/server")
+		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class StartE2ESessionResource {
+		public class GetServerInfoResource {
 		
-			static final Logger LOG = LoggerFactory.getLogger(StartE2ESessionResource.class);
-		
-			public StartE2ESessionResource() {
+			public GetServerInfoResource() {
 				super();
 			}
 		
-			@PUT
+			@GET
 			@Timed
-			@Path("/start")
-			public Response put(@NotNull List<TimelineItem> timeline) throws JsonProcessingException {
-				if (E2E.sessionIsRunning) {
-					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
-				}
-				E2E.sessionIsRunning = true;
-				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
-				E2E.timeline = timeline;
-				return Response.ok().build();
+			@Path("/info")
+			public Response put() {
+				return Response.ok(new ServerInfo(App.getVersion())).build();
 			}
 		
 		}
+		
+	'''
+	
+	def generateServerInfo() '''
+		package com.anfelisa.ace;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		public class ServerInfo {
+		
+			private String serverVersion;
+			
+			public ServerInfo(String serverVersion) {
+				super();
+				this.serverVersion = serverVersion;
+			}
+		
+			@JsonProperty
+			public String getServerVersion() {
+				return serverVersion;
+			}
+			
+		}
+		
 	'''
 	
 	def generateGetServerTimelineResource() '''
@@ -1269,6 +1313,7 @@ class JavaTemplate {
 		
 					ITimelineItem lastAction = aceDao.selectLastAction(databaseHandle.getHandle());
 		
+					int eventCount = 0;
 					ITimelineItem nextAction = E2E.selectNextAction(lastAction != null ? lastAction.getUuid() : null);
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
@@ -1280,12 +1325,13 @@ class JavaTemplate {
 							event.initEventData(nextEvent.getData());
 							event.notifyListeners();
 							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
+							eventCount++;
 						}
 						nextAction = E2E.selectNextAction(nextAction.getUuid());
 					}
 		
 					databaseHandle.commitTransaction();
-					return Response.ok().build();
+					return Response.ok("prepared action " + uuid + " by publishing " + eventCount + " events").build();
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
 					throw new WebApplicationException(e);
@@ -1372,6 +1418,11 @@ class JavaTemplate {
 			}
 		
 			public static void addActionToTimeline(IAction action) {
+				String uuid = action.getActionData().getUuid();
+				ITimelineItem item = aceDao.selectTimelineItem(action.getDatabaseHandle().getHandle(), uuid);
+				if (item != null) {
+					throw new WebApplicationException("duplicate uuid " + uuid);
+				}
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
 					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
@@ -1598,7 +1649,7 @@ class JavaTemplate {
 			public List<ITimelineItem> selectServerTimeline(Handle handle) {
 				return handle
 						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "where method != 'GET' order by id asc ")
+								+ "order by id asc ")
 						.map(new TimelineItemMapper()).list();
 			}
 
@@ -1672,7 +1723,7 @@ class JavaTemplate {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(DBI.class, DBI.class);
+							Constructor<?> con = cl.getConstructor(DBI.class);
 							IAction action = (IAction) con.newInstance(jdbi);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());
@@ -2128,7 +2179,9 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		import org.joda.time.DateTime;
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
+		@JsonDeserialize(as=TimelineItem.class)
 		public interface ITimelineItem {
 		
 			Integer getId();
@@ -2195,6 +2248,7 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		import org.joda.time.DateTime;
+		import com.fasterxml.jackson.annotation.JsonProperty;
 		
 		public class TimelineItem implements ITimelineItem {
 		
@@ -2213,8 +2267,15 @@ class JavaTemplate {
 			private String uuid;
 		
 			
-			public TimelineItem(Integer id, String type, String method, String name, DateTime timestamp, String data,
-					String uuid) {
+			public TimelineItem(
+				@JsonProperty("id") Integer id, 
+				@JsonProperty("type") String type, 
+				@JsonProperty("method") String method, 
+				@JsonProperty("name") String name, 
+				@JsonProperty("timestamp") DateTime timestamp, 
+				@JsonProperty("data") String data,
+				@JsonProperty("uuid") String uuid
+			) {
 				super();
 				this.id = id;
 				this.type = type;
@@ -2225,30 +2286,37 @@ class JavaTemplate {
 				this.uuid = uuid;
 			}
 		
+			@JsonProperty
 			public Integer getId() {
 				return id;
 			}
 		
+			@JsonProperty
 			public String getType() {
 				return type;
 			}
 		
+			@JsonProperty
 			public String getMethod() {
 				return method;
 			}
 		
+			@JsonProperty
 			public String getName() {
 				return name;
 			}
 		
+			@JsonProperty
 			public DateTime getTimestamp() {
 				return timestamp;
 			}
 		
+			@JsonProperty
 			public String getData() {
 				return data;
 			}
 		
+			@JsonProperty
 			public String getUuid() {
 				return uuid;
 			}
