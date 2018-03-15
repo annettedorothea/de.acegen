@@ -1318,14 +1318,16 @@ class JavaTemplate {
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
 							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
-							LOG.info("PUBLISH EVENT " + nextEvent);
-							Class<?> cl = Class.forName(nextEvent.getName());
-							Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
-							IEvent event = (IEvent) con.newInstance(databaseHandle);
-							event.initEventData(nextEvent.getData());
-							event.notifyListeners();
-							AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
-							eventCount++;
+							if (nextEvent != null) {
+								LOG.info("PUBLISH EVENT " + nextEvent);
+								Class<?> cl = Class.forName(nextEvent.getName());
+								Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
+								IEvent event = (IEvent) con.newInstance(databaseHandle);
+								event.initEventData(nextEvent.getData());
+								event.notifyListeners();
+								AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
+								eventCount++;
+							}
 						}
 						nextAction = E2E.selectNextAction(nextAction.getUuid());
 					}
