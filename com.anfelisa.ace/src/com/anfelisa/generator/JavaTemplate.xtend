@@ -1,22 +1,20 @@
 package com.anfelisa.generator
 
-import com.anfelisa.ace.Action
-import com.anfelisa.ace.Command
+import com.anfelisa.ace.ACE
 import com.anfelisa.ace.Data
-import com.anfelisa.ace.Event
 import com.anfelisa.ace.Model
+import com.anfelisa.ace.Outcome
 import com.anfelisa.ace.Project
 import com.anfelisa.ace.View
-import com.anfelisa.extensions.ActionExtension
+import com.anfelisa.extensions.AceExtension
 import com.anfelisa.extensions.AttributeExtension
-import com.anfelisa.extensions.CommandExtension
 import com.anfelisa.extensions.ComplexAttributeExtension
 import com.anfelisa.extensions.DataExtension
-import com.anfelisa.extensions.EventExtension
 import com.anfelisa.extensions.ModelExtension
+import com.anfelisa.extensions.ProjectExtension
 import com.anfelisa.extensions.ViewExtension
 import javax.inject.Inject
-import com.anfelisa.extensions.ProjectExtension
+import com.anfelisa.ace.ViewFunction
 
 class JavaTemplate {
 	
@@ -24,14 +22,8 @@ class JavaTemplate {
 	extension ProjectExtension
 
 	@Inject
-	extension ActionExtension
+	extension AceExtension
 
-	@Inject
-	extension CommandExtension
-
-	@Inject
-	extension EventExtension
-	
 	@Inject
 	extension ViewExtension
 	
@@ -433,7 +425,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractActionFile(Action it, Project project) '''
+	def generateAbstractActionFile(ACE it, Project project) '''
 		package «project.name».actions;
 		
 		import org.skife.jdbi.v2.DBI;
@@ -444,8 +436,8 @@ class JavaTemplate {
 		import com.anfelisa.ace.ICommand;
 		«data.dataImport»
 		
-		«IF command !== null»
-			import «project.name».commands.«command.commandName»;
+		«IF outcomes.size > 0»
+			import «project.name».commands.«commandName»;
 		«ENDIF»
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
@@ -456,8 +448,8 @@ class JavaTemplate {
 		
 			@Override
 			public ICommand getCommand() {
-				«IF command !== null»
-					return new «command.commandName»(this.actionData, databaseHandle);
+				«IF outcomes.size > 0»
+					return new «commandName»(this.actionData, databaseHandle);
 				«ELSE»
 					return null;
 				«ENDIF»
@@ -481,7 +473,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 
-	def generateAbstractCommandFile(Command it, Project project) '''
+	def generateAbstractCommandFile(ACE it, Project project) '''
 		package «project.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
@@ -493,8 +485,8 @@ class JavaTemplate {
 
 		public abstract class «abstractCommandName» extends Command<«data.dataParamType»> {
 		
-			«FOR eventOnOutcome : eventsOnOutcome»
-				protected static final String «eventOnOutcome.outcome» = "«eventOnOutcome.outcome»";
+			«FOR outcome : outcomes»
+				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
 			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle) {
@@ -508,13 +500,11 @@ class JavaTemplate {
 			@Override
 			public void publishEvents() {
 				switch (this.commandData.getOutcome()) {
-				«FOR eventOnOutcome : eventsOnOutcome»
-					case «eventOnOutcome.outcome»:
-						«FOR event : eventOnOutcome.events»
-							new «event.eventNameWithPackage»(this.commandData, databaseHandle).publish();
-						«ENDFOR»
-						«FOR action : eventOnOutcome.actions»
-							«action.newAction»
+				«FOR outcome : outcomes»
+					case «outcome.name»:
+						new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle).publish();
+						«FOR aceOperation : outcome.aceOperations»
+							«aceOperation.newAction»
 							Thread actionThread = new Thread(new Runnable() {
 								public void run() {
 									action.apply();
@@ -543,7 +533,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 
-	def generateAbstractEventFile(Event it, Project project) '''
+	def generateAbstractEventFile(ACE it, Outcome outcome, Project project) '''
 		package «project.name».events;
 		
 		import javax.ws.rs.WebApplicationException;
@@ -553,14 +543,14 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
-		public abstract class «abstractEventName» extends Event<«data.dataParamType»> {
+		public abstract class «abstractEventName(outcome)» extends Event<«data.dataParamType»> {
 		
-			public «abstractEventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
-				super("«project.name».events.«eventName»", eventParam, databaseHandle);
+			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
+				super("«project.name».events.«eventName(outcome)»", eventParam, databaseHandle);
 			}
 			
-			public «abstractEventName»(DatabaseHandle databaseHandle) {
-				super("«project.name».events.«eventName»", null, databaseHandle);
+			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle) {
+				super("«project.name».events.«eventName(outcome)»", null, databaseHandle);
 			}
 			
 			public void initEventData(String json) {
@@ -577,7 +567,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 
-	def generateInitialActionFile(Action it, Project project) '''
+	def generateInitialActionFile(ACE it, Project project) '''
 		package «project.name».actions;
 		
 		import javax.annotation.security.PermitAll;
@@ -632,7 +622,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateInitialCommandFile(Command it, Project project) '''
+	def generateInitialCommandFile(ACE it, Project project) '''
 		package «project.name».commands;
 		
 		import com.anfelisa.ace.DatabaseHandle;
@@ -656,8 +646,8 @@ class JavaTemplate {
 		
 			@Override
 			protected void executeCommand() {
-				«IF eventsOnOutcome.size > 0»
-					this.commandData.setOutcome(«eventsOnOutcome.get(0).outcome»);
+				«IF outcomes.size > 0»
+					this.commandData.setOutcome(«outcomes.get(0).name»);
 				«ENDIF»
 			}
 		
@@ -666,7 +656,7 @@ class JavaTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateInitialEventFile(Event it, Project project) '''
+	def generateInitialEventFile(ACE it, Outcome outcome, Project project) '''
 		package «project.name».events;
 		
 		import com.anfelisa.ace.DatabaseHandle;
@@ -676,15 +666,15 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
-		public class «eventName» extends «abstractEventName» {
+		public class «eventName(outcome)» extends «abstractEventName(outcome)» {
 		
-			static final Logger LOG = LoggerFactory.getLogger(«eventName».class);
+			static final Logger LOG = LoggerFactory.getLogger(«eventName(outcome)».class);
 
-			public «eventName»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
+			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
 				super(eventParam, databaseHandle);
 			}
 		
-			public «eventName»(DatabaseHandle databaseHandle) {
+			public «eventName(outcome)»(DatabaseHandle databaseHandle) {
 				this(null, databaseHandle);
 			}
 		
@@ -735,7 +725,7 @@ class JavaTemplate {
 		«FOR view : it.referencedViews()»
 			import «view.viewNameWithPackage»;
 	    	«ENDFOR»
-		«IF actions.size > 0»
+		«IF aceOperations.size > 0»
 			import «name».actions.*;
 		«ENDIF»
 
@@ -743,28 +733,32 @@ class JavaTemplate {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, DBI jdbi) {
-				«FOR action : actions»
-					environment.jersey().register(new «action.actionName»(jdbi));
+				«FOR aceOperation : aceOperations»
+					environment.jersey().register(new «aceOperation.actionName»(jdbi));
 				«ENDFOR»
 			}
 		
 			public static void registerConsumers() {
-				«FOR event : events»
-					«FOR renderFunction : event.listeners»
-						«IF (renderFunction.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE || AceController.getAceExecutionMode() == AceExecutionMode.DEV) {
-							AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
-						}
-						
-						«ELSE»
-				AceController.addConsumer("«name».events.«event.eventName»", «renderFunction.viewFunctionWithViewName»);
-				
-						«ENDIF»
+				«FOR aceOperation : aceOperations»
+					«FOR outcome : aceOperation.outcomes»
+						«FOR listener : outcome.listeners»
+							«IF (listener.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE || AceController.getAceExecutionMode() == AceExecutionMode.DEV) {
+								«addConsumers(it, aceOperation, outcome, listener)»
+							}
+							«ELSE»
+							«addConsumers(it, aceOperation, outcome, listener)»
+							«ENDIF»
+							«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 		    }
 		}
 		
 		/*                    S.D.G.                    */
+	'''
+	
+	private def addConsumers(Project project, ACE aceOperation, Outcome outcome, ViewFunction listener) '''
+		AceController.addConsumer("«project.name».events.«aceOperation.eventName(outcome)»", «listener.viewFunctionWithViewName»);
 	'''
 	
 	def generateAppUtils() '''

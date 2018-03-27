@@ -5,13 +5,7 @@ generate ace "http://www.anfelisa.com/Ace"
 Project: 
 	name = QualifiedName
 	'target' target = ('ES6' | 'JAVA')
-	('models' '{'
-		'schema' schema = ID
-		(models += Model)*
-	'}')?
-	('data' '{'
-		(data += Data)*
-	'}')?
+	(aceOperations += ACE)*
 	('actions' '{'
 		(actions += Action)*
 	'}')?
@@ -24,6 +18,30 @@ Project:
 	('views' '{'
 		(views += View)*
 	'}')?
+	('models' '{'
+		'schema' schema = ID
+		(models += Model)*
+	'}')?
+	('data' '{'
+		(data += Data)*
+	'}')?
+;
+
+ACE: 
+	init ?= 'init'?
+	(type = FunctionType)? name = ID 
+	('uses' data = [ Data | QualifiedName ])?
+	('preUpdateUI' '(' (PreUpdateUI += [ViewFunction | QualifiedName])* ')')? 
+	('postUpdateUI' '(' (PostUpdateUI += [ViewFunction | QualifiedName])* ')')? 
+	('{'
+		(outcomes += Outcome)*
+	'}')*
+;
+
+Outcome:
+	'on' name = ID 
+	('(' (listeners += [ViewFunction | QualifiedName])* ')')? 
+	('triggers' '(' (aceOperations += [ACE | QualifiedName])* ')')? 
 ;
 
 Model:

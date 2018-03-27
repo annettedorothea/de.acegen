@@ -12,11 +12,13 @@ class ProjectExtension {
 
 	def List<View> referencedViews(Project it) {
 		var list = new ArrayList<View>();
-		for (event : events) {
-			for (listener : event.listeners) {
-				val view = listener.eContainer as View;
-				if (!list.contains(view)) {
-					list.add(view);
+		for (aceOperation : aceOperations) {
+			for (outcome : aceOperation.outcomes) {
+				for (listener : outcome.listeners) {
+					val view = listener.eContainer as View;
+					if (!list.contains(view)) {
+						list.add(view);
+					}
 				}
 			}
 		}

@@ -4,6 +4,7 @@
 package com.anfelisa.generator
 
 import com.anfelisa.ace.Project
+import com.anfelisa.extensions.AceExtension
 import com.anfelisa.extensions.ActionExtension
 import com.anfelisa.extensions.CommandExtension
 import com.anfelisa.extensions.DataExtension
@@ -30,6 +31,9 @@ class AceGenerator extends AbstractGenerator {
 
 	@Inject
 	JavaTemplate javaTemplate;
+
+	@Inject
+	extension AceExtension
 
 	@Inject
 	extension ActionExtension
@@ -140,29 +144,27 @@ class AceGenerator extends AbstractGenerator {
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateData(data, project));
 				}
-				for (action : project.actions) {
-					fsa.generateFile(project.packageFolder + '/actions/' + action.abstractActionName + '.java',
+				for (ace : project.aceOperations) {
+					fsa.generateFile(project.packageFolder + '/actions/' + ace.abstractActionName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAbstractActionFile(action, project));
-					fsa.generateFile(project.packageFolder + '/actions/' + action.actionName + '.java',
+						javaTemplate.generateAbstractActionFile(ace, project));
+					fsa.generateFile(project.packageFolder + '/actions/' + ace.actionName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateInitialActionFile(action, project));
-				}
-				for (command : project.commands) {
-					fsa.generateFile(project.packageFolder + '/commands/' + command.abstractCommandName + '.java',
+						javaTemplate.generateInitialActionFile(ace, project));
+					fsa.generateFile(project.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAbstractCommandFile(command, project));
-					fsa.generateFile(project.packageFolder + '/commands/' + command.commandName + '.java',
+						javaTemplate.generateAbstractCommandFile(ace, project));
+					fsa.generateFile(project.packageFolder + '/commands/' + ace.commandName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateInitialCommandFile(command, project));
-				}
-				for (event : project.events) {
-					fsa.generateFile(project.packageFolder + '/events/' + event.abstractEventName + '.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAbstractEventFile(event, project));
-					fsa.generateFile(project.packageFolder + '/events/' + event.eventName + '.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateInitialEventFile(event, project));
+						javaTemplate.generateInitialCommandFile(ace, project));
+					for (outcome : ace.outcomes) {
+						fsa.generateFile(project.packageFolder + '/events/' + ace.abstractEventName(outcome) + '.java',
+							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+							javaTemplate.generateAbstractEventFile(ace, outcome, project));
+						fsa.generateFile(project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
+							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+							javaTemplate.generateInitialEventFile(ace, outcome, project));
+					}
 				}
 				for (view : project.views) {
 					fsa.generateFile(project.packageFolder + '/views/' + view.viewName + '.java',
