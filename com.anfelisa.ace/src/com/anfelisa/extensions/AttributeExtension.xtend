@@ -2,6 +2,7 @@ package com.anfelisa.extensions
 
 import com.anfelisa.ace.Attribute
 import javax.inject.Inject
+import com.anfelisa.ace.PrimitiveAttribute
 
 class AttributeExtension {
 
@@ -131,7 +132,7 @@ class AttributeExtension {
 		}	
 	}
 	
-	def Attribute foreignKey(Attribute it) {
+	def PrimitiveAttribute foreignKey(Attribute it) {
 		if (primitiveAttribute !== null) {
 			return primitiveAttribute.foreignKey;
 		}	

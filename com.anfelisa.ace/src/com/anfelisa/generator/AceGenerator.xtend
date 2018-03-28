@@ -61,10 +61,12 @@ class AceGenerator extends AbstractGenerator {
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialCommandFile(ace, project));
 					for(outcome : ace.outcomes) {
-						fsa.generateFile(project.name + '/events/' + ace.abstractEventName(outcome) + '.js',
-							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(ace, outcome, project));
-						fsa.generateFile(project.name + '/events/' + ace.eventName(outcome) + '.js',
-							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(ace, outcome, project));
+						if (outcome.listeners.size > 0) {
+							fsa.generateFile(project.name + '/events/' + ace.abstractEventName(outcome) + '.js',
+								IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(ace, outcome, project));
+							fsa.generateFile(project.name + '/events/' + ace.eventName(outcome) + '.js',
+								ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(ace, outcome, project));
+						}
 					}
 				}
 				fsa.generateFile(project.name + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,

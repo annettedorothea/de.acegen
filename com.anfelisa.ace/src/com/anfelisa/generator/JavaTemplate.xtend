@@ -1,6 +1,7 @@
 package com.anfelisa.generator
 
 import com.anfelisa.ace.ACE
+import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Data
 import com.anfelisa.ace.Model
 import com.anfelisa.ace.Outcome
@@ -288,7 +289,7 @@ class JavaTemplate {
 		<createTable tableName="«table»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«attribute.tableName»_«attribute.foreignKey.tableName»"«ENDIF» />
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«(attribute.foreignKey.eContainer as Attribute).tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>
@@ -2490,6 +2491,9 @@ class JavaTemplate {
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		
+		<addUniqueConstraint columnNames="type, uuid" tableName="timeline" />
+		<addUniqueConstraint columnNames="type, uuid" tableName="errortimeline" />
 
 	'''
 	

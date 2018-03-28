@@ -1,5 +1,6 @@
 package com.anfelisa.extensions
 
+import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Model
 import com.anfelisa.ace.PrimitiveAttribute
 import com.google.inject.Inject
@@ -39,13 +40,13 @@ class PrimitiveAttributeExtension {
 		statement.bind("«name»", «modelName».get«name.toFirstUpper»());
 	'''
 	
-	def String tableName(PrimitiveAttribute it) '''«(eContainer as Model).table»'''
+	def String tableName(PrimitiveAttribute it) '''«((eContainer as Attribute).eContainer as Model).table»'''
 	
 	def String tableDefinition(PrimitiveAttribute it, String tableName) '''«name.toLowerCase» «sqlType» «IF constraint !== null && constraint.equals('NotNull')»NOT NULL «ENDIF» '''
 	
 	def String primaryKey(PrimitiveAttribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name.toLowerCase»)«ENDIF»'''
 	
-	def String foreignKey(PrimitiveAttribute it, String tableName, String schema) '''«IF foreignKey !== null», CONSTRAINT «tableName»_«name.toLowerCase»_fkey FOREIGN KEY («name.toLowerCase») REFERENCES «schema».«foreignKey.primitiveAttribute.tableName» ( «foreignKey.primitiveAttribute.name.toLowerCase» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
+	def String foreignKey(PrimitiveAttribute it, String tableName, String schema) '''«IF foreignKey !== null», CONSTRAINT «tableName»_«name.toLowerCase»_fkey FOREIGN KEY («name.toLowerCase») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name.toLowerCase» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
 	
 	def String uniqueConstraint(PrimitiveAttribute it, String tableName) '''«IF unique», CONSTRAINT «tableName»_«name»_unique UNIQUE («name»)«ENDIF»'''
 

@@ -80,10 +80,12 @@ class ES6Template {
 		import Command from "../../../gen/ace/Command";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
-			import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
+			«IF outcome.listeners.size > 0»
+				import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
+			«ENDIF»
 		«ENDFOR»
 		«FOR aceOperation : triggeredAceOperations»
-			import «aceOperation.actionName» from "../../../src/«project.name»/actions/«aceOperation.actionName»";
+			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as Project).name»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
 		export default class «abstractCommandName» extends Command {
@@ -100,7 +102,9 @@ class ES6Template {
 				switch (this.commandData.outcome) {
 				«FOR outcome : outcomes»
 					case this.«outcome.name»:
-						promises.push(new «eventName(outcome)»(this.commandData).publish());
+						«IF outcome.listeners.size > 0»
+							promises.push(new «eventName(outcome)»(this.commandData).publish());
+						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
 							promises.push(new TriggerAction(new «aceOperation.actionName»(this.commandData)).publish());
 						«ENDFOR»
