@@ -5,10 +5,7 @@ package com.anfelisa.generator
 
 import com.anfelisa.ace.Project
 import com.anfelisa.extensions.AceExtension
-import com.anfelisa.extensions.ActionExtension
-import com.anfelisa.extensions.CommandExtension
 import com.anfelisa.extensions.DataExtension
-import com.anfelisa.extensions.EventExtension
 import com.anfelisa.extensions.ModelExtension
 import com.anfelisa.extensions.ProjectExtension
 import com.anfelisa.extensions.ViewExtension
@@ -36,15 +33,6 @@ class AceGenerator extends AbstractGenerator {
 	extension AceExtension
 
 	@Inject
-	extension ActionExtension
-
-	@Inject
-	extension CommandExtension
-
-	@Inject
-	extension EventExtension
-
-	@Inject
 	extension ViewExtension
 
 	@Inject
@@ -61,19 +49,23 @@ class AceGenerator extends AbstractGenerator {
 			val project = resource.contents.get(0) as Project
 
 			if (project.target == 'ES6') {
-				for (action : project.actions) {
-					fsa.generateFile(project.name + '/actions/' + action.abstractActionName + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractActionFile(action, project));
-					fsa.generateFile(project.name + '/actions/' + action.actionName + '.js',
+				for (ace : project.aceOperations) {
+					fsa.generateFile(project.name + '/actions/' + ace.abstractActionName + '.js',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractActionFile(ace, project));
+					fsa.generateFile(project.name + '/actions/' + ace.actionName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-						es6Template.generateInitialActionFile(action, project));
-				}
-				for (command : project.commands) {
-					fsa.generateFile(project.name + '/commands/' + command.abstractCommandName + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(command, project));
-					fsa.generateFile(project.name + '/commands/' + command.commandName + '.js',
+						es6Template.generateInitialActionFile(ace, project));
+					fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
+						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(ace, project));
+					fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-						es6Template.generateInitialCommandFile(command, project));
+						es6Template.generateInitialCommandFile(ace, project));
+					for(outcome : ace.outcomes) {
+						fsa.generateFile(project.name + '/events/' + ace.abstractEventName(outcome) + '.js',
+							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(ace, outcome, project));
+						fsa.generateFile(project.name + '/events/' + ace.eventName(outcome) + '.js',
+							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(ace, outcome, project));
+					}
 				}
 				fsa.generateFile(project.name + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateEventListenerRegistration(project));
@@ -81,12 +73,6 @@ class AceGenerator extends AbstractGenerator {
 					es6Template.generateActionFactoryRegistration(project));
 				fsa.generateFile(project.name + '/ActionFunctionExports.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateActionFunctionExports(project));
-				for (event : project.events) {
-					fsa.generateFile(project.name + '/events/' + event.abstractEventName + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractEventFile(event, project));
-					fsa.generateFile(project.name + '/events/' + event.eventName + '.js',
-						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateInitialEventFile(event, project));
-				}
 				for (view : project.views) {
 					fsa.generateFile(project.name + '/views/' + view.viewName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, es6Template.generateView(view, project));
@@ -121,9 +107,6 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelClassName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateModelClass(model, project));
-					fsa.generateFile(project.packageFolder + '/' + model.name + '.html',
-						ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
-						javaTemplate.generateModelResource(model));
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateMapper(model, project));

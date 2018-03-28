@@ -1,38 +1,29 @@
 package com.anfelisa.generator
 
-import com.anfelisa.ace.Action
-import com.anfelisa.ace.Command
-import com.anfelisa.ace.Event
-import com.anfelisa.extensions.ActionExtension
-import com.anfelisa.extensions.CommandExtension
-import com.anfelisa.extensions.EventExtension
+import com.anfelisa.ace.ACE
+import com.anfelisa.ace.Outcome
 import com.anfelisa.ace.Project
-import javax.inject.Inject
-import com.anfelisa.extensions.ViewExtension
 import com.anfelisa.ace.View
+import com.anfelisa.extensions.AceExtension
 import com.anfelisa.extensions.ProjectExtension
+import com.anfelisa.extensions.ViewExtension
+import javax.inject.Inject
 
 class ES6Template {
 	
 	@Inject
-	extension ActionExtension
+	extension AceExtension
 
-	@Inject
-	extension CommandExtension
-
-	@Inject
-	extension EventExtension
-	
 	@Inject
 	extension ViewExtension
 	
 	@Inject
 	extension ProjectExtension
 	
-	def generateAbstractActionFile(Action it, Project project) '''
+	def generateAbstractActionFile(ACE it, Project project) '''
 		import Action from "../../ace/Action";
-		«IF command !== null»
-			import «command.commandName» from "../../../src/«project.name»/commands/«command.commandName»";
+		«IF outcomes.size > 0»
+			import «commandName» from "../../../src/«project.name»/commands/«commandName»";
 	    «ENDIF»
 		«FOR view : preAndPostUpdateUIViews»
 			import «view.viewName» from "../../../src/«(view.eContainer as Project).name»/views/«view.viewName»";
@@ -44,9 +35,9 @@ class ES6Template {
 		        super(actionParam, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
 		    }
 		
-			«IF command !== null»
+			«IF outcomes.size > 0»
 				getCommand() {
-					return new «command.commandName»(this.actionData);
+					return new «commandName»(this.actionData);
 				}
 			«ENDIF»
 		
@@ -67,7 +58,7 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 
-	def generateInitialActionFile(Action it, Project project) '''
+	def generateInitialActionFile(ACE it, Project project) '''
 		import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
 		
 		export default class «actionName» extends «abstractActionName» {
@@ -85,21 +76,21 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractCommandFile(Command it, Project project) '''
+	def generateAbstractCommandFile(ACE it, Project project) '''
 		import Command from "../../../gen/ace/Command";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
-		«FOR event : eventsOfCommand»
-			import «event.eventName» from "../../../src/«(event.eContainer as Project).name»/events/«event.eventName»";
+		«FOR outcome : outcomes»
+			import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
 		«ENDFOR»
-		«FOR action : triggeredActionsOfCommand»
-			import «action.actionName» from "../../../src/«(action.eContainer as Project).name»/actions/«action.actionName»";
+		«FOR aceOperation : triggeredAceOperations»
+			import «aceOperation.actionName» from "../../../src/«project.name»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
 		export default class «abstractCommandName» extends Command {
 		    constructor(commandParam) {
 		        super(commandParam, "«project.name».«commandName»");
-		        «FOR eventOnOutcome : eventsOnOutcome»
-		        	this.«eventOnOutcome.outcome» = "«eventOnOutcome.outcome»";
+		        «FOR outcome : outcomes»
+		        	this.«outcome.name» = "«outcome.name»";
 		        «ENDFOR»
 		    }
 		
@@ -107,13 +98,11 @@ class ES6Template {
 				let promises = [];
 			    	
 				switch (this.commandData.outcome) {
-				«FOR eventOnOutcome : eventsOnOutcome»
-					case this.«eventOnOutcome.outcome»:
-						«FOR event : eventOnOutcome.events»
-							promises.push(new «event.eventName»(this.commandData).publish());
-						«ENDFOR»
-						«FOR action : eventOnOutcome.actions»
-							promises.push(new TriggerAction(new «action.actionName»(this.commandData)).publish());
+				«FOR outcome : outcomes»
+					case this.«outcome.name»:
+						promises.push(new «eventName(outcome)»(this.commandData).publish());
+						«FOR aceOperation : outcome.aceOperations»
+							promises.push(new TriggerAction(new «aceOperation.actionName»(this.commandData)).publish());
 						«ENDFOR»
 						break;
 				«ENDFOR»
@@ -127,7 +116,7 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateInitialCommandFile(Command it, Project project) '''
+	def generateInitialCommandFile(ACE it, Project project) '''
 		import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
 		
 		export default class «commandName» extends «abstractCommandName» {
@@ -141,21 +130,21 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractEventFile(Event it, Project project) '''
+	def generateAbstractEventFile(ACE it, Outcome outcome, Project project) '''
 		import Event from "../../../gen/ace/Event";
 		
-		export default class «abstractEventName» extends Event {
+		export default class «abstractEventName(outcome)» extends Event {
 		    constructor(eventParam) {
-		        super(eventParam, '«project.name».«eventName»');
+		        super(eventParam, '«project.name».«eventName(outcome)»');
 		    }
 		}
 		
 		/*       S.D.G.       */
 	'''
-	def generateInitialEventFile(Event it, Project project) '''
-		import «abstractEventName» from "../../../gen/«project.name»/events/«abstractEventName»";
+	def generateInitialEventFile(ACE it, Outcome outcome, Project project) '''
+		import «abstractEventName(outcome)» from "../../../gen/«project.name»/events/«abstractEventName(outcome)»";
 		
-		export default class «eventName» extends «abstractEventName» {
+		export default class «eventName(outcome)» extends «abstractEventName(outcome)» {
 		    prepareDataForView() {
 		        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
 		        if (this.eventData.data === undefined) {
@@ -175,9 +164,11 @@ class ES6Template {
 		export default class EventListenerRegistration«projectName» {
 		
 			static init() {
-				«FOR event : events»
-					«FOR renderFunction : event.listeners»
-						ACEController.registerListener('«name».«event.eventName»', «renderFunction.viewFunctionWithViewName»);
+				«FOR aceOperation : aceOperations»
+					«FOR outcome : aceOperation.outcomes»
+						«FOR listener : outcome.listeners»
+							ACEController.registerListener('«name».«aceOperation.eventName(outcome)»', «listener.viewFunctionWithViewName»);
+						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -188,15 +179,15 @@ class ES6Template {
 	'''
 	def generateActionFactoryRegistration(Project it) '''
 		import ACEController from "../ace/ACEController";
-		«FOR action : actions»
-			import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+		«FOR aceOperation : aceOperations»
+			import «aceOperation.actionName» from "../../src/«name»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
 		export default class ActionFactoryRegistration«projectName» {
 		
 			static init() {
-				«FOR action : actions»
-					ACEController.registerFactory('«name».«action.actionName»', (actionParam) => new «action.actionName»(actionParam));
+				«FOR aceOperation : aceOperations»
+					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionParam) => new «aceOperation.actionName»(actionParam));
 				«ENDFOR»
 			}
 		
@@ -205,13 +196,13 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	def generateActionFunctionExports(Project it) '''
-		«FOR action : actions»
-			import «action.actionName» from "../../src/«name»/actions/«action.actionName»";
+		«FOR aceOperation : aceOperations»
+			import «aceOperation.actionName» from "../../src/«name»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		«FOR action : actions»
-			export function «action.name.toFirstLower»(actionParam) {
-			    new «action.actionName»(actionParam).apply();
+		«FOR aceOperation : aceOperations»
+			export function «aceOperation.name.toFirstLower»(actionParam) {
+			    new «aceOperation.actionName»(actionParam).apply();
 			}
 			
 		«ENDFOR»

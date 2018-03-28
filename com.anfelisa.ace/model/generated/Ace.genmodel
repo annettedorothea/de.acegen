@@ -10,9 +10,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/target"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/aceOperations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/actions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/commands"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/events"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/views"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Project/schema"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/models"/>
@@ -36,7 +33,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Model/persistent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Model/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Model/attributes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Model/models"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Data">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Data/name"/>
@@ -50,38 +46,18 @@
     <genClasses ecoreClass="Ace.ecore#//ModelRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ModelRef/model"/>
     </genClasses>
+    <genClasses ecoreClass="Ace.ecore#//PrimitiveAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/unique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/primaryKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//PrimitiveAttribute/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//PrimitiveAttribute/foreignKey"/>
+    </genClasses>
     <genClasses ecoreClass="Ace.ecore#//Attribute">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/unique"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/primaryKey"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/constraint"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/list"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Attribute/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Attribute/foreignKey"/>
-    </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//Action">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/init"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Action/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/data"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/PreUpdateUI"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/command"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Action/PostUpdateUI"/>
-    </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//Command">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Command/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Command/data"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Command/eventsOnOutcome"/>
-    </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//EventOnOutcome">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//EventOnOutcome/outcome"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//EventOnOutcome/events"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//EventOnOutcome/actions"/>
-    </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//Event">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//Event/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Event/data"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//Event/listeners"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Attribute/complexAttribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Attribute/primitiveAttribute"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//View">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//View/external"/>

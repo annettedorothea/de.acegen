@@ -41,5 +41,7 @@ class ComplexAttributeExtension {
 		}'''
 	
 	def String assign(ComplexAttribute it) '''this.«name» = «name»;'''
+
+	def String mapperInit(ComplexAttribute it) '''null'''
 	
 }

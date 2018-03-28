@@ -1,75 +1,154 @@
 package com.anfelisa.extensions
 
 import com.anfelisa.ace.Attribute
-import com.anfelisa.ace.Model
-import com.google.inject.Inject
+import javax.inject.Inject
 
 class AttributeExtension {
 
 	@Inject
-	extension ModelExtension
-	
-	def String declaration(Attribute it) '''
-		«IF constraint !== null»
-			@«constraint»
-		«ENDIF»
-		private «javaType» «name»;
-	'''
-	
-	def String javaType(Attribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSEIF type.equals('Encrypted')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
+	extension PrimitiveAttributeExtension
 
-	def String sqlType(Attribute it) {
-		switch type {
-      		case 'Serial' : "serial"
-      		case 'Integer' : "integer"
-      		case 'Long' : "bigint"
-      		case 'String' : "character varying"
-      		case 'Encrypted' : "character varying"
-      		case 'Float' : "numeric"
-      		case 'Boolean' : "boolean"
-      		case 'DateTime' : "timestamp with time zone"
-    	}
+	@Inject
+	extension ComplexAttributeExtension
+
+	def String name(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.name;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.name;
+		}
 	}
 	
-	def String mapperInit(Attribute it) '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSEIF type.equals("Encrypted")»EncryptionService.decrypt(r.getString("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
-
-	def String param(Attribute it) '''@JsonProperty("«name»") «javaType» «name»'''
+	def String getterCall(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.getterCall;
+		}	
+	}
 	
-	def String bind(Attribute it, String modelName) '''
-		statement.bind("«name»", «modelName».get«name.toFirstUpper»());
-	'''
+	def String type(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.type;
+		}	
+	}
 	
-	def String tableName(Attribute it) '''«(eContainer as Model).table»'''
+	def String javaType(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.javaType;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.javaType;
+		}	
+	}
 	
-	def String tableDefinition(Attribute it, String tableName) '''«name.toLowerCase» «sqlType» «IF constraint !== null && constraint.equals('NotNull')»NOT NULL «ENDIF» '''
+	def String mapperInit(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.mapperInit;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.mapperInit;
+		}	
+	}
 	
-	def String primaryKey(Attribute it, String tableName) '''«IF isPrimaryKey», CONSTRAINT «tableName»_pkey PRIMARY KEY («name.toLowerCase»)«ENDIF»'''
+	def String sqlType(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.sqlType;
+		}	
+	}
 	
-	def String foreignKey(Attribute it, String tableName, String schema) '''«IF foreignKey !== null», CONSTRAINT «tableName»_«name.toLowerCase»_fkey FOREIGN KEY («name.toLowerCase») REFERENCES «schema».«foreignKey.tableName» ( «foreignKey.name.toLowerCase» ) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE«ENDIF»'''
+	def String constraint(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.constraint;
+		}	
+	}
 	
-	def String uniqueConstraint(Attribute it, String tableName) '''«IF unique», CONSTRAINT «tableName»_«name»_unique UNIQUE («name»)«ENDIF»'''
-
-	def String interfaceGetter(Attribute it) '''«javaType» get«name.toFirstUpper»();'''
+	def String tableName(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.tableName;
+		}	
+	}
 	
-	def String getter(Attribute it) '''
-		@JsonProperty
-		public «javaType» get«name.toFirstUpper»() {
-			return this.«name»;
-		}'''
+	def String declaration(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.declaration;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.declaration;
+		}	
+	}
 	
-	def String getterCall(Attribute it) '''get«name.toFirstUpper»()'''
+	def String param(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.param;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.param;
+		}	
+	}
 	
-	def String setter(Attribute it) '''
-		public void set«name.toFirstUpper»(«javaType» «name») {
-			this.«name» = «name»;
-		}'''
+	def String interfaceGetter(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.interfaceGetter;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.interfaceGetter;
+		}	
+	}
 	
-	def String initializer(Attribute it, String className) '''
-		public «className» with«name.toFirstUpper»(«javaType» «name») {
-			this.«name» = «name»;
-			return this;
-		}'''
+	def String assign(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.assign;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.assign;
+		}	
+	}
 	
-	def String assign(Attribute it) '''this.«name» = «name»;'''
+	def String getter(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.getter;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.getter;
+		}	
+	}
+	
+	def String setter(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.setter;
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.setter;
+		}	
+	}
+	
+	def String initializer(Attribute it, String dataName) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.initializer(dataName);
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.initializer(dataName);
+		}	
+	}
+	
+	def Attribute foreignKey(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.foreignKey;
+		}	
+	}
+	
+	def boolean isPrimaryKey(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.primaryKey;
+		}
+		return false;
+	}
+	
+	def boolean isUnique(Attribute it) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.unique;
+		}
+		return false;
+	}
 	
 }

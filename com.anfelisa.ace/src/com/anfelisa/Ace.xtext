@@ -5,15 +5,8 @@ generate ace "http://www.anfelisa.com/Ace"
 Project: 
 	name = QualifiedName
 	'target' target = ('ES6' | 'JAVA')
-	(aceOperations += ACE)*
-	('actions' '{'
-		(actions += Action)*
-	'}')?
-	('commands' '{'
-		(commands += Command)*
-	'}')?
-	('events' '{'
-		(events += Event)*
+	('ACE' '{'
+		(aceOperations += ACE)*
 	'}')?
 	('views' '{'
 		(views += View)*
@@ -46,13 +39,7 @@ Outcome:
 
 Model:
 	persistent ?= 'persistent'? name = ID ('{'
-		('primitiveAttributes' '{' 
-			attributes += Attribute*
-			
-		'}')?
-		('complexAttributes' '{' 
-			models += ComplexAttribute*
-		'}')?
+		attributes += Attribute*
 	'}')?
 ;
 
@@ -70,37 +57,12 @@ ModelRef:
 	model = [Model | QualifiedName]
 ;
 
-Attribute:
+PrimitiveAttribute :
 	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = ModelType) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
 ;
 
-Action:
-	init ?= 'init'?
-	(type = FunctionType)? name = ID 
-	('uses' data = [ Data | QualifiedName ])?
-	('preUpdateUI' '(' (PreUpdateUI += [ViewFunction | QualifiedName])* ')')? 
-	('executes' command = [Command | QualifiedName])? 
-	('postUpdateUI' '(' (PostUpdateUI += [ViewFunction | QualifiedName])* ')')? 
-;
-
-Command:
-	name = ID 
-	('uses' data = [ Data | QualifiedName ])? 
-	('{'
-		(eventsOnOutcome += EventOnOutcome)*
-	'}')*
-;
-
-EventOnOutcome:
-	'on' outcome = ID 
-	('publishes' '(' (events += [Event | QualifiedName])* ')')? 
-	('triggers' '(' (actions += [Action | QualifiedName])* ')')? 
-;
-
-Event:
-	name = ID 
-	('uses' data = [ Data | QualifiedName ])? 
-	('listenedToBy' '(' (listeners += [ViewFunction | QualifiedName])* ')')? 
+Attribute:
+	complexAttribute = ComplexAttribute | primitiveAttribute = PrimitiveAttribute
 ;
 
 View: 

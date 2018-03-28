@@ -8,7 +8,7 @@ import java.util.List
 import javax.inject.Inject
 
 class DataExtension {
-	
+		
 	@Inject
 	extension AttributeExtension
 	

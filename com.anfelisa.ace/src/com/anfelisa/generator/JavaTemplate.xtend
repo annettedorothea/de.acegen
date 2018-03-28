@@ -6,15 +6,14 @@ import com.anfelisa.ace.Model
 import com.anfelisa.ace.Outcome
 import com.anfelisa.ace.Project
 import com.anfelisa.ace.View
+import com.anfelisa.ace.ViewFunction
 import com.anfelisa.extensions.AceExtension
 import com.anfelisa.extensions.AttributeExtension
-import com.anfelisa.extensions.ComplexAttributeExtension
 import com.anfelisa.extensions.DataExtension
 import com.anfelisa.extensions.ModelExtension
 import com.anfelisa.extensions.ProjectExtension
 import com.anfelisa.extensions.ViewExtension
 import javax.inject.Inject
-import com.anfelisa.ace.ViewFunction
 
 class JavaTemplate {
 	
@@ -36,9 +35,6 @@ class JavaTemplate {
 	@Inject
 	extension AttributeExtension
 	
-	@Inject
-	extension ComplexAttributeExtension
-	
 	def generateModel(Model it, Project project) '''
 		package «project.name».models;
 		
@@ -51,86 +47,9 @@ class JavaTemplate {
 				«attribute.interfaceGetter»
 			«ENDFOR»
 
-			«FOR complexAttribute : models»
-				«complexAttribute.interfaceGetter»
-			«ENDFOR»
-
 		}
 		
 		/*       S.D.G.       */
-	'''
-	
-	def generateModelResource(Model it) '''
-		<form class="form-horizontal">
-
-		    <div class="form-group">
-		        <label class="col-sm-3 control-label"></label>
-		        <div class="col-sm-9">
-		            <h4>{{texts.«name.toFirstLower»}}</h4>
-		        </div>
-		    </div>
-
-			«FOR attribute : attributes»
-			    <div class="form-group" id="«name.toFirstLower»«attribute.name.toFirstUpper»Div">
-			        <label for="«name.toFirstLower»«attribute.name.toFirstUpper»" class="col-sm-3 control-label">«IF attribute.constraint !== null»* «ENDIF»{{texts.«name.toLowerCase».«attribute.name»}}</label>
-			        <div class="col-sm-9">
-			            <input type="text" class="form-control" id="«name.toFirstLower»«attribute.name.toFirstUpper»" placeholder="{{texts.«name.toLowerCase».«attribute.name»}}" value="{{«name.toFirstLower».«attribute.name»}}"«IF attribute.constraint !== null» onblur="new ValidateRequiredFieldAction({id : '«name.toFirstLower»«attribute.name.toFirstUpper»'}).apply()"«ENDIF»>
-			            «IF attribute.constraint !== null»<span class="help-block notEmpty" style="display: none">{{texts.«name.toLowerCase».«attribute.name»NotEmpty}}</span>«ENDIF»
-			        </div>
-			    </div>
-			    
-			«ENDFOR»
-			«FOR modelRef : models»
-				«IF modelRef.list»
-					{{#«modelRef.name»}}
-					<div class="panel panel-default">
-					    <div class="panel-heading">
-							«FOR attribute : modelRef.model.attributes»
-								<h4 class="panel-title">{{texts.«attribute.name»}}: {{«attribute.name»}}</h4>
-							«ENDFOR»
-					    </div>
-					    <div class="panel-body">
-							«FOR attribute : modelRef.model.attributes»
-								{{texts.«attribute.name»}}: {{«attribute.name»}}<br>
-							«ENDFOR»
-					    </div>
-					</div>
-					{{/«modelRef.name»}}
-					{{^«modelRef.name»}}
-					<div class="panel panel-default">
-					    <div class="panel-heading">
-					        <h3 class="panel-title">{{texts.empty«modelRef.name.toFirstUpper»}}</h3>
-					    </div>
-					</div>
-					{{/«modelRef.name»}}
-					
-					<div class="table-responsive">
-					    <table class="table table-bordered table-hover table-responsive">
-					        <tr>
-								«FOR attribute : modelRef.model.attributes»
-									<th>{{texts.«attribute.name»}}</th>
-								«ENDFOR»
-					        </tr>
-					        {{#«modelRef.name»}}
-					        <tr>
-								«FOR attribute : modelRef.model.attributes»
-									<td>{{«attribute.name»}}</td>
-								«ENDFOR»
-					        </tr>
-					        {{/«modelRef.name»}}
-					        {{^«modelRef.name»}}
-					        <tr>
-					            <td colspan="«modelRef.model.attributes.size»">{{texts.empty«modelRef.name.toFirstUpper»}}</td>
-					        </tr>
-					        {{/«modelRef.name»}}
-					    </table>
-					</div>
-					
-				«ENDIF»
-				
-			«ENDFOR»
-			
-		</form>
 	'''
 	
 	def generateModelClass(Model it, Project project) '''
@@ -145,11 +64,6 @@ class JavaTemplate {
 		
 			«FOR attribute : attributes»
 				«attribute.declaration»
-				
-			«ENDFOR»
-		
-			«FOR modelRef : models»
-				«modelRef.declaration»
 				
 			«ENDFOR»
 		
@@ -169,12 +83,6 @@ class JavaTemplate {
 				
 			«ENDFOR»
 		
-			«FOR modelRef : models»
-				«modelRef.getter»
-				«modelRef.setter»
-				
-			«ENDFOR»
-				
 		}
 		
 		/*       S.D.G.       */
@@ -230,12 +138,6 @@ class JavaTemplate {
 				
 			«ENDFOR»
 		
-			«FOR modelRef : models»
-				«FOR modelModelRef : modelRef.model.models»
-					«modelModelRef.declaration»
-				«ENDFOR»
-				
-			«ENDFOR»
 			private org.joda.time.DateTime systemTime;
 			
 			public «dataName»(
@@ -260,13 +162,6 @@ class JavaTemplate {
 				«attribute.getter»
 				«attribute.setter»
 				«attribute.initializer(dataName)»
-				
-			«ENDFOR»
-			«FOR modelRef : models»
-				«FOR modelModelRef : modelRef.model.models»
-					«modelModelRef.getter»
-					«modelModelRef.setter»
-				«ENDFOR»
 				
 			«ENDFOR»
 		
