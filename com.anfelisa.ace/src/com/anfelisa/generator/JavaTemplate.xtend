@@ -134,6 +134,8 @@ class JavaTemplate {
 			
 			private String createdId;
 			
+			private String[] notifiedListeners;
+			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
 				
@@ -151,6 +153,7 @@ class JavaTemplate {
 					«attribute.assign»
 				«ENDFOR»
 				this.uuid = uuid;
+				
 			}
 		
 			«IF allAttributes.length > 0»
@@ -199,6 +202,88 @@ class JavaTemplate {
 			public void setOutcome(String outcome) {
 				this.outcome = outcome;
 			}
+		
+			@Override
+			@JsonProperty
+			public String[] getNotifiedListeners() {
+				return notifiedListeners;
+			}
+		
+			@Override
+			@JsonProperty
+			public void setNotifiedListeners(String[] listeners) {
+				this.notifiedListeners = listeners;
+			}
+
+			@Override
+			public Object toPresentationalData() {
+				return new «presentationalDataName»(
+					«FOR attribute : allAttributes SEPARATOR ','»
+						this.«attribute.name»
+					«ENDFOR»
+				);
+			}
+
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generatePresentationalData(Data it, Project project) '''
+		package «project.name».data;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		import com.fasterxml.jackson.annotation.JsonIgnore;
+		
+		import javax.validation.constraints.NotNull;
+		import org.hibernate.validator.constraints.NotEmpty;
+		import org.joda.time.DateTime;
+		import java.util.List;
+		
+		import com.anfelisa.ace.IDataContainer;
+		
+		«FOR model : models»
+			«model.model.importModel»
+		«ENDFOR»
+		
+		@SuppressWarnings("all")
+		public class «presentationalDataName» implements «presentationalDataInterfaceName» {
+			
+			«FOR attribute : allAttributes»
+				«attribute.declaration»
+				
+			«ENDFOR»
+			
+			public «presentationalDataName»(
+				«FOR attribute : allAttributes SEPARATOR ','»
+					«attribute.param»
+				«ENDFOR»
+			) {
+				«FOR attribute : allAttributes»
+					«attribute.assign»
+				«ENDFOR»
+				
+			}
+		
+			«FOR attribute : allAttributes»
+				«attribute.getter»
+				«attribute.setter»
+				«attribute.initializer(presentationalDataName)»
+				
+			«ENDFOR»
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generatePresentationalInterfaceData(Data it, Project project) '''
+		package «project.name».data;
+		
+		«FOR model : models»
+			«model.model.importModel»
+		«ENDFOR»
+		
+		public interface «presentationalDataInterfaceName» «IF models.size > 0»extends «FOR modelRef : models SEPARATOR ', '»«modelRef.model.modelName»«ENDFOR»«ENDIF» {
 		
 		}
 		
@@ -398,7 +483,9 @@ class JavaTemplate {
 				switch (this.commandData.getOutcome()) {
 				«FOR outcome : outcomes»
 					case «outcome.name»:
-						new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle).publish();
+						«IF outcome.listeners.size > 0»
+							new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle).publish();
+						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
 							«aceOperation.newAction»
 							Thread actionThread = new Thread(new Runnable() {
@@ -456,6 +543,15 @@ class JavaTemplate {
 					throw new WebApplicationException(e);
 				}
 			}
+			
+			protected String[] getNotifiedListeners() {
+				«IF outcome.listeners.size == 0»
+					return new String[] {}; 
+				«ELSE»
+					return new String[] { «FOR listener : outcome.listeners SEPARATOR ', '»"«(listener.eContainer as View).viewNameWithPackage».«listener.name»"«ENDFOR» };
+				«ENDIF»
+			}
+			
 			
 		
 		}
@@ -930,7 +1026,7 @@ class JavaTemplate {
 			@Timed
 			@Path("/start")
 			public Response put(@NotNull List<ITimelineItem> timeline) throws JsonProcessingException {
-				if (E2E.sessionIsRunning) {
+				if (E2E.sessionIsRunning && E2E.sessionStartedAt.plusMinutes(1).isAfterNow()) {
 					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
 				}
 				E2E.sessionIsRunning = true;
@@ -1636,7 +1732,7 @@ class JavaTemplate {
 					}
 					databaseHandle.commitTransaction();
 					if (httpMethod == HttpMethod.GET) {
-						return Response.ok(this.getActionData()).build();
+						return Response.ok(this.getActionData().toPresentationalData()).build();
 					} else if (httpMethod == HttpMethod.POST) {
 						return Response.ok(this.getActionData().getCreatedId()).build();
 					} else {
@@ -1947,8 +2043,11 @@ class JavaTemplate {
 				return databaseHandle;
 			}
 		
+			protected abstract String[] getNotifiedListeners();
+		
 			public void publish() {
 				this.prepareDataForView();
+				this.eventData.setNotifiedListeners(this.getNotifiedListeners());
 				AceController.addEventToTimeline(this);
 				this.notifyListeners();
 			}
@@ -2036,6 +2135,12 @@ class JavaTemplate {
 			DateTime getSystemTime();
 			
 			void setSystemTime(DateTime systemTime);
+		
+			String[] getNotifiedListeners();
+
+			void setNotifiedListeners(String[] listeners);
+			
+			Object toPresentationalData();
 		
 		}
 		

@@ -60,17 +60,14 @@ class ES6Template {
 
 	def generateInitialActionFile(ACE it, Project project) '''
 		import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
+		import AppUtils from "../../app/AppUtils";
 		
 		export default class «actionName» extends «abstractActionName» {
 		
-		    captureActionParam() {
-		    }
-		
 		    initActionData() {
+		    	this.actionData = AppUtils.deepCopy(this.actionParam);
 		    }
 		
-		    releaseActionParam() {
-		    }
 		}
 		
 		/*       S.D.G.       */
@@ -141,16 +138,21 @@ class ES6Template {
 		    constructor(eventParam) {
 		        super(eventParam, '«project.name».«eventName(outcome)»');
 		    }
+			getNotifiedListeners() {
+			    return [ «FOR listener : outcome.listeners SEPARATOR ', '»"«(listener.eContainer as View).viewNameWithPackage».«listener.name»"«ENDFOR» ];
+			}
 		}
+		
 		
 		/*       S.D.G.       */
 	'''
 	def generateInitialEventFile(ACE it, Outcome outcome, Project project) '''
 		import «abstractEventName(outcome)» from "../../../gen/«project.name»/events/«abstractEventName(outcome)»";
+		import AppUtils from "../../app/AppUtils";
 		
 		export default class «eventName(outcome)» extends «abstractEventName(outcome)» {
 		    prepareDataForView() {
-		        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
+		        this.eventData = AppUtils.deepCopy(this.eventParam);
 		        if (this.eventData.data === undefined) {
 		        	this.eventData.data = {};
 		        }
@@ -236,7 +238,7 @@ class ES6Template {
 		        if (actionParam === undefined) {
 		            actionParam = {};
 		        }
-		        this.actionParam = JSON.parse(JSON.stringify(actionParam));
+		        this.actionParam = AppUtils.deepCopy(actionParam);
 		        this.actionData = {};
 		        this.isInitAction = isInitAction === true;
 		        this.postUpdateUI = this.postUpdateUI.bind(this);
@@ -305,7 +307,7 @@ class ES6Template {
 		export default class Command {
 		    constructor(commandParam, commandName) {
 		        this.commandName = commandName;
-		        this.commandParam = JSON.parse(JSON.stringify(commandParam));
+		        this.commandParam = AppUtils.deepCopy(commandParam);
 		        this.commandData = {};
 		    }
 		
@@ -430,21 +432,28 @@ class ES6Template {
 	
 	def generateEvent() '''
 		import ACEController from "./ACEController";
+		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Event {
 		    constructor(eventParam, eventName) {
 		        this.eventName = eventName;
-		        this.eventParam = eventParam;
+		        this.eventParam = AppUtils.deepCopy(eventParam);
 		    }
 		
 		    prepareDataForView() {
 		        throw "no prepareDataForView method defined for " + this.eventName;
-		
+		    }
+
+		    getNotifiedListeners() {
+		        return [];
 		    }
 		
 		    publish() {
 		        return new Promise((resolve, reject) => {
 		            this.prepareDataForView();
+					if (this.eventName !== "TriggerAction") {
+					    this.eventData.notifiedListeners = this.getNotifiedListeners();
+					}
 		            ACEController.addItemToTimeLine({event: this});
 		            Promise.all(this.notifyListeners()).then(() => {
 		                resolve();
@@ -631,6 +640,10 @@ class ES6Template {
 		
 		    static displayUnexpectedError(error) {
 		    }
+
+			static deepCopy(object) {
+			    return JSON.parse(JSON.stringify(object));
+			}
 		
 		}
 		
@@ -663,6 +676,13 @@ class ES6Template {
 		            return value;
 		        }
 		    }
+
+		    static compareItems(expected, actual) {
+		    	// will return false if just the order of props is different
+		    	// for a better result use https://www.npmjs.com/package/json-stable-stringify
+		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
+		    }
+
 		}
 		
 		/*       S.D.G.       */
@@ -720,7 +740,7 @@ class ES6Template {
 		        let timestamp = new Date();
 		        item.timestamp = timestamp.getTime();
 		        if (ACEController.execution === ACEController.LIVE) {
-		            ACEController.timeline.push(JSON.parse(JSON.stringify(item)));
+		            ACEController.timeline.push(AppUtils.deepCopy(item));
 		            if (ACEController.timeline.length > ACEController.timelineSize) {
 		                let i;
 		                for (i = 1; i < ACEController.timeline.length; i++) {
@@ -735,7 +755,7 @@ class ES6Template {
 		                }
 		            }
 		        } else {
-		            ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
+		            ACEController.actualTimeline.push(AppUtils.deepCopy(item));
 		        }
 		    }
 		
@@ -1125,7 +1145,7 @@ class ES6Template {
 		                for (let i = 0; i < size; i++) {
 		                    const expected = normalized.expected[i] ? normalized.expected[i] : null;
 		                    const actual = normalized.actual[i] ? normalized.actual[i] : null;
-		                    const result = Utils.compareItems(expected, actual);
+		                    const result = ReplayUtils.compareItems(expected, actual);
 		                    const item = {
 		                        expected,
 		                        actual,
@@ -1140,17 +1160,16 @@ class ES6Template {
 		            }
 		            if (result === true) {
 		                console.log("%c===============", "color: green;");
-		                console.log("%c=== SUCCESS ===", "color: green;");
+		                console.log("%c=== SCENARIO " + ReplayUtils.scenarioConfig.scenarioId + " SUCCESS ===", "color: green;");
 		                console.log("%c===============", "color: green;");
 		            } else {
 		                console.log("%c===============", "color: red;");
-		                console.log("%c=== FAILURE ===", "color: red;");
+		                console.log("%c=== SCENARIO " + ReplayUtils.scenarioConfig.scenarioId + " FAILURE ===", "color: red;");
 		                console.log("%c===============", "color: red;");
 		            }
 		            Utils.saveScenarioResult(normalized, result);
 		            AppUtils.httpPut('replay/e2e/stop').then(() => {
 		                if (ReplayUtils.scenarioConfig.runAllScenarios === true) {
-		                    console.log("executed scenario with id " + ReplayUtils.scenarioConfig.scenarioId);
 		                    Utils.loadNextScenario(ReplayUtils.scenarioConfig.scenarioId).then((scenario) => {
 		                        if (scenario.id) {
 		                            ReplayUtils.scenarioConfig.scenarioId = scenario.id;
@@ -1174,11 +1193,6 @@ class ES6Template {
 		            return item.event.eventName;
 		        }
 		    }
-		
-		    static compareItems(expected, actual) {
-		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
-		    }
-		
 		
 		}
 		

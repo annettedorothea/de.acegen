@@ -128,6 +128,12 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/data/' + data.dataName + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateData(data, project));
+					fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generatePresentationalData(data, project));
+					fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataInterfaceName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generatePresentationalInterfaceData(data, project));
 				}
 				for (ace : project.aceOperations) {
 					fsa.generateFile(project.packageFolder + '/actions/' + ace.abstractActionName + '.java',
@@ -143,12 +149,14 @@ class AceGenerator extends AbstractGenerator {
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateInitialCommandFile(ace, project));
 					for (outcome : ace.outcomes) {
-						fsa.generateFile(project.packageFolder + '/events/' + ace.abstractEventName(outcome) + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generateAbstractEventFile(ace, outcome, project));
-						fsa.generateFile(project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-							javaTemplate.generateInitialEventFile(ace, outcome, project));
+						if (outcome.listeners.size > 0) {
+							fsa.generateFile(project.packageFolder + '/events/' + ace.abstractEventName(outcome) + '.java',
+								ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+								javaTemplate.generateAbstractEventFile(ace, outcome, project));
+							fsa.generateFile(project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
+								ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+								javaTemplate.generateInitialEventFile(ace, outcome, project));
+						}
 					}
 				}
 				for (view : project.views) {
