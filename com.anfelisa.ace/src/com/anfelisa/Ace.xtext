@@ -84,7 +84,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Serial' | 'Integer' | 'String' | 'Encrypted' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
+	'Integer' | 'String' | 'Encrypted' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
 ;
 
 Constraint:

@@ -37,36 +37,10 @@ class ModelExtension {
 	def String modelAttributeSqlValue(Model it, Project project, Attribute attribute) 
 	''':«attribute.name.toLowerCase»'''
 	
-	def Attribute findPrimaryKeyAttribute(Model it) {
-		var primaryKeys = attributes.filter[a | a.primaryKey];
-		if (primaryKeys.size == 1) {
-			return primaryKeys.get(0);
-		}
-		return null;
-	}
-	
-	def Attribute findSerialAttribute(Model it) {
-		for (attribute : attributes) {
-			if (attribute.type == 'Serial') {
-				return attribute;
-			}
-		}
-	}
-	
 	def List<Attribute> allUniqueAttributes(Model it) {
 		var list = new ArrayList<Attribute>();
 		for (attribute : attributes) {
 			if (attribute.unique) {
-				list.add(attribute);
-			}
-		}
-		return list;
-	}
-	
-	def List<Attribute> allNonSerialAttributes(Model it) {
-		var list = new ArrayList<Attribute>();
-		for (attribute : attributes) {
-			if (!'Serial'.equals(attribute.type)) {
 				list.add(attribute);
 			}
 		}

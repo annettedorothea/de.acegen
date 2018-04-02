@@ -132,8 +132,6 @@ class JavaTemplate {
 			
 			private String outcome;
 			
-			private String createdId;
-			
 			private String[] notifiedListeners;
 			
 			«FOR attribute : allAttributes»
@@ -172,15 +170,6 @@ class JavaTemplate {
 			@JsonProperty
 			public String getUuid() {
 				return this.uuid;
-			}
-		
-			@JsonIgnore
-			public String getCreatedId() {
-				return createdId;
-			}
-		
-			public void setCreatedId(String createdId) {
-				this.createdId = createdId;
 			}
 		
 			@JsonProperty
@@ -308,28 +297,19 @@ class JavaTemplate {
 		@JsonIgnoreType
 		public class «modelDao» {
 			
-			public «IF findPrimaryKeyAttribute !== null»«findPrimaryKeyAttribute.javaType»«ELSE»void«ENDIF» insert(Handle handle, «modelName» «modelParam») {
-				«IF findPrimaryKeyAttribute !== null»
-					Query<Map<String, Object>> statement = handle.createQuery("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR») RETURNING «findPrimaryKeyAttribute.name.toLowerCase»");
-					«FOR attribute : allNonSerialAttributes»
-						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
-					«ENDFOR»
-					Map<String, Object> first = statement.first();
-					return («findPrimaryKeyAttribute.javaType») first.get("«findPrimaryKeyAttribute.name.toLowerCase»");
-				«ELSE»
-					Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : allNonSerialAttributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
-					«FOR attribute : allNonSerialAttributes»
-						statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
-					«ENDFOR»
-					statement.execute();
-				«ENDIF»
+			public void insert(Handle handle, «modelName» «modelParam») {
+				Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
+				«FOR attribute : attributes»
+					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
+				«ENDFOR»
+				statement.execute();
 			}
 			
 			
 			«FOR attribute : allUniqueAttributes»
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : allNonSerialAttributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
-					«FOR attr : allNonSerialAttributes»
+					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					«FOR attr : attributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
 					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)» );
@@ -359,10 +339,6 @@ class JavaTemplate {
 			public void truncate(Handle handle) {
 				Update statement = handle.createStatement("TRUNCATE «project.schema».«table» CASCADE");
 				statement.execute();
-				«IF findSerialAttribute !== null»
-					statement = handle.createStatement("ALTER SEQUENCE «project.schema».«table»_«findSerialAttribute.name»_seq RESTART");
-					statement.execute();
-				«ENDIF»
 			}
 
 		}
@@ -374,7 +350,7 @@ class JavaTemplate {
 		<createTable tableName="«table»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«(attribute.foreignKey.eContainer as Attribute).tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true"«ENDIF» />
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«(attribute.foreignKey.eContainer as Attribute).tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«table»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>
@@ -1095,7 +1071,7 @@ class JavaTemplate {
 		
 				final DBIFactory factory = new DBIFactory();
 		
-				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "todo");
+				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				LOG.info("START EVENT REPLAY");
@@ -1236,7 +1212,7 @@ class JavaTemplate {
 			public Response get() {
 				Handle timelineHandle = jdbi.open();
 				try {
-					List<ITimelineItem> serverTimeline = aceDao.selectServerTimeline(timelineHandle);
+					List<ITimelineItem> serverTimeline = aceDao.selectTimeline(timelineHandle);
 					return Response.ok(serverTimeline).build();
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
@@ -1406,11 +1382,6 @@ class JavaTemplate {
 			}
 		
 			public static void addActionToTimeline(IAction action) {
-				String uuid = action.getActionData().getUuid();
-				ITimelineItem item = aceDao.selectTimelineItem(action.getDatabaseHandle().getHandle(), uuid);
-				if (item != null) {
-					throw new WebApplicationException("duplicate uuid " + uuid);
-				}
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
 					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
@@ -1515,12 +1486,10 @@ class JavaTemplate {
 		
 			public void truncateTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE " + timelineTable());
-				handle.execute("ALTER SEQUENCE " + timelineTable() + "_id_seq RESTART");
 			}
 		
 			public void truncateErrorTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE " + errorTimelineTable());
-				handle.execute("ALTER SEQUENCE " + errorTimelineTable() + "_id_seq RESTART");
 			}
 		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
@@ -1560,81 +1529,14 @@ class JavaTemplate {
 				}
 			}
 		
-			public ITimelineItem selectNextAction(Handle handle, String uuid) {
-				if (uuid != null) {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where id > " + "(select id from " + timelineTable()
-									+ " where uuid = :uuid and type = 'action' limit 1) " + "and type = 'action' "
-									+ "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				} else {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where type = 'action' " + "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				}
-			}
-		
 			public ITimelineItem selectLastAction(Handle handle) {
 				return handle
-						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
 								+ "where type = 'action' " + "order by time desc " + "limit 1")
 						.map(new TimelineItemMapper()).first();
 			}
 		
-			public ITimelineItem selectTimelineItem(Handle handle, String uuid) {
-				return handle.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-						+ "where uuid = :uuid").bind("uuid", uuid).map(new TimelineItemMapper()).first();
-			}
-		
-			public ITimelineItem selectNextCommand(Handle handle, String uuid) {
-				if (uuid != null) {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where id > " + "(select id from " + timelineTable()
-									+ " where uuid = :uuid and type = 'command' limit 1) " + "and type = 'command' "
-									+ "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				} else {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where type = 'command' " + "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				}
-			}
-		
-			public ITimelineItem selectCommand(Handle handle, String uuid) {
-				return handle
-						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "where uuid = :uuid and type = 'command'")
-						.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-			}
-
-			public ITimelineItem selectNextEvent(Handle handle, String uuid) {
-				if (uuid != null) {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where id > " + "(select id from " + timelineTable()
-									+ " where uuid = :uuid and type = 'event' limit 1) " + "and type = 'event' "
-									+ "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				} else {
-					return handle
-							.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-									+ "where type = 'event' " + "order by time asc " + "limit 1")
-							.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-				}
-			}
-		
-			public ITimelineItem selectEvent(Handle handle, String uuid) {
-				return handle
-						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "where uuid = :uuid and type = 'event'")
-						.bind("uuid", uuid).map(new TimelineItemMapper()).first();
-			}
-			
-			public List<ITimelineItem> selectServerTimeline(Handle handle) {
+			public List<ITimelineItem> selectTimeline(Handle handle) {
 				return handle
 						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
 								+ "order by id asc ")
@@ -1733,8 +1635,6 @@ class JavaTemplate {
 					databaseHandle.commitTransaction();
 					if (httpMethod == HttpMethod.GET) {
 						return Response.ok(this.getActionData().toPresentationalData()).build();
-					} else if (httpMethod == HttpMethod.POST) {
-						return Response.ok(this.getActionData().getCreatedId()).build();
 					} else {
 						return Response.ok().build();
 					}
@@ -2128,10 +2028,6 @@ class JavaTemplate {
 
 			void setOutcome(String outcome);
 			
-			String getCreatedId();
-			
-			void setCreatedId(String createdId);
-			
 			DateTime getSystemTime();
 			
 			void setSystemTime(DateTime systemTime);
@@ -2181,8 +2077,6 @@ class JavaTemplate {
 		@JsonDeserialize(as=TimelineItem.class)
 		public interface ITimelineItem {
 		
-			Integer getId();
-			
 			String getType();
 			
 			String getMethod();
@@ -2249,8 +2143,6 @@ class JavaTemplate {
 		
 		public class TimelineItem implements ITimelineItem {
 		
-			private Integer id;
-			
 			private String type;
 			
 			private String method;
@@ -2265,7 +2157,6 @@ class JavaTemplate {
 		
 			
 			public TimelineItem(
-				@JsonProperty("id") Integer id, 
 				@JsonProperty("type") String type, 
 				@JsonProperty("method") String method, 
 				@JsonProperty("name") String name, 
@@ -2274,18 +2165,12 @@ class JavaTemplate {
 				@JsonProperty("uuid") String uuid
 			) {
 				super();
-				this.id = id;
 				this.type = type;
 				this.method = method;
 				this.name = name;
 				this.timestamp = timestamp;
 				this.data = data;
 				this.uuid = uuid;
-			}
-		
-			@JsonProperty
-			public Integer getId() {
-				return id;
 			}
 		
 			@JsonProperty
@@ -2320,7 +2205,7 @@ class JavaTemplate {
 			
 			@Override
 			public String toString() {
-				return "TimelineItem [id=" + id + ", type=" + type + ", method=" + method + ", name=" + name + ", timestamp="
+				return "TimelineItem [type=" + type + ", method=" + method + ", name=" + name + ", timestamp="
 						+ timestamp + ", uuid=" + uuid + "]";
 			}
 		
@@ -2348,7 +2233,6 @@ class JavaTemplate {
 				DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 				DateTime time = DateTime.parse(r.getString("time"), fmt);
 				return new TimelineItem(
-					r.getInt("id"),
 					r.getString("type"),
 					r.getString("method"),
 					r.getString("name"),
@@ -2550,9 +2434,6 @@ class JavaTemplate {
 	
 	def generateAceMigration() '''
 		<createTable tableName="timeline">
-			<column name="id" type="serial">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
 			<column name="type" type="character varying">
 				<constraints nullable="false" />
 			</column>
@@ -2574,9 +2455,6 @@ class JavaTemplate {
 		</createTable>
 		
 		<createTable tableName="errortimeline">
-			<column name="id" type="serial">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
 			<column name="type" type="character varying">
 				<constraints nullable="false" />
 			</column>

@@ -21,7 +21,6 @@ class PrimitiveAttributeExtension {
 
 	def String sqlType(PrimitiveAttribute it) {
 		switch type {
-      		case 'Serial' : "serial"
       		case 'Integer' : "integer"
       		case 'Long' : "bigint"
       		case 'String' : "character varying"
