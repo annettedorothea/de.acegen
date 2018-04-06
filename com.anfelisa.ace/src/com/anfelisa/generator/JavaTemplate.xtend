@@ -1036,6 +1036,7 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		import java.lang.reflect.Constructor;
+		import java.util.List;
 		
 		import org.skife.jdbi.v2.DBI;
 		import org.skife.jdbi.v2.Handle;
@@ -1077,30 +1078,39 @@ class JavaTemplate {
 				LOG.info("START EVENT REPLAY");
 				try {
 					databaseHandle.beginTransaction();
-		
 					Handle handle = databaseHandle.getHandle();
-		
 					AppUtils.truncateAllViews(handle);
 		
+					List<ITimelineItem> timeline = aceDao.selectTimeline(handle);
+					E2E.timeline = timeline;
+		
 					int eventCount = 0;
-					ITimelineItem nextAction = aceDao.selectNextAction(handle, null);
+					ITimelineItem nextAction = E2E.selectNextAction(null);
 					while (nextAction != null) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
-							ITimelineItem nextEvent = aceDao.selectEvent(handle, nextAction.getUuid());
-							LOG.info("PUBLISH EVENT " + nextEvent);
-							Class<?> cl = Class.forName(nextEvent.getName());
-							Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
-							IEvent event = (IEvent) con.newInstance(databaseHandle);
-							event.initEventData(nextEvent.getData());
-							event.notifyListeners();
-							eventCount++;
+							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
+							if (nextEvent != null) {
+								try {
+									Class<?> cl = Class.forName(nextEvent.getName());
+									Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
+									IEvent event = (IEvent) con.newInstance(databaseHandle);
+									event.initEventData(nextEvent.getData());
+									event.notifyListeners();
+									eventCount++;
+									LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+								} catch (Exception e) {
+									LOG.error("failed to replay event " + nextEvent.getUuid() + " - " + nextEvent.getName());
+									LOG.error(e.getMessage());
+								}
+							}
 						}
-						nextAction = aceDao.selectNextAction(handle, nextAction.getUuid());
+						nextAction = E2E.selectNextAction(nextAction.getUuid());
 					}
 		
 					databaseHandle.commitTransaction();
 		
-					LOG.info("EVENT REPLAY FINISHED: successfully replayed " +  eventCount + " events");
+					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + eventCount + " events");
+					
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
 					LOG.info("EVENT REPLAY ABORTED " + e.getMessage());
@@ -1538,8 +1548,8 @@ class JavaTemplate {
 		
 			public List<ITimelineItem> selectTimeline(Handle handle) {
 				return handle
-						.createQuery("SELECT id, type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "order by id asc ")
+						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+								+ "order by time asc ")
 						.map(new TimelineItemMapper()).list();
 			}
 
@@ -1635,6 +1645,8 @@ class JavaTemplate {
 					databaseHandle.commitTransaction();
 					if (httpMethod == HttpMethod.GET) {
 						return Response.ok(this.getActionData().toPresentationalData()).build();
+					} else if (httpMethod == HttpMethod.POST) {
+						return Response.ok(this.getActionData().getUuid()).build();
 					} else {
 						return Response.ok().build();
 					}
