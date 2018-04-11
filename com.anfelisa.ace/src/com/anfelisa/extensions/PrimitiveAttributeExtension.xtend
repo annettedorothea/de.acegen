@@ -14,10 +14,10 @@ class PrimitiveAttributeExtension {
 		«IF constraint !== null»
 			@«constraint»
 		«ENDIF»
-		private «javaType» «name»;
+		private «javaType» «name»«IF type.equals('Boolean')» = false«ENDIF»;
 	'''
 	
-	def String javaType(PrimitiveAttribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('Serial')»Integer«ELSEIF type.equals('DateTime')»org.joda.time.DateTime«ELSEIF type.equals('Encrypted')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
+	def String javaType(PrimitiveAttribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»org.joda.time.DateTime«ELSEIF type.equals('Encrypted')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
 
 	def String sqlType(PrimitiveAttribute it) {
 		switch type {

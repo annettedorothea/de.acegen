@@ -60,12 +60,10 @@ class ES6Template {
 
 	def generateInitialActionFile(ACE it, Project project) '''
 		import «abstractActionName» from "../../../gen/«project.name»/actions/«abstractActionName»";
-		import AppUtils from "../../app/AppUtils";
 		
 		export default class «actionName» extends «abstractActionName» {
 		
 		    initActionData() {
-		    	this.actionData = AppUtils.deepCopy(this.actionParam);
 		    }
 		
 		}
