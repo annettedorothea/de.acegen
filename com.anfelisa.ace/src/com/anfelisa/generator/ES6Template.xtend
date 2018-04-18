@@ -860,7 +860,7 @@ class ES6Template {
 		}
 		
 		export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
-		    Utils.loadNextScenario(-1).then((scenario) => {
+		    Utils.loadNextScenario(null).then((scenario) => {
 		        if (scenario) {
 		            ReplayUtils.scenarioConfig = {
 		                executor,

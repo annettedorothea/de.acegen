@@ -112,51 +112,36 @@ class JavaTemplate {
 		package «project.name».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
-		import com.fasterxml.jackson.annotation.JsonIgnore;
 		
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
 		
-		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.AbstractData;
 		
-		«FOR model : models»
-			«model.model.importModel»
-		«ENDFOR»
-		
-		@SuppressWarnings("all")
-		public class «dataName» implements «dataInterfaceName» {
-			
-			private String uuid;
-			
-			private String outcome;
-			
-			private String[] notifiedListeners;
+		public class «dataName» extends AbstractData implements «dataInterfaceName» {
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
 				
 			«ENDFOR»
 		
-			private org.joda.time.DateTime systemTime;
-			
 			public «dataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param»
 				«ENDFOR»
 				@JsonProperty("uuid") String uuid
 			) {
+				super(uuid);
 				«FOR attribute : allAttributes»
 					«attribute.assign»
 				«ENDFOR»
-				this.uuid = uuid;
-				
 			}
 		
 			«IF allAttributes.length > 0»
 				public «dataName»( String uuid ) {
-					this.uuid = uuid;
+					super(uuid);
 				}
 			«ENDIF»
 		
@@ -166,6 +151,49 @@ class JavaTemplate {
 				«attribute.initializer(dataName)»
 				
 			«ENDFOR»
+		
+			@Override
+			public Object toPresentationalData() {
+				return new «presentationalDataName»(
+					«FOR attribute : allAttributes SEPARATOR ','»
+						this.«attribute.name»
+					«ENDFOR»
+				);
+			}
+
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateAbstractData() '''
+		package com.anfelisa.ace;
+		
+		import org.joda.time.DateTime;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		public abstract class AbstractData implements IDataContainer {
+		
+			private String uuid;
+			
+			private String outcome;
+			
+			private String[] notifiedListeners;
+		
+			private org.joda.time.DateTime systemTime;
+			
+			public AbstractData(String uuid, String outcome, String[] notifiedListeners, DateTime systemTime) {
+				super();
+				this.uuid = uuid;
+				this.outcome = outcome;
+				this.notifiedListeners = notifiedListeners;
+				this.systemTime = systemTime;
+			}
+		
+			public AbstractData( String uuid ) {
+				this.uuid = uuid;
+			}
 		
 			@JsonProperty
 			public String getUuid() {
@@ -203,16 +231,7 @@ class JavaTemplate {
 			public void setNotifiedListeners(String[] listeners) {
 				this.notifiedListeners = listeners;
 			}
-
-			@Override
-			public Object toPresentationalData() {
-				return new «presentationalDataName»(
-					«FOR attribute : allAttributes SEPARATOR ','»
-						this.«attribute.name»
-					«ENDFOR»
-				);
-			}
-
+		
 		}
 		
 		/*       S.D.G.       */
