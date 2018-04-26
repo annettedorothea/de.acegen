@@ -3,50 +3,13 @@
  */
 package com.anfelisa.formatting2
 
-import com.anfelisa.ace.ACE
-import com.anfelisa.ace.Data
-import com.anfelisa.ace.Model
-import com.anfelisa.ace.Outcome
-import com.anfelisa.ace.Project
-import com.anfelisa.ace.View
-import com.anfelisa.services.AceGrammarAccess
-import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class AceFormatter extends AbstractFormatter2 {
-
-	@Inject extension AceGrammarAccess
-
-	def dispatch void format(Project project, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (ACE aCE : project.getAceOperations()) {
-			aCE.format;
-		}
-		for (View view : project.getViews()) {
-			view.format;
-		}
-		for (Model model : project.getModels()) {
-			model.format;
-		}
-		for (Data data : project.getData()) {
-			data.format;
-		}
+	
+	override format(Object arg0, IFormattableDocument arg1) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 
-	def dispatch void format(ACE aCE, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		//aCE.regionFor.keyword("{").append[newLine]
-		//aCE.regionFor.keyword("}").prepend[newLine]
-		interior(
-			aCE.regionFor.keyword('{').append[newLine],
-			aCE.regionFor.keyword('}'),
-			[indent]
-		)
-		for (Outcome outcome : aCE.getOutcomes()) {
-			outcome.format;
-		}
-	}
-
-// TODO: implement for Model, Data, Attribute, View
 }

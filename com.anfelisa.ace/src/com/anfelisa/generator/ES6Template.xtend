@@ -1136,7 +1136,7 @@ class ES6Template {
 		    static finishReplay() {
 		        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
 		            const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
-		            const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+		            const result = ReplayUtils.compareItems(normalized.expected, normalized.actual);
 		
 		            if (normalized.expected && normalized.actual) {
 		                const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
