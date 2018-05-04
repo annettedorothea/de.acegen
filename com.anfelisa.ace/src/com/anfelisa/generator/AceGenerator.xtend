@@ -200,9 +200,6 @@ class AceGenerator extends AbstractGenerator {
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateEventReplayCommand());
 
-					fsa.generateFile("com/anfelisa/ace" + '/AceController.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAceController());
 					fsa.generateFile("com/anfelisa/ace" + '/AceDao.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceDao());
 					fsa.generateFile("com/anfelisa/ace" + '/AceExecutionMode.java',
@@ -250,6 +247,16 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile("com/anfelisa/ace" + '/AbstractData.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateAbstractData());
+
+					fsa.generateFile("com/anfelisa/ace" + '/AbstractDaoProvider.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateAbstractDaoProvider());
+					fsa.generateFile("com/anfelisa/ace" + '/DaoProvider.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateDaoProvider());
+					fsa.generateFile("com/anfelisa/ace" + '/ViewProvider.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateViewProvider());
 
 					fsa.generateFile("com/anfelisa/ace/encryption" + '/AESEncryption.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,

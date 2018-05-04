@@ -408,6 +408,9 @@ class JavaTemplate {
 		import javax.ws.rs.WebApplicationException;
 
 		import com.anfelisa.ace.Action;
+		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;
 		«data.dataImport»
@@ -418,14 +421,14 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi) {
-				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi);
+			public «abstractActionName»(DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, appConfiguration, daoProvider, viewProvider);
 			}
 		
 			@Override
 			public ICommand getCommand() {
 				«IF outcomes.size > 0»
-					return new «commandName»(this.actionData, databaseHandle);
+					return new «commandName»(this.actionData, databaseHandle, daoProvider, viewProvider);
 				«ELSE»
 					return null;
 				«ENDIF»
@@ -456,6 +459,8 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ViewProvider;
 
 		«data.dataImport»
 
@@ -465,12 +470,12 @@ class JavaTemplate {
 				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle) {
-				super("«project.name».commands.«commandName»", commandParam, databaseHandle);
+			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».commands.«commandName»", commandParam, databaseHandle, daoProvider, viewProvider);
 			}
 		
-			public «abstractCommandName»(DatabaseHandle databaseHandle) {
-				super("«project.name».commands.«commandName»", null, databaseHandle);
+			public «abstractCommandName»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».commands.«commandName»", null, databaseHandle, daoProvider, viewProvider);
 			}
 		
 			@Override
@@ -479,7 +484,7 @@ class JavaTemplate {
 				«FOR outcome : outcomes»
 					case «outcome.name»:
 						«IF outcome.listeners.size > 0»
-							new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle).publish();
+							new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle, daoProvider, viewProvider).publish();
 						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
 							«aceOperation.newAction»
@@ -518,17 +523,19 @@ class JavaTemplate {
 
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ViewProvider;
 		
 		«data.dataImport»
 		
 		public abstract class «abstractEventName(outcome)» extends Event<«data.dataParamType»> {
 		
-			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
-				super("«project.name».events.«eventName(outcome)»", eventParam, databaseHandle);
+			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».events.«eventName(outcome)»", eventParam, databaseHandle, daoProvider, viewProvider);
 			}
 			
-			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle) {
-				super("«project.name».events.«eventName(outcome)»", null, databaseHandle);
+			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».events.«eventName(outcome)»", null, databaseHandle, daoProvider, viewProvider);
 			}
 			
 			public void initEventData(String json) {
@@ -568,6 +575,9 @@ class JavaTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
+		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.DaoProvider;
 		import com.anfelisa.ace.DatabaseHandle;
 		
 		import org.slf4j.Logger;
@@ -586,8 +596,8 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi) {
-				super(jdbi);
+			public «actionName»(DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super(jdbi,appConfiguration, daoProvider, viewProvider);
 			}
 		
 			«IF type !== null»@«type»«ENDIF»
@@ -613,6 +623,8 @@ class JavaTemplate {
 		package «project.name».commands;
 		
 		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.DaoProvider;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -627,8 +639,8 @@ class JavaTemplate {
 				super(commandParam, databaseHandle);
 			}
 		
-			public «commandName»(DatabaseHandle databaseHandle) {
-				super(null, databaseHandle);
+			public «commandName»(DatabaseHandle databaseHandle, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super(null, databaseHandle, daoProvider, viewProvider);
 			}
 		
 			@Override
@@ -647,6 +659,8 @@ class JavaTemplate {
 		package «project.name».events;
 		
 		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ViewProvider;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -657,12 +671,12 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«eventName(outcome)».class);
 
-			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle) {
-				super(eventParam, databaseHandle);
+			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				super(eventParam, databaseHandle, daoProvider, viewProvider);
 			}
 		
-			public «eventName(outcome)»(DatabaseHandle databaseHandle) {
-				this(null, databaseHandle);
+			public «eventName(outcome)»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+				this(null, databaseHandle, daoProvider, viewProvider);
 			}
 		
 			@Override
@@ -689,9 +703,16 @@ class JavaTemplate {
 		
 		@SuppressWarnings("all")
 		public class «viewName» {
+
+			private DaoProvider daoProvider;
+			
+			public «viewName»(DaoProvider daoProvider) {
+				super();
+				this.daoProvider = daoProvider;
+			}
 		
 			«FOR renderFunction : renderFunctions»
-			    public static BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
+			    public BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
 			    };
 			«ENDFOR»
 		
@@ -704,14 +725,17 @@ class JavaTemplate {
 		package «name»;
 		
 		import io.dropwizard.setup.Environment;
-		import com.anfelisa.ace.AceController;
+		import com.anfelisa.ace.AppConfiguration;
 		import com.anfelisa.ace.AceExecutionMode;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.ServerConfiguration;
 		
 		import org.skife.jdbi.v2.DBI;
 		
 		«FOR view : it.referencedViews()»
 			import «view.viewNameWithPackage»;
-	    	«ENDFOR»
+    	«ENDFOR»
 		«IF aceOperations.size > 0»
 			import «name».actions.*;
 		«ENDIF»
@@ -719,17 +743,17 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, DBI jdbi) {
+			public void registerResources(Environment environment, DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.actionName»(jdbi));
+					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
 			}
 		
-			public static void registerConsumers() {
+			public void registerConsumers(ViewProvider viewProvider, String mode) {
 				«FOR aceOperation : aceOperations»
 					«FOR outcome : aceOperation.outcomes»
 						«FOR listener : outcome.listeners»
-							«IF (listener.eContainer as View).isExternal»if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE || AceController.getAceExecutionMode() == AceExecutionMode.DEV) {
+							«IF (listener.eContainer as View).isExternal»if (ServerConfiguration.LIVE.equals(mode) || ServerConfiguration.DEV.equals(mode)) {
 								«addConsumers(it, aceOperation, outcome, listener)»
 							}
 							«ELSE»
@@ -745,7 +769,7 @@ class JavaTemplate {
 	'''
 	
 	private def addConsumers(Project project, ACE aceOperation, Outcome outcome, ViewFunction listener) '''
-		AceController.addConsumer("«project.name».events.«aceOperation.eventName(outcome)»", «listener.viewFunctionWithViewName»);
+		viewProvider.addConsumer("«project.name».events.«aceOperation.eventName(outcome)»", viewProvider.«listener.viewFunctionWithViewNameAsVariable»);
 	'''
 	
 	def generateAppUtils() '''
@@ -770,7 +794,6 @@ class JavaTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.AceController;
 		import com.anfelisa.ace.AceDao;
 		import com.anfelisa.ace.AceExecutionMode;
 		
@@ -822,16 +845,12 @@ class JavaTemplate {
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
-					AceController.setAceExecutionMode(AceExecutionMode.REPLAY);
 					environment.jersey().register(new PrepareE2EResource(jdbi));
 					environment.jersey().register(new StartE2ESessionResource(jdbi));
 					environment.jersey().register(new StopE2ESessionResource());
 					environment.jersey().register(new GetServerTimelineResource(jdbi));
 				} else if (ServerConfiguration.DEV.equals(configuration.getServerConfiguration().getMode())) {
-					AceController.setAceExecutionMode(AceExecutionMode.DEV);
 					environment.jersey().register(new GetServerTimelineResource(jdbi));
-				} else {
-					AceController.setAceExecutionMode(AceExecutionMode.LIVE);
 				}
 
 				environment.jersey().register(new GetServerInfoResource());
@@ -1072,23 +1091,22 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
-			private AceDao aceDao = new AceDao();
-		
-			protected EventReplayCommand(Application<AppConfiguration> application) {
+			private DaoProvider daoProvider;
+			
+			protected EventReplayCommand(Application<AppConfiguration> application, DaoProvider daoProvider) {
 				super(application, "replay", "truncates views and replays events");
+				this.daoProvider = daoProvider;
 			}
 		
 			@Override
 			protected void run(Environment environment, Namespace namespace, AppConfiguration configuration) throws Exception {
-				if (AceController.getAceExecutionMode() == AceExecutionMode.LIVE) {	
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {	
 					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
 				}
-				if (AceController.getAceExecutionMode() == AceExecutionMode.REPLAY) {	
+				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {	
 					throw new RuntimeException("replay events in a replay environment doesn't make sense");
 				}
 				
-				AceDao.setSchemaName(null);
-		
 				final DBIFactory factory = new DBIFactory();
 		
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
@@ -1100,7 +1118,7 @@ class JavaTemplate {
 					Handle handle = databaseHandle.getHandle();
 					AppUtils.truncateAllViews(handle);
 		
-					List<ITimelineItem> timeline = aceDao.selectTimeline(handle);
+					List<ITimelineItem> timeline = daoProvider.aceDao.selectTimeline(handle);
 					E2E.timeline = timeline;
 		
 					int eventCount = 0;
@@ -1284,11 +1302,12 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
 		
-			private AceDao aceDao = new AceDao();
+			private DaoProvider daoProvider;
 		
-			public PrepareE2EResource(DBI jdbi) {
+			public PrepareE2EResource(DBI jdbi, DaoProvider daoProvider) {
 				super();
 				this.jdbi = jdbi;
+				this.daoProvider = daoProvider;
 			}
 		
 			@PUT
@@ -1302,7 +1321,7 @@ class JavaTemplate {
 				try {
 					databaseHandle.beginTransaction();
 		
-					ITimelineItem lastAction = aceDao.selectLastAction(databaseHandle.getHandle());
+					ITimelineItem lastAction = daoProvider.aceDao.selectLastAction(databaseHandle.getHandle());
 		
 					int eventCount = 0;
 					ITimelineItem nextAction = E2E.selectNextAction(lastAction != null ? lastAction.getUuid() : null);
@@ -1316,7 +1335,7 @@ class JavaTemplate {
 								IEvent event = (IEvent) con.newInstance(databaseHandle);
 								event.initEventData(nextEvent.getData());
 								event.notifyListeners();
-								AceController.addPreparingEventToTimeline(event, nextAction.getUuid());
+								daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
 								eventCount++;
 							}
 						}
@@ -1371,110 +1390,6 @@ class JavaTemplate {
 				E2E.sessionStartedAt = null;
 				E2E.timeline = null;
 				return Response.ok().build();
-			}
-		
-		}
-	'''
-	
-	def generateAceController() '''
-		package com.anfelisa.ace;
-		
-		import java.util.ArrayList;
-		import java.util.HashMap;
-		import java.util.List;
-		import java.util.Map;
-		import java.util.function.BiConsumer;
-		
-		import javax.ws.rs.WebApplicationException;
-		
-		import org.skife.jdbi.v2.Handle;
-		
-		import com.anfelisa.ace.encryption.EncryptionService;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		public class AceController {
-		
-			private static AceExecutionMode aceExecutionMode;
-		
-			private final static JodaObjectMapper mapper = new JodaObjectMapper();
-		
-			private final static Map<String, List<BiConsumer<? extends IDataContainer, Handle>>> consumerMap = new HashMap<String, List<BiConsumer<? extends IDataContainer, Handle>>>();
-		
-			private final static AceDao aceDao = new AceDao();
-		
-			public static AceExecutionMode getAceExecutionMode() {
-				return aceExecutionMode;
-			}
-		
-			public static void setAceExecutionMode(AceExecutionMode aceExecutionMode) {
-				AceController.aceExecutionMode = aceExecutionMode;
-			}
-		
-			public static void addActionToTimeline(IAction action) {
-				try {
-					String json = mapper.writeValueAsString(action.getActionData());
-					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
-							action.getActionData().getUuid(), action.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			public static void addCommandToTimeline(ICommand command) {
-				try {
-					addItemToTimeline("command", null, command.getCommandName(),
-							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
-							command.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			public static void addEventToTimeline(IEvent event) {
-				try {
-					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							event.getEventParam().getUuid(), event.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			public static void addPreparingEventToTimeline(IEvent event, String uuid) {
-				try {
-					addItemToTimeline("preparing event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							uuid, event.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			public static void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
-				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), "exception", null, x.getClass().getName(),
-						x.getMessage(), uuid);
-			}
-		
-			private static void addItemToTimeline(String type, String method, String name, String json, String uuid,
-					DatabaseHandle databaseHandle) {
-				if (databaseHandle == null) {
-					throw new WebApplicationException("no database handle");
-				}
-				aceDao.insertIntoTimeline(databaseHandle.getHandle(), type, method, name, EncryptionService.encrypt(json),
-						uuid);
-				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), type, method, name,
-						EncryptionService.encrypt(json), uuid);
-			}
-		
-			public static void addConsumer(String eventName, BiConsumer<? extends IDataContainer, Handle> createUserTable) {
-				List<BiConsumer<? extends IDataContainer, Handle>> consumerForEvent = consumerMap.get(eventName);
-				if (consumerForEvent == null) {
-					consumerForEvent = new ArrayList<BiConsumer<? extends IDataContainer, Handle>>();
-					consumerMap.put(eventName, consumerForEvent);
-				}
-				consumerForEvent.add(createUserTable);
-			}
-		
-			public static List<BiConsumer<? extends IDataContainer, Handle>> getConsumerForEvent(String eventName) {
-				return consumerMap.get(eventName);
 			}
 		
 		}
@@ -1608,13 +1523,19 @@ class JavaTemplate {
 			protected DatabaseHandle databaseHandle;
 			private DBI jdbi;
 			protected JodaObjectMapper mapper;
+			private AppConfiguration appConfiguration;
+			protected DaoProvider daoProvider;
+			protected ViewProvider viewProvider;
 		
-			public Action(String actionName, HttpMethod httpMethod, DBI jdbi) {
+			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.actionName = actionName;
 				this.httpMethod = httpMethod;
 				this.jdbi = jdbi;
 				mapper = new JodaObjectMapper();
+				this.appConfiguration = appConfiguration;
+				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
 			}
 		
 			public String getActionName() {
@@ -1636,7 +1557,7 @@ class JavaTemplate {
 				Handle timelineHandle = null;
 				databaseHandle.beginTransaction();
 				try {
-					if (AceController.getAceExecutionMode() != AceExecutionMode.REPLAY) {
+					if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						this.actionData.setSystemTime(new DateTime());
 					} else {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
@@ -1650,7 +1571,7 @@ class JavaTemplate {
 							this.actionData.setSystemTime(new DateTime());
 						}
 					}
-					AceController.addActionToTimeline(this);
+					daoProvider.addActionToTimeline(this);
 					if (httpMethod != HttpMethod.GET) {
 						ICommand command = this.getCommand();
 						if (command != null) {
@@ -1670,13 +1591,13 @@ class JavaTemplate {
 						return Response.ok().build();
 					}
 				} catch (WebApplicationException x) {
-					AceController.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
+					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
 					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
 					//x.printStackTrace();
 					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
 				} catch (Exception x) {
-					AceController.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
+					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
 					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
 					//x.printStackTrace();
@@ -1760,13 +1681,17 @@ class JavaTemplate {
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
 			protected JodaObjectMapper mapper;
+			protected DaoProvider daoProvider;
+			protected ViewProvider viewProvider;
 		
-			public Command(String commandName, T commandData, DatabaseHandle databaseHandle) {
+			public Command(String commandName, T commandData, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.commandData = commandData;
 				this.commandName = commandName;
 				this.databaseHandle = databaseHandle;
 				mapper = new JodaObjectMapper();
+				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
 			}
 		
 			protected void executeCommand() {
@@ -1774,7 +1699,7 @@ class JavaTemplate {
 		
 			public void execute() {
 				this.executeCommand();
-				AceController.addCommandToTimeline(this);
+				daoProvider.addCommandToTimeline(this);
 				this.publishEvents();
 			}
 		
@@ -1935,13 +1860,17 @@ class JavaTemplate {
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
 			protected JodaObjectMapper mapper;
+			protected DaoProvider daoProvider;
+			private ViewProvider viewProvider;
 		
-			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle) {
+			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.eventParam = eventParam;
 				this.eventName = eventName;
 				this.databaseHandle = databaseHandle;
+				this.daoProvider = daoProvider;
 				mapper = new JodaObjectMapper();
+				this.viewProvider = viewProvider;
 			}
 
 			protected void prepareDataForView() {
@@ -1949,7 +1878,7 @@ class JavaTemplate {
 		
 			@SuppressWarnings("unchecked")
 			public void notifyListeners() {
-				List<BiConsumer<? extends IDataContainer, Handle>> consumerList = AceController.getConsumerForEvent(eventName);
+				List<BiConsumer<? extends IDataContainer, Handle>> consumerList = viewProvider.getConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (BiConsumer<? extends IDataContainer, Handle> consumer : consumerList) {
 						((BiConsumer<T, Handle>)consumer).accept(this.eventData, databaseHandle.getHandle());
@@ -1979,7 +1908,7 @@ class JavaTemplate {
 			public void publish() {
 				this.prepareDataForView();
 				this.eventData.setNotifiedListeners(this.getNotifiedListeners());
-				AceController.addEventToTimeline(this);
+				daoProvider.addEventToTimeline(this);
 				this.notifyListeners();
 			}
 		
@@ -2273,6 +2202,123 @@ class JavaTemplate {
 				);
 			}
 		}
+	'''
+	
+	def generateAbstractDaoProvider() '''
+		package com.anfelisa.ace;
+		
+		import javax.ws.rs.WebApplicationException;
+		
+		import com.anfelisa.ace.encryption.EncryptionService;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		public abstract class AbstractDaoProvider {
+		
+			protected final AceDao aceDao = new AceDao();
+		
+			protected final JodaObjectMapper mapper = new JodaObjectMapper();
+		
+			public void addActionToTimeline(IAction action) {
+				try {
+					String json = mapper.writeValueAsString(action.getActionData());
+					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
+							action.getActionData().getUuid(), action.getDatabaseHandle());
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addCommandToTimeline(ICommand command) {
+				try {
+					addItemToTimeline("command", null, command.getCommandName(),
+							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
+							command.getDatabaseHandle());
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addEventToTimeline(IEvent event) {
+				try {
+					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
+							event.getEventParam().getUuid(), event.getDatabaseHandle());
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addPreparingEventToTimeline(IEvent event, String uuid) {
+				try {
+					addItemToTimeline("preparing event", null, event.getEventName(),
+							mapper.writeValueAsString(event.getEventData()), uuid, event.getDatabaseHandle());
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
+				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), "exception", null, x.getClass().getName(),
+						x.getMessage(), uuid);
+			}
+		
+			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
+					DatabaseHandle databaseHandle) {
+				if (databaseHandle == null) {
+					throw new WebApplicationException("no database handle");
+				}
+				aceDao.insertIntoTimeline(databaseHandle.getHandle(), type, method, name, EncryptionService.encrypt(json),
+						uuid);
+				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), type, method, name,
+						EncryptionService.encrypt(json), uuid);
+			}
+		
+		}
+		
+	'''
+	
+	def generateDaoProvider() '''
+		package com.anfelisa.ace;
+		
+		public class DaoProvider extends AbstractDaoProvider {
+		
+		}
+		
+	'''
+	
+	def generateViewProvider() '''
+		package com.anfelisa.ace;
+		
+		import java.util.ArrayList;
+		import java.util.HashMap;
+		import java.util.List;
+		import java.util.Map;
+		import java.util.function.BiConsumer;
+		
+		import org.skife.jdbi.v2.Handle;
+		
+		public class ViewProvider {
+		
+			private final Map<String, List<BiConsumer<? extends IDataContainer, Handle>>> consumerMap;
+		
+			public ViewProvider(DaoProvider daoProvider, EmailService emailService) {
+				consumerMap = new HashMap<String, List<BiConsumer<? extends IDataContainer, Handle>>>();
+			}
+			
+			public void addConsumer(String eventName, BiConsumer<? extends IDataContainer, Handle> createUserTable) {
+				List<BiConsumer<? extends IDataContainer, Handle>> consumerForEvent = consumerMap.get(eventName);
+				if (consumerForEvent == null) {
+					consumerForEvent = new ArrayList<BiConsumer<? extends IDataContainer, Handle>>();
+					consumerMap.put(eventName, consumerForEvent);
+				}
+				consumerForEvent.add(createUserTable);
+			}
+		
+			public List<BiConsumer<? extends IDataContainer, Handle>> getConsumerForEvent(String eventName) {
+				return consumerMap.get(eventName);
+			}
+		
+		}
+		
 	'''
 	
 	def generateAESEncryption() '''

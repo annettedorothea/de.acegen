@@ -9,6 +9,7 @@ class ViewExtension {
 	def String viewNameWithPackage(View it) '''«(eContainer as Project).name».views.«viewName»'''
 	def String viewNameAsVariable(View it) '''«name.toFirstLower»View'''
 	def String viewFunctionWithViewName(ViewFunction it) '''«(it.eContainer as View).viewName».«name»'''
+	def String viewFunctionWithViewNameAsVariable(ViewFunction it) '''«(it.eContainer as View).viewNameAsVariable».«name»'''
 	def View view(ViewFunction it) {
 		return it.eContainer as View;
 	}
