@@ -772,20 +772,6 @@ class JavaTemplate {
 		viewProvider.addConsumer("«project.name».events.«aceOperation.eventName(outcome)»", viewProvider.«listener.viewFunctionWithViewNameAsVariable»);
 	'''
 	
-	def generateAppUtils() '''
-		package com.anfelisa.ace;
-		
-		import org.skife.jdbi.v2.Handle;
-		
-		public class AppUtils {
-		
-			public static void truncateAllViews(Handle handle) {
-			}
-		
-		}
-		
-	'''
-	
 	def generateApp() '''
 		package com.anfelisa.ace;
 		
@@ -1029,11 +1015,12 @@ class JavaTemplate {
 		
 			private DBI jdbi;
 		
-			private AceDao aceDao = new AceDao();
+			private DaoProvider daoProvider = new DaoProvider();
 
-			public StartE2ESessionResource(DBI jdbi) {
+			public StartE2ESessionResource(DBI jdbi, DaoProvider daoProvider) {
 				super();
 				this.jdbi = jdbi;
+				this.daoProvider = daoProvider;
 			}
 		
 			@PUT
@@ -1051,10 +1038,10 @@ class JavaTemplate {
 				try {
 					handle.getConnection().setAutoCommit(false);
 					
-					aceDao.truncateErrorTimelineTable(handle);
-					aceDao.truncateTimelineTable(handle);
+					daoProvider.aceDao.truncateErrorTimelineTable(handle);
+					daoProvider.aceDao.truncateTimelineTable(handle);
 
-					AppUtils.truncateAllViews(handle);
+					daoProvider.truncateAllViews(handle);
 
 					handle.commit();
 
@@ -1303,11 +1290,13 @@ class JavaTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
 		
 			private DaoProvider daoProvider;
+			private ViewProvider viewProvider;
 		
-			public PrepareE2EResource(DBI jdbi, DaoProvider daoProvider) {
+			public PrepareE2EResource(DBI jdbi, DaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
 			}
 		
 			@PUT
@@ -1331,8 +1320,8 @@ class JavaTemplate {
 							if (nextEvent != null) {
 								LOG.info("PUBLISH EVENT " + nextEvent);
 								Class<?> cl = Class.forName(nextEvent.getName());
-								Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
-								IEvent event = (IEvent) con.newInstance(databaseHandle);
+								Constructor<?> con = cl.getConstructor(DatabaseHandle.class, DaoProvider.class, ViewProvider.class);
+								IEvent event = (IEvent) con.newInstance(databaseHandle, daoProvider, viewProvider);
 								event.initEventData(nextEvent.getData());
 								event.notifyListeners();
 								daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
@@ -1563,8 +1552,8 @@ class JavaTemplate {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(DBI.class);
-							IAction action = (IAction) con.newInstance(jdbi);
+							Constructor<?> con = cl.getConstructor(DBI.class, AppConfiguration.class, DaoProvider.class, ViewProvider.class);
+							IAction action = (IAction) con.newInstance(jdbi, appConfiguration, daoProvider, viewProvider);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());
 						} else {
@@ -1594,13 +1583,13 @@ class JavaTemplate {
 					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
 					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
-					//x.printStackTrace();
+					x.printStackTrace();
 					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
 				} catch (Exception x) {
 					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
 					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
-					//x.printStackTrace();
+					x.printStackTrace();
 					return Response.status(500).entity(x.getMessage()).build();
 				} finally {
 					databaseHandle.close();
@@ -2280,6 +2269,8 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		public class DaoProvider extends AbstractDaoProvider {
+			
+			public AceDao aceDao = new AceDao();
 		
 		}
 		
