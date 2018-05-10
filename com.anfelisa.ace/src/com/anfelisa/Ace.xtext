@@ -22,6 +22,7 @@ Project:
 
 ACE: 
 	init ?= 'init'?
+	async ?= 'async'?
 	(type = FunctionType)? name = ID 
 	('uses' data = [ Data | QualifiedName ])?
 	('preUpdateUI' '(' (PreUpdateUI += [ViewFunction | QualifiedName])* ')')? 

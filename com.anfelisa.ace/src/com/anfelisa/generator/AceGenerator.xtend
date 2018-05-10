@@ -55,11 +55,19 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.name + '/actions/' + ace.actionName + '.js',
 						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 						es6Template.generateInitialActionFile(ace, project));
-					fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAbstractCommandFile(ace, project));
-					fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
-						ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-						es6Template.generateInitialCommandFile(ace, project));
+					if (ace.isAsync) {
+						fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
+							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousAbstractCommandFile(ace, project));
+						fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
+							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+							es6Template.generateAsynchronousInitialCommandFile(ace, project));
+					} else {
+						fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
+							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousAbstractCommandFile(ace, project));
+						fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
+							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+							es6Template.generateSynchronousInitialCommandFile(ace, project));
+					}
 					for (outcome : ace.outcomes) {
 						if (outcome.listeners.size > 0) {
 							fsa.generateFile(project.name + '/events/' + ace.abstractEventName(outcome) + '.js',
@@ -89,8 +97,14 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile('app/ReplayUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 					es6Template.generateReplayUtilsStub(project));
 				fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAction());
+				fsa.generateFile('ace/AsynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousAction());
+				fsa.generateFile('ace/SynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousAction());
 				fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateCommand());
+				fsa.generateFile('ace/AsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousCommand());
+				fsa.generateFile('ace/SynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousCommand());
 				fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateEvent());
+				fsa.generateFile('ace/AsynchronousEvent.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousEvent());
+				fsa.generateFile('ace/SynchronousEvent.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousEvent());
 				fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateACEController());
 				fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT,

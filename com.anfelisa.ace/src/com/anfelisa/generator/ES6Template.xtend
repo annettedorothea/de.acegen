@@ -21,7 +21,7 @@ class ES6Template {
 	extension ProjectExtension
 	
 	def generateAbstractActionFile(ACE it, Project project) '''
-		import Action from "../../ace/Action";
+		import Action from "../../ace/«IF async»AsynchronousAction«ELSE»SynchronousAction«ENDIF»";
 		«IF outcomes.size > 0»
 			import «commandName» from "../../../src/«project.name»/commands/«commandName»";
 	    «ENDIF»
@@ -33,6 +33,9 @@ class ES6Template {
 		
 		    constructor(actionParam) {
 		        super(actionParam, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
+				«IF async»
+					this.postUpdateUI = this.postUpdateUI.bind(this);
+				«ENDIF»
 		    }
 		
 			«IF outcomes.size > 0»
@@ -41,17 +44,19 @@ class ES6Template {
 				}
 			«ENDIF»
 		
-			preUpdateUI() {
-				«FOR viewFunction : preUpdateUI»
-					«viewFunction.viewFunctionWithViewName»(this.actionParam);
-				«ENDFOR»
-			}
-		
-			postUpdateUI() {
-				«FOR viewFunction : postUpdateUI»
-					«viewFunction.viewFunctionWithViewName»(this.actionParam);
-				«ENDFOR»
-			}
+			«IF async»
+				preUpdateUI() {
+					«FOR viewFunction : preUpdateUI»
+						«viewFunction.viewFunctionWithViewName»(this.actionParam);
+					«ENDFOR»
+				}
+			
+				postUpdateUI() {
+					«FOR viewFunction : postUpdateUI»
+						«viewFunction.viewFunctionWithViewName»(this.actionParam);
+					«ENDFOR»
+				}
+			«ENDIF»
 		
 		}
 		
@@ -71,8 +76,8 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateAbstractCommandFile(ACE it, Project project) '''
-		import Command from "../../../gen/ace/Command";
+	def generateAsynchronousAbstractCommandFile(ACE it, Project project) '''
+		import Command from "../../../gen/ace/«IF async»AsynchronousCommand«ELSE»SynchronousCommand«ENDIF»";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
@@ -115,7 +120,48 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
-	def generateInitialCommandFile(ACE it, Project project) '''
+	def generateSynchronousAbstractCommandFile(ACE it, Project project) '''
+		import Command from "../../../gen/ace/«IF async»AsynchronousCommand«ELSE»SynchronousCommand«ENDIF»";
+		import TriggerAction from "../../../gen/ace/TriggerAction";
+		«FOR outcome : outcomes»
+			«IF outcome.listeners.size > 0»
+				import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
+			«ENDIF»
+		«ENDFOR»
+		«FOR aceOperation : triggeredAceOperations»
+			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as Project).name»/actions/«aceOperation.actionName»";
+		«ENDFOR»
+		
+		export default class «abstractCommandName» extends Command {
+		    constructor(commandParam) {
+		        super(commandParam, "«project.name».«commandName»");
+		        «FOR outcome : outcomes»
+		        	this.«outcome.name» = "«outcome.name»";
+		        «ENDFOR»
+		    }
+		
+		    publishEvents() {
+				switch (this.commandData.outcome) {
+				«FOR outcome : outcomes»
+					case this.«outcome.name»:
+						«IF outcome.listeners.size > 0»
+							new «eventName(outcome)»(this.commandData).publish();
+						«ENDIF»
+						«FOR aceOperation : outcome.aceOperations»
+							new TriggerAction(new «aceOperation.actionName»(this.commandData)).publish();
+						«ENDFOR»
+						break;
+				«ENDFOR»
+				default:
+					throw '«commandName» unhandled outcome: ' + this.commandData.outcome;
+				}
+		    }
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateAsynchronousInitialCommandFile(ACE it, Project project) '''
 		import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
 		
 		export default class «commandName» extends «abstractCommandName» {
@@ -129,8 +175,19 @@ class ES6Template {
 		/*       S.D.G.       */
 	'''
 	
+	def generateSynchronousInitialCommandFile(ACE it, Project project) '''
+		import «abstractCommandName» from "../../../gen/«project.name»/commands/«abstractCommandName»";
+		
+		export default class «commandName» extends «abstractCommandName» {
+		    execute() {
+		    }
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
 	def generateAbstractEventFile(ACE it, Outcome outcome, Project project) '''
-		import Event from "../../../gen/ace/Event";
+		import Event from "../../../gen/ace/«IF async»AsynchronousEvent«ELSE»SynchronousEvent«ENDIF»";
 		
 		export default class «abstractEventName(outcome)» extends Event {
 		    constructor(eventParam) {
@@ -239,7 +296,6 @@ class ES6Template {
 		        this.actionParam = AppUtils.deepCopy(actionParam);
 		        this.actionData = {};
 		        this.isInitAction = isInitAction === true;
-		        this.postUpdateUI = this.postUpdateUI.bind(this);
 		    }
 		
 		    captureActionParam() {
@@ -258,7 +314,24 @@ class ES6Template {
 		    apply() {
 		        ACEController.addActionToQueue(this);
 		    }
+		}
 		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateAsynchronousAction() '''
+		import ACEController from "./ACEController";
+		import Action from "./Action";
+		import AppUtils from "../../src/app/AppUtils";
+		
+		export default class AsynchronousAction extends Action {
+
+		    constructor(actionParam, actionName, isInitAction) {
+		    	super(actionParam, actionName, isInitAction);
+		        this.asynchronous = true;
+		    }
+			
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
 		            this.preUpdateUI();
@@ -274,16 +347,16 @@ class ES6Template {
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
-						command.executeCommand().then(
-						    () => {
-						        this.postUpdateUI();
-						        resolve();
-						    },
-						    (error) => {
-						        this.postUpdateUI();
-						        reject(error + "\n" + command.commandName);
-						    }
-						);
+		                command.executeCommand().then(
+		                    () => {
+		                        this.postUpdateUI();
+		                        resolve();
+		                    },
+		                    (error) => {
+		                        this.postUpdateUI();
+		                        reject(error + "\n" + command.commandName);
+		                    }
+		                );
 		            } else {
 		                this.postUpdateUI();
 		                resolve();
@@ -296,11 +369,43 @@ class ES6Template {
 		/*       S.D.G.       */
 		
 	'''
+	
+	def generateSynchronousAction() '''
+		import ACEController from "./ACEController";
+		import Action from "./Action";
+		import AppUtils from "../../src/app/AppUtils";
+		
+		export default class SynchronousAction extends Action {
+
+		    constructor(actionParam, actionName, isInitAction) {
+		    	super(actionParam, actionName, isInitAction);
+		        this.asynchronous = false;
+		    }
+
+		    applyAction() {
+		        if (ACEController.execution === ACEController.LIVE) {
+		            this.actionData.uuid = AppUtils.createUUID();
+		        }
+		        if (ACEController.execution === ACEController.LIVE) {
+		            this.captureActionParam();
+		        } else {
+		            this.releaseActionParam();
+		        }
+		        this.initActionData();
+		        ACEController.addItemToTimeLine({action: this});
+		        let command = this.getCommand();
+		        if (command) {
+		            command.executeCommand();
+		        }
+		    }
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
 
 	def generateCommand() '''
-		import ACEController from "./ACEController";
 		import AppUtils from "../../src/app/AppUtils";
-		import Utils from "./Utils";
 		
 		export default class Command {
 		    constructor(commandParam, commandName) {
@@ -317,6 +422,19 @@ class ES6Template {
 		        throw "no publishEvents method defined for " + this.commandName;
 		    }
 		
+		}
+		
+		/*       S.D.G.       */
+		
+	'''
+	
+	def generateAsynchronousCommand() '''
+		import ACEController from "./ACEController";
+		import Command from "./Command";
+		import AppUtils from "../../src/app/AppUtils";
+		import Utils from "./Utils";
+		
+		export default class AsynchronousCommand extends Command {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 		            if (ACEController.execution !== ACEController.REPLAY) {
@@ -330,19 +448,19 @@ class ES6Template {
 		                        }
 		                        resolve();
 		                    }, (error) => {
-								if (ACEController.execution === ACEController.LIVE) {
-								    ACEController.applyNextActions();
-								} else {
-								    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-								}
+		                        if (ACEController.execution === ACEController.LIVE) {
+		                            ACEController.applyNextActions();
+		                        } else {
+		                            setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                        }
 		                        reject(error + "\n" + this.commandName);
 		                    });
 		                }, (error) => {
-							if (ACEController.execution === ACEController.LIVE) {
-							    ACEController.applyNextActions();
-							} else {
-							    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-							}
+		                    if (ACEController.execution === ACEController.LIVE) {
+		                        ACEController.applyNextActions();
+		                    } else {
+		                        setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                    }
 		                    reject(error + "\n" + this.commandName);
 		                });
 		            } else {
@@ -353,7 +471,7 @@ class ES6Template {
 		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 		                    resolve();
 		                }, (error) => {
-							setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 		                    reject(error + "\n" + this.commandName);
 		                });
 		            }
@@ -426,10 +544,55 @@ class ES6Template {
 		
 		/*       S.D.G.       */
 		
+		
+	'''
+	
+	def generateSynchronousCommand() '''
+		import ACEController from "./ACEController";
+		import Command from "./Command";
+		
+		export default class SynchronousCommand extends Command {
+		    executeCommand() {
+		        if (ACEController.execution !== ACEController.REPLAY) {
+		            try {
+		                this.execute();
+		                ACEController.addItemToTimeLine({command: this});
+		                this.publishEvents();
+		                if (ACEController.execution === ACEController.LIVE) {
+		                    ACEController.applyNextActions();
+		                } else {
+		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                }
+		            }
+		            catch (error) {
+		            	console.log("executeCommand failed", error);
+		                if (ACEController.execution === ACEController.LIVE) {
+		                    ACEController.applyNextActions();
+		                } else {
+		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		                }
+		            }
+		        } else {
+		            try {
+		                const timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
+		                this.commandData = timelineCommand.commandData;
+		                ACEController.addItemToTimeLine({command: this});
+		                this.publishEvents();
+		                setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		            } catch (e) {
+		                setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+		            }
+		        }
+		    }
+		
+		}
+		
+		/*       S.D.G.       */
+		
+		
 	'''
 	
 	def generateEvent() '''
-		import ACEController from "./ACEController";
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Event {
@@ -441,17 +604,29 @@ class ES6Template {
 		    prepareDataForView() {
 		        throw "no prepareDataForView method defined for " + this.eventName;
 		    }
-
+		
 		    getNotifiedListeners() {
 		        return [];
 		    }
 		
+		}
+		
+		/*       S.D.G.       */
+		
+		
+	'''
+	
+	def generateAsynchronousEvent() '''
+		import ACEController from "./ACEController";
+		import Event from "./Event";
+		
+		export default class AsynchronousEvent extends Event {
 		    publish() {
 		        return new Promise((resolve, reject) => {
 		            this.prepareDataForView();
-					if (this.eventName !== "TriggerAction") {
-					    this.eventData.notifiedListeners = this.getNotifiedListeners();
-					}
+		            if (this.eventName !== "TriggerAction") {
+		                this.eventData.notifiedListeners = this.getNotifiedListeners();
+		            }
 		            ACEController.addItemToTimeLine({event: this});
 		            Promise.all(this.notifyListeners()).then(() => {
 		                resolve();
@@ -479,6 +654,43 @@ class ES6Template {
 		}
 		
 		/*       S.D.G.       */
+		
+		
+	'''
+	
+	def generateSynchronousEvent() '''
+		import ACEController from "./ACEController";
+		import Event from "./Event";
+		
+		
+		export default class SynchronousEvent extends Event {
+		
+		    publish() {
+		        this.prepareDataForView();
+		        if (this.eventName !== "TriggerAction") {
+		            this.eventData.notifiedListeners = this.getNotifiedListeners();
+		        }
+		        ACEController.addItemToTimeLine({event: this});
+		        this.notifyListeners();
+		    }
+		
+		    notifyListeners() {
+		        let i, listener;
+		        if (this.eventName !== undefined) {
+		            const listenersForEvent = ACEController.listeners[this.eventName];
+		            if (listenersForEvent !== undefined) {
+		                for (i = 0; i < listenersForEvent.length; i += 1) {
+		                    listener = listenersForEvent[i];
+		                    listener(this.eventData);
+		                }
+		            }
+		        }
+		    }
+		
+		}
+		
+		/*       S.D.G.       */
+		
 		
 	'''
 	
@@ -770,12 +982,22 @@ class ES6Template {
 		    static applyNextActions() {
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
-		            action.applyAction().then(() => {
-		            }, (error) => {
-		                ACEController.actionIsProcessing = false;
-		                console.error(error + "\n" + action.actionName);
-		                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
-		            });
+		        	if (action.asynchronous) {
+			            action.applyAction().then(() => {
+			            }, (error) => {
+			                ACEController.actionIsProcessing = false;
+			                console.error(error + "\n" + action.actionName);
+			                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+			            });
+			    	} else {
+			    		try {
+			    			action.applyAction();
+			    		} catch(error) {
+			                ACEController.actionIsProcessing = false;
+			                console.error(error + "\n" + action.actionName);
+			                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+						}
+			    	}
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
 		            if (ACEController.execution !== ACEController.LIVE) {
