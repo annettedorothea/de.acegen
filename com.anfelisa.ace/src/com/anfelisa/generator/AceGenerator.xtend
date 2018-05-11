@@ -266,6 +266,9 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile("com/anfelisa/ace" + '/DaoProvider.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateDaoProvider());
+					fsa.generateFile("com/anfelisa/ace" + '/IDaoProvider.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateIDaoProvider());
 					fsa.generateFile("com/anfelisa/ace" + '/ViewProvider.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 						javaTemplate.generateViewProvider());

@@ -409,7 +409,7 @@ class JavaTemplate {
 
 		import com.anfelisa.ace.Action;
 		import com.anfelisa.ace.AppConfiguration;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;
@@ -421,7 +421,7 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractActionName»(DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -459,7 +459,7 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 
 		«data.dataImport»
@@ -470,11 +470,11 @@ class JavaTemplate {
 				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».commands.«commandName»", commandParam, databaseHandle, daoProvider, viewProvider);
 			}
 		
-			public «abstractCommandName»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractCommandName»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».commands.«commandName»", null, databaseHandle, daoProvider, viewProvider);
 			}
 		
@@ -523,18 +523,18 @@ class JavaTemplate {
 
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
 		«data.dataImport»
 		
 		public abstract class «abstractEventName(outcome)» extends Event<«data.dataParamType»> {
 		
-			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».events.«eventName(outcome)»", eventParam, databaseHandle, daoProvider, viewProvider);
 			}
 			
-			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».events.«eventName(outcome)»", null, databaseHandle, daoProvider, viewProvider);
 			}
 			
@@ -576,8 +576,8 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.AppConfiguration;
-		import com.anfelisa.ace.DaoProvider;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.DatabaseHandle;
 		
 		import org.slf4j.Logger;
@@ -596,7 +596,7 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «actionName»(DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(jdbi,appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -624,7 +624,7 @@ class JavaTemplate {
 		
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -639,7 +639,7 @@ class JavaTemplate {
 				super(commandParam, databaseHandle);
 			}
 		
-			public «commandName»(DatabaseHandle databaseHandle, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «commandName»(DatabaseHandle databaseHandle, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(null, databaseHandle, daoProvider, viewProvider);
 			}
 		
@@ -659,7 +659,7 @@ class JavaTemplate {
 		package «project.name».events;
 		
 		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
 		import org.slf4j.Logger;
@@ -671,11 +671,11 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«eventName(outcome)».class);
 
-			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(eventParam, databaseHandle, daoProvider, viewProvider);
 			}
 		
-			public «eventName(outcome)»(DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public «eventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				this(null, databaseHandle, daoProvider, viewProvider);
 			}
 		
@@ -704,9 +704,9 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class «viewName» {
 
-			private DaoProvider daoProvider;
+			private IDaoProvider daoProvider;
 			
-			public «viewName»(DaoProvider daoProvider) {
+			public «viewName»(IDaoProvider daoProvider) {
 				super();
 				this.daoProvider = daoProvider;
 			}
@@ -727,7 +727,7 @@ class JavaTemplate {
 		import io.dropwizard.setup.Environment;
 		import com.anfelisa.ace.AppConfiguration;
 		import com.anfelisa.ace.AceExecutionMode;
-		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.ServerConfiguration;
 		
@@ -743,7 +743,7 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public void registerResources(Environment environment, DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public void registerResources(Environment environment, DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
 					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
@@ -1015,9 +1015,9 @@ class JavaTemplate {
 		
 			private DBI jdbi;
 		
-			private DaoProvider daoProvider = new DaoProvider();
+			private IDaoProvider daoProvider = new DaoProvider();
 
-			public StartE2ESessionResource(DBI jdbi, DaoProvider daoProvider) {
+			public StartE2ESessionResource(DBI jdbi, IDaoProvider daoProvider) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
@@ -1038,8 +1038,8 @@ class JavaTemplate {
 				try {
 					handle.getConnection().setAutoCommit(false);
 					
-					daoProvider.aceDao.truncateErrorTimelineTable(handle);
-					daoProvider.aceDao.truncateTimelineTable(handle);
+					daoProvider.getAceDao().truncateErrorTimelineTable(handle);
+					daoProvider.getAceDao().truncateTimelineTable(handle);
 
 					daoProvider.truncateAllViews(handle);
 
@@ -1078,9 +1078,9 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
-			private DaoProvider daoProvider;
+			private IDaoProvider daoProvider;
 			
-			protected EventReplayCommand(Application<AppConfiguration> application, DaoProvider daoProvider) {
+			protected EventReplayCommand(Application<AppConfiguration> application, IDaoProvider daoProvider) {
 				super(application, "replay", "truncates views and replays events");
 				this.daoProvider = daoProvider;
 			}
@@ -1105,7 +1105,7 @@ class JavaTemplate {
 					Handle handle = databaseHandle.getHandle();
 					AppUtils.truncateAllViews(handle);
 		
-					List<ITimelineItem> timeline = daoProvider.aceDao.selectTimeline(handle);
+					List<ITimelineItem> timeline = daoProvider.getAceDao().selectTimeline(handle);
 					E2E.timeline = timeline;
 		
 					int eventCount = 0;
@@ -1289,10 +1289,10 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
 		
-			private DaoProvider daoProvider;
+			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public PrepareE2EResource(DBI jdbi, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public PrepareE2EResource(DBI jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
@@ -1310,7 +1310,7 @@ class JavaTemplate {
 				try {
 					databaseHandle.beginTransaction();
 		
-					ITimelineItem lastAction = daoProvider.aceDao.selectLastAction(databaseHandle.getHandle());
+					ITimelineItem lastAction = daoProvider.getAceDao().selectLastAction(databaseHandle.getHandle());
 		
 					int eventCount = 0;
 					ITimelineItem nextAction = E2E.selectNextAction(lastAction != null ? lastAction.getUuid() : null);
@@ -1320,7 +1320,7 @@ class JavaTemplate {
 							if (nextEvent != null) {
 								LOG.info("PUBLISH EVENT " + nextEvent);
 								Class<?> cl = Class.forName(nextEvent.getName());
-								Constructor<?> con = cl.getConstructor(DatabaseHandle.class, DaoProvider.class, ViewProvider.class);
+								Constructor<?> con = cl.getConstructor(DatabaseHandle.class, IDaoProvider.class, ViewProvider.class);
 								IEvent event = (IEvent) con.newInstance(databaseHandle, daoProvider, viewProvider);
 								event.initEventData(nextEvent.getData());
 								event.notifyListeners();
@@ -1513,10 +1513,10 @@ class JavaTemplate {
 			private DBI jdbi;
 			protected JodaObjectMapper mapper;
 			private AppConfiguration appConfiguration;
-			protected DaoProvider daoProvider;
+			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
-			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, AppConfiguration appConfiguration, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.actionName = actionName;
 				this.httpMethod = httpMethod;
@@ -1552,7 +1552,7 @@ class JavaTemplate {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(DBI.class, AppConfiguration.class, DaoProvider.class, ViewProvider.class);
+							Constructor<?> con = cl.getConstructor(DBI.class, AppConfiguration.class, IDaoProvider.class, ViewProvider.class);
 							IAction action = (IAction) con.newInstance(jdbi, appConfiguration, daoProvider, viewProvider);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());
@@ -1670,10 +1670,10 @@ class JavaTemplate {
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
 			protected JodaObjectMapper mapper;
-			protected DaoProvider daoProvider;
+			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
-			public Command(String commandName, T commandData, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public Command(String commandName, T commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.commandData = commandData;
 				this.commandName = commandName;
@@ -1849,10 +1849,10 @@ class JavaTemplate {
 			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
 			protected JodaObjectMapper mapper;
-			protected DaoProvider daoProvider;
+			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle, DaoProvider daoProvider, ViewProvider viewProvider) {
+			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.eventParam = eventParam;
 				this.eventName = eventName;
@@ -2201,12 +2201,18 @@ class JavaTemplate {
 		import com.anfelisa.ace.encryption.EncryptionService;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
-		public abstract class AbstractDaoProvider {
+		public abstract class AbstractDaoProvider implements IDaoProvider {
 		
 			protected final AceDao aceDao = new AceDao();
 		
 			protected final JodaObjectMapper mapper = new JodaObjectMapper();
 		
+			@Override
+			public AceDao getAceDao() {
+				return this.aceDao;
+			}
+			
+			@Override
 			public void addActionToTimeline(IAction action) {
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
@@ -2217,6 +2223,7 @@ class JavaTemplate {
 				}
 			}
 		
+			@Override
 			public void addCommandToTimeline(ICommand command) {
 				try {
 					addItemToTimeline("command", null, command.getCommandName(),
@@ -2227,6 +2234,7 @@ class JavaTemplate {
 				}
 			}
 		
+			@Override
 			public void addEventToTimeline(IEvent event) {
 				try {
 					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
@@ -2236,6 +2244,7 @@ class JavaTemplate {
 				}
 			}
 		
+			@Override
 			public void addPreparingEventToTimeline(IEvent event, String uuid) {
 				try {
 					addItemToTimeline("preparing event", null, event.getEventName(),
@@ -2245,6 +2254,7 @@ class JavaTemplate {
 				}
 			}
 		
+			@Override
 			public void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
 				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), "exception", null, x.getClass().getName(),
 						x.getMessage(), uuid);
@@ -2270,8 +2280,27 @@ class JavaTemplate {
 		
 		public class DaoProvider extends AbstractDaoProvider {
 			
-			public AceDao aceDao = new AceDao();
+		}
 		
+	'''
+	
+	def generateIDaoProvider() '''
+		package com.anfelisa.ace;
+		
+		public interface IDaoProvider {
+			
+			AceDao getAceDao();
+			
+			void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle);
+			
+			void addPreparingEventToTimeline(IEvent event, String uuid);
+			
+			public void addEventToTimeline(IEvent event);
+			
+			public void addCommandToTimeline(ICommand command);
+			
+			void addActionToTimeline(IAction action);
+			
 		}
 		
 	'''
@@ -2291,7 +2320,7 @@ class JavaTemplate {
 		
 			private final Map<String, List<BiConsumer<? extends IDataContainer, Handle>>> consumerMap;
 		
-			public ViewProvider(DaoProvider daoProvider, EmailService emailService) {
+			public ViewProvider(IDaoProvider daoProvider, EmailService emailService) {
 				consumerMap = new HashMap<String, List<BiConsumer<? extends IDataContainer, Handle>>>();
 			}
 			
