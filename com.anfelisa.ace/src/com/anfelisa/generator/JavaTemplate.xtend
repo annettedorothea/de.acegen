@@ -576,6 +576,7 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.DatabaseHandle;
