@@ -408,7 +408,7 @@ class JavaTemplate {
 		import javax.ws.rs.WebApplicationException;
 
 		import com.anfelisa.ace.Action;
-		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.HttpMethod;
@@ -421,7 +421,7 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractActionName»(DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -575,7 +575,7 @@ class JavaTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.IDaoProvider;
@@ -597,7 +597,7 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «actionName»(DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(jdbi,appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -726,7 +726,7 @@ class JavaTemplate {
 		package «name»;
 		
 		import io.dropwizard.setup.Environment;
-		import com.anfelisa.ace.AppConfiguration;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.AceExecutionMode;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
@@ -744,7 +744,7 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public void registerResources(Environment environment, DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public void registerResources(Environment environment, DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
 					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
@@ -792,7 +792,7 @@ class JavaTemplate {
 		import io.dropwizard.setup.Bootstrap;
 		import io.dropwizard.setup.Environment;
 		
-		public class App extends Application<AppConfiguration> {
+		public class App extends Application<CustomAppConfiguration> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(App.class);
 		
@@ -810,10 +810,10 @@ class JavaTemplate {
 			}
 		
 			@Override
-			public void initialize(Bootstrap<AppConfiguration> bootstrap) {
-				bootstrap.addBundle(new MigrationsBundle<AppConfiguration>() {
+			public void initialize(Bootstrap<CustomAppConfiguration> bootstrap) {
+				bootstrap.addBundle(new MigrationsBundle<CustomAppConfiguration>() {
 					@Override
-					public DataSourceFactory getDataSourceFactory(AppConfiguration configuration) {
+					public DataSourceFactory getDataSourceFactory(CustomAppConfiguration configuration) {
 						return configuration.getDataSourceFactory();
 					}
 				});
@@ -822,7 +822,7 @@ class JavaTemplate {
 			}
 		
 			@Override
-			public void run(AppConfiguration configuration, Environment environment) throws ClassNotFoundException {
+			public void run(CustomAppConfiguration configuration, Environment environment) throws ClassNotFoundException {
 				LOG.info("running version {}", getVersion());
 		
 				AceDao.setSchemaName(null);
@@ -983,6 +983,22 @@ class JavaTemplate {
 		}
 	'''
 	
+	def generateCustomAppConfiguration() '''
+		package com.anfelisa.ace;
+		
+		import javax.validation.Valid;
+		import javax.validation.constraints.NotNull;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		import io.dropwizard.Configuration;
+		import io.dropwizard.db.DataSourceFactory;
+		
+		public class CustomAppConfiguration extends AppConfiguration {
+		
+		}
+	'''
+	
 	def generateStartE2ESessionResource() '''
 		package com.anfelisa.ace;
 		
@@ -1075,19 +1091,19 @@ class JavaTemplate {
 		import io.dropwizard.setup.Environment;
 		import net.sourceforge.argparse4j.inf.Namespace;
 		
-		public class EventReplayCommand extends EnvironmentCommand<AppConfiguration> {
+		public class EventReplayCommand extends EnvironmentCommand<CustomAppConfiguration> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
 			private IDaoProvider daoProvider;
 			
-			protected EventReplayCommand(Application<AppConfiguration> application, IDaoProvider daoProvider) {
+			protected EventReplayCommCustomAppConfigurationAppConfiguration> application, IDaoProvider daoProvider) {
 				super(application, "replay", "truncates views and replays events");
 				this.daoProvider = daoProvider;
 			}
 		
 			@Override
-			protected void run(Environment environment, Namespace namespace, AppConfiguration configuration) throws Exception {
+			protected void run(Environment environment, Namespace namespace, CustomAppConfiguration configuration) throws Exception {
 				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {	
 					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
 				}
@@ -1513,11 +1529,11 @@ class JavaTemplate {
 			protected DatabaseHandle databaseHandle;
 			private DBI jdbi;
 			protected JodaObjectMapper mapper;
-			private AppConfiguration appConfiguration;
+			private CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
-			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, AppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.actionName = actionName;
 				this.httpMethod = httpMethod;
@@ -1553,7 +1569,7 @@ class JavaTemplate {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(DBI.class, AppConfiguration.class, IDaoProvider.class, ViewProvider.class);
+							Constructor<?> con = cl.getConstructor(DBI.class, CustomAppConfiguration.class, IDaoProvider.class, ViewProvider.class);
 							IAction action = (IAction) con.newInstance(jdbi, appConfiguration, daoProvider, viewProvider);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());

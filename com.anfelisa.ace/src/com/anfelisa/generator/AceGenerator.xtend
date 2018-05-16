@@ -186,6 +186,9 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateAppConfiguration());
+					fsa.generateFile("com/anfelisa/ace" + '/CustomAppConfiguration.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateCustomAppConfiguration());
 					fsa.generateFile("com/anfelisa/ace" + '/E2E.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateE2E());
 					fsa.generateFile("com/anfelisa/ace" + '/ServerConfiguration.java',
