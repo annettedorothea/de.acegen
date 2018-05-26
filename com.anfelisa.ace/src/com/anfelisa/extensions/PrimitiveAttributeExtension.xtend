@@ -31,7 +31,7 @@ class PrimitiveAttributeExtension {
     	}
 	}
 	
-	def String mapperInit(PrimitiveAttribute it) '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getInt("«name»")«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSEIF type.equals("Encrypted")»EncryptionService.decrypt(r.getString("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+	def String mapperInit(PrimitiveAttribute it) '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSEIF type.equals("Encrypted")»EncryptionService.decrypt(r.getString("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
 	def String param(PrimitiveAttribute it) '''@JsonProperty("«name»") «javaType» «name»'''
 	
