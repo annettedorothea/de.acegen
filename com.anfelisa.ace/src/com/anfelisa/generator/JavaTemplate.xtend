@@ -636,8 +636,8 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 
-			public «commandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super(null, databaseHandle, daoProvider, viewProvider);
+			public «commandName»(«data.dataParamType» commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super(commandData, databaseHandle, daoProvider, viewProvider);
 			}
 		
 			@Override

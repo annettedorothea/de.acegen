@@ -31,8 +31,8 @@ class ES6Template {
 
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(actionParam) {
-		        super(actionParam, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
+		    constructor(actionData) {
+		        super(actionData, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
 				«IF async»
 					this.postUpdateUI = this.postUpdateUI.bind(this);
 				«ENDIF»
@@ -47,13 +47,13 @@ class ES6Template {
 			«IF async»
 				preUpdateUI() {
 					«FOR viewFunction : preUpdateUI»
-						«viewFunction.viewFunctionWithViewName»(this.actionParam);
+						«viewFunction.viewFunctionWithViewName»(this.actionData);
 					«ENDFOR»
 				}
 			
 				postUpdateUI() {
 					«FOR viewFunction : postUpdateUI»
-						«viewFunction.viewFunctionWithViewName»(this.actionParam);
+						«viewFunction.viewFunctionWithViewName»(this.actionData);
 					«ENDFOR»
 				}
 			«ENDIF»
@@ -89,8 +89,8 @@ class ES6Template {
 		«ENDFOR»
 		
 		export default class «abstractCommandName» extends Command {
-		    constructor(commandParam) {
-		        super(commandParam, "«project.name».«commandName»");
+		    constructor(commandData) {
+		        super(commandData, "«project.name».«commandName»");
 		        «FOR outcome : outcomes»
 		        	this.«outcome.name» = "«outcome.name»";
 		        «ENDFOR»
@@ -133,8 +133,8 @@ class ES6Template {
 		«ENDFOR»
 		
 		export default class «abstractCommandName» extends Command {
-		    constructor(commandParam) {
-		        super(commandParam, "«project.name».«commandName»");
+		    constructor(commandData) {
+		        super(commandData, "«project.name».«commandName»");
 		        «FOR outcome : outcomes»
 		        	this.«outcome.name» = "«outcome.name»";
 		        «ENDFOR»
@@ -190,8 +190,8 @@ class ES6Template {
 		import Event from "../../../gen/ace/«IF async»AsynchronousEvent«ELSE»SynchronousEvent«ENDIF»";
 		
 		export default class «abstractEventName(outcome)» extends Event {
-		    constructor(eventParam) {
-		        super(eventParam, '«project.name».«eventName(outcome)»');
+		    constructor(eventData) {
+		        super(eventData, '«project.name».«eventName(outcome)»');
 		    }
 			getNotifiedListeners() {
 			    return [ «FOR listener : outcome.listeners SEPARATOR ', '»"«(listener.eContainer as View).viewNameWithPackage».«listener.name»"«ENDFOR» ];
@@ -207,7 +207,7 @@ class ES6Template {
 		
 		export default class «eventName(outcome)» extends «abstractEventName(outcome)» {
 		    prepareDataForView() {
-		        this.eventData = AppUtils.deepCopy(this.eventParam);
+		        this.eventData = AppUtils.deepCopy(this.eventData);
 		        if (this.eventData.data === undefined) {
 		        	this.eventData.data = {};
 		        }
@@ -248,7 +248,7 @@ class ES6Template {
 		
 			static init() {
 				«FOR aceOperation : aceOperations»
-					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionParam) => new «aceOperation.actionName»(actionParam));
+					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionData) => new «aceOperation.actionName»(actionData));
 				«ENDFOR»
 			}
 		
@@ -262,8 +262,8 @@ class ES6Template {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.name.toFirstLower»(actionParam) {
-			    new «aceOperation.actionName»(actionParam).apply();
+			export function «aceOperation.name.toFirstLower»(actionData) {
+			    new «aceOperation.actionName»(actionData).apply();
 			}
 			
 		«ENDFOR»
@@ -288,20 +288,13 @@ class ES6Template {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Action {
-		    constructor(actionParam, actionName, isInitAction) {
+		    constructor(actionData, actionName, isInitAction) {
 		        this.actionName = actionName;
-		        if (actionParam === undefined) {
-		            actionParam = {};
+		        if (actionData === undefined) {
+		            actionData = {};
 		        }
-		        this.actionParam = AppUtils.deepCopy(actionParam);
-		        this.actionData = {};
+		        this.actionData = AppUtils.deepCopy(actionData);
 		        this.isInitAction = isInitAction === true;
-		    }
-		
-		    captureActionParam() {
-		    }
-		
-		    releaseActionParam() {
 		    }
 		
 		    initActionData() {
@@ -327,8 +320,8 @@ class ES6Template {
 		
 		export default class AsynchronousAction extends Action {
 
-		    constructor(actionParam, actionName, isInitAction) {
-		    	super(actionParam, actionName, isInitAction);
+		    constructor(actionData, actionName, isInitAction) {
+		    	super(actionData, actionName, isInitAction);
 		        this.asynchronous = true;
 		    }
 			
@@ -337,11 +330,6 @@ class ES6Template {
 		            this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
-		            }
-		            if (ACEController.execution === ACEController.LIVE) {
-		                this.captureActionParam();
-		            } else {
-		                this.releaseActionParam();
 		            }
 		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
@@ -377,19 +365,14 @@ class ES6Template {
 		
 		export default class SynchronousAction extends Action {
 
-		    constructor(actionParam, actionName, isInitAction) {
-		    	super(actionParam, actionName, isInitAction);
+		    constructor(actionData, actionName, isInitAction) {
+		    	super(actionData, actionName, isInitAction);
 		        this.asynchronous = false;
 		    }
 
 		    applyAction() {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            this.actionData.uuid = AppUtils.createUUID();
-		        }
-		        if (ACEController.execution === ACEController.LIVE) {
-		            this.captureActionParam();
-		        } else {
-		            this.releaseActionParam();
 		        }
 		        this.initActionData();
 		        ACEController.addItemToTimeLine({action: this});
@@ -408,10 +391,9 @@ class ES6Template {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Command {
-		    constructor(commandParam, commandName) {
+		    constructor(commandData, commandName) {
 		        this.commandName = commandName;
-		        this.commandParam = AppUtils.deepCopy(commandParam);
-		        this.commandData = {};
+		        this.commandData = AppUtils.deepCopy(commandData);
 		    }
 		
 		    execute() {
@@ -464,7 +446,7 @@ class ES6Template {
 		                    reject(error + "\n" + this.commandName);
 		                });
 		            } else {
-		                const timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
+		                const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents().then(() => {
@@ -479,39 +461,39 @@ class ES6Template {
 		    }
 		
 		    httpGet(url, queryParams) {
-		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
-		            return AppUtils.httpGet(url, queryParams, this.commandParam);
+		            return AppUtils.httpGet(url, queryParams, this.commandData);
 		        }, (error) => {
 		            reject(error);
 		        });
 		    }
 		
 		    httpPost(url, queryParams, data) {
-		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpPost(url, queryParams, data, this.commandParam);
+		            return AppUtils.httpPost(url, queryParams, data, this.commandData);
 		        }, (error) => {
 		            reject(error);
 		        });
 		    }
 		
 		    httpPut(url, queryParams, data) {
-		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpPut(url, queryParams, data, this.commandParam);
+		            return AppUtils.httpPut(url, queryParams, data, this.commandData);
 		        }, (error) => {
 		            reject(error);
 		        });
 		    }
 		
 		    httpDelete(url, queryParams, data) {
-		        return Utils.prepareAction(this.commandParam.uuid).then(() => {
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpDelete(url, queryParams, data, this.commandParam);
+		            return AppUtils.httpDelete(url, queryParams, data, this.commandData);
 		        }, (error) => {
 		            reject(error);
 		        });
@@ -521,10 +503,10 @@ class ES6Template {
 		        if (!queryParams) {
 		            queryParams = [];
 		        }
-		        if (this.commandParam.uuid) {
+		        if (this.commandData.uuid) {
 		            queryParams.push({
 		                key: "uuid",
-		                value: this.commandParam.uuid
+		                value: this.commandData.uuid
 		            });
 		        }
 		        return queryParams;
@@ -534,8 +516,8 @@ class ES6Template {
 		        if (!data) {
 		            data = {};
 		        }
-		        if (this.commandParam.uuid) {
-		            data.uuid = this.commandParam.uuid;
+		        if (this.commandData.uuid) {
+		            data.uuid = this.commandData.uuid;
 		        }
 		        return data;
 		    }
@@ -574,7 +556,7 @@ class ES6Template {
 		            }
 		        } else {
 		            try {
-		                const timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
+		                const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 		                this.commandData = timelineCommand.commandData;
 		                ACEController.addItemToTimeLine({command: this});
 		                this.publishEvents();
@@ -596,9 +578,9 @@ class ES6Template {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Event {
-		    constructor(eventParam, eventName) {
+		    constructor(eventData, eventName) {
 		        this.eventName = eventName;
-		        this.eventParam = AppUtils.deepCopy(eventParam);
+		        this.eventData = AppUtils.deepCopy(eventData);
 		    }
 		
 		    prepareDataForView() {
@@ -716,9 +698,9 @@ class ES6Template {
 		        return "http://127.0.0.1:8070/";
 		    }
 		
-		    static httpGet(url, queryParams, commandParam) {
+		    static httpGet(url, queryParams, commandData) {
 				return new Promise((resolve, reject) => {
-				    let authorization = commandParam ? AppUtils.basicAuth(commandParam.username, commandParam.password) : undefined;
+				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "application/json");
@@ -759,9 +741,9 @@ class ES6Template {
 				});
 		    }
 		
-		    static httpChange(methodType, url, queryParams, data, commandParam) {
+		    static httpChange(methodType, url, queryParams, data, commandData) {
 				return new Promise((resolve, reject) => {
-				    let authorization = commandParam ? AppUtils.basicAuth(commandParam.username, commandParam.password) : undefined;
+				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "text/plain");
@@ -803,16 +785,16 @@ class ES6Template {
 				});
 		    }
 		
-		    static httpPost(url, queryParams, data, commandParam) {
-		        return AppUtils.httpChange("POST", url, queryParams, data, commandParam);
+		    static httpPost(url, queryParams, data, commandData) {
+		        return AppUtils.httpChange("POST", url, queryParams, data, commandData);
 		    }
 		
-		    static httpPut(url, queryParams, data, commandParam) {
-		        return AppUtils.httpChange("PUT", url, queryParams, data, commandParam);
+		    static httpPut(url, queryParams, data, commandData) {
+		        return AppUtils.httpChange("PUT", url, queryParams, data, commandData);
 		    }
 		
-		    static httpDelete(url, queryParams, data, commandParam) {
-		        return AppUtils.httpChange("DELETE", url, queryParams, data, commandParam);
+		    static httpDelete(url, queryParams, data, commandData) {
+		        return AppUtils.httpChange("DELETE", url, queryParams, data, commandData);
 		    }
 		
 		    static queryParamString(url, queryParams) {
@@ -1034,8 +1016,8 @@ class ES6Template {
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
-		                const actionParam = item.action.actionParam;
-		                let action = ACEController.factories[item.action.actionName](actionParam);
+		                const actionData = item.action.actionData;
+		                let action = ACEController.factories[item.action.actionName](actionData);
 		                action.actionData.uuid = item.action.actionData.uuid;
 		                actions.push(action);
 		            }
@@ -1049,7 +1031,7 @@ class ES6Template {
 		    static getCommandByUuid(uuid) {
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
-		            if (item.command && item.command.commandParam.uuid === uuid) {
+		            if (item.command && item.command.commandData.uuid === uuid) {
 		                return item.command;
 		            }
 		        }
