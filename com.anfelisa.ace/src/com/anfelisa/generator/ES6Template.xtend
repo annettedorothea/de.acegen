@@ -547,7 +547,7 @@ class ES6Template {
 		                }
 		            }
 		            catch (error) {
-		            	console.log("executeCommand failed", error);
+		            	console.error(`execute command ${this.commandName} failed`, error);
 		                if (ACEController.execution === ACEController.LIVE) {
 		                    ACEController.applyNextActions();
 		                } else {
@@ -873,6 +873,12 @@ class ES6Template {
 		    	// will return false if just the order of props is different
 		    	// for a better result use https://www.npmjs.com/package/json-stable-stringify
 		        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
+		    }
+		    
+		    static prepareReplay() {
+		    }
+
+		    static tearDownReplay() {
 		    }
 
 		}
@@ -1315,10 +1321,12 @@ class ES6Template {
 		    }
 		
 		    static replayServerless(pauseInMillis) {
+		        ReplayUtils.prepareReplay();
 		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
 		    }
 		
 		    static replayE2E(pauseInMillis, serverTimeline) {
+		        ReplayUtils.prepareReplay();
 		        AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
 		            ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		        });
@@ -1361,6 +1369,7 @@ class ES6Template {
 		    }
 		
 		    static finishReplay() {
+		    	ReplayUtils.tearDownReplay();
 		        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
 		            const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
 		            const result = ReplayUtils.compareItems(normalized.expected, normalized.actual);
