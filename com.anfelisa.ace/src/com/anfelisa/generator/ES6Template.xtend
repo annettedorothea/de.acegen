@@ -601,6 +601,7 @@ class ES6Template {
 	def generateAsynchronousEvent() '''
 		import ACEController from "./ACEController";
 		import Event from "./Event";
+		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class AsynchronousEvent extends Event {
 		    publish() {
@@ -609,10 +610,13 @@ class ES6Template {
 		            if (this.eventName !== "TriggerAction") {
 		                this.eventData.notifiedListeners = this.getNotifiedListeners();
 		            }
-		            ACEController.addItemToTimeLine({event: this});
 		            Promise.all(this.notifyListeners()).then(() => {
+						this.eventData.appState = AppUtils.getAppState();
+						ACEController.addItemToTimeLine({event: this});
 		                resolve();
 		            }, (error) => {
+						this.eventData.appState = AppUtils.getAppState();
+						ACEController.addItemToTimeLine({event: this});
 		                reject(error + "\n" + this.eventName);
 		            });
 		        });
@@ -643,7 +647,7 @@ class ES6Template {
 	def generateSynchronousEvent() '''
 		import ACEController from "./ACEController";
 		import Event from "./Event";
-		
+		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class SynchronousEvent extends Event {
 		
@@ -652,8 +656,9 @@ class ES6Template {
 		        if (this.eventName !== "TriggerAction") {
 		            this.eventData.notifiedListeners = this.getNotifiedListeners();
 		        }
-		        ACEController.addItemToTimeLine({event: this});
 		        this.notifyListeners();
+				this.eventData.appState = AppUtils.getAppState();
+				ACEController.addItemToTimeLine({event: this});
 		    }
 		
 		    notifyListeners() {
@@ -836,6 +841,11 @@ class ES6Template {
 			static deepCopy(object) {
 			    return JSON.parse(JSON.stringify(object));
 			}
+			
+			static getAppState() {
+				return {};
+			}
+			
 		
 		}
 		
