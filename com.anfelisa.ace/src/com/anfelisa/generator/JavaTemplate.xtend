@@ -1093,7 +1093,7 @@ class JavaTemplate {
 		
 			private IDaoProvider daoProvider;
 			
-			protected EventReplayCommCustomAppConfigurationAppConfiguration> application, IDaoProvider daoProvider) {
+			protected EventReplayCommand(Application<CustomAppConfiguration> application, IDaoProvider daoProvider) {
 				super(application, "replay", "truncates views and replays events");
 				this.daoProvider = daoProvider;
 			}
@@ -2291,8 +2291,12 @@ class JavaTemplate {
 	def generateDaoProvider() '''
 		package com.anfelisa.ace;
 		
+		import org.skife.jdbi.v2.Handle;
+
 		public class DaoProvider extends AbstractDaoProvider {
-			
+			@Override
+			public void truncateAllViews(Handle handle) {
+			}
 		}
 		
 	'''
@@ -2300,7 +2304,11 @@ class JavaTemplate {
 	def generateIDaoProvider() '''
 		package com.anfelisa.ace;
 		
+		import org.skife.jdbi.v2.Handle;
+		
 		public interface IDaoProvider {
+			
+			void truncateAllViews(Handle handle);
 			
 			AceDao getAceDao();
 			
@@ -2333,7 +2341,7 @@ class JavaTemplate {
 		
 			private final Map<String, List<BiConsumer<? extends IDataContainer, Handle>>> consumerMap;
 		
-			public ViewProvider(IDaoProvider daoProvider, EmailService emailService) {
+			public ViewProvider(IDaoProvider daoProvider) {
 				consumerMap = new HashMap<String, List<BiConsumer<? extends IDataContainer, Handle>>>();
 			}
 			
