@@ -32,7 +32,7 @@ class ES6Template {
 		export default class «abstractActionName» extends Action {
 		
 		    constructor(actionData) {
-		        super(actionData, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF», «IF route»true«ELSE»false«ENDIF»);
+		        super(actionData, '«project.name».«actionName»');
 				«IF async»
 					this.postUpdateUI = this.postUpdateUI.bind(this);
 				«ENDIF»
@@ -288,14 +288,12 @@ class ES6Template {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Action {
-		    constructor(actionData, actionName, isInitAction, isRouteAction) {
+		    constructor(actionData, actionName) {
 		        this.actionName = actionName;
 		        if (actionData === undefined) {
 		            actionData = {};
 		        }
 		        this.actionData = AppUtils.deepCopy(actionData);
-		        this.isInitAction = isInitAction === true;
-		        this.isRouteAction = isRouteAction === true;
 		    }
 		
 		    initActionData() {
@@ -321,8 +319,8 @@ class ES6Template {
 		
 		export default class AsynchronousAction extends Action {
 
-		    constructor(actionData, actionName, isInitAction, isRouteAction) {
-		    	super(actionData, actionName, isInitAction, isRouteAction);
+		    constructor(actionData, actionName) {
+		    	super(actionData, actionName);
 		        this.asynchronous = true;
 		    }
 			
@@ -366,8 +364,8 @@ class ES6Template {
 		
 		export default class SynchronousAction extends Action {
 
-		    constructor(actionData, actionName, isInitAction, isRouteAction) {
-		    	super(actionData, actionName, isInitAction, isRouteAction);
+		    constructor(actionData, actionName) {
+		    	super(actionData, actionName);
 		        this.asynchronous = false;
 		    }
 
@@ -612,12 +610,9 @@ class ES6Template {
 		                this.eventData.notifiedListeners = this.getNotifiedListeners();
 		            }
 		            Promise.all(this.notifyListeners()).then(() => {
-						this.eventData.appState = AppUtils.getAppState();
 						ACEController.addItemToTimeLine({event: this});
 		                resolve();
 		            }, (error) => {
-						this.eventData.appState = AppUtils.getAppState();
-						ACEController.addItemToTimeLine({event: this});
 		                reject(error + "\n" + this.eventName);
 		            });
 		        });
@@ -631,7 +626,7 @@ class ES6Template {
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
-		                    promises.push(listener(this.eventData));
+							promises.push(listener(AppUtils.deepCopy(this.eventData)));
 		                }
 		            }
 		        }
@@ -658,7 +653,6 @@ class ES6Template {
 		            this.eventData.notifiedListeners = this.getNotifiedListeners();
 		        }
 		        this.notifyListeners();
-				this.eventData.appState = AppUtils.getAppState();
 				ACEController.addItemToTimeLine({event: this});
 		    }
 		
@@ -669,7 +663,7 @@ class ES6Template {
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
-		                    listener(this.eventData);
+							listener(AppUtils.deepCopy(this.eventData));
 		                }
 		            }
 		        }
@@ -843,11 +837,9 @@ class ES6Template {
 			    return JSON.parse(JSON.stringify(object));
 			}
 			
-			static getAppState() {
-				return {};
-			}
-			
-		
+			static getMaxTimelineSize() {
+		        return 2000;
+		    }
 		}
 		
 		/*       S.D.G.       */
@@ -917,7 +909,6 @@ class ES6Template {
 		        ACEController.execution = ACEController.LIVE;
 		        ACEController.actualTimeline = [];
 		        ACEController.expectedTimeline = [];
-		        ACEController.firstRouteIndex = undefined;
 		    }
 		
 		    static registerListener(eventName, listener) {
@@ -949,15 +940,11 @@ class ES6Template {
 		        let timestamp = new Date();
 		        item.timestamp = timestamp.getTime();
 		        if (ACEController.execution === ACEController.LIVE) {
-					if (item.action && item.action.isRouteAction === true) {
-					    if (ACEController.firstRouteIndex === undefined) {
-					        ACEController.firstRouteIndex = ACEController.timeline.length;
-					    }
-					    if (ACEController.firstRouteIndex && ACEController.firstRouteIndex < ACEController.timeline.length) {
-					        ACEController.timeline.splice(ACEController.firstRouteIndex);
-					    }
+		            if (ACEController.timeline.length < AppUtils.getMaxTimelineSize()) {
+						ACEController.timeline.push(AppUtils.deepCopy(item));
+					} else {
+						console.debug(`timeline size ${AppUtils.getMaxTimelineSize()} exceeded - item was not added`, item);
 					}
-					ACEController.timeline.push(AppUtils.deepCopy(item));
 		        } else {
 		            ACEController.actualTimeline.push(AppUtils.deepCopy(item));
 		        }

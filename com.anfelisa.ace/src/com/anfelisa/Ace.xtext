@@ -21,8 +21,6 @@ Project:
 ;
 
 ACE: 
-	init ?= 'init'?
-	route ?= 'route'?
 	async ?= 'async'?
 	(type = FunctionType)? name = ID 
 	('uses' data = [ Data | QualifiedName ])?

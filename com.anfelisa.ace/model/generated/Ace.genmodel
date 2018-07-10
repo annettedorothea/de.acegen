@@ -16,8 +16,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//Project/data"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ACE">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/init"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/route"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/async"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/name"/>
