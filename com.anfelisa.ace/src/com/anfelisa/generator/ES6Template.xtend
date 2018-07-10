@@ -32,7 +32,7 @@ class ES6Template {
 		export default class «abstractActionName» extends Action {
 		
 		    constructor(actionData) {
-		        super(actionData, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF»);
+		        super(actionData, '«project.name».«actionName»', «IF init»true«ELSE»false«ENDIF», «IF route»true«ELSE»false«ENDIF»);
 				«IF async»
 					this.postUpdateUI = this.postUpdateUI.bind(this);
 				«ENDIF»
@@ -288,13 +288,14 @@ class ES6Template {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class Action {
-		    constructor(actionData, actionName, isInitAction) {
+		    constructor(actionData, actionName, isInitAction, isRouteAction) {
 		        this.actionName = actionName;
 		        if (actionData === undefined) {
 		            actionData = {};
 		        }
 		        this.actionData = AppUtils.deepCopy(actionData);
 		        this.isInitAction = isInitAction === true;
+		        this.isRouteAction = isRouteAction === true;
 		    }
 		
 		    initActionData() {
@@ -320,8 +321,8 @@ class ES6Template {
 		
 		export default class AsynchronousAction extends Action {
 
-		    constructor(actionData, actionName, isInitAction) {
-		    	super(actionData, actionName, isInitAction);
+		    constructor(actionData, actionName, isInitAction, isRouteAction) {
+		    	super(actionData, actionName, isInitAction, isRouteAction);
 		        this.asynchronous = true;
 		    }
 			
@@ -365,8 +366,8 @@ class ES6Template {
 		
 		export default class SynchronousAction extends Action {
 
-		    constructor(actionData, actionName, isInitAction) {
-		    	super(actionData, actionName, isInitAction);
+		    constructor(actionData, actionName, isInitAction, isRouteAction) {
+		    	super(actionData, actionName, isInitAction, isRouteAction);
 		        this.asynchronous = false;
 		    }
 
@@ -916,7 +917,7 @@ class ES6Template {
 		        ACEController.execution = ACEController.LIVE;
 		        ACEController.actualTimeline = [];
 		        ACEController.expectedTimeline = [];
-		        ACEController.timelineSize = 200;
+		        ACEController.firstRouteIndex = undefined;
 		    }
 		
 		    static registerListener(eventName, listener) {
@@ -948,20 +949,15 @@ class ES6Template {
 		        let timestamp = new Date();
 		        item.timestamp = timestamp.getTime();
 		        if (ACEController.execution === ACEController.LIVE) {
-		            ACEController.timeline.push(AppUtils.deepCopy(item));
-		            if (ACEController.timeline.length > ACEController.timelineSize) {
-		                let i;
-		                for (i = 1; i < ACEController.timeline.length; i++) {
-		                    if (ACEController.timeline[i].action && ACEController.timeline[i].action.isInitAction) {
-		                        break;
-		                    }
-		                }
-		                if (i < ACEController.timeline.length) {
-		                    for (let j = 0; j < i; j++) {
-		                        ACEController.timeline.shift();
-		                    }
-		                }
-		            }
+					if (item.action && item.action.isRouteAction === true) {
+					    if (ACEController.firstRouteIndex === undefined) {
+					        ACEController.firstRouteIndex = ACEController.timeline.length;
+					    }
+					    if (ACEController.firstRouteIndex && ACEController.firstRouteIndex < ACEController.timeline.length) {
+					        ACEController.timeline.splice(ACEController.firstRouteIndex);
+					    }
+					}
+					ACEController.timeline.push(AppUtils.deepCopy(item));
 		        } else {
 		            ACEController.actualTimeline.push(AppUtils.deepCopy(item));
 		        }

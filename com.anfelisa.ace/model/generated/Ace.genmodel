@@ -17,6 +17,7 @@
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ACE">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/init"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/route"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/async"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ACE/name"/>
