@@ -1112,11 +1112,14 @@ class JavaTemplate {
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				
+				ViewProvider viewProvider = new ViewProvider(daoProvider);
+				
 				LOG.info("START EVENT REPLAY");
 				try {
 					databaseHandle.beginTransaction();
 					Handle handle = databaseHandle.getHandle();
-					AppUtils.truncateAllViews(handle);
+					daoProvider.truncateAllViews(handle);
 		
 					List<ITimelineItem> timeline = daoProvider.getAceDao().selectTimeline(handle);
 					E2E.timeline = timeline;
@@ -1129,8 +1132,8 @@ class JavaTemplate {
 							if (nextEvent != null) {
 								try {
 									Class<?> cl = Class.forName(nextEvent.getName());
-									Constructor<?> con = cl.getConstructor(DatabaseHandle.class);
-									IEvent event = (IEvent) con.newInstance(databaseHandle);
+									Constructor<?> con = cl.getConstructor(DatabaseHandle.class, IDaoProvider.class, ViewProvider.class);
+									IEvent event = (IEvent) con.newInstance(databaseHandle, daoProvider, viewProvider);
 									event.initEventData(nextEvent.getData());
 									event.notifyListeners();
 									eventCount++;
