@@ -418,44 +418,27 @@ class ES6Template {
 		export default class AsynchronousCommand extends Command {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
-		            if (ACEController.execution !== ACEController.REPLAY) {
-		                this.execute().then(() => {
-		                    ACEController.addItemToTimeLine({command: this});
-		                    this.publishEvents().then(() => {
-		                        if (ACEController.execution === ACEController.LIVE) {
-		                            ACEController.applyNextActions();
-		                        } else {
-		                            setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                        }
-		                        resolve();
-		                    }, (error) => {
-		                        if (ACEController.execution === ACEController.LIVE) {
-		                            ACEController.applyNextActions();
-		                        } else {
-		                            setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                        }
-		                        reject(error + "\n" + this.commandName);
-		                    });
-		                }, (error) => {
-		                    if (ACEController.execution === ACEController.LIVE) {
-		                        ACEController.applyNextActions();
-		                    } else {
-		                        setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                    }
-		                    reject(error + "\n" + this.commandName);
-		                });
-		            } else {
-		                const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-		                this.commandData = timelineCommand.commandData;
-		                ACEController.addItemToTimeLine({command: this});
-		                this.publishEvents().then(() => {
-		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                    resolve();
-		                }, (error) => {
-		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                    reject(error + "\n" + this.commandName);
-		                });
-		            }
+					if (ACEController.execution !== ACEController.REPLAY) {
+					    this.execute().then(() => {
+					        ACEController.addItemToTimeLine({command: this});
+					        this.publishEvents().then(() => {
+					            resolve();
+					        }, (error) => {
+					            reject(error + "\n" + this.commandName);
+					        });
+					    }, (error) => {
+					        reject(error + "\n" + this.commandName);
+					    });
+					} else {
+					    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
+					    this.commandData = timelineCommand.commandData;
+					    ACEController.addItemToTimeLine({command: this});
+					    this.publishEvents().then(() => {
+					        resolve();
+					    }, (error) => {
+					        reject(error + "\n" + this.commandName);
+					    });
+					}
 		        });
 		    }
 		
@@ -534,36 +517,14 @@ class ES6Template {
 		
 		export default class SynchronousCommand extends Command {
 		    executeCommand() {
-		        if (ACEController.execution !== ACEController.REPLAY) {
-		            try {
-		                this.execute();
-		                ACEController.addItemToTimeLine({command: this});
-		                this.publishEvents();
-		                if (ACEController.execution === ACEController.LIVE) {
-		                    ACEController.applyNextActions();
-		                } else {
-		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                }
-		            }
-		            catch (error) {
-		            	console.error(`execute command ${this.commandName} failed`, error);
-		                if (ACEController.execution === ACEController.LIVE) {
-		                    ACEController.applyNextActions();
-		                } else {
-		                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		                }
-		            }
-		        } else {
-		            try {
-		                const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-		                this.commandData = timelineCommand.commandData;
-		                ACEController.addItemToTimeLine({command: this});
-		                this.publishEvents();
-		                setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		            } catch (e) {
-		                setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-		            }
-		        }
+				if (ACEController.execution !== ACEController.REPLAY) {
+				    this.execute();
+				} else {
+				    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
+				    this.commandData = timelineCommand.commandData;
+				}
+				ACEController.addItemToTimeLine({command: this});
+				this.publishEvents();
 		    }
 		
 		}
@@ -610,6 +571,7 @@ class ES6Template {
 		                this.eventData.notifiedListeners = this.getNotifiedListeners();
 		            }
 		            Promise.all(this.notifyListeners()).then(() => {
+		            	this.eventData.appState = AppUtils.getAppState();
 						ACEController.addItemToTimeLine({event: this});
 		                resolve();
 		            }, (error) => {
@@ -653,6 +615,7 @@ class ES6Template {
 		            this.eventData.notifiedListeners = this.getNotifiedListeners();
 		        }
 		        this.notifyListeners();
+		        this.eventData.appState = AppUtils.getAppState();
 				ACEController.addItemToTimeLine({event: this});
 		    }
 		
@@ -840,6 +803,11 @@ class ES6Template {
 			static getMaxTimelineSize() {
 		        return 2000;
 		    }
+		    
+			static getAppState() {
+			    return {};
+			}
+		    
 		}
 		
 		/*       S.D.G.       */
@@ -963,22 +931,26 @@ class ES6Template {
 		    static applyNextActions() {
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
-		        	if (action.asynchronous) {
-			            action.applyAction().then(() => {
-			            }, (error) => {
-			                ACEController.actionIsProcessing = false;
-			                console.error(error + "\n" + action.actionName);
-			                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
-			            });
-			    	} else {
-			    		try {
-			    			action.applyAction();
-			    		} catch(error) {
-			                ACEController.actionIsProcessing = false;
-			                console.error(error + "\n" + action.actionName);
-			                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+					const pauseInMillis = ACEController.execution === ACEController.LIVE ? 0 : ACEController.pauseInMillis;
+					if (action.asynchronous) {
+					    action.applyAction().then(() => {
+					        setTimeout(ACEController.applyNextActions, pauseInMillis);
+					    }, (error) => {
+					        ACEController.actionIsProcessing = false;
+					        console.error(error + "\n" + action.actionName);
+					        AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+					    });
+					} else {
+						try {
+							action.applyAction();
+					        setTimeout(ACEController.applyNextActions, pauseInMillis);
+						} catch(error) {
+					        ACEController.actionIsProcessing = false;
+					        console.error(error + "\n" + action.actionName);
+					        AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+					        setTimeout(ACEController.applyNextActions, pauseInMillis);
 						}
-			    	}
+					}
 		        } else if (action === undefined) {
 		            ACEController.actionIsProcessing = false;
 		            if (ACEController.execution !== ACEController.LIVE) {
