@@ -329,8 +329,8 @@ class ES6Template {
 		            this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
+			            this.initActionData();
 		            }
-		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
@@ -372,8 +372,8 @@ class ES6Template {
 		    applyAction() {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            this.actionData.uuid = AppUtils.createUUID();
+			        this.initActionData();
 		        }
-		        this.initActionData();
 		        ACEController.addItemToTimeLine({action: this});
 		        let command = this.getCommand();
 		        if (command) {
@@ -661,7 +661,7 @@ class ES6Template {
 		        return "http://127.0.0.1:8070/";
 		    }
 		
-		    static httpGet(url, queryParams, commandData) {
+		    static httpGet(url, queryParams, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
 				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
 				    const headers = new Headers();
@@ -678,7 +678,10 @@ class ES6Template {
 				        cache: 'no-cache'
 				    };
 				
-				    const adjustedUrl = AppUtils.url(url);
+					let adjustedUrl = url;
+					if (adjustUrl === true) {
+					    adjustedUrl = AppUtils.url(url);
+					}
 				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
 				    const request = new Request(completeUrl, options);
 				
@@ -704,7 +707,7 @@ class ES6Template {
 				});
 		    }
 		
-		    static httpChange(methodType, url, queryParams, data, commandData) {
+		    static httpChange(methodType, url, queryParams, data, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
 				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
 				    const headers = new Headers();
@@ -722,7 +725,10 @@ class ES6Template {
 				        body: JSON.stringify(data)
 				    };
 				
-				    const adjustedUrl = AppUtils.url(url);
+					let adjustedUrl = url;
+					if (adjustUrl === true) {
+					    adjustedUrl = AppUtils.url(url);
+					}
 				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
 				    const request = new Request(completeUrl, options);
 				
@@ -1151,7 +1157,7 @@ class ES6Template {
 		                apiKey: AppUtils.getApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data);
+		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data, false);
 		        });
 		    }
 		
@@ -1170,7 +1176,7 @@ class ES6Template {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams, {}, false);
 		    }
 		
 		    static saveScenario(description, creator) {
@@ -1189,7 +1195,7 @@ class ES6Template {
 		                    apiKey: AppUtils.getApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data, false);
 		            });
 		        });
 		    }
@@ -1211,7 +1217,7 @@ class ES6Template {
 		                    serverVersion: serverInfo.serverVersion,
 		                    serverTimeline: JSON.stringify(serverTimeline)
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data);
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data, false);
 		            });
 		        });
 		    }
@@ -1231,7 +1237,7 @@ class ES6Template {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams, {}, false);
 		    }
 		
 		    static loadNextScenario(lastId) {
@@ -1249,7 +1255,7 @@ class ES6Template {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams, {}, false);
 		    }
 		
 		    static getBrowserInfo() {
