@@ -103,8 +103,6 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile('ace/AsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousCommand());
 				fsa.generateFile('ace/SynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousCommand());
 				fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateEvent());
-				fsa.generateFile('ace/AsynchronousEvent.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousEvent());
-				fsa.generateFile('ace/SynchronousEvent.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousEvent());
 				fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateACEController());
 				fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT,

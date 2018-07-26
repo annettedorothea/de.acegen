@@ -187,15 +187,12 @@ class ES6Template {
 	'''
 	
 	def generateAbstractEventFile(ACE it, Outcome outcome, Project project) '''
-		import Event from "../../../gen/ace/«IF async»AsynchronousEvent«ELSE»SynchronousEvent«ENDIF»";
+		import Event from "../../../gen/ace/Event";
 		
 		export default class «abstractEventName(outcome)» extends Event {
 		    constructor(eventData) {
 		        super(eventData, '«project.name».«eventName(outcome)»');
 		    }
-			getNotifiedListeners() {
-			    return [ «FOR listener : outcome.listeners SEPARATOR ', '»"«(listener.eContainer as View).viewNameWithPackage».«listener.name»"«ENDFOR» ];
-			}
 		}
 		
 		
@@ -329,8 +326,8 @@ class ES6Template {
 		            this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
-			            this.initActionData();
 		            }
+		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
@@ -341,7 +338,7 @@ class ES6Template {
 		                    },
 		                    (error) => {
 		                        this.postUpdateUI();
-		                        reject(error + "\n" + command.commandName);
+		                        reject(error);
 		                    }
 		                );
 		            } else {
@@ -372,8 +369,8 @@ class ES6Template {
 		    applyAction() {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            this.actionData.uuid = AppUtils.createUUID();
-			        this.initActionData();
 		        }
+		        this.initActionData();
 		        ACEController.addItemToTimeLine({action: this});
 		        let command = this.getCommand();
 		        if (command) {
@@ -421,23 +418,17 @@ class ES6Template {
 					if (ACEController.execution !== ACEController.REPLAY) {
 					    this.execute().then(() => {
 					        ACEController.addItemToTimeLine({command: this});
-					        this.publishEvents().then(() => {
-					            resolve();
-					        }, (error) => {
-					            reject(error + "\n" + this.commandName);
-					        });
+					        this.publishEvents();
+					        resolve();
 					    }, (error) => {
-					        reject(error + "\n" + this.commandName);
+					        reject(error);
 					    });
 					} else {
 					    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 					    this.commandData = timelineCommand.commandData;
 					    ACEController.addItemToTimeLine({command: this});
-					    this.publishEvents().then(() => {
-					        resolve();
-					    }, (error) => {
-					        reject(error + "\n" + this.commandName);
-					    });
+				        this.publishEvents();
+				        resolve();
 					}
 		        });
 		    }
@@ -536,6 +527,7 @@ class ES6Template {
 	
 	def generateEvent() '''
 		import AppUtils from "../../src/app/AppUtils";
+		import ACEController from "./ACEController";
 		
 		export default class Event {
 		    constructor(eventData, eventName) {
@@ -547,73 +539,8 @@ class ES6Template {
 		        throw "no prepareDataForView method defined for " + this.eventName;
 		    }
 		
-		    getNotifiedListeners() {
-		        return [];
-		    }
-		
-		}
-		
-		/*       S.D.G.       */
-		
-		
-	'''
-	
-	def generateAsynchronousEvent() '''
-		import ACEController from "./ACEController";
-		import Event from "./Event";
-		import AppUtils from "../../src/app/AppUtils";
-		
-		export default class AsynchronousEvent extends Event {
-		    publish() {
-		        return new Promise((resolve, reject) => {
-		            this.prepareDataForView();
-		            if (this.eventName !== "TriggerAction") {
-		                this.eventData.notifiedListeners = this.getNotifiedListeners();
-		            }
-		            Promise.all(this.notifyListeners()).then(() => {
-		            	this.eventData.appState = AppUtils.getAppState();
-						ACEController.addItemToTimeLine({event: this});
-		                resolve();
-		            }, (error) => {
-		                reject(error + "\n" + this.eventName);
-		            });
-		        });
-		    }
-		
-		    notifyListeners() {
-		        let promises = [];
-		        let i, listener;
-		        if (this.eventName !== undefined) {
-		            const listenersForEvent = ACEController.listeners[this.eventName];
-		            if (listenersForEvent !== undefined) {
-		                for (i = 0; i < listenersForEvent.length; i += 1) {
-		                    listener = listenersForEvent[i];
-							promises.push(listener(AppUtils.deepCopy(this.eventData)));
-		                }
-		            }
-		        }
-		        return promises;
-		    }
-		
-		}
-		
-		/*       S.D.G.       */
-		
-		
-	'''
-	
-	def generateSynchronousEvent() '''
-		import ACEController from "./ACEController";
-		import Event from "./Event";
-		import AppUtils from "../../src/app/AppUtils";
-		
-		export default class SynchronousEvent extends Event {
-		
 		    publish() {
 		        this.prepareDataForView();
-		        if (this.eventName !== "TriggerAction") {
-		            this.eventData.notifiedListeners = this.getNotifiedListeners();
-		        }
 		        this.notifyListeners();
 		        this.eventData.appState = AppUtils.getAppState();
 				ACEController.addItemToTimeLine({event: this});
@@ -685,25 +612,34 @@ class ES6Template {
 				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
 				    const request = new Request(completeUrl, options);
 				
-				    fetch(request).then(function (response) {
-				        if (response.status >= 300) {
-				            const status = {
-				                code: response.status,
-				                text: response.statusText
-				            };
-				            reject(status);
-				        } else {
-				            return response.json();
-				        }
-				    }).then(function (data) {
-				        resolve(data);
-				    }).catch(function (error) {
-				        const status = {
-				            code: error.name,
-				            text: error.message
-				        };
-				        reject(status);
-				    });
+					let status;
+					let statusText;
+					fetch(request).then(function (response) {
+					    status = response.status;
+					    statusText = response.statusText;
+					    if (status >= 300) {
+					        return response.text();
+					    } else {
+					        return response.json();
+					    }
+					}).then(function (data) {
+					    if (status >= 300) {
+					        const error = {
+					            code: status,
+					            text: statusText,
+					            errorKey: data
+					        };
+					        reject(error);
+					    } else {
+					        resolve(data);
+					    }
+					}).catch(function (error) {
+					    const status = {
+					        code: error.name,
+					        text: error.message
+					    };
+					    reject(status);
+					});
 				});
 		    }
 		
@@ -732,25 +668,30 @@ class ES6Template {
 				    const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
 				    const request = new Request(completeUrl, options);
 				
-				    fetch(request).then(function (response) {
-				        if (response.status >= 300) {
-				            const status = {
-				                code: response.status,
-				                text: response.statusText
-				            };
-				            reject(status);
-				        } else {
-				            return response.text();
-				        }
-				    }).then(function (data) {
-				        resolve(data);
-				    }).catch(function (error) {
-				        const status = {
-				            code: error.name,
-				            text: error.message
-				        };
-				        reject(status);
-				    });
+					let status;
+					let statusText;
+					fetch(request).then(function (response) {
+					    status = response.status;
+					    statusText = response.statusText;
+					    return response.text();
+					}).then(function (data) {
+					    if (status >= 300) {
+					        const error = {
+					            code: status,
+					            text: statusText,
+					            errorKey: data
+					        };
+					        reject(error);
+					    } else {
+					        resolve(data);
+					    }
+					}).catch(function (error) {
+					    const status = {
+					        code: error.name,
+					        text: error.message
+					    };
+					    reject(status);
+					});
 				});
 		    }
 		
@@ -814,6 +755,32 @@ class ES6Template {
 			    return {};
 			}
 		    
+			static deepMerge(newState, appState) {
+			    for (let property in newState) {
+			        if (newState.hasOwnProperty(property)) {
+			            if (appState[property] === undefined) {
+			                appState[property] = newState[property];
+			            } else if (newState[property] === undefined) {
+			                appState[property] = undefined;
+			            } else if (typeof newState[property] === 'object') {
+			                AppUtils.deepMerge(newState[property], appState[property]);
+			            } else {
+			                appState[property] = newState[property];
+			            }
+			        }
+			    }
+			    return appState;
+			}
+			
+			static merge(newState, appState) {
+			    for (let property in newState) {
+			        if (newState.hasOwnProperty(property)) {
+			            appState[property] = newState[property];
+			        }
+			    }
+			    return appState;
+			}
+
 		}
 		
 		/*       S.D.G.       */
@@ -827,6 +794,14 @@ class ES6Template {
 		export * from "../../gen/ace/Bug";
 		
 		AppUtils.start();
+		
+		export function deepMergeState(newAppState) {
+		    appState = AppUtils.deepMerge(newAppState, appState);
+		}
+		
+		export function mergeState(newAppState) {
+		    appState = AppUtils.merge(newAppState, appState);
+		}
 		
 		// add EventListenerRegistration.init() of all modules
 		// add ActionFactoryRegistrationTodo.init() of all modules
@@ -943,8 +918,7 @@ class ES6Template {
 					        setTimeout(ACEController.applyNextActions, pauseInMillis);
 					    }, (error) => {
 					        ACEController.actionIsProcessing = false;
-					        console.error(error + "\n" + action.actionName);
-					        AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+					        AppUtils.displayUnexpectedError(error);
 					    });
 					} else {
 						try {
@@ -952,8 +926,7 @@ class ES6Template {
 					        setTimeout(ACEController.applyNextActions, pauseInMillis);
 						} catch(error) {
 					        ACEController.actionIsProcessing = false;
-					        console.error(error + "\n" + action.actionName);
-					        AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+					        AppUtils.displayUnexpectedError(error);
 					        setTimeout(ACEController.applyNextActions, pauseInMillis);
 						}
 					}
@@ -1107,9 +1080,6 @@ class ES6Template {
 		    
 			publish() {
 			    this.prepareDataForView();
-			    if (this.eventName !== "TriggerAction") {
-			        this.eventData.notifiedListeners = this.getNotifiedListeners();
-			    }
 			    ACEController.addItemToTimeLine({event: this});
 			    this.notifyListeners();
 			}

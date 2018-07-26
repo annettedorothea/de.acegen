@@ -1111,7 +1111,7 @@ class JavaTemplate {
 		
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null, null);
 				
 				ViewProvider viewProvider = new ViewProvider(daoProvider);
 				
@@ -1324,7 +1324,7 @@ class JavaTemplate {
 					return Response.ok("prepared action " + uuid + " by doing nothing - action was not found").build();
 				}
 		
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null, jdbi.open());
 				LOG.info("PREPARE ACTION " + actionToBePrepared);
 				try {
 					databaseHandle.beginTransaction();
@@ -1561,7 +1561,7 @@ class JavaTemplate {
 			protected abstract void loadDataForGetRequest();
 		
 			public Response apply() {
-				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
+				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open(), jdbi.open());
 				Handle timelineHandle = null;
 				databaseHandle.beginTransaction();
 				try {
@@ -1781,8 +1781,9 @@ class JavaTemplate {
 		
 			private Handle handle;
 			private Handle errorHandle;
+			private Handle timelineHandle;
 		
-			public DatabaseHandle(Handle handle, Handle errorHandle) {
+			public DatabaseHandle(Handle handle, Handle errorHandle,  Handle timelineHandle) {
 				super();
 				try {
 					if (handle != null) {
@@ -1792,6 +1793,10 @@ class JavaTemplate {
 					if (errorHandle != null) {
 						this.errorHandle = errorHandle;
 						this.errorHandle.getConnection().setAutoCommit(false);
+					}
+					if (timelineHandle != null) {
+						this.timelineHandle = timelineHandle;
+						this.timelineHandle.getConnection().setAutoCommit(false);
 					}
 				} catch (Exception e) {
 					LOG.error("failed to set auto commit off", e);
@@ -1805,11 +1810,17 @@ class JavaTemplate {
 				if (errorHandle != null) {
 					errorHandle.begin();
 				}
+				if (timelineHandle != null) {
+					timelineHandle.begin();
+				}
 			}
 		
 			public void commitTransaction() {
 				if (handle != null) {
 					handle.commit();
+				}
+				if (timelineHandle != null) {
+					timelineHandle.commit();
 				}
 				if (errorHandle != null) {
 					errorHandle.rollback();
@@ -1823,6 +1834,9 @@ class JavaTemplate {
 				if (errorHandle != null) {
 					errorHandle.commit();
 				}
+				if (timelineHandle != null) {
+					timelineHandle.commit();
+				}
 			}
 		
 			public void close() {
@@ -1831,6 +1845,9 @@ class JavaTemplate {
 				}
 				if (errorHandle != null) {
 					errorHandle.close();
+				}
+				if (timelineHandle != null) {
+					timelineHandle.close();
 				}
 			}
 		
@@ -1842,8 +1859,12 @@ class JavaTemplate {
 				return errorHandle;
 			}
 		
-		}
+			public Handle getTimelineHandle() {
+				return timelineHandle;
+			}
 		
+		}
+
 	'''
 	
 	def generateEvent() '''
@@ -2092,7 +2113,7 @@ class JavaTemplate {
 			}
 		
 			public DatabaseHandle createDatabaseHandle() {
-				return new DatabaseHandle(jdbi.open(), jdbi.open());
+				return new DatabaseHandle(jdbi.open(), jdbi.open(), jdbi.open());
 			}
 		
 			public DBI getJdbi() {
@@ -2284,7 +2305,7 @@ class JavaTemplate {
 				if (databaseHandle == null) {
 					throw new WebApplicationException("no database handle");
 				}
-				aceDao.insertIntoTimeline(databaseHandle.getHandle(), type, method, name, EncryptionService.encrypt(json),
+				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), type, method, name, EncryptionService.encrypt(json),
 						uuid);
 				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), type, method, name,
 						EncryptionService.encrypt(json), uuid);
