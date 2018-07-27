@@ -60,7 +60,6 @@ class AceExtension {
 	}
 	
 	def String eventName(ACE it, Outcome outcome) '''«name.toFirstUpper»«outcome.name.toFirstUpper»Event'''
-	def String abstractEventName(ACE it, Outcome outcome) '''Abstract«name.toFirstUpper»«outcome.name.toFirstUpper»Event'''
 	def String eventNameWithPackage(ACE it, Outcome outcome) '''«(eContainer as Project).name».events.«eventName(outcome)»'''
 	
 }

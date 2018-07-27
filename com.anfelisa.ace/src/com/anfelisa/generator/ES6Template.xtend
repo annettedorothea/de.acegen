@@ -81,7 +81,7 @@ class ES6Template {
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
-				import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
+				import «eventName(outcome)» from "../../../gen/«project.name»/events/«eventName(outcome)»";
 			«ENDIF»
 		«ENDFOR»
 		«FOR aceOperation : triggeredAceOperations»
@@ -125,7 +125,7 @@ class ES6Template {
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
-				import «eventName(outcome)» from "../../../src/«project.name»/events/«eventName(outcome)»";
+				import «eventName(outcome)» from "../../../gen/«project.name»/events/«eventName(outcome)»";
 			«ENDIF»
 		«ENDFOR»
 		«FOR aceOperation : triggeredAceOperations»
@@ -189,27 +189,12 @@ class ES6Template {
 	def generateAbstractEventFile(ACE it, Outcome outcome, Project project) '''
 		import Event from "../../../gen/ace/Event";
 		
-		export default class «abstractEventName(outcome)» extends Event {
+		export default class «eventName(outcome)» extends Event {
 		    constructor(eventData) {
 		        super(eventData, '«project.name».«eventName(outcome)»');
 		    }
 		}
 		
-		
-		/*       S.D.G.       */
-	'''
-	def generateInitialEventFile(ACE it, Outcome outcome, Project project) '''
-		import «abstractEventName(outcome)» from "../../../gen/«project.name»/events/«abstractEventName(outcome)»";
-		import AppUtils from "../../app/AppUtils";
-		
-		export default class «eventName(outcome)» extends «abstractEventName(outcome)» {
-		    prepareDataForView() {
-		        this.eventData = AppUtils.deepCopy(this.eventData);
-		        if (this.eventData.data === undefined) {
-		        	this.eventData.data = {};
-		        }
-		    }
-		}
 		
 		/*       S.D.G.       */
 	'''
@@ -535,12 +520,7 @@ class ES6Template {
 		        this.eventData = AppUtils.deepCopy(eventData);
 		    }
 		
-		    prepareDataForView() {
-		        throw "no prepareDataForView method defined for " + this.eventName;
-		    }
-		
 		    publish() {
-		        this.prepareDataForView();
 		        this.notifyListeners();
 		        this.eventData.appState = AppUtils.getAppState();
 				ACEController.addItemToTimeLine({event: this});
@@ -1075,11 +1055,7 @@ class ES6Template {
 		        this.eventData = action;
 		    }
 		
-		    prepareDataForView() {
-		    }
-		    
 			publish() {
-			    this.prepareDataForView();
 			    ACEController.addItemToTimeLine({event: this});
 			    this.notifyListeners();
 			}

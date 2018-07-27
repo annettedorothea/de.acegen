@@ -179,15 +179,12 @@ class JavaTemplate {
 			
 			private String outcome;
 			
-			private String[] notifiedListeners;
-		
 			private org.joda.time.DateTime systemTime;
 			
-			public AbstractData(String uuid, String outcome, String[] notifiedListeners, DateTime systemTime) {
+			public AbstractData(String uuid, String outcome, DateTime systemTime) {
 				super();
 				this.uuid = uuid;
 				this.outcome = outcome;
-				this.notifiedListeners = notifiedListeners;
 				this.systemTime = systemTime;
 			}
 		
@@ -218,18 +215,6 @@ class JavaTemplate {
 			@JsonProperty
 			public void setOutcome(String outcome) {
 				this.outcome = outcome;
-			}
-		
-			@Override
-			@JsonProperty
-			public String[] getNotifiedListeners() {
-				return notifiedListeners;
-			}
-		
-			@Override
-			@JsonProperty
-			public void setNotifiedListeners(String[] listeners) {
-				this.notifiedListeners = listeners;
 			}
 		
 		}
@@ -528,13 +513,13 @@ class JavaTemplate {
 		
 		«data.dataImport»
 		
-		public abstract class «abstractEventName(outcome)» extends Event<«data.dataParamType»> {
+		public class «eventName(outcome)» extends Event<«data.dataParamType»> {
 		
-			public «abstractEventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«project.name».events.«eventName(outcome)»", eventParam, databaseHandle, daoProvider, viewProvider);
+			public «eventName(outcome)»(«data.dataParamType» eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«project.name».events.«eventName(outcome)»", eventData, databaseHandle, daoProvider, viewProvider);
 			}
 			
-			public «abstractEventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «eventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».events.«eventName(outcome)»", null, databaseHandle, daoProvider, viewProvider);
 			}
 			
@@ -545,16 +530,6 @@ class JavaTemplate {
 					throw new WebApplicationException(e);
 				}
 			}
-			
-			protected String[] getNotifiedListeners() {
-				«IF outcome.listeners.size == 0»
-					return new String[] {}; 
-				«ELSE»
-					return new String[] { «FOR listener : outcome.listeners SEPARATOR ', '»"«(listener.eContainer as View).viewNameWithPackage».«listener.name»"«ENDFOR» };
-				«ENDIF»
-			}
-			
-			
 		
 		}
 		
@@ -645,40 +620,6 @@ class JavaTemplate {
 				«IF outcomes.size > 0»
 					this.commandData.setOutcome(«outcomes.get(0).name»);
 				«ENDIF»
-			}
-		
-		}
-		
-		/*       S.D.G.       */
-	'''
-	
-	def generateInitialEventFile(ACE it, Outcome outcome, Project project) '''
-		package «project.name».events;
-		
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.ViewProvider;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
-		«data.dataImport»
-		
-		public class «eventName(outcome)» extends «abstractEventName(outcome)» {
-		
-			static final Logger LOG = LoggerFactory.getLogger(«eventName(outcome)».class);
-
-			public «eventName(outcome)»(«data.dataParamType» eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super(eventParam, databaseHandle, daoProvider, viewProvider);
-			}
-		
-			public «eventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				this(null, databaseHandle, daoProvider, viewProvider);
-			}
-		
-			@Override
-			protected void prepareDataForView() {
-				this.eventData = this.eventParam;
 			}
 		
 		}
@@ -1883,7 +1824,6 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(Event.class);
 		
-			protected T eventParam;
 			protected T eventData;
 			private String eventName;
 			@JsonIgnore
@@ -1892,9 +1832,9 @@ class JavaTemplate {
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public Event(String eventName, T eventParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Event(String eventName, T eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
-				this.eventParam = eventParam;
+				this.eventData = eventData;
 				this.eventName = eventName;
 				this.databaseHandle = databaseHandle;
 				this.daoProvider = daoProvider;
@@ -1902,9 +1842,6 @@ class JavaTemplate {
 				this.viewProvider = viewProvider;
 			}
 
-			protected void prepareDataForView() {
-			}
-		
 			@SuppressWarnings("unchecked")
 			public void notifyListeners() {
 				List<BiConsumer<? extends IDataContainer, Handle>> consumerList = viewProvider.getConsumerForEvent(eventName);
@@ -1913,10 +1850,6 @@ class JavaTemplate {
 						((BiConsumer<T, Handle>)consumer).accept(this.eventData, databaseHandle.getHandle());
 					}
 				}
-			}
-		
-			public IDataContainer getEventParam() {
-				return eventParam;
 			}
 		
 			public IDataContainer getEventData() {
@@ -1932,11 +1865,7 @@ class JavaTemplate {
 				return databaseHandle;
 			}
 		
-			protected abstract String[] getNotifiedListeners();
-		
 			public void publish() {
-				this.prepareDataForView();
-				this.eventData.setNotifiedListeners(this.getNotifiedListeners());
 				daoProvider.addEventToTimeline(this);
 				this.notifyListeners();
 			}
@@ -2021,10 +1950,6 @@ class JavaTemplate {
 			
 			void setSystemTime(DateTime systemTime);
 		
-			String[] getNotifiedListeners();
-
-			void setNotifiedListeners(String[] listeners);
-			
 			Object toPresentationalData();
 		
 		}
@@ -2039,8 +1964,6 @@ class JavaTemplate {
 		public interface IEvent {
 		
 			String getEventName();
-			
-			IDataContainer getEventParam();
 			
 			IDataContainer getEventData();
 			
@@ -2278,7 +2201,7 @@ class JavaTemplate {
 			public void addEventToTimeline(IEvent event) {
 				try {
 					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							event.getEventParam().getUuid(), event.getDatabaseHandle());
+							event.getEventData().getUuid(), event.getDatabaseHandle());
 				} catch (JsonProcessingException e) {
 					throw new WebApplicationException(e);
 				}

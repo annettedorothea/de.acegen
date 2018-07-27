@@ -70,12 +70,9 @@ class AceGenerator extends AbstractGenerator {
 					}
 					for (outcome : ace.outcomes) {
 						if (outcome.listeners.size > 0) {
-							fsa.generateFile(project.name + '/events/' + ace.abstractEventName(outcome) + '.js',
+							fsa.generateFile(project.name + '/events/' + ace.eventName(outcome) + '.js',
 								IFileSystemAccess.DEFAULT_OUTPUT,
 								es6Template.generateAbstractEventFile(ace, outcome, project));
-							fsa.generateFile(project.name + '/events/' + ace.eventName(outcome) + '.js',
-								ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-								es6Template.generateInitialEventFile(ace, outcome, project));
 						}
 					}
 				}
@@ -160,12 +157,9 @@ class AceGenerator extends AbstractGenerator {
 							for (outcome : ace.outcomes) {
 								if (outcome.listeners.size > 0) {
 									fsa.generateFile(
-										project.packageFolder + '/events/' + ace.abstractEventName(outcome) + '.java',
+										project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
 										ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 										javaTemplate.generateAbstractEventFile(ace, outcome, project));
-									fsa.generateFile(project.packageFolder + '/events/' + ace.eventName(outcome) +
-										'.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-										javaTemplate.generateInitialEventFile(ace, outcome, project));
 								}
 							}
 						}
