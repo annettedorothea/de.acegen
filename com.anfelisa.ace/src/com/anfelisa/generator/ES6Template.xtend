@@ -570,7 +570,7 @@ class ES6Template {
 		
 		    static httpGet(url, queryParams, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
-				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
+				    let authorization = AppUtils.basicAuth();
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "application/json");
@@ -625,7 +625,7 @@ class ES6Template {
 		
 		    static httpChange(methodType, url, queryParams, data, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
-				    let authorization = commandData ? AppUtils.basicAuth(commandData.username, commandData.password) : undefined;
+				    let authorization = AppUtils.basicAuth();
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "text/plain");
@@ -710,7 +710,7 @@ class ES6Template {
 		        }
 		    }
 		
-			static basicAuth(user, password) {
+			static basicAuth() {
 				// implement your basic auth
 			    return undefined;
 			}
