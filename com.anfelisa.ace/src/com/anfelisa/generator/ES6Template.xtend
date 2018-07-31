@@ -281,6 +281,9 @@ class ES6Template {
 		    initActionData() {
 		    }
 		
+		    extendActionData() {
+		    }
+		
 		    getCommand() {
 		        throw "no command defined for " + this.actionName;
 		    }
@@ -311,6 +314,7 @@ class ES6Template {
 		            this.preUpdateUI();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
+		                this.extendActionData();
 		            }
 		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
@@ -354,6 +358,7 @@ class ES6Template {
 		    applyAction() {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            this.actionData.uuid = AppUtils.createUUID();
+		            this.extendActionData();
 		        }
 		        this.initActionData();
 		        ACEController.addItemToTimeLine({action: this});
