@@ -436,7 +436,7 @@ class ES6Template {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpPost(url, queryParams, data, this.commandData);
+		            return AppUtils.httpPost(url, queryParams, data);
 		        }, (error) => {
 		            reject(error);
 		        });
@@ -446,7 +446,7 @@ class ES6Template {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpPut(url, queryParams, data, this.commandData);
+		            return AppUtils.httpPut(url, queryParams, data);
 		        }, (error) => {
 		            reject(error);
 		        });
@@ -456,7 +456,7 @@ class ES6Template {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            data = this.addUuidToData(data);
-		            return AppUtils.httpDelete(url, queryParams, data, this.commandData);
+		            return AppUtils.httpDelete(url, queryParams, data);
 		        }, (error) => {
 		            reject(error);
 		        });
@@ -628,7 +628,7 @@ class ES6Template {
 				});
 		    }
 		
-		    static httpChange(methodType, url, queryParams, data, commandData, adjustUrl = true) {
+		    static httpChange(methodType, url, queryParams, data, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
 				    let authorization = AppUtils.basicAuth();
 				    const headers = new Headers();
@@ -680,16 +680,16 @@ class ES6Template {
 				});
 		    }
 		
-		    static httpPost(url, queryParams, data, commandData) {
-		        return AppUtils.httpChange("POST", url, queryParams, data, commandData);
+		    static httpPost(url, queryParams, data) {
+		        return AppUtils.httpChange("POST", url, queryParams, data);
 		    }
 		
-		    static httpPut(url, queryParams, data, commandData) {
-		        return AppUtils.httpChange("PUT", url, queryParams, data, commandData);
+		    static httpPut(url, queryParams, data) {
+		        return AppUtils.httpChange("PUT", url, queryParams, data);
 		    }
 		
-		    static httpDelete(url, queryParams, data, commandData) {
-		        return AppUtils.httpChange("DELETE", url, queryParams, data, commandData);
+		    static httpDelete(url, queryParams, data) {
+		        return AppUtils.httpChange("DELETE", url, queryParams, data);
 		    }
 		
 		    static queryParamString(url, queryParams) {
