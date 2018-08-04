@@ -1472,7 +1472,7 @@ class JavaTemplate {
 			protected DatabaseHandle databaseHandle;
 			private DBI jdbi;
 			protected JodaObjectMapper mapper;
-			private CustomAppConfiguration appConfiguration;
+			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
