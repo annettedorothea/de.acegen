@@ -897,22 +897,20 @@ class ES6Template {
 		    static applyNextActions() {
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
-					const pauseInMillis = ACEController.execution === ACEController.LIVE ? 0 : ACEController.pauseInMillis;
 					if (action.asynchronous) {
 					    action.applyAction().then(() => {
-					        setTimeout(ACEController.applyNextActions, pauseInMillis);
+					    	ACEController.callApplyNextActions();
 					    }, (error) => {
-					        ACEController.actionIsProcessing = false;
 					        AppUtils.displayUnexpectedError(error);
+					    	ACEController.callApplyNextActions();
 					    });
 					} else {
 						try {
 							action.applyAction();
-					        setTimeout(ACEController.applyNextActions, pauseInMillis);
+					    	ACEController.callApplyNextActions();
 						} catch(error) {
-					        ACEController.actionIsProcessing = false;
 					        AppUtils.displayUnexpectedError(error);
-					        setTimeout(ACEController.applyNextActions, pauseInMillis);
+					    	ACEController.callApplyNextActions();
 						}
 					}
 		        } else if (action === undefined) {
@@ -926,6 +924,14 @@ class ES6Template {
 		                AppUtils.start();
 		            }
 		        }
+		    }
+		    
+		    static callApplyNextActions() {
+		    	if (ACEController.execution === ACEController.LIVE) {
+		    		ACEController.applyNextActions();
+		    	} else {
+					setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+				}
 		    }
 		
 		    static triggerAction(action) {
