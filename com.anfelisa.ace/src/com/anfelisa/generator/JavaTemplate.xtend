@@ -818,13 +818,23 @@ class JavaTemplate {
 			
 			public static ITimelineItem selectEvent(String uuid) {
 				for (ITimelineItem timelineItem : timeline) {
-					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("event")) {
+					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("event") && !E2E.hasException(uuid)) {
 						return timelineItem;
 					}
+					
 				}
 				return null;
 			}
-		
+			
+			private static boolean hasException(String uuid) {
+				for (ITimelineItem timelineItem : timeline) {
+					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("exception")) {
+						return true;
+					}
+					
+				}
+				return false;
+			}
 			
 			public static ITimelineItem selectNextAction(String uuid) {
 				if (uuid != null) {
@@ -858,6 +868,7 @@ class JavaTemplate {
 		
 		public class ServerConfiguration {
 			public static final String REPLAY = "REPLAY";
+			public static final String REPLAY_EVENTS = "REPLAY_EVENTS";
 			public static final String LIVE = "LIVE";
 			public static final String DEV = "DEV";
 			
@@ -992,7 +1003,6 @@ class JavaTemplate {
 				try {
 					handle.getConnection().setAutoCommit(false);
 					
-					daoProvider.getAceDao().truncateErrorTimelineTable(handle);
 					daoProvider.getAceDao().truncateTimelineTable(handle);
 
 					daoProvider.truncateAllViews(handle);
@@ -1052,7 +1062,7 @@ class JavaTemplate {
 		
 				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null, null);
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				
 				ViewProvider viewProvider = new ViewProvider(daoProvider);
 				
@@ -1265,7 +1275,7 @@ class JavaTemplate {
 					return Response.ok("prepared action " + uuid + " by doing nothing - action was not found").build();
 				}
 		
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null, jdbi.open());
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				LOG.info("PREPARE ACTION " + actionToBePrepared);
 				try {
 					databaseHandle.beginTransaction();
@@ -1369,20 +1379,8 @@ class JavaTemplate {
 				}
 			}
 		
-			private String errorTimelineTable() {
-				if (StringUtils.isBlank(AceDao.schemaName)) {
-					return "public.errorTimeline";
-				} else {
-					return AceDao.schemaName + ".errorTimeline";
-				}
-			}
-		
 			public void truncateTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE " + timelineTable());
-			}
-		
-			public void truncateErrorTimelineTable(Handle handle) {
-				handle.execute("TRUNCATE " + errorTimelineTable());
 			}
 		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
@@ -1398,28 +1396,6 @@ class JavaTemplate {
 				statement.bind("data", data);
 				statement.bind("uuid", uuid);
 				statement.execute();
-			}
-		
-			public void insertIntoErrorTimeline(Handle handle, String type, String method, String name, String data,
-					String uuid) {
-				if (handle != null) {
-					Update statement = handle.createStatement("INSERT INTO " + errorTimelineTable()
-							+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
-					statement.bind("type", type);
-					if (method != null) {
-						statement.bind("method", method);
-					} else {
-						statement.bind("method", "---");
-					}
-					statement.bind("name", name);
-					if (data != null) {
-						statement.bind("data", data);
-					} else {
-						statement.bind("data", "unknown exception");
-					}
-					statement.bind("uuid", uuid);
-					statement.execute();
-				}
 			}
 		
 			public ITimelineItem selectLastAction(Handle handle) {
@@ -1502,7 +1478,7 @@ class JavaTemplate {
 			protected abstract void loadDataForGetRequest();
 		
 			public Response apply() {
-				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open(), jdbi.open());
+				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				Handle timelineHandle = null;
 				databaseHandle.beginTransaction();
 				try {
@@ -1721,19 +1697,14 @@ class JavaTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(DatabaseHandle.class);
 		
 			private Handle handle;
-			private Handle errorHandle;
 			private Handle timelineHandle;
 		
-			public DatabaseHandle(Handle handle, Handle errorHandle,  Handle timelineHandle) {
+			public DatabaseHandle(Handle handle, Handle timelineHandle) {
 				super();
 				try {
 					if (handle != null) {
 						this.handle = handle;
 						this.handle.getConnection().setAutoCommit(false);
-					}
-					if (errorHandle != null) {
-						this.errorHandle = errorHandle;
-						this.errorHandle.getConnection().setAutoCommit(false);
 					}
 					if (timelineHandle != null) {
 						this.timelineHandle = timelineHandle;
@@ -1748,9 +1719,6 @@ class JavaTemplate {
 				if (handle != null) {
 					handle.begin();
 				}
-				if (errorHandle != null) {
-					errorHandle.begin();
-				}
 				if (timelineHandle != null) {
 					timelineHandle.begin();
 				}
@@ -1763,17 +1731,11 @@ class JavaTemplate {
 				if (timelineHandle != null) {
 					timelineHandle.commit();
 				}
-				if (errorHandle != null) {
-					errorHandle.rollback();
-				}
 			}
 		
 			public void rollbackTransaction() {
 				if (handle != null) {
 					handle.rollback();
-				}
-				if (errorHandle != null) {
-					errorHandle.commit();
 				}
 				if (timelineHandle != null) {
 					timelineHandle.commit();
@@ -1784,9 +1746,6 @@ class JavaTemplate {
 				if (handle != null) {
 					handle.close();
 				}
-				if (errorHandle != null) {
-					errorHandle.close();
-				}
 				if (timelineHandle != null) {
 					timelineHandle.close();
 				}
@@ -1794,10 +1753,6 @@ class JavaTemplate {
 		
 			public Handle getHandle() {
 				return handle;
-			}
-		
-			public Handle getErrorHandle() {
-				return errorHandle;
 			}
 		
 			public Handle getTimelineHandle() {
@@ -2036,7 +1991,7 @@ class JavaTemplate {
 			}
 		
 			public DatabaseHandle createDatabaseHandle() {
-				return new DatabaseHandle(jdbi.open(), jdbi.open(), jdbi.open());
+				return new DatabaseHandle(jdbi.open(), jdbi.open());
 			}
 		
 			public DBI getJdbi() {
@@ -2219,7 +2174,7 @@ class JavaTemplate {
 		
 			@Override
 			public void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
-				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), "exception", null, x.getClass().getName(),
+				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), "exception", null, x.getClass().getName(),
 						x.getMessage(), uuid);
 			}
 		
@@ -2230,8 +2185,6 @@ class JavaTemplate {
 				}
 				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), type, method, name, EncryptionService.encrypt(json),
 						uuid);
-				aceDao.insertIntoErrorTimeline(databaseHandle.getErrorHandle(), type, method, name,
-						EncryptionService.encrypt(json), uuid);
 			}
 		
 		}
@@ -2522,29 +2475,7 @@ class JavaTemplate {
 			</column>
 		</createTable>
 		
-		<createTable tableName="errortimeline">
-			<column name="type" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="method" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="name" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="time" type="timestamp">
-				<constraints nullable="false" />
-			</column>
-			<column name="data" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="uuid" type="character varying">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		
 		<addUniqueConstraint columnNames="type, uuid" tableName="timeline" />
-		<addUniqueConstraint columnNames="type, uuid" tableName="errortimeline" />
 
 	'''
 	
