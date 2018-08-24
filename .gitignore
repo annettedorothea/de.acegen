@@ -14,3 +14,8 @@ com.anfelisa.ace.tests/xtend-gen
 com.anfelisa.ace.ui/xtend-gen
 com.anfelisa.ace/xtend-gen
 Eclipse.app
+ace-gen.app
+com.anfelisa.ace.update.site/features
+com.anfelisa.ace.update.site/plugins
+artifacts.jar
+content.jar

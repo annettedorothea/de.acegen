@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.anfelisa.ace.feature_3.0.0.jar" id="com.anfelisa.ace.feature" version="3.0.0"/>
+   <feature url="features/com.anfelisa.ace.feature_3.0.1.jar" id="com.anfelisa.ace.feature" version="3.0.1">
+      <category name="ace"/>
+   </feature>
+   <category-def name="ace" label="ace DSL and generator"/>
 </site>
