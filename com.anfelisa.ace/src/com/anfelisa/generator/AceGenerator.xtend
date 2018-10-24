@@ -57,13 +57,15 @@ class AceGenerator extends AbstractGenerator {
 						es6Template.generateInitialActionFile(ace, project));
 					if (ace.isAsync) {
 						fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
-							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousAbstractCommandFile(ace, project));
+							IFileSystemAccess.DEFAULT_OUTPUT,
+							es6Template.generateAsynchronousAbstractCommandFile(ace, project));
 						fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
 							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 							es6Template.generateAsynchronousInitialCommandFile(ace, project));
 					} else {
 						fsa.generateFile(project.name + '/commands/' + ace.abstractCommandName + '.js',
-							IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousAbstractCommandFile(ace, project));
+							IFileSystemAccess.DEFAULT_OUTPUT,
+							es6Template.generateSynchronousAbstractCommandFile(ace, project));
 						fsa.generateFile(project.name + '/commands/' + ace.commandName + '.js',
 							ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 							es6Template.generateSynchronousInitialCommandFile(ace, project));
@@ -94,11 +96,15 @@ class AceGenerator extends AbstractGenerator {
 				fsa.generateFile('app/ReplayUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 					es6Template.generateReplayUtilsStub(project));
 				fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAction());
-				fsa.generateFile('ace/AsynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousAction());
-				fsa.generateFile('ace/SynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousAction());
+				fsa.generateFile('ace/AsynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateAsynchronousAction());
+				fsa.generateFile('ace/SynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateSynchronousAction());
 				fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateCommand());
-				fsa.generateFile('ace/AsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateAsynchronousCommand());
-				fsa.generateFile('ace/SynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateSynchronousCommand());
+				fsa.generateFile('ace/AsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateAsynchronousCommand());
+				fsa.generateFile('ace/SynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
+					es6Template.generateSynchronousCommand());
 				fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, es6Template.generateEvent());
 				fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT,
 					es6Template.generateACEController());
@@ -117,179 +123,136 @@ class AceGenerator extends AbstractGenerator {
 					fsa.generateFile(project.packageFolder + '/models/' + model.modelMapper + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						javaTemplate.generateMapper(model, project));
-						if (model.persistent) {
-							fsa.generateFile(project.packageFolder + '/models/' + model.modelDao + '.java',
-								ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-								javaTemplate.generateDao(model, project));
-							fsa.generateFile(project.packageFolder + '/' + model.name + '_creation.xml',
-								ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
-								javaTemplate.generateMigration(model, project));
-						}
+					if (model.persistent) {
+						fsa.generateFile(project.packageFolder + '/models/' + model.modelDao + '.java',
+							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+							javaTemplate.generateDao(model, project));
+						fsa.generateFile(project.packageFolder + '/' + model.name + '_creation.xml',
+							ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+							javaTemplate.generateMigration(model, project));
 					}
-					for (data : project.data) {
-						fsa.generateFile(project.packageFolder + '/data/' + data.dataInterfaceName + '.java',
+				}
+				for (data : project.data) {
+					fsa.generateFile(project.packageFolder + '/data/' + data.dataInterfaceName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateDataInterface(data, project));
+					fsa.generateFile(project.packageFolder + '/data/' + data.dataName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateData(data, project));
+					fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generatePresentationalData(data, project));
+					fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataInterfaceName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generatePresentationalInterfaceData(data, project));
+				}
+				for (ace : project.aceOperations) {
+					fsa.generateFile(project.packageFolder + '/actions/' + ace.abstractActionName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						javaTemplate.generateAbstractActionFile(ace, project));
+					fsa.generateFile(project.packageFolder + '/actions/' + ace.actionName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateInitialActionFile(ace, project));
+					if (!'GET'.equals(ace.type)) {
+						fsa.generateFile(project.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
 							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generateDataInterface(data, project));
-						fsa.generateFile(project.packageFolder + '/data/' + data.dataName + '.java',
+							javaTemplate.generateAbstractCommandFile(ace, project));
+						fsa.generateFile(project.packageFolder + '/commands/' + ace.commandName + '.java',
 							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-							javaTemplate.generateData(data, project));
-						fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataName + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generatePresentationalData(data, project));
-						fsa.generateFile(project.packageFolder + '/data/' + data.presentationalDataInterfaceName +
-							'.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generatePresentationalInterfaceData(data, project));
-					}
-					for (ace : project.aceOperations) {
-						fsa.generateFile(project.packageFolder + '/actions/' + ace.abstractActionName + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							javaTemplate.generateAbstractActionFile(ace, project));
-						fsa.generateFile(project.packageFolder + '/actions/' + ace.actionName + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-							javaTemplate.generateInitialActionFile(ace, project));
-						if (!'GET'.equals(ace.type)) {
-							fsa.generateFile(project.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
-								ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-								javaTemplate.generateAbstractCommandFile(ace, project));
-							fsa.generateFile(project.packageFolder + '/commands/' + ace.commandName + '.java',
-								ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-								javaTemplate.generateInitialCommandFile(ace, project));
-							for (outcome : ace.outcomes) {
-								if (outcome.listeners.size > 0) {
-									fsa.generateFile(
-										project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
-										ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-										javaTemplate.generateAbstractEventFile(ace, outcome, project));
-								}
+							javaTemplate.generateInitialCommandFile(ace, project));
+						for (outcome : ace.outcomes) {
+							if (outcome.listeners.size > 0) {
+								fsa.generateFile(project.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
+									ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+									javaTemplate.generateAbstractEventFile(ace, outcome, project));
 							}
 						}
 					}
-					for (view : project.views) {
-						fsa.generateFile(project.packageFolder + '/views/' + view.viewName + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-							javaTemplate.generateView(view, project));
-					}
-					fsa.generateFile(project.packageFolder + '/AppRegistration.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAppRegistration(project));
-
-					fsa.generateFile("com/anfelisa/ace" + '/App.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateApp());
-					fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAppConfiguration());
-					fsa.generateFile("com/anfelisa/ace" + '/CustomAppConfiguration.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateCustomAppConfiguration());
-					fsa.generateFile("com/anfelisa/ace" + '/E2E.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateE2E());
-					fsa.generateFile("com/anfelisa/ace" + '/ServerConfiguration.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateServerConfiguration());
-					fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateStartE2ESessionResource());
-					fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateStopE2ESessionResource());
-					fsa.generateFile("com/anfelisa/ace" + '/PrepareE2EResource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generatePrepareE2EResource());
-					fsa.generateFile("com/anfelisa/ace" + '/GetServerTimelineResource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateGetServerTimelineResource());
-					fsa.generateFile("com/anfelisa/ace" + '/ServerInfo.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerInfo());
-					fsa.generateFile("com/anfelisa/ace" + '/GetServerInfoResource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateGetServerInfoResource());
-					fsa.generateFile("com/anfelisa/ace" + '/EventReplayCommand.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateEventReplayCommand());
-
-					fsa.generateFile("com/anfelisa/ace" + '/AceDao.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceDao());
-					fsa.generateFile("com/anfelisa/ace" + '/AceExecutionMode.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAceExecutionMode());
-					fsa.generateFile("com/anfelisa/ace" + '/Action.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAction());
-					fsa.generateFile("com/anfelisa/ace" + '/Command.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateCommand());
-					fsa.generateFile("com/anfelisa/ace" + '/DatabaseHandle.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateDatabaseHandle());
-					fsa.generateFile("com/anfelisa/ace" + '/Event.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateEvent());
-					fsa.generateFile("com/anfelisa/ace" + '/HttpMethod.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateHttpMethod());
-					fsa.generateFile("com/anfelisa/ace" + '/IAction.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateIAction());
-					fsa.generateFile("com/anfelisa/ace" + '/ICommand.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateICommand());
-					fsa.generateFile("com/anfelisa/ace" + '/IDataContainer.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateIDataContainer());
-					fsa.generateFile("com/anfelisa/ace" + '/IEvent.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateIEvent());
-					fsa.generateFile("com/anfelisa/ace" + '/ITimelineItem.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateITimelineItem());
-					fsa.generateFile("com/anfelisa/ace" + '/JodaObjectMapper.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateJodaObjectMapper());
-					fsa.generateFile("com/anfelisa/ace" + '/Resource.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateResource());
-					fsa.generateFile("com/anfelisa/ace" + '/TimelineItem.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateTimelineItem());
-					fsa.generateFile("com/anfelisa/ace" + '/TimelineItemMapper.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateTimelineItemMapper());
-					fsa.generateFile("com/anfelisa/ace" + '/AbstractData.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAbstractData());
-
-					fsa.generateFile("com/anfelisa/ace" + '/AbstractDaoProvider.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAbstractDaoProvider());
-					fsa.generateFile("com/anfelisa/ace" + '/DaoProvider.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateDaoProvider());
-					fsa.generateFile("com/anfelisa/ace" + '/IDaoProvider.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateIDaoProvider());
-					fsa.generateFile("com/anfelisa/ace" + '/ViewProvider.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-						javaTemplate.generateViewProvider());
-
-					fsa.generateFile("com/anfelisa/ace/encryption" + '/AESEncryption.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateAESEncryption());
-					fsa.generateFile("com/anfelisa/ace/encryption" + '/EncryptionService.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateEncryptionService());
-					fsa.generateFile("com/anfelisa/ace/encryption" + '/IEncryptionService.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateIEncryptionService());
-					fsa.generateFile("com/anfelisa/ace/encryption" + '/KeyStoreUtils.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateKeystoreUtils());
-					fsa.generateFile("com/anfelisa/ace/encryption" + '/NoEncryption.java',
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						javaTemplate.generateNoEncryption());
-
-					fsa.generateFile('ace_creation.xml',
-						ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
-						javaTemplate.generateAceMigration());
-
-					}
 				}
+				for (view : project.views) {
+					fsa.generateFile(project.packageFolder + '/views/' + view.viewName + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+						javaTemplate.generateView(view, project));
+				}
+				fsa.generateFile(project.packageFolder + '/AppRegistration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAppRegistration(project));
+
+				fsa.generateFile("com/anfelisa/ace" + '/App.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateApp());
+				fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAppConfiguration());
+				fsa.generateFile("com/anfelisa/ace" + '/CustomAppConfiguration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+					javaTemplate.generateCustomAppConfiguration());
+				fsa.generateFile("com/anfelisa/ace" + '/E2E.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					javaTemplate.generateE2E());
+				fsa.generateFile("com/anfelisa/ace" + '/ServerConfiguration.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerConfiguration());
+				fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateStartE2ESessionResource());
+				fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateStopE2ESessionResource());
+				fsa.generateFile("com/anfelisa/ace" + '/PrepareE2EResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generatePrepareE2EResource());
+				fsa.generateFile("com/anfelisa/ace" + '/GetServerTimelineResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					javaTemplate.generateGetServerTimelineResource());
+				fsa.generateFile("com/anfelisa/ace" + '/ServerInfo.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateServerInfo());
+				fsa.generateFile("com/anfelisa/ace" + '/GetServerInfoResource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateGetServerInfoResource());
+				fsa.generateFile("com/anfelisa/ace" + '/EventReplayCommand.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateEventReplayCommand());
+
+				fsa.generateFile("com/anfelisa/ace" + '/AceDao.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceDao());
+				fsa.generateFile("com/anfelisa/ace" + '/AceExecutionMode.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAceExecutionMode());
+				fsa.generateFile("com/anfelisa/ace" + '/Action.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAction());
+				fsa.generateFile("com/anfelisa/ace" + '/Command.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateCommand());
+				fsa.generateFile("com/anfelisa/ace" + '/DatabaseHandle.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateDatabaseHandle());
+				fsa.generateFile("com/anfelisa/ace" + '/Event.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					javaTemplate.generateEvent());
+				fsa.generateFile("com/anfelisa/ace" + '/HttpMethod.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateHttpMethod());
+				fsa.generateFile("com/anfelisa/ace" + '/IAction.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIAction());
+				fsa.generateFile("com/anfelisa/ace" + '/ICommand.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateICommand());
+				fsa.generateFile("com/anfelisa/ace" + '/IDataContainer.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIDataContainer());
+				fsa.generateFile("com/anfelisa/ace" + '/IEvent.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateIEvent());
+				fsa.generateFile("com/anfelisa/ace" + '/ITimelineItem.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateITimelineItem());
+				fsa.generateFile("com/anfelisa/ace" + '/JodaObjectMapper.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateJodaObjectMapper());
+				fsa.generateFile("com/anfelisa/ace" + '/Resource.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateResource());
+				fsa.generateFile("com/anfelisa/ace" + '/TimelineItem.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateTimelineItem());
+				fsa.generateFile("com/anfelisa/ace" + '/TimelineItemMapper.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateTimelineItemMapper());
+				fsa.generateFile("com/anfelisa/ace" + '/AbstractData.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAbstractData());
+
+				fsa.generateFile("com/anfelisa/ace" + '/AbstractDaoProvider.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, javaTemplate.generateAbstractDaoProvider());
+				fsa.generateFile("com/anfelisa/ace" + '/DaoProvider.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateDaoProvider());
+				fsa.generateFile("com/anfelisa/ace" + '/IDaoProvider.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateIDaoProvider());
+				fsa.generateFile("com/anfelisa/ace" + '/ViewProvider.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, javaTemplate.generateViewProvider());
+
+				fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+					javaTemplate.generateAceMigration());
+					
 			}
+
 		}
-						
+	}
+}

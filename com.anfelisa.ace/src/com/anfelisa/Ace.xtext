@@ -4,7 +4,7 @@ generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
 	name = QualifiedName
-	'target' target = ('ES6' | 'JAVA')
+	'target' target = ('ES6' | 'JAVA' | '.NET')
 	('ACE' '{'
 		(aceOperations += ACE)*
 	'}')?
@@ -84,7 +84,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Integer' | 'String' | 'Encrypted' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
+	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
 ;
 
 Constraint:

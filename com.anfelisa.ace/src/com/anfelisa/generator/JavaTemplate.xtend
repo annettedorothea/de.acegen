@@ -286,23 +286,21 @@ class JavaTemplate {
 	def generateDao(Model it, Project project) '''
 		package «project.name».models;
 		
-		import org.skife.jdbi.v2.Handle;
-		import org.skife.jdbi.v2.Query;
-		import org.skife.jdbi.v2.Update;
-		
+		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.statement.Update;
+
 		import java.util.List;
 		import java.util.Map;
+		import java.util.Optional;
 		
 		import com.fasterxml.jackson.annotation.JsonIgnoreType;
-
-		import com.anfelisa.ace.encryption.EncryptionService;
 
 		@SuppressWarnings("all")
 		@JsonIgnoreType
 		public class «modelDao» {
 			
 			public void insert(Handle handle, «modelName» «modelParam») {
-				Update statement = handle.createStatement("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
+				Update statement = handle.createUpdate("INSERT INTO «project.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(project, attribute)»«ENDFOR»)");
 				«FOR attribute : attributes»
 					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 				«ENDFOR»
@@ -312,7 +310,7 @@ class JavaTemplate {
 			
 			«FOR attribute : allUniqueAttributes»
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createStatement("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					Update statement = handle.createUpdate("UPDATE «project.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
@@ -321,16 +319,17 @@ class JavaTemplate {
 				}
 
 				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Update statement = handle.createStatement("DELETE FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					Update statement = handle.createUpdate("DELETE FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					statement.bind("«attribute.name.toLowerCase»", «attribute.name»);
 					statement.execute();
 				}
 
 				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+					Optional<«modelName»> optional = handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «project.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
 						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
-						.first();
+						.findFirst();
+					return optional.isPresent() ? optional.get() : null;
 				}
 			«ENDFOR»
 			
@@ -341,7 +340,7 @@ class JavaTemplate {
 			}
 
 			public void truncate(Handle handle) {
-				Update statement = handle.createStatement("TRUNCATE «project.schema».«table» CASCADE");
+				Update statement = handle.createUpdate("TRUNCATE «project.schema».«table» CASCADE");
 				statement.execute();
 			}
 
@@ -366,15 +365,13 @@ class JavaTemplate {
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
 		
-		import org.skife.jdbi.v2.StatementContext;
-		import org.skife.jdbi.v2.tweak.ResultSetMapper;
-		
-		import com.anfelisa.ace.encryption.EncryptionService;
+		import org.jdbi.v3.core.mapper.RowMapper;
+		import org.jdbi.v3.core.statement.StatementContext;
 		
 		@SuppressWarnings("all")
-		public class «modelMapper» implements ResultSetMapper<«modelName»> {
+		public class «modelMapper» implements RowMapper<«modelName»> {
 			
-			public «modelName» map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+			public «modelName» map(ResultSet r, StatementContext ctx) throws SQLException {
 				return new «modelClassName»(
 					«FOR attribute : attributes SEPARATOR ','»
 						«attribute.mapperInit»
@@ -389,7 +386,8 @@ class JavaTemplate {
 	def generateAbstractActionFile(ACE it, Project project) '''
 		package «project.name».actions;
 		
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		import javax.ws.rs.WebApplicationException;
 
 		import com.anfelisa.ace.Action;
@@ -406,7 +404,7 @@ class JavaTemplate {
 		
 		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
 		
-			public «abstractActionName»(DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«project.name».actions.«actionName»", HttpMethod.«type», jdbi, appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -561,7 +559,8 @@ class JavaTemplate {
 
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		
 		«data.dataImport»
 		
@@ -572,7 +571,7 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 
-			public «actionName»(DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «actionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(jdbi,appConfiguration, daoProvider, viewProvider);
 			}
 		
@@ -632,7 +631,7 @@ class JavaTemplate {
 		
 		import java.util.function.BiConsumer;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		
 		import com.anfelisa.ace.IDataContainer;
 		«FOR renderFunction : renderFunctions»
@@ -669,7 +668,8 @@ class JavaTemplate {
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.ServerConfiguration;
 		
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		
 		«FOR view : it.referencedViews()»
 			import «view.viewNameWithPackage»;
@@ -681,7 +681,7 @@ class JavaTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public void registerResources(Environment environment, DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
 					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
@@ -714,7 +714,8 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -766,7 +767,7 @@ class JavaTemplate {
 		
 				final DBIFactory factory = new DBIFactory();
 		
-				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
+				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
 					environment.jersey().register(new PrepareE2EResource(jdbi));
@@ -961,8 +962,9 @@ class JavaTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.skife.jdbi.v2.DBI;
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Jdbi;
+
+		import org.jdbi.v3.core.Handle;
 
 		import org.joda.time.DateTime;
 		import org.slf4j.Logger;
@@ -978,11 +980,11 @@ class JavaTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(StartE2ESessionResource.class);
 		
-			private DBI jdbi;
+			private Jdbi jdbi;
 		
 			private IDaoProvider daoProvider = new DaoProvider();
 
-			public StartE2ESessionResource(DBI jdbi, IDaoProvider daoProvider) {
+			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
@@ -1027,8 +1029,9 @@ class JavaTemplate {
 		import java.lang.reflect.Constructor;
 		import java.util.List;
 		
-		import org.skife.jdbi.v2.DBI;
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Jdbi;
+
+		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1060,7 +1063,7 @@ class JavaTemplate {
 				
 				final DBIFactory factory = new DBIFactory();
 		
-				DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
+				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
 				
@@ -1184,8 +1187,9 @@ class JavaTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.skife.jdbi.v2.DBI;
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Jdbi;
+
+		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1196,13 +1200,13 @@ class JavaTemplate {
 		@Consumes(MediaType.APPLICATION_JSON)
 		public class GetServerTimelineResource {
 		
-			private DBI jdbi;
+			private Jdbi jdbi;
 		
 			static final Logger LOG = LoggerFactory.getLogger(GetServerTimelineResource.class);
 		
 			private AceDao aceDao = new AceDao();
 		
-			public GetServerTimelineResource(DBI jdbi) {
+			public GetServerTimelineResource(Jdbi jdbi) {
 				super();
 				this.jdbi = jdbi;
 			}
@@ -1241,7 +1245,8 @@ class JavaTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1252,14 +1257,14 @@ class JavaTemplate {
 		@Consumes(MediaType.APPLICATION_JSON)
 		public class PrepareE2EResource {
 		
-			private DBI jdbi;
+			private Jdbi jdbi;
 		
 			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
 		
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public PrepareE2EResource(DBI jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public PrepareE2EResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
@@ -1358,10 +1363,11 @@ class JavaTemplate {
 		package com.anfelisa.ace;
 		
 		import java.util.List;
+		import java.util.Optional;
 
 		import org.apache.commons.lang3.StringUtils;
-		import org.skife.jdbi.v2.Handle;
-		import org.skife.jdbi.v2.Update;
+		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.statement.Update;
 		
 		public class AceDao {
 		
@@ -1384,7 +1390,7 @@ class JavaTemplate {
 			}
 		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
-				Update statement = handle.createStatement("INSERT INTO " + timelineTable()
+				Update statement = handle.createUpdate("INSERT INTO " + timelineTable()
 						+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
 				statement.bind("type", type);
 				if (method != null) {
@@ -1399,10 +1405,12 @@ class JavaTemplate {
 			}
 		
 			public ITimelineItem selectLastAction(Handle handle) {
-				return handle
+				Optional<ITimelineItem> optional = handle
 						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
 								+ "where type = 'action' " + "order by time desc " + "limit 1")
-						.map(new TimelineItemMapper()).first();
+						.map(new TimelineItemMapper())
+						.findFirst();
+				return optional.isPresent() ? optional.get() : null;
 			}
 		
 			public List<ITimelineItem> selectTimeline(Handle handle) {
@@ -1433,8 +1441,9 @@ class JavaTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.joda.time.DateTime;
-		import org.skife.jdbi.v2.DBI;
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Jdbi;
+
+		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1446,13 +1455,13 @@ class JavaTemplate {
 			private String actionName;
 			private HttpMethod httpMethod;
 			protected DatabaseHandle databaseHandle;
-			private DBI jdbi;
+			private Jdbi jdbi;
 			protected JodaObjectMapper mapper;
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
-			public Action(String actionName, HttpMethod httpMethod, DBI jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Action(String actionName, HttpMethod httpMethod, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.actionName = actionName;
 				this.httpMethod = httpMethod;
@@ -1488,7 +1497,7 @@ class JavaTemplate {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
 							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(DBI.class, CustomAppConfiguration.class, IDaoProvider.class, ViewProvider.class);
+							Constructor<?> con = cl.getConstructor(Jdbi.class, CustomAppConfiguration.class, IDaoProvider.class, ViewProvider.class);
 							IAction action = (IAction) con.newInstance(jdbi, appConfiguration, daoProvider, viewProvider);
 							action.initActionData(timelineItem.getData());
 							this.actionData.setSystemTime(action.getActionData().getSystemTime());
@@ -1595,7 +1604,7 @@ class JavaTemplate {
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		
 		import com.fasterxml.jackson.annotation.JsonIgnore;
 		
@@ -1688,7 +1697,7 @@ class JavaTemplate {
 	def generateDatabaseHandle() '''
 		package com.anfelisa.ace;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1769,7 +1778,7 @@ class JavaTemplate {
 		import java.util.List;
 		import java.util.function.BiConsumer;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -1979,13 +1988,14 @@ class JavaTemplate {
 	def generateResource() '''
 		package com.anfelisa.ace;
 		
-		import org.skife.jdbi.v2.DBI;
+		import org.jdbi.v3.core.Jdbi;
+
 		
 		public class Resource {
 		
-			private DBI jdbi;
+			private Jdbi jdbi;
 		
-			public Resource( DBI jdbi) {
+			public Resource( Jdbi jdbi) {
 				super();
 				this.jdbi = jdbi;
 			}
@@ -1994,7 +2004,7 @@ class JavaTemplate {
 				return new DatabaseHandle(jdbi.open(), jdbi.open());
 			}
 		
-			public DBI getJdbi() {
+			public Jdbi getJdbi() {
 				return jdbi;
 			}
 			
@@ -2089,14 +2099,12 @@ class JavaTemplate {
 		import org.joda.time.DateTime;
 		import org.joda.time.format.DateTimeFormat;
 		import org.joda.time.format.DateTimeFormatter;
-		import org.skife.jdbi.v2.StatementContext;
-		import org.skife.jdbi.v2.tweak.ResultSetMapper;
+		import org.jdbi.v3.core.mapper.RowMapper;
+		import org.jdbi.v3.core.statement.StatementContext;
 		
-		import com.anfelisa.ace.encryption.EncryptionService;
-		
-		public class TimelineItemMapper implements ResultSetMapper<ITimelineItem> {
+		public class TimelineItemMapper implements RowMapper<ITimelineItem> {
 			
-			public ITimelineItem map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+			public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {
 				DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 				DateTime time = DateTime.parse(r.getString("time"), fmt);
 				return new TimelineItem(
@@ -2104,7 +2112,7 @@ class JavaTemplate {
 					r.getString("method"),
 					r.getString("name"),
 					time,
-					EncryptionService.decrypt(r.getString("data")),
+					r.getString("data"),
 					r.getString("uuid")
 				);
 			}
@@ -2116,7 +2124,6 @@ class JavaTemplate {
 		
 		import javax.ws.rs.WebApplicationException;
 		
-		import com.anfelisa.ace.encryption.EncryptionService;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
 		public abstract class AbstractDaoProvider implements IDaoProvider {
@@ -2183,8 +2190,7 @@ class JavaTemplate {
 				if (databaseHandle == null) {
 					throw new WebApplicationException("no database handle");
 				}
-				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), type, method, name, EncryptionService.encrypt(json),
-						uuid);
+				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), type, method, name, json, uuid);
 			}
 		
 		}
@@ -2194,7 +2200,7 @@ class JavaTemplate {
 	def generateDaoProvider() '''
 		package com.anfelisa.ace;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 
 		public class DaoProvider extends AbstractDaoProvider {
 			@Override
@@ -2207,7 +2213,7 @@ class JavaTemplate {
 	def generateIDaoProvider() '''
 		package com.anfelisa.ace;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		
 		public interface IDaoProvider {
 			
@@ -2238,7 +2244,7 @@ class JavaTemplate {
 		import java.util.Map;
 		import java.util.function.BiConsumer;
 		
-		import org.skife.jdbi.v2.Handle;
+		import org.jdbi.v3.core.Handle;
 		
 		public class ViewProvider {
 		
@@ -2259,194 +2265,6 @@ class JavaTemplate {
 		
 			public List<BiConsumer<? extends IDataContainer, Handle>> getConsumerForEvent(String eventName) {
 				return consumerMap.get(eventName);
-			}
-		
-		}
-		
-	'''
-	
-	def generateAESEncryption() '''
-		package com.anfelisa.ace.encryption;
-		
-		import static com.anfelisa.ace.encryption.KeyStoreUtils.generateCipher;
-		import static com.anfelisa.ace.encryption.KeyStoreUtils.loadKey;
-		
-		import java.io.File;
-		
-		import javax.crypto.Cipher;
-		import javax.crypto.SecretKey;
-		
-		import org.apache.commons.lang3.StringUtils;
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
-		import sun.misc.BASE64Decoder;
-		import sun.misc.BASE64Encoder;
-		
-		@SuppressWarnings("restriction")
-		public class AESEncryption implements IEncryptionService {
-		
-			static final Logger LOG = LoggerFactory.getLogger(AESEncryption.class);
-		
-		    private SecretKey key;
-			private Cipher encryptCipher;
-			private Cipher decryptCipher;
-		
-			public void initKey(File file) {
-				try {
-					key = loadKey(file);
-					encryptCipher = generateCipher(key, Cipher.ENCRYPT_MODE);
-					decryptCipher = generateCipher(key, Cipher.DECRYPT_MODE);
-				} catch (Exception e) {
-					LOG.error("error in initKey", e);
-				}
-			}
-		
-			public String encrypt(String string) {
-				if (StringUtils.isEmpty(string)) {
-					return "";
-				}
-				try {
-					byte[] bytes = encryptCipher.doFinal(string.getBytes());
-					BASE64Encoder myEncoder = new BASE64Encoder();
-					return myEncoder.encode(bytes);
-				} catch (Exception x) {
-					LOG.error("error in encrypt", x);
-					return string;
-				}
-			}
-		
-			public String decrypt(String string) {
-				if (StringUtils.isEmpty(string)) {
-					return "";
-				}
-				try {
-					BASE64Decoder myDecoder = new BASE64Decoder();
-					byte[] crypted = myDecoder.decodeBuffer(string);
-					byte[] recoveredBytes = decryptCipher.doFinal(crypted);
-					return new String(recoveredBytes);
-				} catch (Exception x) {
-					LOG.error("error in decrypt", x);
-					return string;
-				}
-			}
-		
-		}
-		
-	'''
-	
-	def generateEncryptionService() '''
-		package com.anfelisa.ace.encryption;
-		
-		public class EncryptionService {
-		
-			private static IEncryptionService encryptionService = new NoEncryption();
-		
-			public static void setEncryptionService(IEncryptionService encryptionService) {
-				EncryptionService.encryptionService = encryptionService;
-			}
-		
-			public static String encrypt(String string) {
-				return encryptionService.encrypt(string);
-			}
-			
-			public static  String decrypt(String string) {
-				return encryptionService.decrypt(string);
-			}
-		
-		
-		}
-		
-	'''
-	
-	def generateIEncryptionService() '''
-		package com.anfelisa.ace.encryption;
-		
-		import java.io.File;
-		
-		public interface IEncryptionService {
-			void initKey(File file);
-			String encrypt(String string);
-			String decrypt(String string);
-		}
-		
-	'''
-	
-	def generateKeystoreUtils() '''
-		package com.anfelisa.ace.encryption;
-		
-		import static org.apache.commons.codec.binary.Hex.decodeHex;
-		import static org.apache.commons.codec.binary.Hex.encodeHex;
-		import static org.apache.commons.io.FileUtils.readFileToByteArray;
-		import static org.apache.commons.io.FileUtils.writeStringToFile;
-		
-		import java.io.File;
-		import java.io.IOException;
-		import java.security.InvalidKeyException;
-		import java.security.NoSuchAlgorithmException;
-		
-		import javax.crypto.Cipher;
-		import javax.crypto.KeyGenerator;
-		import javax.crypto.NoSuchPaddingException;
-		import javax.crypto.SecretKey;
-		import javax.crypto.spec.SecretKeySpec;
-		
-		import org.apache.commons.codec.DecoderException;
-		
-		public class KeyStoreUtils {
-			public static final String ALGO = "AES";
-		
-			public static SecretKey generateKey() throws NoSuchAlgorithmException {
-				KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGO);
-				SecretKey key = keyGenerator.generateKey();
-				return key;
-			}
-		
-			public static void saveKey(SecretKey key, File file) throws IOException {
-				byte[] encoded = key.getEncoded();
-				char[] hex = encodeHex(encoded);
-				String data = String.valueOf(hex);
-				writeStringToFile(file, data);
-			}
-		
-			public static SecretKey loadKey(File file) throws IOException {
-				String data = new String(readFileToByteArray(file));
-				char[] hex = data.toCharArray();
-				byte[] encoded;
-				try {
-					encoded = decodeHex(hex);
-				} catch (DecoderException e) {
-					e.printStackTrace();
-					return null;
-				}
-				SecretKey key = new SecretKeySpec(encoded, ALGO);
-				return key;
-			}
-			
-			public static Cipher generateCipher(SecretKey key, int mode) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
-				Cipher cipher = Cipher.getInstance(ALGO);
-				cipher.init(mode, key);
-				return cipher;
-			}
-		}
-	'''
-	
-	def generateNoEncryption() '''
-		package com.anfelisa.ace.encryption;
-		
-		import java.io.File;
-		
-		public class NoEncryption implements IEncryptionService {
-		
-			public void initKey(File file) {
-			}
-		
-			public String encrypt(String string) {
-				return string;
-			}
-		
-			public String decrypt(String string) {
-				return string;
 			}
 		
 		}

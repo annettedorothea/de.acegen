@@ -204,6 +204,15 @@
 			</activeWhen>
 		</handler>
 	</extension>
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="ace"
+			id="com.anfelisa.Ace.contenttype"
+			name="Ace File"
+			priority="normal">
+		</content-type>
+	</extension>
 	<!-- adding resource factories -->
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
@@ -239,6 +248,15 @@
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="com.anfelisa.Ace"
+			class="com.anfelisa.ui.AceExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="com.anfelisa.Ace.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="com.anfelisa.ui.keyword_Ace"/>
+		</page>
 	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
@@ -388,12 +406,18 @@
 			class="com.anfelisa.ui.AceExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="ace">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="com.anfelisa.Ace.contenttype"
+			contentViewerId="com.anfelisa.Ace.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="com.anfelisa.Ace.compare.contentMergeViewers"
 			class="com.anfelisa.ui.AceExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="ace" label="Ace Compare">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="com.anfelisa.Ace.contenttype"
+			contentMergeViewerId="com.anfelisa.Ace.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="com.anfelisa.Ace.editors.documentProviders"
