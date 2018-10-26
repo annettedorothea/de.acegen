@@ -1003,7 +1003,7 @@ class JavaTemplate {
 				
 				Handle handle = jdbi.open();
 				try {
-					handle.getConnection().setAutoCommit(false);
+					handle.begin();
 					
 					daoProvider.getAceDao().truncateTimelineTable(handle);
 
@@ -1487,8 +1487,7 @@ class JavaTemplate {
 			protected abstract void loadDataForGetRequest();
 		
 			public Response apply() {
-				this.databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
-				Handle timelineHandle = null;
+				databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				databaseHandle.beginTransaction();
 				try {
 					if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -1538,9 +1537,6 @@ class JavaTemplate {
 					return Response.status(500).entity(x.getMessage()).build();
 				} finally {
 					databaseHandle.close();
-					if (timelineHandle != null) {
-						timelineHandle.close();
-					}
 				}
 			}
 		
@@ -1713,11 +1709,9 @@ class JavaTemplate {
 				try {
 					if (handle != null) {
 						this.handle = handle;
-						this.handle.getConnection().setAutoCommit(false);
 					}
 					if (timelineHandle != null) {
 						this.timelineHandle = timelineHandle;
-						this.timelineHandle.getConnection().setAutoCommit(false);
 					}
 				} catch (Exception e) {
 					LOG.error("failed to set auto commit off", e);
