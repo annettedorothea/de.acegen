@@ -630,6 +630,7 @@ class JavaTemplate {
 		package «project.name».views;
 		
 		import java.util.function.BiConsumer;
+		import com.anfelisa.ace.IDaoProvider;
 		
 		import org.jdbi.v3.core.Handle;
 		
