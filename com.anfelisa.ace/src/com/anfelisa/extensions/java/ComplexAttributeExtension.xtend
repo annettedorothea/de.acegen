@@ -1,4 +1,4 @@
-package com.anfelisa.extensions
+package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.ComplexAttribute
 import com.google.inject.Inject

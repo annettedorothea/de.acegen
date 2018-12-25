@@ -1,8 +1,8 @@
-package com.anfelisa.extensions
+package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Data
-import com.anfelisa.ace.Project
+import com.anfelisa.ace.JAVA
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
@@ -16,11 +16,11 @@ class DataExtension {
 	def String presentationalDataName(Data it) '''«name.toFirstUpper»PresentationalData'''
 	def String presentationalDataInterfaceName(Data it) '''I«name.toFirstUpper»PresentationalData'''
 	def String dataInterfaceName(Data it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
-	def String dataNameWithPackage(Data it) '''«(eContainer as Project).name».data.«name.toFirstUpper»Data'''
+	def String dataNameWithPackage(Data it) '''«(eContainer as JAVA).name».data.«name.toFirstUpper»Data'''
 	
 	def String dataImport(Data it) '''
 		«IF it !== null»
-			import «(eContainer as Project).name».data.«dataName»;
+			import «(eContainer as JAVA).name».data.«dataName»;
 		«ELSE»
 			import com.anfelisa.ace.IDataContainer;
 		«ENDIF»

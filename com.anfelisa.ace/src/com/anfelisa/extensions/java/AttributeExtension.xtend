@@ -1,8 +1,8 @@
-package com.anfelisa.extensions
+package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.Attribute
-import javax.inject.Inject
 import com.anfelisa.ace.PrimitiveAttribute
+import javax.inject.Inject
 
 class AttributeExtension {
 

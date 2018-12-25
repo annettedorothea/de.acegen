@@ -3,38 +3,91 @@ grammar com.anfelisa.Ace with org.eclipse.xtext.common.Terminals
 generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
-	name = QualifiedName
-	'target' target = ('ES6' | 'JAVA' | '.NET')
-	('ACE' '{'
-		(aceOperations += ACE)*
-	'}')?
-	('views' '{'
-		(views += View)*
-	'}')?
-	('models' '{'
-		'schema' schema = ID
-		(models += Model)*
-	'}')?
-	('data' '{'
-		(data += Data)*
-	'}')?
+	es6 = ES6 ?	| java = JAVA ?
 ;
 
-ACE: 
-	async ?= 'async'?
-	(type = FunctionType)? name = ID 
-	('uses' data = [ Data | QualifiedName ])?
-	('preUpdateUI' '(' (PreUpdateUI += [ViewFunction | QualifiedName])* ')')? 
-	('postUpdateUI' '(' (PostUpdateUI += [ViewFunction | QualifiedName])* ')')? 
+ES6: 
+	'ES6'
+		name = QualifiedName
+		('ACE' '{'
+			(aceOperations += ES6_ACE)*
+		'}')?
+		('views' '{'
+			(views += ES6_View)*
+		'}')?
+;
+
+ES6_ACE: 
+	name = ID 
+	('preCall' '(' (preCall += [ES6_ViewFunction | QualifiedName])* ')')? 
+	('call' '(' serverCall = [JAVA_ACE | QualifiedName] ')' )? 
+	('postCall' '(' (postCall += [ES6_ViewFunction | QualifiedName])* ')')? 
 	('{'
-		(outcomes += Outcome)*
+		(outcomes += ES6_Outcome)*
 	'}')*
 ;
 
-Outcome:
+ES6_Outcome:
 	'on' name = ID 
-	('(' (listeners += [ViewFunction | QualifiedName])* ')')? 
-	('triggers' '(' (aceOperations += [ACE | QualifiedName])* ')')? 
+	('(' (listeners += [ES6_ViewFunction | QualifiedName])* ')')? 
+	('triggers' '(' (aceOperations += [ES6_ACE | QualifiedName])* ')')? 
+;
+
+ES6_View: 
+	name = ID ('{'
+		(renderFunctions += ES6_ViewFunction)*
+	'}')*
+;
+
+ES6_ViewFunction:
+	name = ID
+;
+
+JAVA:
+	'JAVA'
+		name = QualifiedName
+		('ACE' '{'
+			(aceOperations += JAVA_ACE)*
+		'}')?
+		('views' '{'
+			(views += JAVA_View)*
+		'}')?
+		('models' '{'
+			'schema' schema = ID
+			(models += Model)*
+		'}')?
+		('data' '{'
+			(data += Data)*
+		'}')?
+;
+
+JAVA_ACE: 
+	type = FunctionType
+	url = STRING 
+	authorize ?= 'authorize'? 
+	('pathParams' '{' (pathParams += [PrimitiveAttribute | QualifiedName])* '}')?
+	('queryParams' '{' (queryParams += [PrimitiveAttribute | QualifiedName])* '}')?
+	('payload' '{' (payload = [Data | QualifiedName]) '}')?
+	name = ID 
+	'uses' data = [ Data | QualifiedName ]
+	('{'
+		(outcomes += JAVA_Outcome)*
+	'}')*
+;
+
+JAVA_Outcome:
+	'on' name = ID 
+	('(' (listeners += [JAVA_ViewFunction | QualifiedName])* ')')? 
+;
+
+JAVA_View: 
+	external ?= 'external'? name = ID ('{'
+		(renderFunctions += JAVA_ViewFunction)*
+	'}')*
+;
+
+JAVA_ViewFunction:
+	name = ID '(' data = [ Data | QualifiedName ] ')'
 ;
 
 Model:
@@ -65,16 +118,6 @@ Attribute:
 	complexAttribute = ComplexAttribute | primitiveAttribute = PrimitiveAttribute
 ;
 
-View: 
-	external ?= 'external'? name = ID ('{'
-		(renderFunctions += ViewFunction)*
-	'}')*
-;
-
-ViewFunction:
-	name = ID ('(' data = [ Data | QualifiedName ] ')')?
-;
-
 QualifiedName:
   ID ('.' ID)*
 ;
@@ -84,10 +127,14 @@ FunctionType:
 ;
 
 ModelType:
-	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' 
+	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' | 'AuthUser' 
 ;
 
 Constraint:
 	'NotEmpty' | 'NotNull'
+;
+
+Role: 
+	name = ID
 ;
 

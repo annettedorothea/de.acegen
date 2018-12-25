@@ -2,36 +2,81 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ace" nsURI="http://www.anfelisa.com/Ace" nsPrefix="ace">
   <eClassifiers xsi:type="ecore:EClass" name="Project">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="es6" eType="#//ES6" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="java" eType="#//JAVA" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
-        eType="#//ACE" containment="true"/>
+        eType="#//ES6_ACE" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="views" upperBound="-1"
-        eType="#//View" containment="true"/>
+        eType="#//ES6_View" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_ACE">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preCall" unique="false"
+        upperBound="-1" eType="#//ES6_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//JAVA_ACE"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postCall" unique="false"
+        upperBound="-1" eType="#//ES6_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
+        eType="#//ES6_Outcome" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_Outcome">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
+        upperBound="-1" eType="#//ES6_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
+        upperBound="-1" eType="#//ES6_ACE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_View">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
+        eType="#//ES6_ViewFunction" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_ViewFunction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
+        eType="#//JAVA_ACE" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="views" upperBound="-1"
+        eType="#//JAVA_View" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schema" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="models" upperBound="-1"
         eType="#//Model" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="data" upperBound="-1" eType="#//Data"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ACE">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="async" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_ACE">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authorize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathParams" unique="false"
+        upperBound="-1" eType="#//PrimitiveAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="queryParams" unique="false"
+        upperBound="-1" eType="#//PrimitiveAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payload" eType="#//Data"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="PreUpdateUI" unique="false"
-        upperBound="-1" eType="#//ViewFunction"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="PostUpdateUI" unique="false"
-        upperBound="-1" eType="#//ViewFunction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
-        eType="#//Outcome" containment="true"/>
+        eType="#//JAVA_Outcome" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Outcome">
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_Outcome">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
-        upperBound="-1" eType="#//ViewFunction"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
-        upperBound="-1" eType="#//ACE"/>
+        upperBound="-1" eType="#//JAVA_ViewFunction"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_View">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
+        eType="#//JAVA_ViewFunction" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_ViewFunction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -67,14 +112,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="primitiveAttribute" eType="#//PrimitiveAttribute"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="View">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Role">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
-        eType="#//ViewFunction" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ViewFunction">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//Data"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -1,4 +1,4 @@
-package com.anfelisa.extensions
+package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.Model
@@ -58,6 +58,7 @@ class PrimitiveAttributeExtension {
 		}'''
 	
 	def String getterCall(PrimitiveAttribute it) '''get«name.toFirstUpper»()'''
+	def String setterCall(PrimitiveAttribute it, String param) '''set«name.toFirstUpper»(«param»)'''
 	
 	def String setter(PrimitiveAttribute it) '''
 		public void set«name.toFirstUpper»(«javaType» «name») {

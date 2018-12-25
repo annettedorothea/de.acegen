@@ -1,9 +1,9 @@
-package com.anfelisa.extensions
+package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.Attribute
+import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.Model
 import com.anfelisa.ace.ModelRef
-import com.anfelisa.ace.Project
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
@@ -29,12 +29,12 @@ class ModelExtension {
 	
 	def String importModel(Model it) '''import «modelInterfaceWithPackage»;'''
 	
-	def String modelInterfaceWithPackage(Model it) '''«(eContainer as Project).name».models.«modelName»'''
+	def String modelInterfaceWithPackage(Model it) '''«(eContainer as JAVA).name».models.«modelName»'''
 	
 	def String modelGetAttribute(Model it, Attribute attribute) 
 	'''«IF attribute.type.equals("Encrypted")»EncryptionService.encrypt(«ENDIF» «modelParam».«attribute.getterCall» «IF attribute.type.equals("Encrypted")»)«ENDIF»'''
 	
-	def String modelAttributeSqlValue(Model it, Project project, Attribute attribute) 
+	def String modelAttributeSqlValue(Model it, Attribute attribute) 
 	''':«attribute.name.toLowerCase»'''
 	
 	def List<Attribute> allUniqueAttributes(Model it) {
