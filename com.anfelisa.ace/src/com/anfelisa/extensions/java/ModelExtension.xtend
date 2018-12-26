@@ -32,7 +32,7 @@ class ModelExtension {
 	def String modelInterfaceWithPackage(Model it) '''«(eContainer as JAVA).name».models.«modelName»'''
 	
 	def String modelGetAttribute(Model it, Attribute attribute) 
-	'''«IF attribute.type.equals("Encrypted")»EncryptionService.encrypt(«ENDIF» «modelParam».«attribute.getterCall» «IF attribute.type.equals("Encrypted")»)«ENDIF»'''
+	''' «modelParam».«attribute.getterCall» '''
 	
 	def String modelAttributeSqlValue(Model it, Attribute attribute) 
 	''':«attribute.name.toLowerCase»'''

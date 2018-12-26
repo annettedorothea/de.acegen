@@ -3,28 +3,21 @@ grammar com.anfelisa.Ace with org.eclipse.xtext.common.Terminals
 generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
-	es6 = ES6 ?	| java = JAVA ?
+	'ES6' es6 = ES6 ? | 'JAVA' java = JAVA ?
 ;
 
 ES6: 
-	'ES6'
-		name = QualifiedName
-		('ACE' '{'
-			(aceOperations += ES6_ACE)*
-		'}')?
-		('views' '{'
-			(views += ES6_View)*
-		'}')?
+	name = QualifiedName
+	('ACE' (aceOperations += ES6_ACE)*)?
+	('views' (views += ES6_View)* )?
 ;
 
 ES6_ACE: 
 	name = ID 
 	('preCall' '(' (preCall += [ES6_ViewFunction | QualifiedName])* ')')? 
-	('call' '(' serverCall = [JAVA_ACE | QualifiedName] ')' )? 
+	('call' serverCall = [JAVA_ACE | QualifiedName] )? 
 	('postCall' '(' (postCall += [ES6_ViewFunction | QualifiedName])* ')')? 
-	('{'
-		(outcomes += ES6_Outcome)*
-	'}')*
+	(outcomes += ES6_Outcome)*
 ;
 
 ES6_Outcome:
@@ -44,50 +37,49 @@ ES6_ViewFunction:
 ;
 
 JAVA:
-	'JAVA'
+	
 		name = QualifiedName
-		('ACE' '{'
-			(aceOperations += JAVA_ACE)*
-		'}')?
-		('views' '{'
-			(views += JAVA_View)*
-		'}')?
-		('models' '{'
-			'schema' schema = ID
-			(models += Model)*
-		'}')?
-		('data' '{'
-			(data += Data)*
-		'}')?
+		('Authorization' authUser = AuthUser)?
+		('import' authUserRef = [AuthUser | QualifiedName])?
+		('ACE' (aceOperations += JAVA_ACE)*	)?
+		('views' (views += JAVA_View)* )?
+		('models' 'schema' schema = ID (models += Model)*)?
+		('data' (data += Data)* )?
 ;
 
 JAVA_ACE: 
+	name = ID 
 	type = FunctionType
 	url = STRING 
 	authorize ?= 'authorize'? 
-	('pathParams' '{' (pathParams += [PrimitiveAttribute | QualifiedName])* '}')?
-	('queryParams' '{' (queryParams += [PrimitiveAttribute | QualifiedName])* '}')?
-	('payload' '{' (payload = [Data | QualifiedName]) '}')?
-	name = ID 
+	('pathParams' (pathParams += [PrimitiveAttribute | QualifiedName])*)?
+	('queryParams' (queryParams += [PrimitiveAttribute | QualifiedName])*)?
+	('payload' (payload += [PrimitiveAttribute | QualifiedName])*)?
 	'uses' data = [ Data | QualifiedName ]
-	('{'
-		(outcomes += JAVA_Outcome)*
-	'}')*
+	(outcomes += JAVA_Outcome)*
 ;
 
 JAVA_Outcome:
 	'on' name = ID 
-	('(' (listeners += [JAVA_ViewFunction | QualifiedName])* ')')? 
+	('('(listeners += [JAVA_ViewFunction | QualifiedName])*')')* 
 ;
 
 JAVA_View: 
-	external ?= 'external'? name = ID ('{'
+	external ?= 'external'? name = ID 
+	('{'
 		(renderFunctions += JAVA_ViewFunction)*
-	'}')*
+	'}')?		
 ;
 
 JAVA_ViewFunction:
 	name = ID '(' data = [ Data | QualifiedName ] ')'
+;
+
+AuthUser: 
+	name = ID
+	 ('{'
+		attributes += Attribute*
+	'}')
 ;
 
 Model:
@@ -127,7 +119,7 @@ FunctionType:
 ;
 
 ModelType:
-	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' | 'AuthUser' 
+	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
 ;
 
 Constraint:

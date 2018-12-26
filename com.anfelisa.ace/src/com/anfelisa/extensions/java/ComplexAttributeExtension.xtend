@@ -15,19 +15,20 @@ class ComplexAttributeExtension {
 	
 	def String javaType(ComplexAttribute it) '''«IF list»java.util.List<«ENDIF»«model.modelInterfaceWithPackage»«IF list»>«ENDIF»'''
 
-	def String param(ComplexAttribute it) '''@JsonProperty("«name»") «javaType» «name»'''
+	def String param(ComplexAttribute it, boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
 
 	def String name(ComplexAttribute it) '''«model.modelName»«IF list»List«ENDIF»'''
 	
 	def String interfaceGetter(ComplexAttribute it) '''«javaType» get«name.toFirstUpper»();'''
 	
-	def String getter(ComplexAttribute it) '''
-		@JsonProperty
+	def String getter(ComplexAttribute it, boolean jsonProperty) '''
+		«IF jsonProperty»@JsonProperty«ENDIF»
 		public «javaType» get«name.toFirstUpper»() {
 			return this.«name»;
 		}'''
 	
 	def String getterCall(ComplexAttribute it) '''get«name.toFirstUpper»()'''
+	def String setterCall(ComplexAttribute it, String param) '''set«name.toFirstUpper»(«param»)'''
 	
 	def String setter(ComplexAttribute it) '''
 		public void set«name.toFirstUpper»(«javaType» «name») {

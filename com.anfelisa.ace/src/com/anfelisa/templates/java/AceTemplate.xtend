@@ -1,9 +1,14 @@
 package com.anfelisa.templates.java
 
-import com.anfelisa.ace.JAVA
+import com.anfelisa.ace.AuthUser
+import com.anfelisa.extensions.java.AttributeExtension
+import javax.inject.Inject
 
 class AceTemplate {
 
+	@Inject
+	extension AttributeExtension
+	
 	def generateApp() '''
 		package com.anfelisa.ace;
 		
@@ -1082,12 +1087,32 @@ class AceTemplate {
 
 	'''
 
-	def generateAuthUser(JAVA it) '''
+	def generateAuthUser(AuthUser it) '''
 		package com.anfelisa.auth;
 		
 		import java.security.Principal;
 		
-		public class AuthUser implements Principal {
+		public class «name.toFirstUpper» implements Principal {
+		
+			«FOR attribute : attributes»
+				«attribute.declaration»
+				
+			«ENDFOR»
+		
+			public «name.toFirstUpper» (
+				«FOR attribute : attributes SEPARATOR ','»
+					«attribute.param(false)»
+				«ENDFOR»
+			) {
+				«FOR attribute : attributes»
+					«attribute.assign»
+				«ENDFOR»
+			}
+		
+			«FOR attribute : attributes»
+				«attribute.getter(false)»
+				
+			«ENDFOR»
 			public String getName() {
 				return "AuthUser";
 			}

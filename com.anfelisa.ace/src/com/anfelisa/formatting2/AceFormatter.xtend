@@ -3,13 +3,7 @@
  */
 package com.anfelisa.formatting2
 
-import org.eclipse.xtext.formatting2.AbstractFormatter2
-import org.eclipse.xtext.formatting2.IFormattableDocument
+class AceFormatter  {
 
-class AceFormatter extends AbstractFormatter2 {
-	
-	override format(Object arg0, IFormattableDocument arg1) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
 
 }

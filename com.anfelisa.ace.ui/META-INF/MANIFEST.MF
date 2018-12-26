@@ -23,3 +23,4 @@ Export-Package: com.anfelisa.ui.quickfix,
  com.anfelisa.ui.contentassist,
  com.anfelisa.ace.ui.internal
 Bundle-Activator: com.anfelisa.ace.ui.internal.AceActivator
+Automatic-Module-Name: com.anfelisa.ace.ui

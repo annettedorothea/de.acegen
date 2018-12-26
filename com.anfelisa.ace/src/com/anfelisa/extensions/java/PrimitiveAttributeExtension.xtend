@@ -14,26 +14,29 @@ class PrimitiveAttributeExtension {
 		«IF constraint !== null»
 			@«constraint»
 		«ENDIF»
-		private «javaType» «name»«IF type.equals('Boolean')» = false«ENDIF»;
+		private «javaType» «name.toFirstLower»«IF type.equals('Boolean')» = false«ENDIF»;
 	'''
 	
-	def String javaType(PrimitiveAttribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»org.joda.time.DateTime«ELSEIF type.equals('Encrypted')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
+	def String javaType(PrimitiveAttribute it) '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»'''
 
 	def String sqlType(PrimitiveAttribute it) {
 		switch type {
       		case 'Integer' : "integer"
       		case 'Long' : "bigint"
       		case 'String' : "character varying"
-      		case 'Encrypted' : "character varying"
       		case 'Float' : "numeric"
       		case 'Boolean' : "boolean"
       		case 'DateTime' : "timestamp with time zone"
     	}
 	}
 	
-	def String mapperInit(PrimitiveAttribute it) '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSEIF type.equals("Encrypted")»EncryptionService.decrypt(r.getString("«name»"))«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+	def String mapperInit(PrimitiveAttribute it) '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 
-	def String param(PrimitiveAttribute it) '''@JsonProperty("«name»") «javaType» «name»'''
+	def String param(PrimitiveAttribute it, boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
+	
+	def String resourceParamType(PrimitiveAttribute it) '''«IF type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
+	
+	def String resourceParam(PrimitiveAttribute it) '''«IF type.equals('DateTime')»new DateTime(«name»).withZone(DateTimeZone.UTC)«ELSE»«name»«ENDIF»'''
 	
 	def String bind(PrimitiveAttribute it, String modelName) '''
 		statement.bind("«name»", «modelName».get«name.toFirstUpper»());
@@ -51,8 +54,8 @@ class PrimitiveAttributeExtension {
 
 	def String interfaceGetter(PrimitiveAttribute it) '''«javaType» get«name.toFirstUpper»();'''
 	
-	def String getter(PrimitiveAttribute it) '''
-		@JsonProperty
+	def String getter(PrimitiveAttribute it, boolean jsonProperty) '''
+		«IF jsonProperty»@JsonProperty«ENDIF»
 		public «javaType» get«name.toFirstUpper»() {
 			return this.«name»;
 		}'''

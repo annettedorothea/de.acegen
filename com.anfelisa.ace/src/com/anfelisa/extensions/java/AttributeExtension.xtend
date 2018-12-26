@@ -78,12 +78,12 @@ class AttributeExtension {
 		}	
 	}
 	
-	def String param(Attribute it) {
+	def String param(Attribute it, boolean jsonProperty) {
 		if (primitiveAttribute !== null) {
-			return primitiveAttribute.param;
+			return primitiveAttribute.param(jsonProperty);
 		}	
 		if (complexAttribute !== null) {
-			return complexAttribute.param;
+			return complexAttribute.param(jsonProperty);
 		}	
 	}
 	
@@ -105,12 +105,12 @@ class AttributeExtension {
 		}	
 	}
 	
-	def String getter(Attribute it) {
+	def String getter(Attribute it, boolean jsonProperty) {
 		if (primitiveAttribute !== null) {
-			return primitiveAttribute.getter;
+			return primitiveAttribute.getter(jsonProperty);
 		}	
 		if (complexAttribute !== null) {
-			return complexAttribute.getter;
+			return complexAttribute.getter(jsonProperty);
 		}	
 	}
 	
@@ -120,6 +120,15 @@ class AttributeExtension {
 		}	
 		if (complexAttribute !== null) {
 			return complexAttribute.setter;
+		}	
+	}
+	
+	def String setterCall(Attribute it, String param) {
+		if (primitiveAttribute !== null) {
+			return primitiveAttribute.setterCall(param);
+		}	
+		if (complexAttribute !== null) {
+			return complexAttribute.setterCall(param);
 		}	
 	}
 	

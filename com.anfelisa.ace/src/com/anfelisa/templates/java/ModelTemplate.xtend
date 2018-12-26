@@ -24,7 +24,6 @@ class ModelTemplate {
 		package «java.name».models;
 		
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-		import com.anfelisa.auth.AuthUser;
 		
 		@JsonDeserialize(as=«modelClassName».class)
 		public interface «modelName» {
@@ -44,7 +43,6 @@ class ModelTemplate {
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
-		import com.anfelisa.auth.AuthUser;
 
 		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
@@ -56,7 +54,7 @@ class ModelTemplate {
 		
 			public «modelClassName»(
 				«FOR attribute : attributes SEPARATOR ','»
-					«attribute.param»
+					«attribute.param(true)»
 				«ENDFOR»
 			) {
 				«FOR attribute : attributes»
@@ -65,7 +63,7 @@ class ModelTemplate {
 			}
 		
 			«FOR attribute : attributes»
-				«attribute.getter»
+				«attribute.getter(true)»
 				«attribute.setter»
 				
 			«ENDFOR»
@@ -103,7 +101,6 @@ class ModelTemplate {
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
-		import com.anfelisa.auth.AuthUser;
 		
 		import com.anfelisa.ace.AbstractData;
 		
@@ -116,7 +113,7 @@ class ModelTemplate {
 		
 			public «dataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
-					«attribute.param»
+					«attribute.param(true)»
 				«ENDFOR»
 				@JsonProperty("uuid") String uuid
 			) {
@@ -133,7 +130,7 @@ class ModelTemplate {
 			«ENDIF»
 		
 			«FOR attribute : allAttributes»
-				«attribute.getter»
+				«attribute.getter(true)»
 				«attribute.setter»
 				«attribute.initializer(dataName)»
 				
@@ -219,7 +216,6 @@ class ModelTemplate {
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
-		import com.anfelisa.auth.AuthUser;
 		
 		import com.anfelisa.ace.IDataContainer;
 		
@@ -237,7 +233,7 @@ class ModelTemplate {
 			
 			public «presentationalDataName»(
 				«FOR attribute : allAttributes SEPARATOR ','»
-					«attribute.param»
+					«attribute.param(true)»
 				«ENDFOR»
 			) {
 				«FOR attribute : allAttributes»
@@ -247,7 +243,7 @@ class ModelTemplate {
 			}
 		
 			«FOR attribute : allAttributes»
-				«attribute.getter»
+				«attribute.getter(true)»
 				«attribute.setter»
 				«attribute.initializer(presentationalDataName)»
 				

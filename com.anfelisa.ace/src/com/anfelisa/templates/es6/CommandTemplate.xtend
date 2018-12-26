@@ -52,7 +52,7 @@ class CommandTemplate {
 			execute() {
 			    return new Promise((resolve, reject) => {
 			    	«initQueryParams»
-					this.«httpCall»("«httpUrl»", «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF serverCall.payload !== null», this.commandData«ENDIF»).then((data) => {
+					this.«httpCall»("«httpUrl»", «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF serverCall.type == "POST" || serverCall.type == "PUT"», this.commandData«ENDIF»).then((data) => {
 						this.handleResponse(data);
 					    resolve();
 					}, (error) => {

@@ -32,7 +32,7 @@ class DataExtension {
 		val attrs = new ArrayList<Attribute>();
 		for (model : models) {
 			for (attribute : model.model.attributes) {
-				if (!contains(attribute, attrs)) {
+				if (!attrs.containsAttribute(attribute)) {
 					attrs.add(attribute)
 				}
 			}
@@ -40,11 +40,11 @@ class DataExtension {
 		return attrs;
 	}
 	
-	private def boolean contains(Attribute attribute, List<Attribute> attributes) {
-		if (attributes.size == 0) {
+	def boolean containsAttribute(List<Attribute> it, Attribute attribute) {
+		if (size == 0) {
 			return false
 		} else {
-			for (attr : attributes) {
+			for (attr : it) {
 				if (attr.name.equals(attribute.name)) {
 					return true
 				}

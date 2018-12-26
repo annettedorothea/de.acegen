@@ -28,3 +28,4 @@ Export-Package: com.anfelisa.scoping,
  com.anfelisa.ace.impl,
  com.anfelisa.formatting2
 Import-Package: org.apache.log4j
+Automatic-Module-Name: com.anfelisa.ace

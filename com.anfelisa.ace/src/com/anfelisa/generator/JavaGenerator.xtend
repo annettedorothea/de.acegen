@@ -46,6 +46,10 @@ class JavaGenerator {
 	extension AceExtension
 
 	def void doGenerate(JAVA java, IFileSystemAccess2 fsa) {
+		var authUser = java.authUser
+		if (authUser === null) {
+			authUser = java.authUserRef
+		}
 		for (model : java.models) {
 			fsa.generateFile(java.packageFolder + '/models/' + model.modelName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateModel(model, java));
@@ -76,7 +80,7 @@ class JavaGenerator {
 		for (ace : java.aceOperations) {
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-				actionTemplate.generateAbstractActionFile(ace, java));
+				actionTemplate.generateAbstractActionFile(ace, java, authUser));
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.actionName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 				actionTemplate.generateInitialActionFile(ace, java));
@@ -175,8 +179,10 @@ class JavaGenerator {
 		fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 			aceTemplate.generateAceMigration());
 
-		fsa.generateFile('com/anfelisa/auth/AuthUser.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-			aceTemplate.generateAuthUser(java));
+		if (authUser !== null) {
+			fsa.generateFile('com/anfelisa/auth/' + authUser.name.toFirstUpper + '.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+				aceTemplate.generateAuthUser(authUser));
+		}
 
 	}
 

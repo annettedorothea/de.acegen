@@ -1,11 +1,13 @@
 package com.anfelisa.templates.java
 
+import com.anfelisa.ace.AuthUser
 import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.JAVA_Outcome
 import com.anfelisa.ace.JAVA_View
 import com.anfelisa.ace.JAVA_ViewFunction
 import com.anfelisa.extensions.java.AceExtension
+import com.anfelisa.extensions.java.AttributeExtension
 import com.anfelisa.extensions.java.DataExtension
 import com.anfelisa.extensions.java.JavaExtension
 import com.anfelisa.extensions.java.PrimitiveAttributeExtension
@@ -29,7 +31,10 @@ class ActionTemplate {
 	@Inject
 	extension PrimitiveAttributeExtension
 
-	def generateAbstractActionFile(JAVA_ACE it, JAVA java) '''
+	@Inject
+	extension AttributeExtension
+
+	def generateAbstractActionFile(JAVA_ACE it, JAVA java, AuthUser authUser) '''
 		package «java.name».actions;
 		
 		import javax.validation.constraints.NotNull;
@@ -44,6 +49,7 @@ class ActionTemplate {
 		import javax.ws.rs.core.Response;
 		import javax.ws.rs.QueryParam;
 		import javax.ws.rs.PathParam;
+		import io.dropwizard.auth.Auth;
 		
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
@@ -64,6 +70,9 @@ class ActionTemplate {
 		import com.anfelisa.ace.HttpMethod;
 		import com.anfelisa.ace.ICommand;
 		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		«IF authorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		
 		«data.dataImport»
 		
@@ -106,14 +115,31 @@ class ActionTemplate {
 			«IF type !== null && type == "GET"»@Produces(MediaType.APPLICATION_JSON)«ELSE»@Produces(MediaType.TEXT_PLAIN)«ENDIF»
 			@Consumes(MediaType.APPLICATION_JSON)
 			public Response «resourceName.toFirstLower»(
-					«FOR param : queryParams»@QueryParam("«param.name»") «param.type» «param.name», «ENDFOR»
-					«FOR param : pathParams»@PathParam("«param.name»") «param.type» «param.name», «ENDFOR»
-					«IF payload !== null»«payload.dataParamType» «payload.name», «ENDIF»
-					@NotNull @QueryParam("uuid") String uuid) throws JsonProcessingException {
-				«IF payload !== null»this.actionData = «payload.name»;«ENDIF»
-				«IF payload === null»this.actionData = new «data.dataParamType»(uuid);«ENDIF»
-				«FOR param : queryParams»this.actionData.«param.setterCall(param.name)»;«ENDFOR»
-				«FOR param : pathParams»this.actionData.«param.setterCall(param.name)»;«ENDFOR»
+					«IF authorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
+					«FOR param : queryParams»
+						@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
+					«ENDFOR»
+					«FOR param : pathParams»
+						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
+					«ENDFOR»
+					«IF payload !== null»@NotNull «data.dataParamType» payload)
+					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
+					throws JsonProcessingException {
+				this.actionData = new «data.dataParamType»(«IF payload !== null»payload.getUuid()«ELSE»uuid«ENDIF»);
+				«FOR param : queryParams»
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				«ENDFOR»
+				«FOR param : pathParams»
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				«ENDFOR»
+				«FOR attribute : payload»
+					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+				«ENDFOR»
+				«IF authorize && authUser !== null»
+					«FOR param : data.allAttributes»
+						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
+					«ENDFOR»
+				«ENDIF»
 				return this.apply();
 			}
 		}
