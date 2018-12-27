@@ -3,7 +3,6 @@ package com.anfelisa.extensions.java
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.Model
-import com.anfelisa.ace.ModelRef
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
@@ -27,9 +26,9 @@ class ModelExtension {
 	
 	def String table(Model it) '''«name.toLowerCase»'''
 	
-	def String importModel(Model it) '''import «modelInterfaceWithPackage»;'''
+	def String importModel(Model it) '''import «interfaceWithPackage»;'''
 	
-	def String modelInterfaceWithPackage(Model it) '''«(eContainer as JAVA).name».models.«modelName»'''
+	def String interfaceWithPackage(Model it) '''«(eContainer as JAVA).name».models.«modelName»'''
 	
 	def String modelGetAttribute(Model it, Attribute attribute) 
 	''' «modelParam».«attribute.getterCall» '''
@@ -58,27 +57,75 @@ class ModelExtension {
 			this.«modelListAttributeName» = «modelListAttributeName»;
 		}'''
 	
-	def String interfaceGetter(ModelRef it) '''«interfaceWithPackage» get«modelRefToUpper»();'''
+	def String interfaceGetter(Model it) '''«interfaceWithPackage» get«modelRefToUpper»();'''
 	
-	def String declaration(ModelRef it) '''
+	def String declaration(Model it) '''
 		private «interfaceWithPackage» «modelRefToLower»;
 	'''
 	
-	def String interfaceWithPackage(ModelRef it) '''«model.modelInterfaceWithPackage»'''
-	
-	def String getter(ModelRef it) '''
+	def String getter(Model it) '''
 		@JsonProperty
 		public «interfaceWithPackage» get«modelRefToUpper»() {
 			return this.«modelRefToLower»;
 		}'''
 	
-	def String setter(ModelRef it) '''
+	def String setter(Model it) '''
 		public void set«modelRefToUpper»(«interfaceWithPackage» «modelRefToLower») {
 			this.«modelRefToLower» = «modelRefToLower»;
 		}'''
 	
-	def String modelRefToLower(ModelRef it) '''«model.name.toFirstLower»'''
+	def List<Attribute> allAttributes(Model it) {
+		val attrs = new ArrayList<Attribute>();
+		allAttributesRec(attrs);
+		return attrs;
+	}
 	
-	def String modelRefToUpper(ModelRef it) '''«model.name.toFirstUpper»'''
+	def void allAttributesRec(Model it, List<Attribute> attrs) {
+		for (attribute : attributes) {
+			if (!attrs.containsAttribute(attribute)) {
+				attrs.add(attribute)
+			}
+		}
+		for(superModel : superModels) {
+			superModel.allAttributesRec(attrs);
+		}
+	}
+	
+	def String modelRefToLower(Model it) '''«name.toFirstLower»'''
+	
+	def String modelRefToUpper(Model it) '''«name.toFirstUpper»'''
+	
+		def String dataName(Model it) '''«IF it !== null»«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
+	def String dataInterfaceName(Model it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
+	def String dataNameWithPackage(Model it) '''«(eContainer as JAVA).name».data.«name.toFirstUpper»Data'''
+	
+	def String dataImport(Model it) '''
+		«IF it !== null»
+			import «(eContainer as JAVA).name».data.«dataName»;
+		«ELSE»
+			import com.anfelisa.ace.IDataContainer;
+		«ENDIF»
+	'''
+	
+	def String dataParamType(Model it) '''«IF it !== null»«dataName»«ELSE»IDataContainer«ENDIF»'''
+	
+	def boolean containsAttribute(List<Attribute> it, Attribute attribute) {
+		if (size == 0) {
+			return false
+		} else {
+			for (attr : it) {
+				if (attr.name.equals(attribute.name)) {
+					return true
+				}
+			}
+		}
+	}
+	
+	def newFromCommandData(Model it) '''new «dataNameWithPackage»(
+			«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
+				this.commandData.«attribute.getterCall»
+			«ENDFOR»
+			this.commandData.getUuid()
+		)'''
 	
 }

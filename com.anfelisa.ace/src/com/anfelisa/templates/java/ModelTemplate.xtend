@@ -1,11 +1,10 @@
 package com.anfelisa.templates.java
 
-import com.anfelisa.ace.Attribute
-import com.anfelisa.ace.Data
 import com.anfelisa.ace.JAVA
+import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.Model
+import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.AttributeExtension
-import com.anfelisa.extensions.java.DataExtension
 import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
 
@@ -15,10 +14,10 @@ class ModelTemplate {
 	extension ModelExtension
 	
 	@Inject
-	extension DataExtension
+	extension AttributeExtension
 	
 	@Inject
-	extension AttributeExtension
+	extension AceExtension
 	
 	def generateModel(Model it, JAVA java) '''
 		package «java.name».models;
@@ -26,7 +25,7 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		@JsonDeserialize(as=«modelClassName».class)
-		public interface «modelName» {
+		public interface «modelName» «IF superModels.size > 0»extends «FOR superModel : superModels SEPARATOR ','»«superModel.interfaceWithPackage»«ENDFOR»«ENDIF»{
 		
 			«FOR attribute : attributes»
 				«attribute.interfaceGetter»
@@ -47,22 +46,22 @@ class ModelTemplate {
 		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
 		
-			«FOR attribute : attributes»
+			«FOR attribute : allAttributes»
 				«attribute.declaration»
 				
 			«ENDFOR»
 		
 			public «modelClassName»(
-				«FOR attribute : attributes SEPARATOR ','»
+				«FOR attribute : allAttributes SEPARATOR ','»
 					«attribute.param(true)»
 				«ENDFOR»
 			) {
-				«FOR attribute : attributes»
+				«FOR attribute : allAttributes»
 					«attribute.assign»
 				«ENDFOR»
 			}
 		
-			«FOR attribute : attributes»
+			«FOR attribute : allAttributes»
 				«attribute.getter(true)»
 				«attribute.setter»
 				
@@ -73,26 +72,24 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateDataInterface(Data it, JAVA java) '''
+	def generateDataInterface(Model it, JAVA java) '''
 		package «java.name».data;
 		
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		import com.anfelisa.ace.IDataContainer;
 		
-		«FOR model : models»
-			«model.model.importModel»
-		«ENDFOR»
+		«importModel»
 		
 		@JsonDeserialize(as=«dataName».class)
-		public interface «dataInterfaceName» extends «FOR modelRef : models SEPARATOR ', ' AFTER ','»«modelRef.model.modelName»«ENDFOR» IDataContainer {
+		public interface «dataInterfaceName» extends «modelName», IDataContainer {
 		
 		}
 		
 		/*       S.D.G.       */
 	'''
 	
-	def generateData(Data it, JAVA java) '''
+	def generateData(Model it, JAVA java) '''
 		package «java.name».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
@@ -132,19 +129,8 @@ class ModelTemplate {
 			«FOR attribute : allAttributes»
 				«attribute.getter(true)»
 				«attribute.setter»
-				«attribute.initializer(dataName)»
 				
 			«ENDFOR»
-		
-			@Override
-			public Object toPresentationalData() {
-				return new «presentationalDataName»(
-					«FOR attribute : allAttributes SEPARATOR ','»
-						this.«attribute.name»
-					«ENDFOR»
-				);
-			}
-
 		}
 		
 		/*       S.D.G.       */
@@ -206,7 +192,7 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generatePresentationalData(Data it, JAVA java) '''
+	def generateResponseData(JAVA_ACE it, JAVA java) '''
 		package «java.name».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
@@ -219,33 +205,21 @@ class ModelTemplate {
 		
 		import com.anfelisa.ace.IDataContainer;
 		
-		«FOR model : models»
-			«model.model.importModel»
-		«ENDFOR»
-		
 		@SuppressWarnings("all")
-		public class «presentationalDataName» implements «presentationalDataInterfaceName» {
+		public class «responseDataName» implements «responseDataInterfaceName» {
 			
-			«FOR attribute : allAttributes»
+			«FOR attribute : response»
 				«attribute.declaration»
 				
 			«ENDFOR»
-			
-			public «presentationalDataName»(
-				«FOR attribute : allAttributes SEPARATOR ','»
-					«attribute.param(true)»
+			public «responseDataName»(«model.interfaceWithPackage» data) {
+				«FOR attribute : response»
+					«attribute.name» = data.«attribute.getterCall»;
 				«ENDFOR»
-			) {
-				«FOR attribute : allAttributes»
-					«attribute.assign»
-				«ENDFOR»
-				
 			}
-		
-			«FOR attribute : allAttributes»
+			
+			«FOR attribute : response»
 				«attribute.getter(true)»
-				«attribute.setter»
-				«attribute.initializer(presentationalDataName)»
 				
 			«ENDFOR»
 		}
@@ -253,14 +227,14 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generatePresentationalInterfaceData(Data it, JAVA java) '''
+	def generatePresentationalInterfaceData(JAVA_ACE it, JAVA java) '''
 		package «java.name».data;
 		
-		«FOR model : models»
-			«model.model.importModel»
-		«ENDFOR»
-		
-		public interface «presentationalDataInterfaceName» «IF models.size > 0»extends «FOR modelRef : models SEPARATOR ', '»«modelRef.model.modelName»«ENDFOR»«ENDIF» {
+		public interface «responseDataInterfaceName» {
+			«FOR attribute : response»
+				«attribute.interfaceGetter»
+				
+			«ENDFOR»
 		
 		}
 		
@@ -337,7 +311,7 @@ class ModelTemplate {
 		<createTable tableName="«table»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«(attribute.foreignKey.eContainer as Attribute).tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«table»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«table»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>
@@ -357,7 +331,7 @@ class ModelTemplate {
 			
 			public «modelName» map(ResultSet r, StatementContext ctx) throws SQLException {
 				return new «modelClassName»(
-					«FOR attribute : attributes SEPARATOR ','»
+					«FOR attribute : allAttributes SEPARATOR ','»
 						«attribute.mapperInit»
 					«ENDFOR»
 				);
@@ -383,15 +357,11 @@ class ModelTemplate {
 		
 			public DatabaseHandle(Handle handle, Handle timelineHandle) {
 				super();
-				try {
-					if (handle != null) {
-						this.handle = handle;
-					}
-					if (timelineHandle != null) {
-						this.timelineHandle = timelineHandle;
-					}
-				} catch (Exception e) {
-					LOG.error("failed to set auto commit off", e);
+				if (handle != null) {
+					this.handle = handle;
+				}
+				if (timelineHandle != null) {
+					this.timelineHandle = timelineHandle;
 				}
 			}
 		
@@ -459,8 +429,6 @@ class ModelTemplate {
 			DateTime getSystemTime();
 			
 			void setSystemTime(DateTime systemTime);
-		
-			Object toPresentationalData();
 		
 		}
 		

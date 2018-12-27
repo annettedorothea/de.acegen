@@ -2,7 +2,6 @@ package com.anfelisa.generator
 
 import com.anfelisa.ace.JAVA
 import com.anfelisa.extensions.java.AceExtension
-import com.anfelisa.extensions.java.DataExtension
 import com.anfelisa.extensions.java.JavaExtension
 import com.anfelisa.extensions.java.ModelExtension
 import com.anfelisa.extensions.java.ViewExtension
@@ -40,9 +39,6 @@ class JavaGenerator {
 	extension ModelExtension
 
 	@Inject
-	extension DataExtension
-
-	@Inject
 	extension AceExtension
 
 	def void doGenerate(JAVA java, IFileSystemAccess2 fsa) {
@@ -64,18 +60,10 @@ class JavaGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 					modelTemplate.generateMigration(model, java));
 			}
-		}
-		for (data : java.data) {
-			fsa.generateFile(java.packageFolder + '/data/' + data.dataInterfaceName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDataInterface(data, java));
-			fsa.generateFile(java.packageFolder + '/data/' + data.dataName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(data, java));
-			fsa.generateFile(java.packageFolder + '/data/' + data.presentationalDataName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-				modelTemplate.generatePresentationalData(data, java));
-			fsa.generateFile(java.packageFolder + '/data/' + data.presentationalDataInterfaceName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-				modelTemplate.generatePresentationalInterfaceData(data, java));
+			fsa.generateFile(java.packageFolder + '/data/' + model.dataInterfaceName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDataInterface(model, java));
+			fsa.generateFile(java.packageFolder + '/data/' + model.dataName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
 		}
 		for (ace : java.aceOperations) {
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
@@ -98,6 +86,13 @@ class JavaGenerator {
 							eventTemplate.generateAbstractEventFile(ace, outcome, java));
 					}
 				}
+			} else {
+				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataName + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					modelTemplate.generateResponseData(ace, java));
+				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataInterfaceName + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					modelTemplate.generatePresentationalInterfaceData(ace, java));
 			}
 		}
 		for (view : java.views) {

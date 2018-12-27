@@ -5,7 +5,7 @@ import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.JAVA_Outcome
 import com.anfelisa.ace.JAVA_View
 import com.anfelisa.extensions.java.AceExtension
-import com.anfelisa.extensions.java.DataExtension
+import com.anfelisa.extensions.java.ModelExtension
 import com.anfelisa.extensions.java.ViewExtension
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ class EventTemplate {
 	extension ViewExtension
 
 	@Inject
-	extension DataExtension
+	extension ModelExtension
 
 	def generateAbstractEventFile(JAVA_ACE it, JAVA_Outcome outcome, JAVA java) '''
 		package «java.name».events;
@@ -29,11 +29,11 @@ class EventTemplate {
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
-		«data.dataImport»
+		«model.dataImport»
 		
-		public class «eventName(outcome)» extends Event<«data.dataParamType»> {
+		public class «eventName(outcome)» extends Event<«model.dataParamType»> {
 		
-			public «eventName(outcome)»(«data.dataParamType» eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «eventName(outcome)»(«model.dataParamType» eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«java.name».events.«eventName(outcome)»", eventData, databaseHandle, daoProvider, viewProvider);
 			}
 			
@@ -43,7 +43,7 @@ class EventTemplate {
 			
 			public void initEventData(String json) {
 				try {
-					this.eventData = mapper.readValue(json, «data.dataParamType».class);
+					this.eventData = mapper.readValue(json, «model.dataParamType».class);
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				}
@@ -64,7 +64,7 @@ class EventTemplate {
 		
 		import com.anfelisa.ace.IDataContainer;
 		«FOR renderFunction : renderFunctions»
-			«renderFunction.data.dataImport»
+			«renderFunction.model.dataImport»
 		«ENDFOR»
 		
 		@SuppressWarnings("all")
@@ -78,7 +78,7 @@ class EventTemplate {
 			}
 		
 			«FOR renderFunction : renderFunctions»
-				public BiConsumer<«renderFunction.data.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
+				public BiConsumer<«renderFunction.model.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
 				};
 			«ENDFOR»
 		

@@ -3,7 +3,7 @@ package com.anfelisa.templates.java
 import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.extensions.java.AceExtension
-import com.anfelisa.extensions.java.DataExtension
+import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class CommandTemplate {
@@ -11,7 +11,7 @@ class CommandTemplate {
 	extension AceExtension
 
 	@Inject
-	extension DataExtension
+	extension ModelExtension
 
 	def generateAbstractCommandFile(JAVA_ACE it, JAVA java) '''
 		package «java.name».commands;
@@ -23,15 +23,15 @@ class CommandTemplate {
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
-		«data.dataImport»
+		«model.dataImport»
 		
-		public abstract class «abstractCommandName» extends Command<«data.dataParamType»> {
+		public abstract class «abstractCommandName» extends Command<«model.dataParamType»> {
 		
 			«FOR outcome : outcomes»
 				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(«data.dataParamType» commandParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractCommandName»(«model.dataParamType» commandParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«java.name».commands.«commandName»", commandParam, databaseHandle, daoProvider, viewProvider);
 			}
 		
@@ -56,7 +56,7 @@ class CommandTemplate {
 			
 			public void initCommandData(String json) {
 				try {
-					this.commandData = mapper.readValue(json, «data.dataParamType».class);
+					this.commandData = mapper.readValue(json, «model.dataParamType».class);
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				}
@@ -77,13 +77,13 @@ class CommandTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		«data.dataImport»
+		«model.dataImport»
 		
 		public class «commandName» extends «abstractCommandName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 		
-			public «commandName»(«data.dataParamType» commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «commandName»(«model.dataParamType» commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 			super(commandData, databaseHandle, daoProvider, viewProvider);
 			}
 		

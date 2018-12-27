@@ -3,7 +3,7 @@ grammar com.anfelisa.Ace with org.eclipse.xtext.common.Terminals
 generate ace "http://www.anfelisa.com/Ace"
 
 Project: 
-	'ES6' es6 = ES6 ? | 'JAVA' java = JAVA ?
+	{Project} 'ES6' es6 = ES6 ? | 'JAVA' java = JAVA ?
 ;
 
 ES6: 
@@ -37,25 +37,23 @@ ES6_ViewFunction:
 ;
 
 JAVA:
-	
-		name = QualifiedName
-		('Authorization' authUser = AuthUser)?
-		('import' authUserRef = [AuthUser | QualifiedName])?
-		('ACE' (aceOperations += JAVA_ACE)*	)?
-		('views' (views += JAVA_View)* )?
-		('models' 'schema' schema = ID (models += Model)*)?
-		('data' (data += Data)* )?
+	name = QualifiedName
+	('Authorization' authUser = AuthUser)?
+	('import' authUserRef = [AuthUser | QualifiedName])?
+	('ACE' (aceOperations += JAVA_ACE)*	)?
+	('views' (views += JAVA_View)* )?
+	('models' 'schema' schema = ID (models += Model)*)?
 ;
 
 JAVA_ACE: 
-	name = ID 
+	name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = FunctionType
-	url = STRING 
+	url = STRING
 	authorize ?= 'authorize'? 
-	('pathParams' (pathParams += [PrimitiveAttribute | QualifiedName])*)?
-	('queryParams' (queryParams += [PrimitiveAttribute | QualifiedName])*)?
-	('payload' (payload += [PrimitiveAttribute | QualifiedName])*)?
-	'uses' data = [ Data | QualifiedName ]
+	('pathParams' (pathParams += [Attribute | QualifiedName])*)?
+	('queryParams' (queryParams += [Attribute | QualifiedName])*)?
+	('payload' (payload += [Attribute | QualifiedName])*)?
+	('response' (response += [Attribute | QualifiedName])*)?
 	(outcomes += JAVA_Outcome)*
 ;
 
@@ -72,7 +70,7 @@ JAVA_View:
 ;
 
 JAVA_ViewFunction:
-	name = ID '(' data = [ Data | QualifiedName ] ')'
+	name = ID '(' model = [ Model | QualifiedName ] ')'
 ;
 
 AuthUser: 
@@ -83,31 +81,13 @@ AuthUser:
 ;
 
 Model:
-	persistent ?= 'persistent'? name = ID ('{'
+	persistent ?= 'persistent'? name = ID ('extends' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])* )? ('{'
 		attributes += Attribute*
 	'}')?
 ;
 
-Data:
-	name = ID ':' '('
-		(models += ModelRef)*
-	')'
-;
-
-ComplexAttribute: 
-	list ?= 'List'? model = [Model | QualifiedName] name = ID
-;
-
-ModelRef: 
-	model = [Model | QualifiedName]
-;
-
-PrimitiveAttribute :
-	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = ModelType) name = ID ('references' foreignKey = [PrimitiveAttribute | QualifiedName])?
-;
-
 Attribute:
-	complexAttribute = ComplexAttribute | primitiveAttribute = PrimitiveAttribute
+	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = Type | model = [Model | QualifiedName]) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
 ;
 
 QualifiedName:
@@ -118,15 +98,11 @@ FunctionType:
 	'POST' | 'PUT' | 'DELETE' | 'GET'
 ;
 
-ModelType:
+Type:
 	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
 ;
 
 Constraint:
 	'NotEmpty' | 'NotNull'
-;
-
-Role: 
-	name = ID
 ;
 

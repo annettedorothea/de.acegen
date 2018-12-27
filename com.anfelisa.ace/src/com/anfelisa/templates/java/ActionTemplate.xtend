@@ -8,9 +8,8 @@ import com.anfelisa.ace.JAVA_View
 import com.anfelisa.ace.JAVA_ViewFunction
 import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.AttributeExtension
-import com.anfelisa.extensions.java.DataExtension
 import com.anfelisa.extensions.java.JavaExtension
-import com.anfelisa.extensions.java.PrimitiveAttributeExtension
+import com.anfelisa.extensions.java.ModelExtension
 import com.anfelisa.extensions.java.ViewExtension
 import javax.inject.Inject
 
@@ -20,16 +19,13 @@ class ActionTemplate {
 	extension JavaExtension
 
 	@Inject
+	extension ModelExtension
+
+	@Inject
 	extension AceExtension
 
 	@Inject
 	extension ViewExtension
-
-	@Inject
-	extension DataExtension
-
-	@Inject
-	extension PrimitiveAttributeExtension
 
 	@Inject
 	extension AttributeExtension
@@ -74,7 +70,7 @@ class ActionTemplate {
 		
 		«IF authorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		
-		«data.dataImport»
+		«model.dataImport»
 		
 		«IF outcomes.size > 0»
 			import «commandNameWithPackage(java)»;
@@ -82,7 +78,7 @@ class ActionTemplate {
 		
 		@SuppressWarnings("unused")
 		@Path("«url»")
-		public abstract class «abstractActionName» extends Action<«data.dataParamType»> {
+		public abstract class «abstractActionName» extends Action<«model.dataParamType»> {
 		
 			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«actionNameWithPackage(java)»", HttpMethod.«type», jdbi, appConfiguration, daoProvider, viewProvider);
@@ -104,7 +100,7 @@ class ActionTemplate {
 		
 			public void initActionData(String json) {
 				try {
-					this.actionData = mapper.readValue(json, «data.dataParamType».class);
+					this.actionData = mapper.readValue(json, «model.dataParamType».class);
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				}
@@ -122,10 +118,10 @@ class ActionTemplate {
 					«FOR param : pathParams»
 						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
 					«ENDFOR»
-					«IF payload !== null»@NotNull «data.dataParamType» payload)
+					«IF payload.size > 0»@NotNull «model.dataParamType» payload)
 					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
 					throws JsonProcessingException {
-				this.actionData = new «data.dataParamType»(«IF payload !== null»payload.getUuid()«ELSE»uuid«ENDIF»);
+				this.actionData = new «model.dataParamType»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 				«FOR param : queryParams»
 					this.actionData.«param.setterCall(param.resourceParam)»;
 				«ENDFOR»
@@ -136,12 +132,18 @@ class ActionTemplate {
 					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
 				«ENDFOR»
 				«IF authorize && authUser !== null»
-					«FOR param : data.allAttributes»
+					«FOR param : model.allAttributes»
 						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
 					«ENDFOR»
 				«ENDIF»
 				return this.apply();
 			}
+
+			«IF type == "GET"»
+				protected Object createReponse() {
+					return new «responseDataNameWithPackage(java)»(this.actionData);
+				}
+			«ENDIF»
 		}
 		
 		/*       S.D.G.       */
@@ -263,7 +265,7 @@ class ActionTemplate {
 					}
 					databaseHandle.commitTransaction();
 					if (httpMethod == HttpMethod.GET) {
-						return Response.ok(this.getActionData().toPresentationalData()).build();
+						return Response.ok(this.createReponse()).build();
 					} else if (httpMethod == HttpMethod.POST) {
 						return Response.ok(this.getActionData().getUuid()).build();
 					} else {
@@ -339,6 +341,10 @@ class ActionTemplate {
 			throw new WebApplicationException(message, Response.Status.INTERNAL_SERVER_ERROR);
 			}
 		
+			protected Object createReponse() {
+				return null;
+			}
+
 		}
 	'''
 
