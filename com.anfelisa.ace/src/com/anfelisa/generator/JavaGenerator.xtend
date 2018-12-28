@@ -54,8 +54,10 @@ class JavaGenerator {
 			fsa.generateFile(java.packageFolder + '/models/' + model.modelMapper + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateMapper(model, java));
 			if (model.persistent) {
+				fsa.generateFile(java.packageFolder + '/models/' + model.abstractModelDao + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractDao(model, java));
 				fsa.generateFile(java.packageFolder + '/models/' + model.modelDao + '.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDao(model, java));
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateDao(model, java));
 				fsa.generateFile(java.packageFolder + '/' + model.name + '_creation.xml',
 					ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 					modelTemplate.generateMigration(model, java));

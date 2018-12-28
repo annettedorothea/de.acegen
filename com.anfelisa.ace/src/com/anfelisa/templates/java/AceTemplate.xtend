@@ -692,6 +692,16 @@ class AceTemplate {
 				handle.execute("TRUNCATE " + timelineTable());
 			}
 		
+			public boolean contains(Handle handle, String uuid) {
+				Optional<Integer> optional = handle
+						.createQuery("SELECT count(uuid) " + "FROM " + timelineTable() + " "
+								+ "where uuid = :uuid")
+						.bind("uuid", uuid)
+						.mapTo((Integer.class)).findFirst();
+				Integer count = optional.isPresent() ? optional.get() : 0;
+				return count > 0;
+			}
+
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
 				Update statement = handle.createUpdate("INSERT INTO " + timelineTable()
 						+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");

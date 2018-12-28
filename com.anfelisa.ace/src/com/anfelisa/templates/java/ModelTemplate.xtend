@@ -241,7 +241,7 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateDao(Model it, JAVA java) '''
+	def generateAbstractDao(Model it, JAVA java) '''
 		package «java.name».models;
 		
 		import org.jdbi.v3.core.Handle;
@@ -251,11 +251,8 @@ class ModelTemplate {
 		import java.util.Map;
 		import java.util.Optional;
 		
-		import com.fasterxml.jackson.annotation.JsonIgnoreType;
-
 		@SuppressWarnings("all")
-		@JsonIgnoreType
-		public class «modelDao» {
+		public class «abstractModelDao» {
 			
 			public void insert(Handle handle, «modelName» «modelParam») {
 				Update statement = handle.createUpdate("INSERT INTO «java.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
@@ -302,6 +299,16 @@ class ModelTemplate {
 				statement.execute();
 			}
 
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateDao(Model it, JAVA java) '''
+		package «java.name».models;
+		
+		public class «modelDao» extends «abstractModelDao» {
+			
 		}
 		
 		/*       S.D.G.       */
