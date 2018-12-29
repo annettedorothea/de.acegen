@@ -89,7 +89,7 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generateData(Model it, JAVA java) '''
+	def generateAbstractData(Model it, JAVA java) '''
 		package «java.name».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
@@ -101,14 +101,15 @@ class ModelTemplate {
 		
 		import com.anfelisa.ace.AbstractData;
 		
-		public class «dataName» extends AbstractData implements «dataInterfaceName» {
+		@SuppressWarnings("unused")
+		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
 				
 			«ENDFOR»
 		
-			public «dataName»(
+			public «abstractDataName»(
 				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
 					«attribute.param(true)»
 				«ENDFOR»
@@ -121,7 +122,7 @@ class ModelTemplate {
 			}
 		
 			«IF allAttributes.length > 0»
-				public «dataName»( String uuid ) {
+				public «abstractDataName»( String uuid ) {
 					super(uuid);
 				}
 			«ENDIF»
@@ -131,6 +132,47 @@ class ModelTemplate {
 				«attribute.setter»
 				
 			«ENDFOR»
+		}
+		
+		/*       S.D.G.       */
+	'''
+	
+	def generateData(Model it, JAVA java) '''
+		package «java.name».data;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		import org.joda.time.DateTime;
+		import java.util.List;
+		
+		import com.anfelisa.ace.AbstractData;
+		
+		public class «dataName» extends «abstractDataName» implements «dataInterfaceName» {
+			
+			public «dataName»(
+				«FOR attribute : allAttributes»
+					«attribute.param(true)», 
+				«ENDFOR»
+				@JsonProperty("uuid") String uuid
+			) {
+				super(
+					«FOR attribute : allAttributes»
+						«attribute.name»,
+					«ENDFOR»
+					uuid
+				);
+			}
+
+			«IF allAttributes.length > 0»
+				public «dataName»( String uuid ) {
+					super(uuid);
+				}
+			«ENDIF»
+		
+			
+			public void migrateLegacyData(String json) {
+			}
+		
 		}
 		
 		/*       S.D.G.       */
@@ -227,7 +269,7 @@ class ModelTemplate {
 		/*       S.D.G.       */
 	'''
 	
-	def generatePresentationalInterfaceData(JAVA_ACE it, JAVA java) '''
+	def generateReponseDataInterface(JAVA_ACE it, JAVA java) '''
 		package «java.name».data;
 		
 		public interface «responseDataInterfaceName» {
@@ -248,7 +290,6 @@ class ModelTemplate {
 		import org.jdbi.v3.core.statement.Update;
 
 		import java.util.List;
-		import java.util.Map;
 		import java.util.Optional;
 		
 		@SuppressWarnings("all")
@@ -333,7 +374,6 @@ class ModelTemplate {
 		import org.jdbi.v3.core.mapper.RowMapper;
 		import org.jdbi.v3.core.statement.StatementContext;
 		
-		@SuppressWarnings("all")
 		public class «modelMapper» implements RowMapper<«modelName»> {
 			
 			public «modelName» map(ResultSet r, StatementContext ctx) throws SQLException {
@@ -432,14 +472,15 @@ class ModelTemplate {
 			String getOutcome();
 
 			void setOutcome(String outcome);
-			
+		
 			DateTime getSystemTime();
-			
+		
 			void setSystemTime(DateTime systemTime);
+		
+			void migrateLegacyData(String json);
 		
 		}
 		
 	'''
-	
 	
 }

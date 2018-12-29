@@ -96,7 +96,8 @@ class ModelExtension {
 	
 	def String modelRefToUpper(Model it) '''«name.toFirstUpper»'''
 	
-		def String dataName(Model it) '''«IF it !== null»«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
+	def String dataName(Model it) '''«IF it !== null»«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
+	def String abstractDataName(Model it) '''«IF it !== null»Abstract«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataInterfaceName(Model it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataNameWithPackage(Model it) '''«(eContainer as JAVA).name».data.«name.toFirstUpper»Data'''
 	

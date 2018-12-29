@@ -8,15 +8,11 @@ import com.anfelisa.ace.JAVA_View
 import com.anfelisa.ace.JAVA_ViewFunction
 import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.AttributeExtension
-import com.anfelisa.extensions.java.JavaExtension
 import com.anfelisa.extensions.java.ModelExtension
 import com.anfelisa.extensions.java.ViewExtension
 import javax.inject.Inject
 
 class ActionTemplate {
-
-	@Inject
-	extension JavaExtension
 
 	@Inject
 	extension ModelExtension
@@ -50,17 +46,10 @@ class ActionTemplate {
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.DatabaseHandle;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
 		
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		import org.jdbi.v3.core.Jdbi;
-		import org.jdbi.v3.core.Jdbi;
-		
-		import javax.ws.rs.WebApplicationException;
 		
 		import com.anfelisa.ace.Action;
 		import com.anfelisa.ace.HttpMethod;
@@ -98,14 +87,6 @@ class ActionTemplate {
 				}
 			«ENDIF»
 		
-			public void initActionData(String json) {
-				try {
-					this.actionData = mapper.readValue(json, «model.dataParamType».class);
-				} catch (Exception e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
 			«IF type !== null»@«type»«ENDIF»
 			@Timed
 			«IF type !== null && type == "GET"»@Produces(MediaType.APPLICATION_JSON)«ELSE»@Produces(MediaType.TEXT_PLAIN)«ENDIF»
@@ -139,7 +120,7 @@ class ActionTemplate {
 				return this.apply();
 			}
 
-			«IF type == "GET"»
+			«IF response.size > 0»
 				protected Object createReponse() {
 					return new «responseDataNameWithPackage(java)»(this.actionData);
 				}
@@ -182,8 +163,6 @@ class ActionTemplate {
 
 	def generateAction() '''
 		package com.anfelisa.ace;
-		
-		import java.lang.reflect.Constructor;
 		
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
@@ -247,13 +226,8 @@ class ActionTemplate {
 					} else {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
-							Class<?> cl = Class.forName(timelineItem.getName());
-							Constructor<?> con = cl.getConstructor(Jdbi.class, CustomAppConfiguration.class, IDaoProvider.class, ViewProvider.class);
-							IAction action = (IAction) con.newInstance(jdbi, appConfiguration, daoProvider, viewProvider);
-							action.initActionData(timelineItem.getData());
-							this.actionData.setSystemTime(action.getActionData().getSystemTime());
-						} else {
-							this.actionData.setSystemTime(new DateTime());
+							IDataContainer data = mapper.readValue(timelineItem.getData(), IDataContainer.class);
+							this.actionData.setSystemTime(data.getSystemTime());
 						}
 					}
 					daoProvider.addActionToTimeline(this);
@@ -267,14 +241,9 @@ class ActionTemplate {
 					} else {
 						this.loadDataForGetRequest();
 					}
+					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
-					if (httpMethod == HttpMethod.GET) {
-						return Response.ok(this.createReponse()).build();
-					} else if (httpMethod == HttpMethod.POST) {
-						return Response.ok(this.getActionData().getUuid()).build();
-					} else {
-						return Response.ok().build();
-					}
+					return response;
 				} catch (WebApplicationException x) {
 					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
 					databaseHandle.rollbackTransaction();
@@ -346,7 +315,7 @@ class ActionTemplate {
 			}
 		
 			protected Object createReponse() {
-				return null;
+				return this.actionData.getUuid();
 			}
 
 		}
@@ -381,9 +350,7 @@ class ActionTemplate {
 		    void setDatabaseHandle(DatabaseHandle databaseHandle);
 		
 		    Response apply();
-			
-			void initActionData(String json);
-			
+		
 		}
 		
 	'''
@@ -401,9 +368,6 @@ class ActionTemplate {
 		import org.jdbi.v3.core.Jdbi;
 
 		
-		«FOR view : referencedViews()»
-			import «view.viewNameWithPackage»;
-    	«ENDFOR»
 		«IF aceOperations.size > 0»
 			import «name».actions.*;
 		«ENDIF»
@@ -411,18 +375,18 @@ class ActionTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
 					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
 			}
 		
-			public void registerConsumers(ViewProvider viewProvider, String mode) {
+			public static void registerConsumers(ViewProvider viewProvider, String mode) {
 				«FOR aceOperation : aceOperations»
 					«FOR outcome : aceOperation.outcomes»
 						«FOR listener : outcome.listeners»
 							«IF (listener.eContainer as JAVA_View).isExternal»if (ServerConfiguration.LIVE.equals(mode) || ServerConfiguration.DEV.equals(mode)) {
-								«addConsumers(it, aceOperation, outcome, listener)»
+							«addConsumers(it, aceOperation, outcome, listener)»
 							}
 							«ELSE»
 							«addConsumers(it, aceOperation, outcome, listener)»

@@ -88,12 +88,31 @@ class AceTemplate {
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
-				// register resources
-				// register consumers
+				AppRegistration.registerResources(environment, jdbi, appConfiguration, daoProvider, viewProvider);
+				AppRegistration.registerConsumers(viewProvider, mode);
 		
 			}
 		
 		}
+	'''
+	
+	def generateAppRegistration() '''
+		package com.anfelisa.ace;
+		
+		import org.jdbi.v3.core.Jdbi;
+		
+		import io.dropwizard.setup.Environment;
+		
+		public class AppRegistration {
+		
+			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration,
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
+			}
+		
+			public static void registerConsumers(ViewProvider viewProvider, String mode) {
+			}
+		}
+		
 	'''
 	
 	def generateE2E() '''
@@ -329,18 +348,16 @@ class AceTemplate {
 	def generateEventReplayCommand() '''
 		package com.anfelisa.ace;
 		
-		import java.lang.reflect.Constructor;
 		import java.util.List;
 		
-		import org.jdbi.v3.core.Jdbi;
-
 		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
 		import io.dropwizard.Application;
 		import io.dropwizard.cli.EnvironmentCommand;
-		import io.dropwizard.jdbi.DBIFactory;
+		import io.dropwizard.jdbi3.JdbiFactory;
 		import io.dropwizard.setup.Environment;
 		import net.sourceforge.argparse4j.inf.Namespace;
 		
@@ -349,65 +366,57 @@ class AceTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
 			private IDaoProvider daoProvider;
-			
+		
 			protected EventReplayCommand(Application<CustomAppConfiguration> application, IDaoProvider daoProvider) {
 				super(application, "replay", "truncates views and replays events");
 				this.daoProvider = daoProvider;
 			}
 		
 			@Override
-			protected void run(Environment environment, Namespace namespace, CustomAppConfiguration configuration) throws Exception {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {	
+			protected void run(Environment environment, Namespace namespace, CustomAppConfiguration configuration)
+					throws Exception {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
 					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
 				}
-				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {	
+				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
 					throw new RuntimeException("replay events in a replay environment doesn't make sense");
 				}
-				
-				final DBIFactory factory = new DBIFactory();
+		
+				final JdbiFactory factory = new JdbiFactory();
 		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
-				
-				ViewProvider viewProvider = new ViewProvider(daoProvider);
-				
+		
+				ViewProvider viewProvider = new ViewProvider(daoProvider, new EmailService(configuration.getEmail()));
+		
+				AppRegistration.registerConsumers(viewProvider, ServerConfiguration.REPLAY);
+		
 				LOG.info("START EVENT REPLAY");
 				try {
 					databaseHandle.beginTransaction();
 					Handle handle = databaseHandle.getHandle();
 					daoProvider.truncateAllViews(handle);
 		
-					List<ITimelineItem> timeline = daoProvider.getAceDao().selectTimeline(handle);
-					E2E.timeline = timeline;
+					List<ITimelineItem> timeline = daoProvider.getAceDao().selectReplayTimeline(handle);
 		
-					int eventCount = 0;
-					ITimelineItem nextAction = E2E.selectNextAction(null);
-					while (nextAction != null) {
-						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
-							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
-							if (nextEvent != null) {
-								try {
-									Class<?> cl = Class.forName(nextEvent.getName());
-									Constructor<?> con = cl.getConstructor(DatabaseHandle.class, IDaoProvider.class, ViewProvider.class);
-									IEvent event = (IEvent) con.newInstance(databaseHandle, daoProvider, viewProvider);
-									event.initEventData(nextEvent.getData());
-									event.notifyListeners();
-									eventCount++;
-									LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
-								} catch (Exception e) {
-									LOG.error("failed to replay event " + nextEvent.getUuid() + " - " + nextEvent.getName());
-									LOG.error(e.getMessage());
-								}
-							}
+					for (ITimelineItem nextEvent : timeline) {
+						try {
+							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
+									daoProvider, viewProvider);
+							event.notifyListeners();
+							LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+						} catch (Exception e) {
+							LOG.error("failed to replay event " + nextEvent.getUuid() + " - " + nextEvent.getName());
+							LOG.error(e.getMessage());
+							e.printStackTrace();
 						}
-						nextAction = E2E.selectNextAction(nextAction.getUuid());
 					}
 		
 					databaseHandle.commitTransaction();
 		
-					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + eventCount + " events");
-					
+					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
+		
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
 					LOG.info("EVENT REPLAY ABORTED " + e.getMessage());
@@ -536,8 +545,6 @@ class AceTemplate {
 	def generatePrepareE2EResource() '''
 		package com.anfelisa.ace;
 		
-		import java.lang.reflect.Constructor;
-		
 		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.PUT;
@@ -549,7 +556,6 @@ class AceTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.jdbi.v3.core.Jdbi;
-
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -596,14 +602,13 @@ class AceTemplate {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
 							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
 							if (nextEvent != null) {
-								LOG.info("PUBLISH EVENT " + nextEvent);
-								Class<?> cl = Class.forName(nextEvent.getName());
-								Constructor<?> con = cl.getConstructor(DatabaseHandle.class, IDaoProvider.class, ViewProvider.class);
-								IEvent event = (IEvent) con.newInstance(databaseHandle, daoProvider, viewProvider);
-								event.initEventData(nextEvent.getData());
+								LOG.info("PUBLISH EVENT " + nextEvent.getName());
+								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
+										daoProvider, viewProvider);
 								event.notifyListeners();
 								daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
 								eventCount++;
+								LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
 							}
 						}
 						nextAction = E2E.selectNextAction(nextAction.getUuid());
@@ -613,6 +618,7 @@ class AceTemplate {
 					return Response.ok("prepared action " + uuid + " by publishing " + eventCount + " events").build();
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
+					LOG.info("exception during prepare action " + uuid, e);
 					throw new WebApplicationException(e);
 				} finally {
 					databaseHandle.close();
@@ -621,6 +627,7 @@ class AceTemplate {
 		
 		}
 		
+
 	'''
 	
 	def generateStopE2ESessionResource() '''
@@ -732,6 +739,14 @@ class AceTemplate {
 								+ "order by time asc ")
 						.map(new TimelineItemMapper()).list();
 			}
+			
+			public List<ITimelineItem> selectReplayTimeline(Handle handle) {
+				return handle
+						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
+								+ "where type = 'event' order by time asc ")
+						.map(new TimelineItemMapper()).list();
+			}
+			
 
 		}
 	'''
@@ -784,33 +799,6 @@ class AceTemplate {
 		    }
 		}
 	''' 
-	
-	def generateResource() '''
-		package com.anfelisa.ace;
-		
-		import org.jdbi.v3.core.Jdbi;
-
-		
-		public class Resource {
-		
-			private Jdbi jdbi;
-		
-			public Resource( Jdbi jdbi) {
-				super();
-				this.jdbi = jdbi;
-			}
-		
-			public DatabaseHandle createDatabaseHandle() {
-				return new DatabaseHandle(jdbi.open(), jdbi.open());
-			}
-		
-			public Jdbi getJdbi() {
-				return jdbi;
-			}
-			
-		}
-		
-	'''
 	
 	def generateTimelineItem() '''
 		package com.anfelisa.ace;

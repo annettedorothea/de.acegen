@@ -6,12 +6,15 @@ package com.anfelisa.scoping
 import com.anfelisa.ace.AcePackage
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.JAVA_ACE
+import com.anfelisa.ace.JAVA_Outcome
 import com.anfelisa.extensions.java.ModelExtension
 import java.util.ArrayList
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.impl.FilteringScope
+import com.anfelisa.ace.JAVA_ViewFunction
 
 /**
  * This class contains custom scoping description.
@@ -23,22 +26,24 @@ class AceScopeProvider extends AbstractAceScopeProvider {
 
 	@Inject
 	extension ModelExtension
-	
+
 	override getScope(EObject context, EReference reference) {
-		if (context instanceof JAVA_ACE && 
-			(
+		if (context instanceof JAVA_ACE && (
 				reference == AcePackage.Literals.JAVA_ACE__QUERY_PARAMS ||
-				reference == AcePackage.Literals.JAVA_ACE__PATH_PARAMS ||
-				reference == AcePackage.Literals.JAVA_ACE__PAYLOAD ||
-				reference == AcePackage.Literals.JAVA_ACE__RESPONSE
-			)
-		) {
+			reference == AcePackage.Literals.JAVA_ACE__PATH_PARAMS ||
+			reference == AcePackage.Literals.JAVA_ACE__PAYLOAD || reference == AcePackage.Literals.JAVA_ACE__RESPONSE
+			)) {
 			val javaAce = context as JAVA_ACE;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.model.allAttributesRec(attrs);
 			return Scopes.scopeFor(attrs)
 		}
+		if (context instanceof JAVA_Outcome) {
+			val aceModel = (context.eContainer as JAVA_ACE).model
+			val scope = super.getScope(context, reference)
+			return new FilteringScope(scope, [(getEObjectOrProxy as JAVA_ViewFunction).model.equals(aceModel)])
+		}
 		return super.getScope(context, reference);
 	}
-	
+
 }

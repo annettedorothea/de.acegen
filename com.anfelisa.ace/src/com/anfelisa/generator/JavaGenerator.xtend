@@ -64,6 +64,8 @@ class JavaGenerator {
 			}
 			fsa.generateFile(java.packageFolder + '/data/' + model.dataInterfaceName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDataInterface(model, java));
+			fsa.generateFile(java.packageFolder + '/data/' + model.abstractDataName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractData(model, java));
 			fsa.generateFile(java.packageFolder + '/data/' + model.dataName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
 		}
@@ -88,24 +90,33 @@ class JavaGenerator {
 							eventTemplate.generateAbstractEventFile(ace, outcome, java));
 					}
 				}
-			} else {
+			} 
+			if (ace.response.size > 0) {
 				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 					modelTemplate.generateResponseData(ace, java));
 				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataInterfaceName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					modelTemplate.generatePresentationalInterfaceData(ace, java));
+					modelTemplate.generateReponseDataInterface(ace, java));
 			}
 		}
 		for (view : java.views) {
 			fsa.generateFile(java.packageFolder + '/views/' + view.viewName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateView(view, java));
 		}
+		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
+
+		fsa.generateFile('com/anfelisa/ace/EventFactory.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateEventFactory());
+
 		fsa.generateFile(java.packageFolder + '/AppRegistration.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAppRegistration(java));
 
 		fsa.generateFile("com/anfelisa/ace" + '/App.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 			aceTemplate.generateApp());
+		fsa.generateFile("com/anfelisa/ace" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+			aceTemplate.generateAppRegistration());
 		fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAppConfiguration());
 		fsa.generateFile("com/anfelisa/ace" + '/CustomAppConfiguration.java',
@@ -127,7 +138,7 @@ class JavaGenerator {
 		fsa.generateFile("com/anfelisa/ace" + '/GetServerInfoResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateGetServerInfoResource());
 		fsa.generateFile("com/anfelisa/ace" + '/EventReplayCommand.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, aceTemplate.generateEventReplayCommand());
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventReplayCommand());
 
 		fsa.generateFile("com/anfelisa/ace" + '/AceDao.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateAceDao());
@@ -155,8 +166,6 @@ class JavaGenerator {
 			aceTemplate.generateITimelineItem());
 		fsa.generateFile("com/anfelisa/ace" + '/JodaObjectMapper.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateJodaObjectMapper());
-		fsa.generateFile("com/anfelisa/ace" + '/Resource.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-			aceTemplate.generateResource());
 		fsa.generateFile("com/anfelisa/ace" + '/TimelineItem.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateTimelineItem());
 		fsa.generateFile("com/anfelisa/ace" + '/TimelineItemMapper.java',

@@ -22,8 +22,6 @@ class EventTemplate {
 	def generateAbstractEventFile(JAVA_ACE it, JAVA_Outcome outcome, JAVA java) '''
 		package «java.name».events;
 		
-		import javax.ws.rs.WebApplicationException;
-		
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.Event;
 		import com.anfelisa.ace.IDaoProvider;
@@ -35,18 +33,6 @@ class EventTemplate {
 		
 			public «eventName(outcome)»(«model.dataParamType» eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«java.name».events.«eventName(outcome)»", eventData, databaseHandle, daoProvider, viewProvider);
-			}
-			
-			public «eventName(outcome)»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.name».events.«eventName(outcome)»", null, databaseHandle, daoProvider, viewProvider);
-			}
-			
-			public void initEventData(String json) {
-				try {
-					this.eventData = mapper.readValue(json, «model.dataParamType».class);
-				} catch (Exception e) {
-					throw new WebApplicationException(e);
-				}
 			}
 		
 		}
@@ -68,7 +54,7 @@ class EventTemplate {
 		«ENDFOR»
 		
 		@SuppressWarnings("all")
-		public class «viewName» {
+		public class «viewName» implements I«viewName» {
 		
 			private IDaoProvider daoProvider;
 			
@@ -97,17 +83,13 @@ class EventTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.fasterxml.jackson.annotation.JsonIgnore;
-		
 		public abstract class Event<T extends IDataContainer> implements IEvent {
 		
 			static final Logger LOG = LoggerFactory.getLogger(Event.class);
 		
 			protected T eventData;
 			private String eventName;
-			@JsonIgnore
 			protected DatabaseHandle databaseHandle;
-			protected JodaObjectMapper mapper;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
@@ -117,7 +99,6 @@ class EventTemplate {
 				this.eventName = eventName;
 				this.databaseHandle = databaseHandle;
 				this.daoProvider = daoProvider;
-				mapper = new JodaObjectMapper();
 				this.viewProvider = viewProvider;
 			}
 		
@@ -139,7 +120,6 @@ class EventTemplate {
 				return eventName;
 			}
 		
-			@JsonIgnore
 			public DatabaseHandle getDatabaseHandle() {
 				return databaseHandle;
 			}
@@ -156,23 +136,81 @@ class EventTemplate {
 	def generateIEvent() '''
 		package com.anfelisa.ace;
 		
-		import com.fasterxml.jackson.annotation.JsonIgnore;
-		
 		public interface IEvent {
 		
 			String getEventName();
 			
 			IDataContainer getEventData();
 			
-			@JsonIgnore
 			DatabaseHandle getDatabaseHandle();
 			
 			void publish();
 			
-			void initEventData(String json);
-			
 			void notifyListeners();
 		
+		}
+		
+	'''
+	
+	def generateEventFactory(JAVA it) '''
+		package «name».events;
+		
+		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IEvent;
+		import com.anfelisa.ace.ViewProvider;
+		import «name».data.*;
+		import com.anfelisa.ace.JodaObjectMapper;
+		import com.fasterxml.jackson.databind.DeserializationFeature;
+		
+		import java.io.IOException;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		public class EventFactory {
+			
+			private static JodaObjectMapper mapper = new JodaObjectMapper();
+			private static final Logger LOG = LoggerFactory.getLogger(EventFactory.class);
+		
+			static {
+				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			}
+		
+			public static IEvent createEvent(String eventClass, String json, DatabaseHandle databaseHandle,
+				IDaoProvider daoProvider, ViewProvider viewProvider) {
+				try {
+					«FOR ace : aceOperations»
+						«FOR outcome : ace.outcomes»
+							«IF outcome.listeners.size > 0»
+								if (eventClass.equals("«name».events.«ace.eventName(outcome)»")) {
+									«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
+									data.migrateLegacyData(json);
+									«ace.eventName(outcome)» event = new «ace.eventName(outcome)»(data, databaseHandle, daoProvider, viewProvider);
+									return event;
+								}
+							«ENDIF»
+						«ENDFOR»
+					«ENDFOR»
+				} catch (IOException e) {
+					LOG.error("failed to create event {} with data {}", eventClass, json, e);
+				}
+		
+				return null;
+			}
+		}
+		
+	'''
+	
+	def generateEventFactory() '''
+		package com.anfelisa.ace;
+		
+		public class EventFactory {
+			public static IEvent createEvent(String eventClass, String json, DatabaseHandle databaseHandle,
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
+				//delegate to package EventFactory
+				return null;
+			}
 		}
 		
 	'''

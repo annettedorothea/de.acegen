@@ -3,6 +3,9 @@
  */
 package com.anfelisa.validation
 
+import com.anfelisa.ace.AcePackage
+import com.anfelisa.ace.JAVA_ACE
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -11,15 +14,11 @@ package com.anfelisa.validation
  */
 class AceValidator extends AbstractAceValidator {
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					AcePackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
-	
+	@Check
+    def void checkNameStartsWithCapital(JAVA_ACE ace) {
+    	if ("GET".equals(ace.type) && ace.response.size == 0) {
+    		warning('GET request should have a response', 
+					AcePackage.Literals.JAVA_ACE__NAME)
+    	}
+    }
 }
