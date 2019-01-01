@@ -62,23 +62,21 @@ class AceExtension {
 
 	def String httpUrl(ES6_ACE it) {
 		var url = serverCall.url;
-		while (url.contains('{') && url.contains('}')) {
-			val before = url.substring(0, url.indexOf('{'));
-			val pathParam = url.substring(url.indexOf('{')+1, url.indexOf('}'));
-			val after = url.substring(url.indexOf('}')+1, url.length);
-			url = '''«before»this.commandData.«pathParam»«after»'''
+		val split1 = url.split('\\{')
+		var urlElements = new ArrayList();
+		for (split : split1) {
+			val split2 = split.split('\\}');
+			urlElements.addAll(split2)
 		}
-		return "/api" + url;
+		var urlWithPathParam = "";
+		for (var i=0; i<urlElements.size; i++) {
+			if (i%2 == 0) {
+				urlWithPathParam += urlElements.get(i)
+			} else {
+				urlWithPathParam += '''${this.commandData.«urlElements.get(i)»}'''
+			}
+		}
+		return "/api" + urlWithPathParam;
 	}
-
-	def String initQueryParams(ES6_ACE it) '''
-		let queryParams = [];
-        «FOR queryParam : serverCall.queryParams»
-queryParams.push({
-	key: "«queryParam.name»",
-	value: this.commandData.«queryParam.name»
-});
-        «ENDFOR»
-	'''
 
 }

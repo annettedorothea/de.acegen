@@ -98,11 +98,16 @@ class ModelTemplate {
 		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
 		
 		import com.anfelisa.ace.AbstractData;
+		import com.anfelisa.ace.IDataContainer;
 		
 		@SuppressWarnings("unused")
 		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
+			
+			static final Logger LOG = LoggerFactory.getLogger(«abstractDataName».class);
 			
 			«FOR attribute : allAttributes»
 				«attribute.declaration»
@@ -132,6 +137,22 @@ class ModelTemplate {
 				«attribute.setter»
 				
 			«ENDFOR»
+			
+			public void overwriteNotReplayableData(IDataContainer dataContainer) {
+				«IF allNotReplayableAttributes.size > 0»
+					if (dataContainer != null) {
+						try {
+							«dataInterfaceName» original = («dataInterfaceName»)dataContainer;
+							«FOR attribute : allNotReplayableAttributes»
+								«attribute.name» = original.«attribute.getterCall()»;
+							«ENDFOR»
+						} catch (ClassCastException x) {
+							LOG.error("cannot cast data to «dataInterfaceName» for overwriting not replayable attributes", x);
+						}
+					}
+				«ENDIF»
+			}
+		
 		}
 		
 		/*       S.D.G.       */
@@ -169,7 +190,7 @@ class ModelTemplate {
 				}
 			«ENDIF»
 		
-			
+		
 			public void migrateLegacyData(String json) {
 			}
 		
@@ -478,6 +499,8 @@ class ModelTemplate {
 			void setSystemTime(DateTime systemTime);
 		
 			void migrateLegacyData(String json);
+		
+			void overwriteNotReplayableData(IDataContainer original);
 		
 		}
 		

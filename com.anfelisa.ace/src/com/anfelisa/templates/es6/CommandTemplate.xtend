@@ -39,7 +39,7 @@ class CommandTemplate {
 							promises.push(new «eventName(outcome)»(this.commandData).publish());
 						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
-							promises.push(new TriggerAction(new «aceOperation.actionName»(this.commandData)).publish());
+							promises.push(new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam»«ENDFOR»)).publish());
 						«ENDFOR»
 						break;
 				«ENDFOR»
@@ -51,12 +51,25 @@ class CommandTemplate {
 		    
 			execute() {
 			    return new Promise((resolve, reject) => {
-			    	«initQueryParams»
-					this.«httpCall»("«httpUrl»", «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF serverCall.type == "POST" || serverCall.type == "PUT"», this.commandData«ENDIF»).then((data) => {
-						this.handleResponse(data);
-					    resolve();
+					let queryParams = [];
+				    «FOR queryParam : serverCall.queryParams»
+				    	queryParams.push({key: "«queryParam.name»",value: this.commandData.«queryParam.name»});
+			        «ENDFOR»
+			        «IF serverCall.payload.size > 0»let payload = {	
+			        	«FOR payload : serverCall.payload»
+			        		«payload.name» : this.commandData.«payload.name»,
+			        	«ENDFOR»
+			        	};
+			        «ENDIF»
+		
+					this.«httpCall»(`«httpUrl»`, «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF (serverCall.type == "POST" || serverCall.type == "PUT") && serverCall.payload.size > 0», payload«ENDIF»).then((data) => {
+						«FOR responseAttribute : serverCall.response»
+							this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
+						«ENDFOR»
+						this.handleResponse(resolve, reject);
 					}, (error) => {
-					    reject(error);
+						this.commandData.error = error;
+						this.handleError(resolve, reject);
 					});
 			    });
 			}
@@ -94,7 +107,7 @@ class CommandTemplate {
 							new «eventName(outcome)»(this.commandData).publish();
 						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
-							new TriggerAction(new «aceOperation.actionName»(this.commandData)).publish();
+							new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam»«ENDFOR»)).publish();
 						«ENDFOR»
 						break;
 				«ENDFOR»
@@ -112,12 +125,20 @@ class CommandTemplate {
 		
 		export default class «commandName» extends «abstractCommandName» {
 
+		    initCommandData() {
+		    	//add from appState to commandData 
+		    }
+
 		    isCommandDataValid() {
 		    	return true;
 		    }
 
-		    handleResponse(data) {
+		    handleResponse(resolve, reject) {
 		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).name»;«ENDIF»
+		    	resolve();
+		    }
+		    handleError(resolve, reject) {
+		    	reject(this.commandData.error);
 		    }
 		}
 		
@@ -169,6 +190,7 @@ class CommandTemplate {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
+						this.initCommandData();
 						if (this.isCommandDataValid() === true) {
 						    this.execute().then(() => {
 						        ACEController.addItemToTimeLine({command: this});
@@ -178,6 +200,8 @@ class CommandTemplate {
 						        reject(error);
 						    });
 						} else {
+					        ACEController.addItemToTimeLine({command: this});
+					        this.publishEvents();
 							resolve();
 						}
 					} else {
@@ -188,6 +212,13 @@ class CommandTemplate {
 				        resolve();
 					}
 		        });
+		    }
+		
+		    initCommandData() {
+		    }
+		
+		    isCommandDataValid() {
+		    	return true;
 		    }
 		
 		    httpGet(url, authorize, queryParams) {

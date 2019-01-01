@@ -10,10 +10,11 @@ ES6:
 	name = QualifiedName
 	('ACE' (aceOperations += ES6_ACE)*)?
 	('views' (views += ES6_View)* )?
+	('models' (models += ES6_StateElement)* )?
 ;
 
 ES6_ACE: 
-	name = ID 
+	name = ID  ('<' input += ID (',' input += ID)* '>')?  
 	('preCall' '(' (preCall += [ES6_ViewFunction | QualifiedName])* ')')? 
 	('call' serverCall = [JAVA_ACE | QualifiedName] )? 
 	('postCall' '(' (postCall += [ES6_ViewFunction | QualifiedName])* ')')? 
@@ -34,6 +35,16 @@ ES6_View:
 
 ES6_ViewFunction:
 	name = ID
+;
+
+ES6_StateElement:
+	name = ID ('extends' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])* )? ('{'
+		elements += ES6_StateElementDefinition* 
+	'}')?
+;
+
+ES6_StateElementDefinition:
+	list ?= 'List'? name = ID ('{' types += [ES6_StateElement | QualifiedName] ('|' types += [ES6_StateElement | QualifiedName])* '}')?
 ;
 
 JAVA:
@@ -87,7 +98,7 @@ Model:
 ;
 
 Attribute:
-	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = Type | model = [Model | QualifiedName]) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
+	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = Type | model = [Model | QualifiedName]) name = ID ('references' foreignKey = [Attribute | QualifiedName])? (notReplayable ?= 'notReplayable')?
 ;
 
 QualifiedName:

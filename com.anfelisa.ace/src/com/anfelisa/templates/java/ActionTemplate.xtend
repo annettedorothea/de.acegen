@@ -217,6 +217,7 @@ class ActionTemplate {
 				databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				databaseHandle.beginTransaction();
 				try {
+					IDataContainer originalData = null;
 					if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
 							databaseHandle.commitTransaction();
@@ -226,8 +227,9 @@ class ActionTemplate {
 					} else {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
-							IDataContainer data = mapper.readValue(timelineItem.getData(), IDataContainer.class);
-							this.actionData.setSystemTime(data.getSystemTime());
+							originalData = mapper.readValue(timelineItem.getData(), IDataContainer.class);
+							this.actionData.setSystemTime(originalData.getSystemTime());
+							this.actionData.overwriteNotReplayableData(originalData);
 						}
 					}
 					daoProvider.addActionToTimeline(this);
@@ -235,6 +237,10 @@ class ActionTemplate {
 						ICommand command = this.getCommand();
 						if (command != null) {
 							command.execute();
+							if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+								command.getCommandData().overwriteNotReplayableData(originalData);
+							}
+							command.publishEvents();
 						} else {
 							throw new WebApplicationException(actionName + " returns no command");
 						}

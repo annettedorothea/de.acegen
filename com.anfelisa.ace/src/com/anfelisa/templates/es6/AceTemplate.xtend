@@ -57,13 +57,15 @@ class AceTemplate {
 		
 		    static httpGet(url, authorize, queryParams, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
-				    let authorization = AppUtils.basicAuth();
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "application/json");
-				    if (authorize === true && authorization !== undefined) {
-				        headers.append("Authorization", authorization);
-				    }
+					if (authorize === true) {
+					    let authorization = AppUtils.basicAuth();
+					    if (authorization !== undefined) {
+					        headers.append("Authorization", authorization);
+					    }
+					}
 				
 				    const options = {
 				        method: 'GET',
@@ -110,15 +112,17 @@ class AceTemplate {
 				});
 		    }
 		
-		    static httpChange(methodType, authorize, url, queryParams, data, adjustUrl = true) {
+		    static httpChange(methodType, url, authorize, queryParams, data, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
-				    let authorization = AppUtils.basicAuth();
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
 				    headers.append("Accept", "text/plain");
-				    if (authorize === true && authorization !== undefined) {
-				        headers.append("Authorization", authorization);
-				    }
+					if (authorize === true) {
+					    let authorization = AppUtils.basicAuth();
+					    if (authorization !== undefined) {
+					        headers.append("Authorization", authorization);
+					    }
+					}
 				
 				    const options = {
 				        method: methodType,
@@ -608,7 +612,7 @@ class AceTemplate {
 		                apiKey: AppUtils.getAceScenariosApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data, false);
+		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data, false);
 		        });
 		    }
 		
@@ -627,7 +631,7 @@ class AceTemplate {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams, {}, false);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', false, queryParams, false);
 		    }
 		
 		    static saveScenario(description, creator) {
@@ -646,7 +650,7 @@ class AceTemplate {
 		                    apiKey: AppUtils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data, false);
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data, false);
 		            });
 		        });
 		    }
@@ -668,7 +672,7 @@ class AceTemplate {
 		                    serverVersion: serverInfo.serverVersion,
 		                    serverTimeline: JSON.stringify(serverTimeline)
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data, false);
+		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data, false);
 		            });
 		        });
 		    }
@@ -688,7 +692,7 @@ class AceTemplate {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams, {}, false);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', false, queryParams, false);
 		    }
 		
 		    static loadNextScenario(lastId) {
@@ -706,7 +710,7 @@ class AceTemplate {
 		            key: "uuid",
 		            value: uuid
 		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams, {}, false);
+		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', false, queryParams, false);
 		    }
 		
 		    static getBrowserInfo() {
@@ -717,7 +721,7 @@ class AceTemplate {
 		            return {name: 'IE ', version: (tem[1] || '')};
 		        }
 		        if (M[1] === 'Chrome') {
-		            tem = ua.match(/\bOPR\/(\d+)/)
+		            tem = ua.match(/\bOPR\/(\d+)/);
 		            if (tem != null) {
 		                return {name: 'Opera', version: tem[1]};
 		            }

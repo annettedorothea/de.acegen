@@ -54,14 +54,6 @@ class CommandTemplate {
 				}
 			}
 			
-			public void initCommandData(String json) {
-				try {
-					this.commandData = mapper.readValue(json, «model.dataParamType».class);
-				} catch (Exception e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
 		}
 		
 		/*       S.D.G.       */
@@ -132,7 +124,6 @@ class CommandTemplate {
 			public void execute() {
 				this.executeCommand();
 				daoProvider.addCommandToTimeline(this);
-				this.publishEvents();
 			}
 		
 			public IDataContainer getCommandData() {
@@ -200,8 +191,6 @@ class CommandTemplate {
 			IDataContainer getCommandData();
 
 			DatabaseHandle getDatabaseHandle();
-
-			void initCommandData(String json);
 
 			void execute();
 		

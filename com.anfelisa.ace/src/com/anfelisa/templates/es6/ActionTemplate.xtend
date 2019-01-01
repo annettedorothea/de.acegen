@@ -28,8 +28,8 @@ class ActionTemplate {
 
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(actionData) {
-		        super(actionData, '«es6.name».«actionName»');
+		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam»«ENDFOR») {
+		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam»«ENDFOR»}, '«es6.name».«actionName»');
 				«IF serverCall !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
@@ -47,7 +47,7 @@ class ActionTemplate {
 						«viewFunction.viewFunctionWithViewName»(this.actionData);
 					«ENDFOR»
 				}
-			
+				
 				postCall() {
 					«FOR viewFunction : postCall»
 						«viewFunction.viewFunctionWithViewName»(this.actionData);
@@ -66,6 +66,7 @@ class ActionTemplate {
 		export default class «actionName» extends «abstractActionName» {
 		
 		    initActionData() {
+		    	//add not replayable data to action data in order to freeze for replay (e.g. time or date)
 		    }
 		
 		}
@@ -122,9 +123,6 @@ class ActionTemplate {
 		    initActionData() {
 		    }
 		
-		    extendActionData() {
-		    }
-		
 		    getCommand() {
 		        throw "no command defined for " + this.actionName;
 		    }
@@ -155,9 +153,8 @@ class ActionTemplate {
 		            this.preCall();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
-		                this.extendActionData();
+		                this.initActionData();
 		            }
-		            this.initActionData();
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            if (command) {
@@ -199,9 +196,8 @@ class ActionTemplate {
 		    applyAction() {
 		        if (ACEController.execution === ACEController.LIVE) {
 		            this.actionData.uuid = AppUtils.createUUID();
-		            this.extendActionData();
+		            this.initActionData();
 		        }
-		        this.initActionData();
 		        ACEController.addItemToTimeLine({action: this});
 		        let command = this.getCommand();
 		        if (command) {
