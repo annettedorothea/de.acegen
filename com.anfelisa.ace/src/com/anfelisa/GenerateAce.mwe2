@@ -40,7 +40,7 @@ Workflow {
 			}
 			
 			formatter = {
-				generateStub = false
+				generateStub = true
 			}
 		}
 	}

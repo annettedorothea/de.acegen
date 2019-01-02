@@ -83,7 +83,9 @@ class ModelTemplate {
 		
 		@JsonDeserialize(as=«dataName».class)
 		public interface «dataInterfaceName» extends «modelName», IDataContainer {
-		
+			«FOR superModel : superModels»
+				void mapFrom(«superModel.interfaceWithPackage» model);
+			«ENDFOR»
 		}
 		
 		/*       S.D.G.       */
@@ -138,21 +140,13 @@ class ModelTemplate {
 				
 			«ENDFOR»
 			
-			public void overwriteNotReplayableData(IDataContainer dataContainer) {
-				«IF allNotReplayableAttributes.size > 0»
-					if (dataContainer != null) {
-						try {
-							«dataInterfaceName» original = («dataInterfaceName»)dataContainer;
-							«FOR attribute : allNotReplayableAttributes»
-								«attribute.name» = original.«attribute.getterCall()»;
-							«ENDFOR»
-						} catch (ClassCastException x) {
-							LOG.error("cannot cast data to «dataInterfaceName» for overwriting not replayable attributes", x);
-						}
-					}
-				«ENDIF»
-			}
-		
+			«FOR superModel : superModels»
+				public void mapFrom(«superModel.interfaceWithPackage» model) {
+					«FOR attribute: superModel.allAttributes»
+						this.«attribute.name» = model.«attribute.getterCall»;
+					«ENDFOR»
+				}
+			«ENDFOR»
 		}
 		
 		/*       S.D.G.       */
@@ -167,6 +161,7 @@ class ModelTemplate {
 		import java.util.List;
 		
 		import com.anfelisa.ace.AbstractData;
+		import com.anfelisa.ace.IDataContainer;
 		
 		public class «dataName» extends «abstractDataName» implements «dataInterfaceName» {
 			
@@ -192,6 +187,17 @@ class ModelTemplate {
 		
 		
 			public void migrateLegacyData(String json) {
+			}
+		
+			public void overwriteNotReplayableData(IDataContainer dataContainer) {
+				/*if (dataContainer != null) {
+					try {
+						«dataInterfaceName» original = («dataInterfaceName»)dataContainer;
+						//overwrite values
+					} catch (ClassCastException x) {
+						LOG.error("cannot cast data to «dataInterfaceName» for overwriting not replayable attributes", x);
+					}
+				}*/
 			}
 		
 		}

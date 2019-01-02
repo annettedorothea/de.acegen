@@ -391,11 +391,12 @@ class ActionTemplate {
 				«FOR aceOperation : aceOperations»
 					«FOR outcome : aceOperation.outcomes»
 						«FOR listener : outcome.listeners»
-							«IF (listener.eContainer as JAVA_View).isExternal»if (ServerConfiguration.LIVE.equals(mode) || ServerConfiguration.DEV.equals(mode)) {
-							«addConsumers(it, aceOperation, outcome, listener)»
-							}
+							«IF (listener.eContainer as JAVA_View).isExternal»
+								if (ServerConfiguration.LIVE.equals(mode) || ServerConfiguration.DEV.equals(mode)) {
+									«addConsumers(it, aceOperation, outcome, listener)»
+								}
 							«ELSE»
-							«addConsumers(it, aceOperation, outcome, listener)»
+								«addConsumers(it, aceOperation, outcome, listener)»
 							«ENDIF»
 							«ENDFOR»
 					«ENDFOR»
@@ -407,7 +408,10 @@ class ActionTemplate {
 	'''
 	
 	private def addConsumers(JAVA java, JAVA_ACE aceOperation, JAVA_Outcome outcome, JAVA_ViewFunction listener) '''
-		viewProvider.addConsumer("«java.name».events.«aceOperation.eventName(outcome)»", viewProvider.«listener.viewFunctionWithViewNameAsVariable»);
+		viewProvider.addConsumer("«java.name».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
+			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.model.dataNameWithPackage») dataContainer, handle);
+		});
+		
 	'''
 	
 }

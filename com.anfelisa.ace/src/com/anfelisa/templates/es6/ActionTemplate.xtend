@@ -34,7 +34,7 @@ class ActionTemplate {
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
 		    }
-		
+		    
 			«IF outcomes.size > 0»
 				getCommand() {
 					return new «commandName»(this.actionData);
@@ -84,7 +84,7 @@ class ActionTemplate {
 		
 			static init() {
 				«FOR aceOperation : aceOperations»
-					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionData) => new «aceOperation.actionName»(actionData));
+					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionData) => new «aceOperation.actionName»(actionData, '«name».«aceOperation.actionName»'));
 				«ENDFOR»
 			}
 		

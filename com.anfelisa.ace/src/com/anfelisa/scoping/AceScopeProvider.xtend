@@ -7,6 +7,8 @@ import com.anfelisa.ace.AcePackage
 import com.anfelisa.ace.Attribute
 import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.JAVA_Outcome
+import com.anfelisa.ace.JAVA_ViewFunction
+import com.anfelisa.ace.Model
 import com.anfelisa.extensions.java.ModelExtension
 import java.util.ArrayList
 import javax.inject.Inject
@@ -14,7 +16,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import com.anfelisa.ace.JAVA_ViewFunction
 
 /**
  * This class contains custom scoping description.
@@ -42,6 +43,11 @@ class AceScopeProvider extends AbstractAceScopeProvider {
 			val aceModel = (context.eContainer as JAVA_ACE).model
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [(getEObjectOrProxy as JAVA_ViewFunction).model.equals(aceModel)])
+		}
+		if (context instanceof Model) {
+			val aceModel = context as Model
+			val scope = super.getScope(context, reference)
+			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
 		return super.getScope(context, reference);
 	}

@@ -1030,28 +1030,42 @@ class AceTemplate {
 		import java.util.HashMap;
 		import java.util.List;
 		import java.util.Map;
-		import java.util.function.BiConsumer;
 		
-		import org.jdbi.v3.core.Handle;
+		public class ViewProvider extends AbstractViewProvider {
 		
-		public class ViewProvider {
+			public ViewProvider() {
+			}
 		
-			private final Map<String, List<BiConsumer<? extends IDataContainer, Handle>>> consumerMap;
+		}
 		
-			public ViewProvider(IDaoProvider daoProvider) {
-				consumerMap = new HashMap<String, List<BiConsumer<? extends IDataContainer, Handle>>>();
+	'''
+	
+	def generateAbstractViewProvider() '''
+		package com.anfelisa.ace;
+		
+		import java.util.ArrayList;
+		import java.util.HashMap;
+		import java.util.List;
+		import java.util.Map;
+		
+		public class AbstractViewProvider {
+		
+			private final Map<String, List<EventConsumer>> consumerMap;
+		
+			public AbstractViewProvider() {
+				consumerMap = new HashMap<String, List<EventConsumer>>();
 			}
 			
-			public void addConsumer(String eventName, BiConsumer<? extends IDataContainer, Handle> createUserTable) {
-				List<BiConsumer<? extends IDataContainer, Handle>> consumerForEvent = consumerMap.get(eventName);
+			public void addConsumer(String eventName, EventConsumer eventConsumer) {
+				List<EventConsumer> consumerForEvent = consumerMap.get(eventName);
 				if (consumerForEvent == null) {
-					consumerForEvent = new ArrayList<BiConsumer<? extends IDataContainer, Handle>>();
+					consumerForEvent = new ArrayList<EventConsumer>();
 					consumerMap.put(eventName, consumerForEvent);
 				}
-				consumerForEvent.add(createUserTable);
+				consumerForEvent.add(eventConsumer);
 			}
 		
-			public List<BiConsumer<? extends IDataContainer, Handle>> getConsumerForEvent(String eventName) {
+			public List<EventConsumer> getConsumerForEvent(String eventName) {
 				return consumerMap.get(eventName);
 			}
 		
@@ -1117,6 +1131,17 @@ class AceTemplate {
 		}
 		
 		/*       S.D.G.       */
+	'''
+	
+	def generateEventconsumer() '''
+		package com.anfelisa.ace;
+		
+		import org.jdbi.v3.core.Handle;
+		
+		@FunctionalInterface
+		public interface EventConsumer {
+			public void consumeEvent(IDataContainer data, Handle handle);
+		}
 	'''
 
 }

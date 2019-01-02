@@ -43,7 +43,6 @@ class EventTemplate {
 	def generateView(JAVA_View it, JAVA java) '''
 		package «java.name».views;
 		
-		import java.util.function.BiConsumer;
 		import com.anfelisa.ace.IDaoProvider;
 		
 		import org.jdbi.v3.core.Handle;
@@ -53,8 +52,7 @@ class EventTemplate {
 			«renderFunction.model.dataImport»
 		«ENDFOR»
 		
-		@SuppressWarnings("all")
-		public class «viewName» implements I«viewName» {
+		public class «viewName» implements «viewInterfaceName» {
 		
 			private IDaoProvider daoProvider;
 			
@@ -64,8 +62,30 @@ class EventTemplate {
 			}
 		
 			«FOR renderFunction : renderFunctions»
-				public BiConsumer<«renderFunction.model.dataName», Handle> «renderFunction.name» = (dataContainer, handle) -> {
-				};
+				public void «renderFunction.name»(«renderFunction.model.dataName» data, Handle handle) {
+				}
+			«ENDFOR»
+		
+		}
+		
+		/*                    S.D.G.                    */
+	'''
+
+	def generateViewInterface(JAVA_View it, JAVA java) '''
+		package «java.name».views;
+		
+		import org.jdbi.v3.core.Handle;
+		
+		import com.anfelisa.ace.IDataContainer;
+		«FOR renderFunction : renderFunctions»
+			«renderFunction.model.dataImport»
+		«ENDFOR»
+		
+		@SuppressWarnings("all")
+		public interface «viewInterfaceName» {
+		
+			«FOR renderFunction : renderFunctions»
+				void «renderFunction.name»(«renderFunction.model.dataName» data, Handle handle);
 			«ENDFOR»
 		
 		}
@@ -77,9 +97,7 @@ class EventTemplate {
 		package com.anfelisa.ace;
 		
 		import java.util.List;
-		import java.util.function.BiConsumer;
 		
-		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -93,7 +111,8 @@ class EventTemplate {
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public Event(String eventName, T eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Event(String eventName, T eventData, DatabaseHandle databaseHandle, IDaoProvider daoProvider,
+					ViewProvider viewProvider) {
 				super();
 				this.eventData = eventData;
 				this.eventName = eventName;
@@ -102,14 +121,13 @@ class EventTemplate {
 				this.viewProvider = viewProvider;
 			}
 		
-			@SuppressWarnings("unchecked")
 			public void notifyListeners() {
-			List<BiConsumer<? extends IDataContainer, Handle>> consumerList = viewProvider.getConsumerForEvent(eventName);
-			if (consumerList != null) {
-				for (BiConsumer<? extends IDataContainer, Handle> consumer : consumerList) {
-					((BiConsumer<T, Handle>)consumer).accept(this.eventData, databaseHandle.getHandle());
+				List<EventConsumer> consumerList = viewProvider.getConsumerForEvent(eventName);
+				if (consumerList != null) {
+					for (EventConsumer consumer : consumerList) {
+						consumer.consumeEvent(this.eventData, databaseHandle.getHandle());
+					}
 				}
-			}
 			}
 		
 			public IDataContainer getEventData() {

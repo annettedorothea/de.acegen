@@ -75,12 +75,6 @@ class ModelExtension {
 			this.«modelRefToLower» = «modelRefToLower»;
 		}'''
 	
-	def Iterable<Attribute> allNotReplayableAttributes(Model it) {
-		val attrs = new ArrayList<Attribute>();
-		allAttributesRec(attrs);
-		return attrs.filter[notReplayable];
-	}
-	
 	def List<Attribute> allAttributes(Model it) {
 		val attrs = new ArrayList<Attribute>();
 		allAttributesRec(attrs);

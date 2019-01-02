@@ -129,10 +129,6 @@ class CommandTemplate {
 		    	//add from appState to commandData 
 		    }
 
-		    isCommandDataValid() {
-		    	return true;
-		    }
-
 		    handleResponse(resolve, reject) {
 		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).name»;«ENDIF»
 		    	resolve();
@@ -191,19 +187,13 @@ class CommandTemplate {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
 						this.initCommandData();
-						if (this.isCommandDataValid() === true) {
-						    this.execute().then(() => {
-						        ACEController.addItemToTimeLine({command: this});
-						        this.publishEvents();
-						        resolve();
-						    }, (error) => {
-						        reject(error);
-						    });
-						} else {
+					    this.execute().then(() => {
 					        ACEController.addItemToTimeLine({command: this});
 					        this.publishEvents();
-							resolve();
-						}
+					        resolve();
+					    }, (error) => {
+					        reject(error);
+					    });
 					} else {
 					    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 					    this.commandData = timelineCommand.commandData;
@@ -215,10 +205,6 @@ class CommandTemplate {
 		    }
 		
 		    initCommandData() {
-		    }
-		
-		    isCommandDataValid() {
-		    	return true;
 		    }
 		
 		    httpGet(url, authorize, queryParams) {
