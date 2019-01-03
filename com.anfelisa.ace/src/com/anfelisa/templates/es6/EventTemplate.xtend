@@ -79,7 +79,6 @@ class EventTemplate {
 		
 		    publish() {
 		        this.notifyListeners();
-		        this.eventData.appState = AppUtils.getAppState();
 				ACEController.addItemToTimeLine({event: this});
 		    }
 		
