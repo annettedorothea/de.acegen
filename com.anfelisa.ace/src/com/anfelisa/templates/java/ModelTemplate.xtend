@@ -29,6 +29,8 @@ class ModelTemplate {
 		
 			«FOR attribute : attributes»
 				«attribute.interfaceGetter»
+				«attribute.interfaceSetter»
+				
 			«ENDFOR»
 
 		}
