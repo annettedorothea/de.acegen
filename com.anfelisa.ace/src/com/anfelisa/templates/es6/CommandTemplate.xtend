@@ -126,7 +126,8 @@ class CommandTemplate {
 		export default class «commandName» extends «abstractCommandName» {
 
 		    initCommandData() {
-		    	//add from appState to commandData 
+		    	//add from appState to commandData
+		    	return true;
 		    }
 
 		    handleResponse(resolve, reject) {
@@ -195,6 +196,8 @@ class CommandTemplate {
 						        reject(error);
 						    });
 						} else {
+					        ACEController.addItemToTimeLine({command: this});
+					        this.publishEvents();
 							resolve();
 						}
 					} else {
@@ -208,6 +211,7 @@ class CommandTemplate {
 		    }
 		
 		    initCommandData() {
+		    	return true;
 		    }
 		
 		    httpGet(url, authorize, queryParams) {
