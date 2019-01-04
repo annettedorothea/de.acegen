@@ -84,7 +84,8 @@ class ActionTemplate {
 		
 			static init() {
 				«FOR aceOperation : aceOperations»
-					ACEController.registerFactory('«name».«aceOperation.actionName»', (actionData) => new «aceOperation.actionName»(actionData, '«name».«aceOperation.actionName»'));
+					ACEController.registerFactory('«name».«aceOperation.actionName»', 
+						(actionData) => new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»actionData.«attr»«ENDFOR»));
 				«ENDFOR»
 			}
 		
