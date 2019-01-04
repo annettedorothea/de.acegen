@@ -212,7 +212,7 @@ class CommandTemplate {
 		            queryParams = this.addUuidToQueryParams(queryParams);
 		            return AppUtils.httpGet(url, authorize, queryParams, this.commandData);
 		        }, (error) => {
-		            reject(error);
+		            throw error;
 		        });
 		    }
 		
@@ -222,7 +222,7 @@ class CommandTemplate {
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpPost(url, authorize, queryParams, data);
 		        }, (error) => {
-		            reject(error);
+		            throw error;
 		        });
 		    }
 		
@@ -232,7 +232,7 @@ class CommandTemplate {
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpPut(url, authorize, queryParams, data);
 		        }, (error) => {
-		            reject(error);
+		            throw error;
 		        });
 		    }
 		
@@ -242,7 +242,7 @@ class CommandTemplate {
 		            data = this.addUuidToData(data);
 		            return AppUtils.httpDelete(url, authorize, queryParams, data);
 		        }, (error) => {
-		            reject(error);
+		            throw error;
 		        });
 		    }
 		
