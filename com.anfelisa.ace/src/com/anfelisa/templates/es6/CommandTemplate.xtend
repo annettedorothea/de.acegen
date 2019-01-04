@@ -186,14 +186,17 @@ class CommandTemplate {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
-						this.initCommandData();
-					    this.execute().then(() => {
-					        ACEController.addItemToTimeLine({command: this});
-					        this.publishEvents();
-					        resolve();
-					    }, (error) => {
-					        reject(error);
-					    });
+						if (this.initCommandData()) {
+						    this.execute().then(() => {
+						        ACEController.addItemToTimeLine({command: this});
+						        this.publishEvents();
+						        resolve();
+						    }, (error) => {
+						        reject(error);
+						    });
+						} else {
+							resolve();
+						}
 					} else {
 					    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 					    this.commandData = timelineCommand.commandData;
