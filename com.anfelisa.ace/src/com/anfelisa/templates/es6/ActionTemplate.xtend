@@ -99,8 +99,8 @@ class ActionTemplate {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.name.toFirstLower»(actionData) {
-			    new «aceOperation.actionName»(actionData).apply();
+			export function «aceOperation.name.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR») {
+			    new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR»).apply();
 			}
 			
 		«ENDFOR»

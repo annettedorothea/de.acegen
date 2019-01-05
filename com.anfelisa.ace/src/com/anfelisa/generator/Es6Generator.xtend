@@ -62,7 +62,7 @@ class Es6Generator {
 			eventTemplate.generateEventListenerRegistration(es6));
 		fsa.generateFile(es6.name + '/ActionFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateActionFactoryRegistration(es6));
-		fsa.generateFile(es6.name + '/ActionFunctionExports.js', IFileSystemAccess.DEFAULT_OUTPUT,
+		fsa.generateFile(es6.name + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateActionFunctionExports(es6));
 		for (view : es6.views) {
 			fsa.generateFile(es6.name + '/views/' + view.viewName + '.js',
