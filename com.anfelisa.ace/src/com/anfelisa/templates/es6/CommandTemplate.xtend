@@ -217,7 +217,7 @@ class CommandTemplate {
 		    httpGet(url, authorize, queryParams) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);
-		            return AppUtils.httpGet(url, authorize, queryParams, this.commandData);
+		            return AppUtils.httpGet(url, authorize, queryParams);
 		        }, (error) => {
 		            throw error;
 		        });

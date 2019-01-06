@@ -118,70 +118,77 @@ class AceTemplate {
 	def generateE2E() '''
 		package com.anfelisa.ace;
 		
+		import java.util.ArrayList;
+		import java.util.HashMap;
 		import java.util.List;
+		import java.util.Map;
 		
 		import org.joda.time.DateTime;
 		
 		public class E2E {
-			
+		
 			public static boolean sessionIsRunning;
-			
+		
 			public static DateTime sessionStartedAt;
-			
-			public static List<ITimelineItem> timeline;
-			
-			public static ITimelineItem selectAction(String uuid) {
-				for (ITimelineItem timelineItem : timeline) {
-					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("action")) {
-						return timelineItem;
+		
+			private static Map<String, AceOperation> timeline;
+		
+			private static List<String> uuidList;
+		
+			private static int index;
+		
+			public static void reset() {
+				E2E.sessionIsRunning = false;
+				E2E.sessionStartedAt = null;
+				E2E.timeline = null;
+				E2E.index = 0;
+			}
+		
+			public static void init(List<ITimelineItem> initialTimeline) {
+				timeline = new HashMap<>();
+				uuidList = new ArrayList<>();
+				for (ITimelineItem timelineItem : initialTimeline) {
+					String uuid = timelineItem.getUuid();
+					if (!uuidList.contains(uuid)) {
+						uuidList.add(uuid);
+					}
+					AceOperation aceOperation = timeline.get(uuid);
+					if (aceOperation == null) {
+						aceOperation = new AceOperation(uuid);
+						timeline.put(uuid, aceOperation);
+					}
+					if ("action".equals(timelineItem.getType())) {
+						aceOperation.setAction(timelineItem);
+					} else if ("command".equals(timelineItem.getType())) {
+						aceOperation.setCommand(timelineItem);
+					} else if ("event".equals(timelineItem.getType())) {
+						aceOperation.setEvent(timelineItem);
 					}
 				}
-				return null;
+				E2E.sessionIsRunning = true;
+				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
+				E2E.index = 0;
 			}
-			
-			public static ITimelineItem selectEvent(String uuid) {
-				for (ITimelineItem timelineItem : timeline) {
-					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("event") && !E2E.hasException(uuid)) {
-						return timelineItem;
-					}
-					
-				}
-				return null;
-			}
-			
-			private static boolean hasException(String uuid) {
-				for (ITimelineItem timelineItem : timeline) {
-					if (timelineItem.getUuid().equals(uuid) && timelineItem.getType().equals("exception")) {
-						return true;
-					}
-					
-				}
-				return false;
-			}
-			
-			public static ITimelineItem selectNextAction(String uuid) {
-				if (uuid != null) {
-					boolean returnNextAction = false;
-					for (ITimelineItem timelineItem : timeline) {
-						if (returnNextAction && timelineItem.getType().equals("action")) {
-							return timelineItem;
-						}
-						if (timelineItem.getUuid().equals(uuid)) {
-							returnNextAction = true;
-						}
-					}
-				} else {
-					for (ITimelineItem timelineItem : timeline) {
-						if (timelineItem.getType().equals("action")) {
-							return timelineItem;
-						}
-					}
+		
+			public static ITimelineItem selectNextAction() {
+				if (index < uuidList.size()) {
+					String uuid = uuidList.get(index);
+					index++;
+					return timeline.get(uuid).getAction();
 				}
 				return null;
 			}
 		
+			public static ITimelineItem selectAction(String uuid) {
+				return timeline.get(uuid).getAction();
+			}
+		
+			public static ITimelineItem selectEvent(String uuid) {
+				return timeline.get(uuid).getEvent();
+			}
 			
 		}
+		
 	'''
 	
 	def generateServerConfiguration() '''
@@ -284,11 +291,8 @@ class AceTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.jdbi.v3.core.Jdbi;
-
 		import org.jdbi.v3.core.Handle;
-
-		import org.joda.time.DateTime;
+		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -305,7 +309,7 @@ class AceTemplate {
 			private Jdbi jdbi;
 		
 			private IDaoProvider daoProvider = new DaoProvider();
-
+		
 			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider) {
 				super();
 				this.jdbi = jdbi;
@@ -319,20 +323,18 @@ class AceTemplate {
 				if (E2E.sessionIsRunning && E2E.sessionStartedAt.plusMinutes(1).isAfterNow()) {
 					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
 				}
-				E2E.sessionIsRunning = true;
-				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
-				E2E.timeline = timeline;
+				E2E.init(timeline);
 				
 				Handle handle = jdbi.open();
 				try {
 					handle.begin();
 					
 					daoProvider.getAceDao().truncateTimelineTable(handle);
-
+		
 					daoProvider.truncateAllViews(handle);
-
+		
 					handle.commit();
-
+		
 					return Response.ok().build();
 				} catch (Exception e) {
 					handle.rollback();
@@ -343,6 +345,7 @@ class AceTemplate {
 			}
 		
 		}
+		
 	'''
 	
 	def generateEventReplayCommand() '''
@@ -590,41 +593,38 @@ class AceTemplate {
 			@Timed
 			@Path("/prepare")
 			public Response put(@NotNull @QueryParam("uuid") String uuid) {
-				ITimelineItem actionToBePrepared = E2E.selectAction(uuid);
-				if (actionToBePrepared == null) {
-					return Response.ok("prepared action " + uuid + " by doing nothing - action was not found").build();
-				}
-		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
-				LOG.info("PREPARE ACTION " + actionToBePrepared);
+				LOG.info("PREPARE ACTION " + uuid);
 				try {
 					databaseHandle.beginTransaction();
 		
-					ITimelineItem lastAction = daoProvider.getAceDao().selectLastAction(databaseHandle.getHandle());
-		
 					int eventCount = 0;
-					ITimelineItem nextAction = E2E.selectNextAction(lastAction != null ? lastAction.getUuid() : null);
+					ITimelineItem nextAction = E2E.selectNextAction();
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
 							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
 							if (nextEvent != null) {
-								LOG.info("PUBLISH EVENT " + nextEvent.getName());
+								LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
 								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
 										daoProvider, viewProvider);
-								event.notifyListeners();
-								daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
-								eventCount++;
-								LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+								if (event != null) {
+									event.notifyListeners();
+									daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
+									eventCount++;
+								} else {
+									LOG.error("failed to create " + nextEvent.getName());
+								}
 							}
 						}
-						nextAction = E2E.selectNextAction(nextAction.getUuid());
+						nextAction = E2E.selectNextAction();
 					}
 		
 					databaseHandle.commitTransaction();
 					return Response.ok("prepared action " + uuid + " by publishing " + eventCount + " events").build();
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
-					LOG.info("exception during prepare action " + uuid, e);
+					LOG.error("exception during prepare action " + uuid);
+					LOG.error(e.getMessage());
 					throw new WebApplicationException(e);
 				} finally {
 					databaseHandle.close();
@@ -633,7 +633,6 @@ class AceTemplate {
 		
 		}
 		
-
 	'''
 	
 	def generateStopE2ESessionResource() '''
@@ -666,13 +665,52 @@ class AceTemplate {
 			@Timed
 			@Path("/stop")
 			public Response put() {
-				E2E.sessionIsRunning = false;
-				E2E.sessionStartedAt = null;
-				E2E.timeline = null;
+				E2E.reset();
 				return Response.ok().build();
 			}
 		
 		}
+		
+	'''
+	
+	def generateAceOperation() '''
+		package com.anfelisa.ace;
+		
+		public class AceOperation {
+		
+			private ITimelineItem action;
+			private ITimelineItem command;
+			private ITimelineItem event;
+			private String uuid;
+		
+			public AceOperation(String uuid) {
+				super();
+				this.uuid = uuid;
+			}
+			public ITimelineItem getAction() {
+				return action;
+			}
+			public ITimelineItem getCommand() {
+				return command;
+			}
+			public ITimelineItem getEvent() {
+				return event;
+			}
+			public void setAction(ITimelineItem action) {
+				this.action = action;
+			}
+			public void setCommand(ITimelineItem command) {
+				this.command = command;
+			}
+			public void setEvent(ITimelineItem event) {
+				this.event = event;
+			}
+			public String getUuid() {
+				return uuid;
+			}
+			
+		}
+		
 	'''
 	
 	def generateAceDao() '''

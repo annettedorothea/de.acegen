@@ -445,7 +445,7 @@ class AceTemplate {
 		            if (item.action) {
 		                const actionData = item.action.actionData;
 		                let action = ACEController.factories[item.action.actionName](actionData);
-		                action.actionData.uuid = item.action.actionData.uuid;
+		                action.actionData = actionData;
 		                actions.push(action);
 		            }
 		        }
