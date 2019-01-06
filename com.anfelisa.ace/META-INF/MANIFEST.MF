@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.anfelisa.ace
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 4.0.1
+Bundle-Version: 4.1.0
 Bundle-SymbolicName: com.anfelisa.ace; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
