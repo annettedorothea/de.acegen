@@ -227,9 +227,12 @@ class ActionTemplate {
 					} else {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
 						if (timelineItem != null) {
-							originalData = mapper.readValue(timelineItem.getData(), IDataContainer.class);
-							this.actionData.setSystemTime(originalData.getSystemTime());
-							this.actionData.overwriteNotReplayableData(originalData);
+							IAction action = ActionFactory.createAction(timelineItem.getName(), timelineItem.getData(), jdbi, appConfiguration, daoProvider, viewProvider);
+							if (action != null) {
+								originalData = action.getActionData();
+								this.actionData.setSystemTime(originalData.getSystemTime());
+								this.actionData.overwriteNotReplayableData(originalData);
+							}
 						}
 					}
 					daoProvider.addActionToTimeline(this);
@@ -411,6 +414,75 @@ class ActionTemplate {
 		viewProvider.addConsumer("«java.name».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
 			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.model.dataNameWithPackage») dataContainer, handle);
 		});
+		
+	'''
+
+	def generateActionFactory(JAVA it) '''
+		package «name».actions;
+		
+		import java.io.IOException;
+		
+		import org.jdbi.v3.core.Jdbi;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.IAction;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.JodaObjectMapper;
+		import com.anfelisa.ace.ViewProvider;
+		import «name».data.*;
+		import com.fasterxml.jackson.databind.DeserializationFeature;		
+		
+		public class ActionFactory {
+			
+			private static JodaObjectMapper mapper = new JodaObjectMapper();
+			private static final Logger LOG = LoggerFactory.getLogger(ActionFactory.class);
+		
+			static {
+				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			}
+		
+			public static IAction createAction(String actionClass, String json, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				try {
+					«FOR ace : aceOperations»
+						«FOR outcome : ace.outcomes»
+							«IF outcome.listeners.size > 0»
+								if (actionClass.equals("«name».actions.«ace.actionName»")) {
+									«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
+									data.migrateLegacyData(json);
+									«ace.actionName» action = new «ace.actionName»(jdbi, appConfiguration, daoProvider, viewProvider);
+									return action;
+								}
+							«ENDIF»
+						«ENDFOR»
+					«ENDFOR»
+				} catch (IOException e) {
+					LOG.error("failed to create action {} with data {}", actionClass, json, e);
+				}
+		
+				return null;
+			}
+		}
+		
+	'''
+	
+	def generateActionFactory() '''
+		package com.anfelisa.ace;
+		
+		import org.jdbi.v3.core.Jdbi;
+		
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.IAction;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.ViewProvider;
+		
+		public class ActionFactory {
+			public static IAction createAction(String actionClass, String json, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				//delegate to package ActionFactory
+				return null;
+			}
+		}
 		
 	'''
 	

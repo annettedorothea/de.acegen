@@ -109,8 +109,14 @@ class JavaGenerator {
 		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
 
+		fsa.generateFile(java.packageFolder + '/actions/ActionFactory.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateActionFactory(java));
+
 		fsa.generateFile('com/anfelisa/ace/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateEventFactory());
+
+		fsa.generateFile('com/anfelisa/ace/ActionFactory.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, actionTemplate.generateActionFactory());
 
 		fsa.generateFile(java.packageFolder + '/AppRegistration.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAppRegistration(java));
