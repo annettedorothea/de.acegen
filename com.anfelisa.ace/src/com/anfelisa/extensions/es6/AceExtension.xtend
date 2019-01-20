@@ -3,7 +3,6 @@ package com.anfelisa.extensions.es6
 import com.anfelisa.ace.ES6
 import com.anfelisa.ace.ES6_ACE
 import com.anfelisa.ace.ES6_Outcome
-import com.anfelisa.ace.ES6_View
 import java.util.ArrayList
 import java.util.List
 
@@ -19,23 +18,6 @@ class AceExtension {
 	def String resourceName(ES6_ACE it) '''«name.toFirstUpper»Resource'''
 
 	def String actionNameWithPackage(ES6_ACE it) '''«(eContainer as ES6).name».actions.«actionName»'''
-
-	def List<ES6_View> preAndPostUpdateUIViews(ES6_ACE it) {
-		var list = new ArrayList<ES6_View>();
-		for (viewFuction : preCall) {
-			val view = viewFuction.eContainer as ES6_View;
-			if (!list.contains(view)) {
-				list.add(view);
-			}
-		}
-		for (viewFuction : postCall) {
-			val view = viewFuction.eContainer as ES6_View;
-			if (!list.contains(view)) {
-				list.add(view);
-			}
-		}
-		return list;
-	}
 
 	def String abstractCommandName(ES6_ACE it) '''Abstract«name.toFirstUpper»Command'''
 

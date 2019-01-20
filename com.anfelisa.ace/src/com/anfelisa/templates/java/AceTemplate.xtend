@@ -424,7 +424,7 @@ class AceTemplate {
 		
 					databaseHandle.commitTransaction();
 		
-					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
+					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + i + " events");
 		
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
@@ -1013,8 +1013,8 @@ class AceTemplate {
 		
 			@Override
 			public void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
-				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), "exception", null, x.getClass().getName(),
-						x.getMessage(), uuid);
+				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), "exception", "", x.getClass().getName(),
+						x.getMessage() != null ? x.getMessage() : "", uuid);
 			}
 		
 			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
@@ -1131,7 +1131,7 @@ class AceTemplate {
 			<column name="time" type="timestamp">
 				<constraints nullable="false" />
 			</column>
-			<column name="data" type="character varying">
+			<column name="data" type="text">
 				<constraints nullable="false" />
 			</column>
 			<column name="uuid" type="character varying">

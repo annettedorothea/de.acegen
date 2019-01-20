@@ -9,35 +9,42 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
         eType="#//ES6_ACE" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="views" upperBound="-1"
-        eType="#//ES6_View" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="appStateRef" eType="#//ES6_StateElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="appState" eType="#//ES6_StateElement"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ES6_ACE">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" unique="false" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="preCall" unique="false"
-        upperBound="-1" eType="#//ES6_ViewFunction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//JAVA_ACE"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="postCall" unique="false"
-        upperBound="-1" eType="#//ES6_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//ES6_StateElement"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//ES6_Outcome" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ES6_Outcome">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
-        upperBound="-1" eType="#//ES6_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" upperBound="-1"
+        eType="#//ES6_StateFunction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
         upperBound="-1" eType="#//ES6_ACE"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ES6_View">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
-        eType="#//ES6_ViewFunction" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_StateFunction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateFunctionType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//ES6_StateElement"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ES6_ViewFunction">
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_StateElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="list" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="storage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
+        eType="#//ES6_TypeDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ES6_TypeDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//ES6_StateElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JAVA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

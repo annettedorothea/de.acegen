@@ -148,7 +148,7 @@ class JavaGenerator {
 		fsa.generateFile("com/anfelisa/ace" + '/GetServerInfoResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateGetServerInfoResource());
 		fsa.generateFile("com/anfelisa/ace" + '/EventReplayCommand.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventReplayCommand());
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, aceTemplate.generateEventReplayCommand());
 
 		fsa.generateFile("com/anfelisa/ace" + '/AceDao.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateAceDao());

@@ -13,27 +13,35 @@
     <genClasses ecoreClass="Ace.ecore#//ES6">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6/aceOperations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6/views"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6/appStateRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6/appState"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ES6_ACE">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_ACE/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_ACE/input"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_ACE/preCall"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_ACE/serverCall"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_ACE/postCall"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_ACE/loadingFlag"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_ACE/outcomes"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//ES6_Outcome">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_Outcome/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_Outcome/listeners"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_Outcome/listeners"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_Outcome/aceOperations"/>
     </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//ES6_View">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_View/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_View/renderFunctions"/>
+    <genClasses ecoreClass="Ace.ecore#//ES6_StateFunction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_StateFunction/stateFunctionType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_StateFunction/attribute"/>
     </genClasses>
-    <genClasses ecoreClass="Ace.ecore#//ES6_ViewFunction">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_ViewFunction/name"/>
+    <genClasses ecoreClass="Ace.ecore#//ES6_StateElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_StateElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_StateElement/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_StateElement/hash"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_StateElement/storage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_StateElement/types"/>
+    </genClasses>
+    <genClasses ecoreClass="Ace.ecore#//ES6_TypeDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//ES6_TypeDefinition/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//ES6_TypeDefinition/elements"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//JAVA">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//JAVA/name"/>

@@ -2,7 +2,6 @@ package com.anfelisa.generator
 
 import com.anfelisa.ace.ES6
 import com.anfelisa.extensions.es6.AceExtension
-import com.anfelisa.extensions.es6.ViewExtension
 import com.anfelisa.templates.es6.AceTemplate
 import com.anfelisa.templates.es6.ActionTemplate
 import com.anfelisa.templates.es6.CommandTemplate
@@ -26,9 +25,6 @@ class Es6Generator {
 
 	@Inject
 	extension AceExtension
-
-	@Inject
-	extension ViewExtension
 
 	def void doGenerate(ES6 es6, IFileSystemAccess2 fsa) {
 		for (ace : es6.aceOperations) {
@@ -64,10 +60,6 @@ class Es6Generator {
 			actionTemplate.generateActionFactoryRegistration(es6));
 		fsa.generateFile(es6.name + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateActionFunctionExports(es6));
-		for (view : es6.views) {
-			fsa.generateFile(es6.name + '/views/' + view.viewName + '.js',
-				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, eventTemplate.generateView(view, es6));
-		}
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppStub());
 		fsa.generateFile('app/AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
@@ -90,5 +82,13 @@ class Es6Generator {
 		fsa.generateFile('ace/Scenario.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateScenario());
 		fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateBug());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
+		if (es6.appState !== null) {
+			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				aceTemplate.generateAppState(es6.appState, ""));
+		} else if (es6.appStateRef !== null)  {
+			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				aceTemplate.generateAppState(es6.appStateRef, ""));
+		}
+		
 	}
 }

@@ -180,6 +180,7 @@ class EventTemplate {
 		import «name».data.*;
 		import com.anfelisa.ace.JodaObjectMapper;
 		import com.fasterxml.jackson.databind.DeserializationFeature;
+		import com.anfelisa.ace.IDataContainer;
 		
 		import java.io.IOException;
 		
@@ -216,6 +217,21 @@ class EventTemplate {
 		
 				return null;
 			}
+		
+			public static IEvent createEvent(String eventClass, IDataContainer data, DatabaseHandle databaseHandle,
+				IDaoProvider daoProvider, ViewProvider viewProvider) {
+				«FOR ace : aceOperations»
+					«FOR outcome : ace.outcomes»
+						«IF outcome.listeners.size > 0»
+							if (eventClass.equals("«name».events.«ace.eventName(outcome)»")) {
+								return new «ace.eventName(outcome)»((«ace.model.dataName»)data, databaseHandle, daoProvider, viewProvider);
+							}
+						«ENDIF»
+					«ENDFOR»
+				«ENDFOR»
+		
+				return null;
+			}
 		}
 		
 	'''
@@ -225,6 +241,11 @@ class EventTemplate {
 		
 		public class EventFactory {
 			public static IEvent createEvent(String eventClass, String json, DatabaseHandle databaseHandle,
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
+				//delegate to package EventFactory
+				return null;
+			}
+			public static IEvent createEvent(String eventClass, IDataContainer data, DatabaseHandle databaseHandle,
 					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				//delegate to package EventFactory
 				return null;

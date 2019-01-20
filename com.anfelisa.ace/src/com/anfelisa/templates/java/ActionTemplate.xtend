@@ -46,6 +46,7 @@ class ActionTemplate {
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IDataContainer;
 		
 		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
@@ -80,6 +81,10 @@ class ActionTemplate {
 				«ELSE»
 					return null;
 				«ENDIF»
+			}
+			
+			public void setActionData(IDataContainer data) {
+				this.actionData = («model.dataParamType»)data;
 			}
 		
 			«IF !type.equals("GET")»
@@ -254,18 +259,24 @@ class ActionTemplate {
 					databaseHandle.commitTransaction();
 					return response;
 				} catch (WebApplicationException x) {
-					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
-					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
-					x.printStackTrace();
-					App.reportException(x);
+					try {
+						databaseHandle.rollbackTransaction();
+						daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
 					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
 				} catch (Exception x) {
-					daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
-					databaseHandle.rollbackTransaction();
 					LOG.error(actionName + " failed " + x.getMessage());
-					x.printStackTrace();
-					App.reportException(x);
+					try {
+						databaseHandle.rollbackTransaction();
+						daoProvider.addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle);
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
 					return Response.status(500).entity(x.getMessage()).build();
 				} finally {
 					databaseHandle.close();
@@ -351,6 +362,8 @@ class ActionTemplate {
 			HttpMethod getHttpMethod();
 			
 			IDataContainer getActionData();
+			
+			void setActionData(IDataContainer data);
 			
 			ICommand getCommand();
 			
@@ -452,6 +465,7 @@ class ActionTemplate {
 									«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
 									data.migrateLegacyData(json);
 									«ace.actionName» action = new «ace.actionName»(jdbi, appConfiguration, daoProvider, viewProvider);
+									action.setActionData(data);
 									return action;
 								}
 							«ENDIF»

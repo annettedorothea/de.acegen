@@ -2,7 +2,7 @@
 <feature
       id="com.anfelisa.ace.feature"
       label="com.anfelisa.ace.feature"
-      version="4.0.1"
+      version="0.4.2"
       provider-name="Annette Pohl">
 
    <description url="http://www.example.com/description">

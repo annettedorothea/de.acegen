@@ -1,6 +1,13 @@
 package com.anfelisa.templates.es6
 
+import com.anfelisa.ace.ES6_StateElement
+import com.anfelisa.extensions.es6.Es6Extension
+import javax.inject.Inject
+
 class AceTemplate {
+	@Inject
+	extension Es6Extension
+	
 	def generateAppUtilsStub() '''
 		import ACEController from "../../gen/ace/ACEController";
 		import uuid from "uuid";
@@ -54,6 +61,16 @@ class AceTemplate {
 			static isDevelopment() {
 			    return AppUtils.settings.development;
 			}
+			
+			static createInitialAppState() {
+				return {};
+			}
+			
+		    static renderNewState() {
+		        // render the new state
+		        // you should get it from AppState
+		    }
+			
 		
 		    static httpGet(url, authorize, queryParams, commandData, adjustUrl = true) {
 				return new Promise((resolve, reject) => {
@@ -859,6 +876,113 @@ class AceTemplate {
 		/*       S.D.G.       */
 		
 		
+	'''
+	
+	def String generateAppState(ES6_StateElement it, String prefix) '''
+		import AppUtils from "../../src/app/AppUtils";
+		
+		let «name»;
+		
+		export function get«name.toFirstUpper»() {
+			return AppUtils.deepCopy(«name»);
+		}
+		
+		export function setInitial«name.toFirstUpper»(initial«name.toFirstUpper») {
+			«name» = AppUtils.deepCopy(initial«name.toFirstUpper»);
+		}
+		
+		«IF types !== null»
+			«FOR type : types»
+				«FOR element : type.elements»
+					«element.generateAppStateRec()»
+				«ENDFOR»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	def String generateAppStateRec(ES6_StateElement it) '''
+		«IF types === null || types.length == 0»
+			export function set_«functionName»(eventData) {
+				«IF hash»
+					location.hash = eventData.«name»;
+				«ELSEIF storage»
+					localStorage.setItem("«name»", eventData.«name»);
+				«ELSE»
+					«elementPath» = eventData.«name»;
+				«ENDIF»
+			}
+			
+			export function get_«functionName»() {
+				«IF hash»
+					return location.hash;
+				«ELSEIF storage»
+					return localStorage.getItem("«name»");
+				«ELSE»
+					return «elementPath»;
+				«ENDIF»
+			}
+			
+			export function reset_«functionName»() {
+				«IF hash»
+					location.hash = "";
+				«ELSEIF storage»
+					localStorage.removeItem("«name»");
+				«ELSE»
+					«elementPath» = null;
+				«ENDIF»
+			}
+		«ELSE»
+			export function set_«functionName»(eventData) {
+				«IF hash»
+					location.hash = eventData.«name»;
+				«ELSEIF storage»
+					localStorage.setItem("«name»", eventData.«name»);
+				«ELSE»
+					«elementPath» = eventData.«name»;
+				«ENDIF»
+			}
+			
+			export function get_«functionName»() {
+				«IF hash»
+					return location.hash;
+				«ELSEIF storage»
+					localStorage.getItem("«name»");
+				«ELSE»
+					return AppUtils.deepCopy(«elementPath»);
+				«ENDIF»
+			}
+			
+			«IF !list && !hash && !storage»
+				export function merge_«functionName»(eventData) {
+					«FOR type : types»
+						«FOR element : type.elements»
+							if (eventData.«element.name» !== undefined) {
+								«element.elementPath» = eventData.«element.name»;
+							}
+						«ENDFOR»
+					«ENDFOR»
+				}
+			«ENDIF»
+			
+			export function reset_«functionName»() {
+				«IF hash»
+					location.hash = "";
+				«ELSEIF storage»
+					localStorage.removeItem("«name»");
+				«ELSE»
+					«elementPath» = null;
+				«ENDIF»
+			}
+			
+			«IF types !== null && !list && !hash && !storage»
+				«FOR type : types»
+					«FOR element : type.elements»
+						«element.generateAppStateRec()»
+					«ENDFOR»
+				«ENDFOR»
+			«ENDIF»
+			
+		«ENDIF»
 	'''
 	
 }

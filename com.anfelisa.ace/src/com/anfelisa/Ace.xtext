@@ -9,31 +9,39 @@ Project:
 ES6: 
 	name = QualifiedName
 	('ACE' (aceOperations += ES6_ACE)*)?
-	('views' (views += ES6_View)* )?
+	('import' appStateRef = [ES6_StateElement | QualifiedName])?
+	('appState' appState = ES6_StateElement )?
 ;
 
 ES6_ACE: 
 	name = ID  ('<' input += ID (',' input += ID)* '>')?  
-	('preCall' '(' (preCall += [ES6_ViewFunction | QualifiedName])* ')')? 
 	('call' serverCall = [JAVA_ACE | QualifiedName] )? 
-	('postCall' '(' (postCall += [ES6_ViewFunction | QualifiedName])* ')')? 
+	('loadingFlag' loadingFlag = [ES6_StateElement | QualifiedName])? 
 	(outcomes += ES6_Outcome)*
 ;
 
 ES6_Outcome:
 	'on' name = ID 
-	('(' (listeners += [ES6_ViewFunction | QualifiedName])* ')')? 
+	('(' listeners += ES6_StateFunction* ')')? 
 	('triggers' '(' (aceOperations += [ES6_ACE | QualifiedName])* ')')? 
 ;
 
-ES6_View: 
-	name = ID ('{'
-		(renderFunctions += ES6_ViewFunction)*
-	'}')*
+ES6_StateFunction:
+	stateFunctionType = ES6_StateFunctionType attribute = [ES6_StateElement | QualifiedName]
 ;
 
-ES6_ViewFunction:
-	name = ID
+ES6_StateFunctionType:
+	'set' | 'merge' | 'reset'
+;
+
+ES6_StateElement:
+	name = ID list ?= 'list'? hash ?= 'location.hash'? storage ?= 'storage'? (types += ES6_TypeDefinition ('|' types += ES6_TypeDefinition)*)?
+;
+
+ES6_TypeDefinition:
+	':' name = ID '{'
+		elements += ES6_StateElement* 
+	'}'
 ;
 
 JAVA:

@@ -4,7 +4,6 @@ import com.anfelisa.ace.ES6
 import com.anfelisa.ace.ES6_ACE
 import com.anfelisa.extensions.es6.AceExtension
 import com.anfelisa.extensions.es6.Es6Extension
-import com.anfelisa.extensions.es6.ViewExtension
 import javax.inject.Inject
 
 class ActionTemplate {
@@ -12,25 +11,22 @@ class ActionTemplate {
 	extension AceExtension
 
 	@Inject
-	extension ViewExtension
-	
-	@Inject
 	extension Es6Extension
 	
 	def generateAbstractActionFile(ES6_ACE it, ES6 es6) '''
 		import Action from "../../ace/«IF serverCall !== null»AsynchronousAction«ELSE»SynchronousAction«ENDIF»";
 		«IF outcomes.size > 0»
 			import «commandName» from "../../../src/«es6.name»/commands/«commandName»";
-	    «ENDIF»
-		«FOR view : preAndPostUpdateUIViews»
-			import «view.viewName» from "../../../src/«(view.eContainer as ES6).name»/views/«view.viewName»";
-		«ENDFOR»
+		«ENDIF»
+		«IF loadingFlag !== null»
+			import * as AppState from "../../ace/AppState";
+		«ENDIF»
 
 		export default class «abstractActionName» extends Action {
 		
 		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam»«ENDFOR») {
 		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam»«ENDFOR»}, '«es6.name».«actionName»');
-				«IF serverCall !== null»
+				«IF loadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
 		    }
@@ -41,17 +37,13 @@ class ActionTemplate {
 				}
 			«ENDIF»
 		
-			«IF serverCall !== null»
+			«IF loadingFlag !== null»
 				preCall() {
-					«FOR viewFunction : preCall»
-						«viewFunction.viewFunctionWithViewName»(this.actionData);
-					«ENDFOR»
+					AppState.set_«loadingFlag.functionName»({«loadingFlag.name»: true});
 				}
 				
 				postCall() {
-					«FOR viewFunction : postCall»
-						«viewFunction.viewFunctionWithViewName»(this.actionData);
-					«ENDFOR»
+					AppState.set_«loadingFlag.functionName»({«loadingFlag.name»: false});
 				}
 			«ENDIF»
 		
@@ -151,28 +143,32 @@ class ActionTemplate {
 			
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
-		            this.preCall();
+		            if (this.preCall) {
+		            	this.preCall();
+		            }
+		            AppUtils.renderNewState();
 		            if (ACEController.execution === ACEController.LIVE) {
 		                this.actionData.uuid = AppUtils.createUUID();
 		                this.initActionData();
 		            }
 		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
-		            if (command) {
-		                command.executeCommand().then(
-		                    () => {
-		                        this.postCall();
-		                        resolve();
-		                    },
-		                    (error) => {
-		                        this.postCall();
-		                        reject(error);
-		                    }
-		                );
-		            } else {
-		                this.postCall();
-		                resolve();
-		            }
+					command.executeCommand().then(
+					    () => {
+				            if (this.postCall) {
+				            	this.postCall();
+				            }
+					        AppUtils.renderNewState();
+					        resolve();
+					    },
+					    (error) => {
+				            if (this.postCall) {
+				            	this.postCall();
+				            }
+					        AppUtils.renderNewState();
+					        reject(error);
+					    }
+					);
 		        });
 		    }
 		
@@ -201,9 +197,8 @@ class ActionTemplate {
 		        }
 		        ACEController.addItemToTimeLine({action: this});
 		        let command = this.getCommand();
-		        if (command) {
-		            command.executeCommand();
-		        }
+		        command.executeCommand();
+		        AppUtils.renderNewState();
 		    }
 		}
 		
