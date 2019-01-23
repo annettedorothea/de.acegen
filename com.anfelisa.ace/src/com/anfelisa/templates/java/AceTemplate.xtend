@@ -368,11 +368,8 @@ class AceTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(EventReplayCommand.class);
 		
-			private IDaoProvider daoProvider;
-		
-			protected EventReplayCommand(Application<CustomAppConfiguration> application, IDaoProvider daoProvider) {
+			protected EventReplayCommand(Application<CustomAppConfiguration> application) {
 				super(application, "replay", "truncates views and replays events");
-				this.daoProvider = daoProvider;
 			}
 		
 			@Override
@@ -385,13 +382,12 @@ class AceTemplate {
 					throw new RuntimeException("replay events in a replay environment doesn't make sense");
 				}
 		
+				IDaoProvider daoProvider = DaoProvider.create();
+				ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);
+
 				final JdbiFactory factory = new JdbiFactory();
-		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
-		
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
-		
-				ViewProvider viewProvider = new ViewProvider(daoProvider, new EmailService(configuration.getEmail()));
 		
 				AppRegistration.registerConsumers(viewProvider, ServerConfiguration.REPLAY);
 		
@@ -405,21 +401,14 @@ class AceTemplate {
 		
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
-						try {
-							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
-									daoProvider, viewProvider);
-							event.notifyListeners();
-							i++;
-							if (i%1000 == 0) {
-								LOG.info("published " + i + " events");
-							}
-							//LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
-						} catch (Exception e) {
-							LOG.error("failed to replay event " + nextEvent.getUuid() + " - " + nextEvent.getName());
-							LOG.error("  --- " + nextEvent.getData());
-							LOG.error(e.getMessage());
-							//e.printStackTrace();
+						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
+								daoProvider, viewProvider);
+						event.notifyListeners();
+						i++;
+						if (i%1000 == 0) {
+							LOG.info("published " + i + " events");
 						}
+						//LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
 					}
 		
 					databaseHandle.commitTransaction();
@@ -1034,10 +1023,16 @@ class AceTemplate {
 		
 		import org.jdbi.v3.core.Handle;
 
-		public class DaoProvider extends AbstractDaoProvider {
+		public class DaoProvider extends AbstractDaoProvider implements IDaoProvider {
+			
+			public static IDaoProvider create() {
+				return new DaoProvider();
+			}
+			
 			@Override
 			public void truncateAllViews(Handle handle) {
 			}
+			
 		}
 		
 	'''
@@ -1078,6 +1073,10 @@ class AceTemplate {
 		public class ViewProvider extends AbstractViewProvider {
 		
 			public ViewProvider() {
+			}
+		
+			public static ViewProvider create() {
+				return new ViewProvider();
 			}
 		
 		}

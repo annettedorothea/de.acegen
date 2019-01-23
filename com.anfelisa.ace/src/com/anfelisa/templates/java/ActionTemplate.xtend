@@ -238,22 +238,20 @@ class ActionTemplate {
 								this.actionData.setSystemTime(originalData.getSystemTime());
 								this.actionData.overwriteNotReplayableData(originalData);
 							}
+						} else {
+							throw new WebApplicationException("action for " + this.actionData.getUuid() + " not found in timeline");
 						}
 					}
 					daoProvider.addActionToTimeline(this);
-					if (httpMethod != HttpMethod.GET) {
-						ICommand command = this.getCommand();
-						if (command != null) {
-							command.execute();
-							if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-								command.getCommandData().overwriteNotReplayableData(originalData);
-							}
-							command.publishEvents();
-						} else {
-							throw new WebApplicationException(actionName + " returns no command");
-						}
-					} else {
+					if (httpMethod == HttpMethod.GET) {
 						this.loadDataForGetRequest();
+					} else {
+						ICommand command = this.getCommand();
+						command.execute();
+						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+							command.getCommandData().overwriteNotReplayableData(originalData);
+						}
+						command.publishEvents();
 					}
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
@@ -320,18 +318,18 @@ class ActionTemplate {
 			}
 		
 			protected void throwInternalServerError(Exception x) {
-			String message = x.getMessage();
-			StackTraceElement[] stackTrace = x.getStackTrace();
-			int i = 1;
-			for (StackTraceElement stackTraceElement : stackTrace) {
-				message += "\n" + stackTraceElement.toString();
-				if (i > 3) {
-					message += "\n" + (stackTrace.length - 4) + " more...";
-					break;
+				String message = x.getMessage();
+				StackTraceElement[] stackTrace = x.getStackTrace();
+				int i = 1;
+				for (StackTraceElement stackTraceElement : stackTrace) {
+					message += "\n" + stackTraceElement.toString();
+					if (i > 3) {
+						message += "\n" + (stackTrace.length - 4) + " more...";
+						break;
+					}
+					i++;
 				}
-				i++;
-			}
-			throw new WebApplicationException(message, Response.Status.INTERNAL_SERVER_ERROR);
+				throw new WebApplicationException(message, Response.Status.INTERNAL_SERVER_ERROR);
 			}
 		
 			protected Object createReponse() {
