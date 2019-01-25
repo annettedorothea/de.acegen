@@ -226,7 +226,7 @@ class ActionTemplate {
 					if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
 							databaseHandle.commitTransaction();
-							return Response.status(500).entity("uuid already exists - please choose another one").build();
+							throwBadRequest("uuid already exists - please choose another one");
 						}
 						this.actionData.setSystemTime(new DateTime());
 					} else {

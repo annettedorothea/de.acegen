@@ -106,6 +106,10 @@ class JavaGenerator {
 			fsa.generateFile(java.packageFolder + '/views/' + view.viewInterfaceName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
 		}
+
+		fsa.generateFile(java.packageFolder + '/BaseTest.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest(java));
+
 		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
 
@@ -135,6 +139,8 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateServerConfiguration());
 		fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStartE2ESessionResource());
+		fsa.generateFile("com/anfelisa/ace" + '/ReplayEventsResource.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateReplayEventsResource());
 		fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStopE2ESessionResource());
 		fsa.generateFile("com/anfelisa/ace" + '/AceOperation.java',

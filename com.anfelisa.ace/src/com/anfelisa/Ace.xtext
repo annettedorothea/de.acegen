@@ -50,7 +50,7 @@ JAVA:
 	('import' authUserRef = [AuthUser | QualifiedName])?
 	('ACE' (aceOperations += JAVA_ACE)*	)?
 	('views' (views += JAVA_View)* )?
-	('models' 'schema' schema = ID (models += Model)*)?
+	('models' (models += Model)*)?
 ;
 
 JAVA_ACE: 

@@ -97,6 +97,12 @@ class AttributeExtension {
 			return this.«name»;
 		}'''
 	
+	def String with(Attribute it, Model model) '''
+		public «model.dataInterfaceName» with«name.toFirstUpper»(«javaType» «name») {
+			this.«name» = «name»;
+			return this;
+		}'''
+	
 	def String setter(Attribute it) '''
 		public void set«name.toFirstUpper»(«javaType» «name») {
 			this.«name» = «name»;

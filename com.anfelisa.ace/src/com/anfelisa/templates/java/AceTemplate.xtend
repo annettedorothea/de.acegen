@@ -1,13 +1,18 @@
 package com.anfelisa.templates.java
 
 import com.anfelisa.ace.AuthUser
+import com.anfelisa.ace.JAVA
 import com.anfelisa.extensions.java.AttributeExtension
+import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class AceTemplate {
 
 	@Inject
 	extension AttributeExtension
+	
+	@Inject
+	extension ModelExtension
 	
 	def generateApp() '''
 		package com.anfelisa.ace;
@@ -65,8 +70,6 @@ class AceTemplate {
 			@Override
 			public void run(CustomAppConfiguration configuration, Environment environment) throws ClassNotFoundException {
 				LOG.info("running version {}", getVersion());
-		
-				AceDao.setSchemaName(null);
 		
 				final DBIFactory factory = new DBIFactory();
 		
@@ -345,6 +348,85 @@ class AceTemplate {
 			}
 		
 		}
+		
+	'''
+	
+	def generateReplayEventsResource() '''
+		package com.anfelisa.ace;
+		
+		import java.util.List;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.Jdbi;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/test")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class ReplayEventsResource {
+		
+			private Jdbi jdbi;
+		
+			static final Logger LOG = LoggerFactory.getLogger(ReplayEventsResource.class);
+		
+			private IDaoProvider daoProvider;
+			private ViewProvider viewProvider;
+		
+			public ReplayEventsResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super();
+				this.jdbi = jdbi;
+				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
+			}
+		
+			@PUT
+			@Timed
+			@Path("/prepare")
+			public Response put(@NotNull List<ITimelineItem> timeline) {
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
+				try {
+					databaseHandle.beginTransaction();
+		
+					Handle handle = databaseHandle.getHandle();
+					daoProvider.truncateAllViews(handle);
+					daoProvider.getAceDao().truncateTimelineTable(handle);
+		
+					for (ITimelineItem nextEvent : timeline) {
+						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
+								daoProvider, viewProvider);
+						event.notifyListeners();
+						daoProvider.addPreparingEventToTimeline(event, nextEvent.getUuid());
+						LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+					}
+		
+					databaseHandle.commitTransaction();
+		
+					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
+					return Response.ok("prepared test by publishing " + timeline.size() + " events").build();
+				} catch (Exception e) {
+					databaseHandle.rollbackTransaction();
+					LOG.error("exception during prepare test");
+					LOG.error(e.getMessage());
+					throw new WebApplicationException(e);
+				} finally {
+					databaseHandle.close();
+				}
+			}
+		
+		}
+		
 		
 	'''
 	
@@ -714,27 +796,13 @@ class AceTemplate {
 		
 		public class AceDao {
 		
-			private static String schemaName = "public";
-		
-			public static void setSchemaName(String schemaName) {
-				AceDao.schemaName = schemaName;
-			}
-		
-			private String timelineTable() {
-				if (StringUtils.isBlank(AceDao.schemaName)) {
-					return "public.timeline";
-				} else {
-					return AceDao.schemaName + ".timeline";
-				}
-			}
-		
 			public void truncateTimelineTable(Handle handle) {
-				handle.execute("TRUNCATE " + timelineTable());
+				handle.execute("TRUNCATE TABLE timeline");
 			}
 		
 			public boolean contains(Handle handle, String uuid) {
 				Optional<Integer> optional = handle
-						.createQuery("SELECT count(uuid) " + "FROM " + timelineTable() + " "
+						.createQuery("SELECT count(uuid) " + "FROM timeline "
 								+ "where uuid = :uuid")
 						.bind("uuid", uuid)
 						.mapTo((Integer.class)).findFirst();
@@ -743,8 +811,7 @@ class AceTemplate {
 			}
 
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
-				Update statement = handle.createUpdate("INSERT INTO " + timelineTable()
-						+ " (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
+				Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
 				statement.bind("type", type);
 				if (method != null) {
 					statement.bind("method", method);
@@ -759,8 +826,7 @@ class AceTemplate {
 		
 			public ITimelineItem selectLastAction(Handle handle) {
 				Optional<ITimelineItem> optional = handle
-						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "order by time desc " + "limit 1")
+						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time desc limit 1")
 						.map(new TimelineItemMapper())
 						.findFirst();
 				return optional.isPresent() ? optional.get() : null;
@@ -768,15 +834,13 @@ class AceTemplate {
 		
 			public List<ITimelineItem> selectTimeline(Handle handle) {
 				return handle
-						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "order by time asc ")
+						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time asc")
 						.map(new TimelineItemMapper()).list();
 			}
 			
 			public List<ITimelineItem> selectReplayTimeline(Handle handle) {
 				return handle
-						.createQuery("SELECT type, method, name, time, data, uuid " + "FROM " + timelineTable() + " "
-								+ "where type = 'event' order by time asc ")
+						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline where type = 'event' order by time asc ")
 						.map(new TimelineItemMapper()).list();
 			}
 			
@@ -1185,6 +1249,129 @@ class AceTemplate {
 		public interface EventConsumer {
 			public void consumeEvent(IDataContainer data, Handle handle);
 		}
+	'''
+	
+	def generateBaseTest(JAVA it) '''
+		package «name»;
+		
+		import static org.hamcrest.MatcherAssert.assertThat;
+		import static org.hamcrest.Matchers.is;
+		
+		import java.sql.Connection;
+		import java.sql.SQLException;
+		import java.util.ArrayList;
+		import java.util.List;
+		import java.util.UUID;
+		
+		import javax.ws.rs.client.Client;
+		import javax.ws.rs.client.Entity;
+		import javax.ws.rs.core.Response;
+		
+		import org.glassfish.jersey.client.JerseyClientBuilder;
+		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.Jdbi;
+		import org.joda.time.DateTime;
+		import org.junit.After;
+		import org.junit.AfterClass;
+		import org.junit.Before;
+		import org.junit.BeforeClass;
+		import org.mockito.MockitoAnnotations;
+		
+		import com.anfelisa.ace.App;
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ITimelineItem;
+		import com.anfelisa.ace.JodaObjectMapper;
+		import com.anfelisa.ace.TimelineItem;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		import io.dropwizard.db.ManagedDataSource;
+		import io.dropwizard.jdbi3.JdbiFactory;
+		import io.dropwizard.testing.ConfigOverride;
+		import io.dropwizard.testing.DropwizardTestSupport;
+		import liquibase.Liquibase;
+		import liquibase.database.jvm.JdbcConnection;
+		import liquibase.exception.LiquibaseException;
+		import liquibase.resource.ClassLoaderResourceAccessor;
+		
+		public class BaseTest {
+		
+			protected final JodaObjectMapper mapper = new JodaObjectMapper();
+		
+			protected DaoProvider daoProvider;
+		
+			protected Handle handle;
+		
+			public static final DropwizardTestSupport<CustomAppConfiguration> SUPPORT = new DropwizardTestSupport<CustomAppConfiguration>(
+					App.class, "test.yml", ConfigOverride.config("server.applicationConnectors[0].port", "0"));
+		
+			@BeforeClass
+			public static void beforeClass() throws SQLException, LiquibaseException {
+				SUPPORT.before();
+				ManagedDataSource ds = SUPPORT.getConfiguration().getDataSourceFactory().build(SUPPORT.getEnvironment().metrics(), "migrations");
+				try (Connection connection = ds.getConnection()) {
+					Liquibase migrator = new Liquibase("migrations.xml", new ClassLoaderResourceAccessor(),
+							new JdbcConnection(connection));
+					migrator.update("");
+				}
+			}
+		
+			@AfterClass
+			public static void afterClass() {
+				SUPPORT.after();
+			}
+		
+			@Before
+			public void before() {
+				final JdbiFactory factory = new JdbiFactory();
+				Jdbi jdbi = factory.build(SUPPORT.getEnvironment(), SUPPORT.getConfiguration().getDataSourceFactory(), "testdb");
+				daoProvider = new DaoProvider();
+				handle = jdbi.open();
+				MockitoAnnotations.initMocks(this);
+			}
+		
+			@After
+			public void after() {
+				handle.close();
+			}
+		
+			protected void prepare(List<ITimelineItem> timeline) {
+				Client client = new JerseyClientBuilder().build();
+				client.target(String.format("http://localhost:%d/api/test/prepare", SUPPORT.getLocalPort()))
+						.request().put(Entity.json(timeline));
+			}
+			
+			«FOR aceOperation : aceOperations»
+				«IF aceOperation.type == "POST"»
+					protected Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataNameWithPackage» data) {
+						Client client = new JerseyClientBuilder().build();
+						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+								.post(Entity.json(data));
+					}
+				«ELSEIF aceOperation.type == "PUT"»
+					protected Response call«aceOperation.name.toFirstUpper»(«IF aceOperation.payload.length > 0» «aceOperation.model.dataNameWithPackage» data«ENDIF») {
+						Client client = new JerseyClientBuilder().build();
+						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+								.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
+					}
+				«ELSEIF aceOperation.type == "DELETE"»
+					protected Response call«aceOperation.name.toFirstUpper»() {
+						Client client = new JerseyClientBuilder().build();
+						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+								.delete();
+					}
+				«ELSE»
+					protected Response call«aceOperation.name.toFirstUpper»(String uuid) {
+						Client client = new JerseyClientBuilder().build();
+						return client.target(
+								String.format("http://localhost:%d/api«aceOperation.url»?uuid=%s", SUPPORT.getLocalPort(), uuid))
+								.request().get();
+					}
+				«ENDIF»
+			«ENDFOR»
+		
+		}
+		
 	'''
 
 }

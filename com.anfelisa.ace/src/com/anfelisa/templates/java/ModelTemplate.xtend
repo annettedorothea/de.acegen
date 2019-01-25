@@ -88,6 +88,12 @@ class ModelTemplate {
 			«FOR superModel : superModels»
 				void mapFrom(«superModel.interfaceWithPackage» model);
 			«ENDFOR»
+			
+			«FOR attribute : allAttributes»
+				«dataInterfaceName» with«attribute.name.toFirstUpper»(«attribute.javaType» «attribute.name»);
+				
+			«ENDFOR»
+			
 		}
 		
 		/*       S.D.G.       */
@@ -139,6 +145,7 @@ class ModelTemplate {
 			«FOR attribute : allAttributes»
 				«attribute.getter(true)»
 				«attribute.setter»
+				«attribute.with(it)»
 				
 			«ENDFOR»
 			
@@ -283,6 +290,9 @@ class ModelTemplate {
 				«attribute.declaration»
 				
 			«ENDFOR»
+			public «responseDataName»() {
+			}
+			
 			public «responseDataName»(«model.interfaceWithPackage» data) {
 				«FOR attribute : response»
 					«attribute.name» = data.«attribute.getterCall»;
@@ -325,7 +335,7 @@ class ModelTemplate {
 		public class «abstractModelDao» {
 			
 			public void insert(Handle handle, «modelName» «modelParam») {
-				Update statement = handle.createUpdate("INSERT INTO «java.schema».«table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
+				Update statement = handle.createUpdate("INSERT INTO «table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
 				«FOR attribute : attributes»
 					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 				«ENDFOR»
@@ -335,7 +345,7 @@ class ModelTemplate {
 			
 			«FOR attribute : allUniqueAttributes»
 				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createUpdate("UPDATE «java.schema».«table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					Update statement = handle.createUpdate("UPDATE «table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
@@ -344,13 +354,13 @@ class ModelTemplate {
 				}
 
 				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Update statement = handle.createUpdate("DELETE FROM «java.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+					Update statement = handle.createUpdate("DELETE FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					statement.bind("«attribute.name.toLowerCase»", «attribute.name»);
 					statement.execute();
 				}
 
 				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Optional<«modelName»> optional = handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «java.schema».«table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+					Optional<«modelName»> optional = handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
 						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
 						.findFirst();
@@ -359,13 +369,13 @@ class ModelTemplate {
 			«ENDFOR»
 			
 			public List<«modelName»> selectAll(Handle handle) {
-				return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «java.schema».«table»")
+				return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table»")
 					.map(new «modelMapper»())
 					.list();
 			}
 
 			public void truncate(Handle handle) {
-				Update statement = handle.createUpdate("TRUNCATE «java.schema».«table» CASCADE");
+				Update statement = handle.createUpdate("TRUNCATE TABLE «table»");
 				statement.execute();
 			}
 
