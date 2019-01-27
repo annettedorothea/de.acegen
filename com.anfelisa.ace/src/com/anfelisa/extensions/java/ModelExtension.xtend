@@ -100,8 +100,16 @@ class ModelExtension {
 	def String abstractDataName(Model it) '''«IF it !== null»Abstract«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataInterfaceName(Model it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	def String dataNameWithPackage(Model it) '''«(eContainer as JAVA).name».data.«name.toFirstUpper»Data'''
+	def String dataInterfaceNameWithPackage(Model it) '''«(eContainer as JAVA).name».data.«dataInterfaceName»'''
 	
 	def String dataImport(Model it) '''
+		«IF it !== null»
+			import «(eContainer as JAVA).name».data.«dataInterfaceName»;
+		«ELSE»
+			import com.anfelisa.ace.IDataContainer;
+		«ENDIF»
+	'''
+	def String dataClassImport(Model it) '''
 		«IF it !== null»
 			import «(eContainer as JAVA).name».data.«dataName»;
 		«ELSE»
@@ -109,7 +117,7 @@ class ModelExtension {
 		«ENDIF»
 	'''
 	
-	def String dataParamType(Model it) '''«IF it !== null»«dataName»«ELSE»IDataContainer«ENDIF»'''
+	def String dataParamType(Model it) '''«IF it !== null»«dataInterfaceName»«ELSE»IDataContainer«ENDIF»'''
 	
 	def boolean containsAttribute(List<Attribute> it, Attribute attribute) {
 		if (size == 0) {

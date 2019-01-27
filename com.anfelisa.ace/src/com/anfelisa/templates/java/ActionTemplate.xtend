@@ -61,6 +61,7 @@ class ActionTemplate {
 		«IF authorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		
 		«model.dataImport»
+		«model.dataClassImport»
 		
 		«IF outcomes.size > 0»
 			import «commandNameWithPackage(java)»;
@@ -107,7 +108,7 @@ class ActionTemplate {
 					«IF payload.size > 0»@NotNull «model.dataParamType» payload)
 					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
 					throws JsonProcessingException {
-				this.actionData = new «model.dataParamType»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
+				this.actionData = new «model.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 				«FOR param : queryParams»
 					this.actionData.«param.setterCall(param.resourceParam)»;
 				«ENDFOR»

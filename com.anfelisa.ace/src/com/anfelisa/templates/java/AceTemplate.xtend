@@ -2,6 +2,7 @@ package com.anfelisa.templates.java
 
 import com.anfelisa.ace.AuthUser
 import com.anfelisa.ace.JAVA
+import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.AttributeExtension
 import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
@@ -13,6 +14,9 @@ class AceTemplate {
 	
 	@Inject
 	extension ModelExtension
+	
+	@Inject
+	extension AceExtension
 	
 	def generateApp() '''
 		package com.anfelisa.ace;
@@ -790,7 +794,6 @@ class AceTemplate {
 		import java.util.List;
 		import java.util.Optional;
 
-		import org.apache.commons.lang3.StringUtils;
 		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.statement.Update;
 		
@@ -1294,6 +1297,7 @@ class AceTemplate {
 		import liquibase.exception.LiquibaseException;
 		import liquibase.resource.ClassLoaderResourceAccessor;
 		
+		@SuppressWarnings("unused")
 		public class BaseTest {
 		
 			protected final JodaObjectMapper mapper = new JodaObjectMapper();
@@ -1341,33 +1345,66 @@ class AceTemplate {
 						.request().put(Entity.json(timeline));
 			}
 			
+			protected String randomUUID() {
+				return UUID.randomUUID().toString();
+			}
+			
 			«FOR aceOperation : aceOperations»
 				«IF aceOperation.type == "POST"»
-					protected Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataNameWithPackage» data) {
+					protected Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", SUPPORT.getLocalPort())).request()
 								.post(Entity.json(data));
 					}
 				«ELSEIF aceOperation.type == "PUT"»
-					protected Response call«aceOperation.name.toFirstUpper»(«IF aceOperation.payload.length > 0» «aceOperation.model.dataNameWithPackage» data«ENDIF») {
+					protected Response call«aceOperation.name.toFirstUpper»(
+							«IF aceOperation.payload.length > 0»«aceOperation.model.dataInterfaceNameWithPackage» data, «ENDIF»
+							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+						) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort())).request()
 								.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
 					}
 				«ELSEIF aceOperation.type == "DELETE"»
-					protected Response call«aceOperation.name.toFirstUpper»() {
+					protected Response call«aceOperation.name.toFirstUpper»(
+							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+					) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.url»", SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort())).request()
 								.delete();
 					}
 				«ELSE»
-					protected Response call«aceOperation.name.toFirstUpper»(String uuid) {
+					protected Response call«aceOperation.name.toFirstUpper»(
+							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+					) {
 						Client client = new JerseyClientBuilder().build();
 						return client.target(
-								String.format("http://localhost:%d/api«aceOperation.url»?uuid=%s", SUPPORT.getLocalPort(), uuid))
+								String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort()))
 								.request().get();
 					}
 				«ENDIF»
+				
+				«FOR outcome : aceOperation.outcomes»
+					public TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
+						«aceOperation.eventNameWithPackage(outcome)» event =  new «aceOperation.eventNameWithPackage(outcome)»(data, null, null, null);
+						String json = mapper.writeValueAsString(event.getEventData());
+						return new TimelineItem("prepare", null, event.getEventName(), null, json, randomUUID());
+					}
+				«ENDFOR»
+			«ENDFOR»
+			
+			«FOR model: models»
+				protected void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
+					«FOR attribute : model.attributes»
+						assertThat(actual.«attribute.getterCall», is(expected.«attribute.getterCall»));
+					«ENDFOR»
+				}
 			«ENDFOR»
 		
 		}

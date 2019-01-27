@@ -62,7 +62,7 @@ class EventTemplate {
 			}
 		
 			«FOR renderFunction : renderFunctions»
-				public void «renderFunction.name»(«renderFunction.model.dataName» data, Handle handle) {
+				public void «renderFunction.name»(«renderFunction.model.dataInterfaceName» data, Handle handle) {
 				}
 			«ENDFOR»
 		
@@ -85,7 +85,7 @@ class EventTemplate {
 		public interface «viewInterfaceName» {
 		
 			«FOR renderFunction : renderFunctions»
-				void «renderFunction.name»(«renderFunction.model.dataName» data, Handle handle);
+				void «renderFunction.name»(«renderFunction.model.dataInterfaceName» data, Handle handle);
 			«ENDFOR»
 		
 		}

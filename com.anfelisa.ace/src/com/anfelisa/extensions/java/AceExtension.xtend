@@ -3,6 +3,7 @@ package com.anfelisa.extensions.java
 import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.JAVA_Outcome
+import java.util.ArrayList
 import javax.inject.Inject
 
 class AceExtension {
@@ -39,5 +40,26 @@ class AceExtension {
 	def String responseDataName(JAVA_ACE  it) '''«name.toFirstUpper»Response'''
 	def String responseDataNameWithPackage(JAVA_ACE  it, JAVA java) '''«java.name».data.«name.toFirstUpper»Response'''
 	def String responseDataInterfaceName(JAVA_ACE it) '''I«name.toFirstUpper»Response'''
+	
+	def String urlWithPathParams(JAVA_ACE  it) {
+		if (pathParams.size == 0) {
+			return url;
+		}
+		val split1 = url.split('\\{')
+		var urlElements = new ArrayList();
+		for (split : split1) {
+			val split2 = split.split('\\}');
+			urlElements.addAll(split2)
+		}
+		var urlWithPathParam = "";
+		for (var i=0; i<urlElements.size; i++) {
+			if (i%2 == 0) {
+				urlWithPathParam += urlElements.get(i)
+			} else {
+				urlWithPathParam += '''" + «urlElements.get(i)» + "'''
+			}
+		}
+		return urlWithPathParam;
+	}
 	
 }
