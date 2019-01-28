@@ -141,6 +141,8 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStartE2ESessionResource());
 		fsa.generateFile("com/anfelisa/ace" + '/ReplayEventsResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateReplayEventsResource());
+		fsa.generateFile("com/anfelisa/ace" + '/SetSystemTimeResource.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateSetSystemTimeResource());
 		fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStopE2ESessionResource());
 		fsa.generateFile("com/anfelisa/ace" + '/AceOperation.java',

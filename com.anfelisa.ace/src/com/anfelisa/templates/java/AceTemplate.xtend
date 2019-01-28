@@ -84,8 +84,10 @@ class AceTemplate {
 					environment.jersey().register(new StartE2ESessionResource(jdbi));
 					environment.jersey().register(new StopE2ESessionResource());
 					environment.jersey().register(new GetServerTimelineResource(jdbi));
-				} else if (ServerConfiguration.DEV.equals(configuration.getServerConfiguration().getMode())) {
+				} else if (ServerConfiguration.DEV.equals(mode)) {
 					environment.jersey().register(new GetServerTimelineResource(jdbi));
+				} else if (ServerConfiguration.TEST.equals(mode)) {
+					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider));
 				}
 
 				environment.jersey().register(new GetServerInfoResource());
@@ -205,9 +207,9 @@ class AceTemplate {
 		
 		public class ServerConfiguration {
 			public static final String REPLAY = "REPLAY";
-			public static final String REPLAY_EVENTS = "REPLAY_EVENTS";
 			public static final String LIVE = "LIVE";
 			public static final String DEV = "DEV";
+			public static final String TEST = "TEST";
 			
 			private String mode = DEV;
 		
@@ -431,6 +433,40 @@ class AceTemplate {
 		
 		}
 		
+		
+	'''
+	
+	def generateSetSystemTimeResource() '''
+		package com.anfelisa.ace;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		
+		import com.codahale.metrics.annotation.Timed;
+		
+		@Path("/test")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class SetSystemTimeResource {
+		
+			public static DateTime systemTime;
+			
+			@PUT
+			@Timed
+			@Path("/system-time")
+			public Response put(@NotNull String systemTime) {
+				SetSystemTimeResource.systemTime = new DateTime(systemTime);
+				return Response.ok("set system time to " + systemTime).build();
+			}
+		
+		}
 		
 	'''
 	
@@ -1344,7 +1380,20 @@ class AceTemplate {
 				client.target(String.format("http://localhost:%d/api/test/prepare", SUPPORT.getLocalPort()))
 						.request().put(Entity.json(timeline));
 			}
-			
+		
+			protected void prepare() {
+				List<ITimelineItem> timeline = new ArrayList<>();
+				Client client = new JerseyClientBuilder().build();
+				client.target(String.format("http://localhost:%d/api/test/prepare", SUPPORT.getLocalPort()))
+						.request().put(Entity.json(timeline));
+			}
+		
+			protected void setSystemTime(DateTime systemTime) {
+				Client client = new JerseyClientBuilder().build();
+				client.target(String.format("http://localhost:%d/api/test/system-time", SUPPORT.getLocalPort()))
+						.request().put(Entity.json(systemTime.toString()));
+			}
+		
 			protected String randomUUID() {
 				return UUID.randomUUID().toString();
 			}
@@ -1400,11 +1449,15 @@ class AceTemplate {
 			«ENDFOR»
 			
 			«FOR model: models»
-				protected void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
-					«FOR attribute : model.attributes»
-						assertThat(actual.«attribute.getterCall», is(expected.«attribute.getterCall»));
-					«ENDFOR»
-				}
+				«IF model.containsPrimitiveAttributes»
+					protected void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
+						«FOR attribute : model.attributes»
+							«IF attribute.isPrimitive»
+								assertThat(actual.«attribute.getterCall», is(expected.«attribute.getterCall»));
+							«ENDIF»
+						«ENDFOR»
+					}
+				«ENDIF»
 			«ENDFOR»
 		
 		}

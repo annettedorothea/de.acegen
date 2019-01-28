@@ -59,6 +59,7 @@
         eType="#//Model" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JAVA_ACE">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="proxy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -81,7 +82,6 @@
         upperBound="-1" eType="#//JAVA_ViewFunction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JAVA_View">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
         eType="#//JAVA_ViewFunction" containment="true"/>

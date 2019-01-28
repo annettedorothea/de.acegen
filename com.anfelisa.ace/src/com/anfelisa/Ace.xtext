@@ -54,7 +54,7 @@ JAVA:
 ;
 
 JAVA_ACE: 
-	name = ID '<' model = [ Model | QualifiedName ] '>' 
+	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = FunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
@@ -71,7 +71,7 @@ JAVA_Outcome:
 ;
 
 JAVA_View: 
-	external ?= 'external'? name = ID 
+	name = ID 
 	('{'
 		(renderFunctions += JAVA_ViewFunction)*
 	'}')?		

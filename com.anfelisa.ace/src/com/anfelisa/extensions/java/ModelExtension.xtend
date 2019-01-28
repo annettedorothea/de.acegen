@@ -21,6 +21,7 @@ class ModelExtension {
 	def String modelParam(Model it) '''«name.toFirstLower»Model'''
 	
 	def String modelDao(Model it) '''«name.toFirstUpper»Dao'''
+	
 	def String abstractModelDao(Model it) '''Abstract«name.toFirstUpper»Dao'''
 	
 	def String modelMapper(Model it) '''«name.toFirstUpper»Mapper'''
@@ -45,6 +46,15 @@ class ModelExtension {
 			}
 		}
 		return list;
+	}
+	
+	def boolean containsPrimitiveAttributes(Model it) {
+		for (attribute : attributes) {
+			if (attribute.isPrimitive) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	def String listGetter(Model it) '''
