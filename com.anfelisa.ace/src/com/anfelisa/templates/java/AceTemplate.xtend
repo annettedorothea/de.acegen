@@ -1305,6 +1305,7 @@ class AceTemplate {
 		import javax.ws.rs.client.Client;
 		import javax.ws.rs.client.Entity;
 		import javax.ws.rs.core.Response;
+		import javax.ws.rs.client.Invocation.Builder;
 		
 		import org.glassfish.jersey.client.JerseyClientBuilder;
 		import org.jdbi.v3.core.Handle;
@@ -1334,7 +1335,7 @@ class AceTemplate {
 		import liquibase.resource.ClassLoaderResourceAccessor;
 		
 		@SuppressWarnings("unused")
-		public class BaseTest {
+		public abstract class BaseTest {
 		
 			protected final JodaObjectMapper mapper = new JodaObjectMapper();
 		
@@ -1394,53 +1395,108 @@ class AceTemplate {
 						.request().put(Entity.json(systemTime.toString()));
 			}
 		
-			protected String randomUUID() {
+			protected abstract Builder addAuthentication(Builder builder);
+			
+		}
+		
+	'''
+
+	def generateTestUtils(JAVA it) '''
+		package «name»;
+		
+		import static org.hamcrest.MatcherAssert.assertThat;
+		import static org.hamcrest.Matchers.is;
+		
+		import java.sql.Connection;
+		import java.sql.SQLException;
+		import java.util.ArrayList;
+		import java.util.List;
+		import java.util.UUID;
+		
+		import javax.ws.rs.client.Client;
+		import javax.ws.rs.client.Entity;
+		import javax.ws.rs.core.Response;
+		import javax.ws.rs.client.Invocation.Builder;
+		
+		import org.glassfish.jersey.client.JerseyClientBuilder;
+		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.Jdbi;
+		import org.joda.time.DateTime;
+		import org.junit.After;
+		import org.junit.AfterClass;
+		import org.junit.Before;
+		import org.junit.BeforeClass;
+		import org.mockito.MockitoAnnotations;
+		
+		import com.anfelisa.ace.App;
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.DaoProvider;
+		import com.anfelisa.ace.ITimelineItem;
+		import com.anfelisa.ace.JodaObjectMapper;
+		import com.anfelisa.ace.TimelineItem;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
+		import io.dropwizard.db.ManagedDataSource;
+		import io.dropwizard.jdbi3.JdbiFactory;
+		import io.dropwizard.testing.ConfigOverride;
+		import io.dropwizard.testing.DropwizardTestSupport;
+		import liquibase.Liquibase;
+		import liquibase.database.jvm.JdbcConnection;
+		import liquibase.exception.LiquibaseException;
+		import liquibase.resource.ClassLoaderResourceAccessor;
+		
+		@SuppressWarnings("unused")
+		public class TestUtils {
+		
+			private static final JodaObjectMapper mapper = new JodaObjectMapper();
+
+			public static String randomUUID() {
 				return UUID.randomUUID().toString();
 			}
 			
 			«FOR aceOperation : aceOperations»
 				«IF aceOperation.type == "POST"»
-					protected Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data) {
+					public static Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", BaseTest.SUPPORT.getLocalPort())).request()
 								.post(Entity.json(data));
 					}
 				«ELSEIF aceOperation.type == "PUT"»
-					protected Response call«aceOperation.name.toFirstUpper»(
+					public static Response call«aceOperation.name.toFirstUpper»(
 							«IF aceOperation.payload.length > 0»«aceOperation.model.dataInterfaceNameWithPackage» data, «ENDIF»
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
 						) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort())).request()
 								.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
 					}
 				«ELSEIF aceOperation.type == "DELETE"»
-					protected Response call«aceOperation.name.toFirstUpper»(
+					public static Response call«aceOperation.name.toFirstUpper»(
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
 					) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort())).request()
+						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort())).request()
 								.delete();
 					}
 				«ELSE»
-					protected Response call«aceOperation.name.toFirstUpper»(
+					public static Response call«aceOperation.name.toFirstUpper»(
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
 					) {
 						Client client = new JerseyClientBuilder().build();
 						return client.target(
-								String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», SUPPORT.getLocalPort()))
+								String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort()))
 								.request().get();
 					}
 				«ENDIF»
 				
 				«FOR outcome : aceOperation.outcomes»
-					public TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
+					public static TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
 						«aceOperation.eventNameWithPackage(outcome)» event =  new «aceOperation.eventNameWithPackage(outcome)»(data, null, null, null);
 						String json = mapper.writeValueAsString(event.getEventData());
 						return new TimelineItem("prepare", null, event.getEventName(), null, json, randomUUID());
@@ -1450,7 +1506,7 @@ class AceTemplate {
 			
 			«FOR model: models»
 				«IF model.containsPrimitiveAttributes»
-					protected void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
+					public static void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
 						«FOR attribute : model.attributes»
 							«IF attribute.isPrimitive»
 								assertThat(actual.«attribute.getterCall», is(expected.«attribute.getterCall»));

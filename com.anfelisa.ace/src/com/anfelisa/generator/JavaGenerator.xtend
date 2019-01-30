@@ -84,11 +84,9 @@ class JavaGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 					commandTemplate.generateInitialCommandFile(ace, java));
 				for (outcome : ace.outcomes) {
-					if (outcome.listeners.size > 0) {
-						fsa.generateFile(java.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
-							ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-							eventTemplate.generateAbstractEventFile(ace, outcome, java));
-					}
+					fsa.generateFile(java.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+						eventTemplate.generateAbstractEventFile(ace, outcome, java));
 				}
 			} 
 			if (ace.response.size > 0) {
@@ -109,6 +107,9 @@ class JavaGenerator {
 
 		fsa.generateFile(java.packageFolder + '/BaseTest.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest(java));
+
+		fsa.generateFile(java.packageFolder + '/TestUtils.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateTestUtils(java));
 
 		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));

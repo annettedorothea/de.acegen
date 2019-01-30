@@ -375,7 +375,7 @@ class ModelTemplate {
 			}
 
 			public void truncate(Handle handle) {
-				Update statement = handle.createUpdate("TRUNCATE TABLE «table»");
+				Update statement = handle.createUpdate("TRUNCATE TABLE «table» CASCADE");
 				statement.execute();
 			}
 
