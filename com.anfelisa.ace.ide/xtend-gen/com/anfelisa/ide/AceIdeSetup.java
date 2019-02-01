@@ -15,6 +15,7 @@ import org.eclipse.xtext.util.Modules2;
  */
 @SuppressWarnings("all")
 public class AceIdeSetup extends AceStandaloneSetup {
+  @Override
   public Injector createInjector() {
     AceRuntimeModule _aceRuntimeModule = new AceRuntimeModule();
     AceIdeModule _aceIdeModule = new AceIdeModule();

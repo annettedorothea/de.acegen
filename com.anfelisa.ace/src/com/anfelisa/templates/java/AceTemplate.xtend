@@ -370,6 +370,8 @@ class AceTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		
 		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
@@ -399,7 +401,7 @@ class AceTemplate {
 			@PUT
 			@Timed
 			@Path("/replay-events")
-			public Response put(List<ITimelineItem> timeline) {
+			public Response put(List<ITimelineItem> timeline) throws JsonProcessingException {
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				try {
 					databaseHandle.beginTransaction();
@@ -407,7 +409,9 @@ class AceTemplate {
 					Handle handle = databaseHandle.getHandle();
 					daoProvider.truncateAllViews(handle);
 					daoProvider.getAceDao().truncateTimelineTable(handle);
+					databaseHandle.commitTransaction();
 		
+					databaseHandle.beginTransaction();
 					if (timeline != null) {
 						for (ITimelineItem nextEvent : timeline) {
 							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
@@ -1506,9 +1510,8 @@ class AceTemplate {
 				
 				«FOR outcome : aceOperation.outcomes»
 					public static TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
-						«aceOperation.eventNameWithPackage(outcome)» event =  new «aceOperation.eventNameWithPackage(outcome)»(data, null, null, null);
-						String json = mapper.writeValueAsString(event.getEventData());
-						return new TimelineItem("prepare", null, event.getEventName(), null, json, randomUUID());
+						String json = mapper.writeValueAsString(data);
+						return new TimelineItem("prepare", null, "«aceOperation.eventNameWithPackage(outcome)»", null, json, randomUUID());
 					}
 				«ENDFOR»
 			«ENDFOR»
