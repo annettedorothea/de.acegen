@@ -362,7 +362,6 @@ class AceTemplate {
 		
 		import java.util.List;
 		
-		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.Path;
@@ -399,8 +398,8 @@ class AceTemplate {
 		
 			@PUT
 			@Timed
-			@Path("/prepare")
-			public Response put(@NotNull List<ITimelineItem> timeline) {
+			@Path("/replay-events")
+			public Response put(List<ITimelineItem> timeline) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
 				try {
 					databaseHandle.beginTransaction();
@@ -409,18 +408,20 @@ class AceTemplate {
 					daoProvider.truncateAllViews(handle);
 					daoProvider.getAceDao().truncateTimelineTable(handle);
 		
-					for (ITimelineItem nextEvent : timeline) {
-						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
-								daoProvider, viewProvider);
-						event.notifyListeners();
-						daoProvider.addPreparingEventToTimeline(event, nextEvent.getUuid());
-						LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+					if (timeline != null) {
+						for (ITimelineItem nextEvent : timeline) {
+							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
+									daoProvider, viewProvider);
+							event.notifyListeners();
+							daoProvider.addPreparingEventToTimeline(event, nextEvent.getUuid());
+							LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+						}
+						LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
 					}
 		
 					databaseHandle.commitTransaction();
 		
-					LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
-					return Response.ok("prepared test by publishing " + timeline.size() + " events").build();
+					return Response.ok().build();
 				} catch (Exception e) {
 					databaseHandle.rollbackTransaction();
 					LOG.error("exception during prepare test");
@@ -1290,8 +1291,8 @@ class AceTemplate {
 		}
 	'''
 	
-	def generateBaseTest(JAVA it) '''
-		package «name»;
+	def generateBaseTest() '''
+		package com.anfelisa.ace;
 		
 		import static org.hamcrest.MatcherAssert.assertThat;
 		import static org.hamcrest.Matchers.is;
@@ -1335,7 +1336,7 @@ class AceTemplate {
 		import liquibase.resource.ClassLoaderResourceAccessor;
 		
 		@SuppressWarnings("unused")
-		public abstract class BaseTest {
+		public abstract class AbstractBaseTest {
 		
 			protected final JodaObjectMapper mapper = new JodaObjectMapper();
 		
@@ -1349,12 +1350,6 @@ class AceTemplate {
 			@BeforeClass
 			public static void beforeClass() throws SQLException, LiquibaseException {
 				SUPPORT.before();
-				ManagedDataSource ds = SUPPORT.getConfiguration().getDataSourceFactory().build(SUPPORT.getEnvironment().metrics(), "migrations");
-				try (Connection connection = ds.getConnection()) {
-					Liquibase migrator = new Liquibase("migrations.xml", new ClassLoaderResourceAccessor(),
-							new JdbcConnection(connection));
-					migrator.update("");
-				}
 			}
 		
 			@AfterClass
@@ -1378,14 +1373,14 @@ class AceTemplate {
 		
 			protected void prepare(List<ITimelineItem> timeline) {
 				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/prepare", SUPPORT.getLocalPort()))
+				client.target(String.format("http://localhost:%d/api/test/replay-events", SUPPORT.getLocalPort()))
 						.request().put(Entity.json(timeline));
 			}
 		
 			protected void prepare() {
 				List<ITimelineItem> timeline = new ArrayList<>();
 				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/prepare", SUPPORT.getLocalPort()))
+				client.target(String.format("http://localhost:%d/api/test/replay-events", SUPPORT.getLocalPort()))
 						.request().put(Entity.json(timeline));
 			}
 		
@@ -1395,7 +1390,9 @@ class AceTemplate {
 						.request().put(Entity.json(systemTime.toString()));
 			}
 		
-			protected abstract Builder addAuthentication(Builder builder);
+			protected String getAuthenticationHeader() {
+				return "";
+			}
 			
 		}
 		
@@ -1429,6 +1426,7 @@ class AceTemplate {
 		import org.mockito.MockitoAnnotations;
 		
 		import com.anfelisa.ace.App;
+		import com.anfelisa.ace.AbstractBaseTest;
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.DaoProvider;
 		import com.anfelisa.ace.ITimelineItem;
@@ -1456,42 +1454,53 @@ class AceTemplate {
 			
 			«FOR aceOperation : aceOperations»
 				«IF aceOperation.type == "POST"»
-					public static Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data) {
+					public static Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data«IF aceOperation.authorize», String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", BaseTest.SUPPORT.getLocalPort())).request()
-								.post(Entity.json(data));
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", AbstractBaseTest.SUPPORT.getLocalPort())).request(); 
+						«IF aceOperation.authorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.post(Entity.json(data));
 					}
 				«ELSEIF aceOperation.type == "PUT"»
 					public static Response call«aceOperation.name.toFirstUpper»(
 							«IF aceOperation.payload.length > 0»«aceOperation.model.dataInterfaceNameWithPackage» data, «ENDIF»
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
 						) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort())).request()
-								.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request();
+						«IF aceOperation.authorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
 					}
 				«ELSEIF aceOperation.type == "DELETE"»
 					public static Response call«aceOperation.name.toFirstUpper»(
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
 					) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort())).request()
-								.delete();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request();
+						«IF aceOperation.authorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.delete();
 					}
 				«ELSE»
 					public static Response call«aceOperation.name.toFirstUpper»(
 							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
 							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»
+							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
 					) {
 						Client client = new JerseyClientBuilder().build();
-						return client.target(
-								String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», BaseTest.SUPPORT.getLocalPort()))
-								.request().get();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request(); 
+						«IF aceOperation.authorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.get();
 					}
 				«ENDIF»
 				

@@ -105,8 +105,8 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
 		}
 
-		fsa.generateFile(java.packageFolder + '/BaseTest.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest(java));
+		fsa.generateFile('com/anfelisa/ace/AbstractBaseTest.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest());
 
 		fsa.generateFile(java.packageFolder + '/TestUtils.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateTestUtils(java));
