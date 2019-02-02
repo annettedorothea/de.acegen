@@ -1,8 +1,11 @@
 package com.anfelisa.extensions.java
 
 import com.anfelisa.ace.Attribute
-import javax.inject.Inject
+import com.anfelisa.ace.JAVA_ACE
 import com.anfelisa.ace.Model
+import java.util.ArrayList
+import java.util.List
+import javax.inject.Inject
 
 class AttributeExtension {
 
@@ -83,6 +86,15 @@ class AttributeExtension {
 		}
 	}
 
+	def String typeWithParam(Attribute it) {
+		if (type !== null) {
+			return '''«javaType» «name.toFirstLower»'''
+		}
+		if (model !== null) {
+			return '''«javaType» «name»'''
+		}
+	}
+
 	def String param(Attribute it,
 		boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
 
@@ -133,6 +145,94 @@ class AttributeExtension {
 
 	def boolean isPrimitive(Attribute it) {
 		return !list && model === null;
+	}
+	
+	def List<String> mergeAttributesForGet(JAVA_ACE it) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		attributeList.add("int port");
+		return attributeList;
+	}
+
+	def List<String> mergeAttributesForPut(JAVA_ACE it) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (attr : payload) {
+			val typeWithParam = attr.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		attributeList.add("int port");
+		return attributeList;
+	}
+
+	def List<String> mergeAttributesForPost(JAVA_ACE it) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (attr : payload) {
+			val typeWithParam = attr.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		attributeList.add("int port");
+		return attributeList;
+	}
+
+	def List<String> mergeAttributesForDelete(JAVA_ACE it) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+			}
+		}
+		attributeList.add("int port");
+		return attributeList;
 	}
 
 }

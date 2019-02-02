@@ -11,19 +11,19 @@ class AceTemplate {
 
 	@Inject
 	extension AttributeExtension
-	
+
 	@Inject
 	extension ModelExtension
-	
+
 	@Inject
 	extension AceExtension
-	
+
 	def generateApp() '''
 		package com.anfelisa.ace;
 		
 		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 		import org.jdbi.v3.core.Jdbi;
-
+		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -58,17 +58,17 @@ class AceTemplate {
 			public static void reportException(Exception x) {
 				// do somehting to notify someone about exception
 			}
-
+		
 			@Override
 			public void initialize(Bootstrap<CustomAppConfiguration> bootstrap) {
-				bootstrap.addBundle(new MigrationsBundle<CustomAppConfiguration>() {
-					@Override
-					public DataSourceFactory getDataSourceFactory(CustomAppConfiguration configuration) {
-						return configuration.getDataSourceFactory();
-					}
-				});
-				
-				bootstrap.addCommand(new EventReplayCommand(this));
+			bootstrap.addBundle(new MigrationsBundle<CustomAppConfiguration>() {
+				@Override
+				public DataSourceFactory getDataSourceFactory(CustomAppConfiguration configuration) {
+					return configuration.getDataSourceFactory();
+				}
+			});
+			
+			bootstrap.addCommand(new EventReplayCommand(this));
 			}
 		
 			@Override
@@ -89,9 +89,9 @@ class AceTemplate {
 				} else if (ServerConfiguration.TEST.equals(mode)) {
 					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider));
 				}
-
+		
 				environment.jersey().register(new GetServerInfoResource());
-
+		
 				DBIExceptionsBundle dbiExceptionsBundle = new DBIExceptionsBundle();
 				environment.jersey().register(dbiExceptionsBundle);
 		
@@ -104,7 +104,7 @@ class AceTemplate {
 		
 		}
 	'''
-	
+
 	def generateAppRegistration() '''
 		package com.anfelisa.ace;
 		
@@ -123,7 +123,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateE2E() '''
 		package com.anfelisa.ace;
 		
@@ -199,7 +199,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateServerConfiguration() '''
 		package com.anfelisa.ace;
 		
@@ -225,7 +225,7 @@ class AceTemplate {
 			
 		}
 	'''
-	
+
 	def generateAppConfiguration() '''
 		package com.anfelisa.ace;
 		
@@ -269,7 +269,7 @@ class AceTemplate {
 		
 		}
 	'''
-	
+
 	def generateCustomAppConfiguration() '''
 		package com.anfelisa.ace;
 		
@@ -285,7 +285,7 @@ class AceTemplate {
 		
 		}
 	'''
-	
+
 	def generateStartE2ESessionResource() '''
 		package com.anfelisa.ace;
 		
@@ -356,7 +356,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateReplayEventsResource() '''
 		package com.anfelisa.ace;
 		
@@ -440,7 +440,7 @@ class AceTemplate {
 		
 		
 	'''
-	
+
 	def generateSetSystemTimeResource() '''
 		package com.anfelisa.ace;
 		
@@ -474,7 +474,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateEventReplayCommand() '''
 		package com.anfelisa.ace;
 		
@@ -511,7 +511,7 @@ class AceTemplate {
 		
 				IDaoProvider daoProvider = DaoProvider.create();
 				ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);
-
+		
 				final JdbiFactory factory = new JdbiFactory();
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
@@ -555,7 +555,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateGetServerInfoResource() '''
 		package com.anfelisa.ace;
 		
@@ -587,7 +587,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateServerInfo() '''
 		package com.anfelisa.ace;
 		
@@ -610,7 +610,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateGetServerTimelineResource() '''
 		package com.anfelisa.ace;
 		
@@ -625,7 +625,7 @@ class AceTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.jdbi.v3.core.Jdbi;
-
+		
 		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -666,7 +666,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generatePrepareE2EResource() '''
 		package com.anfelisa.ace;
 		
@@ -750,7 +750,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateStopE2ESessionResource() '''
 		package com.anfelisa.ace;
 		
@@ -788,7 +788,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateAceOperation() '''
 		package com.anfelisa.ace;
 		
@@ -828,13 +828,13 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateAceDao() '''
 		package com.anfelisa.ace;
 		
 		import java.util.List;
 		import java.util.Optional;
-
+		
 		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.statement.Update;
 		
@@ -853,19 +853,19 @@ class AceTemplate {
 				Integer count = optional.isPresent() ? optional.get() : 0;
 				return count > 0;
 			}
-
+		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
-				Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
-				statement.bind("type", type);
-				if (method != null) {
-					statement.bind("method", method);
-				} else {
-					statement.bind("method", "---");
-				}
-				statement.bind("name", name);
-				statement.bind("data", data);
-				statement.bind("uuid", uuid);
-				statement.execute();
+			Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
+			statement.bind("type", type);
+			if (method != null) {
+				statement.bind("method", method);
+			} else {
+				statement.bind("method", "---");
+			}
+			statement.bind("name", name);
+			statement.bind("data", data);
+			statement.bind("uuid", uuid);
+			statement.execute();
 			}
 		
 			public ITimelineItem selectLastAction(Handle handle) {
@@ -888,10 +888,10 @@ class AceTemplate {
 						.map(new TimelineItemMapper()).list();
 			}
 			
-
+		
 		}
 	'''
-	
+
 	def generateAceExecutionMode() '''
 		package com.anfelisa.ace;
 		
@@ -900,6 +900,7 @@ class AceTemplate {
 		}
 		
 	'''
+
 	def generateITimelineItem() '''
 		package com.anfelisa.ace;
 		
@@ -923,7 +924,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateJodaObjectMapper() '''
 		package com.anfelisa.ace;
 		
@@ -935,12 +936,12 @@ class AceTemplate {
 			private static final long serialVersionUID = 3204337293769989499L;
 		
 			public JodaObjectMapper() {
-		        super();
-		        registerModule(new JodaModule());
-		    }
+			       super();
+			       registerModule(new JodaModule());
+			   }
 		}
-	''' 
-	
+	'''
+
 	def generateTimelineItem() '''
 		package com.anfelisa.ace;
 		
@@ -1018,7 +1019,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateTimelineItemMapper() '''
 		package com.anfelisa.ace;
 		
@@ -1047,7 +1048,7 @@ class AceTemplate {
 			}
 		}
 	'''
-	
+
 	def generateAbstractDaoProvider() '''
 		package com.anfelisa.ace;
 		
@@ -1125,12 +1126,12 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateDaoProvider() '''
 		package com.anfelisa.ace;
 		
 		import org.jdbi.v3.core.Handle;
-
+		
 		public class DaoProvider extends AbstractDaoProvider implements IDaoProvider {
 			
 			public static IDaoProvider create() {
@@ -1144,7 +1145,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateIDaoProvider() '''
 		package com.anfelisa.ace;
 		
@@ -1169,7 +1170,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateViewProvider() '''
 		package com.anfelisa.ace;
 		
@@ -1190,7 +1191,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateAbstractViewProvider() '''
 		package com.anfelisa.ace;
 		
@@ -1223,7 +1224,7 @@ class AceTemplate {
 		}
 		
 	'''
-	
+
 	def generateAceMigration() '''
 		<createTable tableName="timeline">
 			<column name="type" type="character varying">
@@ -1247,7 +1248,7 @@ class AceTemplate {
 		</createTable>
 		
 		<addUniqueConstraint columnNames="type, uuid" tableName="timeline" />
-
+		
 	'''
 
 	def generateAuthUser(AuthUser it) '''
@@ -1283,7 +1284,7 @@ class AceTemplate {
 		
 		/*       S.D.G.       */
 	'''
-	
+
 	def generateEventconsumer() '''
 		package com.anfelisa.ace;
 		
@@ -1294,52 +1295,21 @@ class AceTemplate {
 			public void consumeEvent(IDataContainer data, Handle handle);
 		}
 	'''
-	
+
 	def generateBaseTest() '''
 		package com.anfelisa.ace;
 		
-		import static org.hamcrest.MatcherAssert.assertThat;
-		import static org.hamcrest.Matchers.is;
-		
-		import java.sql.Connection;
-		import java.sql.SQLException;
-		import java.util.ArrayList;
-		import java.util.List;
-		import java.util.UUID;
-		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.client.Invocation.Builder;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
-		import org.jdbi.v3.core.Handle;
-		import org.jdbi.v3.core.Jdbi;
-		import org.joda.time.DateTime;
-		import org.junit.After;
-		import org.junit.AfterClass;
-		import org.junit.Before;
-		import org.junit.BeforeClass;
-		import org.mockito.MockitoAnnotations;
-		
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.DaoProvider;
-		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.ace.JodaObjectMapper;
-		import com.anfelisa.ace.TimelineItem;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		import io.dropwizard.db.ManagedDataSource;
-		import io.dropwizard.jdbi3.JdbiFactory;
-		import io.dropwizard.testing.ConfigOverride;
-		import io.dropwizard.testing.DropwizardTestSupport;
-		import liquibase.Liquibase;
-		import liquibase.database.jvm.JdbcConnection;
-		import liquibase.exception.LiquibaseException;
-		import liquibase.resource.ClassLoaderResourceAccessor;
-		
-		@SuppressWarnings("unused")
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.jdbi.v3.core.Handle;
+import org.joda.time.DateTime;
+
 		public abstract class AbstractBaseTest {
 		
 			protected final JodaObjectMapper mapper = new JodaObjectMapper();
@@ -1348,56 +1318,29 @@ class AceTemplate {
 		
 			protected Handle handle;
 		
-			public static final DropwizardTestSupport<CustomAppConfiguration> SUPPORT = new DropwizardTestSupport<CustomAppConfiguration>(
-					App.class, "test.yml", ConfigOverride.config("server.applicationConnectors[0].port", "0"));
-		
-			@BeforeClass
-			public static void beforeClass() throws SQLException, LiquibaseException {
-				SUPPORT.before();
+			public static String randomUUID() {
+				return UUID.randomUUID().toString();
 			}
 		
-			@AfterClass
-			public static void afterClass() {
-				SUPPORT.after();
-			}
-		
-			@Before
-			public void before() {
-				final JdbiFactory factory = new JdbiFactory();
-				Jdbi jdbi = factory.build(SUPPORT.getEnvironment(), SUPPORT.getConfiguration().getDataSourceFactory(), "testdb");
-				daoProvider = new DaoProvider();
-				handle = jdbi.open();
-				MockitoAnnotations.initMocks(this);
-			}
-		
-			@After
-			public void after() {
-				handle.close();
-			}
-		
-			protected void prepare(List<ITimelineItem> timeline) {
+			protected void prepare(List<ITimelineItem> timeline, int port) {
 				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", SUPPORT.getLocalPort()))
+				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
 						.request().put(Entity.json(timeline));
 			}
 		
-			protected void prepare() {
+			protected void prepare(int port) {
 				List<ITimelineItem> timeline = new ArrayList<>();
 				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", SUPPORT.getLocalPort()))
+				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
 						.request().put(Entity.json(timeline));
 			}
 		
-			protected void setSystemTime(DateTime systemTime) {
+			protected void setSystemTime(DateTime systemTime, int port) {
 				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/system-time", SUPPORT.getLocalPort()))
+				client.target(String.format("http://localhost:%d/api/test/system-time", port))
 						.request().put(Entity.json(systemTime.toString()));
 			}
 		
-			protected String getAuthenticationHeader() {
-				return "";
-			}
-			
 		}
 		
 	'''
@@ -1405,102 +1348,82 @@ class AceTemplate {
 	def generateTestUtils(JAVA it) '''
 		package «name»;
 		
-		import static org.hamcrest.MatcherAssert.assertThat;
-		import static org.hamcrest.Matchers.is;
-		
-		import java.sql.Connection;
-		import java.sql.SQLException;
-		import java.util.ArrayList;
-		import java.util.List;
-		import java.util.UUID;
-		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.client.Invocation.Builder;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
-		import org.jdbi.v3.core.Handle;
-		import org.jdbi.v3.core.Jdbi;
-		import org.joda.time.DateTime;
-		import org.junit.After;
-		import org.junit.AfterClass;
-		import org.junit.Before;
-		import org.junit.BeforeClass;
-		import org.mockito.MockitoAnnotations;
-		
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.AbstractBaseTest;
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.DaoProvider;
-		import com.anfelisa.ace.ITimelineItem;
 		import com.anfelisa.ace.JodaObjectMapper;
 		import com.anfelisa.ace.TimelineItem;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
-		import io.dropwizard.db.ManagedDataSource;
-		import io.dropwizard.jdbi3.JdbiFactory;
-		import io.dropwizard.testing.ConfigOverride;
-		import io.dropwizard.testing.DropwizardTestSupport;
-		import liquibase.Liquibase;
-		import liquibase.database.jvm.JdbcConnection;
-		import liquibase.exception.LiquibaseException;
-		import liquibase.resource.ClassLoaderResourceAccessor;
-		
-		@SuppressWarnings("unused")
 		public class TestUtils {
 		
 			private static final JodaObjectMapper mapper = new JodaObjectMapper();
-
-			public static String randomUUID() {
-				return UUID.randomUUID().toString();
-			}
+		
+			«FOR aceOperation : aceOperations»
+				«FOR outcome : aceOperation.outcomes»
+					public static TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
+						String json = mapper.writeValueAsString(data);
+						return new TimelineItem("prepare", null, "«aceOperation.eventNameWithPackage(outcome)»", null, json, data.getUuid());
+					}
+				«ENDFOR»
+				
+			«ENDFOR»
 			
+		}
+		
+	'''
+
+	def generateActionCalls(JAVA it) '''
+		package «name»;
+		
+		import javax.ws.rs.client.Client;
+		import javax.ws.rs.client.Entity;
+		import javax.ws.rs.client.Invocation.Builder;
+		import javax.ws.rs.core.Response;
+		
+		import org.glassfish.jersey.client.JerseyClientBuilder;
+		
+		public class ActionCalls {
+		
 			«FOR aceOperation : aceOperations»
 				«IF aceOperation.type == "POST"»
-					public static Response call«aceOperation.name.toFirstUpper»(«aceOperation.model.dataInterfaceNameWithPackage» data«IF aceOperation.authorize», String authorization«ENDIF») {
+					public static Response call«aceOperation.name.toFirstUpper»(«FOR param : mergeAttributesForPost(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", AbstractBaseTest.SUPPORT.getLocalPort())).request(); 
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", port)).request(); 
+						«aceOperation.model.dataInterfaceNameWithPackage» data = new «aceOperation.model.dataNameWithPackage»(uuid);
+						«IF aceOperation.payload.length > 0»
+							«FOR param : aceOperation.payload»
+								data.«param.setterCall(param.name.toFirstLower)»;
+							«ENDFOR»
+						«ENDIF»
 						«IF aceOperation.authorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
 						return builder.post(Entity.json(data));
 					}
 				«ELSEIF aceOperation.type == "PUT"»
-					public static Response call«aceOperation.name.toFirstUpper»(
-							«IF aceOperation.payload.length > 0»«aceOperation.model.dataInterfaceNameWithPackage» data, «ENDIF»
-							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
-						) {
+					public static Response call«aceOperation.name.toFirstUpper»(«FOR param : mergeAttributesForPut(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request();
+						«aceOperation.model.dataInterfaceNameWithPackage» data = new «aceOperation.model.dataNameWithPackage»(uuid);
+						«FOR param : aceOperation.payload»
+							data.«param.setterCall(param.name.toFirstLower)»;
+						«ENDFOR»
 						«IF aceOperation.authorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
 						return builder.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
 					}
 				«ELSEIF aceOperation.type == "DELETE"»
-					public static Response call«aceOperation.name.toFirstUpper»(
-							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
-					) {
+					public static Response call«aceOperation.name.toFirstUpper»(«FOR param : mergeAttributesForDelete(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request();
 						«IF aceOperation.authorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
 						return builder.delete();
 					}
 				«ELSE»
-					public static Response call«aceOperation.name.toFirstUpper»(
-							String uuid«IF aceOperation.queryParams.length > 0 || aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR queryParam: aceOperation.queryParams SEPARATOR ', '»«queryParam.type» «queryParam.name.toFirstLower»«ENDFOR»«IF aceOperation.queryParams.length > 0 && aceOperation.pathParams.length > 0», «ENDIF»
-							«FOR pathParam: aceOperation.pathParams SEPARATOR ', '»«pathParam.type» «pathParam.name.toFirstLower»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF»
-					) {
+					public static Response call«aceOperation.name.toFirstUpper»(«FOR param : mergeAttributesForGet(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.authorize», String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», AbstractBaseTest.SUPPORT.getLocalPort())).request(); 
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request(); 
 						«IF aceOperation.authorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -1508,26 +1431,8 @@ class AceTemplate {
 					}
 				«ENDIF»
 				
-				«FOR outcome : aceOperation.outcomes»
-					public static TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
-						String json = mapper.writeValueAsString(data);
-						return new TimelineItem("prepare", null, "«aceOperation.eventNameWithPackage(outcome)»", null, json, randomUUID());
-					}
-				«ENDFOR»
 			«ENDFOR»
 			
-			«FOR model: models»
-				«IF model.containsPrimitiveAttributes»
-					public static void assertEquals(«model.interfaceWithPackage» actual, «model.interfaceWithPackage» expected) {
-						«FOR attribute : model.attributes»
-							«IF attribute.isPrimitive»
-								assertThat(actual.«attribute.getterCall», is(expected.«attribute.getterCall»));
-							«ENDIF»
-						«ENDFOR»
-					}
-				«ENDIF»
-			«ENDFOR»
-		
 		}
 		
 	'''

@@ -32,7 +32,7 @@ class ModelTemplate {
 				«attribute.interfaceSetter»
 				
 			«ENDFOR»
-
+			
 		}
 		
 		/*       S.D.G.       */
@@ -44,6 +44,8 @@ class ModelTemplate {
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
+		import java.util.List;
+		import java.util.ArrayList;
 
 		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
@@ -52,6 +54,9 @@ class ModelTemplate {
 				«attribute.declaration»
 				
 			«ENDFOR»
+		
+			public «modelClassName»() {
+			}
 		
 			public «modelClassName»(
 				«FOR attribute : allAttributes SEPARATOR ','»
@@ -68,7 +73,21 @@ class ModelTemplate {
 				«attribute.setter»
 				
 			«ENDFOR»
-		
+			
+			«IF containsPrimitiveAttributes»
+				public List<String> equalsPrimitiveTypes(«modelName» other) {
+					List<String> differingAttributes = new ArrayList<String>();
+					«FOR attribute : attributes»
+						«IF attribute.isPrimitive»
+							if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
+								differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
+							}
+						«ENDIF»
+					«ENDFOR»
+					return differingAttributes;
+				}
+			«ENDIF»
+			
 		}
 		
 		/*       S.D.G.       */

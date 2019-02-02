@@ -111,6 +111,9 @@ class JavaGenerator {
 		fsa.generateFile(java.packageFolder + '/TestUtils.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateTestUtils(java));
 
+		fsa.generateFile(java.packageFolder + '/ActionCalls.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateActionCalls(java));
+
 		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
 
