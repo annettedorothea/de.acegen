@@ -22,8 +22,10 @@ class ModelTemplate {
 	def generateModel(Model it, JAVA java) '''
 		package «java.name».models;
 		
+		import java.util.List;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
+		@SuppressWarnings("unused")
 		@JsonDeserialize(as=«modelClassName».class)
 		public interface «modelName» «IF superModels.size > 0»extends «FOR superModel : superModels SEPARATOR ','»«superModel.interfaceWithPackage»«ENDFOR»«ENDIF»{
 		
@@ -32,6 +34,10 @@ class ModelTemplate {
 				«attribute.interfaceSetter»
 				
 			«ENDFOR»
+			
+			«IF containsPrimitiveAttributes»
+				List<String> equalsPrimitiveTypes(«modelName» other);
+			«ENDIF»
 			
 		}
 		
@@ -55,8 +61,10 @@ class ModelTemplate {
 				
 			«ENDFOR»
 		
-			public «modelClassName»() {
-			}
+			«IF attributes.length > 0»
+				public «modelClassName»() {
+				}
+			«ENDIF»
 		
 			public «modelClassName»(
 				«FOR attribute : allAttributes SEPARATOR ','»
@@ -129,6 +137,11 @@ class ModelTemplate {
 		import java.util.List;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		import java.util.ArrayList;
+		«importModel»
+		«FOR superModel : superModels»
+			«superModel.importModel»
+		«ENDFOR»
 		
 		import com.anfelisa.ace.AbstractData;
 		import com.anfelisa.ace.IDataContainer;
@@ -175,6 +188,38 @@ class ModelTemplate {
 					«ENDFOR»
 				}
 			«ENDFOR»
+			
+			«IF containsPrimitiveAttributes»
+				public List<String> equalsPrimitiveTypes(«modelName» other) {
+					List<String> differingAttributes = new ArrayList<String>();
+					«FOR attribute : attributes»
+						«IF attribute.isPrimitive»
+							if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
+								differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
+							}
+						«ENDIF»
+					«ENDFOR»
+					return differingAttributes;
+				}
+			«ENDIF»
+			
+			«FOR superModel : superModels»
+				«IF superModel.containsPrimitiveAttributes»
+					public List<String> equalsPrimitiveTypes(«superModel.modelName» other) {
+						List<String> differingAttributes = new ArrayList<String>();
+						«FOR attribute : superModel.attributes»
+							«IF attribute.isPrimitive»
+								if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
+									differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
+								}
+							«ENDIF»
+						«ENDFOR»
+						return differingAttributes;
+					}
+				«ENDIF»
+				
+			«ENDFOR»
+			
 		}
 		
 		/*       S.D.G.       */

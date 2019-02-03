@@ -1380,6 +1380,7 @@ import org.joda.time.DateTime;
 		
 		import org.glassfish.jersey.client.JerseyClientBuilder;
 		
+		@SuppressWarnings("unused")
 		public class ActionCalls {
 		
 			«FOR aceOperation : aceOperations»
