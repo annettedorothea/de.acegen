@@ -402,7 +402,7 @@ class AceTemplate {
 			@Timed
 			@Path("/replay-events")
 			public Response put(List<ITimelineItem> timeline) throws JsonProcessingException {
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);
 				try {
 					databaseHandle.beginTransaction();
 		
@@ -414,10 +414,9 @@ class AceTemplate {
 					databaseHandle.beginTransaction();
 					if (timeline != null) {
 						for (ITimelineItem nextEvent : timeline) {
-							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
-									daoProvider, viewProvider);
-							event.notifyListeners();
-							daoProvider.addPreparingEventToTimeline(event, nextEvent.getUuid());
+							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
+							event.notifyListeners(databaseHandle.getHandle());
+							daoProvider.getAceDao().addPreparingEventToTimeline(event, nextEvent.getUuid(), databaseHandle.getTimelineHandle());
 							LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
 						}
 						LOG.info("EVENT REPLAY FINISHED: successfully replayed " + timeline.size() + " events");
@@ -514,7 +513,7 @@ class AceTemplate {
 		
 				final JdbiFactory factory = new JdbiFactory();
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), null);
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);
 		
 				AppRegistration.registerConsumers(viewProvider, ServerConfiguration.REPLAY);
 		
@@ -528,9 +527,8 @@ class AceTemplate {
 		
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
-						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
-								daoProvider, viewProvider);
-						event.notifyListeners();
+						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
+						event.notifyListeners(databaseHandle.getHandle());
 						i++;
 						if (i%1000 == 0) {
 							LOG.info("published " + i + " events");
@@ -709,7 +707,7 @@ class AceTemplate {
 			@Timed
 			@Path("/prepare")
 			public Response put(@NotNull @QueryParam("uuid") String uuid) {
-				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi.open(), jdbi.open());
+				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);
 				LOG.info("PREPARE ACTION " + uuid);
 				try {
 					databaseHandle.beginTransaction();
@@ -721,11 +719,10 @@ class AceTemplate {
 							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
 							if (nextEvent != null) {
 								LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
-								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), databaseHandle,
-										daoProvider, viewProvider);
+								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
 								if (event != null) {
-									event.notifyListeners();
-									daoProvider.addPreparingEventToTimeline(event, nextAction.getUuid());
+									event.notifyListeners(databaseHandle.getHandle());
+									daoProvider.getAceDao().addPreparingEventToTimeline(event, nextAction.getUuid(), databaseHandle.getTimelineHandle());
 									eventCount++;
 								} else {
 									LOG.error("failed to create " + nextEvent.getName());
@@ -838,7 +835,12 @@ class AceTemplate {
 		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.statement.Update;
 		
+		import com.fasterxml.jackson.core.JsonProcessingException;
+		import javax.ws.rs.WebApplicationException;
+		
 		public class AceDao {
+		
+			private JodaObjectMapper mapper = new JodaObjectMapper();
 		
 			public void truncateTimelineTable(Handle handle) {
 				handle.execute("TRUNCATE TABLE timeline");
@@ -855,17 +857,17 @@ class AceTemplate {
 			}
 		
 			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
-			Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
-			statement.bind("type", type);
-			if (method != null) {
-				statement.bind("method", method);
-			} else {
-				statement.bind("method", "---");
-			}
-			statement.bind("name", name);
-			statement.bind("data", data);
-			statement.bind("uuid", uuid);
-			statement.execute();
+				Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
+				statement.bind("type", type);
+				if (method != null) {
+					statement.bind("method", method);
+				} else {
+					statement.bind("method", "---");
+				}
+				statement.bind("name", name);
+				statement.bind("data", data);
+				statement.bind("uuid", uuid);
+				statement.execute();
 			}
 		
 			public ITimelineItem selectLastAction(Handle handle) {
@@ -888,6 +890,53 @@ class AceTemplate {
 						.map(new TimelineItemMapper()).list();
 			}
 			
+			public void addActionToTimeline(IAction action, Handle timelineHandle) {
+				try {
+					String json = mapper.writeValueAsString(action.getActionData());
+					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
+							action.getActionData().getUuid(), timelineHandle);
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addCommandToTimeline(ICommand command, Handle timelineHandle) {
+				try {
+					addItemToTimeline("command", null, command.getCommandName(),
+							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
+							timelineHandle);
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addEventToTimeline(IEvent event, Handle timelineHandle) {
+				try {
+					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
+							event.getEventData().getUuid(), timelineHandle);
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addPreparingEventToTimeline(IEvent event, String uuid, Handle timelineHandle) {
+				try {
+					addItemToTimeline("preparing event", null, event.getEventName(),
+							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
+				} catch (JsonProcessingException e) {
+					throw new WebApplicationException(e);
+				}
+			}
+		
+			public void addExceptionToTimeline(String uuid, Throwable x, Handle timelineHandle) {
+				this.insertIntoTimeline(timelineHandle, "exception", "", x.getClass().getName(),
+						x.getMessage() != null ? x.getMessage() : "", uuid);
+			}
+		
+			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
+					Handle timelineHandle) {
+				this.insertIntoTimeline(timelineHandle, type, method, name, json, uuid);
+			}
 		
 		}
 	'''
@@ -1052,77 +1101,15 @@ class AceTemplate {
 	def generateAbstractDaoProvider() '''
 		package com.anfelisa.ace;
 		
-		import javax.ws.rs.WebApplicationException;
-		
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
 		public abstract class AbstractDaoProvider implements IDaoProvider {
 		
 			protected final AceDao aceDao = new AceDao();
-		
-			protected final JodaObjectMapper mapper = new JodaObjectMapper();
 		
 			@Override
 			public AceDao getAceDao() {
 				return this.aceDao;
 			}
 			
-			@Override
-			public void addActionToTimeline(IAction action) {
-				try {
-					String json = mapper.writeValueAsString(action.getActionData());
-					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
-							action.getActionData().getUuid(), action.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			@Override
-			public void addCommandToTimeline(ICommand command) {
-				try {
-					addItemToTimeline("command", null, command.getCommandName(),
-							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
-							command.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			@Override
-			public void addEventToTimeline(IEvent event) {
-				try {
-					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							event.getEventData().getUuid(), event.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			@Override
-			public void addPreparingEventToTimeline(IEvent event, String uuid) {
-				try {
-					addItemToTimeline("preparing event", null, event.getEventName(),
-							mapper.writeValueAsString(event.getEventData()), uuid, event.getDatabaseHandle());
-				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
-				}
-			}
-		
-			@Override
-			public void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle) {
-				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), "exception", "", x.getClass().getName(),
-						x.getMessage() != null ? x.getMessage() : "", uuid);
-			}
-		
-			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
-					DatabaseHandle databaseHandle) {
-				if (databaseHandle == null) {
-					throw new WebApplicationException("no database handle");
-				}
-				aceDao.insertIntoTimeline(databaseHandle.getTimelineHandle(), type, method, name, json, uuid);
-			}
-		
 		}
 		
 	'''
@@ -1156,17 +1143,7 @@ class AceTemplate {
 			void truncateAllViews(Handle handle);
 			
 			AceDao getAceDao();
-			
-			void addExceptionToTimeline(String uuid, Throwable x, DatabaseHandle databaseHandle);
-			
-			void addPreparingEventToTimeline(IEvent event, String uuid);
-			
-			public void addEventToTimeline(IEvent event);
-			
-			public void addCommandToTimeline(ICommand command);
-			
-			void addActionToTimeline(IAction action);
-			
+		
 		}
 		
 	'''
@@ -1299,16 +1276,16 @@ class AceTemplate {
 	def generateBaseTest() '''
 		package com.anfelisa.ace;
 		
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.jdbi.v3.core.Handle;
-import org.joda.time.DateTime;
+		import java.util.ArrayList;
+		import java.util.List;
+		import java.util.UUID;
+		
+		import javax.ws.rs.client.Client;
+		import javax.ws.rs.client.Entity;
+		
+		import org.glassfish.jersey.client.JerseyClientBuilder;
+		import org.jdbi.v3.core.Handle;
+		import org.joda.time.DateTime;
 
 		public abstract class AbstractBaseTest {
 		

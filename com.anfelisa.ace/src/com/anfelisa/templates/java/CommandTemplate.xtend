@@ -17,9 +17,9 @@ class CommandTemplate {
 		package «java.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
+		import org.jdbi.v3.core.Handle;
 		
 		import com.anfelisa.ace.Command;
-		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
@@ -31,21 +31,21 @@ class CommandTemplate {
 				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(«model.dataParamType» commandParam, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.name».commands.«commandName»", commandParam, databaseHandle, daoProvider, viewProvider);
+			public «abstractCommandName»(«model.dataParamType» commandParam, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«java.name».commands.«commandName»", commandParam, daoProvider, viewProvider);
 			}
 		
-			public «abstractCommandName»(DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.name».commands.«commandName»", null, databaseHandle, daoProvider, viewProvider);
+			public «abstractCommandName»(IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«java.name».commands.«commandName»", null, daoProvider, viewProvider);
 			}
 		
 			@Override
-			public void publishEvents() {
+			public void publishEvents(Handle handle, Handle timelineHandle) {
 				switch (this.commandData.getOutcome()) {
 				«FOR outcome : outcomes»
 					case «outcome.name»:
 						«IF outcome.listeners.size > 0»
-							new «eventNameWithPackage(outcome)»(this.commandData, databaseHandle, daoProvider, viewProvider).publish();
+							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider).publish(handle, timelineHandle);
 						«ENDIF»
 						break;
 				«ENDFOR»
@@ -75,12 +75,12 @@ class CommandTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 		
-			public «commandName»(«model.dataParamType» commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
-			super(commandData, databaseHandle, daoProvider, viewProvider);
+			public «commandName»(«model.dataParamType» commandData, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super(commandData, daoProvider, viewProvider);
 			}
 		
 			@Override
-			protected void executeCommand() {
+			protected void executeCommand(Handle readonlyHandle) {
 				«IF outcomes.size > 0»
 					this.commandData.setOutcome(«outcomes.get(0).name»);
 				«ENDIF»
@@ -103,27 +103,24 @@ class CommandTemplate {
 		
 			protected T commandData;
 			private String commandName;
-			protected DatabaseHandle databaseHandle;
 			protected JodaObjectMapper mapper;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 		
-			public Command(String commandName, T commandData, DatabaseHandle databaseHandle, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Command(String commandName, T commandData, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super();
 				this.commandData = commandData;
 				this.commandName = commandName;
-				this.databaseHandle = databaseHandle;
 				mapper = new JodaObjectMapper();
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
 			}
 		
-			protected void executeCommand() {
-			}
+			protected abstract void executeCommand(Handle readonlyHandle);
 		
-			public void execute() {
-				this.executeCommand();
-				daoProvider.addCommandToTimeline(this);
+			public void execute(Handle readonlyHandle, Handle timelineHandle) {
+				this.executeCommand(readonlyHandle);
+				daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);
 			}
 		
 			public IDataContainer getCommandData() {
@@ -132,18 +129,6 @@ class CommandTemplate {
 		
 			public String getCommandName() {
 				return commandName;
-			}
-		
-			public DatabaseHandle getDatabaseHandle() {
-				return databaseHandle;
-			}
-		
-			protected Handle getHandle() {
-				if (databaseHandle != null) {
-					return databaseHandle.getHandle();
-				} else {
-					throw new RuntimeException("no database handle");
-				}
 			}
 		
 			protected void throwUnauthorized() {
@@ -184,17 +169,17 @@ class CommandTemplate {
 	def generateICommand() '''
 		package com.anfelisa.ace;
 		
+		import org.jdbi.v3.core.Handle;
+		
 		public interface ICommand {
 		
 			String getCommandName();
 
 			IDataContainer getCommandData();
 
-			DatabaseHandle getDatabaseHandle();
-
-			void execute();
+			void execute(Handle readonlyHandle, Handle timelineHandle);
 		
-			void publishEvents();
+			void publishEvents(Handle handle, Handle timelineHandle);
 		}
 		
 	'''

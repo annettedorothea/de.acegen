@@ -102,6 +102,21 @@ class ModelExtension {
 		}
 	}
 	
+	def List<Model> allSuperModels(Model it) {
+		val models = new ArrayList<Model>();
+		allSupperModelsRec(models);
+		return models;
+	}
+	
+	def void allSupperModelsRec(Model it, List<Model> models) {
+		if (!models.containsModel(it)) {
+			models.add(it)
+		}
+		for(superModel : superModels) {
+			superModel.allSupperModelsRec(models);
+		}
+	}
+	
 	def String modelRefToLower(Model it) '''«name.toFirstLower»'''
 	
 	def String modelRefToUpper(Model it) '''«name.toFirstUpper»'''
@@ -139,6 +154,20 @@ class ModelExtension {
 				}
 			}
 		}
+		return false;
+	}
+	
+	def boolean containsModel(List<Model> it, Model model) {
+		if (size == 0) {
+			return false
+		} else {
+			for (m : it) {
+				if (m.name.equals(model.name)) {
+					return true
+				}
+			}
+		}
+		return false;
 	}
 	
 	def newFromCommandData(Model it) '''new «dataNameWithPackage»(

@@ -82,19 +82,21 @@ class ModelTemplate {
 				
 			«ENDFOR»
 			
-			«IF containsPrimitiveAttributes»
-				public List<String> equalsPrimitiveTypes(«modelName» other) {
-					List<String> differingAttributes = new ArrayList<String>();
-					«FOR attribute : attributes»
-						«IF attribute.isPrimitive»
-							if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
-								differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
-							}
-						«ENDIF»
-					«ENDFOR»
-					return differingAttributes;
-				}
-			«ENDIF»
+			«FOR superModel : allSuperModels»
+				«IF superModel.containsPrimitiveAttributes»
+					public List<String> equalsPrimitiveTypes(«superModel.modelName» other) {
+						List<String> differingAttributes = new ArrayList<String>();
+						«FOR attribute : superModel.attributes»
+							«IF attribute.isPrimitive»
+								if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
+									differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
+								}
+							«ENDIF»
+						«ENDFOR»
+						return differingAttributes;
+					}
+				«ENDIF»
+			«ENDFOR»
 			
 		}
 		
@@ -189,21 +191,7 @@ class ModelTemplate {
 				}
 			«ENDFOR»
 			
-			«IF containsPrimitiveAttributes»
-				public List<String> equalsPrimitiveTypes(«modelName» other) {
-					List<String> differingAttributes = new ArrayList<String>();
-					«FOR attribute : attributes»
-						«IF attribute.isPrimitive»
-							if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
-								differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
-							}
-						«ENDIF»
-					«ENDFOR»
-					return differingAttributes;
-				}
-			«ENDIF»
-			
-			«FOR superModel : superModels»
+			«FOR superModel : allSuperModels»
 				«IF superModel.containsPrimitiveAttributes»
 					public List<String> equalsPrimitiveTypes(«superModel.modelName» other) {
 						List<String> differingAttributes = new ArrayList<String>();
@@ -234,7 +222,6 @@ class ModelTemplate {
 		import java.util.List;
 		
 		import com.anfelisa.ace.AbstractData;
-		import com.anfelisa.ace.IDataContainer;
 		
 		public class «dataName» extends «abstractDataName» implements «dataInterfaceName» {
 			
@@ -256,21 +243,9 @@ class ModelTemplate {
 				public «dataName»( String uuid ) {
 					super(uuid);
 				}
+
 			«ENDIF»
-		
-		
 			public void migrateLegacyData(String json) {
-			}
-		
-			public void overwriteNotReplayableData(IDataContainer dataContainer) {
-				/*if (dataContainer != null) {
-					try {
-						«dataInterfaceName» original = («dataInterfaceName»)dataContainer;
-						//overwrite values
-					} catch (ClassCastException x) {
-						LOG.error("cannot cast data to «dataInterfaceName» for overwriting not replayable attributes", x);
-					}
-				}*/
 			}
 		
 		}
@@ -497,62 +472,53 @@ class ModelTemplate {
 		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		import org.jdbi.v3.core.Jdbi;
 		
 		public class DatabaseHandle {
 		
 			static final Logger LOG = LoggerFactory.getLogger(DatabaseHandle.class);
 		
 			private Handle handle;
+			private Handle readonlyHandle;
 			private Handle timelineHandle;
 		
-			public DatabaseHandle(Handle handle, Handle timelineHandle) {
+			public DatabaseHandle(Jdbi jdbi) {
 				super();
-				if (handle != null) {
-					this.handle = handle;
-				}
-				if (timelineHandle != null) {
-					this.timelineHandle = timelineHandle;
-				}
+				this.handle = jdbi.open();
+				this.readonlyHandle = jdbi.open();
+				this.timelineHandle = jdbi.open();
 			}
 		
-			public void beginTransaction() {
-				if (handle != null) {
-					handle.begin();
-				}
-				if (timelineHandle != null) {
-					timelineHandle.begin();
-				}
+			synchronized public void beginTransaction() {
+				handle.begin();
+				readonlyHandle.begin();
+				timelineHandle.begin();
 			}
 		
-			public void commitTransaction() {
-				if (handle != null) {
-					handle.commit();
-				}
-				if (timelineHandle != null) {
-					timelineHandle.commit();
-				}
+			synchronized public void commitTransaction() {
+				handle.commit();
+				readonlyHandle.rollback();
+				timelineHandle.commit();
 			}
 		
-			public void rollbackTransaction() {
-				if (handle != null) {
-					handle.rollback();
-				}
-				if (timelineHandle != null) {
-					timelineHandle.commit();
-				}
+			synchronized public void rollbackTransaction() {
+				handle.rollback();
+				readonlyHandle.rollback();
+				timelineHandle.commit();
 			}
 		
-			public void close() {
-				if (handle != null) {
-					handle.close();
-				}
-				if (timelineHandle != null) {
-					timelineHandle.close();
-				}
+			synchronized public void close() {
+				handle.close();
+				readonlyHandle.close();
+				timelineHandle.close();
 			}
 		
 			public Handle getHandle() {
 				return handle;
+			}
+		
+			public Handle getReadonlyHandle() {
+				return readonlyHandle;
 			}
 		
 			public Handle getTimelineHandle() {
@@ -581,8 +547,6 @@ class ModelTemplate {
 			void setSystemTime(DateTime systemTime);
 		
 			void migrateLegacyData(String json);
-		
-			void overwriteNotReplayableData(IDataContainer original);
 		
 		}
 		
