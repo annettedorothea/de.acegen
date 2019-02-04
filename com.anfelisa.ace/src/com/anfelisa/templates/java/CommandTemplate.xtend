@@ -20,6 +20,7 @@ class CommandTemplate {
 		import org.jdbi.v3.core.Handle;
 		
 		import com.anfelisa.ace.Command;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		
@@ -31,12 +32,8 @@ class CommandTemplate {
 				protected static final String «outcome.name» = "«outcome.name»";
 			«ENDFOR»
 		
-			public «abstractCommandName»(«model.dataParamType» commandParam, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.name».commands.«commandName»", commandParam, daoProvider, viewProvider);
-			}
-		
-			public «abstractCommandName»(IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.name».commands.«commandName»", null, daoProvider, viewProvider);
+			public «abstractCommandName»(«model.dataParamType» commandParam, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+				super("«java.name».commands.«commandName»", commandParam, daoProvider, viewProvider, appConfiguration);
 			}
 		
 			@Override
@@ -65,6 +62,7 @@ class CommandTemplate {
 		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -75,8 +73,9 @@ class CommandTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 		
-			public «commandName»(«model.dataParamType» commandData, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super(commandData, daoProvider, viewProvider);
+			public «commandName»(«model.dataParamType» commandData, IDaoProvider daoProvider, ViewProvider viewProvider, 
+					CustomAppConfiguration appConfiguration, CustomAppConfiguration appConfiguration) {
+				super(commandData, daoProvider, viewProvider, appConfiguration);
 			}
 		
 			@Override
@@ -96,6 +95,7 @@ class CommandTemplate {
 		
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		
 		import org.jdbi.v3.core.Handle;
 		
@@ -106,14 +106,16 @@ class CommandTemplate {
 			protected JodaObjectMapper mapper;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
+			protected CustomAppConfiguration appConfiguration;
 		
-			public Command(String commandName, T commandData, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Command(String commandName, T commandData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super();
 				this.commandData = commandData;
 				this.commandName = commandName;
 				mapper = new JodaObjectMapper();
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.appConfiguration = appConfiguration;
 			}
 		
 			protected abstract void executeCommand(Handle readonlyHandle);
@@ -125,6 +127,11 @@ class CommandTemplate {
 		
 			public IDataContainer getCommandData() {
 				return commandData;
+			}
+			
+			@SuppressWarnings("unchecked")
+			public void setCommandData(IDataContainer data) {
+				commandData = (T)data;
 			}
 		
 			public String getCommandName() {
@@ -176,6 +183,8 @@ class CommandTemplate {
 			String getCommandName();
 
 			IDataContainer getCommandData();
+			
+			void setCommandData(IDataContainer data);
 
 			void execute(Handle readonlyHandle, Handle timelineHandle);
 		

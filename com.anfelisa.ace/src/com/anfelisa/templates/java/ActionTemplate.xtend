@@ -104,7 +104,7 @@ class ActionTemplate {
 			@Override
 			public ICommand getCommand() {
 				«IF outcomes.size > 0»
-					return new «commandName»(this.actionData, daoProvider, viewProvider);
+					return new «commandName»(this.actionData, daoProvider, viewProvider, this.appConfiguration);
 				«ELSE»
 					return null;
 				«ENDIF»
@@ -155,7 +155,6 @@ class ActionTemplate {
 				databaseHandle = new DatabaseHandle(jdbi);
 				databaseHandle.beginTransaction();
 				try {
-					IDataContainer originalData = null;
 					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
 							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
@@ -166,17 +165,8 @@ class ActionTemplate {
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
-						if (timelineItem != null) {
-							IAction action = ActionFactory.createAction(timelineItem.getName(), timelineItem.getData(), jdbi,
-									appConfiguration, daoProvider, viewProvider);
-							if (action != null) {
-								originalData = action.getActionData();
-								this.actionData = («model.dataParamType»)originalData;
-							}
-						} else {
-							throw new WebApplicationException(
-									"action for " + this.actionData.getUuid() + " not found in timeline");
-						}
+						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+						this.actionData = («model.dataParamType»)originalData;
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (SetSystemTimeResource.systemTime != null) {
 							this.actionData.setSystemTime(SetSystemTimeResource.systemTime);
@@ -184,12 +174,29 @@ class ActionTemplate {
 							this.actionData.setSystemTime(new DateTime());
 						}
 					}
-					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					«IF type.equals("GET")»
-						this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
+						«IF proxy»
+							if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+								this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
+							}
+						«ELSE»
+							this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
+						«ENDIF»
+						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					«ELSE»
+						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 						ICommand command = this.getCommand();
-						command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
+						«IF proxy»
+							if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+								ITimelineItem timelineItem = E2E.selectCommand(this.actionData.getUuid());
+								IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+								command.setCommandData((IBoxData)originalData);
+							} else {
+								command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
+							}
+						«ELSE»
+							command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
+						«ENDIF»
 						command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
 					«ENDIF»
 					Response response = Response.ok(this.createReponse()).build();
@@ -419,70 +426,46 @@ class ActionTemplate {
 		
 	'''
 
-	def generateActionFactory(JAVA it) '''
+	def generateAceDataFactory(JAVA it) '''
 		package «name».actions;
 		
 		import java.io.IOException;
 		
-		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IDataContainer;
 		import com.anfelisa.ace.JodaObjectMapper;
-		import com.anfelisa.ace.ViewProvider;
 		import «name».data.*;
 		import com.fasterxml.jackson.databind.DeserializationFeature;		
 		
-		public class ActionFactory {
+		public class AceDataFactory {
 			
 			private static JodaObjectMapper mapper = new JodaObjectMapper();
-			private static final Logger LOG = LoggerFactory.getLogger(ActionFactory.class);
+			private static final Logger LOG = LoggerFactory.getLogger(AceDataFactory.class);
 		
 			static {
 				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			}
 		
-			public static IAction createAction(String actionClass, String json, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static IDataContainer createAceData(String className, String json) {
 				try {
 					«FOR ace : aceOperations»
-						«FOR outcome : ace.outcomes»
-							«IF outcome.listeners.size > 0»
-								if (actionClass.equals("«name».actions.«ace.actionName»")) {
-									«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
-									data.migrateLegacyData(json);
-									«ace.actionName» action = new «ace.actionName»(jdbi, appConfiguration, daoProvider, viewProvider);
-									action.setActionData(data);
-									return action;
-								}
-							«ENDIF»
-						«ENDFOR»
+						if (className.equals("«name».actions.«ace.actionName»") ||
+								className.equals("«name».commands.«ace.commandName»") «IF ace.outcomes.length > 0»||«ENDIF»
+								«FOR outcome: ace.outcomes SEPARATOR '||'»
+									className.equals("«name».events.«ace.eventName(outcome)»")
+								«ENDFOR»
+						) {
+							«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
+							data.migrateLegacyData(json);
+							return data;
+						}
 					«ENDFOR»
 				} catch (IOException e) {
-					LOG.error("failed to create action {} with data {}", actionClass, json, e);
+					LOG.error("failed to create ace data {} with data {}", className, json, e);
 				}
 		
-				return null;
-			}
-		}
-		
-	'''
-	
-	def generateActionFactory() '''
-		package com.anfelisa.ace;
-		
-		import org.jdbi.v3.core.Jdbi;
-		
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.ViewProvider;
-		
-		public class ActionFactory {
-			public static IAction createAction(String actionClass, String json, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				//delegate to package ActionFactory
 				return null;
 			}
 		}

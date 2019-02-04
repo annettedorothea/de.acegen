@@ -192,6 +192,10 @@ class AceTemplate {
 				return timeline.get(uuid).getAction();
 			}
 		
+			public static ITimelineItem selectCommand(String uuid) {
+				return timeline.get(uuid).getCommand();
+			}
+		
 			public static ITimelineItem selectEvent(String uuid) {
 				return timeline.get(uuid).getEvent();
 			}
