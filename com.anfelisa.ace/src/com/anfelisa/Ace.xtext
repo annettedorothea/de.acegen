@@ -54,8 +54,12 @@ JAVA:
 ;
 
 JAVA_ACE: 
+	JAVA_ACE_WRITE | JAVA_ACE_READ
+;
+
+JAVA_ACE_WRITE: 
 	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
-	type = FunctionType
+	type = WriteFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
 	('pathParams' (pathParams += [Attribute | QualifiedName])*)?
@@ -68,6 +72,18 @@ JAVA_ACE:
 JAVA_Outcome:
 	'on' name = ID 
 	('('(listeners += [JAVA_ViewFunction | QualifiedName])*')')* 
+	('triggers' '(' (aceOperations += [JAVA_ACE_WRITE | QualifiedName])* ')')? 
+;
+
+JAVA_ACE_READ: 
+	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
+	type = ReadFunctionType
+	url = STRING
+	authorize ?= 'authorize'? 
+	('pathParams' (pathParams += [Attribute | QualifiedName])*)?
+	('queryParams' (queryParams += [Attribute | QualifiedName])*)?
+	('payload' (payload += [Attribute | QualifiedName])*)?
+	('response' (response += [Attribute | QualifiedName])*)?
 ;
 
 JAVA_View: 
@@ -102,8 +118,12 @@ QualifiedName:
   ID ('.' ID)*
 ;
 
-FunctionType:
-	'POST' | 'PUT' | 'DELETE' | 'GET'
+WriteFunctionType:
+	'POST' | 'PUT' | 'DELETE'
+;
+
+ReadFunctionType:
+	'GET'
 ;
 
 Type:

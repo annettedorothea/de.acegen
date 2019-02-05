@@ -1,7 +1,7 @@
 package com.anfelisa.templates.java
 
 import com.anfelisa.ace.JAVA
-import com.anfelisa.ace.JAVA_ACE
+import com.anfelisa.ace.JAVA_ACE_WRITE
 import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class CommandTemplate {
 	@Inject
 	extension ModelExtension
 
-	def generateAbstractCommandFile(JAVA_ACE it, JAVA java) '''
+	def generateAbstractCommandFile(JAVA_ACE_WRITE it, JAVA java) '''
 		package «java.name».commands;
 		
 		import javax.ws.rs.WebApplicationException;
@@ -56,13 +56,13 @@ class CommandTemplate {
 		/*       S.D.G.       */
 	'''
 
-	def generateInitialCommandFile(JAVA_ACE it, JAVA java) '''
+	def generateInitialCommandFile(JAVA_ACE_WRITE it, JAVA java) '''
 		package «java.name».commands;
 		
-		import com.anfelisa.ace.DatabaseHandle;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.CustomAppConfiguration;
+		import org.jdbi.v3.core.Handle;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -74,7 +74,7 @@ class CommandTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 		
 			public «commandName»(«model.dataParamType» commandData, IDaoProvider daoProvider, ViewProvider viewProvider, 
-					CustomAppConfiguration appConfiguration, CustomAppConfiguration appConfiguration) {
+					CustomAppConfiguration appConfiguration) {
 				super(commandData, daoProvider, viewProvider, appConfiguration);
 			}
 		

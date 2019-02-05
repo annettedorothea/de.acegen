@@ -10,6 +10,8 @@ import com.anfelisa.extensions.java.AttributeExtension
 import com.anfelisa.extensions.java.ModelExtension
 import com.anfelisa.extensions.java.ViewExtension
 import javax.inject.Inject
+import com.anfelisa.ace.JAVA_ACE_WRITE
+import com.anfelisa.ace.JAVA_ACE_READ
 
 class ActionTemplate {
 
@@ -25,8 +27,10 @@ class ActionTemplate {
 	@Inject
 	extension AttributeExtension
 
-	def generateAbstractActionFile(JAVA_ACE it, JAVA java, AuthUser authUser) '''
+	def dispatch generateAbstractActionFile(JAVA_ACE_WRITE it, JAVA java, AuthUser authUser) '''
 		package «java.name».actions;
+		
+		import java.util.UUID;
 		
 		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
@@ -41,6 +45,7 @@ class ActionTemplate {
 		import javax.ws.rs.QueryParam;
 		import javax.ws.rs.PathParam;
 		import io.dropwizard.auth.Auth;
+		import javax.ws.rs.HeaderParam;
 		
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
@@ -91,6 +96,9 @@ class ActionTemplate {
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
+			«IF authorize»
+				private String authorization;
+			«ENDIF»
 
 			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«actionNameWithPackage(java)»", HttpMethod.«type»);
@@ -114,13 +122,218 @@ class ActionTemplate {
 				this.actionData = («model.dataParamType»)data;
 			}
 		
-			«IF type.equals("GET")»
-				protected abstract void loadDataForGetRequest(Handle readonlyHandle);
+			«IF type !== null»@«type»«ENDIF»
+			@Timed
+			@Produces(MediaType.TEXT_PLAIN)
+			@Consumes(MediaType.APPLICATION_JSON)
+			public Response «resourceName.toFirstLower»(
+					«IF authorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
+					«FOR param : queryParams»
+						@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
+					«ENDFOR»
+					«FOR param : pathParams»
+						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
+					«ENDFOR»
+					«IF authorize»
+						@HeaderParam("authorization") String authorization,
+					«ENDIF»
+					«IF payload.size > 0»@NotNull «model.dataParamType» payload)
+					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
+					throws JsonProcessingException {
+				this.actionData = new «model.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
+				«FOR param : queryParams»
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				«ENDFOR»
+				«FOR param : pathParams»
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				«ENDFOR»
+				«FOR attribute : payload»
+					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+				«ENDFOR»
+				«IF authorize && authUser !== null»
+					«FOR param : model.allAttributes»
+						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+				«IF authorize»
+					this.authorization = authorization;
+				«ENDIF»
+				
+				return this.apply();
+			}
+
+			public Response apply() {
+				databaseHandle = new DatabaseHandle(jdbi);
+				databaseHandle.beginTransaction();
+				try {
+					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
+							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
+							databaseHandle.commitTransaction();
+							throwBadRequest("uuid already exists - please choose another one");
+						}
+						this.actionData.setSystemTime(new DateTime());
+						this.initActionData();
+					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
+						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+						this.actionData = («model.dataParamType»)originalData;
+					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (SetSystemTimeResource.systemTime != null) {
+							this.actionData.setSystemTime(SetSystemTimeResource.systemTime);
+						} else {
+							this.actionData.setSystemTime(new DateTime());
+						}
+					}
+					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+					ICommand command = this.getCommand();
+					«IF proxy»
+						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+							ITimelineItem timelineItem = E2E.selectCommand(this.actionData.getUuid());
+							IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+							command.setCommandData((IBoxData)originalData);
+						} else {
+							command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
+						}
+					«ELSE»
+						command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
+					«ENDIF»
+					command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
+					Response response = Response.ok(this.createReponse()).build();
+					databaseHandle.commitTransaction();
+					«FOR outcome : outcomes»
+						«FOR triggeredAction : outcome.aceOperations»
+							«(triggeredAction.eContainer as JAVA).name».ActionCalls.call«triggeredAction.name»(
+								«FOR param: triggeredAction.mergeAttributes SEPARATOR ','»
+									«param»
+								«ENDFOR»
+							);
+						«ENDFOR»
+					«ENDFOR»
+					return response;
+				} catch (WebApplicationException x) {
+					LOG.error(actionName + " failed " + x.getMessage());
+					try {
+						databaseHandle.rollbackTransaction();
+						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
+				} catch (Exception x) {
+					LOG.error(actionName + " failed " + x.getMessage());
+					try {
+						databaseHandle.rollbackTransaction();
+						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					return Response.status(500).entity(x.getMessage()).build();
+				} finally {
+					databaseHandle.close();
+				}
+			}
+		
+
+			«IF response.size > 0»
+				protected Object createReponse() {
+					return new «responseDataNameWithPackage(java)»(this.actionData);
+				}
 			«ENDIF»
+		}
+		
+		/*       S.D.G.       */
+	'''
+
+	def dispatch generateAbstractActionFile(JAVA_ACE_READ it, JAVA java, AuthUser authUser) '''
+		package «java.name».actions;
+		
+		import javax.validation.constraints.NotNull;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.POST;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.DELETE;
+		import javax.ws.rs.GET;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.PathParam;
+		import io.dropwizard.auth.Auth;
+		
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.App;
+		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.ServerConfiguration;
+		import com.anfelisa.ace.E2E;
+		import com.anfelisa.ace.ITimelineItem;
+		import com.anfelisa.ace.IAction;
+		import com.anfelisa.ace.SetSystemTimeResource;
+		import com.anfelisa.ace.JodaObjectMapper;
+		
+		import com.codahale.metrics.annotation.Timed;
+		import com.fasterxml.jackson.core.JsonProcessingException;
+
+		import org.jdbi.v3.core.Jdbi;
+		import org.jdbi.v3.core.Handle;
+		
+		import com.anfelisa.ace.Action;
+		import com.anfelisa.ace.HttpMethod;
+		import com.anfelisa.ace.ICommand;
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		import javax.ws.rs.WebApplicationException;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		«IF authorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
+		«model.dataImport»
+		«model.dataClassImport»
+		
+		@Path("«url»")
+		@SuppressWarnings("unused")
+		public abstract class «abstractActionName» extends Action<«model.dataParamType»> {
+		
+			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
+
+			private DatabaseHandle databaseHandle;
+			private Jdbi jdbi;
+			protected JodaObjectMapper mapper;
+			protected CustomAppConfiguration appConfiguration;
+			protected IDaoProvider daoProvider;
+			private ViewProvider viewProvider;
+
+			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+				super("«actionNameWithPackage(java)»", HttpMethod.«type»);
+				this.jdbi = jdbi;
+				mapper = new JodaObjectMapper();
+				this.appConfiguration = appConfiguration;
+				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
+			}
+		
+			@Override
+			public ICommand getCommand() {
+				return null;
+			}
+			
+			public void setActionData(IDataContainer data) {
+				this.actionData = («model.dataParamType»)data;
+			}
+		
+			protected abstract void loadDataForGetRequest(Handle readonlyHandle);
 		
 			«IF type !== null»@«type»«ENDIF»
 			@Timed
-			«IF type !== null && type == "GET"»@Produces(MediaType.APPLICATION_JSON)«ELSE»@Produces(MediaType.TEXT_PLAIN)«ENDIF»
+			@Produces(MediaType.APPLICATION_JSON)
 			@Consumes(MediaType.APPLICATION_JSON)
 			public Response «resourceName.toFirstLower»(
 					«IF authorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
@@ -174,31 +387,14 @@ class ActionTemplate {
 							this.actionData.setSystemTime(new DateTime());
 						}
 					}
-					«IF type.equals("GET")»
-						«IF proxy»
-							if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-								this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
-							}
-						«ELSE»
+					«IF proxy»
+						if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 							this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
-						«ENDIF»
-						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+						}
 					«ELSE»
-						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
-						ICommand command = this.getCommand();
-						«IF proxy»
-							if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-								ITimelineItem timelineItem = E2E.selectCommand(this.actionData.getUuid());
-								IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-								command.setCommandData((IBoxData)originalData);
-							} else {
-								command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
-							}
-						«ELSE»
-							command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
-						«ENDIF»
-						command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
+						this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
 					«ENDIF»
+					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
 					return response;
@@ -407,17 +603,23 @@ class ActionTemplate {
 		
 			public static void registerConsumers(ViewProvider viewProvider, String mode) {
 				«FOR aceOperation : aceOperations»
-					«FOR outcome : aceOperation.outcomes»
-						«FOR listener : outcome.listeners»
-							«addConsumers(it, aceOperation, outcome, listener)»
-						«ENDFOR»
-					«ENDFOR»
+					«registerConsumer(aceOperation, it)»
 				«ENDFOR»
 		    }
 		}
 		
 		/*                    S.D.G.                    */
 	'''
+	
+	private def dispatch registerConsumer(JAVA_ACE_WRITE it, JAVA java) '''
+		«FOR outcome : outcomes»
+			«FOR listener : outcome.listeners»
+				«addConsumers(java, it, outcome, listener)»
+			«ENDFOR»
+		«ENDFOR»
+	'''
+	
+	private def dispatch registerConsumer(JAVA_ACE_READ it, JAVA java) ''''''
 	
 	private def addConsumers(JAVA java, JAVA_ACE aceOperation, JAVA_Outcome outcome, JAVA_ViewFunction listener) '''
 		viewProvider.addConsumer("«java.name».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
@@ -451,16 +653,7 @@ class ActionTemplate {
 			public static IDataContainer createAceData(String className, String json) {
 				try {
 					«FOR ace : aceOperations»
-						if (className.equals("«name».actions.«ace.actionName»") ||
-								className.equals("«name».commands.«ace.commandName»") «IF ace.outcomes.length > 0»||«ENDIF»
-								«FOR outcome: ace.outcomes SEPARATOR '||'»
-									className.equals("«name».events.«ace.eventName(outcome)»")
-								«ENDFOR»
-						) {
-							«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
-							data.migrateLegacyData(json);
-							return data;
-						}
+						«ace.createData(it)»
 					«ENDFOR»
 				} catch (IOException e) {
 					LOG.error("failed to create ace data {} with data {}", className, json, e);
@@ -470,6 +663,27 @@ class ActionTemplate {
 			}
 		}
 		
+	'''
+	
+	private def dispatch createData(JAVA_ACE_WRITE it, JAVA java) '''
+		if (className.equals("«java.name».actions.«actionName»") ||
+				className.equals("«java.name».commands.«commandName»") «IF outcomes.length > 0»||«ENDIF»
+				«FOR outcome: outcomes SEPARATOR '||'»
+					className.equals("«java.name».events.«eventName(outcome)»")
+				«ENDFOR»
+		) {
+			«model.dataName» data = mapper.readValue(json, «model.dataName».class);
+			data.migrateLegacyData(json);
+			return data;
+		}
+	'''
+	
+	private def dispatch createData(JAVA_ACE_READ it, JAVA java) '''
+		if (className.equals("«java.name».actions.«actionName»")) {
+			«model.dataName» data = mapper.readValue(json, «model.dataName».class);
+			data.migrateLegacyData(json);
+			return data;
+		}
 	'''
 	
 }

@@ -234,5 +234,48 @@ class AttributeExtension {
 		attributeList.add("int port");
 		return attributeList;
 	}
+	
+	def List<String> mergeAttributes(JAVA_ACE it) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("UUID.randomUUID().toString()");
+		if (type == 'PUT' || type == 'POST') {
+			for (queryParam : queryParams) {
+				val getter = queryParam.getterCall;
+				if (!attributeList.contains(getter)) {
+					attributeList.add('''((«model.dataParamType»)command.getCommandData()).«getter»''');
+				}
+			}
+			for (pathParam : pathParams) {
+				val getter = pathParam.getterCall;
+				if (!attributeList.contains(getter)) {
+					attributeList.add('''((«model.dataParamType»)command.getCommandData()).«getter»''');
+				}
+			}
+			for (attr : payload) {
+				val getter = attr.getterCall;
+				if (!attributeList.contains(getter)) {
+					attributeList.add('''((«model.dataParamType»)command.getCommandData()).«getter»''');
+				}
+			}
+		} else if (type == 'DELETE') {
+			for (queryParam : queryParams) {
+				val getter = queryParam.getterCall;
+				if (!attributeList.contains(getter)) {
+					attributeList.add('''((«model.dataParamType»)command.getCommandData()).«getter»''');
+				}
+			}
+			for (pathParam : pathParams) {
+				val getter = pathParam.getterCall;
+				if (!attributeList.contains(getter)) {
+					attributeList.add('''((«model.dataParamType»)command.getCommandData()).«getter»''');
+				}
+			}
+		}
+		attributeList.add("appConfiguration.getPort()");
+		if (authorize) {
+			attributeList.add("authorization");
+		}
+		return attributeList;
+	}
 
 }

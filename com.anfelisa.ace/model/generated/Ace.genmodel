@@ -62,12 +62,16 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_ACE/queryParams"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_ACE/payload"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_ACE/response"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_ACE/outcomes"/>
+    </genClasses>
+    <genClasses ecoreClass="Ace.ecore#//JAVA_ACE_WRITE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_ACE_WRITE/outcomes"/>
     </genClasses>
     <genClasses ecoreClass="Ace.ecore#//JAVA_Outcome">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//JAVA_Outcome/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_Outcome/listeners"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_Outcome/aceOperations"/>
     </genClasses>
+    <genClasses ecoreClass="Ace.ecore#//JAVA_ACE_READ"/>
     <genClasses ecoreClass="Ace.ecore#//JAVA_View">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ace.ecore#//JAVA_View/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ace.ecore#//JAVA_View/renderFunctions"/>

@@ -6,6 +6,8 @@ import com.anfelisa.extensions.java.AceExtension
 import com.anfelisa.extensions.java.AttributeExtension
 import com.anfelisa.extensions.java.ModelExtension
 import javax.inject.Inject
+import com.anfelisa.ace.JAVA_ACE_WRITE
+import com.anfelisa.ace.JAVA_ACE_READ
 
 class AceTemplate {
 
@@ -21,6 +23,9 @@ class AceTemplate {
 	def generateApp() '''
 		package com.anfelisa.ace;
 		
+		import org.eclipse.jetty.server.Connector;
+		import org.eclipse.jetty.server.Server;
+		import org.eclipse.jetty.server.ServerConnector;
 		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 		import org.jdbi.v3.core.Jdbi;
 		
@@ -75,6 +80,19 @@ class AceTemplate {
 			public void run(CustomAppConfiguration configuration, Environment environment) throws ClassNotFoundException {
 				LOG.info("running version {}", getVersion());
 		
+				environment.lifecycle().addServerLifecycleListener(new ServerLifecycleListener() {
+					@Override
+					public void serverStarted(Server server) {
+						for (Connector connector : server.getConnectors()) {
+							if (connector instanceof ServerConnector) {
+								try (ServerConnector serverConnector = (ServerConnector) connector) {
+									configuration.setPort(serverConnector.getPort());
+								}
+							}
+						}
+					}
+				});
+
 				final DBIFactory factory = new DBIFactory();
 		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
@@ -246,6 +264,16 @@ class AceTemplate {
 			@Valid
 			@NotNull
 			private DataSourceFactory database = new DataSourceFactory();
+		
+			private int port;
+			
+			public int getPort() {
+				return port;
+			}
+		
+			public void setPort(int port) {
+				this.port = port;
+			}
 		
 			@Valid
 			@NotNull
@@ -1338,18 +1366,24 @@ class AceTemplate {
 			private static final JodaObjectMapper mapper = new JodaObjectMapper();
 		
 			«FOR aceOperation : aceOperations»
-				«FOR outcome : aceOperation.outcomes»
-					public static TimelineItem create«aceOperation.eventName(outcome)»TimelineItem(«aceOperation.model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
-						String json = mapper.writeValueAsString(data);
-						return new TimelineItem("prepare", null, "«aceOperation.eventNameWithPackage(outcome)»", null, json, data.getUuid());
-					}
-				«ENDFOR»
-				
+				«aceOperation.createTimelineItem»
+
 			«ENDFOR»
 			
 		}
 		
 	'''
+	
+	private def dispatch createTimelineItem(JAVA_ACE_WRITE it) '''
+		«FOR outcome : outcomes»
+			public static TimelineItem create«eventName(outcome)»TimelineItem(«model.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
+				String json = mapper.writeValueAsString(data);
+				return new TimelineItem("prepare", null, "«eventNameWithPackage(outcome)»", null, json, data.getUuid());
+			}
+		«ENDFOR»
+	'''
+
+	private def dispatch createTimelineItem(JAVA_ACE_READ it) ''''''
 
 	def generateActionCalls(JAVA it) '''
 		package «name»;

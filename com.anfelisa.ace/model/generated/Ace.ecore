@@ -73,6 +73,8 @@
         upperBound="-1" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="response" unique="false"
         upperBound="-1" eType="#//Attribute"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_ACE_WRITE" eSuperTypes="#//JAVA_ACE">
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//JAVA_Outcome" containment="true"/>
   </eClassifiers>
@@ -80,7 +82,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
         upperBound="-1" eType="#//JAVA_ViewFunction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
+        upperBound="-1" eType="#//JAVA_ACE_WRITE"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JAVA_ACE_READ" eSuperTypes="#//JAVA_ACE"/>
   <eClassifiers xsi:type="ecore:EClass" name="JAVA_View">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"

@@ -2,6 +2,8 @@ package com.anfelisa.templates.java
 
 import com.anfelisa.ace.JAVA
 import com.anfelisa.ace.JAVA_ACE
+import com.anfelisa.ace.JAVA_ACE_READ
+import com.anfelisa.ace.JAVA_ACE_WRITE
 import com.anfelisa.ace.JAVA_Outcome
 import com.anfelisa.ace.JAVA_View
 import com.anfelisa.extensions.java.AceExtension
@@ -187,16 +189,7 @@ class EventTemplate {
 			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				try {
 					«FOR ace : aceOperations»
-						«FOR outcome : ace.outcomes»
-							«IF outcome.listeners.size > 0»
-								if (eventClass.equals("«name».events.«ace.eventName(outcome)»")) {
-									«ace.model.dataName» data = mapper.readValue(json, «ace.model.dataName».class);
-									data.migrateLegacyData(json);
-									«ace.eventName(outcome)» event = new «ace.eventName(outcome)»(data, daoProvider, viewProvider);
-									return event;
-								}
-							«ENDIF»
-						«ENDFOR»
+						«ace.createEvent(it)»
 					«ENDFOR»
 				} catch (IOException e) {
 					LOG.error("failed to create event {} with data {}", eventClass, json, e);
@@ -207,13 +200,8 @@ class EventTemplate {
 		
 			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR ace : aceOperations»
-					«FOR outcome : ace.outcomes»
-						«IF outcome.listeners.size > 0»
-							if (eventClass.equals("«name».events.«ace.eventName(outcome)»")) {
-								return new «ace.eventName(outcome)»((«ace.model.dataName»)data, daoProvider, viewProvider);
-							}
-						«ENDIF»
-					«ENDFOR»
+					«ace.createEventFromData(it)»
+
 				«ENDFOR»
 		
 				return null;
@@ -221,6 +209,33 @@ class EventTemplate {
 		}
 		
 	'''
+	
+	private def dispatch createEvent(JAVA_ACE_WRITE it, JAVA java) '''
+		«FOR outcome : outcomes»
+			«IF outcome.listeners.size > 0»
+				if (eventClass.equals("«java.name».events.«eventName(outcome)»")) {
+					«model.dataName» data = mapper.readValue(json, «model.dataName».class);
+					data.migrateLegacyData(json);
+					«eventName(outcome)» event = new «eventName(outcome)»(data, daoProvider, viewProvider);
+					return event;
+				}
+			«ENDIF»
+		«ENDFOR»
+	'''
+	
+	private def dispatch createEvent(JAVA_ACE_READ it, JAVA java) ''''''
+	
+	private def dispatch createEventFromData(JAVA_ACE_WRITE it, JAVA java) '''
+		«FOR outcome : outcomes»
+			«IF outcome.listeners.size > 0»
+				if (eventClass.equals("«java.name».events.«eventName(outcome)»")) {
+					return new «eventName(outcome)»((«model.dataName»)data, daoProvider, viewProvider);
+				}
+			«ENDIF»
+		«ENDFOR»
+	'''
+	
+	private def dispatch createEventFromData(JAVA_ACE_READ it, JAVA java) ''''''
 	
 	def generateEventFactory() '''
 		package com.anfelisa.ace;

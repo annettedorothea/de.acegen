@@ -12,6 +12,7 @@ import com.anfelisa.templates.java.EventTemplate
 import com.anfelisa.templates.java.ModelTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import com.anfelisa.ace.JAVA_ACE_WRITE
 
 class JavaGenerator {
 	@Inject
@@ -79,11 +80,12 @@ class JavaGenerator {
 			if (!'GET'.equals(ace.type)) {
 				fsa.generateFile(java.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					commandTemplate.generateAbstractCommandFile(ace, java));
+					commandTemplate.generateAbstractCommandFile(ace as JAVA_ACE_WRITE, java));
 				fsa.generateFile(java.packageFolder + '/commands/' + ace.commandName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-					commandTemplate.generateInitialCommandFile(ace, java));
-				for (outcome : ace.outcomes) {
+					commandTemplate.generateInitialCommandFile(ace as JAVA_ACE_WRITE, java));
+				val aceWrite = ace as JAVA_ACE_WRITE
+				for (outcome : aceWrite.outcomes) {
 					fsa.generateFile(java.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						eventTemplate.generateAbstractEventFile(ace, outcome, java));

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import com.anfelisa.ace.JAVA_ACE_WRITE
 
 /**
  * This class contains custom scoping description.
@@ -40,9 +41,14 @@ class AceScopeProvider extends AbstractAceScopeProvider {
 			return Scopes.scopeFor(attrs)
 		}
 		if (context instanceof JAVA_Outcome) {
-			val aceModel = (context.eContainer as JAVA_ACE).model
-			val scope = super.getScope(context, reference)
-			return new FilteringScope(scope, [(getEObjectOrProxy as JAVA_ViewFunction).model.equals(aceModel)])
+			val aceModel = (context.eContainer as JAVA_ACE_WRITE).model
+			if (reference.name.equals("listeners")) {
+				val scope = super.getScope(context, reference)
+				return new FilteringScope(scope, [(getEObjectOrProxy as JAVA_ViewFunction).model.equals(aceModel)])
+			} else if (reference.name.equals("aceOperations")) {
+				val scope = super.getScope(context, reference)
+				return new FilteringScope(scope, [(getEObjectOrProxy as JAVA_ACE_WRITE).model.equals(aceModel)])
+			}
 		}
 		if (context instanceof Model) {
 			val aceModel = context as Model
