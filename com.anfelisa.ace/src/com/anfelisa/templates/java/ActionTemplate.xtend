@@ -96,9 +96,6 @@ class ActionTemplate {
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
-			«IF authorize»
-				private String authorization;
-			«ENDIF»
 
 			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super("«actionNameWithPackage(java)»", HttpMethod.«type»);
@@ -134,11 +131,7 @@ class ActionTemplate {
 					«FOR param : pathParams»
 						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
 					«ENDFOR»
-					«IF authorize»
-						@HeaderParam("authorization") String authorization,
-					«ENDIF»
-					«IF payload.size > 0»@NotNull «model.dataParamType» payload)
-					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
+					«IF payload.size > 0»@NotNull «model.dataParamType» payload)«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
 					throws JsonProcessingException {
 				this.actionData = new «model.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 				«FOR param : queryParams»
@@ -155,13 +148,10 @@ class ActionTemplate {
 						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
 					«ENDFOR»
 				«ENDIF»
-				«IF authorize»
-					this.authorization = authorization;
-				«ENDIF»
 				
 				return this.apply();
 			}
-
+			
 			public Response apply() {
 				databaseHandle = new DatabaseHandle(jdbi);
 				databaseHandle.beginTransaction();
@@ -191,7 +181,7 @@ class ActionTemplate {
 						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 							ITimelineItem timelineItem = E2E.selectCommand(this.actionData.getUuid());
 							IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-							command.setCommandData((IBoxData)originalData);
+							command.setCommandData(originalData);
 						} else {
 							command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
 						}
@@ -201,14 +191,28 @@ class ActionTemplate {
 					command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
+					
 					«FOR outcome : outcomes»
 						«FOR triggeredAction : outcome.aceOperations»
-							«(triggeredAction.eContainer as JAVA).name».ActionCalls.call«triggeredAction.name»(
-								«FOR param: triggeredAction.mergeAttributes SEPARATOR ','»
-									«param»
-								«ENDFOR»
-							);
+							Thread «triggeredAction.name.toFirstLower»Thread = new Thread(){
+								public void run() {
+									try {
+										LOG.info("trigger «triggeredAction.name»");
+										«triggeredAction.actionNameWithPackage()» «triggeredAction.name.toFirstLower» 
+											= new «triggeredAction.actionNameWithPackage()»(jdbi, appConfiguration, daoProvider, viewProvider);
+										IDataContainer data = AceDataFactory.createAceData("«triggeredAction.actionNameWithPackage»", mapper.writeValueAsString(command.getCommandData()));
+										data.setUuid(UUID.randomUUID().toString());
+										«triggeredAction.name.toFirstLower».setActionData(data);
+										«triggeredAction.name.toFirstLower».apply();
+										LOG.info("trigger «triggeredAction.name» finished");
+									} catch (Exception x) {
+										LOG.error("failed to trigger «triggeredAction.name» " + x.getMessage());
+									}
+								}
+							};
+							«triggeredAction.name.toFirstLower»Thread.start();
 						«ENDFOR»
+						
 					«ENDFOR»
 					return response;
 				} catch (WebApplicationException x) {
