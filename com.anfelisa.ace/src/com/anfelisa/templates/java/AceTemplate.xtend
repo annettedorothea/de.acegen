@@ -96,16 +96,18 @@ class AceTemplate {
 				final DBIFactory factory = new DBIFactory();
 		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
+				
+				E2E e2e = new E2E();
 		
 				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
-					environment.jersey().register(new PrepareE2EResource(jdbi));
-					environment.jersey().register(new StartE2ESessionResource(jdbi));
-					environment.jersey().register(new StopE2ESessionResource());
-					environment.jersey().register(new GetServerTimelineResource(jdbi));
+					environment.jersey().register(new PrepareE2EResource(jdbi, e2e));
+					environment.jersey().register(new StartE2ESessionResource(jdbi, e2e));
+					environment.jersey().register(new StopE2ESessionResource(e2e));
+					environment.jersey().register(new GetServerTimelineResource(jdbi, e2e));
 				} else if (ServerConfiguration.DEV.equals(mode)) {
-					environment.jersey().register(new GetServerTimelineResource(jdbi));
+					environment.jersey().register(new GetServerTimelineResource(jdbi, e2e));
 				} else if (ServerConfiguration.TEST.equals(mode)) {
-					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider));
+					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider, e2e));
 				}
 		
 				environment.jersey().register(new GetServerInfoResource());
@@ -115,7 +117,7 @@ class AceTemplate {
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
-				AppRegistration.registerResources(environment, jdbi, appConfiguration, daoProvider, viewProvider);
+				AppRegistration.registerResources(environment, jdbi, appConfiguration, daoProvider, viewProvider, e2e);
 				AppRegistration.registerConsumers(viewProvider, mode);
 		
 			}
@@ -133,7 +135,7 @@ class AceTemplate {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration,
-					IDaoProvider daoProvider, ViewProvider viewProvider) {
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 			}
 		
 			public static void registerConsumers(ViewProvider viewProvider, String mode) {
@@ -154,24 +156,39 @@ class AceTemplate {
 		
 		public class E2E {
 		
-			public static boolean sessionIsRunning;
+			private boolean sessionIsRunning;
 		
-			public static DateTime sessionStartedAt;
+			private DateTime sessionStartedAt;
 		
-			private static Map<String, AceOperation> timeline;
+			private Map<String, AceOperation> timeline;
 		
-			private static List<String> uuidList;
+			private List<String> uuidList;
 		
-			private static int index;
+			private int index;
 		
-			public static void reset() {
-				E2E.sessionIsRunning = false;
-				E2E.sessionStartedAt = null;
-				E2E.timeline = null;
-				E2E.index = 0;
+			public E2E() {
+				this.sessionIsRunning = false;
+				this.sessionStartedAt = null;
+				this.timeline = null;
+				this.index = 0;
+			}
+			
+			public boolean isSessionRunning() {
+				return this.sessionIsRunning;
 			}
 		
-			public static void init(List<ITimelineItem> initialTimeline) {
+			public DateTime getSessionStartedAt() {
+				return this.sessionStartedAt;
+			}
+		
+			public void reset() {
+				this.sessionIsRunning = false;
+				this.sessionStartedAt = null;
+				this.timeline = null;
+				this.index = 0;
+			}
+		
+			public void init(List<ITimelineItem> initialTimeline) {
 				timeline = new HashMap<>();
 				uuidList = new ArrayList<>();
 				for (ITimelineItem timelineItem : initialTimeline) {
@@ -192,12 +209,12 @@ class AceTemplate {
 						aceOperation.setEvent(timelineItem);
 					}
 				}
-				E2E.sessionIsRunning = true;
-				E2E.sessionStartedAt = new DateTime(System.currentTimeMillis());
-				E2E.index = 0;
+				this.sessionIsRunning = true;
+				this.sessionStartedAt = new DateTime(System.currentTimeMillis());
+				this.index = 0;
 			}
 		
-			public static ITimelineItem selectNextAction() {
+			public ITimelineItem selectNextAction() {
 				if (index < uuidList.size()) {
 					String uuid = uuidList.get(index);
 					index++;
@@ -206,15 +223,15 @@ class AceTemplate {
 				return null;
 			}
 		
-			public static ITimelineItem selectAction(String uuid) {
+			public ITimelineItem selectAction(String uuid) {
 				return timeline.get(uuid).getAction();
 			}
 		
-			public static ITimelineItem selectCommand(String uuid) {
+			public ITimelineItem selectCommand(String uuid) {
 				return timeline.get(uuid).getCommand();
 			}
 		
-			public static ITimelineItem selectEvent(String uuid) {
+			public ITimelineItem selectEvent(String uuid) {
 				return timeline.get(uuid).getEvent();
 			}
 			
@@ -350,21 +367,24 @@ class AceTemplate {
 			private Jdbi jdbi;
 		
 			private IDaoProvider daoProvider = new DaoProvider();
+			
+			private E2E e2e;
 		
-			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider) {
+			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider, E2E e2e) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
+				this.e2e = e2e;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/start")
 			public Response put(@NotNull List<ITimelineItem> timeline) throws JsonProcessingException {
-				if (E2E.sessionIsRunning && E2E.sessionStartedAt.plusMinutes(1).isAfterNow()) {
+				if (e2e.isSessionRunning() && e2e.getSessionStartedAt().plusMinutes(1).isAfterNow()) {
 					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
 				}
-				E2E.init(timeline);
+				e2e.init(timeline);
 				
 				Handle handle = jdbi.open();
 				try {
@@ -727,12 +747,14 @@ class AceTemplate {
 		
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
+			private E2E e2e;
 		
-			public PrepareE2EResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public PrepareE2EResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.e2e = e2e;
 			}
 		
 			@PUT
@@ -745,10 +767,10 @@ class AceTemplate {
 					databaseHandle.beginTransaction();
 		
 					int eventCount = 0;
-					ITimelineItem nextAction = E2E.selectNextAction();
+					ITimelineItem nextAction = e2e.selectNextAction();
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
 						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
-							ITimelineItem nextEvent = E2E.selectEvent(nextAction.getUuid());
+							ITimelineItem nextEvent = e2e.selectEvent(nextAction.getUuid());
 							if (nextEvent != null) {
 								LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
 								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
@@ -761,7 +783,7 @@ class AceTemplate {
 								}
 							}
 						}
-						nextAction = E2E.selectNextAction();
+						nextAction = e2e.selectNextAction();
 					}
 		
 					databaseHandle.commitTransaction();
@@ -802,15 +824,18 @@ class AceTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(StopE2ESessionResource.class);
 		
-			public StopE2ESessionResource() {
+			private E2E e2e;
+			
+			public StopE2ESessionResource(E2E e2e) {
 				super();
+				this.e2e = e2e;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/stop")
 			public Response put() {
-				E2E.reset();
+				e2e.reset();
 				return Response.ok().build();
 			}
 		

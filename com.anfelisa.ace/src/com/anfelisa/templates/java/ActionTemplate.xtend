@@ -96,14 +96,17 @@ class ActionTemplate {
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
+			private E2E e2e;
 
-			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				super("«actionNameWithPackage(java)»", HttpMethod.«type»);
 				this.jdbi = jdbi;
 				mapper = new JodaObjectMapper();
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.e2e = e2e;
 			}
 		
 			@Override
@@ -165,7 +168,7 @@ class ActionTemplate {
 						this.actionData.setSystemTime(new DateTime());
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
+						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 						this.actionData = («model.dataParamType»)originalData;
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -179,7 +182,7 @@ class ActionTemplate {
 					ICommand command = this.getCommand();
 					«IF proxy»
 						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-							ITimelineItem timelineItem = E2E.selectCommand(this.actionData.getUuid());
+							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
 							IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 							command.setCommandData(originalData);
 						} else {
@@ -194,22 +197,8 @@ class ActionTemplate {
 					
 					«FOR outcome : outcomes»
 						«FOR triggeredAction : outcome.aceOperations»
-							Thread «triggeredAction.name.toFirstLower»Thread = new Thread(){
-								public void run() {
-									try {
-										LOG.info("trigger «triggeredAction.name»");
-										«triggeredAction.actionNameWithPackage()» «triggeredAction.name.toFirstLower» 
-											= new «triggeredAction.actionNameWithPackage()»(jdbi, appConfiguration, daoProvider, viewProvider);
-										IDataContainer data = AceDataFactory.createAceData("«triggeredAction.actionNameWithPackage»", mapper.writeValueAsString(command.getCommandData()));
-										data.setUuid(UUID.randomUUID().toString());
-										«triggeredAction.name.toFirstLower».setActionData(data);
-										«triggeredAction.name.toFirstLower».apply();
-										LOG.info("trigger «triggeredAction.name» finished");
-									} catch (Exception x) {
-										LOG.error("failed to trigger «triggeredAction.name» " + x.getMessage());
-									}
-								}
-							};
+							«triggeredAction.name.toFirstUpper»Thread «triggeredAction.name.toFirstLower»Thread = new «triggeredAction.name.toFirstUpper»Thread(
+								jdbi, mapper, appConfiguration, daoProvider, viewProvider, e2e, command.getCommandData());
 							«triggeredAction.name.toFirstLower»Thread.start();
 						«ENDFOR»
 						
@@ -239,6 +228,48 @@ class ActionTemplate {
 					databaseHandle.close();
 				}
 			}
+			
+			«FOR outcome : outcomes»
+				«FOR triggeredAction : outcome.aceOperations»
+					public class «triggeredAction.name.toFirstUpper»Thread extends Thread {
+						private Jdbi jdbi;
+						private JodaObjectMapper mapper;
+						private CustomAppConfiguration appConfiguration;
+						private IDaoProvider daoProvider;
+						private ViewProvider viewProvider;
+						private IDataContainer commandData;
+						private E2E e2e;
+
+						public «triggeredAction.name.toFirstUpper»Thread(Jdbi jdbi, JodaObjectMapper mapper, CustomAppConfiguration appConfiguration,
+								IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e, IDataContainer commandData) {
+						   this.jdbi = jdbi;
+						   this.mapper = mapper;
+						   this.appConfiguration = appConfiguration;
+						   this.daoProvider = daoProvider;
+						   this.viewProvider = viewProvider;
+						   this.e2e = e2e;
+						   this.commandData = commandData;
+						}
+					
+						public void run() {
+							try {
+								LOG.info("trigger «triggeredAction.name»");
+								«triggeredAction.actionNameWithPackage()» «triggeredAction.name.toFirstLower» 
+									= new «triggeredAction.actionNameWithPackage()»(jdbi, appConfiguration, daoProvider, viewProvider, e2e);
+								IDataContainer data = AceDataFactory.createAceData("«triggeredAction.actionNameWithPackage»", mapper.writeValueAsString(commandData));
+								data.setUuid(commandData.getUuid() + "«triggeredAction.name.toFirstUpper»");
+								«triggeredAction.name.toFirstLower».setActionData(data);
+								«triggeredAction.name.toFirstLower».apply();
+								LOG.info("trigger «triggeredAction.name» finished");
+							} catch (Exception x) {
+								LOG.error("failed to trigger «triggeredAction.name» " + x.getMessage());
+							}
+						}
+					};
+				«ENDFOR»
+				
+			«ENDFOR»
+			
 		
 
 			«IF response.size > 0»
@@ -314,14 +345,17 @@ class ActionTemplate {
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
+			private E2E e2e;
 
-			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				super("«actionNameWithPackage(java)»", HttpMethod.«type»);
 				this.jdbi = jdbi;
 				mapper = new JodaObjectMapper();
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.e2e = e2e;
 			}
 		
 			@Override
@@ -381,7 +415,7 @@ class ActionTemplate {
 						this.actionData.setSystemTime(new DateTime());
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-						ITimelineItem timelineItem = E2E.selectAction(this.actionData.getUuid());
+						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 						this.actionData = («model.dataParamType»)originalData;
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -444,6 +478,7 @@ class ActionTemplate {
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.E2E;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -454,8 +489,9 @@ class ActionTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 		
-			public «actionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super(jdbi,appConfiguration, daoProvider, viewProvider);
+			public «actionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
+					ViewProvider viewProvider, E2E e2e") {
+				super(jdbi,appConfiguration, daoProvider, viewProvider, e2e);
 			}
 		
 		
@@ -588,6 +624,7 @@ class ActionTemplate {
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.ServerConfiguration;
+		import com.anfelisa.ace.E2E;
 		
 		import org.jdbi.v3.core.Jdbi;
 
@@ -599,9 +636,10 @@ class ActionTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider));
+					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider, e2e));
 				«ENDFOR»
 			}
 		
