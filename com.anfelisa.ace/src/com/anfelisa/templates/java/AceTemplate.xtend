@@ -385,23 +385,28 @@ class AceTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(StartE2ESessionResource.class);
 		
-			private Jdbi jdbi;
+			private Jdbi jdbi;			
+			private CustomAppConfiguration configuration;
 		
 			private IDaoProvider daoProvider = new DaoProvider();
 			
 			private E2E e2e;
 		
-			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider, E2E e2e) {
+			public StartE2ESessionResource(Jdbi jdbi, IDaoProvider daoProvider, E2E e2e, CustomAppConfiguration configuration) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
 				this.e2e = e2e;
+				this.configuration = configuration;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/start")
 			public Response put(@NotNull List<ITimelineItem> timeline) throws JsonProcessingException {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("start e2e session is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				if (e2e.isSessionRunning() && e2e.getSessionStartedAt().plusMinutes(1).isAfterNow()) {
 					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
 				}
@@ -458,23 +463,28 @@ class AceTemplate {
 		public class ReplayEventsResource {
 		
 			private Jdbi jdbi;
+			private CustomAppConfiguration configuration;
 		
 			static final Logger LOG = LoggerFactory.getLogger(ReplayEventsResource.class);
 		
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 		
-			public ReplayEventsResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public ReplayEventsResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration configuration) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.configuration = configuration;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/replay-events")
 			public Response put(List<ITimelineItem> timeline) throws JsonProcessingException {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("replay e2e events is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);
 				try {
 					databaseHandle.beginTransaction();
@@ -523,6 +533,7 @@ class AceTemplate {
 		import javax.ws.rs.Produces;
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
+		import javax.ws.rs.WebApplicationException;
 		
 		import org.joda.time.DateTime;
 		
@@ -534,11 +545,20 @@ class AceTemplate {
 		public class SetSystemTimeResource {
 		
 			public static DateTime systemTime;
+			private CustomAppConfiguration configuration;
+			
+			public SetSystemTimeResource(CustomAppConfiguration configuration) {
+				super();
+				this.configuration = configuration;
+			}
 			
 			@PUT
 			@Timed
 			@Path("/system-time")
 			public Response put(@NotNull String systemTime) {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("set system time is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				SetSystemTimeResource.systemTime = new DateTime(systemTime);
 				return Response.ok("set system time to " + systemTime).build();
 			}
@@ -709,20 +729,25 @@ class AceTemplate {
 		public class GetServerTimelineResource {
 		
 			private Jdbi jdbi;
+			private CustomAppConfiguration configuration;
 		
 			static final Logger LOG = LoggerFactory.getLogger(GetServerTimelineResource.class);
 		
 			private AceDao aceDao = new AceDao();
 		
-			public GetServerTimelineResource(Jdbi jdbi) {
+			public GetServerTimelineResource(Jdbi jdbi, CustomAppConfiguration configuration) {
 				super();
 				this.jdbi = jdbi;
+				this.configuration = configuration;
 			}
 		
 			@GET
 			@Timed
 			@Path("/timeline")
 			public Response get() {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("get server timeline is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				Handle timelineHandle = jdbi.open();
 				try {
 					List<ITimelineItem> serverTimeline = aceDao.selectTimeline(timelineHandle);
@@ -763,6 +788,7 @@ class AceTemplate {
 		public class PrepareE2EResource {
 		
 			private Jdbi jdbi;
+			private CustomAppConfiguration configuration;
 		
 			static final Logger LOG = LoggerFactory.getLogger(PrepareE2EResource.class);
 		
@@ -770,18 +796,22 @@ class AceTemplate {
 			private ViewProvider viewProvider;
 			private E2E e2e;
 		
-			public PrepareE2EResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			public PrepareE2EResource(Jdbi jdbi, IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e, CustomAppConfiguration configuration) {
 				super();
 				this.jdbi = jdbi;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
 				this.e2e = e2e;
+				this.configuration = configuration;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/prepare")
 			public Response put(@NotNull @QueryParam("uuid") String uuid) {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("prepare e2e replay is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);
 				LOG.info("PREPARE ACTION " + uuid);
 				try {
@@ -832,6 +862,7 @@ class AceTemplate {
 		import javax.ws.rs.Produces;
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
+		import javax.ws.rs.WebApplicationException;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -846,16 +877,21 @@ class AceTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(StopE2ESessionResource.class);
 		
 			private E2E e2e;
+			private CustomAppConfiguration configuration;
 			
-			public StopE2ESessionResource(E2E e2e) {
+			public StopE2ESessionResource(E2E e2e, CustomAppConfiguration configuration) {
 				super();
 				this.e2e = e2e;
+				this.configuration = configuration;
 			}
 		
 			@PUT
 			@Timed
 			@Path("/stop")
 			public Response put() {
+				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+					throw new WebApplicationException("stop e2e session is not available in a live environment", Response.Status.FORBIDDEN);
+				}
 				e2e.reset();
 				return Response.ok().build();
 			}
