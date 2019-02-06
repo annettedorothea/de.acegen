@@ -62,7 +62,7 @@ class CommandTemplate {
 			        	};
 			        «ENDIF»
 		
-					this.«httpCall»(`«httpUrl»`, «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF (serverCall.type == "POST" || serverCall.type == "PUT") && serverCall.payload.size > 0», payload«ENDIF»).then((data) => {
+					this.«httpCall»(this.adjustedUrl(`«httpUrl»`), «IF serverCall.authorize»true«ELSE»false«ENDIF», queryParams«IF (serverCall.type == "POST" || serverCall.type == "PUT") && serverCall.payload.size > 0», payload«ENDIF»).then((data) => {
 						«FOR responseAttribute : serverCall.response»
 							this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
 						«ENDFOR»
@@ -214,6 +214,14 @@ class CommandTemplate {
 		    	return true;
 		    }
 		
+		    adjustedUrl(url) {
+		        if (ACEController.execution !== ACEController.E2E) {
+		            return url;
+		        } else {
+		            return url.replace('api', 'replay');
+		        }
+		    }
+
 		    httpGet(url, authorize, queryParams) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
 		            queryParams = this.addUuidToQueryParams(queryParams);

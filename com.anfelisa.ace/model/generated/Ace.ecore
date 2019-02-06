@@ -9,7 +9,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
         eType="#//ES6_ACE" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="appStateRef" eType="#//ES6_StateElement"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appState" eType="#//ES6_StateElement"
         containment="true"/>
   </eClassifiers>

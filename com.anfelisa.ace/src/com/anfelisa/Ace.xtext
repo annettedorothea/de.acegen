@@ -9,7 +9,6 @@ Project:
 ES6: 
 	name = QualifiedName
 	('ACE' (aceOperations += ES6_ACE)*)?
-	('import' appStateRef = [ES6_StateElement | QualifiedName])?
 	('appState' appState = ES6_StateElement )?
 ;
 
