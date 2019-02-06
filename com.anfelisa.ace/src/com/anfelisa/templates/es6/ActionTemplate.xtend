@@ -19,7 +19,7 @@ class ActionTemplate {
 			import «commandName» from "../../../src/«es6.name»/commands/«commandName»";
 		«ENDIF»
 		«IF loadingFlag !== null»
-			import * as AppState from "../../ace/AppState";
+			import * as AppState from "../../ace/WriteAppState";
 		«ENDIF»
 
 		export default class «abstractActionName» extends Action {

@@ -866,14 +866,10 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateAppState(ES6_StateElement it, String prefix) '''
+	def String generateWriteAppState(ES6_StateElement it, String prefix) '''
 		import AppUtils from "../../src/app/AppUtils";
 		
-		let «name»;
-		
-		export function get«name.toFirstUpper»() {
-			return AppUtils.deepCopy(«name»);
-		}
+		export let «name»;
 		
 		export function setInitial«name.toFirstUpper»(initial«name.toFirstUpper») {
 			«name» = AppUtils.deepCopy(initial«name.toFirstUpper»);
@@ -882,13 +878,13 @@ class AceTemplate {
 		«IF types !== null»
 			«FOR type : types»
 				«FOR element : type.elements»
-					«element.generateAppStateRec()»
+					«element.generateWriteAppStateRec()»
 				«ENDFOR»
 			«ENDFOR»
 		«ENDIF»
 	'''
 	
-	def String generateAppStateRec(ES6_StateElement it) '''
+	def String generateWriteAppStateRec(ES6_StateElement it) '''
 		«IF types === null || types.length == 0»
 			export function set_«functionName»(eventData) {
 				«IF hash»
@@ -897,16 +893,6 @@ class AceTemplate {
 					localStorage.setItem("«name»", eventData.«name»);
 				«ELSE»
 					«elementPath» = eventData.«name»;
-				«ENDIF»
-			}
-			
-			export function get_«functionName»() {
-				«IF hash»
-					return location.hash;
-				«ELSEIF storage»
-					return localStorage.getItem("«name»");
-				«ELSE»
-					return «elementPath»;
 				«ENDIF»
 			}
 			
@@ -927,16 +913,6 @@ class AceTemplate {
 					localStorage.setItem("«name»", eventData.«name»);
 				«ELSE»
 					«elementPath» = eventData.«name»;
-				«ENDIF»
-			}
-			
-			export function get_«functionName»() {
-				«IF hash»
-					return location.hash;
-				«ELSEIF storage»
-					localStorage.getItem("«name»");
-				«ELSE»
-					return AppUtils.deepCopy(«elementPath»);
 				«ENDIF»
 			}
 			
@@ -965,7 +941,58 @@ class AceTemplate {
 			«IF types !== null && !list && !hash && !storage»
 				«FOR type : types»
 					«FOR element : type.elements»
-						«element.generateAppStateRec()»
+						«element.generateWriteAppStateRec()»
+					«ENDFOR»
+				«ENDFOR»
+			«ENDIF»
+			
+		«ENDIF»
+	'''
+	
+	def String generateReadAppState(ES6_StateElement it, String prefix) '''
+		import AppUtils from "../../src/app/AppUtils";
+		import { state } from "./WriteAppState";
+		
+		export function get«name.toFirstUpper»() {
+			return AppUtils.deepCopy(«name»);
+		}
+		
+		«IF types !== null»
+			«FOR type : types»
+				«FOR element : type.elements»
+					«element.generateReadAppStateRec()»
+				«ENDFOR»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	def String generateReadAppStateRec(ES6_StateElement it) '''
+		«IF types === null || types.length == 0»
+			export function get_«functionName»() {
+				«IF hash»
+					return location.hash;
+				«ELSEIF storage»
+					return localStorage.getItem("«name»");
+				«ELSE»
+					return «elementPath»;
+				«ENDIF»
+			}
+			
+		«ELSE»
+			export function get_«functionName»() {
+				«IF hash»
+					return location.hash;
+				«ELSEIF storage»
+					localStorage.getItem("«name»");
+				«ELSE»
+					return AppUtils.deepCopy(«elementPath»);
+				«ENDIF»
+			}
+
+			«IF types !== null && !list && !hash && !storage»
+				«FOR type : types»
+					«FOR element : type.elements»
+						«element.generateReadAppStateRec()»
 					«ENDFOR»
 				«ENDFOR»
 			«ENDIF»

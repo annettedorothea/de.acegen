@@ -83,11 +83,10 @@ class Es6Generator {
 		fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateBug());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
 		if (es6.appState !== null) {
-			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateAppState(es6.appState, ""));
-		} else if (es6.appStateRef !== null)  {
-			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateAppState(es6.appStateRef, ""));
+			fsa.generateFile('ace/WriteAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				aceTemplate.generateWriteAppState(es6.appState, ""));
+			fsa.generateFile('ace/ReadAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				aceTemplate.generateReadAppState(es6.appState, ""));
 		}
 		
 	}

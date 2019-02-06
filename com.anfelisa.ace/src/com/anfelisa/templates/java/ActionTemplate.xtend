@@ -124,7 +124,7 @@ class ActionTemplate {
 		
 			«IF type !== null»@«type»«ENDIF»
 			@Timed
-			@Produces(MediaType.TEXT_PLAIN)
+			@Produces(MediaType.APPLICATION_JSON)
 			@Consumes(MediaType.APPLICATION_JSON)
 			public Response «resourceName.toFirstLower»(
 					«IF authorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
@@ -166,6 +166,11 @@ class ActionTemplate {
 							throwBadRequest("uuid already exists - please choose another one");
 						}
 						this.actionData.setSystemTime(new DateTime());
+						«FOR outcome: outcomes»
+							«FOR triggeredAction : outcome.aceOperations»
+								this.actionData.addUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»", UUID.randomUUID().toString());
+							«ENDFOR»
+						«ENDFOR»
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
@@ -177,6 +182,11 @@ class ActionTemplate {
 						} else {
 							this.actionData.setSystemTime(new DateTime());
 						}
+						«FOR outcome: outcomes»
+							«FOR triggeredAction : outcome.aceOperations»
+								this.actionData.addUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»", UUID.randomUUID().toString());
+							«ENDFOR»
+						«ENDFOR»
 					}
 					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					ICommand command = this.getCommand();
@@ -199,6 +209,7 @@ class ActionTemplate {
 						«FOR triggeredAction : outcome.aceOperations»
 							«triggeredAction.name.toFirstUpper»Thread «triggeredAction.name.toFirstLower»Thread = new «triggeredAction.name.toFirstUpper»Thread(
 								jdbi, mapper, appConfiguration, daoProvider, viewProvider, e2e, command.getCommandData());
+							e2e.addTriggeredThread(«triggeredAction.name.toFirstLower»Thread);
 							«triggeredAction.name.toFirstLower»Thread.start();
 						«ENDFOR»
 						
@@ -249,6 +260,7 @@ class ActionTemplate {
 						   this.viewProvider = viewProvider;
 						   this.e2e = e2e;
 						   this.commandData = commandData;
+						   this.setName("«triggeredAction.name.toFirstUpper»Thread");
 						}
 					
 						public void run() {
@@ -257,7 +269,7 @@ class ActionTemplate {
 								«triggeredAction.actionNameWithPackage()» «triggeredAction.name.toFirstLower» 
 									= new «triggeredAction.actionNameWithPackage()»(jdbi, appConfiguration, daoProvider, viewProvider, e2e);
 								IDataContainer data = AceDataFactory.createAceData("«triggeredAction.actionNameWithPackage»", mapper.writeValueAsString(commandData));
-								data.setUuid(commandData.getUuid() + "«triggeredAction.name.toFirstUpper»");
+								data.setUuid(commandData.getUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»"));
 								«triggeredAction.name.toFirstLower».setActionData(data);
 								«triggeredAction.name.toFirstLower».apply();
 								LOG.info("trigger «triggeredAction.name» finished");
