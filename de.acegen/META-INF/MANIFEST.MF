@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: de.acegen
+Bundle-ManifestVersion: 2
+Bundle-Name: de.acegen
+Bundle-Vendor: Annette Pohl
+Bundle-Version: 0.5.0
+Bundle-SymbolicName: de.acegen; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.14.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.acegen.serializer,
+ de.acegen.validation,
+ de.acegen,
+ de.acegen.services,
+ de.acegen.aceGen.util,
+ de.acegen.parser.antlr,
+ de.acegen.scoping,
+ de.acegen.aceGen,
+ de.acegen.aceGen.impl,
+ de.acegen.parser.antlr.internal,
+ de.acegen.generator
+Import-Package: org.apache.log4j

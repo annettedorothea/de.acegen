@@ -19,3 +19,9 @@ com.anfelisa.ace.update.site/features
 com.anfelisa.ace.update.site/plugins
 artifacts.jar
 content.jar
+de.acegen.updatesite/features
+de.acegen.updatesite/plugins
+de.acegen/.launch
+de.acegen/bin
+.antlr-generator-3.2.0-patch.jar
+de.acegen.ide/bin

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: de.acegen.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: de.acegen.ide
+Bundle-Vendor: Annette Pohl
+Bundle-Version: 0.5.0
+Bundle-SymbolicName: de.acegen.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.acegen,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.acegen.ide.contentassist.antlr,
+ de.acegen.ide.contentassist.antlr.internal
+

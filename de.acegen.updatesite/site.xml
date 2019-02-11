@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.acegen.feature_0.5.0.jar" id="de.acegen.feature" version="0.5.0"/>
+</site>
