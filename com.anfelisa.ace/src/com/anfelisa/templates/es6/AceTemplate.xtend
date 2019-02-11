@@ -905,6 +905,16 @@ class AceTemplate {
 					«elementPath» = null;
 				«ENDIF»
 			}
+			
+			export function init_«functionName»() {
+				«IF hash»
+					location.hash = "";
+				«ELSEIF storage»
+					localStorage.removeItem("«name»");
+				«ELSE»
+					«elementPath» = null;
+				«ENDIF»
+			}
 		«ELSE»
 			export function set_«functionName»(eventData) {
 				«IF hash»
@@ -935,6 +945,16 @@ class AceTemplate {
 					localStorage.removeItem("«name»");
 				«ELSE»
 					«elementPath» = null;
+				«ENDIF»
+			}
+			
+			export function init_«functionName»() {
+				«IF hash»
+					location.hash = "";
+				«ELSEIF storage»
+					localStorage.removeItem("«name»");
+				«ELSE»
+					«elementPath» = {};
 				«ENDIF»
 			}
 			

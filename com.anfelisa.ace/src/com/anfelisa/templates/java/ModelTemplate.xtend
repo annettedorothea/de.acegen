@@ -36,7 +36,7 @@ class ModelTemplate {
 			«ENDFOR»
 			
 			«IF containsPrimitiveAttributes»
-				List<String> equalsPrimitiveTypes(«modelName» other);
+				List<String> equalsPrimitiveTypes(«interfaceWithPackage» other);
 			«ENDIF»
 			
 		}
@@ -84,7 +84,7 @@ class ModelTemplate {
 			
 			«FOR superModel : allSuperModels»
 				«IF superModel.containsPrimitiveAttributes»
-					public List<String> equalsPrimitiveTypes(«superModel.modelName» other) {
+					public List<String> equalsPrimitiveTypes(«superModel.interfaceWithPackage» other) {
 						List<String> differingAttributes = new ArrayList<String>();
 						«FOR attribute : superModel.attributes»
 							«IF attribute.isPrimitive»
@@ -193,7 +193,7 @@ class ModelTemplate {
 			
 			«FOR superModel : allSuperModels»
 				«IF superModel.containsPrimitiveAttributes»
-					public List<String> equalsPrimitiveTypes(«superModel.modelName» other) {
+					public List<String> equalsPrimitiveTypes(«superModel.interfaceWithPackage» other) {
 						List<String> differingAttributes = new ArrayList<String>();
 						«FOR attribute : superModel.attributes»
 							«IF attribute.isPrimitive»

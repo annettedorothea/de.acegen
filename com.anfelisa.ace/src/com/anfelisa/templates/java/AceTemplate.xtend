@@ -23,22 +23,16 @@ class AceTemplate {
 	def generateApp() '''
 		package com.anfelisa.ace;
 		
-		import org.eclipse.jetty.server.Connector;
-		import org.eclipse.jetty.server.Server;
-		import org.eclipse.jetty.server.ServerConnector;
 		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 		import org.jdbi.v3.core.Jdbi;
-		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.AceDao;
-		import com.anfelisa.ace.AceExecutionMode;
-		
 		import io.dropwizard.Application;
 		import io.dropwizard.db.DataSourceFactory;
-		import io.dropwizard.jdbi.DBIFactory;
-		import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
+		import io.dropwizard.jdbi3.JdbiFactory;
+		import io.dropwizard.jdbi3.bundles.JdbiExceptionsBundle;
+		import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 		import io.dropwizard.migrations.MigrationsBundle;
 		import io.dropwizard.setup.Bootstrap;
 		import io.dropwizard.setup.Environment;
@@ -47,6 +41,10 @@ class AceTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(App.class);
 		
+			static IDaoProvider daoProvider;
+			
+			public static ViewProvider viewProvider;
+
 			public static void main(String[] args) throws Exception {
 				new App().run(args);
 			}
@@ -61,7 +59,7 @@ class AceTemplate {
 			}
 		
 			public static void reportException(Exception x) {
-				// do somehting to notify someone about exception
+				// notify about exception
 			}
 		
 			@Override
@@ -80,44 +78,38 @@ class AceTemplate {
 			public void run(CustomAppConfiguration configuration, Environment environment) throws ClassNotFoundException {
 				LOG.info("running version {}", getVersion());
 		
-				environment.lifecycle().addServerLifecycleListener(new ServerLifecycleListener() {
-					@Override
-					public void serverStarted(Server server) {
-						for (Connector connector : server.getConnectors()) {
-							if (connector instanceof ServerConnector) {
-								try (ServerConnector serverConnector = (ServerConnector) connector) {
-									configuration.setPort(serverConnector.getPort());
-								}
-							}
-						}
-					}
-				});
-
-				final DBIFactory factory = new DBIFactory();
+				daoProvider = DaoProvider.create();
+				viewProvider = ViewProvider.create(daoProvider, configuration);
 		
-				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
+				final JdbiFactory factory = new JdbiFactory();
+		
+				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "todo");
 				
 				E2E e2e = new E2E();
 		
-				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
-					environment.jersey().register(new PrepareE2EResource(jdbi, e2e));
-					environment.jersey().register(new StartE2ESessionResource(jdbi, e2e));
-					environment.jersey().register(new StopE2ESessionResource(e2e));
-					environment.jersey().register(new GetServerTimelineResource(jdbi, e2e));
+				String mode = configuration.getServerConfiguration().getMode();
+				if (ServerConfiguration.REPLAY.equals(mode)) {
+					environment.jersey().register(new PrepareE2EResource(jdbi, daoProvider, viewProvider, e2e, configuration));
+					environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));
+					environment.jersey().register(new StopE2ESessionResource(e2e, configuration));
+					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
 				} else if (ServerConfiguration.DEV.equals(mode)) {
-					environment.jersey().register(new GetServerTimelineResource(jdbi, e2e));
+					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
 				} else if (ServerConfiguration.TEST.equals(mode)) {
-					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider, e2e));
+					environment.jersey().register(new ReplayEventsResource(jdbi, daoProvider, viewProvider, configuration));
+					environment.jersey().register(new SetSystemTimeResource(configuration));
 				}
+				
+				environment.jersey().register(new JsonProcessingExceptionMapper(true));
 		
 				environment.jersey().register(new GetServerInfoResource());
 		
-				DBIExceptionsBundle dbiExceptionsBundle = new DBIExceptionsBundle();
+				JdbiExceptionsBundle dbiExceptionsBundle = new JdbiExceptionsBundle();
 				environment.jersey().register(dbiExceptionsBundle);
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
-				AppRegistration.registerResources(environment, jdbi, appConfiguration, daoProvider, viewProvider, e2e);
+				AppRegistration.registerResources(environment, jdbi, configuration, daoProvider, viewProvider, e2e);
 				AppRegistration.registerConsumers(viewProvider, mode);
 		
 			}
@@ -1265,17 +1257,12 @@ class AceTemplate {
 	def generateViewProvider() '''
 		package com.anfelisa.ace;
 		
-		import java.util.ArrayList;
-		import java.util.HashMap;
-		import java.util.List;
-		import java.util.Map;
-		
 		public class ViewProvider extends AbstractViewProvider {
 		
 			public ViewProvider() {
 			}
 		
-			public static ViewProvider create() {
+			public static ViewProvider create(IDaoProvider daoProvider, CustomAppConfiguration configuration) {
 				return new ViewProvider();
 			}
 		

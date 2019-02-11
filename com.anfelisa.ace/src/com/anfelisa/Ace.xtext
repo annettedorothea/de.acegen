@@ -30,7 +30,7 @@ ES6_StateFunction:
 ;
 
 ES6_StateFunctionType:
-	'set' | 'merge' | 'reset'
+	'set' | 'merge' | 'reset' | 'init'
 ;
 
 ES6_StateElement:

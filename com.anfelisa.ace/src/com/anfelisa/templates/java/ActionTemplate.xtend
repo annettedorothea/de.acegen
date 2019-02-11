@@ -494,7 +494,8 @@ class ActionTemplate {
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
-		
+
+		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.Jdbi;
 		
 		public class «actionName» extends «abstractActionName» {
@@ -502,7 +503,7 @@ class ActionTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 		
 			public «actionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
-					ViewProvider viewProvider, E2E e2e") {
+					ViewProvider viewProvider, E2E e2e) {
 				super(jdbi,appConfiguration, daoProvider, viewProvider, e2e);
 			}
 		
