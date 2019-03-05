@@ -9,6 +9,7 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Scenario;
 
 import java.util.Collection;
 
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getViews <em>Views</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getModels <em>Models</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
  * @generated
@@ -115,6 +117,16 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @ordered
    */
   protected EList<Model> models;
+
+  /**
+   * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getScenarios()
+   * @generated
+   * @ordered
+   */
+  protected EList<Scenario> scenarios;
 
   /**
    * <!-- begin-user-doc -->
@@ -308,6 +320,21 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
+  public EList<Scenario> getScenarios()
+  {
+    if (scenarios == null)
+    {
+      scenarios = new EObjectContainmentEList<Scenario>(Scenario.class, this, AceGenPackage.HTTP_SERVER__SCENARIOS);
+    }
+    return scenarios;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -320,6 +347,8 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
         return ((InternalEList<?>)getViews()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_SERVER__MODELS:
         return ((InternalEList<?>)getModels()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_SERVER__SCENARIOS:
+        return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -347,6 +376,8 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
         return getViews();
       case AceGenPackage.HTTP_SERVER__MODELS:
         return getModels();
+      case AceGenPackage.HTTP_SERVER__SCENARIOS:
+        return getScenarios();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -383,6 +414,10 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
         getModels().clear();
         getModels().addAll((Collection<? extends Model>)newValue);
         return;
+      case AceGenPackage.HTTP_SERVER__SCENARIOS:
+        getScenarios().clear();
+        getScenarios().addAll((Collection<? extends Scenario>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -415,6 +450,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_SERVER__MODELS:
         getModels().clear();
         return;
+      case AceGenPackage.HTTP_SERVER__SCENARIOS:
+        getScenarios().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -441,6 +479,8 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
         return views != null && !views.isEmpty();
       case AceGenPackage.HTTP_SERVER__MODELS:
         return models != null && !models.isEmpty();
+      case AceGenPackage.HTTP_SERVER__SCENARIOS:
+        return scenarios != null && !scenarios.isEmpty();
     }
     return super.eIsSet(featureID);
   }

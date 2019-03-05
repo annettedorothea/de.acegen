@@ -19,11 +19,17 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.ScenarioEvent;
+import de.acegen.aceGen.Verification;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.scoping.AbstractAceGenScopeProvider;
 import java.util.ArrayList;
@@ -92,6 +98,50 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       };
       return new FilteringScope(scope_2, _function_2);
     }
+    if ((((context instanceof AttributeDefinitionList) || (context instanceof ListAttributeDefinitionList)) || 
+      (context instanceof AttributeDefinition))) {
+      EObject parent = context.eContainer();
+      while (((parent != null) && (!((((parent instanceof ScenarioEvent) || (parent instanceof Verification)) || (parent instanceof Scenario)) || (parent instanceof AttributeDefinition))))) {
+        parent = parent.eContainer();
+      }
+      if ((parent instanceof ScenarioEvent)) {
+        final ScenarioEvent scenarioEvent = ((ScenarioEvent) parent);
+        final Model aceModel_2 = scenarioEvent.getEvent().getModel();
+        if ((aceModel_2 != null)) {
+          return this.getScopeFor(aceModel_2);
+        }
+      }
+      if ((parent instanceof Verification)) {
+        final Verification verification = ((Verification) parent);
+        final Model aceModel_3 = verification.getAction().getModel();
+        if ((aceModel_3 != null)) {
+          return this.getScopeFor(aceModel_3);
+        }
+      }
+      if ((parent instanceof Scenario)) {
+        final Scenario scenario = ((Scenario) parent);
+        final Model aceModel_4 = scenario.getAction().getModel();
+        if ((aceModel_4 != null)) {
+          return this.getScopeFor(aceModel_4);
+        }
+      }
+      if ((parent instanceof AttributeDefinition)) {
+        final AttributeDefinition attributeDefinition = ((AttributeDefinition) parent);
+        Model _model = attributeDefinition.getAttribute().getModel();
+        boolean _tripleNotEquals = (_model != null);
+        if (_tripleNotEquals) {
+          Model _model_1 = attributeDefinition.getAttribute().getModel();
+          final Model model = ((Model) _model_1);
+          return this.getScopeFor(model);
+        }
+      }
+    }
     return super.getScope(context, reference);
+  }
+  
+  public IScope getScopeFor(final Model aceModel) {
+    final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
+    this._modelExtension.allAttributesRec(aceModel, attrs);
+    return Scopes.scopeFor(attrs);
   }
 }

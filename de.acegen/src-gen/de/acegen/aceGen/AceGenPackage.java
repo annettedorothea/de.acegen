@@ -453,13 +453,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER__MODELS = 5;
 
   /**
+   * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__SCENARIOS = 6;
+
+  /**
    * The number of structural features of the '<em>Http Server</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_FEATURE_COUNT = 6;
+  int HTTP_SERVER_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceImpl <em>Http Server Ace</em>}' class.
@@ -717,22 +726,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_OUTCOME__LISTENERS = 1;
 
   /**
-   * The feature id for the '<em><b>Ace Operations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_OUTCOME__ACE_OPERATIONS = 2;
-
-  /**
    * The number of structural features of the '<em>Http Server Outcome</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_OUTCOME_FEATURE_COUNT = 3;
+  int HTTP_SERVER_OUTCOME_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceReadImpl <em>Http Server Ace Read</em>}' class.
@@ -1010,6 +1010,384 @@ public interface AceGenPackage extends EPackage
   int MODEL_FEATURE_COUNT = 4;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ScenarioImpl <em>Scenario</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ScenarioImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenario()
+   * @generated
+   */
+  int SCENARIO = 16;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Events</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__EVENTS = 1;
+
+  /**
+   * The feature id for the '<em><b>Action</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__ACTION = 2;
+
+  /**
+   * The feature id for the '<em><b>Data Definition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__DATA_DEFINITION = 3;
+
+  /**
+   * The feature id for the '<em><b>Authorization</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__AUTHORIZATION = 4;
+
+  /**
+   * The feature id for the '<em><b>Status Code</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__STATUS_CODE = 5;
+
+  /**
+   * The feature id for the '<em><b>Response</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__RESPONSE = 6;
+
+  /**
+   * The feature id for the '<em><b>Verifications</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO__VERIFICATIONS = 7;
+
+  /**
+   * The number of structural features of the '<em>Scenario</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO_FEATURE_COUNT = 8;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.DataDefinitionImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
+   * @generated
+   */
+  int DATA_DEFINITION = 17;
+
+  /**
+   * The feature id for the '<em><b>Uuid</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_DEFINITION__UUID = 0;
+
+  /**
+   * The feature id for the '<em><b>Systemtime</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_DEFINITION__SYSTEMTIME = 1;
+
+  /**
+   * The feature id for the '<em><b>Data</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_DEFINITION__DATA = 2;
+
+  /**
+   * The number of structural features of the '<em>Data Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_DEFINITION_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AuthorizationImpl <em>Authorization</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AuthorizationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
+   * @generated
+   */
+  int AUTHORIZATION = 18;
+
+  /**
+   * The feature id for the '<em><b>Username</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORIZATION__USERNAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Password</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORIZATION__PASSWORD = 1;
+
+  /**
+   * The number of structural features of the '<em>Authorization</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORIZATION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ScenarioEventImpl <em>Scenario Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ScenarioEventImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenarioEvent()
+   * @generated
+   */
+  int SCENARIO_EVENT = 19;
+
+  /**
+   * The feature id for the '<em><b>Event</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO_EVENT__EVENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Data Definition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO_EVENT__DATA_DEFINITION = 1;
+
+  /**
+   * The number of structural features of the '<em>Scenario Event</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCENARIO_EVENT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.VerificationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
+   * @generated
+   */
+  int VERIFICATION = 20;
+
+  /**
+   * The feature id for the '<em><b>Action</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION__ACTION = 0;
+
+  /**
+   * The feature id for the '<em><b>Data Definition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION__DATA_DEFINITION = 1;
+
+  /**
+   * The feature id for the '<em><b>Authorization</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION__AUTHORIZATION = 2;
+
+  /**
+   * The feature id for the '<em><b>Response</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION__RESPONSE = 3;
+
+  /**
+   * The number of structural features of the '<em>Verification</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
+   * @generated
+   */
+  int VALUE = 25;
+
+  /**
+   * The number of structural features of the '<em>Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl <em>Attribute Definition List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AttributeDefinitionListImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionList()
+   * @generated
+   */
+  int ATTRIBUTE_DEFINITION_LIST = 21;
+
+  /**
+   * The feature id for the '<em><b>Attribute Definitions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Attribute Definition List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ListAttributeDefinitionListImpl <em>List Attribute Definition List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ListAttributeDefinitionListImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getListAttributeDefinitionList()
+   * @generated
+   */
+  int LIST_ATTRIBUTE_DEFINITION_LIST = 22;
+
+  /**
+   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>List Attribute Definition List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AttributeDefinitionImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinition()
+   * @generated
+   */
+  int ATTRIBUTE_DEFINITION = 23;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION__ATTRIBUTE = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Attribute Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1017,7 +1395,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 16;
+  int ATTRIBUTE = 24;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1490,6 +1868,17 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServer_Models();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpServer#getScenarios <em>Scenarios</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Scenarios</em>'.
+   * @see de.acegen.aceGen.HttpServer#getScenarios()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EReference getHttpServer_Scenarios();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerAce <em>Http Server Ace</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1663,17 +2052,6 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServerOutcome_Listeners();
 
   /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerOutcome#getAceOperations <em>Ace Operations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Ace Operations</em>'.
-   * @see de.acegen.aceGen.HttpServerOutcome#getAceOperations()
-   * @see #getHttpServerOutcome()
-   * @generated
-   */
-  EReference getHttpServerOutcome_AceOperations();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerAceRead <em>Http Server Ace Read</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1834,6 +2212,339 @@ public interface AceGenPackage extends EPackage
   EReference getModel_Attributes();
 
   /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Scenario <em>Scenario</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scenario</em>'.
+   * @see de.acegen.aceGen.Scenario
+   * @generated
+   */
+  EClass getScenario();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Scenario#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.Scenario#getName()
+   * @see #getScenario()
+   * @generated
+   */
+  EAttribute getScenario_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Scenario#getEvents <em>Events</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Events</em>'.
+   * @see de.acegen.aceGen.Scenario#getEvents()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_Events();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.Scenario#getAction <em>Action</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Action</em>'.
+   * @see de.acegen.aceGen.Scenario#getAction()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_Action();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Scenario#getDataDefinition <em>Data Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Data Definition</em>'.
+   * @see de.acegen.aceGen.Scenario#getDataDefinition()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_DataDefinition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Scenario#getAuthorization <em>Authorization</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Authorization</em>'.
+   * @see de.acegen.aceGen.Scenario#getAuthorization()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_Authorization();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Scenario#getStatusCode <em>Status Code</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Status Code</em>'.
+   * @see de.acegen.aceGen.Scenario#getStatusCode()
+   * @see #getScenario()
+   * @generated
+   */
+  EAttribute getScenario_StatusCode();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Scenario#getResponse <em>Response</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Response</em>'.
+   * @see de.acegen.aceGen.Scenario#getResponse()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_Response();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Scenario#getVerifications <em>Verifications</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Verifications</em>'.
+   * @see de.acegen.aceGen.Scenario#getVerifications()
+   * @see #getScenario()
+   * @generated
+   */
+  EReference getScenario_Verifications();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Data Definition</em>'.
+   * @see de.acegen.aceGen.DataDefinition
+   * @generated
+   */
+  EClass getDataDefinition();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getUuid <em>Uuid</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Uuid</em>'.
+   * @see de.acegen.aceGen.DataDefinition#getUuid()
+   * @see #getDataDefinition()
+   * @generated
+   */
+  EAttribute getDataDefinition_Uuid();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getSystemtime <em>Systemtime</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Systemtime</em>'.
+   * @see de.acegen.aceGen.DataDefinition#getSystemtime()
+   * @see #getDataDefinition()
+   * @generated
+   */
+  EAttribute getDataDefinition_Systemtime();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.DataDefinition#getData <em>Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Data</em>'.
+   * @see de.acegen.aceGen.DataDefinition#getData()
+   * @see #getDataDefinition()
+   * @generated
+   */
+  EReference getDataDefinition_Data();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Authorization <em>Authorization</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Authorization</em>'.
+   * @see de.acegen.aceGen.Authorization
+   * @generated
+   */
+  EClass getAuthorization();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Authorization#getUsername <em>Username</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Username</em>'.
+   * @see de.acegen.aceGen.Authorization#getUsername()
+   * @see #getAuthorization()
+   * @generated
+   */
+  EAttribute getAuthorization_Username();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Authorization#getPassword <em>Password</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Password</em>'.
+   * @see de.acegen.aceGen.Authorization#getPassword()
+   * @see #getAuthorization()
+   * @generated
+   */
+  EAttribute getAuthorization_Password();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.ScenarioEvent <em>Scenario Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scenario Event</em>'.
+   * @see de.acegen.aceGen.ScenarioEvent
+   * @generated
+   */
+  EClass getScenarioEvent();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.ScenarioEvent#getEvent <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Event</em>'.
+   * @see de.acegen.aceGen.ScenarioEvent#getEvent()
+   * @see #getScenarioEvent()
+   * @generated
+   */
+  EReference getScenarioEvent_Event();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ScenarioEvent#getDataDefinition <em>Data Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Data Definition</em>'.
+   * @see de.acegen.aceGen.ScenarioEvent#getDataDefinition()
+   * @see #getScenarioEvent()
+   * @generated
+   */
+  EReference getScenarioEvent_DataDefinition();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Verification</em>'.
+   * @see de.acegen.aceGen.Verification
+   * @generated
+   */
+  EClass getVerification();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.Verification#getAction <em>Action</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Action</em>'.
+   * @see de.acegen.aceGen.Verification#getAction()
+   * @see #getVerification()
+   * @generated
+   */
+  EReference getVerification_Action();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Verification#getDataDefinition <em>Data Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Data Definition</em>'.
+   * @see de.acegen.aceGen.Verification#getDataDefinition()
+   * @see #getVerification()
+   * @generated
+   */
+  EReference getVerification_DataDefinition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Verification#getAuthorization <em>Authorization</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Authorization</em>'.
+   * @see de.acegen.aceGen.Verification#getAuthorization()
+   * @see #getVerification()
+   * @generated
+   */
+  EReference getVerification_Authorization();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Verification#getResponse <em>Response</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Response</em>'.
+   * @see de.acegen.aceGen.Verification#getResponse()
+   * @see #getVerification()
+   * @generated
+   */
+  EReference getVerification_Response();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Definition List</em>'.
+   * @see de.acegen.aceGen.AttributeDefinitionList
+   * @generated
+   */
+  EClass getAttributeDefinitionList();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.AttributeDefinitionList#getAttributeDefinitions <em>Attribute Definitions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Attribute Definitions</em>'.
+   * @see de.acegen.aceGen.AttributeDefinitionList#getAttributeDefinitions()
+   * @see #getAttributeDefinitionList()
+   * @generated
+   */
+  EReference getAttributeDefinitionList_AttributeDefinitions();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.ListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>List Attribute Definition List</em>'.
+   * @see de.acegen.aceGen.ListAttributeDefinitionList
+   * @generated
+   */
+  EClass getListAttributeDefinitionList();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ListAttributeDefinitionList#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Attribute Definition List</em>'.
+   * @see de.acegen.aceGen.ListAttributeDefinitionList#getAttributeDefinitionList()
+   * @see #getListAttributeDefinitionList()
+   * @generated
+   */
+  EReference getListAttributeDefinitionList_AttributeDefinitionList();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Definition</em>'.
+   * @see de.acegen.aceGen.AttributeDefinition
+   * @generated
+   */
+  EClass getAttributeDefinition();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.AttributeDefinition#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.AttributeDefinition#getAttribute()
+   * @see #getAttributeDefinition()
+   * @generated
+   */
+  EReference getAttributeDefinition_Attribute();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.AttributeDefinition#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.acegen.aceGen.AttributeDefinition#getValue()
+   * @see #getAttributeDefinition()
+   * @generated
+   */
+  EReference getAttributeDefinition_Value();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.Attribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1930,6 +2641,16 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getAttribute_ForeignKey();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Value <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Value</em>'.
+   * @see de.acegen.aceGen.Value
+   * @generated
+   */
+  EClass getValue();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -2259,6 +2980,14 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER__MODELS = eINSTANCE.getHttpServer_Models();
 
     /**
+     * The meta object literal for the '<em><b>Scenarios</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HTTP_SERVER__SCENARIOS = eINSTANCE.getHttpServer_Scenarios();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerAceImpl <em>Http Server Ace</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2393,14 +3122,6 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER_OUTCOME__LISTENERS = eINSTANCE.getHttpServerOutcome_Listeners();
 
     /**
-     * The meta object literal for the '<em><b>Ace Operations</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HTTP_SERVER_OUTCOME__ACE_OPERATIONS = eINSTANCE.getHttpServerOutcome_AceOperations();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerAceReadImpl <em>Http Server Ace Read</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2531,6 +3252,270 @@ public interface AceGenPackage extends EPackage
     EReference MODEL__ATTRIBUTES = eINSTANCE.getModel_Attributes();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ScenarioImpl <em>Scenario</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ScenarioImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenario()
+     * @generated
+     */
+    EClass SCENARIO = eINSTANCE.getScenario();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCENARIO__NAME = eINSTANCE.getScenario_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Events</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__EVENTS = eINSTANCE.getScenario_Events();
+
+    /**
+     * The meta object literal for the '<em><b>Action</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__ACTION = eINSTANCE.getScenario_Action();
+
+    /**
+     * The meta object literal for the '<em><b>Data Definition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__DATA_DEFINITION = eINSTANCE.getScenario_DataDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Authorization</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__AUTHORIZATION = eINSTANCE.getScenario_Authorization();
+
+    /**
+     * The meta object literal for the '<em><b>Status Code</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCENARIO__STATUS_CODE = eINSTANCE.getScenario_StatusCode();
+
+    /**
+     * The meta object literal for the '<em><b>Response</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__RESPONSE = eINSTANCE.getScenario_Response();
+
+    /**
+     * The meta object literal for the '<em><b>Verifications</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO__VERIFICATIONS = eINSTANCE.getScenario_Verifications();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.DataDefinitionImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
+     * @generated
+     */
+    EClass DATA_DEFINITION = eINSTANCE.getDataDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Uuid</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DATA_DEFINITION__UUID = eINSTANCE.getDataDefinition_Uuid();
+
+    /**
+     * The meta object literal for the '<em><b>Systemtime</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DATA_DEFINITION__SYSTEMTIME = eINSTANCE.getDataDefinition_Systemtime();
+
+    /**
+     * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DATA_DEFINITION__DATA = eINSTANCE.getDataDefinition_Data();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AuthorizationImpl <em>Authorization</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AuthorizationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
+     * @generated
+     */
+    EClass AUTHORIZATION = eINSTANCE.getAuthorization();
+
+    /**
+     * The meta object literal for the '<em><b>Username</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORIZATION__USERNAME = eINSTANCE.getAuthorization_Username();
+
+    /**
+     * The meta object literal for the '<em><b>Password</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORIZATION__PASSWORD = eINSTANCE.getAuthorization_Password();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ScenarioEventImpl <em>Scenario Event</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ScenarioEventImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenarioEvent()
+     * @generated
+     */
+    EClass SCENARIO_EVENT = eINSTANCE.getScenarioEvent();
+
+    /**
+     * The meta object literal for the '<em><b>Event</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO_EVENT__EVENT = eINSTANCE.getScenarioEvent_Event();
+
+    /**
+     * The meta object literal for the '<em><b>Data Definition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCENARIO_EVENT__DATA_DEFINITION = eINSTANCE.getScenarioEvent_DataDefinition();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.VerificationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
+     * @generated
+     */
+    EClass VERIFICATION = eINSTANCE.getVerification();
+
+    /**
+     * The meta object literal for the '<em><b>Action</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VERIFICATION__ACTION = eINSTANCE.getVerification_Action();
+
+    /**
+     * The meta object literal for the '<em><b>Data Definition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VERIFICATION__DATA_DEFINITION = eINSTANCE.getVerification_DataDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Authorization</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VERIFICATION__AUTHORIZATION = eINSTANCE.getVerification_Authorization();
+
+    /**
+     * The meta object literal for the '<em><b>Response</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VERIFICATION__RESPONSE = eINSTANCE.getVerification_Response();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl <em>Attribute Definition List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AttributeDefinitionListImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionList()
+     * @generated
+     */
+    EClass ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getAttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute Definitions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = eINSTANCE.getAttributeDefinitionList_AttributeDefinitions();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ListAttributeDefinitionListImpl <em>List Attribute Definition List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ListAttributeDefinitionListImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getListAttributeDefinitionList()
+     * @generated
+     */
+    EClass LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getListAttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getListAttributeDefinitionList_AttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AttributeDefinitionImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinition()
+     * @generated
+     */
+    EClass ATTRIBUTE_DEFINITION = eINSTANCE.getAttributeDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_DEFINITION__ATTRIBUTE = eINSTANCE.getAttributeDefinition_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_DEFINITION__VALUE = eINSTANCE.getAttributeDefinition_Value();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2603,6 +3588,16 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference ATTRIBUTE__FOREIGN_KEY = eINSTANCE.getAttribute_ForeignKey();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
+     * @generated
+     */
+    EClass VALUE = eINSTANCE.getValue();
 
   }
 

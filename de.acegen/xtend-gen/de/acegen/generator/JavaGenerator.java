@@ -22,6 +22,7 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Scenario;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.JavaExtension;
 import de.acegen.extensions.java.ModelExtension;
@@ -348,6 +349,18 @@ public class JavaGenerator {
       String _plus_6 = (_plus_5 + ".java");
       fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
         this.aceTemplate.generateAuthUser(authUser));
+    }
+    EList<Scenario> _scenarios = java.getScenarios();
+    for (final Scenario scenario : _scenarios) {
+      String _packageFolder_5 = this._javaExtension.packageFolder(java);
+      String _plus_7 = (_packageFolder_5 + "/tests/");
+      String _name = scenario.getName();
+      String _plus_8 = (_plus_7 + _name);
+      String _plus_9 = (_plus_8 + "Scenario.java");
+      String _name_1 = scenario.getName();
+      String _plus_10 = ("//" + _name_1);
+      fsa.generateFile(_plus_9, 
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, _plus_10);
     }
   }
 }

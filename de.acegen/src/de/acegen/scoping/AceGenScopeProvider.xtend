@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
- *
+ * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -13,24 +13,31 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
- 
+
 
 package de.acegen.scoping
 
 import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeDefinition
+import de.acegen.aceGen.AttributeDefinitionList
+import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.HttpServerOutcome
+import de.acegen.aceGen.HttpServerViewFunction
+import de.acegen.aceGen.ListAttributeDefinitionList
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.Scenario
+import de.acegen.aceGen.ScenarioEvent
+import de.acegen.aceGen.Verification
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerOutcome
-import de.acegen.aceGen.HttpServerViewFunction
 
 /**
  * This class contains custom scoping description.
@@ -71,12 +78,52 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
+		if (context instanceof AttributeDefinitionList || context instanceof ListAttributeDefinitionList ||
+			context instanceof AttributeDefinition) {
+			var parent = context.eContainer
+			while (parent !== null && !(
+					(parent instanceof ScenarioEvent) || (parent instanceof Verification) ||
+				(parent instanceof Scenario) || (parent instanceof AttributeDefinition)
+				)) {
+				parent = parent.eContainer
+			}
+			if (parent instanceof ScenarioEvent) {
+				val scenarioEvent = parent as ScenarioEvent;
+				val aceModel = scenarioEvent.event.model;
+				if (aceModel !== null) {
+					return getScopeFor(aceModel);
+				}
+			}
+			if (parent instanceof Verification) {
+				val verification = parent as Verification;
+				val aceModel = verification.action.model;
+				if (aceModel !== null) {
+					return getScopeFor(aceModel);
+				}
+			}
+			if (parent instanceof Scenario) {
+				val scenario = parent as Scenario;
+				val aceModel = scenario.action.model;
+				if (aceModel !== null) {
+					return getScopeFor(aceModel);
+				}
+			}
+			if (parent instanceof AttributeDefinition) {
+				val attributeDefinition = parent as AttributeDefinition;
+				if (attributeDefinition.attribute.model !== null) {
+					val model = attributeDefinition.attribute.model as Model
+					return getScopeFor(model);
+				}
+			}
+		}
 		return super.getScope(context, reference);
 	}
 
+	def IScope getScopeFor(Model aceModel) {
+		val attrs = new ArrayList<Attribute>();
+		aceModel.allAttributesRec(attrs);
+		return Scopes.scopeFor(attrs)
+	}
+
 }
-	
-	
 /******* S.D.G. *******/
-	
-	

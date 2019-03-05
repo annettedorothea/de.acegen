@@ -223,7 +223,7 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAbstractViewProvider());
 			
 		fsa.generateFile("com/anfelisa/ace" + '/EventConsumer.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventconsumer());
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventconsumer());	
 
 		fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 			aceTemplate.generateAceMigration());
@@ -231,6 +231,11 @@ class JavaGenerator {
 		if (authUser !== null) {
 			fsa.generateFile('com/anfelisa/auth/' + authUser.name.toFirstUpper + '.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 				aceTemplate.generateAuthUser(authUser));
+		}
+		
+		for (scenario : java.scenarios) {
+			fsa.generateFile(java.packageFolder + '/tests/' + scenario.name + 'Scenario.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, "//" + scenario.name);
 		}
 
 	}

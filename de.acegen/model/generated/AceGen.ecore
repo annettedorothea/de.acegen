@@ -58,6 +58,8 @@
         eType="#//HttpServerView" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="models" upperBound="-1"
         eType="#//Model" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
+        eType="#//Scenario" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAce">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="proxy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -83,8 +85,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
         upperBound="-1" eType="#//HttpServerViewFunction"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
-        upperBound="-1" eType="#//HttpServerAceWrite"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceRead" eSuperTypes="#//HttpServerAce"/>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerView">
@@ -109,6 +109,58 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//Attribute" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
+        eType="#//ScenarioEvent" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpServerAce"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="statusCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//AttributeDefinitionList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
+        eType="#//Verification" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//AttributeDefinitionList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Authorization">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScenarioEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//HttpServerAceWrite"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Verification">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpServerAceRead"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//AttributeDefinitionList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList" eSuperTypes="#//Value">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitions" upperBound="-1"
+        eType="#//AttributeDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList" eSuperTypes="#//Value">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
+        upperBound="-1" eType="#//AttributeDefinitionList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unique" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="primaryKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -119,4 +171,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Value"/>
 </ecore:EPackage>

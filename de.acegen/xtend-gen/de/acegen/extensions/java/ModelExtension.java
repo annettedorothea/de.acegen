@@ -466,8 +466,7 @@ public class ModelExtension {
       return false;
     } else {
       for (final Attribute attr : it) {
-        boolean _equals_1 = attr.getName().equals(attribute.getName());
-        if (_equals_1) {
+        if ((((attr.getName() != null) && (attribute.getName() != null)) && attr.getName().equals(attribute.getName()))) {
           return true;
         }
       }

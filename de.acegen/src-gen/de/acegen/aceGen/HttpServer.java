@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpServer#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getViews <em>Views</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getModels <em>Models</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpServer#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpServer()
@@ -155,5 +156,21 @@ public interface HttpServer extends EObject
    * @generated
    */
   EList<Model> getModels();
+
+  /**
+   * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Scenario}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Scenarios</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Scenarios</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServer_Scenarios()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Scenario> getScenarios();
 
 } // HttpServer

@@ -11,6 +11,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -34,12 +35,14 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServerAceWrite_ResponseKeyword_11_0_q;
 	protected AbstractElementAlias match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a;
 	protected AbstractElementAlias match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a;
-	protected AbstractElementAlias match_HttpServerOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q;
 	protected AbstractElementAlias match_HttpServer_ACEKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpServer_ModelsKeyword_5_0_q;
+	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_6_0_q;
 	protected AbstractElementAlias match_HttpServer_ViewsKeyword_4_0_q;
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
+	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
+	protected AbstractElementAlias match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -57,19 +60,45 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServerAceWrite_ResponseKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_11_0());
 		match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()));
-		match_HttpServerOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()));
 		match_HttpServer_ACEKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getACEKeyword_3_0());
 		match_HttpServer_ModelsKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getModelsKeyword_5_0());
+		match_HttpServer_ScenariosKeyword_6_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_6_0());
 		match_HttpServer_ViewsKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_4_0());
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
+		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
+		match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getValueAccess().getINTTerminalRuleCall_1_1()), new TokenAlias(false, false, grammarAccess.getValueAccess().getSTRINGTerminalRuleCall_0_1()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (ruleCall.getRule() == grammarAccess.getINTRule())
+			return getINTToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getSTRINGRule())
+			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * terminal INT returns ecore::EInt: ('0'..'9')+;
+	 */
+	protected String getINTToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
+	
+	/**
+	 * terminal STRING:
+	 * 			'"' ( '\\' .  | !('\\'|'"') )* '"' |
+	 * 			"'" ( '\\' .  | !('\\'|"'") )* "'"
+	 * 		;
+	 */
+	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "\"\"";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -103,18 +132,22 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a.equals(syntax))
 				emit_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q.equals(syntax))
-				emit_HttpServerOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q.equals(syntax))
 				emit_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ACEKeyword_3_0_q.equals(syntax))
 				emit_HttpServer_ACEKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ModelsKeyword_5_0_q.equals(syntax))
 				emit_HttpServer_ModelsKeyword_5_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServer_ScenariosKeyword_6_0_q.equals(syntax))
+				emit_HttpServer_ScenariosKeyword_6_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ViewsKeyword_4_0_q.equals(syntax))
 				emit_HttpServer_ViewsKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q.equals(syntax))
 				emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Scenario_GIVENKeyword_1_0_q.equals(syntax))
+				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1.equals(syntax))
+				emit_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -314,10 +347,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     listeners+=[HttpServerViewFunction|QualifiedName] ')' (ambiguity) 'triggers' '(' aceOperations+=[HttpServerAceWrite|QualifiedName]
-	 *     listeners+=[HttpServerViewFunction|QualifiedName] ')' (ambiguity) ('triggers' '(' ')')? (rule end)
-	 *     name=ID (ambiguity) 'triggers' '(' aceOperations+=[HttpServerAceWrite|QualifiedName]
-	 *     name=ID (ambiguity) ('triggers' '(' ')')? (rule end)
+	 *     listeners+=[HttpServerViewFunction|QualifiedName] ')' (ambiguity) (rule end)
+	 *     name=ID (ambiguity) (rule end)
 	 */
 	protected void emit_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -332,18 +363,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID '(' (ambiguity) listeners+=[HttpServerViewFunction|QualifiedName]
 	 */
 	protected void emit_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('triggers' '(' ')')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     listeners+=[HttpServerViewFunction|QualifiedName] ')' ('(' ')')* (ambiguity) (rule end)
-	 *     name=ID ('(' ')')* (ambiguity) (rule end)
-	 */
-	protected void emit_HttpServerOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -365,13 +384,16 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     authUser=AuthUser (ambiguity) 'views' views+=HttpServerView
 	 *     authUser=AuthUser (ambiguity) 'views'? 'models' models+=Model
-	 *     authUser=AuthUser (ambiguity) 'views'? 'models'? (rule end)
+	 *     authUser=AuthUser (ambiguity) 'views'? 'models'? 'scenarios' scenarios+=Scenario
+	 *     authUser=AuthUser (ambiguity) 'views'? 'models'? 'scenarios'? (rule end)
 	 *     authUserRef=[AuthUser|QualifiedName] (ambiguity) 'views' views+=HttpServerView
 	 *     authUserRef=[AuthUser|QualifiedName] (ambiguity) 'views'? 'models' models+=Model
-	 *     authUserRef=[AuthUser|QualifiedName] (ambiguity) 'views'? 'models'? (rule end)
+	 *     authUserRef=[AuthUser|QualifiedName] (ambiguity) 'views'? 'models'? 'scenarios' scenarios+=Scenario
+	 *     authUserRef=[AuthUser|QualifiedName] (ambiguity) 'views'? 'models'? 'scenarios'? (rule end)
 	 *     name=QualifiedName (ambiguity) 'views' views+=HttpServerView
 	 *     name=QualifiedName (ambiguity) 'views'? 'models' models+=Model
-	 *     name=QualifiedName (ambiguity) 'views'? 'models'? (rule end)
+	 *     name=QualifiedName (ambiguity) 'views'? 'models'? 'scenarios' scenarios+=Scenario
+	 *     name=QualifiedName (ambiguity) 'views'? 'models'? 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpServer_ACEKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -382,13 +404,34 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'models'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     aceOperations+=HttpServerAce 'views'? (ambiguity) (rule end)
-	 *     authUser=AuthUser 'ACE'? 'views'? (ambiguity) (rule end)
-	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? 'views'? (ambiguity) (rule end)
-	 *     name=QualifiedName 'ACE'? 'views'? (ambiguity) (rule end)
-	 *     views+=HttpServerView (ambiguity) (rule end)
+	 *     aceOperations+=HttpServerAce 'views'? (ambiguity) 'scenarios' scenarios+=Scenario
+	 *     aceOperations+=HttpServerAce 'views'? (ambiguity) 'scenarios'? (rule end)
+	 *     authUser=AuthUser 'ACE'? 'views'? (ambiguity) 'scenarios' scenarios+=Scenario
+	 *     authUser=AuthUser 'ACE'? 'views'? (ambiguity) 'scenarios'? (rule end)
+	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? 'views'? (ambiguity) 'scenarios' scenarios+=Scenario
+	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? 'views'? (ambiguity) 'scenarios'? (rule end)
+	 *     name=QualifiedName 'ACE'? 'views'? (ambiguity) 'scenarios' scenarios+=Scenario
+	 *     name=QualifiedName 'ACE'? 'views'? (ambiguity) 'scenarios'? (rule end)
+	 *     views+=HttpServerView (ambiguity) 'scenarios' scenarios+=Scenario
+	 *     views+=HttpServerView (ambiguity) 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpServer_ModelsKeyword_5_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'scenarios'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     aceOperations+=HttpServerAce 'views'? 'models'? (ambiguity) (rule end)
+	 *     authUser=AuthUser 'ACE'? 'views'? 'models'? (ambiguity) (rule end)
+	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? 'views'? 'models'? (ambiguity) (rule end)
+	 *     models+=Model (ambiguity) (rule end)
+	 *     name=QualifiedName 'ACE'? 'views'? 'models'? (ambiguity) (rule end)
+	 *     views+=HttpServerView 'models'? (ambiguity) (rule end)
+	 */
+	protected void emit_HttpServer_ScenariosKeyword_6_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -398,13 +441,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     aceOperations+=HttpServerAce (ambiguity) 'models' models+=Model
-	 *     aceOperations+=HttpServerAce (ambiguity) 'models'? (rule end)
+	 *     aceOperations+=HttpServerAce (ambiguity) 'models'? 'scenarios' scenarios+=Scenario
+	 *     aceOperations+=HttpServerAce (ambiguity) 'models'? 'scenarios'? (rule end)
 	 *     authUser=AuthUser 'ACE'? (ambiguity) 'models' models+=Model
-	 *     authUser=AuthUser 'ACE'? (ambiguity) 'models'? (rule end)
+	 *     authUser=AuthUser 'ACE'? (ambiguity) 'models'? 'scenarios' scenarios+=Scenario
+	 *     authUser=AuthUser 'ACE'? (ambiguity) 'models'? 'scenarios'? (rule end)
 	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? (ambiguity) 'models' models+=Model
-	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? (ambiguity) 'models'? (rule end)
+	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? (ambiguity) 'models'? 'scenarios' scenarios+=Scenario
+	 *     authUserRef=[AuthUser|QualifiedName] 'ACE'? (ambiguity) 'models'? 'scenarios'? (rule end)
 	 *     name=QualifiedName 'ACE'? (ambiguity) 'models' models+=Model
-	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? (rule end)
+	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? 'scenarios' scenarios+=Scenario
+	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpServer_ViewsKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -419,6 +466,28 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     superModels+=[Model|QualifiedName] (ambiguity) (rule end)
 	 */
 	protected void emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'GIVEN'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) 'WHEN' action=[HttpServerAce|QualifiedName]
+	 */
+	protected void emit_Scenario_GIVENKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     STRING | INT
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

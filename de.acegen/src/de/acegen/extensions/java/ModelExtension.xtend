@@ -166,7 +166,7 @@ class ModelExtension {
 			return false
 		} else {
 			for (attr : it) {
-				if (attr.name.equals(attribute.name)) {
+				if (attr.name !== null && attribute.name !== null && attr.name.equals(attribute.name)) {
 					return true
 				}
 			}

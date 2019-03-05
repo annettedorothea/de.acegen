@@ -168,6 +168,78 @@ public interface AceGenFactory extends EFactory
   Model createModel();
 
   /**
+   * Returns a new object of class '<em>Scenario</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scenario</em>'.
+   * @generated
+   */
+  Scenario createScenario();
+
+  /**
+   * Returns a new object of class '<em>Data Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Definition</em>'.
+   * @generated
+   */
+  DataDefinition createDataDefinition();
+
+  /**
+   * Returns a new object of class '<em>Authorization</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Authorization</em>'.
+   * @generated
+   */
+  Authorization createAuthorization();
+
+  /**
+   * Returns a new object of class '<em>Scenario Event</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scenario Event</em>'.
+   * @generated
+   */
+  ScenarioEvent createScenarioEvent();
+
+  /**
+   * Returns a new object of class '<em>Verification</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Verification</em>'.
+   * @generated
+   */
+  Verification createVerification();
+
+  /**
+   * Returns a new object of class '<em>Attribute Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Definition List</em>'.
+   * @generated
+   */
+  AttributeDefinitionList createAttributeDefinitionList();
+
+  /**
+   * Returns a new object of class '<em>List Attribute Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>List Attribute Definition List</em>'.
+   * @generated
+   */
+  ListAttributeDefinitionList createListAttributeDefinitionList();
+
+  /**
+   * Returns a new object of class '<em>Attribute Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Definition</em>'.
+   * @generated
+   */
+  AttributeDefinition createAttributeDefinition();
+
+  /**
    * Returns a new object of class '<em>Attribute</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -175,6 +247,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   Attribute createAttribute();
+
+  /**
+   * Returns a new object of class '<em>Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Value</em>'.
+   * @generated
+   */
+  Value createValue();
 
   /**
    * Returns the package supported by this factory.

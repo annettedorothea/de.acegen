@@ -4,7 +4,6 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
 
@@ -31,7 +30,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerOutcomeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerOutcomeImpl#getListeners <em>Listeners</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerOutcomeImpl#getAceOperations <em>Ace Operations</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,16 +65,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected EList<HttpServerViewFunction> listeners;
-
-  /**
-   * The cached value of the '{@link #getAceOperations() <em>Ace Operations</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAceOperations()
-   * @generated
-   * @ordered
-   */
-  protected EList<HttpServerAceWrite> aceOperations;
 
   /**
    * <!-- begin-user-doc -->
@@ -145,21 +133,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public EList<HttpServerAceWrite> getAceOperations()
-  {
-    if (aceOperations == null)
-    {
-      aceOperations = new EObjectResolvingEList<HttpServerAceWrite>(HttpServerAceWrite.class, this, AceGenPackage.HTTP_SERVER_OUTCOME__ACE_OPERATIONS);
-    }
-    return aceOperations;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -168,8 +141,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return getName();
       case AceGenPackage.HTTP_SERVER_OUTCOME__LISTENERS:
         return getListeners();
-      case AceGenPackage.HTTP_SERVER_OUTCOME__ACE_OPERATIONS:
-        return getAceOperations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,10 +163,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
         getListeners().clear();
         getListeners().addAll((Collection<? extends HttpServerViewFunction>)newValue);
         return;
-      case AceGenPackage.HTTP_SERVER_OUTCOME__ACE_OPERATIONS:
-        getAceOperations().clear();
-        getAceOperations().addAll((Collection<? extends HttpServerAceWrite>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -216,9 +183,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.HTTP_SERVER_OUTCOME__LISTENERS:
         getListeners().clear();
         return;
-      case AceGenPackage.HTTP_SERVER_OUTCOME__ACE_OPERATIONS:
-        getAceOperations().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -237,8 +201,6 @@ public class HttpServerOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER_OUTCOME__LISTENERS:
         return listeners != null && !listeners.isEmpty();
-      case AceGenPackage.HTTP_SERVER_OUTCOME__ACE_OPERATIONS:
-        return aceOperations != null && !aceOperations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

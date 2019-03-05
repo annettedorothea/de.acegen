@@ -156,9 +156,54 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
+      public Adapter caseScenario(Scenario object)
+      {
+        return createScenarioAdapter();
+      }
+      @Override
+      public Adapter caseDataDefinition(DataDefinition object)
+      {
+        return createDataDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseAuthorization(Authorization object)
+      {
+        return createAuthorizationAdapter();
+      }
+      @Override
+      public Adapter caseScenarioEvent(ScenarioEvent object)
+      {
+        return createScenarioEventAdapter();
+      }
+      @Override
+      public Adapter caseVerification(Verification object)
+      {
+        return createVerificationAdapter();
+      }
+      @Override
+      public Adapter caseAttributeDefinitionList(AttributeDefinitionList object)
+      {
+        return createAttributeDefinitionListAdapter();
+      }
+      @Override
+      public Adapter caseListAttributeDefinitionList(ListAttributeDefinitionList object)
+      {
+        return createListAttributeDefinitionListAdapter();
+      }
+      @Override
+      public Adapter caseAttributeDefinition(AttributeDefinition object)
+      {
+        return createAttributeDefinitionAdapter();
+      }
+      @Override
       public Adapter caseAttribute(Attribute object)
       {
         return createAttributeAdapter();
+      }
+      @Override
+      public Adapter caseValue(Value object)
+      {
+        return createValueAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -423,6 +468,126 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Scenario <em>Scenario</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Scenario
+   * @generated
+   */
+  public Adapter createScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.DataDefinition
+   * @generated
+   */
+  public Adapter createDataDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Authorization <em>Authorization</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Authorization
+   * @generated
+   */
+  public Adapter createAuthorizationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ScenarioEvent <em>Scenario Event</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ScenarioEvent
+   * @generated
+   */
+  public Adapter createScenarioEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Verification
+   * @generated
+   */
+  public Adapter createVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.AttributeDefinitionList
+   * @generated
+   */
+  public Adapter createAttributeDefinitionListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ListAttributeDefinitionList
+   * @generated
+   */
+  public Adapter createListAttributeDefinitionListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.AttributeDefinition
+   * @generated
+   */
+  public Adapter createAttributeDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Attribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -433,6 +598,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Value <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Value
+   * @generated
+   */
+  public Adapter createValueAdapter()
   {
     return null;
   }

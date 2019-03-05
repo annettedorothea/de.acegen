@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpServerOutcome#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerOutcome#getListeners <em>Listeners</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpServerOutcome#getAceOperations <em>Ace Operations</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpServerOutcome()
@@ -68,21 +67,5 @@ public interface HttpServerOutcome extends EObject
    * @generated
    */
   EList<HttpServerViewFunction> getListeners();
-
-  /**
-   * Returns the value of the '<em><b>Ace Operations</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.HttpServerAceWrite}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Ace Operations</em>' reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Ace Operations</em>' reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpServerOutcome_AceOperations()
-   * @model
-   * @generated
-   */
-  EList<HttpServerAceWrite> getAceOperations();
 
 } // HttpServerOutcome

@@ -6,7 +6,11 @@ package de.acegen.aceGen.impl;
 import de.acegen.aceGen.AceGenFactory;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.AuthUser;
+import de.acegen.aceGen.Authorization;
+import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -20,8 +24,13 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Project;
+import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.ScenarioEvent;
+import de.acegen.aceGen.Value;
+import de.acegen.aceGen.Verification;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -155,7 +164,70 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass scenarioEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass dataDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass authorizationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scenarioEventEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass verificationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeDefinitionListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass listAttributeDefinitionListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass attributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valueEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -622,6 +694,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EReference getHttpServer_Scenarios()
+  {
+    return (EReference)httpServerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getHttpServerAce()
   {
     return httpServerAceEClass;
@@ -798,17 +881,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServerOutcome_AceOperations()
-  {
-    return (EReference)httpServerOutcomeEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getHttpServerAceRead()
   {
     return httpServerAceReadEClass;
@@ -974,6 +1046,347 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EClass getScenario()
+  {
+    return scenarioEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getScenario_Name()
+  {
+    return (EAttribute)scenarioEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_Events()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_Action()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_DataDefinition()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_Authorization()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getScenario_StatusCode()
+  {
+    return (EAttribute)scenarioEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_Response()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenario_Verifications()
+  {
+    return (EReference)scenarioEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getDataDefinition()
+  {
+    return dataDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDataDefinition_Uuid()
+  {
+    return (EAttribute)dataDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDataDefinition_Systemtime()
+  {
+    return (EAttribute)dataDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDataDefinition_Data()
+  {
+    return (EReference)dataDefinitionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAuthorization()
+  {
+    return authorizationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAuthorization_Username()
+  {
+    return (EAttribute)authorizationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAuthorization_Password()
+  {
+    return (EAttribute)authorizationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getScenarioEvent()
+  {
+    return scenarioEventEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenarioEvent_Event()
+  {
+    return (EReference)scenarioEventEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getScenarioEvent_DataDefinition()
+  {
+    return (EReference)scenarioEventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getVerification()
+  {
+    return verificationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVerification_Action()
+  {
+    return (EReference)verificationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVerification_DataDefinition()
+  {
+    return (EReference)verificationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVerification_Authorization()
+  {
+    return (EReference)verificationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVerification_Response()
+  {
+    return (EReference)verificationEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAttributeDefinitionList()
+  {
+    return attributeDefinitionListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAttributeDefinitionList_AttributeDefinitions()
+  {
+    return (EReference)attributeDefinitionListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getListAttributeDefinitionList()
+  {
+    return listAttributeDefinitionListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getListAttributeDefinitionList_AttributeDefinitionList()
+  {
+    return (EReference)listAttributeDefinitionListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAttributeDefinition()
+  {
+    return attributeDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAttributeDefinition_Attribute()
+  {
+    return (EReference)attributeDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAttributeDefinition_Value()
+  {
+    return (EReference)attributeDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getAttribute()
   {
     return attributeEClass;
@@ -1073,6 +1486,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EClass getValue()
+  {
+    return valueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public AceGenFactory getAceGenFactory()
   {
     return (AceGenFactory)getEFactoryInstance();
@@ -1141,6 +1565,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerEClass, HTTP_SERVER__ACE_OPERATIONS);
     createEReference(httpServerEClass, HTTP_SERVER__VIEWS);
     createEReference(httpServerEClass, HTTP_SERVER__MODELS);
+    createEReference(httpServerEClass, HTTP_SERVER__SCENARIOS);
 
     httpServerAceEClass = createEClass(HTTP_SERVER_ACE);
     createEAttribute(httpServerAceEClass, HTTP_SERVER_ACE__PROXY);
@@ -1160,7 +1585,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     httpServerOutcomeEClass = createEClass(HTTP_SERVER_OUTCOME);
     createEAttribute(httpServerOutcomeEClass, HTTP_SERVER_OUTCOME__NAME);
     createEReference(httpServerOutcomeEClass, HTTP_SERVER_OUTCOME__LISTENERS);
-    createEReference(httpServerOutcomeEClass, HTTP_SERVER_OUTCOME__ACE_OPERATIONS);
 
     httpServerAceReadEClass = createEClass(HTTP_SERVER_ACE_READ);
 
@@ -1182,6 +1606,45 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(modelEClass, MODEL__SUPER_MODELS);
     createEReference(modelEClass, MODEL__ATTRIBUTES);
 
+    scenarioEClass = createEClass(SCENARIO);
+    createEAttribute(scenarioEClass, SCENARIO__NAME);
+    createEReference(scenarioEClass, SCENARIO__EVENTS);
+    createEReference(scenarioEClass, SCENARIO__ACTION);
+    createEReference(scenarioEClass, SCENARIO__DATA_DEFINITION);
+    createEReference(scenarioEClass, SCENARIO__AUTHORIZATION);
+    createEAttribute(scenarioEClass, SCENARIO__STATUS_CODE);
+    createEReference(scenarioEClass, SCENARIO__RESPONSE);
+    createEReference(scenarioEClass, SCENARIO__VERIFICATIONS);
+
+    dataDefinitionEClass = createEClass(DATA_DEFINITION);
+    createEAttribute(dataDefinitionEClass, DATA_DEFINITION__UUID);
+    createEAttribute(dataDefinitionEClass, DATA_DEFINITION__SYSTEMTIME);
+    createEReference(dataDefinitionEClass, DATA_DEFINITION__DATA);
+
+    authorizationEClass = createEClass(AUTHORIZATION);
+    createEAttribute(authorizationEClass, AUTHORIZATION__USERNAME);
+    createEAttribute(authorizationEClass, AUTHORIZATION__PASSWORD);
+
+    scenarioEventEClass = createEClass(SCENARIO_EVENT);
+    createEReference(scenarioEventEClass, SCENARIO_EVENT__EVENT);
+    createEReference(scenarioEventEClass, SCENARIO_EVENT__DATA_DEFINITION);
+
+    verificationEClass = createEClass(VERIFICATION);
+    createEReference(verificationEClass, VERIFICATION__ACTION);
+    createEReference(verificationEClass, VERIFICATION__DATA_DEFINITION);
+    createEReference(verificationEClass, VERIFICATION__AUTHORIZATION);
+    createEReference(verificationEClass, VERIFICATION__RESPONSE);
+
+    attributeDefinitionListEClass = createEClass(ATTRIBUTE_DEFINITION_LIST);
+    createEReference(attributeDefinitionListEClass, ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS);
+
+    listAttributeDefinitionListEClass = createEClass(LIST_ATTRIBUTE_DEFINITION_LIST);
+    createEReference(listAttributeDefinitionListEClass, LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST);
+
+    attributeDefinitionEClass = createEClass(ATTRIBUTE_DEFINITION);
+    createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__ATTRIBUTE);
+    createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__VALUE);
+
     attributeEClass = createEClass(ATTRIBUTE);
     createEAttribute(attributeEClass, ATTRIBUTE__UNIQUE);
     createEAttribute(attributeEClass, ATTRIBUTE__PRIMARY_KEY);
@@ -1191,6 +1654,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__MODEL);
     createEAttribute(attributeEClass, ATTRIBUTE__NAME);
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
+
+    valueEClass = createEClass(VALUE);
   }
 
   /**
@@ -1224,6 +1689,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     // Add supertypes to classes
     httpServerAceWriteEClass.getESuperTypes().add(this.getHttpServerAce());
     httpServerAceReadEClass.getESuperTypes().add(this.getHttpServerAce());
+    attributeDefinitionListEClass.getESuperTypes().add(this.getValue());
+    listAttributeDefinitionListEClass.getESuperTypes().add(this.getValue());
 
     // Initialize classes and features; add operations and parameters
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1269,6 +1736,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServer_AceOperations(), this.getHttpServerAce(), null, "aceOperations", null, 0, -1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_Views(), this.getHttpServerView(), null, "views", null, 0, -1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_Models(), this.getModel(), null, "models", null, 0, -1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHttpServer_Scenarios(), this.getScenario(), null, "scenarios", null, 0, -1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceEClass, HttpServerAce.class, "HttpServerAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHttpServerAce_Proxy(), ecorePackage.getEBoolean(), "proxy", null, 0, 1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1288,7 +1756,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(httpServerOutcomeEClass, HttpServerOutcome.class, "HttpServerOutcome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHttpServerOutcome_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServerOutcome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerOutcome_Listeners(), this.getHttpServerViewFunction(), null, "listeners", null, 0, -1, HttpServerOutcome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHttpServerOutcome_AceOperations(), this.getHttpServerAceWrite(), null, "aceOperations", null, 0, -1, HttpServerOutcome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceReadEClass, HttpServerAceRead.class, "HttpServerAceRead", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1310,6 +1777,45 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getModel_SuperModels(), this.getModel(), null, "superModels", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(scenarioEClass, Scenario.class, "Scenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScenario_Name(), ecorePackage.getEString(), "name", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_Events(), this.getScenarioEvent(), null, "events", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_Action(), this.getHttpServerAce(), null, "action", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_DataDefinition(), this.getDataDefinition(), null, "dataDefinition", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_Authorization(), this.getAuthorization(), null, "authorization", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScenario_StatusCode(), ecorePackage.getEInt(), "statusCode", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_Response(), this.getAttributeDefinitionList(), null, "response", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_Verifications(), this.getVerification(), null, "verifications", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(dataDefinitionEClass, DataDefinition.class, "DataDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDataDefinition_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDataDefinition_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDataDefinition_Data(), this.getAttributeDefinitionList(), null, "data", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(authorizationEClass, Authorization.class, "Authorization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAuthorization_Username(), ecorePackage.getEString(), "username", null, 0, 1, Authorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAuthorization_Password(), ecorePackage.getEString(), "password", null, 0, 1, Authorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scenarioEventEClass, ScenarioEvent.class, "ScenarioEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getScenarioEvent_Event(), this.getHttpServerAceWrite(), null, "event", null, 0, 1, ScenarioEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenarioEvent_DataDefinition(), this.getDataDefinition(), null, "dataDefinition", null, 0, 1, ScenarioEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(verificationEClass, Verification.class, "Verification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVerification_Action(), this.getHttpServerAceRead(), null, "action", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVerification_DataDefinition(), this.getDataDefinition(), null, "dataDefinition", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVerification_Authorization(), this.getAuthorization(), null, "authorization", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVerification_Response(), this.getAttributeDefinitionList(), null, "response", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeDefinitionListEClass, AttributeDefinitionList.class, "AttributeDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeDefinitionList_AttributeDefinitions(), this.getAttributeDefinition(), null, "attributeDefinitions", null, 0, -1, AttributeDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(listAttributeDefinitionListEClass, ListAttributeDefinitionList.class, "ListAttributeDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getListAttributeDefinitionList_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, -1, ListAttributeDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeDefinitionEClass, AttributeDefinition.class, "AttributeDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeDefinition_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeDefinition_Value(), this.getValue(), null, "value", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttribute_Unique(), ecorePackage.getEBoolean(), "unique", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_PrimaryKey(), ecorePackage.getEBoolean(), "primaryKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1319,6 +1825,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_Model(), this.getModel(), null, "model", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

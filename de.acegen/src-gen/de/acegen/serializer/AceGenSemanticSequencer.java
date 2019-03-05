@@ -6,7 +6,11 @@ package de.acegen.serializer;
 import com.google.inject.Inject;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.AuthUser;
+import de.acegen.aceGen.Authorization;
+import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -19,8 +23,13 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Project;
+import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.ScenarioEvent;
+import de.acegen.aceGen.Value;
+import de.acegen.aceGen.Verification;
 import de.acegen.services.AceGenGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -50,8 +59,20 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.ATTRIBUTE:
 				sequence_Attribute(context, (Attribute) semanticObject); 
 				return; 
+			case AceGenPackage.ATTRIBUTE_DEFINITION:
+				sequence_AttributeDefinition(context, (AttributeDefinition) semanticObject); 
+				return; 
+			case AceGenPackage.ATTRIBUTE_DEFINITION_LIST:
+				sequence_AttributeDefinitionList(context, (AttributeDefinitionList) semanticObject); 
+				return; 
 			case AceGenPackage.AUTH_USER:
 				sequence_AuthUser(context, (AuthUser) semanticObject); 
+				return; 
+			case AceGenPackage.AUTHORIZATION:
+				sequence_Authorization(context, (Authorization) semanticObject); 
+				return; 
+			case AceGenPackage.DATA_DEFINITION:
+				sequence_DataDefinition(context, (DataDefinition) semanticObject); 
 				return; 
 			case AceGenPackage.HTTP_CLIENT:
 				sequence_HttpClient(context, (HttpClient) semanticObject); 
@@ -89,16 +110,65 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION:
 				sequence_HttpServerViewFunction(context, (HttpServerViewFunction) semanticObject); 
 				return; 
+			case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST:
+				sequence_ListAttributeDefinitionList(context, (ListAttributeDefinitionList) semanticObject); 
+				return; 
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
 				return; 
 			case AceGenPackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
 				return; 
+			case AceGenPackage.SCENARIO:
+				sequence_Scenario(context, (Scenario) semanticObject); 
+				return; 
+			case AceGenPackage.SCENARIO_EVENT:
+				sequence_ScenarioEvent(context, (ScenarioEvent) semanticObject); 
+				return; 
+			case AceGenPackage.VALUE:
+				sequence_Value(context, (Value) semanticObject); 
+				return; 
+			case AceGenPackage.VERIFICATION:
+				sequence_Verification(context, (Verification) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     AttributeDefinitionList returns AttributeDefinitionList
+	 *     Value returns AttributeDefinitionList
+	 *
+	 * Constraint:
+	 *     attributeDefinitions+=AttributeDefinition*
+	 */
+	protected void sequence_AttributeDefinitionList(ISerializationContext context, AttributeDefinitionList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AttributeDefinition returns AttributeDefinition
+	 *
+	 * Constraint:
+	 *     (attribute=[Attribute|QualifiedName] value=Value)
+	 */
+	protected void sequence_AttributeDefinition(ISerializationContext context, AttributeDefinition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAttributeDefinitionAccess().getAttributeAttributeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE, false));
+		feeder.accept(grammarAccess.getAttributeDefinitionAccess().getValueValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -128,6 +198,39 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (name=ID attributes+=Attribute*)
 	 */
 	protected void sequence_AuthUser(ISerializationContext context, AuthUser semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Authorization returns Authorization
+	 *
+	 * Constraint:
+	 *     (username=STRING password=STRING)
+	 */
+	protected void sequence_Authorization(ISerializationContext context, Authorization semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.AUTHORIZATION__USERNAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.AUTHORIZATION__USERNAME));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.AUTHORIZATION__PASSWORD) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.AUTHORIZATION__PASSWORD));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAuthorizationAccess().getUsernameSTRINGTerminalRuleCall_1_0(), semanticObject.getUsername());
+		feeder.accept(grammarAccess.getAuthorizationAccess().getPasswordSTRINGTerminalRuleCall_3_0(), semanticObject.getPassword());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DataDefinition returns DataDefinition
+	 *
+	 * Constraint:
+	 *     (uuid=STRING? systemtime=STRING? data=AttributeDefinitionList?)
+	 */
+	protected void sequence_DataDefinition(ISerializationContext context, DataDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -273,7 +376,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpServerOutcome returns HttpServerOutcome
 	 *
 	 * Constraint:
-	 *     (name=ID listeners+=[HttpServerViewFunction|QualifiedName]* aceOperations+=[HttpServerAceWrite|QualifiedName]*)
+	 *     (name=ID listeners+=[HttpServerViewFunction|QualifiedName]*)
 	 */
 	protected void sequence_HttpServerOutcome(ISerializationContext context, HttpServerOutcome semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -324,10 +427,24 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         authUserRef=[AuthUser|QualifiedName]? 
 	 *         aceOperations+=HttpServerAce* 
 	 *         views+=HttpServerView* 
-	 *         models+=Model*
+	 *         models+=Model* 
+	 *         scenarios+=Scenario*
 	 *     )
 	 */
 	protected void sequence_HttpServer(ISerializationContext context, HttpServer semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ListAttributeDefinitionList returns ListAttributeDefinitionList
+	 *     Value returns ListAttributeDefinitionList
+	 *
+	 * Constraint:
+	 *     attributeDefinitionList+=AttributeDefinitionList*
+	 */
+	protected void sequence_ListAttributeDefinitionList(ISerializationContext context, ListAttributeDefinitionList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -352,6 +469,72 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (httpClient=HttpClient | httpServer=HttpServer)?
 	 */
 	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScenarioEvent returns ScenarioEvent
+	 *
+	 * Constraint:
+	 *     (event=[HttpServerAceWrite|QualifiedName] dataDefinition=DataDefinition)
+	 */
+	protected void sequence_ScenarioEvent(ISerializationContext context, ScenarioEvent semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__EVENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__EVENT));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__DATA_DEFINITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__DATA_DEFINITION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.SCENARIO_EVENT__EVENT, false));
+		feeder.accept(grammarAccess.getScenarioEventAccess().getDataDefinitionDataDefinitionParserRuleCall_1_0(), semanticObject.getDataDefinition());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Scenario returns Scenario
+	 *
+	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         events+=ScenarioEvent* 
+	 *         action=[HttpServerAce|QualifiedName] 
+	 *         dataDefinition=DataDefinition 
+	 *         authorization=Authorization? 
+	 *         statusCode=INT 
+	 *         response=AttributeDefinitionList? 
+	 *         verifications+=Verification*
+	 *     )
+	 */
+	protected void sequence_Scenario(ISerializationContext context, Scenario semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Value returns Value
+	 *
+	 * Constraint:
+	 *     {Value}
+	 */
+	protected void sequence_Value(ISerializationContext context, Value semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Verification returns Verification
+	 *
+	 * Constraint:
+	 *     (action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? response=AttributeDefinitionList?)
+	 */
+	protected void sequence_Verification(ISerializationContext context, Verification semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

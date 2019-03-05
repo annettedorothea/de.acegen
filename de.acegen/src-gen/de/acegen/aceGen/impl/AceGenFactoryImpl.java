@@ -81,7 +81,16 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION: return createHttpServerViewFunction();
       case AceGenPackage.AUTH_USER: return createAuthUser();
       case AceGenPackage.MODEL: return createModel();
+      case AceGenPackage.SCENARIO: return createScenario();
+      case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
+      case AceGenPackage.AUTHORIZATION: return createAuthorization();
+      case AceGenPackage.SCENARIO_EVENT: return createScenarioEvent();
+      case AceGenPackage.VERIFICATION: return createVerification();
+      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST: return createAttributeDefinitionList();
+      case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST: return createListAttributeDefinitionList();
+      case AceGenPackage.ATTRIBUTE_DEFINITION: return createAttributeDefinition();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
+      case AceGenPackage.VALUE: return createValue();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -285,10 +294,118 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public Scenario createScenario()
+  {
+    ScenarioImpl scenario = new ScenarioImpl();
+    return scenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DataDefinition createDataDefinition()
+  {
+    DataDefinitionImpl dataDefinition = new DataDefinitionImpl();
+    return dataDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Authorization createAuthorization()
+  {
+    AuthorizationImpl authorization = new AuthorizationImpl();
+    return authorization;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ScenarioEvent createScenarioEvent()
+  {
+    ScenarioEventImpl scenarioEvent = new ScenarioEventImpl();
+    return scenarioEvent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Verification createVerification()
+  {
+    VerificationImpl verification = new VerificationImpl();
+    return verification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AttributeDefinitionList createAttributeDefinitionList()
+  {
+    AttributeDefinitionListImpl attributeDefinitionList = new AttributeDefinitionListImpl();
+    return attributeDefinitionList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ListAttributeDefinitionList createListAttributeDefinitionList()
+  {
+    ListAttributeDefinitionListImpl listAttributeDefinitionList = new ListAttributeDefinitionListImpl();
+    return listAttributeDefinitionList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AttributeDefinition createAttributeDefinition()
+  {
+    AttributeDefinitionImpl attributeDefinition = new AttributeDefinitionImpl();
+    return attributeDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Attribute createAttribute()
   {
     AttributeImpl attribute = new AttributeImpl();
     return attribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Value createValue()
+  {
+    ValueImpl value = new ValueImpl();
+    return value;
   }
 
   /**

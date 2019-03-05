@@ -187,10 +187,75 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.SCENARIO:
+      {
+        Scenario scenario = (Scenario)theEObject;
+        T result = caseScenario(scenario);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.DATA_DEFINITION:
+      {
+        DataDefinition dataDefinition = (DataDefinition)theEObject;
+        T result = caseDataDefinition(dataDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.AUTHORIZATION:
+      {
+        Authorization authorization = (Authorization)theEObject;
+        T result = caseAuthorization(authorization);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.SCENARIO_EVENT:
+      {
+        ScenarioEvent scenarioEvent = (ScenarioEvent)theEObject;
+        T result = caseScenarioEvent(scenarioEvent);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.VERIFICATION:
+      {
+        Verification verification = (Verification)theEObject;
+        T result = caseVerification(verification);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST:
+      {
+        AttributeDefinitionList attributeDefinitionList = (AttributeDefinitionList)theEObject;
+        T result = caseAttributeDefinitionList(attributeDefinitionList);
+        if (result == null) result = caseValue(attributeDefinitionList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST:
+      {
+        ListAttributeDefinitionList listAttributeDefinitionList = (ListAttributeDefinitionList)theEObject;
+        T result = caseListAttributeDefinitionList(listAttributeDefinitionList);
+        if (result == null) result = caseValue(listAttributeDefinitionList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.ATTRIBUTE_DEFINITION:
+      {
+        AttributeDefinition attributeDefinition = (AttributeDefinition)theEObject;
+        T result = caseAttributeDefinition(attributeDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.ATTRIBUTE:
       {
         Attribute attribute = (Attribute)theEObject;
         T result = caseAttribute(attribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.VALUE:
+      {
+        Value value = (Value)theEObject;
+        T result = caseValue(value);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -455,6 +520,134 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Scenario</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scenario</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScenario(Scenario object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataDefinition(DataDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Authorization</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Authorization</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAuthorization(Authorization object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scenario Event</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scenario Event</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScenarioEvent(ScenarioEvent object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Verification</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Verification</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVerification(Verification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Definition List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeDefinitionList(AttributeDefinitionList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>List Attribute Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>List Attribute Definition List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseListAttributeDefinitionList(ListAttributeDefinitionList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeDefinition(AttributeDefinition object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -466,6 +659,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAttribute(Attribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValue(Value object)
   {
     return null;
   }

@@ -189,11 +189,6 @@ class ActionTemplate {
 							throwBadRequest("uuid already exists - please choose another one");
 						}
 						this.actionData.setSystemTime(new DateTime());
-						«FOR outcome: outcomes»
-							«FOR triggeredAction : outcome.aceOperations»
-								this.actionData.addUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»", UUID.randomUUID().toString());
-							«ENDFOR»
-						«ENDFOR»
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
@@ -205,11 +200,6 @@ class ActionTemplate {
 						} else {
 							this.actionData.setSystemTime(new DateTime());
 						}
-						«FOR outcome: outcomes»
-							«FOR triggeredAction : outcome.aceOperations»
-								this.actionData.addUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»", UUID.randomUUID().toString());
-							«ENDFOR»
-						«ENDFOR»
 					}
 					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					ICommand command = this.getCommand();
@@ -227,16 +217,6 @@ class ActionTemplate {
 					command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
-					
-					«FOR outcome : outcomes»
-						«FOR triggeredAction : outcome.aceOperations»
-							«triggeredAction.getName.toFirstUpper»Thread «triggeredAction.getName.toFirstLower»Thread = new «triggeredAction.getName.toFirstUpper»Thread(
-								jdbi, mapper, appConfiguration, daoProvider, viewProvider, e2e, command.getCommandData());
-							e2e.addTriggeredThread(«triggeredAction.getName.toFirstLower»Thread);
-							«triggeredAction.getName.toFirstLower»Thread.start();
-						«ENDFOR»
-						
-					«ENDFOR»
 					return response;
 				} catch (WebApplicationException x) {
 					LOG.error(actionName + " failed " + x.getMessage());
@@ -263,50 +243,6 @@ class ActionTemplate {
 				}
 			}
 			
-			«FOR outcome : outcomes»
-				«FOR triggeredAction : outcome.aceOperations»
-					public class «triggeredAction.getName.toFirstUpper»Thread extends Thread {
-						private Jdbi jdbi;
-						private JodaObjectMapper mapper;
-						private CustomAppConfiguration appConfiguration;
-						private IDaoProvider daoProvider;
-						private ViewProvider viewProvider;
-						private IDataContainer commandData;
-						private E2E e2e;
-
-						public «triggeredAction.getName.toFirstUpper»Thread(Jdbi jdbi, JodaObjectMapper mapper, CustomAppConfiguration appConfiguration,
-								IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e, IDataContainer commandData) {
-						   this.jdbi = jdbi;
-						   this.mapper = mapper;
-						   this.appConfiguration = appConfiguration;
-						   this.daoProvider = daoProvider;
-						   this.viewProvider = viewProvider;
-						   this.e2e = e2e;
-						   this.commandData = commandData;
-						   this.setName("«triggeredAction.getName.toFirstUpper»Thread");
-						}
-					
-						public void run() {
-							try {
-								LOG.info("trigger «triggeredAction.getName»");
-								«triggeredAction.actionNameWithPackage()» «triggeredAction.getName.toFirstLower» 
-									= new «triggeredAction.actionNameWithPackage()»(jdbi, appConfiguration, daoProvider, viewProvider, e2e);
-								IDataContainer data = AceDataFactory.createAceData("«triggeredAction.actionNameWithPackage»", mapper.writeValueAsString(commandData));
-								data.setUuid(commandData.getUuidForTriggeredAction("«triggeredAction.actionNameWithPackage»"));
-								«triggeredAction.getName.toFirstLower».setActionData(data);
-								«triggeredAction.getName.toFirstLower».apply();
-								LOG.info("trigger «triggeredAction.getName» finished");
-							} catch (Exception x) {
-								LOG.error("failed to trigger «triggeredAction.getName» " + x.getMessage());
-							}
-						}
-					};
-				«ENDFOR»
-				
-			«ENDFOR»
-			
-		
-
 			«IF response.size > 0»
 				protected Object createReponse() {
 					return new «responseDataNameWithPackage(java)»(this.actionData);

@@ -67,6 +67,7 @@ HttpServer:
 	('ACE' (aceOperations += HttpServerAce)*	)?
 	('views' (views += HttpServerView)* )?
 	('models' (models += Model)*)?
+	('scenarios' (scenarios += Scenario)*)?
 ;
 
 HttpServerAce: 
@@ -88,7 +89,6 @@ HttpServerAceWrite:
 HttpServerOutcome:
 	'on' name = ID 
 	('('(listeners += [HttpServerViewFunction | QualifiedName])*')')* 
-	('triggers' '(' (aceOperations += [HttpServerAceWrite | QualifiedName])* ')')? 
 ;
 
 HttpServerAceRead: 
@@ -126,6 +126,56 @@ Model:
 	'}')?
 ;
 
+Scenario:
+	name = ID
+	('GIVEN' events += ScenarioEvent* )? 
+	'WHEN' action = [HttpServerAce|QualifiedName] 
+		dataDefinition = DataDefinition
+		(authorization = Authorization)?
+	'THEN' statusCode = INT 
+		('response' response = AttributeDefinitionList)?
+		(verifications += Verification*)
+;
+
+DataDefinition: 
+	{DataDefinition} 
+	('uuid' uuid = STRING)? 
+	('systemTime' systemtime = STRING)? 
+	(data = AttributeDefinitionList)?
+;
+
+Authorization:
+	'authorization' username = STRING ':' password = STRING
+;
+
+ScenarioEvent:
+	event = [HttpServerAceWrite|QualifiedName] 
+	dataDefinition = DataDefinition 
+;
+
+Verification:
+	action = [HttpServerAceRead|QualifiedName] 
+	dataDefinition = DataDefinition 
+	(authorization = Authorization)?
+	('response' response = AttributeDefinitionList)?
+;
+
+AttributeDefinitionList:
+	{AttributeDefinitionList} '{' 
+		attributeDefinitions += AttributeDefinition*
+	'}'
+;
+
+ListAttributeDefinitionList:
+	{ListAttributeDefinitionList} '[' 
+		attributeDefinitionList += AttributeDefinitionList*
+	']'
+;
+
+AttributeDefinition:
+	attribute = [Attribute | QualifiedName] ':' value = Value
+;
+
 Attribute:
 	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = Type | model = [Model | QualifiedName]) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
 ;
@@ -150,7 +200,9 @@ Constraint:
 	'NotEmpty' | 'NotNull'
 ;
 
-	
+Value:
+	{Value} STRING | {Value} INT | AttributeDefinitionList | ListAttributeDefinitionList
+;
 	
 /******* S.D.G. *******/
 	
