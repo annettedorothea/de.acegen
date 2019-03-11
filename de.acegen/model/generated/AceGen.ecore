@@ -135,7 +135,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScenarioEvent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//HttpServerAceWrite"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outcome" eType="#//HttpServerOutcome"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
         containment="true"/>
   </eClassifiers>
@@ -148,11 +148,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//AttributeDefinitionList"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList" eSuperTypes="#//Value">
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitions" upperBound="-1"
         eType="#//AttributeDefinition" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList" eSuperTypes="#//Value">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
         upperBound="-1" eType="#//AttributeDefinitionList" containment="true"/>
   </eClassifiers>
@@ -171,5 +171,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Value">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
+        eType="#//AttributeDefinitionList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listAttributeDefinitionList"
+        eType="#//ListAttributeDefinitionList" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

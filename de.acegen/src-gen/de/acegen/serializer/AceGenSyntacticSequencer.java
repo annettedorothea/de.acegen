@@ -11,7 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -42,7 +41,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServer_ViewsKeyword_4_0_q;
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
-	protected AbstractElementAlias match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -67,38 +65,13 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServer_ViewsKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_4_0());
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
-		match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getValueAccess().getINTTerminalRuleCall_1_1()), new TokenAlias(false, false, grammarAccess.getValueAccess().getSTRINGTerminalRuleCall_0_1()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getINTRule())
-			return getINTToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getSTRINGRule())
-			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * terminal INT returns ecore::EInt: ('0'..'9')+;
-	 */
-	protected String getINTToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "";
-	}
-	
-	/**
-	 * terminal STRING:
-	 * 			'"' ( '\\' .  | !('\\'|'"') )* '"' |
-	 * 			"'" ( '\\' .  | !('\\'|"'") )* "'"
-	 * 		;
-	 */
-	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "\"\"";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -146,8 +119,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Scenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1.equals(syntax))
-				emit_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -477,17 +448,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID (ambiguity) 'WHEN' action=[HttpServerAce|QualifiedName]
 	 */
 	protected void emit_Scenario_GIVENKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     STRING | INT
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 */
-	protected void emit_Value_INTTerminalRuleCall_1_1_or_STRINGTerminalRuleCall_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

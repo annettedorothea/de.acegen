@@ -1194,13 +1194,13 @@ public interface AceGenPackage extends EPackage
   int SCENARIO_EVENT = 19;
 
   /**
-   * The feature id for the '<em><b>Event</b></em>' reference.
+   * The feature id for the '<em><b>Outcome</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCENARIO_EVENT__EVENT = 0;
+  int SCENARIO_EVENT__OUTCOME = 0;
 
   /**
    * The feature id for the '<em><b>Data Definition</b></em>' containment reference.
@@ -1276,25 +1276,6 @@ public interface AceGenPackage extends EPackage
   int VERIFICATION_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.ValueImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
-   * @generated
-   */
-  int VALUE = 25;
-
-  /**
-   * The number of structural features of the '<em>Value</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VALUE_FEATURE_COUNT = 0;
-
-  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl <em>Attribute Definition List</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1311,7 +1292,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = VALUE_FEATURE_COUNT + 0;
+  int ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = 0;
 
   /**
    * The number of structural features of the '<em>Attribute Definition List</em>' class.
@@ -1320,7 +1301,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+  int ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ListAttributeDefinitionListImpl <em>List Attribute Definition List</em>}' class.
@@ -1339,7 +1320,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = VALUE_FEATURE_COUNT + 0;
+  int LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = 0;
 
   /**
    * The number of structural features of the '<em>List Attribute Definition List</em>' class.
@@ -1348,7 +1329,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
@@ -1477,6 +1458,61 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int ATTRIBUTE_FEATURE_COUNT = 8;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
+   * @generated
+   */
+  int VALUE = 25;
+
+  /**
+   * The feature id for the '<em><b>String Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__STRING_VALUE = 0;
+
+  /**
+   * The feature id for the '<em><b>Int Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__INT_VALUE = 1;
+
+  /**
+   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__ATTRIBUTE_DEFINITION_LIST = 2;
+
+  /**
+   * The feature id for the '<em><b>List Attribute Definition List</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = 3;
+
+  /**
+   * The number of structural features of the '<em>Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_FEATURE_COUNT = 4;
 
 
   /**
@@ -2395,15 +2431,15 @@ public interface AceGenPackage extends EPackage
   EClass getScenarioEvent();
 
   /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.ScenarioEvent#getEvent <em>Event</em>}'.
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.ScenarioEvent#getOutcome <em>Outcome</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Event</em>'.
-   * @see de.acegen.aceGen.ScenarioEvent#getEvent()
+   * @return the meta object for the reference '<em>Outcome</em>'.
+   * @see de.acegen.aceGen.ScenarioEvent#getOutcome()
    * @see #getScenarioEvent()
    * @generated
    */
-  EReference getScenarioEvent_Event();
+  EReference getScenarioEvent_Outcome();
 
   /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ScenarioEvent#getDataDefinition <em>Data Definition</em>}'.
@@ -2651,6 +2687,50 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EClass getValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getStringValue <em>String Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String Value</em>'.
+   * @see de.acegen.aceGen.Value#getStringValue()
+   * @see #getValue()
+   * @generated
+   */
+  EAttribute getValue_StringValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getIntValue <em>Int Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Int Value</em>'.
+   * @see de.acegen.aceGen.Value#getIntValue()
+   * @see #getValue()
+   * @generated
+   */
+  EAttribute getValue_IntValue();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Attribute Definition List</em>'.
+   * @see de.acegen.aceGen.Value#getAttributeDefinitionList()
+   * @see #getValue()
+   * @generated
+   */
+  EReference getValue_AttributeDefinitionList();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Value#getListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>List Attribute Definition List</em>'.
+   * @see de.acegen.aceGen.Value#getListAttributeDefinitionList()
+   * @see #getValue()
+   * @generated
+   */
+  EReference getValue_ListAttributeDefinitionList();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -3396,12 +3476,12 @@ public interface AceGenPackage extends EPackage
     EClass SCENARIO_EVENT = eINSTANCE.getScenarioEvent();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Outcome</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SCENARIO_EVENT__EVENT = eINSTANCE.getScenarioEvent_Event();
+    EReference SCENARIO_EVENT__OUTCOME = eINSTANCE.getScenarioEvent_Outcome();
 
     /**
      * The meta object literal for the '<em><b>Data Definition</b></em>' containment reference feature.
@@ -3598,6 +3678,38 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass VALUE = eINSTANCE.getValue();
+
+    /**
+     * The meta object literal for the '<em><b>String Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUE__STRING_VALUE = eINSTANCE.getValue_StringValue();
+
+    /**
+     * The meta object literal for the '<em><b>Int Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUE__INT_VALUE = eINSTANCE.getValue_IntValue();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUE__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getValue_AttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '<em><b>List Attribute Definition List</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getValue_ListAttributeDefinitionList();
 
   }
 

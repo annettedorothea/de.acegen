@@ -105,10 +105,13 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         parent = parent.eContainer();
       }
       if ((parent instanceof ScenarioEvent)) {
-        final ScenarioEvent scenarioEvent = ((ScenarioEvent) parent);
-        final Model aceModel_2 = scenarioEvent.getEvent().getModel();
-        if ((aceModel_2 != null)) {
-          return this.getScopeFor(aceModel_2);
+        EObject _eContainer_1 = ((ScenarioEvent) parent).getOutcome().eContainer();
+        final HttpServerAceWrite httpServerAceWrite = ((HttpServerAceWrite) _eContainer_1);
+        if ((httpServerAceWrite != null)) {
+          final Model aceModel_2 = httpServerAceWrite.getModel();
+          if ((aceModel_2 != null)) {
+            return this.getScopeFor(aceModel_2);
+          }
         }
       }
       if ((parent instanceof Verification)) {

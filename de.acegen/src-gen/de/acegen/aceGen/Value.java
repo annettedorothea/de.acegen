@@ -10,6 +10,15 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Value</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link de.acegen.aceGen.Value#getStringValue <em>String Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Value#getIntValue <em>Int Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Value#getListAttributeDefinitionList <em>List Attribute Definition List</em>}</li>
+ * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getValue()
  * @model
@@ -17,4 +26,108 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Value extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>String Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>String Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>String Value</em>' attribute.
+   * @see #setStringValue(String)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_StringValue()
+   * @model
+   * @generated
+   */
+  String getStringValue();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getStringValue <em>String Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>String Value</em>' attribute.
+   * @see #getStringValue()
+   * @generated
+   */
+  void setStringValue(String value);
+
+  /**
+   * Returns the value of the '<em><b>Int Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Int Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Int Value</em>' attribute.
+   * @see #setIntValue(int)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_IntValue()
+   * @model
+   * @generated
+   */
+  int getIntValue();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getIntValue <em>Int Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Int Value</em>' attribute.
+   * @see #getIntValue()
+   * @generated
+   */
+  void setIntValue(int value);
+
+  /**
+   * Returns the value of the '<em><b>Attribute Definition List</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Attribute Definition List</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Attribute Definition List</em>' containment reference.
+   * @see #setAttributeDefinitionList(AttributeDefinitionList)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_AttributeDefinitionList()
+   * @model containment="true"
+   * @generated
+   */
+  AttributeDefinitionList getAttributeDefinitionList();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Attribute Definition List</em>' containment reference.
+   * @see #getAttributeDefinitionList()
+   * @generated
+   */
+  void setAttributeDefinitionList(AttributeDefinitionList value);
+
+  /**
+   * Returns the value of the '<em><b>List Attribute Definition List</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>List Attribute Definition List</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>List Attribute Definition List</em>' containment reference.
+   * @see #setListAttributeDefinitionList(ListAttributeDefinitionList)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_ListAttributeDefinitionList()
+   * @model containment="true"
+   * @generated
+   */
+  ListAttributeDefinitionList getListAttributeDefinitionList();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getListAttributeDefinitionList <em>List Attribute Definition List</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>List Attribute Definition List</em>' containment reference.
+   * @see #getListAttributeDefinitionList()
+   * @generated
+   */
+  void setListAttributeDefinitionList(ListAttributeDefinitionList value);
+
 } // Value

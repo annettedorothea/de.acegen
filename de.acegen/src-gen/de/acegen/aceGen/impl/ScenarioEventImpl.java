@@ -5,7 +5,7 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.DataDefinition;
-import de.acegen.aceGen.HttpServerAceWrite;
+import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.ScenarioEvent;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.ScenarioEventImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ScenarioEventImpl#getOutcome <em>Outcome</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ScenarioEventImpl#getDataDefinition <em>Data Definition</em>}</li>
  * </ul>
  *
@@ -34,14 +34,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements ScenarioEvent
 {
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' reference.
+   * The cached value of the '{@link #getOutcome() <em>Outcome</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
+   * @see #getOutcome()
    * @generated
    * @ordered
    */
-  protected HttpServerAceWrite event;
+  protected HttpServerOutcome outcome;
 
   /**
    * The cached value of the '{@link #getDataDefinition() <em>Data Definition</em>}' containment reference.
@@ -80,19 +80,19 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    */
   @Override
-  public HttpServerAceWrite getEvent()
+  public HttpServerOutcome getOutcome()
   {
-    if (event != null && event.eIsProxy())
+    if (outcome != null && outcome.eIsProxy())
     {
-      InternalEObject oldEvent = (InternalEObject)event;
-      event = (HttpServerAceWrite)eResolveProxy(oldEvent);
-      if (event != oldEvent)
+      InternalEObject oldOutcome = (InternalEObject)outcome;
+      outcome = (HttpServerOutcome)eResolveProxy(oldOutcome);
+      if (outcome != oldOutcome)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.SCENARIO_EVENT__EVENT, oldEvent, event));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.SCENARIO_EVENT__OUTCOME, oldOutcome, outcome));
       }
     }
-    return event;
+    return outcome;
   }
 
   /**
@@ -100,9 +100,9 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
    * <!-- end-user-doc -->
    * @generated
    */
-  public HttpServerAceWrite basicGetEvent()
+  public HttpServerOutcome basicGetOutcome()
   {
-    return event;
+    return outcome;
   }
 
   /**
@@ -111,12 +111,12 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    */
   @Override
-  public void setEvent(HttpServerAceWrite newEvent)
+  public void setOutcome(HttpServerOutcome newOutcome)
   {
-    HttpServerAceWrite oldEvent = event;
-    event = newEvent;
+    HttpServerOutcome oldOutcome = outcome;
+    outcome = newOutcome;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SCENARIO_EVENT__EVENT, oldEvent, event));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SCENARIO_EVENT__OUTCOME, oldOutcome, outcome));
   }
 
   /**
@@ -195,9 +195,9 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case AceGenPackage.SCENARIO_EVENT__EVENT:
-        if (resolve) return getEvent();
-        return basicGetEvent();
+      case AceGenPackage.SCENARIO_EVENT__OUTCOME:
+        if (resolve) return getOutcome();
+        return basicGetOutcome();
       case AceGenPackage.SCENARIO_EVENT__DATA_DEFINITION:
         return getDataDefinition();
     }
@@ -214,8 +214,8 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case AceGenPackage.SCENARIO_EVENT__EVENT:
-        setEvent((HttpServerAceWrite)newValue);
+      case AceGenPackage.SCENARIO_EVENT__OUTCOME:
+        setOutcome((HttpServerOutcome)newValue);
         return;
       case AceGenPackage.SCENARIO_EVENT__DATA_DEFINITION:
         setDataDefinition((DataDefinition)newValue);
@@ -234,8 +234,8 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case AceGenPackage.SCENARIO_EVENT__EVENT:
-        setEvent((HttpServerAceWrite)null);
+      case AceGenPackage.SCENARIO_EVENT__OUTCOME:
+        setOutcome((HttpServerOutcome)null);
         return;
       case AceGenPackage.SCENARIO_EVENT__DATA_DEFINITION:
         setDataDefinition((DataDefinition)null);
@@ -254,8 +254,8 @@ public class ScenarioEventImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case AceGenPackage.SCENARIO_EVENT__EVENT:
-        return event != null;
+      case AceGenPackage.SCENARIO_EVENT__OUTCOME:
+        return outcome != null;
       case AceGenPackage.SCENARIO_EVENT__DATA_DEFINITION:
         return dataDefinition != null;
     }

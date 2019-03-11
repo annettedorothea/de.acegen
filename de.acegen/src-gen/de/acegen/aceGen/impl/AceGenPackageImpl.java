@@ -1233,7 +1233,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getScenarioEvent_Event()
+  public EReference getScenarioEvent_Outcome()
   {
     return (EReference)scenarioEventEClass.getEStructuralFeatures().get(0);
   }
@@ -1497,6 +1497,50 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getValue_StringValue()
+  {
+    return (EAttribute)valueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getValue_IntValue()
+  {
+    return (EAttribute)valueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getValue_AttributeDefinitionList()
+  {
+    return (EReference)valueEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getValue_ListAttributeDefinitionList()
+  {
+    return (EReference)valueEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public AceGenFactory getAceGenFactory()
   {
     return (AceGenFactory)getEFactoryInstance();
@@ -1626,7 +1670,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(authorizationEClass, AUTHORIZATION__PASSWORD);
 
     scenarioEventEClass = createEClass(SCENARIO_EVENT);
-    createEReference(scenarioEventEClass, SCENARIO_EVENT__EVENT);
+    createEReference(scenarioEventEClass, SCENARIO_EVENT__OUTCOME);
     createEReference(scenarioEventEClass, SCENARIO_EVENT__DATA_DEFINITION);
 
     verificationEClass = createEClass(VERIFICATION);
@@ -1656,6 +1700,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
 
     valueEClass = createEClass(VALUE);
+    createEAttribute(valueEClass, VALUE__STRING_VALUE);
+    createEAttribute(valueEClass, VALUE__INT_VALUE);
+    createEReference(valueEClass, VALUE__ATTRIBUTE_DEFINITION_LIST);
+    createEReference(valueEClass, VALUE__LIST_ATTRIBUTE_DEFINITION_LIST);
   }
 
   /**
@@ -1689,8 +1737,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     // Add supertypes to classes
     httpServerAceWriteEClass.getESuperTypes().add(this.getHttpServerAce());
     httpServerAceReadEClass.getESuperTypes().add(this.getHttpServerAce());
-    attributeDefinitionListEClass.getESuperTypes().add(this.getValue());
-    listAttributeDefinitionListEClass.getESuperTypes().add(this.getValue());
 
     // Initialize classes and features; add operations and parameters
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1797,7 +1843,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getAuthorization_Password(), ecorePackage.getEString(), "password", null, 0, 1, Authorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scenarioEventEClass, ScenarioEvent.class, "ScenarioEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getScenarioEvent_Event(), this.getHttpServerAceWrite(), null, "event", null, 0, 1, ScenarioEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenarioEvent_Outcome(), this.getHttpServerOutcome(), null, "outcome", null, 0, 1, ScenarioEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScenarioEvent_DataDefinition(), this.getDataDefinition(), null, "dataDefinition", null, 0, 1, ScenarioEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(verificationEClass, Verification.class, "Verification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1827,6 +1873,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getValue_StringValue(), ecorePackage.getEString(), "stringValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getValue_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getValue_ListAttributeDefinitionList(), this.getListAttributeDefinitionList(), null, "listAttributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

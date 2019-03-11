@@ -88,10 +88,12 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				parent = parent.eContainer
 			}
 			if (parent instanceof ScenarioEvent) {
-				val scenarioEvent = parent as ScenarioEvent;
-				val aceModel = scenarioEvent.event.model;
-				if (aceModel !== null) {
-					return getScopeFor(aceModel);
+				val httpServerAceWrite = (parent as ScenarioEvent).outcome.eContainer as HttpServerAceWrite;
+				if (httpServerAceWrite !== null) {
+					val aceModel = httpServerAceWrite.model;
+					if (aceModel !== null) {
+						return getScopeFor(aceModel);
+					}
 				}
 			}
 			if (parent instanceof Verification) {

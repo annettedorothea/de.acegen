@@ -226,7 +226,6 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         AttributeDefinitionList attributeDefinitionList = (AttributeDefinitionList)theEObject;
         T result = caseAttributeDefinitionList(attributeDefinitionList);
-        if (result == null) result = caseValue(attributeDefinitionList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -234,7 +233,6 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         ListAttributeDefinitionList listAttributeDefinitionList = (ListAttributeDefinitionList)theEObject;
         T result = caseListAttributeDefinitionList(listAttributeDefinitionList);
-        if (result == null) result = caseValue(listAttributeDefinitionList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

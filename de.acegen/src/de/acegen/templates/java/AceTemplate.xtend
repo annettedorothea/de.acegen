@@ -19,8 +19,6 @@ package de.acegen.templates.java
 
 import de.acegen.aceGen.AuthUser
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceRead
-import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
@@ -1537,96 +1535,6 @@ class AceTemplate {
 		«sdg»
 		
 	'''
-
-	def generateBaseTest() '''
-		«copyright»
-		
-		package com.anfelisa.ace;
-		
-		import java.util.ArrayList;
-		import java.util.List;
-		import java.util.UUID;
-		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
-		import org.jdbi.v3.core.Handle;
-		import org.joda.time.DateTime;
-
-		public abstract class AbstractBaseTest {
-		
-			protected final JodaObjectMapper mapper = new JodaObjectMapper();
-		
-			protected DaoProvider daoProvider;
-		
-			protected Handle handle;
-		
-			public static String randomUUID() {
-				return UUID.randomUUID().toString();
-			}
-		
-			protected void prepare(List<ITimelineItem> timeline, int port) {
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
-						.request().put(Entity.json(timeline));
-			}
-		
-			protected void prepare(int port) {
-				List<ITimelineItem> timeline = new ArrayList<>();
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
-						.request().put(Entity.json(timeline));
-			}
-		
-			protected void setSystemTime(DateTime systemTime, int port) {
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/system-time", port))
-						.request().put(Entity.json(systemTime.toString()));
-			}
-		
-		}
-		
-		
-		«sdg»
-		
-	'''
-
-	def generateTestUtils(HttpServer it) '''
-		«copyright»
-		
-		package «getName»;
-		
-		import com.anfelisa.ace.JodaObjectMapper;
-		import com.anfelisa.ace.TimelineItem;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		public class TestUtils {
-		
-			private static final JodaObjectMapper mapper = new JodaObjectMapper();
-		
-			«FOR aceOperation : aceOperations»
-				«aceOperation.createTimelineItem»
-
-			«ENDFOR»
-			
-		}
-		
-		
-		«sdg»
-		
-	'''
-	
-	private def dispatch createTimelineItem(HttpServerAceWrite it) '''
-		«FOR outcome : outcomes»
-			public static TimelineItem create«eventName(outcome)»TimelineItem(«getModel.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
-				String json = mapper.writeValueAsString(data);
-				return new TimelineItem("prepare", null, "«eventNameWithPackage(outcome)»", null, json, data.getUuid());
-			}
-		«ENDFOR»
-	'''
-
-	private def dispatch createTimelineItem(HttpServerAceRead it) ''''''
 
 	def generateActionCalls(HttpServer it) '''
 		«copyright»

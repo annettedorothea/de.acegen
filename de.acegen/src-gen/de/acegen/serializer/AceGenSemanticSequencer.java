@@ -139,7 +139,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Contexts:
 	 *     AttributeDefinitionList returns AttributeDefinitionList
-	 *     Value returns AttributeDefinitionList
 	 *
 	 * Constraint:
 	 *     attributeDefinitions+=AttributeDefinition*
@@ -439,7 +438,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Contexts:
 	 *     ListAttributeDefinitionList returns ListAttributeDefinitionList
-	 *     Value returns ListAttributeDefinitionList
 	 *
 	 * Constraint:
 	 *     attributeDefinitionList+=AttributeDefinitionList*
@@ -478,17 +476,17 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ScenarioEvent returns ScenarioEvent
 	 *
 	 * Constraint:
-	 *     (event=[HttpServerAceWrite|QualifiedName] dataDefinition=DataDefinition)
+	 *     (outcome=[HttpServerOutcome|QualifiedName] dataDefinition=DataDefinition)
 	 */
 	protected void sequence_ScenarioEvent(ISerializationContext context, ScenarioEvent semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__EVENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__EVENT));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__OUTCOME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__OUTCOME));
 			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__DATA_DEFINITION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.SCENARIO_EVENT__DATA_DEFINITION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.SCENARIO_EVENT__EVENT, false));
+		feeder.accept(grammarAccess.getScenarioEventAccess().getOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.SCENARIO_EVENT__OUTCOME, false));
 		feeder.accept(grammarAccess.getScenarioEventAccess().getDataDefinitionDataDefinitionParserRuleCall_1_0(), semanticObject.getDataDefinition());
 		feeder.finish();
 	}
@@ -520,7 +518,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Value returns Value
 	 *
 	 * Constraint:
-	 *     {Value}
+	 *     (stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList | listAttributeDefinitionList=ListAttributeDefinitionList)
 	 */
 	protected void sequence_Value(ISerializationContext context, Value semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

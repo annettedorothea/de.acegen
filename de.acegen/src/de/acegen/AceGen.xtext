@@ -149,7 +149,7 @@ Authorization:
 ;
 
 ScenarioEvent:
-	event = [HttpServerAceWrite|QualifiedName] 
+	outcome = [HttpServerOutcome|QualifiedName]
 	dataDefinition = DataDefinition 
 ;
 
@@ -201,7 +201,7 @@ Constraint:
 ;
 
 Value:
-	{Value} STRING | {Value} INT | AttributeDefinitionList | ListAttributeDefinitionList
+	stringValue = STRING | intValue = INT | attributeDefinitionList = AttributeDefinitionList | listAttributeDefinitionList = ListAttributeDefinitionList
 ;
 	
 /******* S.D.G. *******/

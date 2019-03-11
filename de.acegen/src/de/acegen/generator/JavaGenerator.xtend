@@ -17,6 +17,8 @@
 
 package de.acegen.generator
 
+import de.acegen.aceGen.HttpServer
+import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.JavaExtension
 import de.acegen.extensions.java.ModelExtension
@@ -26,10 +28,9 @@ import de.acegen.templates.java.ActionTemplate
 import de.acegen.templates.java.CommandTemplate
 import de.acegen.templates.java.EventTemplate
 import de.acegen.templates.java.ModelTemplate
+import de.acegen.templates.java.ScenarioTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceWrite
 
 class JavaGenerator {
 	@Inject
@@ -47,6 +48,9 @@ class JavaGenerator {
 	@Inject
 	ModelTemplate modelTemplate;
 	
+	@Inject
+	ScenarioTemplate scenarioTemplate;
+
 	@Inject
 	extension ViewExtension
 
@@ -123,12 +127,6 @@ class JavaGenerator {
 			fsa.generateFile(java.packageFolder + '/views/' + view.viewInterfaceName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
 		}
-
-		fsa.generateFile('com/anfelisa/ace/AbstractBaseTest.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest());
-
-		fsa.generateFile(java.packageFolder + '/TestUtils.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateTestUtils(java));
 
 		fsa.generateFile(java.packageFolder + '/ActionCalls.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateActionCalls(java));
@@ -233,9 +231,18 @@ class JavaGenerator {
 				aceTemplate.generateAuthUser(authUser));
 		}
 		
+		fsa.generateFile('com/anfelisa/ace/AbstractBaseScenario.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateAbstractBaseScenario());
+
+		fsa.generateFile('com/anfelisa/ace/BaseScenario.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, scenarioTemplate.generateBaseScenario());
+
+		fsa.generateFile(java.packageFolder + '/TestUtils.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateTestUtils(java));
+
 		for (scenario : java.scenarios) {
-			fsa.generateFile(java.packageFolder + '/tests/' + scenario.name + 'Scenario.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, "//" + scenario.name);
+			fsa.generateFile(java.packageFolder + '/scenarios/' + scenario.name + 'Scenario.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateScenario(scenario, java));
 		}
 
 	}

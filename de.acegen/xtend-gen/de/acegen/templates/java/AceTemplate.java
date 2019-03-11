@@ -20,14 +20,10 @@ import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.aceGen.HttpServerAceRead;
-import de.acegen.aceGen.HttpServerAceWrite;
-import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
-import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -3452,204 +3448,6 @@ public class AceTemplate {
     return _builder;
   }
   
-  public CharSequence generateBaseTest() {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import java.util.ArrayList;");
-    _builder.newLine();
-    _builder.append("import java.util.List;");
-    _builder.newLine();
-    _builder.append("import java.util.UUID;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.client.Client;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.client.Entity;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.glassfish.jersey.client.JerseyClientBuilder;");
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("public abstract class AbstractBaseTest {");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected final JodaObjectMapper mapper = new JodaObjectMapper();");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected DaoProvider daoProvider;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected Handle handle;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public static String randomUUID() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return UUID.randomUUID().toString();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected void prepare(List<ITimelineItem> timeline, int port) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("Client client = new JerseyClientBuilder().build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("client.target(String.format(\"http://localhost:%d/api/test/replay-events\", port))");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append(".request().put(Entity.json(timeline));");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected void prepare(int port) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("List<ITimelineItem> timeline = new ArrayList<>();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("Client client = new JerseyClientBuilder().build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("client.target(String.format(\"http://localhost:%d/api/test/replay-events\", port))");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append(".request().put(Entity.json(timeline));");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected void setSystemTime(DateTime systemTime, int port) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("Client client = new JerseyClientBuilder().build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("client.target(String.format(\"http://localhost:%d/api/test/system-time\", port))");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append(".request().put(Entity.json(systemTime.toString()));");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  public CharSequence generateTestUtils(final HttpServer it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("package ");
-    String _name = it.getName();
-    _builder.append(_name);
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.TimelineItem;");
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("public class TestUtils {");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private static final JodaObjectMapper mapper = new JodaObjectMapper();");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      EList<HttpServerAce> _aceOperations = it.getAceOperations();
-      for(final HttpServerAce aceOperation : _aceOperations) {
-        _builder.append("\t");
-        CharSequence _createTimelineItem = this.createTimelineItem(aceOperation);
-        _builder.append(_createTimelineItem, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  private CharSequence _createTimelineItem(final HttpServerAceWrite it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<HttpServerOutcome> _outcomes = it.getOutcomes();
-      for(final HttpServerOutcome outcome : _outcomes) {
-        _builder.append("public static TimelineItem create");
-        String _eventName = this._aceExtension.eventName(it, outcome);
-        _builder.append(_eventName);
-        _builder.append("TimelineItem(");
-        String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
-        _builder.append(_dataInterfaceNameWithPackage);
-        _builder.append(" data) throws JsonProcessingException {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("String json = mapper.writeValueAsString(data);");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("return new TimelineItem(\"prepare\", null, \"");
-        String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome);
-        _builder.append(_eventNameWithPackage, "\t");
-        _builder.append("\", null, json, data.getUuid());");
-        _builder.newLineIfNotEmpty();
-        _builder.append("}");
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence _createTimelineItem(final HttpServerAceRead it) {
-    StringConcatenation _builder = new StringConcatenation();
-    return _builder;
-  }
-  
   public CharSequence generateActionCalls(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -4016,16 +3814,5 @@ public class AceTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
-  }
-  
-  private CharSequence createTimelineItem(final HttpServerAce it) {
-    if (it instanceof HttpServerAceRead) {
-      return _createTimelineItem((HttpServerAceRead)it);
-    } else if (it instanceof HttpServerAceWrite) {
-      return _createTimelineItem((HttpServerAceWrite)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
   }
 }

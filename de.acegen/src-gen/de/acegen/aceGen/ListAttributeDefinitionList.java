@@ -5,6 +5,8 @@ package de.acegen.aceGen;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>List Attribute Definition List</b></em>'.
@@ -21,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ListAttributeDefinitionList extends Value
+public interface ListAttributeDefinitionList extends EObject
 {
   /**
    * Returns the value of the '<em><b>Attribute Definition List</b></em>' containment reference list.

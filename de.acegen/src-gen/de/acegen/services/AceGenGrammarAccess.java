@@ -1403,27 +1403,27 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScenarioEventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ScenarioEvent");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cEventAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cEventHttpServerAceWriteCrossReference_0_0 = (CrossReference)cEventAssignment_0.eContents().get(0);
-		private final RuleCall cEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cEventHttpServerAceWriteCrossReference_0_0.eContents().get(1);
+		private final Assignment cOutcomeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cOutcomeHttpServerOutcomeCrossReference_0_0 = (CrossReference)cOutcomeAssignment_0.eContents().get(0);
+		private final RuleCall cOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cOutcomeHttpServerOutcomeCrossReference_0_0.eContents().get(1);
 		private final Assignment cDataDefinitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cDataDefinitionDataDefinitionParserRuleCall_1_0 = (RuleCall)cDataDefinitionAssignment_1.eContents().get(0);
 		
 		//ScenarioEvent:
-		//	event=[HttpServerAceWrite|QualifiedName] dataDefinition=DataDefinition;
+		//	outcome=[HttpServerOutcome|QualifiedName] dataDefinition=DataDefinition;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//event=[HttpServerAceWrite|QualifiedName] dataDefinition=DataDefinition
+		//outcome=[HttpServerOutcome|QualifiedName] dataDefinition=DataDefinition
 		public Group getGroup() { return cGroup; }
 		
-		//event=[HttpServerAceWrite|QualifiedName]
-		public Assignment getEventAssignment_0() { return cEventAssignment_0; }
+		//outcome=[HttpServerOutcome|QualifiedName]
+		public Assignment getOutcomeAssignment_0() { return cOutcomeAssignment_0; }
 		
-		//[HttpServerAceWrite|QualifiedName]
-		public CrossReference getEventHttpServerAceWriteCrossReference_0_0() { return cEventHttpServerAceWriteCrossReference_0_0; }
+		//[HttpServerOutcome|QualifiedName]
+		public CrossReference getOutcomeHttpServerOutcomeCrossReference_0_0() { return cOutcomeHttpServerOutcomeCrossReference_0_0; }
 		
 		//QualifiedName
-		public RuleCall getEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1() { return cEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1; }
+		public RuleCall getOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1() { return cOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1; }
 		
 		//dataDefinition=DataDefinition
 		public Assignment getDataDefinitionAssignment_1() { return cDataDefinitionAssignment_1; }
@@ -1804,45 +1804,47 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	public class ValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Value");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cValueAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final RuleCall cSTRINGTerminalRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cValueAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final RuleCall cINTTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
-		private final RuleCall cAttributeDefinitionListParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cListAttributeDefinitionListParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Assignment cStringValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cStringValueSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringValueAssignment_0.eContents().get(0);
+		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
+		private final Assignment cAttributeDefinitionListAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0 = (RuleCall)cAttributeDefinitionListAssignment_2.eContents().get(0);
+		private final Assignment cListAttributeDefinitionListAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
+		private final RuleCall cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cListAttributeDefinitionListAssignment_3.eContents().get(0);
 		
 		//Value:
-		//	{Value} STRING | {Value} INT | AttributeDefinitionList | ListAttributeDefinitionList;
+		//	stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
+		//	listAttributeDefinitionList=ListAttributeDefinitionList;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Value} STRING | {Value} INT | AttributeDefinitionList | ListAttributeDefinitionList
+		//stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
+		//listAttributeDefinitionList=ListAttributeDefinitionList
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{Value} STRING
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//{Value}
-		public Action getValueAction_0_0() { return cValueAction_0_0; }
+		//stringValue=STRING
+		public Assignment getStringValueAssignment_0() { return cStringValueAssignment_0; }
 		
 		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_0_1() { return cSTRINGTerminalRuleCall_0_1; }
+		public RuleCall getStringValueSTRINGTerminalRuleCall_0_0() { return cStringValueSTRINGTerminalRuleCall_0_0; }
 		
-		//{Value} INT
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//{Value}
-		public Action getValueAction_1_0() { return cValueAction_1_0; }
+		//intValue=INT
+		public Assignment getIntValueAssignment_1() { return cIntValueAssignment_1; }
 		
 		//INT
-		public RuleCall getINTTerminalRuleCall_1_1() { return cINTTerminalRuleCall_1_1; }
+		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
+		
+		//attributeDefinitionList=AttributeDefinitionList
+		public Assignment getAttributeDefinitionListAssignment_2() { return cAttributeDefinitionListAssignment_2; }
 		
 		//AttributeDefinitionList
-		public RuleCall getAttributeDefinitionListParserRuleCall_2() { return cAttributeDefinitionListParserRuleCall_2; }
+		public RuleCall getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0() { return cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0; }
+		
+		//listAttributeDefinitionList=ListAttributeDefinitionList
+		public Assignment getListAttributeDefinitionListAssignment_3() { return cListAttributeDefinitionListAssignment_3; }
 		
 		//ListAttributeDefinitionList
-		public RuleCall getListAttributeDefinitionListParserRuleCall_3() { return cListAttributeDefinitionListParserRuleCall_3; }
+		public RuleCall getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0() { return cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0; }
 	}
 	
 	
@@ -2181,7 +2183,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScenarioEvent:
-	//	event=[HttpServerAceWrite|QualifiedName] dataDefinition=DataDefinition;
+	//	outcome=[HttpServerOutcome|QualifiedName] dataDefinition=DataDefinition;
 	public ScenarioEventElements getScenarioEventAccess() {
 		return pScenarioEvent;
 	}
@@ -2297,7 +2299,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Value:
-	//	{Value} STRING | {Value} INT | AttributeDefinitionList | ListAttributeDefinitionList;
+	//	stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
+	//	listAttributeDefinitionList=ListAttributeDefinitionList;
 	public ValueElements getValueAccess() {
 		return pValue;
 	}

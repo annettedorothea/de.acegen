@@ -102,8 +102,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAccess().getGroup_6(), "rule__Attribute__Group_6__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
-			builder.put(grammarAccess.getValueAccess().getGroup_0(), "rule__Value__Group_0__0");
-			builder.put(grammarAccess.getValueAccess().getGroup_1(), "rule__Value__Group_1__0");
 			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_0_2(), "rule__Project__HttpClientAssignment_0_2");
 			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1(), "rule__Project__HttpServerAssignment_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
@@ -182,7 +180,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataDefinitionAccess().getDataAssignment_3(), "rule__DataDefinition__DataAssignment_3");
 			builder.put(grammarAccess.getAuthorizationAccess().getUsernameAssignment_1(), "rule__Authorization__UsernameAssignment_1");
 			builder.put(grammarAccess.getAuthorizationAccess().getPasswordAssignment_3(), "rule__Authorization__PasswordAssignment_3");
-			builder.put(grammarAccess.getScenarioEventAccess().getEventAssignment_0(), "rule__ScenarioEvent__EventAssignment_0");
+			builder.put(grammarAccess.getScenarioEventAccess().getOutcomeAssignment_0(), "rule__ScenarioEvent__OutcomeAssignment_0");
 			builder.put(grammarAccess.getScenarioEventAccess().getDataDefinitionAssignment_1(), "rule__ScenarioEvent__DataDefinitionAssignment_1");
 			builder.put(grammarAccess.getVerificationAccess().getActionAssignment_0(), "rule__Verification__ActionAssignment_0");
 			builder.put(grammarAccess.getVerificationAccess().getDataDefinitionAssignment_1(), "rule__Verification__DataDefinitionAssignment_1");
@@ -200,6 +198,10 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAccess().getModelAssignment_4_1(), "rule__Attribute__ModelAssignment_4_1");
 			builder.put(grammarAccess.getAttributeAccess().getNameAssignment_5(), "rule__Attribute__NameAssignment_5");
 			builder.put(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1(), "rule__Attribute__ForeignKeyAssignment_6_1");
+			builder.put(grammarAccess.getValueAccess().getStringValueAssignment_0(), "rule__Value__StringValueAssignment_0");
+			builder.put(grammarAccess.getValueAccess().getIntValueAssignment_1(), "rule__Value__IntValueAssignment_1");
+			builder.put(grammarAccess.getValueAccess().getAttributeDefinitionListAssignment_2(), "rule__Value__AttributeDefinitionListAssignment_2");
+			builder.put(grammarAccess.getValueAccess().getListAttributeDefinitionListAssignment_3(), "rule__Value__ListAttributeDefinitionListAssignment_3");
 		}
 	}
 	

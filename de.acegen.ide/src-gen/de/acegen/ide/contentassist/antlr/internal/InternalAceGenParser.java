@@ -3269,13 +3269,13 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Value__Alternatives"
-    // InternalAceGen.g:1041:1: rule__Value__Alternatives : ( ( ( rule__Value__Group_0__0 ) ) | ( ( rule__Value__Group_1__0 ) ) | ( ruleAttributeDefinitionList ) | ( ruleListAttributeDefinitionList ) );
+    // InternalAceGen.g:1041:1: rule__Value__Alternatives : ( ( ( rule__Value__StringValueAssignment_0 ) ) | ( ( rule__Value__IntValueAssignment_1 ) ) | ( ( rule__Value__AttributeDefinitionListAssignment_2 ) ) | ( ( rule__Value__ListAttributeDefinitionListAssignment_3 ) ) );
     public final void rule__Value__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:1045:1: ( ( ( rule__Value__Group_0__0 ) ) | ( ( rule__Value__Group_1__0 ) ) | ( ruleAttributeDefinitionList ) | ( ruleListAttributeDefinitionList ) )
+            // InternalAceGen.g:1045:1: ( ( ( rule__Value__StringValueAssignment_0 ) ) | ( ( rule__Value__IntValueAssignment_1 ) ) | ( ( rule__Value__AttributeDefinitionListAssignment_2 ) ) | ( ( rule__Value__ListAttributeDefinitionListAssignment_3 ) ) )
             int alt8=4;
             switch ( input.LA(1) ) {
             case RULE_STRING:
@@ -3307,24 +3307,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             switch (alt8) {
                 case 1 :
-                    // InternalAceGen.g:1046:2: ( ( rule__Value__Group_0__0 ) )
+                    // InternalAceGen.g:1046:2: ( ( rule__Value__StringValueAssignment_0 ) )
                     {
-                    // InternalAceGen.g:1046:2: ( ( rule__Value__Group_0__0 ) )
-                    // InternalAceGen.g:1047:3: ( rule__Value__Group_0__0 )
+                    // InternalAceGen.g:1046:2: ( ( rule__Value__StringValueAssignment_0 ) )
+                    // InternalAceGen.g:1047:3: ( rule__Value__StringValueAssignment_0 )
                     {
-                     before(grammarAccess.getValueAccess().getGroup_0()); 
-                    // InternalAceGen.g:1048:3: ( rule__Value__Group_0__0 )
-                    // InternalAceGen.g:1048:4: rule__Value__Group_0__0
+                     before(grammarAccess.getValueAccess().getStringValueAssignment_0()); 
+                    // InternalAceGen.g:1048:3: ( rule__Value__StringValueAssignment_0 )
+                    // InternalAceGen.g:1048:4: rule__Value__StringValueAssignment_0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__Value__Group_0__0();
+                    rule__Value__StringValueAssignment_0();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getValueAccess().getGroup_0()); 
+                     after(grammarAccess.getValueAccess().getStringValueAssignment_0()); 
 
                     }
 
@@ -3332,24 +3332,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:1052:2: ( ( rule__Value__Group_1__0 ) )
+                    // InternalAceGen.g:1052:2: ( ( rule__Value__IntValueAssignment_1 ) )
                     {
-                    // InternalAceGen.g:1052:2: ( ( rule__Value__Group_1__0 ) )
-                    // InternalAceGen.g:1053:3: ( rule__Value__Group_1__0 )
+                    // InternalAceGen.g:1052:2: ( ( rule__Value__IntValueAssignment_1 ) )
+                    // InternalAceGen.g:1053:3: ( rule__Value__IntValueAssignment_1 )
                     {
-                     before(grammarAccess.getValueAccess().getGroup_1()); 
-                    // InternalAceGen.g:1054:3: ( rule__Value__Group_1__0 )
-                    // InternalAceGen.g:1054:4: rule__Value__Group_1__0
+                     before(grammarAccess.getValueAccess().getIntValueAssignment_1()); 
+                    // InternalAceGen.g:1054:3: ( rule__Value__IntValueAssignment_1 )
+                    // InternalAceGen.g:1054:4: rule__Value__IntValueAssignment_1
                     {
                     pushFollow(FOLLOW_2);
-                    rule__Value__Group_1__0();
+                    rule__Value__IntValueAssignment_1();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getValueAccess().getGroup_1()); 
+                     after(grammarAccess.getValueAccess().getIntValueAssignment_1()); 
 
                     }
 
@@ -3357,18 +3357,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:1058:2: ( ruleAttributeDefinitionList )
+                    // InternalAceGen.g:1058:2: ( ( rule__Value__AttributeDefinitionListAssignment_2 ) )
                     {
-                    // InternalAceGen.g:1058:2: ( ruleAttributeDefinitionList )
-                    // InternalAceGen.g:1059:3: ruleAttributeDefinitionList
+                    // InternalAceGen.g:1058:2: ( ( rule__Value__AttributeDefinitionListAssignment_2 ) )
+                    // InternalAceGen.g:1059:3: ( rule__Value__AttributeDefinitionListAssignment_2 )
                     {
-                     before(grammarAccess.getValueAccess().getAttributeDefinitionListParserRuleCall_2()); 
+                     before(grammarAccess.getValueAccess().getAttributeDefinitionListAssignment_2()); 
+                    // InternalAceGen.g:1060:3: ( rule__Value__AttributeDefinitionListAssignment_2 )
+                    // InternalAceGen.g:1060:4: rule__Value__AttributeDefinitionListAssignment_2
+                    {
                     pushFollow(FOLLOW_2);
-                    ruleAttributeDefinitionList();
+                    rule__Value__AttributeDefinitionListAssignment_2();
 
                     state._fsp--;
 
-                     after(grammarAccess.getValueAccess().getAttributeDefinitionListParserRuleCall_2()); 
+
+                    }
+
+                     after(grammarAccess.getValueAccess().getAttributeDefinitionListAssignment_2()); 
 
                     }
 
@@ -3376,18 +3382,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalAceGen.g:1064:2: ( ruleListAttributeDefinitionList )
+                    // InternalAceGen.g:1064:2: ( ( rule__Value__ListAttributeDefinitionListAssignment_3 ) )
                     {
-                    // InternalAceGen.g:1064:2: ( ruleListAttributeDefinitionList )
-                    // InternalAceGen.g:1065:3: ruleListAttributeDefinitionList
+                    // InternalAceGen.g:1064:2: ( ( rule__Value__ListAttributeDefinitionListAssignment_3 ) )
+                    // InternalAceGen.g:1065:3: ( rule__Value__ListAttributeDefinitionListAssignment_3 )
                     {
-                     before(grammarAccess.getValueAccess().getListAttributeDefinitionListParserRuleCall_3()); 
+                     before(grammarAccess.getValueAccess().getListAttributeDefinitionListAssignment_3()); 
+                    // InternalAceGen.g:1066:3: ( rule__Value__ListAttributeDefinitionListAssignment_3 )
+                    // InternalAceGen.g:1066:4: rule__Value__ListAttributeDefinitionListAssignment_3
+                    {
                     pushFollow(FOLLOW_2);
-                    ruleListAttributeDefinitionList();
+                    rule__Value__ListAttributeDefinitionListAssignment_3();
 
                     state._fsp--;
 
-                     after(grammarAccess.getValueAccess().getListAttributeDefinitionListParserRuleCall_3()); 
+
+                    }
+
+                     after(grammarAccess.getValueAccess().getListAttributeDefinitionListAssignment_3()); 
 
                     }
 
@@ -18214,31 +18226,31 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScenarioEvent__Group__0__Impl"
-    // InternalAceGen.g:5730:1: rule__ScenarioEvent__Group__0__Impl : ( ( rule__ScenarioEvent__EventAssignment_0 ) ) ;
+    // InternalAceGen.g:5730:1: rule__ScenarioEvent__Group__0__Impl : ( ( rule__ScenarioEvent__OutcomeAssignment_0 ) ) ;
     public final void rule__ScenarioEvent__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5734:1: ( ( ( rule__ScenarioEvent__EventAssignment_0 ) ) )
-            // InternalAceGen.g:5735:1: ( ( rule__ScenarioEvent__EventAssignment_0 ) )
+            // InternalAceGen.g:5734:1: ( ( ( rule__ScenarioEvent__OutcomeAssignment_0 ) ) )
+            // InternalAceGen.g:5735:1: ( ( rule__ScenarioEvent__OutcomeAssignment_0 ) )
             {
-            // InternalAceGen.g:5735:1: ( ( rule__ScenarioEvent__EventAssignment_0 ) )
-            // InternalAceGen.g:5736:2: ( rule__ScenarioEvent__EventAssignment_0 )
+            // InternalAceGen.g:5735:1: ( ( rule__ScenarioEvent__OutcomeAssignment_0 ) )
+            // InternalAceGen.g:5736:2: ( rule__ScenarioEvent__OutcomeAssignment_0 )
             {
-             before(grammarAccess.getScenarioEventAccess().getEventAssignment_0()); 
-            // InternalAceGen.g:5737:2: ( rule__ScenarioEvent__EventAssignment_0 )
-            // InternalAceGen.g:5737:3: rule__ScenarioEvent__EventAssignment_0
+             before(grammarAccess.getScenarioEventAccess().getOutcomeAssignment_0()); 
+            // InternalAceGen.g:5737:2: ( rule__ScenarioEvent__OutcomeAssignment_0 )
+            // InternalAceGen.g:5737:3: rule__ScenarioEvent__OutcomeAssignment_0
             {
             pushFollow(FOLLOW_2);
-            rule__ScenarioEvent__EventAssignment_0();
+            rule__ScenarioEvent__OutcomeAssignment_0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getScenarioEventAccess().getEventAssignment_0()); 
+             after(grammarAccess.getScenarioEventAccess().getOutcomeAssignment_0()); 
 
             }
 
@@ -20856,308 +20868,18 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__QualifiedName__Group_1__1__Impl"
 
 
-    // $ANTLR start "rule__Value__Group_0__0"
-    // InternalAceGen.g:6582:1: rule__Value__Group_0__0 : rule__Value__Group_0__0__Impl rule__Value__Group_0__1 ;
-    public final void rule__Value__Group_0__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6586:1: ( rule__Value__Group_0__0__Impl rule__Value__Group_0__1 )
-            // InternalAceGen.g:6587:2: rule__Value__Group_0__0__Impl rule__Value__Group_0__1
-            {
-            pushFollow(FOLLOW_30);
-            rule__Value__Group_0__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_2);
-            rule__Value__Group_0__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_0__0"
-
-
-    // $ANTLR start "rule__Value__Group_0__0__Impl"
-    // InternalAceGen.g:6594:1: rule__Value__Group_0__0__Impl : ( () ) ;
-    public final void rule__Value__Group_0__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6598:1: ( ( () ) )
-            // InternalAceGen.g:6599:1: ( () )
-            {
-            // InternalAceGen.g:6599:1: ( () )
-            // InternalAceGen.g:6600:2: ()
-            {
-             before(grammarAccess.getValueAccess().getValueAction_0_0()); 
-            // InternalAceGen.g:6601:2: ()
-            // InternalAceGen.g:6601:3: 
-            {
-            }
-
-             after(grammarAccess.getValueAccess().getValueAction_0_0()); 
-
-            }
-
-
-            }
-
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_0__0__Impl"
-
-
-    // $ANTLR start "rule__Value__Group_0__1"
-    // InternalAceGen.g:6609:1: rule__Value__Group_0__1 : rule__Value__Group_0__1__Impl ;
-    public final void rule__Value__Group_0__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6613:1: ( rule__Value__Group_0__1__Impl )
-            // InternalAceGen.g:6614:2: rule__Value__Group_0__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__Value__Group_0__1__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_0__1"
-
-
-    // $ANTLR start "rule__Value__Group_0__1__Impl"
-    // InternalAceGen.g:6620:1: rule__Value__Group_0__1__Impl : ( RULE_STRING ) ;
-    public final void rule__Value__Group_0__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6624:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:6625:1: ( RULE_STRING )
-            {
-            // InternalAceGen.g:6625:1: ( RULE_STRING )
-            // InternalAceGen.g:6626:2: RULE_STRING
-            {
-             before(grammarAccess.getValueAccess().getSTRINGTerminalRuleCall_0_1()); 
-            match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getValueAccess().getSTRINGTerminalRuleCall_0_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_0__1__Impl"
-
-
-    // $ANTLR start "rule__Value__Group_1__0"
-    // InternalAceGen.g:6636:1: rule__Value__Group_1__0 : rule__Value__Group_1__0__Impl rule__Value__Group_1__1 ;
-    public final void rule__Value__Group_1__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6640:1: ( rule__Value__Group_1__0__Impl rule__Value__Group_1__1 )
-            // InternalAceGen.g:6641:2: rule__Value__Group_1__0__Impl rule__Value__Group_1__1
-            {
-            pushFollow(FOLLOW_43);
-            rule__Value__Group_1__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_2);
-            rule__Value__Group_1__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_1__0"
-
-
-    // $ANTLR start "rule__Value__Group_1__0__Impl"
-    // InternalAceGen.g:6648:1: rule__Value__Group_1__0__Impl : ( () ) ;
-    public final void rule__Value__Group_1__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6652:1: ( ( () ) )
-            // InternalAceGen.g:6653:1: ( () )
-            {
-            // InternalAceGen.g:6653:1: ( () )
-            // InternalAceGen.g:6654:2: ()
-            {
-             before(grammarAccess.getValueAccess().getValueAction_1_0()); 
-            // InternalAceGen.g:6655:2: ()
-            // InternalAceGen.g:6655:3: 
-            {
-            }
-
-             after(grammarAccess.getValueAccess().getValueAction_1_0()); 
-
-            }
-
-
-            }
-
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_1__0__Impl"
-
-
-    // $ANTLR start "rule__Value__Group_1__1"
-    // InternalAceGen.g:6663:1: rule__Value__Group_1__1 : rule__Value__Group_1__1__Impl ;
-    public final void rule__Value__Group_1__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6667:1: ( rule__Value__Group_1__1__Impl )
-            // InternalAceGen.g:6668:2: rule__Value__Group_1__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__Value__Group_1__1__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_1__1"
-
-
-    // $ANTLR start "rule__Value__Group_1__1__Impl"
-    // InternalAceGen.g:6674:1: rule__Value__Group_1__1__Impl : ( RULE_INT ) ;
-    public final void rule__Value__Group_1__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalAceGen.g:6678:1: ( ( RULE_INT ) )
-            // InternalAceGen.g:6679:1: ( RULE_INT )
-            {
-            // InternalAceGen.g:6679:1: ( RULE_INT )
-            // InternalAceGen.g:6680:2: RULE_INT
-            {
-             before(grammarAccess.getValueAccess().getINTTerminalRuleCall_1_1()); 
-            match(input,RULE_INT,FOLLOW_2); 
-             after(grammarAccess.getValueAccess().getINTTerminalRuleCall_1_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Value__Group_1__1__Impl"
-
-
     // $ANTLR start "rule__Project__HttpClientAssignment_0_2"
-    // InternalAceGen.g:6690:1: rule__Project__HttpClientAssignment_0_2 : ( ruleHttpClient ) ;
+    // InternalAceGen.g:6582:1: rule__Project__HttpClientAssignment_0_2 : ( ruleHttpClient ) ;
     public final void rule__Project__HttpClientAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6694:1: ( ( ruleHttpClient ) )
-            // InternalAceGen.g:6695:2: ( ruleHttpClient )
+            // InternalAceGen.g:6586:1: ( ( ruleHttpClient ) )
+            // InternalAceGen.g:6587:2: ( ruleHttpClient )
             {
-            // InternalAceGen.g:6695:2: ( ruleHttpClient )
-            // InternalAceGen.g:6696:3: ruleHttpClient
+            // InternalAceGen.g:6587:2: ( ruleHttpClient )
+            // InternalAceGen.g:6588:3: ruleHttpClient
             {
              before(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_2_0()); 
             pushFollow(FOLLOW_2);
@@ -21188,17 +20910,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Project__HttpServerAssignment_1_1"
-    // InternalAceGen.g:6705:1: rule__Project__HttpServerAssignment_1_1 : ( ruleHttpServer ) ;
+    // InternalAceGen.g:6597:1: rule__Project__HttpServerAssignment_1_1 : ( ruleHttpServer ) ;
     public final void rule__Project__HttpServerAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6709:1: ( ( ruleHttpServer ) )
-            // InternalAceGen.g:6710:2: ( ruleHttpServer )
+            // InternalAceGen.g:6601:1: ( ( ruleHttpServer ) )
+            // InternalAceGen.g:6602:2: ( ruleHttpServer )
             {
-            // InternalAceGen.g:6710:2: ( ruleHttpServer )
-            // InternalAceGen.g:6711:3: ruleHttpServer
+            // InternalAceGen.g:6602:2: ( ruleHttpServer )
+            // InternalAceGen.g:6603:3: ruleHttpServer
             {
              before(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21229,17 +20951,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClient__NameAssignment_0"
-    // InternalAceGen.g:6720:1: rule__HttpClient__NameAssignment_0 : ( ruleQualifiedName ) ;
+    // InternalAceGen.g:6612:1: rule__HttpClient__NameAssignment_0 : ( ruleQualifiedName ) ;
     public final void rule__HttpClient__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6724:1: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:6725:2: ( ruleQualifiedName )
+            // InternalAceGen.g:6616:1: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6617:2: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:6725:2: ( ruleQualifiedName )
-            // InternalAceGen.g:6726:3: ruleQualifiedName
+            // InternalAceGen.g:6617:2: ( ruleQualifiedName )
+            // InternalAceGen.g:6618:3: ruleQualifiedName
             {
              before(grammarAccess.getHttpClientAccess().getNameQualifiedNameParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -21270,17 +20992,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClient__AceOperationsAssignment_1_1"
-    // InternalAceGen.g:6735:1: rule__HttpClient__AceOperationsAssignment_1_1 : ( ruleHttpClientAce ) ;
+    // InternalAceGen.g:6627:1: rule__HttpClient__AceOperationsAssignment_1_1 : ( ruleHttpClientAce ) ;
     public final void rule__HttpClient__AceOperationsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6739:1: ( ( ruleHttpClientAce ) )
-            // InternalAceGen.g:6740:2: ( ruleHttpClientAce )
+            // InternalAceGen.g:6631:1: ( ( ruleHttpClientAce ) )
+            // InternalAceGen.g:6632:2: ( ruleHttpClientAce )
             {
-            // InternalAceGen.g:6740:2: ( ruleHttpClientAce )
-            // InternalAceGen.g:6741:3: ruleHttpClientAce
+            // InternalAceGen.g:6632:2: ( ruleHttpClientAce )
+            // InternalAceGen.g:6633:3: ruleHttpClientAce
             {
              before(grammarAccess.getHttpClientAccess().getAceOperationsHttpClientAceParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21311,17 +21033,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClient__AppStateAssignment_2_1"
-    // InternalAceGen.g:6750:1: rule__HttpClient__AppStateAssignment_2_1 : ( ruleHttpClientStateElement ) ;
+    // InternalAceGen.g:6642:1: rule__HttpClient__AppStateAssignment_2_1 : ( ruleHttpClientStateElement ) ;
     public final void rule__HttpClient__AppStateAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6754:1: ( ( ruleHttpClientStateElement ) )
-            // InternalAceGen.g:6755:2: ( ruleHttpClientStateElement )
+            // InternalAceGen.g:6646:1: ( ( ruleHttpClientStateElement ) )
+            // InternalAceGen.g:6647:2: ( ruleHttpClientStateElement )
             {
-            // InternalAceGen.g:6755:2: ( ruleHttpClientStateElement )
-            // InternalAceGen.g:6756:3: ruleHttpClientStateElement
+            // InternalAceGen.g:6647:2: ( ruleHttpClientStateElement )
+            // InternalAceGen.g:6648:3: ruleHttpClientStateElement
             {
              before(grammarAccess.getHttpClientAccess().getAppStateHttpClientStateElementParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21352,17 +21074,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__NameAssignment_0"
-    // InternalAceGen.g:6765:1: rule__HttpClientAce__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:6657:1: rule__HttpClientAce__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__HttpClientAce__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6769:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:6770:2: ( RULE_ID )
+            // InternalAceGen.g:6661:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6662:2: ( RULE_ID )
             {
-            // InternalAceGen.g:6770:2: ( RULE_ID )
-            // InternalAceGen.g:6771:3: RULE_ID
+            // InternalAceGen.g:6662:2: ( RULE_ID )
+            // InternalAceGen.g:6663:3: RULE_ID
             {
              before(grammarAccess.getHttpClientAceAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -21389,17 +21111,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__InputAssignment_1_1"
-    // InternalAceGen.g:6780:1: rule__HttpClientAce__InputAssignment_1_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:6672:1: rule__HttpClientAce__InputAssignment_1_1 : ( RULE_ID ) ;
     public final void rule__HttpClientAce__InputAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6784:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:6785:2: ( RULE_ID )
+            // InternalAceGen.g:6676:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6677:2: ( RULE_ID )
             {
-            // InternalAceGen.g:6785:2: ( RULE_ID )
-            // InternalAceGen.g:6786:3: RULE_ID
+            // InternalAceGen.g:6677:2: ( RULE_ID )
+            // InternalAceGen.g:6678:3: RULE_ID
             {
              before(grammarAccess.getHttpClientAceAccess().getInputIDTerminalRuleCall_1_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -21426,17 +21148,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__InputAssignment_1_2_1"
-    // InternalAceGen.g:6795:1: rule__HttpClientAce__InputAssignment_1_2_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:6687:1: rule__HttpClientAce__InputAssignment_1_2_1 : ( RULE_ID ) ;
     public final void rule__HttpClientAce__InputAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6799:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:6800:2: ( RULE_ID )
+            // InternalAceGen.g:6691:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6692:2: ( RULE_ID )
             {
-            // InternalAceGen.g:6800:2: ( RULE_ID )
-            // InternalAceGen.g:6801:3: RULE_ID
+            // InternalAceGen.g:6692:2: ( RULE_ID )
+            // InternalAceGen.g:6693:3: RULE_ID
             {
              before(grammarAccess.getHttpClientAceAccess().getInputIDTerminalRuleCall_1_2_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -21463,21 +21185,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__ServerCallAssignment_2_1"
-    // InternalAceGen.g:6810:1: rule__HttpClientAce__ServerCallAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:6702:1: rule__HttpClientAce__ServerCallAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpClientAce__ServerCallAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6814:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:6815:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6706:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:6707:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:6815:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:6816:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6707:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6708:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpClientAceAccess().getServerCallHttpServerAceCrossReference_2_1_0()); 
-            // InternalAceGen.g:6817:3: ( ruleQualifiedName )
-            // InternalAceGen.g:6818:4: ruleQualifiedName
+            // InternalAceGen.g:6709:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6710:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpClientAceAccess().getServerCallHttpServerAceQualifiedNameParserRuleCall_2_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -21512,21 +21234,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__LoadingFlagAssignment_3_1"
-    // InternalAceGen.g:6829:1: rule__HttpClientAce__LoadingFlagAssignment_3_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:6721:1: rule__HttpClientAce__LoadingFlagAssignment_3_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpClientAce__LoadingFlagAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6833:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:6834:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6725:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:6726:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:6834:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:6835:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6726:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6727:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpClientAceAccess().getLoadingFlagHttpClientStateElementCrossReference_3_1_0()); 
-            // InternalAceGen.g:6836:3: ( ruleQualifiedName )
-            // InternalAceGen.g:6837:4: ruleQualifiedName
+            // InternalAceGen.g:6728:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6729:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpClientAceAccess().getLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_3_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -21561,17 +21283,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientAce__OutcomesAssignment_4"
-    // InternalAceGen.g:6848:1: rule__HttpClientAce__OutcomesAssignment_4 : ( ruleHttpClientOutcome ) ;
+    // InternalAceGen.g:6740:1: rule__HttpClientAce__OutcomesAssignment_4 : ( ruleHttpClientOutcome ) ;
     public final void rule__HttpClientAce__OutcomesAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6852:1: ( ( ruleHttpClientOutcome ) )
-            // InternalAceGen.g:6853:2: ( ruleHttpClientOutcome )
+            // InternalAceGen.g:6744:1: ( ( ruleHttpClientOutcome ) )
+            // InternalAceGen.g:6745:2: ( ruleHttpClientOutcome )
             {
-            // InternalAceGen.g:6853:2: ( ruleHttpClientOutcome )
-            // InternalAceGen.g:6854:3: ruleHttpClientOutcome
+            // InternalAceGen.g:6745:2: ( ruleHttpClientOutcome )
+            // InternalAceGen.g:6746:3: ruleHttpClientOutcome
             {
              before(grammarAccess.getHttpClientAceAccess().getOutcomesHttpClientOutcomeParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -21602,17 +21324,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientOutcome__NameAssignment_1"
-    // InternalAceGen.g:6863:1: rule__HttpClientOutcome__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:6755:1: rule__HttpClientOutcome__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__HttpClientOutcome__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6867:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:6868:2: ( RULE_ID )
+            // InternalAceGen.g:6759:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6760:2: ( RULE_ID )
             {
-            // InternalAceGen.g:6868:2: ( RULE_ID )
-            // InternalAceGen.g:6869:3: RULE_ID
+            // InternalAceGen.g:6760:2: ( RULE_ID )
+            // InternalAceGen.g:6761:3: RULE_ID
             {
              before(grammarAccess.getHttpClientOutcomeAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -21639,17 +21361,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientOutcome__ListenersAssignment_2_1"
-    // InternalAceGen.g:6878:1: rule__HttpClientOutcome__ListenersAssignment_2_1 : ( ruleHttpClientStateFunction ) ;
+    // InternalAceGen.g:6770:1: rule__HttpClientOutcome__ListenersAssignment_2_1 : ( ruleHttpClientStateFunction ) ;
     public final void rule__HttpClientOutcome__ListenersAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6882:1: ( ( ruleHttpClientStateFunction ) )
-            // InternalAceGen.g:6883:2: ( ruleHttpClientStateFunction )
+            // InternalAceGen.g:6774:1: ( ( ruleHttpClientStateFunction ) )
+            // InternalAceGen.g:6775:2: ( ruleHttpClientStateFunction )
             {
-            // InternalAceGen.g:6883:2: ( ruleHttpClientStateFunction )
-            // InternalAceGen.g:6884:3: ruleHttpClientStateFunction
+            // InternalAceGen.g:6775:2: ( ruleHttpClientStateFunction )
+            // InternalAceGen.g:6776:3: ruleHttpClientStateFunction
             {
              before(grammarAccess.getHttpClientOutcomeAccess().getListenersHttpClientStateFunctionParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -21680,21 +21402,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientOutcome__AceOperationsAssignment_3_2"
-    // InternalAceGen.g:6893:1: rule__HttpClientOutcome__AceOperationsAssignment_3_2 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:6785:1: rule__HttpClientOutcome__AceOperationsAssignment_3_2 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpClientOutcome__AceOperationsAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6897:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:6898:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6789:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:6790:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:6898:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:6899:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6790:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6791:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpClientOutcomeAccess().getAceOperationsHttpClientAceCrossReference_3_2_0()); 
-            // InternalAceGen.g:6900:3: ( ruleQualifiedName )
-            // InternalAceGen.g:6901:4: ruleQualifiedName
+            // InternalAceGen.g:6792:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6793:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpClientOutcomeAccess().getAceOperationsHttpClientAceQualifiedNameParserRuleCall_3_2_0_1()); 
             pushFollow(FOLLOW_2);
@@ -21729,17 +21451,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateFunction__StateFunctionTypeAssignment_0"
-    // InternalAceGen.g:6912:1: rule__HttpClientStateFunction__StateFunctionTypeAssignment_0 : ( ruleHttpClientStateFunctionType ) ;
+    // InternalAceGen.g:6804:1: rule__HttpClientStateFunction__StateFunctionTypeAssignment_0 : ( ruleHttpClientStateFunctionType ) ;
     public final void rule__HttpClientStateFunction__StateFunctionTypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6916:1: ( ( ruleHttpClientStateFunctionType ) )
-            // InternalAceGen.g:6917:2: ( ruleHttpClientStateFunctionType )
+            // InternalAceGen.g:6808:1: ( ( ruleHttpClientStateFunctionType ) )
+            // InternalAceGen.g:6809:2: ( ruleHttpClientStateFunctionType )
             {
-            // InternalAceGen.g:6917:2: ( ruleHttpClientStateFunctionType )
-            // InternalAceGen.g:6918:3: ruleHttpClientStateFunctionType
+            // InternalAceGen.g:6809:2: ( ruleHttpClientStateFunctionType )
+            // InternalAceGen.g:6810:3: ruleHttpClientStateFunctionType
             {
              before(grammarAccess.getHttpClientStateFunctionAccess().getStateFunctionTypeHttpClientStateFunctionTypeParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -21770,21 +21492,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateFunction__AttributeAssignment_1"
-    // InternalAceGen.g:6927:1: rule__HttpClientStateFunction__AttributeAssignment_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:6819:1: rule__HttpClientStateFunction__AttributeAssignment_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpClientStateFunction__AttributeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6931:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:6932:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6823:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:6824:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:6932:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:6933:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6824:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6825:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpClientStateFunctionAccess().getAttributeHttpClientStateElementCrossReference_1_0()); 
-            // InternalAceGen.g:6934:3: ( ruleQualifiedName )
-            // InternalAceGen.g:6935:4: ruleQualifiedName
+            // InternalAceGen.g:6826:3: ( ruleQualifiedName )
+            // InternalAceGen.g:6827:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpClientStateFunctionAccess().getAttributeHttpClientStateElementQualifiedNameParserRuleCall_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -21819,17 +21541,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__NameAssignment_0"
-    // InternalAceGen.g:6946:1: rule__HttpClientStateElement__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:6838:1: rule__HttpClientStateElement__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__HttpClientStateElement__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6950:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:6951:2: ( RULE_ID )
+            // InternalAceGen.g:6842:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6843:2: ( RULE_ID )
             {
-            // InternalAceGen.g:6951:2: ( RULE_ID )
-            // InternalAceGen.g:6952:3: RULE_ID
+            // InternalAceGen.g:6843:2: ( RULE_ID )
+            // InternalAceGen.g:6844:3: RULE_ID
             {
              before(grammarAccess.getHttpClientStateElementAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -21856,21 +21578,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__ListAssignment_1"
-    // InternalAceGen.g:6961:1: rule__HttpClientStateElement__ListAssignment_1 : ( ( 'list' ) ) ;
+    // InternalAceGen.g:6853:1: rule__HttpClientStateElement__ListAssignment_1 : ( ( 'list' ) ) ;
     public final void rule__HttpClientStateElement__ListAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6965:1: ( ( ( 'list' ) ) )
-            // InternalAceGen.g:6966:2: ( ( 'list' ) )
+            // InternalAceGen.g:6857:1: ( ( ( 'list' ) ) )
+            // InternalAceGen.g:6858:2: ( ( 'list' ) )
             {
-            // InternalAceGen.g:6966:2: ( ( 'list' ) )
-            // InternalAceGen.g:6967:3: ( 'list' )
+            // InternalAceGen.g:6858:2: ( ( 'list' ) )
+            // InternalAceGen.g:6859:3: ( 'list' )
             {
              before(grammarAccess.getHttpClientStateElementAccess().getListListKeyword_1_0()); 
-            // InternalAceGen.g:6968:3: ( 'list' )
-            // InternalAceGen.g:6969:4: 'list'
+            // InternalAceGen.g:6860:3: ( 'list' )
+            // InternalAceGen.g:6861:4: 'list'
             {
              before(grammarAccess.getHttpClientStateElementAccess().getListListKeyword_1_0()); 
             match(input,64,FOLLOW_2); 
@@ -21901,21 +21623,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__HashAssignment_2"
-    // InternalAceGen.g:6980:1: rule__HttpClientStateElement__HashAssignment_2 : ( ( 'location.hash' ) ) ;
+    // InternalAceGen.g:6872:1: rule__HttpClientStateElement__HashAssignment_2 : ( ( 'location.hash' ) ) ;
     public final void rule__HttpClientStateElement__HashAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:6984:1: ( ( ( 'location.hash' ) ) )
-            // InternalAceGen.g:6985:2: ( ( 'location.hash' ) )
+            // InternalAceGen.g:6876:1: ( ( ( 'location.hash' ) ) )
+            // InternalAceGen.g:6877:2: ( ( 'location.hash' ) )
             {
-            // InternalAceGen.g:6985:2: ( ( 'location.hash' ) )
-            // InternalAceGen.g:6986:3: ( 'location.hash' )
+            // InternalAceGen.g:6877:2: ( ( 'location.hash' ) )
+            // InternalAceGen.g:6878:3: ( 'location.hash' )
             {
              before(grammarAccess.getHttpClientStateElementAccess().getHashLocationHashKeyword_2_0()); 
-            // InternalAceGen.g:6987:3: ( 'location.hash' )
-            // InternalAceGen.g:6988:4: 'location.hash'
+            // InternalAceGen.g:6879:3: ( 'location.hash' )
+            // InternalAceGen.g:6880:4: 'location.hash'
             {
              before(grammarAccess.getHttpClientStateElementAccess().getHashLocationHashKeyword_2_0()); 
             match(input,65,FOLLOW_2); 
@@ -21946,21 +21668,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__StorageAssignment_3"
-    // InternalAceGen.g:6999:1: rule__HttpClientStateElement__StorageAssignment_3 : ( ( 'storage' ) ) ;
+    // InternalAceGen.g:6891:1: rule__HttpClientStateElement__StorageAssignment_3 : ( ( 'storage' ) ) ;
     public final void rule__HttpClientStateElement__StorageAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7003:1: ( ( ( 'storage' ) ) )
-            // InternalAceGen.g:7004:2: ( ( 'storage' ) )
+            // InternalAceGen.g:6895:1: ( ( ( 'storage' ) ) )
+            // InternalAceGen.g:6896:2: ( ( 'storage' ) )
             {
-            // InternalAceGen.g:7004:2: ( ( 'storage' ) )
-            // InternalAceGen.g:7005:3: ( 'storage' )
+            // InternalAceGen.g:6896:2: ( ( 'storage' ) )
+            // InternalAceGen.g:6897:3: ( 'storage' )
             {
              before(grammarAccess.getHttpClientStateElementAccess().getStorageStorageKeyword_3_0()); 
-            // InternalAceGen.g:7006:3: ( 'storage' )
-            // InternalAceGen.g:7007:4: 'storage'
+            // InternalAceGen.g:6898:3: ( 'storage' )
+            // InternalAceGen.g:6899:4: 'storage'
             {
              before(grammarAccess.getHttpClientStateElementAccess().getStorageStorageKeyword_3_0()); 
             match(input,66,FOLLOW_2); 
@@ -21991,17 +21713,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__TypesAssignment_4_0"
-    // InternalAceGen.g:7018:1: rule__HttpClientStateElement__TypesAssignment_4_0 : ( ruleHttpClientTypeDefinition ) ;
+    // InternalAceGen.g:6910:1: rule__HttpClientStateElement__TypesAssignment_4_0 : ( ruleHttpClientTypeDefinition ) ;
     public final void rule__HttpClientStateElement__TypesAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7022:1: ( ( ruleHttpClientTypeDefinition ) )
-            // InternalAceGen.g:7023:2: ( ruleHttpClientTypeDefinition )
+            // InternalAceGen.g:6914:1: ( ( ruleHttpClientTypeDefinition ) )
+            // InternalAceGen.g:6915:2: ( ruleHttpClientTypeDefinition )
             {
-            // InternalAceGen.g:7023:2: ( ruleHttpClientTypeDefinition )
-            // InternalAceGen.g:7024:3: ruleHttpClientTypeDefinition
+            // InternalAceGen.g:6915:2: ( ruleHttpClientTypeDefinition )
+            // InternalAceGen.g:6916:3: ruleHttpClientTypeDefinition
             {
              before(grammarAccess.getHttpClientStateElementAccess().getTypesHttpClientTypeDefinitionParserRuleCall_4_0_0()); 
             pushFollow(FOLLOW_2);
@@ -22032,17 +21754,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientStateElement__TypesAssignment_4_1_1"
-    // InternalAceGen.g:7033:1: rule__HttpClientStateElement__TypesAssignment_4_1_1 : ( ruleHttpClientTypeDefinition ) ;
+    // InternalAceGen.g:6925:1: rule__HttpClientStateElement__TypesAssignment_4_1_1 : ( ruleHttpClientTypeDefinition ) ;
     public final void rule__HttpClientStateElement__TypesAssignment_4_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7037:1: ( ( ruleHttpClientTypeDefinition ) )
-            // InternalAceGen.g:7038:2: ( ruleHttpClientTypeDefinition )
+            // InternalAceGen.g:6929:1: ( ( ruleHttpClientTypeDefinition ) )
+            // InternalAceGen.g:6930:2: ( ruleHttpClientTypeDefinition )
             {
-            // InternalAceGen.g:7038:2: ( ruleHttpClientTypeDefinition )
-            // InternalAceGen.g:7039:3: ruleHttpClientTypeDefinition
+            // InternalAceGen.g:6930:2: ( ruleHttpClientTypeDefinition )
+            // InternalAceGen.g:6931:3: ruleHttpClientTypeDefinition
             {
              before(grammarAccess.getHttpClientStateElementAccess().getTypesHttpClientTypeDefinitionParserRuleCall_4_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22073,17 +21795,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientTypeDefinition__NameAssignment_1"
-    // InternalAceGen.g:7048:1: rule__HttpClientTypeDefinition__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:6940:1: rule__HttpClientTypeDefinition__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__HttpClientTypeDefinition__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7052:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7053:2: ( RULE_ID )
+            // InternalAceGen.g:6944:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:6945:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7053:2: ( RULE_ID )
-            // InternalAceGen.g:7054:3: RULE_ID
+            // InternalAceGen.g:6945:2: ( RULE_ID )
+            // InternalAceGen.g:6946:3: RULE_ID
             {
              before(grammarAccess.getHttpClientTypeDefinitionAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -22110,17 +21832,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClientTypeDefinition__ElementsAssignment_3"
-    // InternalAceGen.g:7063:1: rule__HttpClientTypeDefinition__ElementsAssignment_3 : ( ruleHttpClientStateElement ) ;
+    // InternalAceGen.g:6955:1: rule__HttpClientTypeDefinition__ElementsAssignment_3 : ( ruleHttpClientStateElement ) ;
     public final void rule__HttpClientTypeDefinition__ElementsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7067:1: ( ( ruleHttpClientStateElement ) )
-            // InternalAceGen.g:7068:2: ( ruleHttpClientStateElement )
+            // InternalAceGen.g:6959:1: ( ( ruleHttpClientStateElement ) )
+            // InternalAceGen.g:6960:2: ( ruleHttpClientStateElement )
             {
-            // InternalAceGen.g:7068:2: ( ruleHttpClientStateElement )
-            // InternalAceGen.g:7069:3: ruleHttpClientStateElement
+            // InternalAceGen.g:6960:2: ( ruleHttpClientStateElement )
+            // InternalAceGen.g:6961:3: ruleHttpClientStateElement
             {
              before(grammarAccess.getHttpClientTypeDefinitionAccess().getElementsHttpClientStateElementParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -22151,17 +21873,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__NameAssignment_0"
-    // InternalAceGen.g:7078:1: rule__HttpServer__NameAssignment_0 : ( ruleQualifiedName ) ;
+    // InternalAceGen.g:6970:1: rule__HttpServer__NameAssignment_0 : ( ruleQualifiedName ) ;
     public final void rule__HttpServer__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7082:1: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7083:2: ( ruleQualifiedName )
+            // InternalAceGen.g:6974:1: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:6975:2: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:7083:2: ( ruleQualifiedName )
-            // InternalAceGen.g:7084:3: ruleQualifiedName
+            // InternalAceGen.g:6975:2: ( ruleQualifiedName )
+            // InternalAceGen.g:6976:3: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAccess().getNameQualifiedNameParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -22192,17 +21914,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__AuthUserAssignment_1_1"
-    // InternalAceGen.g:7093:1: rule__HttpServer__AuthUserAssignment_1_1 : ( ruleAuthUser ) ;
+    // InternalAceGen.g:6985:1: rule__HttpServer__AuthUserAssignment_1_1 : ( ruleAuthUser ) ;
     public final void rule__HttpServer__AuthUserAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7097:1: ( ( ruleAuthUser ) )
-            // InternalAceGen.g:7098:2: ( ruleAuthUser )
+            // InternalAceGen.g:6989:1: ( ( ruleAuthUser ) )
+            // InternalAceGen.g:6990:2: ( ruleAuthUser )
             {
-            // InternalAceGen.g:7098:2: ( ruleAuthUser )
-            // InternalAceGen.g:7099:3: ruleAuthUser
+            // InternalAceGen.g:6990:2: ( ruleAuthUser )
+            // InternalAceGen.g:6991:3: ruleAuthUser
             {
              before(grammarAccess.getHttpServerAccess().getAuthUserAuthUserParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22233,21 +21955,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__AuthUserRefAssignment_2_1"
-    // InternalAceGen.g:7108:1: rule__HttpServer__AuthUserRefAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7000:1: rule__HttpServer__AuthUserRefAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServer__AuthUserRefAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7112:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7113:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7004:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7005:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7113:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7114:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7005:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7006:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAccess().getAuthUserRefAuthUserCrossReference_2_1_0()); 
-            // InternalAceGen.g:7115:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7116:4: ruleQualifiedName
+            // InternalAceGen.g:7007:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7008:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAccess().getAuthUserRefAuthUserQualifiedNameParserRuleCall_2_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22282,17 +22004,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__AceOperationsAssignment_3_1"
-    // InternalAceGen.g:7127:1: rule__HttpServer__AceOperationsAssignment_3_1 : ( ruleHttpServerAce ) ;
+    // InternalAceGen.g:7019:1: rule__HttpServer__AceOperationsAssignment_3_1 : ( ruleHttpServerAce ) ;
     public final void rule__HttpServer__AceOperationsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7131:1: ( ( ruleHttpServerAce ) )
-            // InternalAceGen.g:7132:2: ( ruleHttpServerAce )
+            // InternalAceGen.g:7023:1: ( ( ruleHttpServerAce ) )
+            // InternalAceGen.g:7024:2: ( ruleHttpServerAce )
             {
-            // InternalAceGen.g:7132:2: ( ruleHttpServerAce )
-            // InternalAceGen.g:7133:3: ruleHttpServerAce
+            // InternalAceGen.g:7024:2: ( ruleHttpServerAce )
+            // InternalAceGen.g:7025:3: ruleHttpServerAce
             {
              before(grammarAccess.getHttpServerAccess().getAceOperationsHttpServerAceParserRuleCall_3_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22323,17 +22045,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__ViewsAssignment_4_1"
-    // InternalAceGen.g:7142:1: rule__HttpServer__ViewsAssignment_4_1 : ( ruleHttpServerView ) ;
+    // InternalAceGen.g:7034:1: rule__HttpServer__ViewsAssignment_4_1 : ( ruleHttpServerView ) ;
     public final void rule__HttpServer__ViewsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7146:1: ( ( ruleHttpServerView ) )
-            // InternalAceGen.g:7147:2: ( ruleHttpServerView )
+            // InternalAceGen.g:7038:1: ( ( ruleHttpServerView ) )
+            // InternalAceGen.g:7039:2: ( ruleHttpServerView )
             {
-            // InternalAceGen.g:7147:2: ( ruleHttpServerView )
-            // InternalAceGen.g:7148:3: ruleHttpServerView
+            // InternalAceGen.g:7039:2: ( ruleHttpServerView )
+            // InternalAceGen.g:7040:3: ruleHttpServerView
             {
              before(grammarAccess.getHttpServerAccess().getViewsHttpServerViewParserRuleCall_4_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22364,17 +22086,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__ModelsAssignment_5_1"
-    // InternalAceGen.g:7157:1: rule__HttpServer__ModelsAssignment_5_1 : ( ruleModel ) ;
+    // InternalAceGen.g:7049:1: rule__HttpServer__ModelsAssignment_5_1 : ( ruleModel ) ;
     public final void rule__HttpServer__ModelsAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7161:1: ( ( ruleModel ) )
-            // InternalAceGen.g:7162:2: ( ruleModel )
+            // InternalAceGen.g:7053:1: ( ( ruleModel ) )
+            // InternalAceGen.g:7054:2: ( ruleModel )
             {
-            // InternalAceGen.g:7162:2: ( ruleModel )
-            // InternalAceGen.g:7163:3: ruleModel
+            // InternalAceGen.g:7054:2: ( ruleModel )
+            // InternalAceGen.g:7055:3: ruleModel
             {
              before(grammarAccess.getHttpServerAccess().getModelsModelParserRuleCall_5_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22405,17 +22127,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServer__ScenariosAssignment_6_1"
-    // InternalAceGen.g:7172:1: rule__HttpServer__ScenariosAssignment_6_1 : ( ruleScenario ) ;
+    // InternalAceGen.g:7064:1: rule__HttpServer__ScenariosAssignment_6_1 : ( ruleScenario ) ;
     public final void rule__HttpServer__ScenariosAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7176:1: ( ( ruleScenario ) )
-            // InternalAceGen.g:7177:2: ( ruleScenario )
+            // InternalAceGen.g:7068:1: ( ( ruleScenario ) )
+            // InternalAceGen.g:7069:2: ( ruleScenario )
             {
-            // InternalAceGen.g:7177:2: ( ruleScenario )
-            // InternalAceGen.g:7178:3: ruleScenario
+            // InternalAceGen.g:7069:2: ( ruleScenario )
+            // InternalAceGen.g:7070:3: ruleScenario
             {
              before(grammarAccess.getHttpServerAccess().getScenariosScenarioParserRuleCall_6_1_0()); 
             pushFollow(FOLLOW_2);
@@ -22446,21 +22168,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__ProxyAssignment_0"
-    // InternalAceGen.g:7187:1: rule__HttpServerAceWrite__ProxyAssignment_0 : ( ( 'proxy' ) ) ;
+    // InternalAceGen.g:7079:1: rule__HttpServerAceWrite__ProxyAssignment_0 : ( ( 'proxy' ) ) ;
     public final void rule__HttpServerAceWrite__ProxyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7191:1: ( ( ( 'proxy' ) ) )
-            // InternalAceGen.g:7192:2: ( ( 'proxy' ) )
+            // InternalAceGen.g:7083:1: ( ( ( 'proxy' ) ) )
+            // InternalAceGen.g:7084:2: ( ( 'proxy' ) )
             {
-            // InternalAceGen.g:7192:2: ( ( 'proxy' ) )
-            // InternalAceGen.g:7193:3: ( 'proxy' )
+            // InternalAceGen.g:7084:2: ( ( 'proxy' ) )
+            // InternalAceGen.g:7085:3: ( 'proxy' )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getProxyProxyKeyword_0_0()); 
-            // InternalAceGen.g:7194:3: ( 'proxy' )
-            // InternalAceGen.g:7195:4: 'proxy'
+            // InternalAceGen.g:7086:3: ( 'proxy' )
+            // InternalAceGen.g:7087:4: 'proxy'
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getProxyProxyKeyword_0_0()); 
             match(input,67,FOLLOW_2); 
@@ -22491,17 +22213,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__NameAssignment_1"
-    // InternalAceGen.g:7206:1: rule__HttpServerAceWrite__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:7098:1: rule__HttpServerAceWrite__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__HttpServerAceWrite__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7210:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7211:2: ( RULE_ID )
+            // InternalAceGen.g:7102:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7103:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7211:2: ( RULE_ID )
-            // InternalAceGen.g:7212:3: RULE_ID
+            // InternalAceGen.g:7103:2: ( RULE_ID )
+            // InternalAceGen.g:7104:3: RULE_ID
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -22528,21 +22250,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__ModelAssignment_3"
-    // InternalAceGen.g:7221:1: rule__HttpServerAceWrite__ModelAssignment_3 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7113:1: rule__HttpServerAceWrite__ModelAssignment_3 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceWrite__ModelAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7225:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7226:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7117:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7118:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7226:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7227:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7118:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7119:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getModelModelCrossReference_3_0()); 
-            // InternalAceGen.g:7228:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7229:4: ruleQualifiedName
+            // InternalAceGen.g:7120:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7121:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getModelModelQualifiedNameParserRuleCall_3_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22577,17 +22299,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__TypeAssignment_5"
-    // InternalAceGen.g:7240:1: rule__HttpServerAceWrite__TypeAssignment_5 : ( ruleWriteFunctionType ) ;
+    // InternalAceGen.g:7132:1: rule__HttpServerAceWrite__TypeAssignment_5 : ( ruleWriteFunctionType ) ;
     public final void rule__HttpServerAceWrite__TypeAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7244:1: ( ( ruleWriteFunctionType ) )
-            // InternalAceGen.g:7245:2: ( ruleWriteFunctionType )
+            // InternalAceGen.g:7136:1: ( ( ruleWriteFunctionType ) )
+            // InternalAceGen.g:7137:2: ( ruleWriteFunctionType )
             {
-            // InternalAceGen.g:7245:2: ( ruleWriteFunctionType )
-            // InternalAceGen.g:7246:3: ruleWriteFunctionType
+            // InternalAceGen.g:7137:2: ( ruleWriteFunctionType )
+            // InternalAceGen.g:7138:3: ruleWriteFunctionType
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getTypeWriteFunctionTypeParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -22618,17 +22340,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__UrlAssignment_6"
-    // InternalAceGen.g:7255:1: rule__HttpServerAceWrite__UrlAssignment_6 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7147:1: rule__HttpServerAceWrite__UrlAssignment_6 : ( RULE_STRING ) ;
     public final void rule__HttpServerAceWrite__UrlAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7259:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7260:2: ( RULE_STRING )
+            // InternalAceGen.g:7151:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7152:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7260:2: ( RULE_STRING )
-            // InternalAceGen.g:7261:3: RULE_STRING
+            // InternalAceGen.g:7152:2: ( RULE_STRING )
+            // InternalAceGen.g:7153:3: RULE_STRING
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getUrlSTRINGTerminalRuleCall_6_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -22655,21 +22377,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__AuthorizeAssignment_7"
-    // InternalAceGen.g:7270:1: rule__HttpServerAceWrite__AuthorizeAssignment_7 : ( ( 'authorize' ) ) ;
+    // InternalAceGen.g:7162:1: rule__HttpServerAceWrite__AuthorizeAssignment_7 : ( ( 'authorize' ) ) ;
     public final void rule__HttpServerAceWrite__AuthorizeAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7274:1: ( ( ( 'authorize' ) ) )
-            // InternalAceGen.g:7275:2: ( ( 'authorize' ) )
+            // InternalAceGen.g:7166:1: ( ( ( 'authorize' ) ) )
+            // InternalAceGen.g:7167:2: ( ( 'authorize' ) )
             {
-            // InternalAceGen.g:7275:2: ( ( 'authorize' ) )
-            // InternalAceGen.g:7276:3: ( 'authorize' )
+            // InternalAceGen.g:7167:2: ( ( 'authorize' ) )
+            // InternalAceGen.g:7168:3: ( 'authorize' )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getAuthorizeAuthorizeKeyword_7_0()); 
-            // InternalAceGen.g:7277:3: ( 'authorize' )
-            // InternalAceGen.g:7278:4: 'authorize'
+            // InternalAceGen.g:7169:3: ( 'authorize' )
+            // InternalAceGen.g:7170:4: 'authorize'
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getAuthorizeAuthorizeKeyword_7_0()); 
             match(input,68,FOLLOW_2); 
@@ -22700,21 +22422,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__PathParamsAssignment_8_1"
-    // InternalAceGen.g:7289:1: rule__HttpServerAceWrite__PathParamsAssignment_8_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7181:1: rule__HttpServerAceWrite__PathParamsAssignment_8_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceWrite__PathParamsAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7293:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7294:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7185:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7186:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7294:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7295:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7186:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7187:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeCrossReference_8_1_0()); 
-            // InternalAceGen.g:7296:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7297:4: ruleQualifiedName
+            // InternalAceGen.g:7188:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7189:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeQualifiedNameParserRuleCall_8_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22749,21 +22471,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__QueryParamsAssignment_9_1"
-    // InternalAceGen.g:7308:1: rule__HttpServerAceWrite__QueryParamsAssignment_9_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7200:1: rule__HttpServerAceWrite__QueryParamsAssignment_9_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceWrite__QueryParamsAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7312:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7313:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7204:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7205:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7313:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7314:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7205:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7206:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeCrossReference_9_1_0()); 
-            // InternalAceGen.g:7315:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7316:4: ruleQualifiedName
+            // InternalAceGen.g:7207:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7208:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeQualifiedNameParserRuleCall_9_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22798,21 +22520,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__PayloadAssignment_10_1"
-    // InternalAceGen.g:7327:1: rule__HttpServerAceWrite__PayloadAssignment_10_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7219:1: rule__HttpServerAceWrite__PayloadAssignment_10_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceWrite__PayloadAssignment_10_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7331:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7332:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7223:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7224:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7332:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7333:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7224:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7225:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeCrossReference_10_1_0()); 
-            // InternalAceGen.g:7334:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7335:4: ruleQualifiedName
+            // InternalAceGen.g:7226:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7227:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeQualifiedNameParserRuleCall_10_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22847,21 +22569,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__ResponseAssignment_11_1"
-    // InternalAceGen.g:7346:1: rule__HttpServerAceWrite__ResponseAssignment_11_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7238:1: rule__HttpServerAceWrite__ResponseAssignment_11_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceWrite__ResponseAssignment_11_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7350:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7351:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7242:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7243:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7351:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7352:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7243:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7244:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeCrossReference_11_1_0()); 
-            // InternalAceGen.g:7353:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7354:4: ruleQualifiedName
+            // InternalAceGen.g:7245:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7246:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -22896,17 +22618,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceWrite__OutcomesAssignment_12"
-    // InternalAceGen.g:7365:1: rule__HttpServerAceWrite__OutcomesAssignment_12 : ( ruleHttpServerOutcome ) ;
+    // InternalAceGen.g:7257:1: rule__HttpServerAceWrite__OutcomesAssignment_12 : ( ruleHttpServerOutcome ) ;
     public final void rule__HttpServerAceWrite__OutcomesAssignment_12() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7369:1: ( ( ruleHttpServerOutcome ) )
-            // InternalAceGen.g:7370:2: ( ruleHttpServerOutcome )
+            // InternalAceGen.g:7261:1: ( ( ruleHttpServerOutcome ) )
+            // InternalAceGen.g:7262:2: ( ruleHttpServerOutcome )
             {
-            // InternalAceGen.g:7370:2: ( ruleHttpServerOutcome )
-            // InternalAceGen.g:7371:3: ruleHttpServerOutcome
+            // InternalAceGen.g:7262:2: ( ruleHttpServerOutcome )
+            // InternalAceGen.g:7263:3: ruleHttpServerOutcome
             {
              before(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_12_0()); 
             pushFollow(FOLLOW_2);
@@ -22937,17 +22659,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerOutcome__NameAssignment_1"
-    // InternalAceGen.g:7380:1: rule__HttpServerOutcome__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:7272:1: rule__HttpServerOutcome__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__HttpServerOutcome__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7384:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7385:2: ( RULE_ID )
+            // InternalAceGen.g:7276:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7277:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7385:2: ( RULE_ID )
-            // InternalAceGen.g:7386:3: RULE_ID
+            // InternalAceGen.g:7277:2: ( RULE_ID )
+            // InternalAceGen.g:7278:3: RULE_ID
             {
              before(grammarAccess.getHttpServerOutcomeAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -22974,21 +22696,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerOutcome__ListenersAssignment_2_1"
-    // InternalAceGen.g:7395:1: rule__HttpServerOutcome__ListenersAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7287:1: rule__HttpServerOutcome__ListenersAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerOutcome__ListenersAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7399:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7400:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7291:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7292:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7400:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7401:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7292:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7293:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerOutcomeAccess().getListenersHttpServerViewFunctionCrossReference_2_1_0()); 
-            // InternalAceGen.g:7402:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7403:4: ruleQualifiedName
+            // InternalAceGen.g:7294:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7295:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerOutcomeAccess().getListenersHttpServerViewFunctionQualifiedNameParserRuleCall_2_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23023,21 +22745,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__ProxyAssignment_0"
-    // InternalAceGen.g:7414:1: rule__HttpServerAceRead__ProxyAssignment_0 : ( ( 'proxy' ) ) ;
+    // InternalAceGen.g:7306:1: rule__HttpServerAceRead__ProxyAssignment_0 : ( ( 'proxy' ) ) ;
     public final void rule__HttpServerAceRead__ProxyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7418:1: ( ( ( 'proxy' ) ) )
-            // InternalAceGen.g:7419:2: ( ( 'proxy' ) )
+            // InternalAceGen.g:7310:1: ( ( ( 'proxy' ) ) )
+            // InternalAceGen.g:7311:2: ( ( 'proxy' ) )
             {
-            // InternalAceGen.g:7419:2: ( ( 'proxy' ) )
-            // InternalAceGen.g:7420:3: ( 'proxy' )
+            // InternalAceGen.g:7311:2: ( ( 'proxy' ) )
+            // InternalAceGen.g:7312:3: ( 'proxy' )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getProxyProxyKeyword_0_0()); 
-            // InternalAceGen.g:7421:3: ( 'proxy' )
-            // InternalAceGen.g:7422:4: 'proxy'
+            // InternalAceGen.g:7313:3: ( 'proxy' )
+            // InternalAceGen.g:7314:4: 'proxy'
             {
              before(grammarAccess.getHttpServerAceReadAccess().getProxyProxyKeyword_0_0()); 
             match(input,67,FOLLOW_2); 
@@ -23068,17 +22790,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__NameAssignment_1"
-    // InternalAceGen.g:7433:1: rule__HttpServerAceRead__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:7325:1: rule__HttpServerAceRead__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__HttpServerAceRead__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7437:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7438:2: ( RULE_ID )
+            // InternalAceGen.g:7329:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7330:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7438:2: ( RULE_ID )
-            // InternalAceGen.g:7439:3: RULE_ID
+            // InternalAceGen.g:7330:2: ( RULE_ID )
+            // InternalAceGen.g:7331:3: RULE_ID
             {
              before(grammarAccess.getHttpServerAceReadAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23105,21 +22827,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__ModelAssignment_3"
-    // InternalAceGen.g:7448:1: rule__HttpServerAceRead__ModelAssignment_3 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7340:1: rule__HttpServerAceRead__ModelAssignment_3 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceRead__ModelAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7452:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7453:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7344:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7345:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7453:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7454:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7345:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7346:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getModelModelCrossReference_3_0()); 
-            // InternalAceGen.g:7455:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7456:4: ruleQualifiedName
+            // InternalAceGen.g:7347:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7348:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceReadAccess().getModelModelQualifiedNameParserRuleCall_3_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23154,17 +22876,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__TypeAssignment_5"
-    // InternalAceGen.g:7467:1: rule__HttpServerAceRead__TypeAssignment_5 : ( ruleReadFunctionType ) ;
+    // InternalAceGen.g:7359:1: rule__HttpServerAceRead__TypeAssignment_5 : ( ruleReadFunctionType ) ;
     public final void rule__HttpServerAceRead__TypeAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7471:1: ( ( ruleReadFunctionType ) )
-            // InternalAceGen.g:7472:2: ( ruleReadFunctionType )
+            // InternalAceGen.g:7363:1: ( ( ruleReadFunctionType ) )
+            // InternalAceGen.g:7364:2: ( ruleReadFunctionType )
             {
-            // InternalAceGen.g:7472:2: ( ruleReadFunctionType )
-            // InternalAceGen.g:7473:3: ruleReadFunctionType
+            // InternalAceGen.g:7364:2: ( ruleReadFunctionType )
+            // InternalAceGen.g:7365:3: ruleReadFunctionType
             {
              before(grammarAccess.getHttpServerAceReadAccess().getTypeReadFunctionTypeParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -23195,17 +22917,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__UrlAssignment_6"
-    // InternalAceGen.g:7482:1: rule__HttpServerAceRead__UrlAssignment_6 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7374:1: rule__HttpServerAceRead__UrlAssignment_6 : ( RULE_STRING ) ;
     public final void rule__HttpServerAceRead__UrlAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7486:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7487:2: ( RULE_STRING )
+            // InternalAceGen.g:7378:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7379:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7487:2: ( RULE_STRING )
-            // InternalAceGen.g:7488:3: RULE_STRING
+            // InternalAceGen.g:7379:2: ( RULE_STRING )
+            // InternalAceGen.g:7380:3: RULE_STRING
             {
              before(grammarAccess.getHttpServerAceReadAccess().getUrlSTRINGTerminalRuleCall_6_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -23232,21 +22954,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__AuthorizeAssignment_7"
-    // InternalAceGen.g:7497:1: rule__HttpServerAceRead__AuthorizeAssignment_7 : ( ( 'authorize' ) ) ;
+    // InternalAceGen.g:7389:1: rule__HttpServerAceRead__AuthorizeAssignment_7 : ( ( 'authorize' ) ) ;
     public final void rule__HttpServerAceRead__AuthorizeAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7501:1: ( ( ( 'authorize' ) ) )
-            // InternalAceGen.g:7502:2: ( ( 'authorize' ) )
+            // InternalAceGen.g:7393:1: ( ( ( 'authorize' ) ) )
+            // InternalAceGen.g:7394:2: ( ( 'authorize' ) )
             {
-            // InternalAceGen.g:7502:2: ( ( 'authorize' ) )
-            // InternalAceGen.g:7503:3: ( 'authorize' )
+            // InternalAceGen.g:7394:2: ( ( 'authorize' ) )
+            // InternalAceGen.g:7395:3: ( 'authorize' )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getAuthorizeAuthorizeKeyword_7_0()); 
-            // InternalAceGen.g:7504:3: ( 'authorize' )
-            // InternalAceGen.g:7505:4: 'authorize'
+            // InternalAceGen.g:7396:3: ( 'authorize' )
+            // InternalAceGen.g:7397:4: 'authorize'
             {
              before(grammarAccess.getHttpServerAceReadAccess().getAuthorizeAuthorizeKeyword_7_0()); 
             match(input,68,FOLLOW_2); 
@@ -23277,21 +22999,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__PathParamsAssignment_8_1"
-    // InternalAceGen.g:7516:1: rule__HttpServerAceRead__PathParamsAssignment_8_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7408:1: rule__HttpServerAceRead__PathParamsAssignment_8_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceRead__PathParamsAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7520:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7521:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7412:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7413:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7521:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7522:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7413:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7414:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getPathParamsAttributeCrossReference_8_1_0()); 
-            // InternalAceGen.g:7523:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7524:4: ruleQualifiedName
+            // InternalAceGen.g:7415:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7416:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceReadAccess().getPathParamsAttributeQualifiedNameParserRuleCall_8_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23326,21 +23048,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__QueryParamsAssignment_9_1"
-    // InternalAceGen.g:7535:1: rule__HttpServerAceRead__QueryParamsAssignment_9_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7427:1: rule__HttpServerAceRead__QueryParamsAssignment_9_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceRead__QueryParamsAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7539:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7540:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7431:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7432:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7540:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7541:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7432:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7433:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getQueryParamsAttributeCrossReference_9_1_0()); 
-            // InternalAceGen.g:7542:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7543:4: ruleQualifiedName
+            // InternalAceGen.g:7434:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7435:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceReadAccess().getQueryParamsAttributeQualifiedNameParserRuleCall_9_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23375,21 +23097,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__PayloadAssignment_10_1"
-    // InternalAceGen.g:7554:1: rule__HttpServerAceRead__PayloadAssignment_10_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7446:1: rule__HttpServerAceRead__PayloadAssignment_10_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceRead__PayloadAssignment_10_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7558:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7559:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7450:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7451:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7559:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7560:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7451:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7452:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getPayloadAttributeCrossReference_10_1_0()); 
-            // InternalAceGen.g:7561:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7562:4: ruleQualifiedName
+            // InternalAceGen.g:7453:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7454:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceReadAccess().getPayloadAttributeQualifiedNameParserRuleCall_10_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23424,21 +23146,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerAceRead__ResponseAssignment_11_1"
-    // InternalAceGen.g:7573:1: rule__HttpServerAceRead__ResponseAssignment_11_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7465:1: rule__HttpServerAceRead__ResponseAssignment_11_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerAceRead__ResponseAssignment_11_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7577:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7578:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7469:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7470:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7578:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7579:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7470:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7471:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerAceReadAccess().getResponseAttributeCrossReference_11_1_0()); 
-            // InternalAceGen.g:7580:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7581:4: ruleQualifiedName
+            // InternalAceGen.g:7472:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7473:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerAceReadAccess().getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23473,17 +23195,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerView__NameAssignment_0"
-    // InternalAceGen.g:7592:1: rule__HttpServerView__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:7484:1: rule__HttpServerView__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__HttpServerView__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7596:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7597:2: ( RULE_ID )
+            // InternalAceGen.g:7488:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7489:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7597:2: ( RULE_ID )
-            // InternalAceGen.g:7598:3: RULE_ID
+            // InternalAceGen.g:7489:2: ( RULE_ID )
+            // InternalAceGen.g:7490:3: RULE_ID
             {
              before(grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23510,17 +23232,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerView__RenderFunctionsAssignment_1_1"
-    // InternalAceGen.g:7607:1: rule__HttpServerView__RenderFunctionsAssignment_1_1 : ( ruleHttpServerViewFunction ) ;
+    // InternalAceGen.g:7499:1: rule__HttpServerView__RenderFunctionsAssignment_1_1 : ( ruleHttpServerViewFunction ) ;
     public final void rule__HttpServerView__RenderFunctionsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7611:1: ( ( ruleHttpServerViewFunction ) )
-            // InternalAceGen.g:7612:2: ( ruleHttpServerViewFunction )
+            // InternalAceGen.g:7503:1: ( ( ruleHttpServerViewFunction ) )
+            // InternalAceGen.g:7504:2: ( ruleHttpServerViewFunction )
             {
-            // InternalAceGen.g:7612:2: ( ruleHttpServerViewFunction )
-            // InternalAceGen.g:7613:3: ruleHttpServerViewFunction
+            // InternalAceGen.g:7504:2: ( ruleHttpServerViewFunction )
+            // InternalAceGen.g:7505:3: ruleHttpServerViewFunction
             {
              before(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -23551,17 +23273,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerViewFunction__NameAssignment_0"
-    // InternalAceGen.g:7622:1: rule__HttpServerViewFunction__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:7514:1: rule__HttpServerViewFunction__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__HttpServerViewFunction__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7626:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7627:2: ( RULE_ID )
+            // InternalAceGen.g:7518:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7519:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7627:2: ( RULE_ID )
-            // InternalAceGen.g:7628:3: RULE_ID
+            // InternalAceGen.g:7519:2: ( RULE_ID )
+            // InternalAceGen.g:7520:3: RULE_ID
             {
              before(grammarAccess.getHttpServerViewFunctionAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23588,21 +23310,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerViewFunction__ModelAssignment_2"
-    // InternalAceGen.g:7637:1: rule__HttpServerViewFunction__ModelAssignment_2 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7529:1: rule__HttpServerViewFunction__ModelAssignment_2 : ( ( ruleQualifiedName ) ) ;
     public final void rule__HttpServerViewFunction__ModelAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7641:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7642:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7533:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7534:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7642:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7643:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7534:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7535:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getHttpServerViewFunctionAccess().getModelModelCrossReference_2_0()); 
-            // InternalAceGen.g:7644:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7645:4: ruleQualifiedName
+            // InternalAceGen.g:7536:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7537:4: ruleQualifiedName
             {
              before(grammarAccess.getHttpServerViewFunctionAccess().getModelModelQualifiedNameParserRuleCall_2_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23637,17 +23359,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AuthUser__NameAssignment_0"
-    // InternalAceGen.g:7656:1: rule__AuthUser__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:7548:1: rule__AuthUser__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__AuthUser__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7660:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7661:2: ( RULE_ID )
+            // InternalAceGen.g:7552:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7553:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7661:2: ( RULE_ID )
-            // InternalAceGen.g:7662:3: RULE_ID
+            // InternalAceGen.g:7553:2: ( RULE_ID )
+            // InternalAceGen.g:7554:3: RULE_ID
             {
              before(grammarAccess.getAuthUserAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23674,17 +23396,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AuthUser__AttributesAssignment_1_1"
-    // InternalAceGen.g:7671:1: rule__AuthUser__AttributesAssignment_1_1 : ( ruleAttribute ) ;
+    // InternalAceGen.g:7563:1: rule__AuthUser__AttributesAssignment_1_1 : ( ruleAttribute ) ;
     public final void rule__AuthUser__AttributesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7675:1: ( ( ruleAttribute ) )
-            // InternalAceGen.g:7676:2: ( ruleAttribute )
+            // InternalAceGen.g:7567:1: ( ( ruleAttribute ) )
+            // InternalAceGen.g:7568:2: ( ruleAttribute )
             {
-            // InternalAceGen.g:7676:2: ( ruleAttribute )
-            // InternalAceGen.g:7677:3: ruleAttribute
+            // InternalAceGen.g:7568:2: ( ruleAttribute )
+            // InternalAceGen.g:7569:3: ruleAttribute
             {
              before(grammarAccess.getAuthUserAccess().getAttributesAttributeParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -23715,21 +23437,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Model__PersistentAssignment_0"
-    // InternalAceGen.g:7686:1: rule__Model__PersistentAssignment_0 : ( ( 'persistent' ) ) ;
+    // InternalAceGen.g:7578:1: rule__Model__PersistentAssignment_0 : ( ( 'persistent' ) ) ;
     public final void rule__Model__PersistentAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7690:1: ( ( ( 'persistent' ) ) )
-            // InternalAceGen.g:7691:2: ( ( 'persistent' ) )
+            // InternalAceGen.g:7582:1: ( ( ( 'persistent' ) ) )
+            // InternalAceGen.g:7583:2: ( ( 'persistent' ) )
             {
-            // InternalAceGen.g:7691:2: ( ( 'persistent' ) )
-            // InternalAceGen.g:7692:3: ( 'persistent' )
+            // InternalAceGen.g:7583:2: ( ( 'persistent' ) )
+            // InternalAceGen.g:7584:3: ( 'persistent' )
             {
              before(grammarAccess.getModelAccess().getPersistentPersistentKeyword_0_0()); 
-            // InternalAceGen.g:7693:3: ( 'persistent' )
-            // InternalAceGen.g:7694:4: 'persistent'
+            // InternalAceGen.g:7585:3: ( 'persistent' )
+            // InternalAceGen.g:7586:4: 'persistent'
             {
              before(grammarAccess.getModelAccess().getPersistentPersistentKeyword_0_0()); 
             match(input,69,FOLLOW_2); 
@@ -23760,17 +23482,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Model__NameAssignment_1"
-    // InternalAceGen.g:7705:1: rule__Model__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalAceGen.g:7597:1: rule__Model__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Model__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7709:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7710:2: ( RULE_ID )
+            // InternalAceGen.g:7601:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7602:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7710:2: ( RULE_ID )
-            // InternalAceGen.g:7711:3: RULE_ID
+            // InternalAceGen.g:7602:2: ( RULE_ID )
+            // InternalAceGen.g:7603:3: RULE_ID
             {
              before(grammarAccess.getModelAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23797,21 +23519,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Model__SuperModelsAssignment_2_1"
-    // InternalAceGen.g:7720:1: rule__Model__SuperModelsAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7612:1: rule__Model__SuperModelsAssignment_2_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Model__SuperModelsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7724:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7725:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7616:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7617:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7725:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7726:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7617:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7618:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getModelAccess().getSuperModelsModelCrossReference_2_1_0()); 
-            // InternalAceGen.g:7727:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7728:4: ruleQualifiedName
+            // InternalAceGen.g:7619:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7620:4: ruleQualifiedName
             {
              before(grammarAccess.getModelAccess().getSuperModelsModelQualifiedNameParserRuleCall_2_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23846,21 +23568,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Model__SuperModelsAssignment_2_2_1"
-    // InternalAceGen.g:7739:1: rule__Model__SuperModelsAssignment_2_2_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7631:1: rule__Model__SuperModelsAssignment_2_2_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Model__SuperModelsAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7743:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7744:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7635:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7636:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7744:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7745:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7636:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7637:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getModelAccess().getSuperModelsModelCrossReference_2_2_1_0()); 
-            // InternalAceGen.g:7746:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7747:4: ruleQualifiedName
+            // InternalAceGen.g:7638:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7639:4: ruleQualifiedName
             {
              before(grammarAccess.getModelAccess().getSuperModelsModelQualifiedNameParserRuleCall_2_2_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -23895,17 +23617,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Model__AttributesAssignment_3_1"
-    // InternalAceGen.g:7758:1: rule__Model__AttributesAssignment_3_1 : ( ruleAttribute ) ;
+    // InternalAceGen.g:7650:1: rule__Model__AttributesAssignment_3_1 : ( ruleAttribute ) ;
     public final void rule__Model__AttributesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7762:1: ( ( ruleAttribute ) )
-            // InternalAceGen.g:7763:2: ( ruleAttribute )
+            // InternalAceGen.g:7654:1: ( ( ruleAttribute ) )
+            // InternalAceGen.g:7655:2: ( ruleAttribute )
             {
-            // InternalAceGen.g:7763:2: ( ruleAttribute )
-            // InternalAceGen.g:7764:3: ruleAttribute
+            // InternalAceGen.g:7655:2: ( ruleAttribute )
+            // InternalAceGen.g:7656:3: ruleAttribute
             {
              before(grammarAccess.getModelAccess().getAttributesAttributeParserRuleCall_3_1_0()); 
             pushFollow(FOLLOW_2);
@@ -23936,17 +23658,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__NameAssignment_0"
-    // InternalAceGen.g:7773:1: rule__Scenario__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalAceGen.g:7665:1: rule__Scenario__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__Scenario__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7777:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:7778:2: ( RULE_ID )
+            // InternalAceGen.g:7669:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:7670:2: ( RULE_ID )
             {
-            // InternalAceGen.g:7778:2: ( RULE_ID )
-            // InternalAceGen.g:7779:3: RULE_ID
+            // InternalAceGen.g:7670:2: ( RULE_ID )
+            // InternalAceGen.g:7671:3: RULE_ID
             {
              before(grammarAccess.getScenarioAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -23973,17 +23695,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__EventsAssignment_1_1"
-    // InternalAceGen.g:7788:1: rule__Scenario__EventsAssignment_1_1 : ( ruleScenarioEvent ) ;
+    // InternalAceGen.g:7680:1: rule__Scenario__EventsAssignment_1_1 : ( ruleScenarioEvent ) ;
     public final void rule__Scenario__EventsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7792:1: ( ( ruleScenarioEvent ) )
-            // InternalAceGen.g:7793:2: ( ruleScenarioEvent )
+            // InternalAceGen.g:7684:1: ( ( ruleScenarioEvent ) )
+            // InternalAceGen.g:7685:2: ( ruleScenarioEvent )
             {
-            // InternalAceGen.g:7793:2: ( ruleScenarioEvent )
-            // InternalAceGen.g:7794:3: ruleScenarioEvent
+            // InternalAceGen.g:7685:2: ( ruleScenarioEvent )
+            // InternalAceGen.g:7686:3: ruleScenarioEvent
             {
              before(grammarAccess.getScenarioAccess().getEventsScenarioEventParserRuleCall_1_1_0()); 
             pushFollow(FOLLOW_2);
@@ -24014,21 +23736,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__ActionAssignment_3"
-    // InternalAceGen.g:7803:1: rule__Scenario__ActionAssignment_3 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7695:1: rule__Scenario__ActionAssignment_3 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Scenario__ActionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7807:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7808:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7699:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7700:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7808:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7809:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7700:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7701:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getScenarioAccess().getActionHttpServerAceCrossReference_3_0()); 
-            // InternalAceGen.g:7810:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7811:4: ruleQualifiedName
+            // InternalAceGen.g:7702:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7703:4: ruleQualifiedName
             {
              before(grammarAccess.getScenarioAccess().getActionHttpServerAceQualifiedNameParserRuleCall_3_0_1()); 
             pushFollow(FOLLOW_2);
@@ -24063,17 +23785,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__DataDefinitionAssignment_4"
-    // InternalAceGen.g:7822:1: rule__Scenario__DataDefinitionAssignment_4 : ( ruleDataDefinition ) ;
+    // InternalAceGen.g:7714:1: rule__Scenario__DataDefinitionAssignment_4 : ( ruleDataDefinition ) ;
     public final void rule__Scenario__DataDefinitionAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7826:1: ( ( ruleDataDefinition ) )
-            // InternalAceGen.g:7827:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7718:1: ( ( ruleDataDefinition ) )
+            // InternalAceGen.g:7719:2: ( ruleDataDefinition )
             {
-            // InternalAceGen.g:7827:2: ( ruleDataDefinition )
-            // InternalAceGen.g:7828:3: ruleDataDefinition
+            // InternalAceGen.g:7719:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7720:3: ruleDataDefinition
             {
              before(grammarAccess.getScenarioAccess().getDataDefinitionDataDefinitionParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -24104,17 +23826,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__AuthorizationAssignment_5"
-    // InternalAceGen.g:7837:1: rule__Scenario__AuthorizationAssignment_5 : ( ruleAuthorization ) ;
+    // InternalAceGen.g:7729:1: rule__Scenario__AuthorizationAssignment_5 : ( ruleAuthorization ) ;
     public final void rule__Scenario__AuthorizationAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7841:1: ( ( ruleAuthorization ) )
-            // InternalAceGen.g:7842:2: ( ruleAuthorization )
+            // InternalAceGen.g:7733:1: ( ( ruleAuthorization ) )
+            // InternalAceGen.g:7734:2: ( ruleAuthorization )
             {
-            // InternalAceGen.g:7842:2: ( ruleAuthorization )
-            // InternalAceGen.g:7843:3: ruleAuthorization
+            // InternalAceGen.g:7734:2: ( ruleAuthorization )
+            // InternalAceGen.g:7735:3: ruleAuthorization
             {
              before(grammarAccess.getScenarioAccess().getAuthorizationAuthorizationParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -24145,17 +23867,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__StatusCodeAssignment_7"
-    // InternalAceGen.g:7852:1: rule__Scenario__StatusCodeAssignment_7 : ( RULE_INT ) ;
+    // InternalAceGen.g:7744:1: rule__Scenario__StatusCodeAssignment_7 : ( RULE_INT ) ;
     public final void rule__Scenario__StatusCodeAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7856:1: ( ( RULE_INT ) )
-            // InternalAceGen.g:7857:2: ( RULE_INT )
+            // InternalAceGen.g:7748:1: ( ( RULE_INT ) )
+            // InternalAceGen.g:7749:2: ( RULE_INT )
             {
-            // InternalAceGen.g:7857:2: ( RULE_INT )
-            // InternalAceGen.g:7858:3: RULE_INT
+            // InternalAceGen.g:7749:2: ( RULE_INT )
+            // InternalAceGen.g:7750:3: RULE_INT
             {
              before(grammarAccess.getScenarioAccess().getStatusCodeINTTerminalRuleCall_7_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -24182,17 +23904,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__ResponseAssignment_8_1"
-    // InternalAceGen.g:7867:1: rule__Scenario__ResponseAssignment_8_1 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7759:1: rule__Scenario__ResponseAssignment_8_1 : ( ruleAttributeDefinitionList ) ;
     public final void rule__Scenario__ResponseAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7871:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:7872:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7763:1: ( ( ruleAttributeDefinitionList ) )
+            // InternalAceGen.g:7764:2: ( ruleAttributeDefinitionList )
             {
-            // InternalAceGen.g:7872:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:7873:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7764:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7765:3: ruleAttributeDefinitionList
             {
              before(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0()); 
             pushFollow(FOLLOW_2);
@@ -24223,17 +23945,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__VerificationsAssignment_9"
-    // InternalAceGen.g:7882:1: rule__Scenario__VerificationsAssignment_9 : ( ruleVerification ) ;
+    // InternalAceGen.g:7774:1: rule__Scenario__VerificationsAssignment_9 : ( ruleVerification ) ;
     public final void rule__Scenario__VerificationsAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7886:1: ( ( ruleVerification ) )
-            // InternalAceGen.g:7887:2: ( ruleVerification )
+            // InternalAceGen.g:7778:1: ( ( ruleVerification ) )
+            // InternalAceGen.g:7779:2: ( ruleVerification )
             {
-            // InternalAceGen.g:7887:2: ( ruleVerification )
-            // InternalAceGen.g:7888:3: ruleVerification
+            // InternalAceGen.g:7779:2: ( ruleVerification )
+            // InternalAceGen.g:7780:3: ruleVerification
             {
              before(grammarAccess.getScenarioAccess().getVerificationsVerificationParserRuleCall_9_0()); 
             pushFollow(FOLLOW_2);
@@ -24264,17 +23986,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataDefinition__UuidAssignment_1_1"
-    // InternalAceGen.g:7897:1: rule__DataDefinition__UuidAssignment_1_1 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7789:1: rule__DataDefinition__UuidAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__DataDefinition__UuidAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7901:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7902:2: ( RULE_STRING )
+            // InternalAceGen.g:7793:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7794:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7902:2: ( RULE_STRING )
-            // InternalAceGen.g:7903:3: RULE_STRING
+            // InternalAceGen.g:7794:2: ( RULE_STRING )
+            // InternalAceGen.g:7795:3: RULE_STRING
             {
              before(grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -24301,17 +24023,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataDefinition__SystemtimeAssignment_2_1"
-    // InternalAceGen.g:7912:1: rule__DataDefinition__SystemtimeAssignment_2_1 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7804:1: rule__DataDefinition__SystemtimeAssignment_2_1 : ( RULE_STRING ) ;
     public final void rule__DataDefinition__SystemtimeAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7916:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7917:2: ( RULE_STRING )
+            // InternalAceGen.g:7808:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7809:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7917:2: ( RULE_STRING )
-            // InternalAceGen.g:7918:3: RULE_STRING
+            // InternalAceGen.g:7809:2: ( RULE_STRING )
+            // InternalAceGen.g:7810:3: RULE_STRING
             {
              before(grammarAccess.getDataDefinitionAccess().getSystemtimeSTRINGTerminalRuleCall_2_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -24338,17 +24060,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataDefinition__DataAssignment_3"
-    // InternalAceGen.g:7927:1: rule__DataDefinition__DataAssignment_3 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7819:1: rule__DataDefinition__DataAssignment_3 : ( ruleAttributeDefinitionList ) ;
     public final void rule__DataDefinition__DataAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7931:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:7932:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7823:1: ( ( ruleAttributeDefinitionList ) )
+            // InternalAceGen.g:7824:2: ( ruleAttributeDefinitionList )
             {
-            // InternalAceGen.g:7932:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:7933:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7824:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7825:3: ruleAttributeDefinitionList
             {
              before(grammarAccess.getDataDefinitionAccess().getDataAttributeDefinitionListParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -24379,17 +24101,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Authorization__UsernameAssignment_1"
-    // InternalAceGen.g:7942:1: rule__Authorization__UsernameAssignment_1 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7834:1: rule__Authorization__UsernameAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Authorization__UsernameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7946:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7947:2: ( RULE_STRING )
+            // InternalAceGen.g:7838:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7839:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7947:2: ( RULE_STRING )
-            // InternalAceGen.g:7948:3: RULE_STRING
+            // InternalAceGen.g:7839:2: ( RULE_STRING )
+            // InternalAceGen.g:7840:3: RULE_STRING
             {
              before(grammarAccess.getAuthorizationAccess().getUsernameSTRINGTerminalRuleCall_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -24416,17 +24138,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Authorization__PasswordAssignment_3"
-    // InternalAceGen.g:7957:1: rule__Authorization__PasswordAssignment_3 : ( RULE_STRING ) ;
+    // InternalAceGen.g:7849:1: rule__Authorization__PasswordAssignment_3 : ( RULE_STRING ) ;
     public final void rule__Authorization__PasswordAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7961:1: ( ( RULE_STRING ) )
-            // InternalAceGen.g:7962:2: ( RULE_STRING )
+            // InternalAceGen.g:7853:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:7854:2: ( RULE_STRING )
             {
-            // InternalAceGen.g:7962:2: ( RULE_STRING )
-            // InternalAceGen.g:7963:3: RULE_STRING
+            // InternalAceGen.g:7854:2: ( RULE_STRING )
+            // InternalAceGen.g:7855:3: RULE_STRING
             {
              before(grammarAccess.getAuthorizationAccess().getPasswordSTRINGTerminalRuleCall_3_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -24452,34 +24174,34 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Authorization__PasswordAssignment_3"
 
 
-    // $ANTLR start "rule__ScenarioEvent__EventAssignment_0"
-    // InternalAceGen.g:7972:1: rule__ScenarioEvent__EventAssignment_0 : ( ( ruleQualifiedName ) ) ;
-    public final void rule__ScenarioEvent__EventAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__ScenarioEvent__OutcomeAssignment_0"
+    // InternalAceGen.g:7864:1: rule__ScenarioEvent__OutcomeAssignment_0 : ( ( ruleQualifiedName ) ) ;
+    public final void rule__ScenarioEvent__OutcomeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7976:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:7977:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7868:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7869:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:7977:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:7978:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7869:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7870:3: ( ruleQualifiedName )
             {
-             before(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteCrossReference_0_0()); 
-            // InternalAceGen.g:7979:3: ( ruleQualifiedName )
-            // InternalAceGen.g:7980:4: ruleQualifiedName
+             before(grammarAccess.getScenarioEventAccess().getOutcomeHttpServerOutcomeCrossReference_0_0()); 
+            // InternalAceGen.g:7871:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7872:4: ruleQualifiedName
             {
-             before(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1()); 
+             before(grammarAccess.getScenarioEventAccess().getOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1()); 
             pushFollow(FOLLOW_2);
             ruleQualifiedName();
 
             state._fsp--;
 
-             after(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteQualifiedNameParserRuleCall_0_0_1()); 
+             after(grammarAccess.getScenarioEventAccess().getOutcomeHttpServerOutcomeQualifiedNameParserRuleCall_0_0_1()); 
 
             }
 
-             after(grammarAccess.getScenarioEventAccess().getEventHttpServerAceWriteCrossReference_0_0()); 
+             after(grammarAccess.getScenarioEventAccess().getOutcomeHttpServerOutcomeCrossReference_0_0()); 
 
             }
 
@@ -24498,21 +24220,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ScenarioEvent__EventAssignment_0"
+    // $ANTLR end "rule__ScenarioEvent__OutcomeAssignment_0"
 
 
     // $ANTLR start "rule__ScenarioEvent__DataDefinitionAssignment_1"
-    // InternalAceGen.g:7991:1: rule__ScenarioEvent__DataDefinitionAssignment_1 : ( ruleDataDefinition ) ;
+    // InternalAceGen.g:7883:1: rule__ScenarioEvent__DataDefinitionAssignment_1 : ( ruleDataDefinition ) ;
     public final void rule__ScenarioEvent__DataDefinitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7995:1: ( ( ruleDataDefinition ) )
-            // InternalAceGen.g:7996:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7887:1: ( ( ruleDataDefinition ) )
+            // InternalAceGen.g:7888:2: ( ruleDataDefinition )
             {
-            // InternalAceGen.g:7996:2: ( ruleDataDefinition )
-            // InternalAceGen.g:7997:3: ruleDataDefinition
+            // InternalAceGen.g:7888:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7889:3: ruleDataDefinition
             {
              before(grammarAccess.getScenarioEventAccess().getDataDefinitionDataDefinitionParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -24543,21 +24265,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Verification__ActionAssignment_0"
-    // InternalAceGen.g:8006:1: rule__Verification__ActionAssignment_0 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7898:1: rule__Verification__ActionAssignment_0 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Verification__ActionAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8010:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:8011:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7902:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7903:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:8011:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:8012:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7903:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7904:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getVerificationAccess().getActionHttpServerAceReadCrossReference_0_0()); 
-            // InternalAceGen.g:8013:3: ( ruleQualifiedName )
-            // InternalAceGen.g:8014:4: ruleQualifiedName
+            // InternalAceGen.g:7905:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7906:4: ruleQualifiedName
             {
              before(grammarAccess.getVerificationAccess().getActionHttpServerAceReadQualifiedNameParserRuleCall_0_0_1()); 
             pushFollow(FOLLOW_2);
@@ -24592,17 +24314,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Verification__DataDefinitionAssignment_1"
-    // InternalAceGen.g:8025:1: rule__Verification__DataDefinitionAssignment_1 : ( ruleDataDefinition ) ;
+    // InternalAceGen.g:7917:1: rule__Verification__DataDefinitionAssignment_1 : ( ruleDataDefinition ) ;
     public final void rule__Verification__DataDefinitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8029:1: ( ( ruleDataDefinition ) )
-            // InternalAceGen.g:8030:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7921:1: ( ( ruleDataDefinition ) )
+            // InternalAceGen.g:7922:2: ( ruleDataDefinition )
             {
-            // InternalAceGen.g:8030:2: ( ruleDataDefinition )
-            // InternalAceGen.g:8031:3: ruleDataDefinition
+            // InternalAceGen.g:7922:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7923:3: ruleDataDefinition
             {
              before(grammarAccess.getVerificationAccess().getDataDefinitionDataDefinitionParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -24633,17 +24355,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Verification__AuthorizationAssignment_2"
-    // InternalAceGen.g:8040:1: rule__Verification__AuthorizationAssignment_2 : ( ruleAuthorization ) ;
+    // InternalAceGen.g:7932:1: rule__Verification__AuthorizationAssignment_2 : ( ruleAuthorization ) ;
     public final void rule__Verification__AuthorizationAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8044:1: ( ( ruleAuthorization ) )
-            // InternalAceGen.g:8045:2: ( ruleAuthorization )
+            // InternalAceGen.g:7936:1: ( ( ruleAuthorization ) )
+            // InternalAceGen.g:7937:2: ( ruleAuthorization )
             {
-            // InternalAceGen.g:8045:2: ( ruleAuthorization )
-            // InternalAceGen.g:8046:3: ruleAuthorization
+            // InternalAceGen.g:7937:2: ( ruleAuthorization )
+            // InternalAceGen.g:7938:3: ruleAuthorization
             {
              before(grammarAccess.getVerificationAccess().getAuthorizationAuthorizationParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -24674,17 +24396,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Verification__ResponseAssignment_3_1"
-    // InternalAceGen.g:8055:1: rule__Verification__ResponseAssignment_3_1 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7947:1: rule__Verification__ResponseAssignment_3_1 : ( ruleAttributeDefinitionList ) ;
     public final void rule__Verification__ResponseAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8059:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:8060:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7951:1: ( ( ruleAttributeDefinitionList ) )
+            // InternalAceGen.g:7952:2: ( ruleAttributeDefinitionList )
             {
-            // InternalAceGen.g:8060:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:8061:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7952:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7953:3: ruleAttributeDefinitionList
             {
              before(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0()); 
             pushFollow(FOLLOW_2);
@@ -24715,17 +24437,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AttributeDefinitionList__AttributeDefinitionsAssignment_2"
-    // InternalAceGen.g:8070:1: rule__AttributeDefinitionList__AttributeDefinitionsAssignment_2 : ( ruleAttributeDefinition ) ;
+    // InternalAceGen.g:7962:1: rule__AttributeDefinitionList__AttributeDefinitionsAssignment_2 : ( ruleAttributeDefinition ) ;
     public final void rule__AttributeDefinitionList__AttributeDefinitionsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8074:1: ( ( ruleAttributeDefinition ) )
-            // InternalAceGen.g:8075:2: ( ruleAttributeDefinition )
+            // InternalAceGen.g:7966:1: ( ( ruleAttributeDefinition ) )
+            // InternalAceGen.g:7967:2: ( ruleAttributeDefinition )
             {
-            // InternalAceGen.g:8075:2: ( ruleAttributeDefinition )
-            // InternalAceGen.g:8076:3: ruleAttributeDefinition
+            // InternalAceGen.g:7967:2: ( ruleAttributeDefinition )
+            // InternalAceGen.g:7968:3: ruleAttributeDefinition
             {
              before(grammarAccess.getAttributeDefinitionListAccess().getAttributeDefinitionsAttributeDefinitionParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -24756,17 +24478,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ListAttributeDefinitionList__AttributeDefinitionListAssignment_2"
-    // InternalAceGen.g:8085:1: rule__ListAttributeDefinitionList__AttributeDefinitionListAssignment_2 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7977:1: rule__ListAttributeDefinitionList__AttributeDefinitionListAssignment_2 : ( ruleAttributeDefinitionList ) ;
     public final void rule__ListAttributeDefinitionList__AttributeDefinitionListAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8089:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:8090:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7981:1: ( ( ruleAttributeDefinitionList ) )
+            // InternalAceGen.g:7982:2: ( ruleAttributeDefinitionList )
             {
-            // InternalAceGen.g:8090:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:8091:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7982:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7983:3: ruleAttributeDefinitionList
             {
              before(grammarAccess.getListAttributeDefinitionListAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -24797,21 +24519,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AttributeDefinition__AttributeAssignment_0"
-    // InternalAceGen.g:8100:1: rule__AttributeDefinition__AttributeAssignment_0 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:7992:1: rule__AttributeDefinition__AttributeAssignment_0 : ( ( ruleQualifiedName ) ) ;
     public final void rule__AttributeDefinition__AttributeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8104:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:8105:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7996:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:7997:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:8105:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:8106:3: ( ruleQualifiedName )
+            // InternalAceGen.g:7997:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:7998:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getAttributeDefinitionAccess().getAttributeAttributeCrossReference_0_0()); 
-            // InternalAceGen.g:8107:3: ( ruleQualifiedName )
-            // InternalAceGen.g:8108:4: ruleQualifiedName
+            // InternalAceGen.g:7999:3: ( ruleQualifiedName )
+            // InternalAceGen.g:8000:4: ruleQualifiedName
             {
              before(grammarAccess.getAttributeDefinitionAccess().getAttributeAttributeQualifiedNameParserRuleCall_0_0_1()); 
             pushFollow(FOLLOW_2);
@@ -24846,17 +24568,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AttributeDefinition__ValueAssignment_2"
-    // InternalAceGen.g:8119:1: rule__AttributeDefinition__ValueAssignment_2 : ( ruleValue ) ;
+    // InternalAceGen.g:8011:1: rule__AttributeDefinition__ValueAssignment_2 : ( ruleValue ) ;
     public final void rule__AttributeDefinition__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8123:1: ( ( ruleValue ) )
-            // InternalAceGen.g:8124:2: ( ruleValue )
+            // InternalAceGen.g:8015:1: ( ( ruleValue ) )
+            // InternalAceGen.g:8016:2: ( ruleValue )
             {
-            // InternalAceGen.g:8124:2: ( ruleValue )
-            // InternalAceGen.g:8125:3: ruleValue
+            // InternalAceGen.g:8016:2: ( ruleValue )
+            // InternalAceGen.g:8017:3: ruleValue
             {
              before(grammarAccess.getAttributeDefinitionAccess().getValueValueParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -24887,21 +24609,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__UniqueAssignment_0"
-    // InternalAceGen.g:8134:1: rule__Attribute__UniqueAssignment_0 : ( ( 'Unique' ) ) ;
+    // InternalAceGen.g:8026:1: rule__Attribute__UniqueAssignment_0 : ( ( 'Unique' ) ) ;
     public final void rule__Attribute__UniqueAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8138:1: ( ( ( 'Unique' ) ) )
-            // InternalAceGen.g:8139:2: ( ( 'Unique' ) )
+            // InternalAceGen.g:8030:1: ( ( ( 'Unique' ) ) )
+            // InternalAceGen.g:8031:2: ( ( 'Unique' ) )
             {
-            // InternalAceGen.g:8139:2: ( ( 'Unique' ) )
-            // InternalAceGen.g:8140:3: ( 'Unique' )
+            // InternalAceGen.g:8031:2: ( ( 'Unique' ) )
+            // InternalAceGen.g:8032:3: ( 'Unique' )
             {
              before(grammarAccess.getAttributeAccess().getUniqueUniqueKeyword_0_0()); 
-            // InternalAceGen.g:8141:3: ( 'Unique' )
-            // InternalAceGen.g:8142:4: 'Unique'
+            // InternalAceGen.g:8033:3: ( 'Unique' )
+            // InternalAceGen.g:8034:4: 'Unique'
             {
              before(grammarAccess.getAttributeAccess().getUniqueUniqueKeyword_0_0()); 
             match(input,70,FOLLOW_2); 
@@ -24932,21 +24654,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__PrimaryKeyAssignment_1"
-    // InternalAceGen.g:8153:1: rule__Attribute__PrimaryKeyAssignment_1 : ( ( 'PrimaryKey' ) ) ;
+    // InternalAceGen.g:8045:1: rule__Attribute__PrimaryKeyAssignment_1 : ( ( 'PrimaryKey' ) ) ;
     public final void rule__Attribute__PrimaryKeyAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8157:1: ( ( ( 'PrimaryKey' ) ) )
-            // InternalAceGen.g:8158:2: ( ( 'PrimaryKey' ) )
+            // InternalAceGen.g:8049:1: ( ( ( 'PrimaryKey' ) ) )
+            // InternalAceGen.g:8050:2: ( ( 'PrimaryKey' ) )
             {
-            // InternalAceGen.g:8158:2: ( ( 'PrimaryKey' ) )
-            // InternalAceGen.g:8159:3: ( 'PrimaryKey' )
+            // InternalAceGen.g:8050:2: ( ( 'PrimaryKey' ) )
+            // InternalAceGen.g:8051:3: ( 'PrimaryKey' )
             {
              before(grammarAccess.getAttributeAccess().getPrimaryKeyPrimaryKeyKeyword_1_0()); 
-            // InternalAceGen.g:8160:3: ( 'PrimaryKey' )
-            // InternalAceGen.g:8161:4: 'PrimaryKey'
+            // InternalAceGen.g:8052:3: ( 'PrimaryKey' )
+            // InternalAceGen.g:8053:4: 'PrimaryKey'
             {
              before(grammarAccess.getAttributeAccess().getPrimaryKeyPrimaryKeyKeyword_1_0()); 
             match(input,71,FOLLOW_2); 
@@ -24977,17 +24699,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__ConstraintAssignment_2"
-    // InternalAceGen.g:8172:1: rule__Attribute__ConstraintAssignment_2 : ( ruleConstraint ) ;
+    // InternalAceGen.g:8064:1: rule__Attribute__ConstraintAssignment_2 : ( ruleConstraint ) ;
     public final void rule__Attribute__ConstraintAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8176:1: ( ( ruleConstraint ) )
-            // InternalAceGen.g:8177:2: ( ruleConstraint )
+            // InternalAceGen.g:8068:1: ( ( ruleConstraint ) )
+            // InternalAceGen.g:8069:2: ( ruleConstraint )
             {
-            // InternalAceGen.g:8177:2: ( ruleConstraint )
-            // InternalAceGen.g:8178:3: ruleConstraint
+            // InternalAceGen.g:8069:2: ( ruleConstraint )
+            // InternalAceGen.g:8070:3: ruleConstraint
             {
              before(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -25018,21 +24740,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__ListAssignment_3"
-    // InternalAceGen.g:8187:1: rule__Attribute__ListAssignment_3 : ( ( 'List' ) ) ;
+    // InternalAceGen.g:8079:1: rule__Attribute__ListAssignment_3 : ( ( 'List' ) ) ;
     public final void rule__Attribute__ListAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8191:1: ( ( ( 'List' ) ) )
-            // InternalAceGen.g:8192:2: ( ( 'List' ) )
+            // InternalAceGen.g:8083:1: ( ( ( 'List' ) ) )
+            // InternalAceGen.g:8084:2: ( ( 'List' ) )
             {
-            // InternalAceGen.g:8192:2: ( ( 'List' ) )
-            // InternalAceGen.g:8193:3: ( 'List' )
+            // InternalAceGen.g:8084:2: ( ( 'List' ) )
+            // InternalAceGen.g:8085:3: ( 'List' )
             {
              before(grammarAccess.getAttributeAccess().getListListKeyword_3_0()); 
-            // InternalAceGen.g:8194:3: ( 'List' )
-            // InternalAceGen.g:8195:4: 'List'
+            // InternalAceGen.g:8086:3: ( 'List' )
+            // InternalAceGen.g:8087:4: 'List'
             {
              before(grammarAccess.getAttributeAccess().getListListKeyword_3_0()); 
             match(input,72,FOLLOW_2); 
@@ -25063,17 +24785,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__TypeAssignment_4_0"
-    // InternalAceGen.g:8206:1: rule__Attribute__TypeAssignment_4_0 : ( ruleType ) ;
+    // InternalAceGen.g:8098:1: rule__Attribute__TypeAssignment_4_0 : ( ruleType ) ;
     public final void rule__Attribute__TypeAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8210:1: ( ( ruleType ) )
-            // InternalAceGen.g:8211:2: ( ruleType )
+            // InternalAceGen.g:8102:1: ( ( ruleType ) )
+            // InternalAceGen.g:8103:2: ( ruleType )
             {
-            // InternalAceGen.g:8211:2: ( ruleType )
-            // InternalAceGen.g:8212:3: ruleType
+            // InternalAceGen.g:8103:2: ( ruleType )
+            // InternalAceGen.g:8104:3: ruleType
             {
              before(grammarAccess.getAttributeAccess().getTypeTypeParserRuleCall_4_0_0()); 
             pushFollow(FOLLOW_2);
@@ -25104,21 +24826,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__ModelAssignment_4_1"
-    // InternalAceGen.g:8221:1: rule__Attribute__ModelAssignment_4_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:8113:1: rule__Attribute__ModelAssignment_4_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Attribute__ModelAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8225:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:8226:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:8117:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:8118:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:8226:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:8227:3: ( ruleQualifiedName )
+            // InternalAceGen.g:8118:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:8119:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getAttributeAccess().getModelModelCrossReference_4_1_0()); 
-            // InternalAceGen.g:8228:3: ( ruleQualifiedName )
-            // InternalAceGen.g:8229:4: ruleQualifiedName
+            // InternalAceGen.g:8120:3: ( ruleQualifiedName )
+            // InternalAceGen.g:8121:4: ruleQualifiedName
             {
              before(grammarAccess.getAttributeAccess().getModelModelQualifiedNameParserRuleCall_4_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -25153,17 +24875,17 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__NameAssignment_5"
-    // InternalAceGen.g:8240:1: rule__Attribute__NameAssignment_5 : ( RULE_ID ) ;
+    // InternalAceGen.g:8132:1: rule__Attribute__NameAssignment_5 : ( RULE_ID ) ;
     public final void rule__Attribute__NameAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8244:1: ( ( RULE_ID ) )
-            // InternalAceGen.g:8245:2: ( RULE_ID )
+            // InternalAceGen.g:8136:1: ( ( RULE_ID ) )
+            // InternalAceGen.g:8137:2: ( RULE_ID )
             {
-            // InternalAceGen.g:8245:2: ( RULE_ID )
-            // InternalAceGen.g:8246:3: RULE_ID
+            // InternalAceGen.g:8137:2: ( RULE_ID )
+            // InternalAceGen.g:8138:3: RULE_ID
             {
              before(grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_5_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25190,21 +24912,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__ForeignKeyAssignment_6_1"
-    // InternalAceGen.g:8255:1: rule__Attribute__ForeignKeyAssignment_6_1 : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:8147:1: rule__Attribute__ForeignKeyAssignment_6_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__Attribute__ForeignKeyAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:8259:1: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:8260:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:8151:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:8152:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:8260:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:8261:3: ( ruleQualifiedName )
+            // InternalAceGen.g:8152:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:8153:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getAttributeAccess().getForeignKeyAttributeCrossReference_6_1_0()); 
-            // InternalAceGen.g:8262:3: ( ruleQualifiedName )
-            // InternalAceGen.g:8263:4: ruleQualifiedName
+            // InternalAceGen.g:8154:3: ( ruleQualifiedName )
+            // InternalAceGen.g:8155:4: ruleQualifiedName
             {
              before(grammarAccess.getAttributeAccess().getForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1()); 
             pushFollow(FOLLOW_2);
@@ -25236,6 +24958,162 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "rule__Attribute__ForeignKeyAssignment_6_1"
+
+
+    // $ANTLR start "rule__Value__StringValueAssignment_0"
+    // InternalAceGen.g:8166:1: rule__Value__StringValueAssignment_0 : ( RULE_STRING ) ;
+    public final void rule__Value__StringValueAssignment_0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalAceGen.g:8170:1: ( ( RULE_STRING ) )
+            // InternalAceGen.g:8171:2: ( RULE_STRING )
+            {
+            // InternalAceGen.g:8171:2: ( RULE_STRING )
+            // InternalAceGen.g:8172:3: RULE_STRING
+            {
+             before(grammarAccess.getValueAccess().getStringValueSTRINGTerminalRuleCall_0_0()); 
+            match(input,RULE_STRING,FOLLOW_2); 
+             after(grammarAccess.getValueAccess().getStringValueSTRINGTerminalRuleCall_0_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Value__StringValueAssignment_0"
+
+
+    // $ANTLR start "rule__Value__IntValueAssignment_1"
+    // InternalAceGen.g:8181:1: rule__Value__IntValueAssignment_1 : ( RULE_INT ) ;
+    public final void rule__Value__IntValueAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalAceGen.g:8185:1: ( ( RULE_INT ) )
+            // InternalAceGen.g:8186:2: ( RULE_INT )
+            {
+            // InternalAceGen.g:8186:2: ( RULE_INT )
+            // InternalAceGen.g:8187:3: RULE_INT
+            {
+             before(grammarAccess.getValueAccess().getIntValueINTTerminalRuleCall_1_0()); 
+            match(input,RULE_INT,FOLLOW_2); 
+             after(grammarAccess.getValueAccess().getIntValueINTTerminalRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Value__IntValueAssignment_1"
+
+
+    // $ANTLR start "rule__Value__AttributeDefinitionListAssignment_2"
+    // InternalAceGen.g:8196:1: rule__Value__AttributeDefinitionListAssignment_2 : ( ruleAttributeDefinitionList ) ;
+    public final void rule__Value__AttributeDefinitionListAssignment_2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalAceGen.g:8200:1: ( ( ruleAttributeDefinitionList ) )
+            // InternalAceGen.g:8201:2: ( ruleAttributeDefinitionList )
+            {
+            // InternalAceGen.g:8201:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:8202:3: ruleAttributeDefinitionList
+            {
+             before(grammarAccess.getValueAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0()); 
+            pushFollow(FOLLOW_2);
+            ruleAttributeDefinitionList();
+
+            state._fsp--;
+
+             after(grammarAccess.getValueAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Value__AttributeDefinitionListAssignment_2"
+
+
+    // $ANTLR start "rule__Value__ListAttributeDefinitionListAssignment_3"
+    // InternalAceGen.g:8211:1: rule__Value__ListAttributeDefinitionListAssignment_3 : ( ruleListAttributeDefinitionList ) ;
+    public final void rule__Value__ListAttributeDefinitionListAssignment_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalAceGen.g:8215:1: ( ( ruleListAttributeDefinitionList ) )
+            // InternalAceGen.g:8216:2: ( ruleListAttributeDefinitionList )
+            {
+            // InternalAceGen.g:8216:2: ( ruleListAttributeDefinitionList )
+            // InternalAceGen.g:8217:3: ruleListAttributeDefinitionList
+            {
+             before(grammarAccess.getValueAccess().getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0()); 
+            pushFollow(FOLLOW_2);
+            ruleListAttributeDefinitionList();
+
+            state._fsp--;
+
+             after(grammarAccess.getValueAccess().getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Value__ListAttributeDefinitionListAssignment_3"
 
     // Delegated rules
 

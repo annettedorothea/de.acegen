@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.ScenarioEvent#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ScenarioEvent#getOutcome <em>Outcome</em>}</li>
  *   <li>{@link de.acegen.aceGen.ScenarioEvent#getDataDefinition <em>Data Definition</em>}</li>
  * </ul>
  *
@@ -25,30 +25,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface ScenarioEvent extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Event</b></em>' reference.
+   * Returns the value of the '<em><b>Outcome</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Event</em>' reference isn't clear,
+   * If the meaning of the '<em>Outcome</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' reference.
-   * @see #setEvent(HttpServerAceWrite)
-   * @see de.acegen.aceGen.AceGenPackage#getScenarioEvent_Event()
+   * @return the value of the '<em>Outcome</em>' reference.
+   * @see #setOutcome(HttpServerOutcome)
+   * @see de.acegen.aceGen.AceGenPackage#getScenarioEvent_Outcome()
    * @model
    * @generated
    */
-  HttpServerAceWrite getEvent();
+  HttpServerOutcome getOutcome();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.ScenarioEvent#getEvent <em>Event</em>}' reference.
+   * Sets the value of the '{@link de.acegen.aceGen.ScenarioEvent#getOutcome <em>Outcome</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event</em>' reference.
-   * @see #getEvent()
+   * @param value the new value of the '<em>Outcome</em>' reference.
+   * @see #getOutcome()
    * @generated
    */
-  void setEvent(HttpServerAceWrite value);
+  void setOutcome(HttpServerOutcome value);
 
   /**
    * Returns the value of the '<em><b>Data Definition</b></em>' containment reference.
