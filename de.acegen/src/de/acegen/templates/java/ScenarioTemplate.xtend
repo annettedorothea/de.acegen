@@ -34,6 +34,8 @@ class ScenarioTemplate {
 		import java.util.ArrayList;
 		import java.util.List;
 		
+		import javax.ws.rs.core.Response;
+		
 		import org.joda.time.DateTime;
 		import org.joda.time.format.DateTimeFormat;
 		
@@ -42,6 +44,10 @@ class ScenarioTemplate {
 		import com.anfelisa.ace.BaseScenario;
 		import com.anfelisa.ace.ITimelineItem;
 		import com.anfelisa.todo.TestUtils;
+		import com.anfelisa.todo.ActionCalls;
+		
+		import static org.hamcrest.MatcherAssert.assertThat;
+		import static org.hamcrest.Matchers.is;
 		
 		public class «name»Scenario extends BaseScenario {
 		
@@ -63,6 +69,8 @@ class ScenarioTemplate {
 			@Test
 			public void execute() throws Exception {
 				given();
+				
+				«generateActionCalls(it.action, it, java)»
 		
 			}
 			
@@ -71,6 +79,29 @@ class ScenarioTemplate {
 		
 		
 		«sdg»
+		
+	'''
+
+	def generateActionCalls(HttpServerAce aceOperation, Scenario it, HttpServer java) '''
+		«IF aceOperation.getType == "POST"»
+			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSEIF aceOperation.getType == "PUT"»
+			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSEIF aceOperation.getType == "DELETE"»
+			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSE»
+			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ENDIF»
+		
+		«IF statusCode !== 0»
+			assertThat(response.getStatus(), is(«statusCode»));
+		«ENDIF»
+		
+		«IF response !== null»
+			«aceOperation.responseDataNameWithPackage(java)» expected = new «aceOperation.responseDataNameWithPackage(java)»();
+			«aceOperation.responseDataNameWithPackage(java)» actual = response.readEntity(«aceOperation.responseDataNameWithPackage(java)».class);
+			assertThat(actual, is(expected));
+		«ENDIF»
 		
 	'''
 	
@@ -161,6 +192,11 @@ class ScenarioTemplate {
 				handle.close();
 			}
 			
+			@Override
+			protected String authorization(String username, String password) {
+				return "";
+			}
+		
 		}
 		
 	'''
@@ -211,6 +247,8 @@ class ScenarioTemplate {
 				client.target(String.format("http://localhost:%d/api/test/system-time", port))
 						.request().put(Entity.json(systemTime.toString()));
 			}
+			
+			protected abstract String authorization(String username, String password);
 		
 		}
 		

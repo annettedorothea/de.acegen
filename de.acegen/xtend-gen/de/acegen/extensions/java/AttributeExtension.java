@@ -17,8 +17,11 @@ package de.acegen.extensions.java;
 
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Value;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -391,21 +394,24 @@ public class AttributeExtension {
       }
     }
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("public ");
     String _javaType = this.javaType(it);
-    _builder.append(_javaType);
+    _builder.append(_javaType, "\t");
     _builder.append(" get");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
+    _builder.append(_firstUpper, "\t");
     _builder.append("() {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("return this.");
     String _name = it.getName();
-    _builder.append(_name, "\t");
+    _builder.append(_name, "\t\t");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("}");
+    _builder.newLine();
     return _builder.toString();
   }
   
@@ -438,6 +444,7 @@ public class AttributeExtension {
     _builder.append("return this;");
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
     return _builder.toString();
   }
   
@@ -464,6 +471,7 @@ public class AttributeExtension {
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.append("}");
+    _builder.newLine();
     return _builder.toString();
   }
   
@@ -538,6 +546,69 @@ public class AttributeExtension {
     return attributeList;
   }
   
+  public List<String> mergeAttributesForGetCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+    ArrayList<String> attributeList = new ArrayList<String>();
+    attributeList.add("String uuid");
+    ArrayList<String> valueList = new ArrayList<String>();
+    valueList.add(this.uuidForCall(dataDefinition));
+    EList<Attribute> _queryParams = it.getQueryParams();
+    for (final Attribute queryParam : _queryParams) {
+      {
+        final String typeWithParam = this.typeWithParam(queryParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(queryParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _pathParams = it.getPathParams();
+    for (final Attribute pathParam : _pathParams) {
+      {
+        final String typeWithParam = this.typeWithParam(pathParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(pathParam, dataDefinition));
+        }
+      }
+    }
+    valueList.add("DROPWIZARD.getLocalPort()");
+    return valueList;
+  }
+  
+  private String valueFor(final Attribute attribute, final DataDefinition dataDefinition) {
+    EList<AttributeDefinition> _attributeDefinitions = dataDefinition.getData().getAttributeDefinitions();
+    for (final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+      boolean _equals = attributeDefinition.getAttribute().equals(attribute);
+      if (_equals) {
+        final Value value = attributeDefinition.getValue();
+        String _stringValue = value.getStringValue();
+        boolean _tripleNotEquals = (_stringValue != null);
+        if (_tripleNotEquals) {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("\"");
+          String _stringValue_1 = value.getStringValue();
+          _builder.append(_stringValue_1);
+          _builder.append("\"");
+          return _builder.toString();
+        }
+        if (((value.getAttributeDefinitionList() != null) || (value.getListAttributeDefinitionList() != null))) {
+          return "null";
+        }
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\"");
+        int _intValue = value.getIntValue();
+        _builder_1.append(_intValue);
+        _builder_1.append("\"");
+        return _builder_1.toString();
+      }
+    }
+    return null;
+  }
+  
   public List<String> mergeAttributesForPut(final HttpServerAce it) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
@@ -576,6 +647,51 @@ public class AttributeExtension {
     }
     attributeList.add("int port");
     return attributeList;
+  }
+  
+  public List<String> mergeAttributesForPutCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+    ArrayList<String> attributeList = new ArrayList<String>();
+    attributeList.add("String uuid");
+    ArrayList<String> valueList = new ArrayList<String>();
+    valueList.add(this.uuidForCall(dataDefinition));
+    EList<Attribute> _queryParams = it.getQueryParams();
+    for (final Attribute queryParam : _queryParams) {
+      {
+        final String typeWithParam = this.typeWithParam(queryParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(queryParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _pathParams = it.getPathParams();
+    for (final Attribute pathParam : _pathParams) {
+      {
+        final String typeWithParam = this.typeWithParam(pathParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(pathParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _payload = it.getPayload();
+    for (final Attribute attr : _payload) {
+      {
+        final String typeWithParam = this.typeWithParam(attr);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(attr, dataDefinition));
+        }
+      }
+    }
+    valueList.add("DROPWIZARD.getLocalPort()");
+    return valueList;
   }
   
   public List<String> mergeAttributesForPost(final HttpServerAce it) {
@@ -618,6 +734,51 @@ public class AttributeExtension {
     return attributeList;
   }
   
+  public List<String> mergeAttributesForPostCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+    ArrayList<String> attributeList = new ArrayList<String>();
+    attributeList.add("String uuid");
+    ArrayList<String> valueList = new ArrayList<String>();
+    valueList.add(this.uuidForCall(dataDefinition));
+    EList<Attribute> _queryParams = it.getQueryParams();
+    for (final Attribute queryParam : _queryParams) {
+      {
+        final String typeWithParam = this.typeWithParam(queryParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(queryParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _pathParams = it.getPathParams();
+    for (final Attribute pathParam : _pathParams) {
+      {
+        final String typeWithParam = this.typeWithParam(pathParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(pathParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _payload = it.getPayload();
+    for (final Attribute attr : _payload) {
+      {
+        final String typeWithParam = this.typeWithParam(attr);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(attr, dataDefinition));
+        }
+      }
+    }
+    valueList.add("DROPWIZARD.getLocalPort()");
+    return valueList;
+  }
+  
   public List<String> mergeAttributesForDelete(final HttpServerAce it) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
@@ -645,6 +806,54 @@ public class AttributeExtension {
     }
     attributeList.add("int port");
     return attributeList;
+  }
+  
+  private String uuidForCall(final DataDefinition it) {
+    String _uuid = it.getUuid();
+    boolean _tripleNotEquals = (_uuid != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\"");
+      String _uuid_1 = it.getUuid();
+      _builder.append(_uuid_1);
+      _builder.append("\"");
+      return _builder.toString();
+    } else {
+      return "randomUUID()";
+    }
+  }
+  
+  public List<String> mergeAttributesForDeleteCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+    ArrayList<String> attributeList = new ArrayList<String>();
+    attributeList.add("String uuid");
+    ArrayList<String> valueList = new ArrayList<String>();
+    valueList.add(this.uuidForCall(dataDefinition));
+    EList<Attribute> _queryParams = it.getQueryParams();
+    for (final Attribute queryParam : _queryParams) {
+      {
+        final String typeWithParam = this.typeWithParam(queryParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(queryParam, dataDefinition));
+        }
+      }
+    }
+    EList<Attribute> _pathParams = it.getPathParams();
+    for (final Attribute pathParam : _pathParams) {
+      {
+        final String typeWithParam = this.typeWithParam(pathParam);
+        boolean _contains = attributeList.contains(typeWithParam);
+        boolean _not = (!_contains);
+        if (_not) {
+          attributeList.add(typeWithParam);
+          valueList.add(this.valueFor(pathParam, dataDefinition));
+        }
+      }
+    }
+    valueList.add("DROPWIZARD.getLocalPort()");
+    return valueList;
   }
   
   public List<String> mergeAttributes(final HttpServerAce it) {

@@ -16,6 +16,7 @@ import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.Arrays;
+import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -58,6 +59,9 @@ public class ScenarioTemplate {
     _builder.append("import java.util.List;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
     _builder.append("import org.joda.time.format.DateTimeFormat;");
@@ -71,6 +75,13 @@ public class ScenarioTemplate {
     _builder.append("import com.anfelisa.ace.ITimelineItem;");
     _builder.newLine();
     _builder.append("import com.anfelisa.todo.TestUtils;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.todo.ActionCalls;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import static org.hamcrest.MatcherAssert.assertThat;");
+    _builder.newLine();
+    _builder.append("import static org.hamcrest.Matchers.is;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
@@ -147,6 +158,12 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.append("given();");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t\t");
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it, java);
+    _builder.append(_generateActionCalls, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -162,6 +179,184 @@ public class ScenarioTemplate {
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateActionCalls(final HttpServerAce aceOperation, final Scenario it, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _type = aceOperation.getType();
+      boolean _equals = Objects.equal(_type, "POST");
+      if (_equals) {
+        _builder.append("Response response = ActionCalls.call");
+        String _firstUpper = StringExtensions.toFirstUpper(aceOperation.getName());
+        _builder.append(_firstUpper);
+        _builder.append("(");
+        {
+          List<String> _mergeAttributesForPostCall = this._attributeExtension.mergeAttributesForPostCall(aceOperation, it.getDataDefinition());
+          boolean _hasElements = false;
+          for(final String param : _mergeAttributesForPostCall) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            _builder.append(param);
+          }
+        }
+        {
+          boolean _isAuthorize = aceOperation.isAuthorize();
+          if (_isAuthorize) {
+            _builder.append(", authorization(");
+            String _username = it.getAuthorization().getUsername();
+            _builder.append(_username);
+            _builder.append(", ");
+            String _password = it.getAuthorization().getPassword();
+            _builder.append(_password);
+            _builder.append(")");
+          }
+        }
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      } else {
+        String _type_1 = aceOperation.getType();
+        boolean _equals_1 = Objects.equal(_type_1, "PUT");
+        if (_equals_1) {
+          _builder.append("Response response = ActionCalls.call");
+          String _firstUpper_1 = StringExtensions.toFirstUpper(aceOperation.getName());
+          _builder.append(_firstUpper_1);
+          _builder.append("(");
+          {
+            List<String> _mergeAttributesForPutCall = this._attributeExtension.mergeAttributesForPutCall(aceOperation, it.getDataDefinition());
+            boolean _hasElements_1 = false;
+            for(final String param_1 : _mergeAttributesForPutCall) {
+              if (!_hasElements_1) {
+                _hasElements_1 = true;
+              } else {
+                _builder.appendImmediate(", ", "");
+              }
+              _builder.append(param_1);
+            }
+          }
+          {
+            boolean _isAuthorize_1 = aceOperation.isAuthorize();
+            if (_isAuthorize_1) {
+              _builder.append(", authorization(");
+              String _username_1 = it.getAuthorization().getUsername();
+              _builder.append(_username_1);
+              _builder.append(", ");
+              String _password_1 = it.getAuthorization().getPassword();
+              _builder.append(_password_1);
+              _builder.append(")");
+            }
+          }
+          _builder.append(");");
+          _builder.newLineIfNotEmpty();
+        } else {
+          String _type_2 = aceOperation.getType();
+          boolean _equals_2 = Objects.equal(_type_2, "DELETE");
+          if (_equals_2) {
+            _builder.append("Response response = ActionCalls.call");
+            String _firstUpper_2 = StringExtensions.toFirstUpper(aceOperation.getName());
+            _builder.append(_firstUpper_2);
+            _builder.append("(");
+            {
+              List<String> _mergeAttributesForDeleteCall = this._attributeExtension.mergeAttributesForDeleteCall(aceOperation, it.getDataDefinition());
+              boolean _hasElements_2 = false;
+              for(final String param_2 : _mergeAttributesForDeleteCall) {
+                if (!_hasElements_2) {
+                  _hasElements_2 = true;
+                } else {
+                  _builder.appendImmediate(", ", "");
+                }
+                _builder.append(param_2);
+              }
+            }
+            {
+              boolean _isAuthorize_2 = aceOperation.isAuthorize();
+              if (_isAuthorize_2) {
+                _builder.append(", authorization(");
+                String _username_2 = it.getAuthorization().getUsername();
+                _builder.append(_username_2);
+                _builder.append(", ");
+                String _password_2 = it.getAuthorization().getPassword();
+                _builder.append(_password_2);
+                _builder.append(")");
+              }
+            }
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          } else {
+            _builder.append("Response response = ActionCalls.call");
+            String _firstUpper_3 = StringExtensions.toFirstUpper(aceOperation.getName());
+            _builder.append(_firstUpper_3);
+            _builder.append("(");
+            {
+              List<String> _mergeAttributesForGetCall = this._attributeExtension.mergeAttributesForGetCall(aceOperation, it.getDataDefinition());
+              boolean _hasElements_3 = false;
+              for(final String param_3 : _mergeAttributesForGetCall) {
+                if (!_hasElements_3) {
+                  _hasElements_3 = true;
+                } else {
+                  _builder.appendImmediate(", ", "");
+                }
+                _builder.append(param_3);
+              }
+            }
+            {
+              boolean _isAuthorize_3 = aceOperation.isAuthorize();
+              if (_isAuthorize_3) {
+                _builder.append(", authorization(");
+                String _username_3 = it.getAuthorization().getUsername();
+                _builder.append(_username_3);
+                _builder.append(", ");
+                String _password_3 = it.getAuthorization().getPassword();
+                _builder.append(_password_3);
+                _builder.append(")");
+              }
+            }
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.newLine();
+    {
+      int _statusCode = it.getStatusCode();
+      boolean _tripleNotEquals = (_statusCode != 0);
+      if (_tripleNotEquals) {
+        _builder.append("assertThat(response.getStatus(), is(");
+        int _statusCode_1 = it.getStatusCode();
+        _builder.append(_statusCode_1);
+        _builder.append("));");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    {
+      AttributeDefinitionList _response = it.getResponse();
+      boolean _tripleNotEquals_1 = (_response != null);
+      if (_tripleNotEquals_1) {
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(aceOperation, java);
+        _builder.append(_responseDataNameWithPackage);
+        _builder.append(" expected = new ");
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(aceOperation, java);
+        _builder.append(_responseDataNameWithPackage_1);
+        _builder.append("();");
+        _builder.newLineIfNotEmpty();
+        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(aceOperation, java);
+        _builder.append(_responseDataNameWithPackage_2);
+        _builder.append(" actual = response.readEntity(");
+        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(aceOperation, java);
+        _builder.append(_responseDataNameWithPackage_3);
+        _builder.append(".class);");
+        _builder.newLineIfNotEmpty();
+        _builder.append("assertThat(actual, is(expected));");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     return _builder;
   }
@@ -377,6 +572,19 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected String authorization(String username, String password) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return \"\";");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -485,6 +693,11 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract String authorization(String username, String password);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

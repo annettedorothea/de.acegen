@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
- *
+ * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -13,16 +13,17 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
- 
+
 
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.DataDefinition
+import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerAce
 
 class AttributeExtension {
 
@@ -122,21 +123,24 @@ class AttributeExtension {
 	def String assign(Attribute it) '''this.«name» = «name»;'''
 
 	def String getter(Attribute it, boolean jsonProperty) '''
-	«IF jsonProperty»@JsonProperty«ENDIF»
-	public «javaType» get«name.toFirstUpper»() {
-		return this.«name»;
-	}'''
+		«IF jsonProperty»@JsonProperty«ENDIF»
+			public «javaType» get«name.toFirstUpper»() {
+				return this.«name»;
+			}
+	'''
 
 	def String with(Attribute it, Model model) '''
-	public «model.dataInterfaceName» with«name.toFirstUpper»(«javaType» «name») {
-		this.«name» = «name»;
-		return this;
-	}'''
+		public «model.dataInterfaceName» with«name.toFirstUpper»(«javaType» «name») {
+			this.«name» = «name»;
+			return this;
+		}
+	'''
 
 	def String setter(Attribute it) '''
-	public void set«name.toFirstUpper»(«javaType» «name») {
-		this.«name» = «name»;
-	}'''
+		public void set«name.toFirstUpper»(«javaType» «name») {
+			this.«name» = «name»;
+		}
+	'''
 
 	def String setterCall(Attribute it, String param) '''set«name.toFirstUpper»(«param»)'''
 
@@ -163,7 +167,7 @@ class AttributeExtension {
 	def boolean isPrimitive(Attribute it) {
 		return !list && model === null;
 	}
-	
+
 	def List<String> mergeAttributesForGet(HttpServerAce it) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
@@ -181,6 +185,45 @@ class AttributeExtension {
 		}
 		attributeList.add("int port");
 		return attributeList;
+	}
+
+	def List<String> mergeAttributesForGetCall(HttpServerAce it, DataDefinition dataDefinition) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		var valueList = new ArrayList<String>();
+		valueList.add(uuidForCall(dataDefinition));
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(queryParam, dataDefinition));
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(pathParam, dataDefinition));
+			}
+		}
+		valueList.add("DROPWIZARD.getLocalPort()");
+		return valueList;
+	}
+
+	private def String valueFor(Attribute attribute, DataDefinition dataDefinition) {
+		for (attributeDefinition : dataDefinition.data.attributeDefinitions) {
+			if (attributeDefinition.attribute.equals(attribute)) {
+				val value = attributeDefinition.value;
+				if (value.stringValue !== null) {
+					return '''"«value.stringValue»"'''
+				}
+				if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
+					return "null"
+				}
+				return '''"«value.intValue»"'''
+			}
+		}
+		return null;
 	}
 
 	def List<String> mergeAttributesForPut(HttpServerAce it) {
@@ -208,6 +251,36 @@ class AttributeExtension {
 		return attributeList;
 	}
 
+	def List<String> mergeAttributesForPutCall(HttpServerAce it, DataDefinition dataDefinition) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		var valueList = new ArrayList<String>();
+		valueList.add(uuidForCall(dataDefinition));
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(queryParam, dataDefinition));
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(pathParam, dataDefinition));
+			}
+		}
+		for (attr : payload) {
+			val typeWithParam = attr.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(attr, dataDefinition));
+			}
+		}
+		valueList.add("DROPWIZARD.getLocalPort()");
+		return valueList;
+	}
+
 	def List<String> mergeAttributesForPost(HttpServerAce it) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
@@ -233,6 +306,36 @@ class AttributeExtension {
 		return attributeList;
 	}
 
+	def List<String> mergeAttributesForPostCall(HttpServerAce it, DataDefinition dataDefinition) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		var valueList = new ArrayList<String>();
+		valueList.add(uuidForCall(dataDefinition));
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(queryParam, dataDefinition));
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(pathParam, dataDefinition));
+			}
+		}
+		for (attr : payload) {
+			val typeWithParam = attr.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(attr, dataDefinition));
+			}
+		}
+		valueList.add("DROPWIZARD.getLocalPort()");
+		return valueList;
+	}
+
 	def List<String> mergeAttributesForDelete(HttpServerAce it) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
@@ -252,6 +355,37 @@ class AttributeExtension {
 		return attributeList;
 	}
 	
+	private def String uuidForCall(DataDefinition it) {
+		if (uuid !== null) {
+			return '''"«uuid»"'''
+		} else {
+			return "randomUUID()"
+		}
+	}
+
+	def List<String> mergeAttributesForDeleteCall(HttpServerAce it, DataDefinition dataDefinition) {
+		var attributeList = new ArrayList<String>();
+		attributeList.add("String uuid");
+		var valueList = new ArrayList<String>();
+		valueList.add(uuidForCall(dataDefinition));
+		for (queryParam : queryParams) {
+			val typeWithParam = queryParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(queryParam, dataDefinition));
+			}
+		}
+		for (pathParam : pathParams) {
+			val typeWithParam = pathParam.typeWithParam;
+			if (!attributeList.contains(typeWithParam)) {
+				attributeList.add(typeWithParam);
+				valueList.add(valueFor(pathParam, dataDefinition));
+			}
+		}
+		valueList.add("DROPWIZARD.getLocalPort()");
+		return valueList;
+	}
+
 	def List<String> mergeAttributes(HttpServerAce it) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("UUID.randomUUID().toString()");
@@ -296,8 +430,4 @@ class AttributeExtension {
 	}
 
 }
-	
-	
 /******* S.D.G. *******/
-	
-	
