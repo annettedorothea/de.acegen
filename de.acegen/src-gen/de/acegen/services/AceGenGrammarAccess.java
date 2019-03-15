@@ -1223,7 +1223,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
 		private final Keyword cResponseKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
 		private final Assignment cResponseAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cResponseAttributeDefinitionListParserRuleCall_8_1_0 = (RuleCall)cResponseAssignment_8_1.eContents().get(0);
+		private final RuleCall cResponseDataDefinitionParserRuleCall_8_1_0 = (RuleCall)cResponseAssignment_8_1.eContents().get(0);
 		private final Assignment cVerificationsAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cVerificationsVerificationParserRuleCall_9_0 = (RuleCall)cVerificationsAssignment_9.eContents().get(0);
 		
@@ -1231,13 +1231,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//	name=ID ('GIVEN' events+=ScenarioEvent*)?
 		//	'WHEN' action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition
 		//	authorization=Authorization?
-		//	'THEN' statusCode=INT ('response' response=AttributeDefinitionList)?
+		//	'THEN' statusCode=INT ('response' response=DataDefinition)?
 		//	verifications+=Verification*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//name=ID ('GIVEN' events+=ScenarioEvent*)? 'WHEN' action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition
-		//authorization=Authorization? 'THEN' statusCode=INT ('response' response=AttributeDefinitionList)?
-		//verifications+=Verification*
+		//authorization=Authorization? 'THEN' statusCode=INT ('response' response=DataDefinition)? verifications+=Verification*
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -1291,17 +1290,17 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getStatusCodeINTTerminalRuleCall_7_0() { return cStatusCodeINTTerminalRuleCall_7_0; }
 		
-		//('response' response=AttributeDefinitionList)?
+		//('response' response=DataDefinition)?
 		public Group getGroup_8() { return cGroup_8; }
 		
 		//'response'
 		public Keyword getResponseKeyword_8_0() { return cResponseKeyword_8_0; }
 		
-		//response=AttributeDefinitionList
+		//response=DataDefinition
 		public Assignment getResponseAssignment_8_1() { return cResponseAssignment_8_1; }
 		
-		//AttributeDefinitionList
-		public RuleCall getResponseAttributeDefinitionListParserRuleCall_8_1_0() { return cResponseAttributeDefinitionListParserRuleCall_8_1_0; }
+		//DataDefinition
+		public RuleCall getResponseDataDefinitionParserRuleCall_8_1_0() { return cResponseDataDefinitionParserRuleCall_8_1_0; }
 		
 		//verifications+=Verification*
 		public Assignment getVerificationsAssignment_9() { return cVerificationsAssignment_9; }
@@ -1444,15 +1443,15 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cResponseKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cResponseAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cResponseAttributeDefinitionListParserRuleCall_3_1_0 = (RuleCall)cResponseAssignment_3_1.eContents().get(0);
+		private final RuleCall cResponseDataDefinitionParserRuleCall_3_1_0 = (RuleCall)cResponseAssignment_3_1.eContents().get(0);
 		
 		//Verification:
 		//	action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition
-		//	authorization=Authorization? ('response' response=AttributeDefinitionList)?;
+		//	authorization=Authorization? ('response' response=DataDefinition)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? ('response'
-		//response=AttributeDefinitionList)?
+		//response=DataDefinition)?
 		public Group getGroup() { return cGroup; }
 		
 		//action=[HttpServerAceRead|QualifiedName]
@@ -1476,17 +1475,17 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//Authorization
 		public RuleCall getAuthorizationAuthorizationParserRuleCall_2_0() { return cAuthorizationAuthorizationParserRuleCall_2_0; }
 		
-		//('response' response=AttributeDefinitionList)?
+		//('response' response=DataDefinition)?
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'response'
 		public Keyword getResponseKeyword_3_0() { return cResponseKeyword_3_0; }
 		
-		//response=AttributeDefinitionList
+		//response=DataDefinition
 		public Assignment getResponseAssignment_3_1() { return cResponseAssignment_3_1; }
 		
-		//AttributeDefinitionList
-		public RuleCall getResponseAttributeDefinitionListParserRuleCall_3_1_0() { return cResponseAttributeDefinitionListParserRuleCall_3_1_0; }
+		//DataDefinition
+		public RuleCall getResponseDataDefinitionParserRuleCall_3_1_0() { return cResponseDataDefinitionParserRuleCall_3_1_0; }
 	}
 	public class AttributeDefinitionListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinitionList");
@@ -2151,7 +2150,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	//	name=ID ('GIVEN' events+=ScenarioEvent*)?
 	//	'WHEN' action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition
 	//	authorization=Authorization?
-	//	'THEN' statusCode=INT ('response' response=AttributeDefinitionList)?
+	//	'THEN' statusCode=INT ('response' response=DataDefinition)?
 	//	verifications+=Verification*;
 	public ScenarioElements getScenarioAccess() {
 		return pScenario;
@@ -2194,7 +2193,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Verification:
 	//	action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition
-	//	authorization=Authorization? ('response' response=AttributeDefinitionList)?;
+	//	authorization=Authorization? ('response' response=DataDefinition)?;
 	public VerificationElements getVerificationAccess() {
 		return pVerification;
 	}

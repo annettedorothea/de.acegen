@@ -1,16 +1,20 @@
 package de.acegen.templates.java
 
 import de.acegen.aceGen.AttributeDefinition
+import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
+import de.acegen.aceGen.ScenarioEvent
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.aceGen.Authorization
 
 class ScenarioTemplate {
 
@@ -48,30 +52,71 @@ class ScenarioTemplate {
 		
 		import static org.hamcrest.MatcherAssert.assertThat;
 		import static org.hamcrest.Matchers.is;
+		import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 		
+		@SuppressWarnings("unused")
 		public class «name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
 				List<ITimelineItem> timeline = new ArrayList<>();
 				
 				«FOR scenarioEvent : events»
-					timeline.add(TestUtils.create«(scenarioEvent.outcome.eContainer as HttpServerAceWrite).eventName(scenarioEvent.outcome)»TimelineItem(
-						new «(scenarioEvent.outcome.eContainer as HttpServerAceWrite).model.dataNameWithPackage»("«scenarioEvent.dataDefinition.uuid»")
-						«FOR attributeDefinition : scenarioEvent.dataDefinition.data.attributeDefinitions»
-							.with«attributeDefinition.attribute.name.toFirstUpper»(«value(attributeDefinition)»)
-						«ENDFOR»
-					));
+					«generateEventCreation(scenarioEvent, (scenarioEvent.outcome.eContainer as HttpServerAceWrite).model, events.indexOf(scenarioEvent))»
 					
 				«ENDFOR»
 				prepare(timeline, DROPWIZARD.getLocalPort());
 			}
 			
+			private Response when() throws Exception {
+				«IF dataDefinition.systemtime !== null»
+					setSystemTime(«dateFrom(dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
+				«ENDIF»
+				return «generateActionCalls(action, dataDefinition, authorization, java)»
+			}
+			
+			private void then(Response response) throws Exception {
+				«IF statusCode !== 0»
+					assertThat(response.getStatus(), is(«statusCode»));
+				«ENDIF»
+				
+				«IF response !== null»
+					«generateDataCreation(response, action.model, "expectedData")»
+					
+					«action.responseDataNameWithPackage(java)» expected = new «action.responseDataNameWithPackage(java)»(expectedData);
+
+					«action.responseDataNameWithPackage(java)» actual = response.readEntity(«action.responseDataNameWithPackage(java)».class);
+
+					assertThat(actual, sameBeanAs(expected));
+				«ENDIF»
+				
+				«FOR verification : verifications»
+					«IF verification.response !== null»
+						«IF verification.dataDefinition.systemtime !== null»
+							setSystemTime(«dateFrom(verification.dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
+						«ENDIF»
+
+						Response «verification.action.name.toFirstLower»«verifications.indexOf(verification)» = «generateActionCalls(verification.action, verification.dataDefinition, verification.authorization, java)»
+						
+						«generateDataCreation(verification.response, verification.action.model, '''expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»Data''')»
+						
+						«verification.action.responseDataNameWithPackage(java)» expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)» = new «verification.action.responseDataNameWithPackage(java)»(expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»Data);
+
+						«verification.action.responseDataNameWithPackage(java)» actual«verification.action.name.toFirstUpper»«verifications.indexOf(verification)» = «verification.action.name.toFirstLower»«verifications.indexOf(verification)».readEntity(«verification.action.responseDataNameWithPackage(java)».class);
+
+						assertThat(actual«verification.action.name.toFirstUpper»«verifications.indexOf(verification)», sameBeanAs(expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»));
+						
+						
+					«ENDIF»
+				«ENDFOR»
+			}
+			
 			@Test
-			public void execute() throws Exception {
+			public void «name.toFirstLower»() throws Exception {
 				given();
 				
-				«generateActionCalls(it.action, it, java)»
+				Response response = when();
 		
+				then(response);
 			}
 			
 			
@@ -81,58 +126,60 @@ class ScenarioTemplate {
 		«sdg»
 		
 	'''
-
-	def generateActionCalls(HttpServerAce aceOperation, Scenario it, HttpServer java) '''
-		«IF aceOperation.getType == "POST"»
-			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
-		«ELSEIF aceOperation.getType == "PUT"»
-			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
-		«ELSEIF aceOperation.getType == "DELETE"»
-			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
-		«ELSE»
-			Response response = ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
-		«ENDIF»
-		
-		«IF statusCode !== 0»
-			assertThat(response.getStatus(), is(«statusCode»));
-		«ENDIF»
-		
-		«IF response !== null»
-			«aceOperation.responseDataNameWithPackage(java)» expected = new «aceOperation.responseDataNameWithPackage(java)»();
-			«aceOperation.responseDataNameWithPackage(java)» actual = response.readEntity(«aceOperation.responseDataNameWithPackage(java)».class);
-			assertThat(actual, is(expected));
-		«ENDIF»
-		
+	
+	def generateEventCreation(ScenarioEvent it, Model model, int index) '''
+		«generateDataCreation(dataDefinition, model, '''«model.name.toFirstLower»«index»''')»
+		timeline.add(TestUtils.create«(outcome.eContainer as HttpServerAceWrite).eventName(outcome)»TimelineItem(«model.name.toFirstLower»«index»));
 	'''
 	
-	private def value(AttributeDefinition it) {
-		if (value.stringValue !== null) {
-			if (attribute.type == "DateTime") {
-				return '''DateTime.parse("«value.stringValue»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss"))'''
-			}
-			if (attribute.type == "Integer") {
-				return '''Integer.parseInt("«value.stringValue»")'''
-			}
-			if (attribute.type == "Float") {
-				return '''Float.parseFloat("«value.stringValue»")'''
-			}
-			if (attribute.type == "Boolean") {
-				return '''new Boolean("«value.stringValue»")'''
-			}
-			if (attribute.type == "Long") {
-				return '''Long.parseLong("«value.stringValue»")'''
-			}
-			return '''"«value.stringValue»"'''
-		}
-		if (value.attributeDefinitionList !== null) {
-			return null
-		}
-		if (value.listAttributeDefinitionList !== null) {
-			return null
-		}
-		return value.intValue
-	}
+	def generateDataCreation(DataDefinition it, Model model, String varName) '''
+		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»("«uuid»");
+		«IF systemtime !== null»
+			«varName».setSystemTime(DateTime.parse("«systemtime»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss")));
+		«ENDIF»
+		«FOR attributeDefinition : data.attributeDefinitions»
+			«IF attributeDefinition.value.attributeDefinitionList !== null»
+				«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+				«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
+			«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
+				«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+				«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
+			«ELSE»
+				«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+			«ENDIF»
+		«ENDFOR»
+	'''
 
+	def generateModelCreation(AttributeDefinition it, String varName) '''
+		«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
+		«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
+			«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+		«ENDFOR»
+	'''
+
+	def generateModelListCreation(AttributeDefinition it, String varName) '''
+		List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
+		«FOR attributeDefinitionList : value.listAttributeDefinitionList.attributeDefinitionList»
+			«attribute.model.interfaceWithPackage» «varName + value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)» = new «attribute.model.modelClassNameWithPackage»();
+			«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
+				«varName»«value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+			«ENDFOR»
+			«varName».add(«varName + value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)»);
+		«ENDFOR»
+	'''
+
+	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
+		«IF aceOperation.getType == "POST"»
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSEIF aceOperation.getType == "PUT"»
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSEIF aceOperation.getType == "DELETE"»
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ELSE»
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+		«ENDIF»
+	'''
+	
 	def generateBaseScenario() '''
 		«copyright»
 		

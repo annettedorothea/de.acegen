@@ -113,12 +113,12 @@ public interface Verification extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Response</em>' containment reference.
-   * @see #setResponse(AttributeDefinitionList)
+   * @see #setResponse(DataDefinition)
    * @see de.acegen.aceGen.AceGenPackage#getVerification_Response()
    * @model containment="true"
    * @generated
    */
-  AttributeDefinitionList getResponse();
+  DataDefinition getResponse();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.Verification#getResponse <em>Response</em>}' containment reference.
@@ -128,6 +128,6 @@ public interface Verification extends EObject
    * @see #getResponse()
    * @generated
    */
-  void setResponse(AttributeDefinitionList value);
+  void setResponse(DataDefinition value);
 
 } // Verification

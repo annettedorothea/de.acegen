@@ -133,7 +133,7 @@ Scenario:
 		dataDefinition = DataDefinition
 		(authorization = Authorization)?
 	'THEN' statusCode = INT 
-		('response' response = AttributeDefinitionList)?
+		('response' response = DataDefinition)?
 		(verifications += Verification*)
 ;
 
@@ -157,7 +157,7 @@ Verification:
 	action = [HttpServerAceRead|QualifiedName] 
 	dataDefinition = DataDefinition 
 	(authorization = Authorization)?
-	('response' response = AttributeDefinitionList)?
+	('response' response = DataDefinition)?
 ;
 
 AttributeDefinitionList:

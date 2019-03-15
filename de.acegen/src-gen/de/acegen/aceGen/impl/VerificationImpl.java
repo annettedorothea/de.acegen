@@ -4,7 +4,6 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAceRead;
@@ -75,7 +74,7 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
    * @generated
    * @ordered
    */
-  protected AttributeDefinitionList response;
+  protected DataDefinition response;
 
   /**
    * <!-- begin-user-doc -->
@@ -249,7 +248,7 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
    * @generated
    */
   @Override
-  public AttributeDefinitionList getResponse()
+  public DataDefinition getResponse()
   {
     return response;
   }
@@ -259,9 +258,9 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetResponse(AttributeDefinitionList newResponse, NotificationChain msgs)
+  public NotificationChain basicSetResponse(DataDefinition newResponse, NotificationChain msgs)
   {
-    AttributeDefinitionList oldResponse = response;
+    DataDefinition oldResponse = response;
     response = newResponse;
     if (eNotificationRequired())
     {
@@ -277,7 +276,7 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
    * @generated
    */
   @Override
-  public void setResponse(AttributeDefinitionList newResponse)
+  public void setResponse(DataDefinition newResponse)
   {
     if (newResponse != response)
     {
@@ -356,7 +355,7 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
         setAuthorization((Authorization)newValue);
         return;
       case AceGenPackage.VERIFICATION__RESPONSE:
-        setResponse((AttributeDefinitionList)newValue);
+        setResponse((DataDefinition)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -382,7 +381,7 @@ public class VerificationImpl extends MinimalEObjectImpl.Container implements Ve
         setAuthorization((Authorization)null);
         return;
       case AceGenPackage.VERIFICATION__RESPONSE:
-        setResponse((AttributeDefinitionList)null);
+        setResponse((DataDefinition)null);
         return;
     }
     super.eUnset(featureID);

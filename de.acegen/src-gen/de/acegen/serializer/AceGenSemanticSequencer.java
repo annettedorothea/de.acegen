@@ -504,7 +504,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         dataDefinition=DataDefinition 
 	 *         authorization=Authorization? 
 	 *         statusCode=INT 
-	 *         response=AttributeDefinitionList? 
+	 *         response=DataDefinition? 
 	 *         verifications+=Verification*
 	 *     )
 	 */
@@ -530,7 +530,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Verification returns Verification
 	 *
 	 * Constraint:
-	 *     (action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? response=AttributeDefinitionList?)
+	 *     (action=[HttpServerAceRead|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? response=DataDefinition?)
 	 */
 	protected void sequence_Verification(ISerializationContext context, Verification semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

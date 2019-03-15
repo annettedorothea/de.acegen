@@ -119,7 +119,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statusCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//AttributeDefinitionList"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//DataDefinition"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
         eType="#//Verification" containment="true"/>
@@ -145,7 +145,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//AttributeDefinitionList"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//DataDefinition"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList">

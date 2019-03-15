@@ -18,10 +18,11 @@ package de.acegen.extensions.java;
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.Value;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -486,6 +487,17 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
+  public String withCall(final Attribute it, final String param) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("with");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("(");
+    _builder.append(param);
+    _builder.append(")");
+    return _builder.toString();
+  }
+  
   public Attribute foreignKey(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -579,31 +591,92 @@ public class AttributeExtension {
     return valueList;
   }
   
+  public String dateFrom(final String date) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("DateTime.parse(\"");
+    _builder.append(date);
+    _builder.append("\", DateTimeFormat.forPattern(\"dd.MM.yyyy HH:mm:ss\"))");
+    return _builder.toString();
+  }
+  
+  public String valueFrom(final AttributeDefinition it) {
+    String _stringValue = it.getValue().getStringValue();
+    boolean _tripleNotEquals = (_stringValue != null);
+    if (_tripleNotEquals) {
+      String _type = it.getAttribute().getType();
+      boolean _equals = Objects.equal(_type, "DateTime");
+      if (_equals) {
+        return this.dateFrom(it.getValue().getStringValue());
+      }
+      String _type_1 = it.getAttribute().getType();
+      boolean _equals_1 = Objects.equal(_type_1, "Integer");
+      if (_equals_1) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Integer.parseInt(\"");
+        String _stringValue_1 = it.getValue().getStringValue();
+        _builder.append(_stringValue_1);
+        _builder.append("\")");
+        return _builder.toString();
+      }
+      String _type_2 = it.getAttribute().getType();
+      boolean _equals_2 = Objects.equal(_type_2, "Float");
+      if (_equals_2) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("Float.parseFloat(\"");
+        String _stringValue_2 = it.getValue().getStringValue();
+        _builder_1.append(_stringValue_2);
+        _builder_1.append("\")");
+        return _builder_1.toString();
+      }
+      String _type_3 = it.getAttribute().getType();
+      boolean _equals_3 = Objects.equal(_type_3, "Boolean");
+      if (_equals_3) {
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("new Boolean(\"");
+        String _stringValue_3 = it.getValue().getStringValue();
+        _builder_2.append(_stringValue_3);
+        _builder_2.append("\")");
+        return _builder_2.toString();
+      }
+      String _type_4 = it.getAttribute().getType();
+      boolean _equals_4 = Objects.equal(_type_4, "Long");
+      if (_equals_4) {
+        StringConcatenation _builder_3 = new StringConcatenation();
+        _builder_3.append("Long.parseLong(\"");
+        String _stringValue_4 = it.getValue().getStringValue();
+        _builder_3.append(_stringValue_4);
+        _builder_3.append("\")");
+        return _builder_3.toString();
+      }
+      StringConcatenation _builder_4 = new StringConcatenation();
+      _builder_4.append("\"");
+      String _stringValue_5 = it.getValue().getStringValue();
+      _builder_4.append(_stringValue_5);
+      _builder_4.append("\"");
+      return _builder_4.toString();
+    }
+    AttributeDefinitionList _attributeDefinitionList = it.getValue().getAttributeDefinitionList();
+    boolean _tripleNotEquals_1 = (_attributeDefinitionList != null);
+    if (_tripleNotEquals_1) {
+      return "null";
+    }
+    ListAttributeDefinitionList _listAttributeDefinitionList = it.getValue().getListAttributeDefinitionList();
+    boolean _tripleNotEquals_2 = (_listAttributeDefinitionList != null);
+    if (_tripleNotEquals_2) {
+      return "null";
+    }
+    StringConcatenation _builder_5 = new StringConcatenation();
+    int _intValue = it.getValue().getIntValue();
+    _builder_5.append(_intValue);
+    return _builder_5.toString();
+  }
+  
   private String valueFor(final Attribute attribute, final DataDefinition dataDefinition) {
     EList<AttributeDefinition> _attributeDefinitions = dataDefinition.getData().getAttributeDefinitions();
     for (final AttributeDefinition attributeDefinition : _attributeDefinitions) {
       boolean _equals = attributeDefinition.getAttribute().equals(attribute);
       if (_equals) {
-        final Value value = attributeDefinition.getValue();
-        String _stringValue = value.getStringValue();
-        boolean _tripleNotEquals = (_stringValue != null);
-        if (_tripleNotEquals) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("\"");
-          String _stringValue_1 = value.getStringValue();
-          _builder.append(_stringValue_1);
-          _builder.append("\"");
-          return _builder.toString();
-        }
-        if (((value.getAttributeDefinitionList() != null) || (value.getListAttributeDefinitionList() != null))) {
-          return "null";
-        }
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("\"");
-        int _intValue = value.getIntValue();
-        _builder_1.append(_intValue);
-        _builder_1.append("\"");
-        return _builder_1.toString();
+        return this.valueFrom(attributeDefinition);
       }
     }
     return null;

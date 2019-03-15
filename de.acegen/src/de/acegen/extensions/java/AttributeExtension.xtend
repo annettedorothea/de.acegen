@@ -18,6 +18,7 @@
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeDefinition
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
@@ -144,6 +145,8 @@ class AttributeExtension {
 
 	def String setterCall(Attribute it, String param) '''set«name.toFirstUpper»(«param»)'''
 
+	def String withCall(Attribute it, String param) '''with«name.toFirstUpper»(«param»)'''
+
 	def Attribute foreignKey(Attribute it) {
 		if (type !== null) {
 			return foreignKey;
@@ -210,17 +213,40 @@ class AttributeExtension {
 		return valueList;
 	}
 
+	def String dateFrom(String date) '''DateTime.parse("«date»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss"))'''
+
+	def String valueFrom(AttributeDefinition it) {
+		if (value.stringValue !== null) {
+			if (attribute.type == "DateTime") {
+				return dateFrom(value.stringValue)
+			}
+			if (attribute.type == "Integer") {
+				return '''Integer.parseInt("«value.stringValue»")'''
+			}
+			if (attribute.type == "Float") {
+				return '''Float.parseFloat("«value.stringValue»")'''
+			}
+			if (attribute.type == "Boolean") {
+				return '''new Boolean("«value.stringValue»")'''
+			}
+			if (attribute.type == "Long") {
+				return '''Long.parseLong("«value.stringValue»")'''
+			}
+			return '''"«value.stringValue»"'''
+		}
+		if (value.attributeDefinitionList !== null) {
+			return "null"
+		}
+		if (value.listAttributeDefinitionList !== null) {
+			return "null"
+		}
+		return '''«value.intValue»'''
+	}
+
 	private def String valueFor(Attribute attribute, DataDefinition dataDefinition) {
 		for (attributeDefinition : dataDefinition.data.attributeDefinitions) {
 			if (attributeDefinition.attribute.equals(attribute)) {
-				val value = attributeDefinition.value;
-				if (value.stringValue !== null) {
-					return '''"«value.stringValue»"'''
-				}
-				if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
-					return "null"
-				}
-				return '''"«value.intValue»"'''
+				return attributeDefinition.valueFrom()
 			}
 		}
 		return null;

@@ -7762,9 +7762,9 @@ rule__Scenario__ResponseAssignment_8_1
 	}
 :
 	(
-		{ before(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0()); }
-		ruleAttributeDefinitionList
-		{ after(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0()); }
+		{ before(grammarAccess.getScenarioAccess().getResponseDataDefinitionParserRuleCall_8_1_0()); }
+		ruleDataDefinition
+		{ after(grammarAccess.getScenarioAccess().getResponseDataDefinitionParserRuleCall_8_1_0()); }
 	)
 ;
 finally {
@@ -7950,9 +7950,9 @@ rule__Verification__ResponseAssignment_3_1
 	}
 :
 	(
-		{ before(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0()); }
-		ruleAttributeDefinitionList
-		{ after(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0()); }
+		{ before(grammarAccess.getVerificationAccess().getResponseDataDefinitionParserRuleCall_3_1_0()); }
+		ruleDataDefinition
+		{ after(grammarAccess.getVerificationAccess().getResponseDataDefinitionParserRuleCall_3_1_0()); }
 	)
 ;
 finally {

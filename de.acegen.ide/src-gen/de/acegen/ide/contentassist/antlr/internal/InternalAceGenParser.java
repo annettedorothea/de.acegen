@@ -17059,7 +17059,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5344:1: ( rule__Scenario__Group_8__0__Impl rule__Scenario__Group_8__1 )
             // InternalAceGen.g:5345:2: rule__Scenario__Group_8__0__Impl rule__Scenario__Group_8__1
             {
-            pushFollow(FOLLOW_20);
+            pushFollow(FOLLOW_41);
             rule__Scenario__Group_8__0__Impl();
 
             state._fsp--;
@@ -18719,7 +18719,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5884:1: ( rule__Verification__Group_3__0__Impl rule__Verification__Group_3__1 )
             // InternalAceGen.g:5885:2: rule__Verification__Group_3__0__Impl rule__Verification__Group_3__1
             {
-            pushFollow(FOLLOW_20);
+            pushFollow(FOLLOW_41);
             rule__Verification__Group_3__0__Impl();
 
             state._fsp--;
@@ -23904,25 +23904,25 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scenario__ResponseAssignment_8_1"
-    // InternalAceGen.g:7759:1: rule__Scenario__ResponseAssignment_8_1 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7759:1: rule__Scenario__ResponseAssignment_8_1 : ( ruleDataDefinition ) ;
     public final void rule__Scenario__ResponseAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7763:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:7764:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7763:1: ( ( ruleDataDefinition ) )
+            // InternalAceGen.g:7764:2: ( ruleDataDefinition )
             {
-            // InternalAceGen.g:7764:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:7765:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7764:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7765:3: ruleDataDefinition
             {
-             before(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0()); 
+             before(grammarAccess.getScenarioAccess().getResponseDataDefinitionParserRuleCall_8_1_0()); 
             pushFollow(FOLLOW_2);
-            ruleAttributeDefinitionList();
+            ruleDataDefinition();
 
             state._fsp--;
 
-             after(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0()); 
+             after(grammarAccess.getScenarioAccess().getResponseDataDefinitionParserRuleCall_8_1_0()); 
 
             }
 
@@ -24396,25 +24396,25 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Verification__ResponseAssignment_3_1"
-    // InternalAceGen.g:7947:1: rule__Verification__ResponseAssignment_3_1 : ( ruleAttributeDefinitionList ) ;
+    // InternalAceGen.g:7947:1: rule__Verification__ResponseAssignment_3_1 : ( ruleDataDefinition ) ;
     public final void rule__Verification__ResponseAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:7951:1: ( ( ruleAttributeDefinitionList ) )
-            // InternalAceGen.g:7952:2: ( ruleAttributeDefinitionList )
+            // InternalAceGen.g:7951:1: ( ( ruleDataDefinition ) )
+            // InternalAceGen.g:7952:2: ( ruleDataDefinition )
             {
-            // InternalAceGen.g:7952:2: ( ruleAttributeDefinitionList )
-            // InternalAceGen.g:7953:3: ruleAttributeDefinitionList
+            // InternalAceGen.g:7952:2: ( ruleDataDefinition )
+            // InternalAceGen.g:7953:3: ruleDataDefinition
             {
-             before(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0()); 
+             before(grammarAccess.getVerificationAccess().getResponseDataDefinitionParserRuleCall_3_1_0()); 
             pushFollow(FOLLOW_2);
-            ruleAttributeDefinitionList();
+            ruleDataDefinition();
 
             state._fsp--;
 
-             after(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0()); 
+             after(grammarAccess.getVerificationAccess().getResponseDataDefinitionParserRuleCall_3_1_0()); 
 
             }
 

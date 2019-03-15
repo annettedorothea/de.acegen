@@ -4,7 +4,6 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAce;
@@ -138,7 +137,7 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
    * @generated
    * @ordered
    */
-  protected AttributeDefinitionList response;
+  protected DataDefinition response;
 
   /**
    * The cached value of the '{@link #getVerifications() <em>Verifications</em>}' containment reference list.
@@ -387,7 +386,7 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
    * @generated
    */
   @Override
-  public AttributeDefinitionList getResponse()
+  public DataDefinition getResponse()
   {
     return response;
   }
@@ -397,9 +396,9 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetResponse(AttributeDefinitionList newResponse, NotificationChain msgs)
+  public NotificationChain basicSetResponse(DataDefinition newResponse, NotificationChain msgs)
   {
-    AttributeDefinitionList oldResponse = response;
+    DataDefinition oldResponse = response;
     response = newResponse;
     if (eNotificationRequired())
     {
@@ -415,7 +414,7 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
    * @generated
    */
   @Override
-  public void setResponse(AttributeDefinitionList newResponse)
+  public void setResponse(DataDefinition newResponse)
   {
     if (newResponse != response)
     {
@@ -532,7 +531,7 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
         setStatusCode((Integer)newValue);
         return;
       case AceGenPackage.SCENARIO__RESPONSE:
-        setResponse((AttributeDefinitionList)newValue);
+        setResponse((DataDefinition)newValue);
         return;
       case AceGenPackage.SCENARIO__VERIFICATIONS:
         getVerifications().clear();
@@ -571,7 +570,7 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
         setStatusCode(STATUS_CODE_EDEFAULT);
         return;
       case AceGenPackage.SCENARIO__RESPONSE:
-        setResponse((AttributeDefinitionList)null);
+        setResponse((DataDefinition)null);
         return;
       case AceGenPackage.SCENARIO__VERIFICATIONS:
         getVerifications().clear();

@@ -1965,9 +1965,9 @@ ruleScenario returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getScenarioAccess().getResponseAttributeDefinitionListParserRuleCall_8_1_0());
+						newCompositeNode(grammarAccess.getScenarioAccess().getResponseDataDefinitionParserRuleCall_8_1_0());
 					}
-					lv_response_10_0=ruleAttributeDefinitionList
+					lv_response_10_0=ruleDataDefinition
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getScenarioRule());
@@ -1976,7 +1976,7 @@ ruleScenario returns [EObject current=null]
 							$current,
 							"response",
 							lv_response_10_0,
-							"de.acegen.AceGen.AttributeDefinitionList");
+							"de.acegen.AceGen.DataDefinition");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2292,9 +2292,9 @@ ruleVerification returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getVerificationAccess().getResponseAttributeDefinitionListParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getVerificationAccess().getResponseDataDefinitionParserRuleCall_3_1_0());
 					}
-					lv_response_4_0=ruleAttributeDefinitionList
+					lv_response_4_0=ruleDataDefinition
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getVerificationRule());
@@ -2303,7 +2303,7 @@ ruleVerification returns [EObject current=null]
 							$current,
 							"response",
 							lv_response_4_0,
-							"de.acegen.AceGen.AttributeDefinitionList");
+							"de.acegen.AceGen.DataDefinition");
 						afterParserOrEnumRuleCall();
 					}
 				)

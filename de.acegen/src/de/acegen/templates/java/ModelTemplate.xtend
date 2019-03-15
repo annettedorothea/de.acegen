@@ -58,10 +58,6 @@ class ModelTemplate {
 				
 			«ENDFOR»
 			
-			«IF containsPrimitiveAttributes»
-				List<String> equalsPrimitiveTypes(«interfaceWithPackage» other);
-			«ENDIF»
-			
 		}
 		
 		
@@ -107,22 +103,6 @@ class ModelTemplate {
 				«attribute.getter(true)»
 				«attribute.setter»
 				
-			«ENDFOR»
-			
-			«FOR superModel : allSuperModels»
-				«IF superModel.containsPrimitiveAttributes»
-					public List<String> equalsPrimitiveTypes(«superModel.interfaceWithPackage» other) {
-						List<String> differingAttributes = new ArrayList<String>();
-						«FOR attribute : superModel.attributes»
-							«IF attribute.isPrimitive»
-								if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
-									differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
-								}
-							«ENDIF»
-						«ENDFOR»
-						return differingAttributes;
-					}
-				«ENDIF»
 			«ENDFOR»
 			
 		}
@@ -226,23 +206,6 @@ class ModelTemplate {
 				}
 			«ENDFOR»
 			
-			«FOR superModel : allSuperModels»
-				«IF superModel.containsPrimitiveAttributes»
-					public List<String> equalsPrimitiveTypes(«superModel.interfaceWithPackage» other) {
-						List<String> differingAttributes = new ArrayList<String>();
-						«FOR attribute : superModel.attributes»
-							«IF attribute.isPrimitive»
-								if (!(this.«attribute.getterCall» == null && other.«attribute.getterCall» == null) && !this.«attribute.getterCall».equals(other.«attribute.getterCall»)) {
-									differingAttributes.add("«attribute.name»: " + this.«attribute.getterCall» + " " + other.«attribute.getterCall»);
-								}
-							«ENDIF»
-						«ENDFOR»
-						return differingAttributes;
-					}
-				«ENDIF»
-				
-			«ENDFOR»
-			
 		}
 		
 		
@@ -300,8 +263,6 @@ class ModelTemplate {
 		package com.anfelisa.ace;
 		
 		import org.joda.time.DateTime;
-		import java.util.HashMap;
-		import java.util.Map;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
@@ -313,11 +274,8 @@ class ModelTemplate {
 			
 			private DateTime systemTime;
 			
-			private Map<String, String> uuidsForTriggeredAction;
-			
 			public AbstractData( String uuid ) {
 				this.uuid = uuid;
-				this.uuidsForTriggeredAction = new HashMap<String, String>();
 			}
 		
 			@JsonProperty
@@ -350,24 +308,6 @@ class ModelTemplate {
 				this.outcome = outcome;
 			}
 			
-			@JsonProperty
-			public Map<String, String> getUuidsForTriggeredAction() {
-				return uuidsForTriggeredAction;
-			}
-		
-			@JsonProperty
-			public void setUuidsForTriggeredAction(Map<String, String> uuidsForTriggeredAction) {
-				this.uuidsForTriggeredAction = uuidsForTriggeredAction;
-			}
-		
-			public void addUuidForTriggeredAction(String actionName, String uuid) {
-				uuidsForTriggeredAction.put(actionName, uuid);
-			}
-		
-			public String getUuidForTriggeredAction(String actionName) {
-				return uuidsForTriggeredAction.get(actionName);
-			}
-		
 		}
 		
 		
@@ -642,10 +582,6 @@ class ModelTemplate {
 			void setSystemTime(DateTime systemTime);
 		
 			void migrateLegacyData(String json);
-		
-			void addUuidForTriggeredAction(String actionName, String uuid);
-		
-			String getUuidForTriggeredAction(String actionName);
 
 		}
 		

@@ -59,6 +59,18 @@ public class ModelExtension {
     return _builder.toString();
   }
   
+  public String modelClassNameWithPackage(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
+    _builder.append(_name);
+    _builder.append(".models.");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("Model");
+    return _builder.toString();
+  }
+  
   public String modelParam(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstLower = StringExtensions.toFirstLower(it.getName());

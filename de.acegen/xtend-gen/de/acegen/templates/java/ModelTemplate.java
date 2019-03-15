@@ -117,19 +117,6 @@ public class ModelTemplate {
     }
     _builder.append("\t");
     _builder.newLine();
-    {
-      boolean _containsPrimitiveAttributes = this._modelExtension.containsPrimitiveAttributes(it);
-      if (_containsPrimitiveAttributes) {
-        _builder.append("\t");
-        _builder.append("List<String> equalsPrimitiveTypes(");
-        String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it);
-        _builder.append(_interfaceWithPackage_1, "\t");
-        _builder.append(" other);");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -253,79 +240,6 @@ public class ModelTemplate {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      List<Model> _allSuperModels = this._modelExtension.allSuperModels(it);
-      for(final Model superModel : _allSuperModels) {
-        {
-          boolean _containsPrimitiveAttributes = this._modelExtension.containsPrimitiveAttributes(superModel);
-          if (_containsPrimitiveAttributes) {
-            _builder.append("\t");
-            _builder.append("public List<String> equalsPrimitiveTypes(");
-            String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(superModel);
-            _builder.append(_interfaceWithPackage, "\t");
-            _builder.append(" other) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("List<String> differingAttributes = new ArrayList<String>();");
-            _builder.newLine();
-            {
-              EList<Attribute> _attributes = superModel.getAttributes();
-              for(final Attribute attribute_4 : _attributes) {
-                {
-                  boolean _isPrimitive = this._attributeExtension.isPrimitive(attribute_4);
-                  if (_isPrimitive) {
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("if (!(this.");
-                    String _terCall = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall, "\t\t");
-                    _builder.append(" == null && other.");
-                    String _terCall_1 = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall_1, "\t\t");
-                    _builder.append(" == null) && !this.");
-                    String _terCall_2 = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall_2, "\t\t");
-                    _builder.append(".equals(other.");
-                    String _terCall_3 = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall_3, "\t\t");
-                    _builder.append(")) {");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("differingAttributes.add(\"");
-                    String _name_1 = attribute_4.getName();
-                    _builder.append(_name_1, "\t\t\t");
-                    _builder.append(": \" + this.");
-                    String _terCall_4 = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall_4, "\t\t\t");
-                    _builder.append(" + \" \" + other.");
-                    String _terCall_5 = this._attributeExtension.getterCall(attribute_4);
-                    _builder.append(_terCall_5, "\t\t\t");
-                    _builder.append(");");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("}");
-                    _builder.newLine();
-                  }
-                }
-              }
-            }
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("return differingAttributes;");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("}");
-            _builder.newLine();
-          }
-        }
       }
     }
     _builder.append("\t");
@@ -619,81 +533,6 @@ public class ModelTemplate {
     }
     _builder.append("\t");
     _builder.newLine();
-    {
-      List<Model> _allSuperModels = this._modelExtension.allSuperModels(it);
-      for(final Model superModel_2 : _allSuperModels) {
-        {
-          boolean _containsPrimitiveAttributes = this._modelExtension.containsPrimitiveAttributes(superModel_2);
-          if (_containsPrimitiveAttributes) {
-            _builder.append("\t");
-            _builder.append("public List<String> equalsPrimitiveTypes(");
-            String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(superModel_2);
-            _builder.append(_interfaceWithPackage_1, "\t");
-            _builder.append(" other) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("List<String> differingAttributes = new ArrayList<String>();");
-            _builder.newLine();
-            {
-              EList<Attribute> _attributes = superModel_2.getAttributes();
-              for(final Attribute attribute_5 : _attributes) {
-                {
-                  boolean _isPrimitive = this._attributeExtension.isPrimitive(attribute_5);
-                  if (_isPrimitive) {
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("if (!(this.");
-                    String _terCall_1 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_1, "\t\t");
-                    _builder.append(" == null && other.");
-                    String _terCall_2 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_2, "\t\t");
-                    _builder.append(" == null) && !this.");
-                    String _terCall_3 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_3, "\t\t");
-                    _builder.append(".equals(other.");
-                    String _terCall_4 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_4, "\t\t");
-                    _builder.append(")) {");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("differingAttributes.add(\"");
-                    String _name_2 = attribute_5.getName();
-                    _builder.append(_name_2, "\t\t\t");
-                    _builder.append(": \" + this.");
-                    String _terCall_5 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_5, "\t\t\t");
-                    _builder.append(" + \" \" + other.");
-                    String _terCall_6 = this._attributeExtension.getterCall(attribute_5);
-                    _builder.append(_terCall_6, "\t\t\t");
-                    _builder.append(");");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    _builder.append("}");
-                    _builder.newLine();
-                  }
-                }
-              }
-            }
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("return differingAttributes;");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("}");
-            _builder.newLine();
-          }
-        }
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -835,10 +674,6 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
-    _builder.append("import java.util.HashMap;");
-    _builder.newLine();
-    _builder.append("import java.util.Map;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
     _builder.newLine();
@@ -862,18 +697,10 @@ public class ModelTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private Map<String, String> uuidsForTriggeredAction;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("public AbstractData( String uuid ) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.uuid = uuid;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.uuidsForTriggeredAction = new HashMap<String, String>();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -957,52 +784,6 @@ public class ModelTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public Map<String, String> getUuidsForTriggeredAction() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return uuidsForTriggeredAction;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public void setUuidsForTriggeredAction(Map<String, String> uuidsForTriggeredAction) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.uuidsForTriggeredAction = uuidsForTriggeredAction;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public void addUuidForTriggeredAction(String actionName, String uuid) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("uuidsForTriggeredAction.put(actionName, uuid);");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public String getUuidForTriggeredAction(String actionName) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return uuidsForTriggeredAction.get(actionName);");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -1905,14 +1686,6 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("void migrateLegacyData(String json);");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("void addUuidForTriggeredAction(String actionName, String uuid);");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("String getUuidForTriggeredAction(String actionName);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

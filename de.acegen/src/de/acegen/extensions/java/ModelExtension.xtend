@@ -35,6 +35,8 @@ class ModelExtension {
 	
 	def String modelClassName(Model it) '''«name.toFirstUpper»Model'''
 	
+	def String modelClassNameWithPackage(Model it) '''«(eContainer as HttpServer).getName».models.«name.toFirstUpper»Model'''
+	
 	def String modelParam(Model it) '''«name.toFirstLower»Model'''
 	
 	def String modelDao(Model it) '''«name.toFirstUpper»Dao'''
