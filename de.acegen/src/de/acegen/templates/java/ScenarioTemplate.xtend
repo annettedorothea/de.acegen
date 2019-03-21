@@ -133,7 +133,7 @@ class ScenarioTemplate {
 	'''
 	
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
-		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»("«uuid»");
+		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
 		«IF systemtime !== null»
 			«varName».setSystemTime(DateTime.parse("«systemtime»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss")));
 		«ENDIF»
