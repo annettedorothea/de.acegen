@@ -2,7 +2,7 @@
 <feature
       id="de.acegen.feature"
       label="AceGen Feature"
-      version="0.5.0">
+      version="0.6.0">
 
    <description url="https://acegen.de">
       Generator based on the ACE architecture.

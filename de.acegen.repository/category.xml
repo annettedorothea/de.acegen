@@ -3,5 +3,8 @@
    <feature url="features/de.acegen.feature_0.5.0.jar" id="de.acegen.feature" version="0.5.0">
       <category name="de.acegen"/>
    </feature>
+   <feature url="features/de.acegen.feature_0.6.0.jar" id="de.acegen.feature" version="0.6.0">
+      <category name="de.acegen"/>
+   </feature>
    <category-def name="de.acegen" label="AceGen"/>
 </site>

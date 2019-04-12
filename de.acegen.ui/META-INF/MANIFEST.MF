@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Automatic-Module-Name: de.acegen.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen.ui
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Annette Pohl
+Bundle-Version: 0.6.0
 Bundle-SymbolicName: de.acegen.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.acegen,

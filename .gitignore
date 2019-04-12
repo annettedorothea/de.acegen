@@ -25,3 +25,4 @@ de.acegen/.launch
 de.acegen/bin
 .antlr-generator-3.2.0-patch.jar
 de.acegen.ide/bin
+acegen.app/Contents
