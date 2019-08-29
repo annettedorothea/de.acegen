@@ -85,14 +85,16 @@ class AceTemplate {
 		
 			@Override
 			public void initialize(Bootstrap<CustomAppConfiguration> bootstrap) {
-			bootstrap.addBundle(new MigrationsBundle<CustomAppConfiguration>() {
-				@Override
-				public DataSourceFactory getDataSourceFactory(CustomAppConfiguration configuration) {
-					return configuration.getDataSourceFactory();
+				bootstrap.addBundle(new MigrationsBundle<CustomAppConfiguration>() {
+					@Override
+					public DataSourceFactory getDataSourceFactory(CustomAppConfiguration configuration) {
+						return configuration.getDataSourceFactory();
+					}
+				});
+				
+				if (!ServerConfiguration.LIVE.equals(mode)) {
+					bootstrap.addCommand(new EventReplayCommand(this));
 				}
-			});
-			
-			bootstrap.addCommand(new EventReplayCommand(this));
 			}
 		
 			@Override
@@ -654,9 +656,6 @@ class AceTemplate {
 				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
 					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
 				}
-				if (ServerConfiguration.REPLAY.equals(configuration.getServerConfiguration().getMode())) {
-					throw new RuntimeException("replay events in a replay environment doesn't make sense");
-				}
 		
 				IDaoProvider daoProvider = DaoProvider.create();
 				ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);
@@ -678,12 +677,16 @@ class AceTemplate {
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
 						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
-						event.notifyListeners(databaseHandle.getHandle());
-						i++;
-						if (i%1000 == 0) {
-							LOG.info("published " + i + " events");
+						if (event != null) {
+							event.notifyListeners(databaseHandle.getHandle());
+							i++;
+							if (i%1000 == 0) {
+								LOG.info("published " + i + " events");
+							}
+							//LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
+						} else {
+							LOG.info("event " + nextEvent.getName() + " seems to be obsolete and was not replayed");
 						}
-						//LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
 					}
 		
 					databaseHandle.commitTransaction();
