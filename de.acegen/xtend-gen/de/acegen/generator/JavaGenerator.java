@@ -277,8 +277,6 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateServerConfiguration());
     fsa.generateFile(("com/anfelisa/ace" + "/StartE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStartE2ESessionResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/ReplayEventsResource.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateReplayEventsResource());
     fsa.generateFile(("com/anfelisa/ace" + "/SetSystemTimeResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateSetSystemTimeResource());
     fsa.generateFile(("com/anfelisa/ace" + "/StopE2ESessionResource.java"), 
@@ -352,19 +350,24 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateAbstractBaseScenario());
     fsa.generateFile("com/anfelisa/ace/BaseScenario.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateBaseScenario());
-    String _packageFolder_4 = this._javaExtension.packageFolder(java);
-    String _plus_6 = (_packageFolder_4 + "/TestUtils.java");
-    fsa.generateFile(_plus_6, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateTestUtils(java));
     EList<Scenario> _scenarios = java.getScenarios();
     for (final Scenario scenario : _scenarios) {
-      String _packageFolder_5 = this._javaExtension.packageFolder(java);
-      String _plus_7 = (_packageFolder_5 + "/scenarios/");
-      String _name = scenario.getName();
-      String _plus_8 = (_plus_7 + _name);
-      String _plus_9 = (_plus_8 + "Scenario.java");
-      fsa.generateFile(_plus_9, 
-        ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateScenario(scenario, java));
+      {
+        String _packageFolder_4 = this._javaExtension.packageFolder(java);
+        String _plus_6 = (_packageFolder_4 + "/scenarios/Abstract");
+        String _name = scenario.getName();
+        String _plus_7 = (_plus_6 + _name);
+        String _plus_8 = (_plus_7 + "Scenario.java");
+        fsa.generateFile(_plus_8, 
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateAbstractScenario(scenario, java));
+        String _packageFolder_5 = this._javaExtension.packageFolder(java);
+        String _plus_9 = (_packageFolder_5 + "/scenarios/");
+        String _name_1 = scenario.getName();
+        String _plus_10 = (_plus_9 + _name_1);
+        String _plus_11 = (_plus_10 + "Scenario.java");
+        fsa.generateFile(_plus_11, 
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenario(scenario, java));
+      }
     }
   }
 }

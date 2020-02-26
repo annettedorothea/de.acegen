@@ -8,9 +8,6 @@ import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.aceGen.HttpServerAceRead;
-import de.acegen.aceGen.HttpServerAceWrite;
-import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Scenario;
@@ -18,7 +15,6 @@ import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
-import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -56,6 +52,53 @@ public class ScenarioTemplate {
     _builder.append(".scenarios;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public class ");
+    String _name_1 = it.getName();
+    _builder.append(_name_1);
+    _builder.append("Scenario extends Abstract");
+    String _name_2 = it.getName();
+    _builder.append(_name_2);
+    _builder.append("Scenario {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected void verifications(Response response) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateAbstractScenario(final Scenario it, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package ");
+    String _name = java.getName();
+    _builder.append(_name);
+    _builder.append(".scenarios;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
     _builder.append("import java.util.ArrayList;");
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -79,45 +122,32 @@ public class ScenarioTemplate {
     _builder.append("import ");
     String _name_1 = java.getName();
     _builder.append(_name_1);
-    _builder.append(".TestUtils;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("import ");
-    String _name_2 = java.getName();
-    _builder.append(_name_2);
     _builder.append(".ActionCalls;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
-    _builder.append("public class ");
-    String _name_3 = it.getName();
-    _builder.append(_name_3);
+    _builder.append("public abstract class Abstract");
+    String _name_2 = it.getName();
+    _builder.append(_name_2);
     _builder.append("Scenario extends BaseScenario {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("List<ITimelineItem> timeline = new ArrayList<>();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.newLine();
     {
       EList<Scenario> _scenarios = it.getScenarios();
       for(final Scenario scenario : _scenarios) {
         _builder.append("\t\t");
         _builder.append("// ");
-        String _name_4 = scenario.getName();
-        _builder.append(_name_4, "\t\t");
+        String _name_3 = scenario.getName();
+        _builder.append(_name_3, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.append("prepare(timeline, DROPWIZARD.getLocalPort());");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -226,12 +256,19 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.append("then(response);");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("verifications(response);");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("protected abstract void verifications(Response response);");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -429,7 +466,8 @@ public class ScenarioTemplate {
             } else {
               _builder.appendImmediate(", ", "");
             }
-            _builder.append(param);
+            CharSequence _paramString = this.paramString(param);
+            _builder.append(_paramString);
           }
         }
         {
@@ -463,7 +501,8 @@ public class ScenarioTemplate {
               } else {
                 _builder.appendImmediate(", ", "");
               }
-              _builder.append(param_1);
+              CharSequence _paramString_1 = this.paramString(param_1);
+              _builder.append(_paramString_1);
             }
           }
           {
@@ -497,7 +536,8 @@ public class ScenarioTemplate {
                 } else {
                   _builder.appendImmediate(", ", "");
                 }
-                _builder.append(param_2);
+                CharSequence _paramString_2 = this.paramString(param_2);
+                _builder.append(_paramString_2);
               }
             }
             {
@@ -528,7 +568,8 @@ public class ScenarioTemplate {
                 } else {
                   _builder.appendImmediate(", ", "");
                 }
-                _builder.append(param_3);
+                CharSequence _paramString_3 = this.paramString(param_3);
+                _builder.append(_paramString_3);
               }
             }
             {
@@ -547,6 +588,18 @@ public class ScenarioTemplate {
             _builder.newLineIfNotEmpty();
           }
         }
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence paramString(final String param) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((param != null) && (param.length() > 0))) {
+        _builder.append(param);
+      } else {
+        _builder.append("null");
       }
     }
     return _builder;
@@ -854,99 +907,5 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
-  }
-  
-  public CharSequence generateTestUtils(final HttpServer it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("package ");
-    String _name = it.getName();
-    _builder.append(_name);
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.TimelineItem;");
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("public class TestUtils {");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private static final JodaObjectMapper mapper = new JodaObjectMapper();");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      EList<HttpServerAce> _aceOperations = it.getAceOperations();
-      for(final HttpServerAce aceOperation : _aceOperations) {
-        _builder.append("\t");
-        CharSequence _createTimelineItem = this.createTimelineItem(aceOperation);
-        _builder.append(_createTimelineItem, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  private CharSequence _createTimelineItem(final HttpServerAceWrite it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<HttpServerOutcome> _outcomes = it.getOutcomes();
-      for(final HttpServerOutcome outcome : _outcomes) {
-        _builder.append("public static TimelineItem create");
-        String _eventName = this._aceExtension.eventName(it, outcome);
-        _builder.append(_eventName);
-        _builder.append("TimelineItem(");
-        String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
-        _builder.append(_dataInterfaceNameWithPackage);
-        _builder.append(" data) throws JsonProcessingException {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("String json = mapper.writeValueAsString(data);");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("return new TimelineItem(\"prepare\", null, \"");
-        String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome);
-        _builder.append(_eventNameWithPackage, "\t");
-        _builder.append("\", null, json, data.getUuid());");
-        _builder.newLineIfNotEmpty();
-        _builder.append("}");
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence _createTimelineItem(final HttpServerAceRead it) {
-    StringConcatenation _builder = new StringConcatenation();
-    return _builder;
-  }
-  
-  private CharSequence createTimelineItem(final HttpServerAce it) {
-    if (it instanceof HttpServerAceRead) {
-      return _createTimelineItem((HttpServerAceRead)it);
-    } else if (it instanceof HttpServerAceWrite) {
-      return _createTimelineItem((HttpServerAceWrite)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
   }
 }

@@ -5,8 +5,6 @@ import de.acegen.aceGen.Authorization
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerAceRead
-import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
 import de.acegen.extensions.CommonExtension
@@ -34,6 +32,27 @@ class ScenarioTemplate {
 		
 		package «java.getName».scenarios;
 		
+		import javax.ws.rs.core.Response;
+		
+		@SuppressWarnings("unused")
+		public class «name»Scenario extends Abstract«name»Scenario {
+
+			@Override
+			protected void verifications(Response response) {
+			}
+		
+		}
+		
+		
+		«sdg»
+		
+	'''
+
+	def generateAbstractScenario(Scenario it, HttpServer java) '''
+		«copyright»
+		
+		package «java.getName».scenarios;
+		
 		import java.util.ArrayList;
 		import java.util.List;
 		
@@ -46,20 +65,16 @@ class ScenarioTemplate {
 		
 		import com.anfelisa.ace.BaseScenario;
 		import com.anfelisa.ace.ITimelineItem;
-		import «java.getName».TestUtils;
 		import «java.getName».ActionCalls;
 		
 		@SuppressWarnings("unused")
-		public class «name»Scenario extends BaseScenario {
+		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
-				List<ITimelineItem> timeline = new ArrayList<>();
-				
 				«FOR scenario : scenarios»
 					// «scenario.name»
 					
 				«ENDFOR»
-				prepare(timeline, DROPWIZARD.getLocalPort());
 			}
 			
 			private Response when() throws Exception {
@@ -93,9 +108,12 @@ class ScenarioTemplate {
 				Response response = when();
 		
 				then(response);
+				
+				verifications(response);
 			}
 			
-			
+			protected abstract void verifications(Response response);
+		
 		}
 		
 		
@@ -141,15 +159,17 @@ class ScenarioTemplate {
 
 	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
 		«IF aceOperation.getType == "POST"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
 		«ELSEIF aceOperation.getType == "PUT"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
 		«ELSEIF aceOperation.getType == "DELETE"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
 		«ELSE»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
 		«ENDIF»
 	'''
+	
+	private def paramString(String param) '''«IF param !== null && param.length > 0»«param»«ELSE»null«ENDIF»'''	
 	
 	def generateBaseScenario() '''
 		«copyright»
@@ -285,41 +305,5 @@ class ScenarioTemplate {
 		«sdg»
 		
 	'''
-
-	def generateTestUtils(HttpServer it) '''
-		«copyright»
-		
-		package «getName»;
-		
-		import com.anfelisa.ace.JodaObjectMapper;
-		import com.anfelisa.ace.TimelineItem;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		public class TestUtils {
-		
-			private static final JodaObjectMapper mapper = new JodaObjectMapper();
-		
-			«FOR aceOperation : aceOperations»
-				«aceOperation.createTimelineItem»
-
-			«ENDFOR»
-			
-		}
-		
-		
-		«sdg»
-		
-	'''
-
-	private def dispatch createTimelineItem(HttpServerAceWrite it) '''
-		«FOR outcome : outcomes»
-			public static TimelineItem create«eventName(outcome)»TimelineItem(«getModel.dataInterfaceNameWithPackage» data) throws JsonProcessingException {
-				String json = mapper.writeValueAsString(data);
-				return new TimelineItem("prepare", null, "«eventNameWithPackage(outcome)»", null, json, data.getUuid());
-			}
-		«ENDFOR»
-	'''
-
-	private def dispatch createTimelineItem(HttpServerAceRead it) ''''''
 
 }

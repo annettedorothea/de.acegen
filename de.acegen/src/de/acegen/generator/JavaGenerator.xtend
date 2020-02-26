@@ -157,8 +157,6 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateServerConfiguration());
 		fsa.generateFile("com/anfelisa/ace" + '/StartE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStartE2ESessionResource());
-		fsa.generateFile("com/anfelisa/ace" + '/ReplayEventsResource.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateReplayEventsResource());
 		fsa.generateFile("com/anfelisa/ace" + '/SetSystemTimeResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateSetSystemTimeResource());
 		fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
@@ -237,12 +235,12 @@ class JavaGenerator {
 		fsa.generateFile('com/anfelisa/ace/BaseScenario.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, scenarioTemplate.generateBaseScenario());
 
-		fsa.generateFile(java.packageFolder + '/TestUtils.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateTestUtils(java));
-
 		for (scenario : java.scenarios) {
+			fsa.generateFile(java.packageFolder + '/scenarios/Abstract' + scenario.name + 'Scenario.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateAbstractScenario(scenario, java));
+
 			fsa.generateFile(java.packageFolder + '/scenarios/' + scenario.name + 'Scenario.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateScenario(scenario, java));
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, scenarioTemplate.generateScenario(scenario, java));
 		}
 
 	}
