@@ -13,7 +13,6 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
- 
 
 package de.acegen.generator;
 
@@ -31,6 +30,8 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 	public final static String DEFAULT_JAVA_OUTPUT = "DEFAULT_JAVA_OUTPUT";
 	public final static String DEFAULT_RESOURCE_OUTPUT = "DEFAULT_RESOURCE_OUTPUT";
 	public final static String DEFAULT_JAVA_OUTPUT_ONCE = "DEFAULT_JAVA_OUTPUT_ONCE";
+	public final static String DEFAULT_JAVA_TEST_OUTPUT_ONCE = "DEFAULT_JAVA_TEST_OUTPUT_ONCE";
+	public final static String DEFAULT_JAVA_TEST_OUTPUT = "DEFAULT_JAVA_TEST_OUTPUT";
 
 	/**
 	 * @return a set of {@link OutputConfiguration} available for the generator
@@ -51,7 +52,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceOutput.setCreateOutputDirectory(true);
 		onceOutput.setCleanUpDerivedResources(false);
 		onceOutput.setSetDerivedProperty(false);
-		
+
 		OutputConfiguration defaultJavaOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT);
 		defaultJavaOutput.setDescription("generated Java sources");
 		defaultJavaOutput.setOutputDirectory("./src/gen/java/");
@@ -59,7 +60,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		defaultJavaOutput.setCreateOutputDirectory(true);
 		defaultJavaOutput.setCleanUpDerivedResources(true);
 		defaultJavaOutput.setSetDerivedProperty(true);
-		
+
 		OutputConfiguration defaultResourceOutput = new OutputConfiguration(DEFAULT_RESOURCE_OUTPUT);
 		defaultResourceOutput.setDescription("generated resources sources");
 		defaultResourceOutput.setOutputDirectory("./src/gen/resources/");
@@ -67,7 +68,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		defaultResourceOutput.setCreateOutputDirectory(true);
 		defaultResourceOutput.setCleanUpDerivedResources(true);
 		defaultResourceOutput.setSetDerivedProperty(true);
-		
+
 		OutputConfiguration onceJavaOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT_ONCE);
 		onceJavaOutput.setDescription("initial Java sources");
 		onceJavaOutput.setOutputDirectory("./src/main/java/");
@@ -75,13 +76,33 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceJavaOutput.setCreateOutputDirectory(true);
 		onceJavaOutput.setCleanUpDerivedResources(false);
 		onceJavaOutput.setSetDerivedProperty(false);
-		
-		return newHashSet(defaultOutput, onceOutput, defaultJavaOutput, onceJavaOutput, defaultResourceOutput);
+
+		OutputConfiguration onceJavaTestOutput = new OutputConfiguration(DEFAULT_JAVA_TEST_OUTPUT_ONCE);
+		onceJavaTestOutput.setDescription("initial Java test sources");
+		onceJavaTestOutput.setOutputDirectory("./src/test/java/");
+		onceJavaTestOutput.setOverrideExistingResources(false);
+		onceJavaTestOutput.setCreateOutputDirectory(true);
+		onceJavaTestOutput.setCleanUpDerivedResources(false);
+		onceJavaTestOutput.setSetDerivedProperty(false);
+
+		OutputConfiguration javaTestOutput = new OutputConfiguration(DEFAULT_JAVA_TEST_OUTPUT);
+		javaTestOutput.setDescription("Java test sources");
+		javaTestOutput.setOutputDirectory("./src/test/gen/");
+		javaTestOutput.setOverrideExistingResources(true);
+		javaTestOutput.setCreateOutputDirectory(true);
+		javaTestOutput.setCleanUpDerivedResources(true);
+		javaTestOutput.setSetDerivedProperty(true);
+
+		return newHashSet(
+				defaultOutput, 
+				onceOutput, 
+				defaultJavaOutput, 
+				onceJavaOutput, 
+				defaultResourceOutput,
+				onceJavaTestOutput, 
+				javaTestOutput);
 	}
 
 }
 
-
 /******* S.D.G. *******/
-
-

@@ -244,9 +244,11 @@ class AttributeExtension {
 	}
 
 	private def String valueFor(Attribute attribute, DataDefinition dataDefinition) {
-		for (attributeDefinition : dataDefinition.data.attributeDefinitions) {
-			if (attributeDefinition.attribute.equals(attribute)) {
-				return attributeDefinition.valueFrom()
+		if (dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null) {
+			for (attributeDefinition : dataDefinition.data.attributeDefinitions) {
+				if (attributeDefinition.attribute.equals(attribute)) {
+					return attributeDefinition.valueFrom()
+				}
 			}
 		}
 		return null;

@@ -128,13 +128,20 @@ Model:
 
 Scenario:
 	name = ID
-	('GIVEN' events += ScenarioEvent* )? 
-	'WHEN' action = [HttpServerAce|QualifiedName] 
-		dataDefinition = DataDefinition
-		(authorization = Authorization)?
-	'THEN' statusCode = INT 
-		('response' response = DataDefinition)?
-		(verifications += Verification*)
+	('GIVEN' scenarios += [Scenario | QualifiedName]* )? 
+	'WHEN' whenBlock = WhenBlock
+	'THEN' thenBlock = ThenBlock
+;
+
+WhenBlock: 
+	action = [HttpServerAce|QualifiedName] 
+	dataDefinition = DataDefinition
+	(authorization = Authorization)?
+;
+
+ThenBlock:
+	statusCode = INT 
+	('response' response = DataDefinition)?
 ;
 
 DataDefinition: 
@@ -146,18 +153,6 @@ DataDefinition:
 
 Authorization:
 	'authorization' username = STRING ':' password = STRING
-;
-
-ScenarioEvent:
-	outcome = [HttpServerOutcome|QualifiedName]
-	dataDefinition = DataDefinition 
-;
-
-Verification:
-	action = [HttpServerAceRead|QualifiedName] 
-	dataDefinition = DataDefinition 
-	(authorization = Authorization)?
-	('response' response = DataDefinition)?
 ;
 
 AttributeDefinitionList:

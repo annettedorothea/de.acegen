@@ -349,13 +349,13 @@ public class JavaGenerator {
         this.aceTemplate.generateAuthUser(authUser));
     }
     fsa.generateFile("com/anfelisa/ace/AbstractBaseScenario.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.scenarioTemplate.generateAbstractBaseScenario());
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateAbstractBaseScenario());
     fsa.generateFile("com/anfelisa/ace/BaseScenario.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.scenarioTemplate.generateBaseScenario());
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateBaseScenario());
     String _packageFolder_4 = this._javaExtension.packageFolder(java);
     String _plus_6 = (_packageFolder_4 + "/TestUtils.java");
     fsa.generateFile(_plus_6, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.scenarioTemplate.generateTestUtils(java));
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateTestUtils(java));
     EList<Scenario> _scenarios = java.getScenarios();
     for (final Scenario scenario : _scenarios) {
       String _packageFolder_5 = this._javaExtension.packageFolder(java);
@@ -364,7 +364,7 @@ public class JavaGenerator {
       String _plus_8 = (_plus_7 + _name);
       String _plus_9 = (_plus_8 + "Scenario.java");
       fsa.generateFile(_plus_9, 
-        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.scenarioTemplate.generateScenario(scenario, java));
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateScenario(scenario, java));
     }
   }
 }

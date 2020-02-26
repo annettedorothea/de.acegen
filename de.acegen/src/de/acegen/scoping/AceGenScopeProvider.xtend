@@ -28,8 +28,8 @@ import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.aceGen.ListAttributeDefinitionList
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
-import de.acegen.aceGen.ScenarioEvent
-import de.acegen.aceGen.Verification
+import de.acegen.aceGen.ThenBlock
+import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import javax.inject.Inject
@@ -81,33 +81,42 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 		if (context instanceof AttributeDefinitionList || context instanceof ListAttributeDefinitionList ||
 			context instanceof AttributeDefinition) {
 			var parent = context.eContainer
-			while (parent !== null && !(
-					(parent instanceof ScenarioEvent) || (parent instanceof Verification) ||
-				(parent instanceof Scenario) || (parent instanceof AttributeDefinition)
-				)) {
+			var isThen = false
+			var isWhen = false
+			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof AttributeDefinition))) {
 				parent = parent.eContainer
-			}
-			if (parent instanceof ScenarioEvent) {
-				val httpServerAceWrite = (parent as ScenarioEvent).outcome.eContainer as HttpServerAceWrite;
-				if (httpServerAceWrite !== null) {
-					val aceModel = httpServerAceWrite.model;
-					if (aceModel !== null) {
-						return getScopeFor(aceModel);
-					}
+				if (parent instanceof ThenBlock) {
+					isThen = true
+				}
+				if (parent instanceof WhenBlock) {
+					isWhen = true
 				}
 			}
-			if (parent instanceof Verification) {
-				val verification = parent as Verification;
-				val aceModel = verification.action.model;
-				if (aceModel !== null) {
-					return getScopeFor(aceModel);
-				}
-			}
+			/*if (parent instanceof ScenarioEvent) {
+			 * 	val httpServerAceWrite = (parent as ScenarioEvent).outcome.eContainer as HttpServerAceWrite;
+			 * 	if (httpServerAceWrite !== null) {
+			 * 		val aceModel = httpServerAceWrite.model;
+			 * 		if (aceModel !== null) {
+			 * 			return getScopeFor(aceModel);
+			 * 		}
+			 * 	}
+			 * }
+			 * if (parent instanceof Verification) {
+			 * 	val verification = parent as Verification;
+			 * 	val aceModel = verification.action.model;
+			 * 	if (aceModel !== null) {
+			 * 		return getScopeFor(aceModel);
+			 * 	}
+			 }*/
 			if (parent instanceof Scenario) {
 				val scenario = parent as Scenario;
-				val aceModel = scenario.action.model;
-				if (aceModel !== null) {
-					return getScopeFor(aceModel);
+				if (isWhen) {
+					var attr = new ArrayList<Attribute>();
+					attr.addAll(scenario.whenBlock.action.payload)
+					attr.addAll(scenario.whenBlock.action.queryParams)
+					return Scopes.scopeFor(attr);
+				} else if (isThen) {
+					return Scopes.scopeFor(scenario.whenBlock.action.response);
 				}
 			}
 			if (parent instanceof AttributeDefinition) {
@@ -121,7 +130,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 		return super.getScope(context, reference);
 	}
 
-	def IScope getScopeFor(Model aceModel) {
+	private def IScope getScopeFor(Model aceModel) {
 		val attrs = new ArrayList<Attribute>();
 		aceModel.allAttributesRec(attrs);
 		return Scopes.scopeFor(attrs)

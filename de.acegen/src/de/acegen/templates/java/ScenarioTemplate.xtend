@@ -1,6 +1,7 @@
 package de.acegen.templates.java
 
 import de.acegen.aceGen.AttributeDefinition
+import de.acegen.aceGen.Authorization
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
@@ -8,13 +9,11 @@ import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
-import de.acegen.aceGen.ScenarioEvent
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
-import de.acegen.aceGen.Authorization
 
 class ScenarioTemplate {
 
@@ -47,12 +46,8 @@ class ScenarioTemplate {
 		
 		import com.anfelisa.ace.BaseScenario;
 		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.todo.TestUtils;
-		import com.anfelisa.todo.ActionCalls;
-		
-		import static org.hamcrest.MatcherAssert.assertThat;
-		import static org.hamcrest.Matchers.is;
-		import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+		import «java.getName».TestUtils;
+		import «java.getName».ActionCalls;
 		
 		@SuppressWarnings("unused")
 		public class «name»Scenario extends BaseScenario {
@@ -60,54 +55,35 @@ class ScenarioTemplate {
 			private void given() throws Exception {
 				List<ITimelineItem> timeline = new ArrayList<>();
 				
-				«FOR scenarioEvent : events»
-					«generateEventCreation(scenarioEvent, (scenarioEvent.outcome.eContainer as HttpServerAceWrite).model, events.indexOf(scenarioEvent))»
+				«FOR scenario : scenarios»
+					// «scenario.name»
 					
 				«ENDFOR»
 				prepare(timeline, DROPWIZARD.getLocalPort());
 			}
 			
 			private Response when() throws Exception {
-				«IF dataDefinition.systemtime !== null»
-					setSystemTime(«dateFrom(dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
+				«IF whenBlock.dataDefinition.systemtime !== null»
+					setSystemTime(«dateFrom(whenBlock.dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
 				«ENDIF»
-				return «generateActionCalls(action, dataDefinition, authorization, java)»
+				return «generateActionCalls(whenBlock.action, whenBlock.dataDefinition, whenBlock.authorization, java)»
 			}
 			
 			private void then(Response response) throws Exception {
-				«IF statusCode !== 0»
-					assertThat(response.getStatus(), is(«statusCode»));
+				«IF thenBlock.statusCode !== 0»
+					assertThat(response.getStatus(), «thenBlock.statusCode»);
 				«ENDIF»
 				
-				«IF response !== null»
-					«generateDataCreation(response, action.model, "expectedData")»
+				«IF thenBlock.response !== null»
+					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData")»
 					
-					«action.responseDataNameWithPackage(java)» expected = new «action.responseDataNameWithPackage(java)»(expectedData);
+					«whenBlock.action.responseDataNameWithPackage(java)» expected = new «whenBlock.action.responseDataNameWithPackage(java)»(expectedData);
 
-					«action.responseDataNameWithPackage(java)» actual = response.readEntity(«action.responseDataNameWithPackage(java)».class);
+					«whenBlock.action.responseDataNameWithPackage(java)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(java)».class);
 
-					assertThat(actual, sameBeanAs(expected));
+					assertThat(actual, expected);
 				«ENDIF»
 				
-				«FOR verification : verifications»
-					«IF verification.response !== null»
-						«IF verification.dataDefinition.systemtime !== null»
-							setSystemTime(«dateFrom(verification.dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
-						«ENDIF»
-
-						Response «verification.action.name.toFirstLower»«verifications.indexOf(verification)» = «generateActionCalls(verification.action, verification.dataDefinition, verification.authorization, java)»
-						
-						«generateDataCreation(verification.response, verification.action.model, '''expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»Data''')»
-						
-						«verification.action.responseDataNameWithPackage(java)» expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)» = new «verification.action.responseDataNameWithPackage(java)»(expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»Data);
-
-						«verification.action.responseDataNameWithPackage(java)» actual«verification.action.name.toFirstUpper»«verifications.indexOf(verification)» = «verification.action.name.toFirstLower»«verifications.indexOf(verification)».readEntity(«verification.action.responseDataNameWithPackage(java)».class);
-
-						assertThat(actual«verification.action.name.toFirstUpper»«verifications.indexOf(verification)», sameBeanAs(expected«verification.action.name.toFirstUpper»«verifications.indexOf(verification)»));
-						
-						
-					«ENDIF»
-				«ENDFOR»
 			}
 			
 			@Test
@@ -125,11 +101,6 @@ class ScenarioTemplate {
 		
 		«sdg»
 		
-	'''
-	
-	def generateEventCreation(ScenarioEvent it, Model model, int index) '''
-		«generateDataCreation(dataDefinition, model, '''«model.name.toFirstLower»«index»''')»
-		timeline.add(TestUtils.create«(outcome.eContainer as HttpServerAceWrite).eventName(outcome)»TimelineItem(«model.name.toFirstLower»«index»));
 	'''
 	
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
@@ -190,7 +161,6 @@ class ScenarioTemplate {
 		import org.junit.AfterClass;
 		import org.junit.Before;
 		import org.junit.BeforeClass;
-		import org.mockito.MockitoAnnotations;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -231,7 +201,6 @@ class ScenarioTemplate {
 			public void before() {
 				daoProvider = new DaoProvider();
 				handle = jdbi.open();
-				MockitoAnnotations.initMocks(this);
 			}
 			
 			@After
@@ -244,6 +213,15 @@ class ScenarioTemplate {
 				return "";
 			}
 		
+			@Override
+			protected void assertThat(int actual, int expected) {
+				throw new RuntimeException("BaseScenario.assertThat not implemented");
+			}
+
+			@Override
+			protected void assertThat(Object actual, Object expected) {
+				throw new RuntimeException("BaseScenario.assertThat not implemented");
+			}
 		}
 		
 	'''
@@ -296,6 +274,10 @@ class ScenarioTemplate {
 			}
 			
 			protected abstract String authorization(String username, String password);
+
+			protected abstract void assertThat(int actual, int expected);
+
+			protected abstract void assertThat(Object actual, Object expected);
 		
 		}
 		

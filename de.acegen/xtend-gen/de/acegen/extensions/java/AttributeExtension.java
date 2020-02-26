@@ -672,11 +672,13 @@ public class AttributeExtension {
   }
   
   private String valueFor(final Attribute attribute, final DataDefinition dataDefinition) {
-    EList<AttributeDefinition> _attributeDefinitions = dataDefinition.getData().getAttributeDefinitions();
-    for (final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-      boolean _equals = attributeDefinition.getAttribute().equals(attribute);
-      if (_equals) {
-        return this.valueFrom(attributeDefinition);
+    if (((dataDefinition.getData() != null) && (dataDefinition.getData().getAttributeDefinitions() != null))) {
+      EList<AttributeDefinition> _attributeDefinitions = dataDefinition.getData().getAttributeDefinitions();
+      for (final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+        boolean _equals = attributeDefinition.getAttribute().equals(attribute);
+        if (_equals) {
+          return this.valueFrom(attributeDefinition);
+        }
       }
     }
     return null;

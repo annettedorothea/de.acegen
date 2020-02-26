@@ -111,18 +111,24 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
-        eType="#//ScenarioEvent" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" unique="false"
+        upperBound="-1" eType="#//Scenario"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//WhenBlock"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ThenBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WhenBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpServerAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ThenBlock">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statusCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//DataDefinition"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
-        eType="#//Verification" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -133,20 +139,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Authorization">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ScenarioEvent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outcome" eType="#//HttpServerOutcome"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Verification">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpServerAceRead"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDefinition" eType="#//DataDefinition"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="response" eType="#//DataDefinition"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitions" upperBound="-1"

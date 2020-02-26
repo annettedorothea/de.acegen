@@ -14,8 +14,6 @@ import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Scenario;
-import de.acegen.aceGen.ScenarioEvent;
-import de.acegen.aceGen.Verification;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
@@ -24,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -79,23 +76,22 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.todo.TestUtils;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.todo.ActionCalls;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import static org.hamcrest.MatcherAssert.assertThat;");
-    _builder.newLine();
-    _builder.append("import static org.hamcrest.Matchers.is;");
-    _builder.newLine();
-    _builder.append("import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;");
-    _builder.newLine();
+    _builder.append("import ");
+    String _name_1 = java.getName();
+    _builder.append(_name_1);
+    _builder.append(".TestUtils;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("import ");
+    String _name_2 = java.getName();
+    _builder.append(_name_2);
+    _builder.append(".ActionCalls;");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ");
-    String _name_1 = it.getName();
-    _builder.append(_name_1);
+    String _name_3 = it.getName();
+    _builder.append(_name_3);
     _builder.append("Scenario extends BaseScenario {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -108,12 +104,12 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.newLine();
     {
-      EList<ScenarioEvent> _events = it.getEvents();
-      for(final ScenarioEvent scenarioEvent : _events) {
+      EList<Scenario> _scenarios = it.getScenarios();
+      for(final Scenario scenario : _scenarios) {
         _builder.append("\t\t");
-        EObject _eContainer = scenarioEvent.getOutcome().eContainer();
-        CharSequence _generateEventCreation = this.generateEventCreation(scenarioEvent, ((HttpServerAceWrite) _eContainer).getModel(), it.getEvents().indexOf(scenarioEvent));
-        _builder.append(_generateEventCreation, "\t\t");
+        _builder.append("// ");
+        String _name_4 = scenario.getName();
+        _builder.append(_name_4, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.newLine();
@@ -131,12 +127,12 @@ public class ScenarioTemplate {
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
     {
-      String _systemtime = it.getDataDefinition().getSystemtime();
+      String _systemtime = it.getWhenBlock().getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
         _builder.append("\t\t");
         _builder.append("setSystemTime(");
-        String _dateFrom = this._attributeExtension.dateFrom(it.getDataDefinition().getSystemtime());
+        String _dateFrom = this._attributeExtension.dateFrom(it.getWhenBlock().getDataDefinition().getSystemtime());
         _builder.append(_dateFrom, "\t\t");
         _builder.append(", DROPWIZARD.getLocalPort());");
         _builder.newLineIfNotEmpty();
@@ -144,7 +140,7 @@ public class ScenarioTemplate {
     }
     _builder.append("\t\t");
     _builder.append("return ");
-    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java);
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getWhenBlock().getAction(), it.getWhenBlock().getDataDefinition(), it.getWhenBlock().getAuthorization(), java);
     _builder.append(_generateActionCalls, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -156,160 +152,54 @@ public class ScenarioTemplate {
     _builder.append("private void then(Response response) throws Exception {");
     _builder.newLine();
     {
-      int _statusCode = it.getStatusCode();
+      int _statusCode = it.getThenBlock().getStatusCode();
       boolean _tripleNotEquals_1 = (_statusCode != 0);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
-        _builder.append("assertThat(response.getStatus(), is(");
-        int _statusCode_1 = it.getStatusCode();
+        _builder.append("assertThat(response.getStatus(), ");
+        int _statusCode_1 = it.getThenBlock().getStatusCode();
         _builder.append(_statusCode_1, "\t\t");
-        _builder.append("));");
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }
     _builder.append("\t\t");
     _builder.newLine();
     {
-      DataDefinition _response = it.getResponse();
+      DataDefinition _response = it.getThenBlock().getResponse();
       boolean _tripleNotEquals_2 = (_response != null);
       if (_tripleNotEquals_2) {
         _builder.append("\t\t");
-        CharSequence _generateDataCreation = this.generateDataCreation(it.getResponse(), it.getAction().getModel(), "expectedData");
+        CharSequence _generateDataCreation = this.generateDataCreation(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel(), "expectedData");
         _builder.append(_generateDataCreation, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.newLine();
         _builder.append("\t\t");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getAction(), java);
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), java);
         _builder.append(_responseDataNameWithPackage, "\t\t");
         _builder.append(" expected = new ");
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getAction(), java);
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), java);
         _builder.append(_responseDataNameWithPackage_1, "\t\t");
         _builder.append("(expectedData);");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
         _builder.append("\t\t");
-        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getAction(), java);
+        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), java);
         _builder.append(_responseDataNameWithPackage_2, "\t\t");
         _builder.append(" actual = response.readEntity(");
-        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getAction(), java);
+        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), java);
         _builder.append(_responseDataNameWithPackage_3, "\t\t");
         _builder.append(".class);");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("assertThat(actual, sameBeanAs(expected));");
+        _builder.append("assertThat(actual, expected);");
         _builder.newLine();
       }
     }
     _builder.append("\t\t");
     _builder.newLine();
-    {
-      EList<Verification> _verifications = it.getVerifications();
-      for(final Verification verification : _verifications) {
-        {
-          DataDefinition _response_1 = verification.getResponse();
-          boolean _tripleNotEquals_3 = (_response_1 != null);
-          if (_tripleNotEquals_3) {
-            {
-              String _systemtime_1 = verification.getDataDefinition().getSystemtime();
-              boolean _tripleNotEquals_4 = (_systemtime_1 != null);
-              if (_tripleNotEquals_4) {
-                _builder.append("\t\t");
-                _builder.append("setSystemTime(");
-                String _dateFrom_1 = this._attributeExtension.dateFrom(verification.getDataDefinition().getSystemtime());
-                _builder.append(_dateFrom_1, "\t\t");
-                _builder.append(", DROPWIZARD.getLocalPort());");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-            _builder.newLine();
-            _builder.append("\t\t");
-            _builder.append("Response ");
-            String _firstLower = StringExtensions.toFirstLower(verification.getAction().getName());
-            _builder.append(_firstLower, "\t\t");
-            int _indexOf = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf, "\t\t");
-            _builder.append(" = ");
-            CharSequence _generateActionCalls_1 = this.generateActionCalls(verification.getAction(), verification.getDataDefinition(), verification.getAuthorization(), java);
-            _builder.append(_generateActionCalls_1, "\t\t");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.newLine();
-            _builder.append("\t\t");
-            DataDefinition _response_2 = verification.getResponse();
-            Model _model = verification.getAction().getModel();
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("expected");
-            String _firstUpper = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder_1.append(_firstUpper);
-            int _indexOf_1 = it.getVerifications().indexOf(verification);
-            _builder_1.append(_indexOf_1);
-            _builder_1.append("Data");
-            CharSequence _generateDataCreation_1 = this.generateDataCreation(_response_2, _model, _builder_1.toString());
-            _builder.append(_generateDataCreation_1, "\t\t");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.newLine();
-            _builder.append("\t\t");
-            String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(verification.getAction(), java);
-            _builder.append(_responseDataNameWithPackage_4, "\t\t");
-            _builder.append(" expected");
-            String _firstUpper_1 = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder.append(_firstUpper_1, "\t\t");
-            int _indexOf_2 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_2, "\t\t");
-            _builder.append(" = new ");
-            String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(verification.getAction(), java);
-            _builder.append(_responseDataNameWithPackage_5, "\t\t");
-            _builder.append("(expected");
-            String _firstUpper_2 = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder.append(_firstUpper_2, "\t\t");
-            int _indexOf_3 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_3, "\t\t");
-            _builder.append("Data);");
-            _builder.newLineIfNotEmpty();
-            _builder.newLine();
-            _builder.append("\t\t");
-            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(verification.getAction(), java);
-            _builder.append(_responseDataNameWithPackage_6, "\t\t");
-            _builder.append(" actual");
-            String _firstUpper_3 = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder.append(_firstUpper_3, "\t\t");
-            int _indexOf_4 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_4, "\t\t");
-            _builder.append(" = ");
-            String _firstLower_1 = StringExtensions.toFirstLower(verification.getAction().getName());
-            _builder.append(_firstLower_1, "\t\t");
-            int _indexOf_5 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_5, "\t\t");
-            _builder.append(".readEntity(");
-            String _responseDataNameWithPackage_7 = this._aceExtension.responseDataNameWithPackage(verification.getAction(), java);
-            _builder.append(_responseDataNameWithPackage_7, "\t\t");
-            _builder.append(".class);");
-            _builder.newLineIfNotEmpty();
-            _builder.newLine();
-            _builder.append("\t\t");
-            _builder.append("assertThat(actual");
-            String _firstUpper_4 = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder.append(_firstUpper_4, "\t\t");
-            int _indexOf_6 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_6, "\t\t");
-            _builder.append(", sameBeanAs(expected");
-            String _firstUpper_5 = StringExtensions.toFirstUpper(verification.getAction().getName());
-            _builder.append(_firstUpper_5, "\t\t");
-            int _indexOf_7 = it.getVerifications().indexOf(verification);
-            _builder.append(_indexOf_7, "\t\t");
-            _builder.append("));");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.newLine();
-            _builder.append("\t\t");
-            _builder.newLine();
-          }
-        }
-      }
-    }
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -320,8 +210,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void ");
-    String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
-    _builder.append(_firstLower_2, "\t");
+    String _firstLower = StringExtensions.toFirstLower(it.getName());
+    _builder.append(_firstLower, "\t");
     _builder.append("() throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -351,29 +241,6 @@ public class ScenarioTemplate {
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    return _builder;
-  }
-  
-  public CharSequence generateEventCreation(final ScenarioEvent it, final Model model, final int index) {
-    StringConcatenation _builder = new StringConcatenation();
-    DataDefinition _dataDefinition = it.getDataDefinition();
-    StringConcatenation _builder_1 = new StringConcatenation();
-    String _firstLower = StringExtensions.toFirstLower(model.getName());
-    _builder_1.append(_firstLower);
-    _builder_1.append(index);
-    CharSequence _generateDataCreation = this.generateDataCreation(_dataDefinition, model, _builder_1.toString());
-    _builder.append(_generateDataCreation);
-    _builder.newLineIfNotEmpty();
-    _builder.append("timeline.add(TestUtils.create");
-    EObject _eContainer = it.getOutcome().eContainer();
-    String _eventName = this._aceExtension.eventName(((HttpServerAceWrite) _eContainer), it.getOutcome());
-    _builder.append(_eventName);
-    _builder.append("TimelineItem(");
-    String _firstLower_1 = StringExtensions.toFirstLower(model.getName());
-    _builder.append(_firstLower_1);
-    _builder.append(index);
-    _builder.append("));");
-    _builder.newLineIfNotEmpty();
     return _builder;
   }
   
@@ -704,8 +571,6 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import org.junit.BeforeClass;");
     _builder.newLine();
-    _builder.append("import org.mockito.MockitoAnnotations;");
-    _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
@@ -800,9 +665,6 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.append("handle = jdbi.open();");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("MockitoAnnotations.initMocks(this);");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -834,6 +696,31 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected void assertThat(int actual, int expected) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throw new RuntimeException(\"BaseScenario.assertThat not implemented\");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected void assertThat(Object actual, Object expected) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throw new RuntimeException(\"BaseScenario.assertThat not implemented\");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -948,6 +835,14 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract String authorization(String username, String password);");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertThat(int actual, int expected);");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertThat(Object actual, Object expected);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

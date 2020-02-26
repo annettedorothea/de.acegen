@@ -28,8 +28,8 @@ import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Scenario;
-import de.acegen.aceGen.ScenarioEvent;
-import de.acegen.aceGen.Verification;
+import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.scoping.AbstractAceGenScopeProvider;
 import java.util.ArrayList;
@@ -101,31 +101,30 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
     if ((((context instanceof AttributeDefinitionList) || (context instanceof ListAttributeDefinitionList)) || 
       (context instanceof AttributeDefinition))) {
       EObject parent = context.eContainer();
-      while (((parent != null) && (!((((parent instanceof ScenarioEvent) || (parent instanceof Verification)) || (parent instanceof Scenario)) || (parent instanceof AttributeDefinition))))) {
-        parent = parent.eContainer();
-      }
-      if ((parent instanceof ScenarioEvent)) {
-        EObject _eContainer_1 = ((ScenarioEvent) parent).getOutcome().eContainer();
-        final HttpServerAceWrite httpServerAceWrite = ((HttpServerAceWrite) _eContainer_1);
-        if ((httpServerAceWrite != null)) {
-          final Model aceModel_2 = httpServerAceWrite.getModel();
-          if ((aceModel_2 != null)) {
-            return this.getScopeFor(aceModel_2);
+      boolean isThen = false;
+      boolean isWhen = false;
+      while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof AttributeDefinition))))) {
+        {
+          parent = parent.eContainer();
+          if ((parent instanceof ThenBlock)) {
+            isThen = true;
           }
-        }
-      }
-      if ((parent instanceof Verification)) {
-        final Verification verification = ((Verification) parent);
-        final Model aceModel_3 = verification.getAction().getModel();
-        if ((aceModel_3 != null)) {
-          return this.getScopeFor(aceModel_3);
+          if ((parent instanceof WhenBlock)) {
+            isWhen = true;
+          }
         }
       }
       if ((parent instanceof Scenario)) {
         final Scenario scenario = ((Scenario) parent);
-        final Model aceModel_4 = scenario.getAction().getModel();
-        if ((aceModel_4 != null)) {
-          return this.getScopeFor(aceModel_4);
+        if (isWhen) {
+          ArrayList<Attribute> attr = new ArrayList<Attribute>();
+          attr.addAll(scenario.getWhenBlock().getAction().getPayload());
+          attr.addAll(scenario.getWhenBlock().getAction().getQueryParams());
+          return Scopes.scopeFor(attr);
+        } else {
+          if (isThen) {
+            return Scopes.scopeFor(scenario.getWhenBlock().getAction().getResponse());
+          }
         }
       }
       if ((parent instanceof AttributeDefinition)) {
@@ -142,7 +141,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
     return super.getScope(context, reference);
   }
   
-  public IScope getScopeFor(final Model aceModel) {
+  private IScope getScopeFor(final Model aceModel) {
     final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
     this._modelExtension.allAttributesRec(aceModel, attrs);
     return Scopes.scopeFor(attrs);

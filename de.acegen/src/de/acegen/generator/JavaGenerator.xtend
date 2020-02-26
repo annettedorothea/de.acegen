@@ -232,17 +232,17 @@ class JavaGenerator {
 		}
 		
 		fsa.generateFile('com/anfelisa/ace/AbstractBaseScenario.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateAbstractBaseScenario());
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateAbstractBaseScenario());
 
 		fsa.generateFile('com/anfelisa/ace/BaseScenario.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, scenarioTemplate.generateBaseScenario());
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, scenarioTemplate.generateBaseScenario());
 
 		fsa.generateFile(java.packageFolder + '/TestUtils.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateTestUtils(java));
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateTestUtils(java));
 
 		for (scenario : java.scenarios) {
 			fsa.generateFile(java.packageFolder + '/scenarios/' + scenario.name + 'Scenario.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, scenarioTemplate.generateScenario(scenario, java));
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, scenarioTemplate.generateScenario(scenario, java));
 		}
 
 	}
