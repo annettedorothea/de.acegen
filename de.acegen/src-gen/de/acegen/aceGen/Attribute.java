@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Attribute#getNotReplayableTestValue <em>Not Replayable Test Value</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -205,5 +206,27 @@ public interface Attribute extends EObject
    * @generated
    */
   void setForeignKey(Attribute value);
+
+  /**
+   * Returns the value of the '<em><b>Not Replayable Test Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Not Replayable Test Value</em>' containment reference.
+   * @see #setNotReplayableTestValue(Value)
+   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NotReplayableTestValue()
+   * @model containment="true"
+   * @generated
+   */
+  Value getNotReplayableTestValue();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Attribute#getNotReplayableTestValue <em>Not Replayable Test Value</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Not Replayable Test Value</em>' containment reference.
+   * @see #getNotReplayableTestValue()
+   * @generated
+   */
+  void setNotReplayableTestValue(Value value);
 
 } // Attribute

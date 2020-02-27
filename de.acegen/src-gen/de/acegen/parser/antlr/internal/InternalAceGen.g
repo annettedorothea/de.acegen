@@ -2533,6 +2533,31 @@ ruleAttribute returns [EObject current=null]
 				)
 			)
 		)?
+		(
+			otherlv_9='notReplayableTestValue'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getAttributeAccess().getNotReplayableTestValueKeyword_7_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getAttributeAccess().getNotReplayableTestValueValueParserRuleCall_7_1_0());
+					}
+					lv_notReplayableTestValue_10_0=ruleValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getAttributeRule());
+						}
+						set(
+							$current,
+							"notReplayableTestValue",
+							lv_notReplayableTestValue_10_0,
+							"de.acegen.AceGen.Value");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
 	)
 ;
 

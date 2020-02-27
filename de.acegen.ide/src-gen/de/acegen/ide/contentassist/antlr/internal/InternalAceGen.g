@@ -6207,6 +6207,7 @@ rule__Attribute__Group__6
 	}
 :
 	rule__Attribute__Group__6__Impl
+	rule__Attribute__Group__7
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6221,6 +6222,32 @@ rule__Attribute__Group__6__Impl
 	{ before(grammarAccess.getAttributeAccess().getGroup_6()); }
 	(rule__Attribute__Group_6__0)?
 	{ after(grammarAccess.getAttributeAccess().getGroup_6()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group__7
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Attribute__Group__7__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group__7__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getAttributeAccess().getGroup_7()); }
+	(rule__Attribute__Group_7__0)?
+	{ after(grammarAccess.getAttributeAccess().getGroup_7()); }
 )
 ;
 finally {
@@ -6275,6 +6302,60 @@ rule__Attribute__Group_6__1__Impl
 	{ before(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1()); }
 	(rule__Attribute__ForeignKeyAssignment_6_1)
 	{ after(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__Attribute__Group_7__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Attribute__Group_7__0__Impl
+	rule__Attribute__Group_7__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group_7__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueKeyword_7_0()); }
+	'notReplayableTestValue'
+	{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueKeyword_7_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group_7__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Attribute__Group_7__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group_7__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueAssignment_7_1()); }
+	(rule__Attribute__NotReplayableTestValueAssignment_7_1)
+	{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueAssignment_7_1()); }
 )
 ;
 finally {
@@ -7889,6 +7970,21 @@ rule__Attribute__ForeignKeyAssignment_6_1
 			{ after(grammarAccess.getAttributeAccess().getForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1()); }
 		)
 		{ after(grammarAccess.getAttributeAccess().getForeignKeyAttributeCrossReference_6_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__NotReplayableTestValueAssignment_7_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueValueParserRuleCall_7_1_0()); }
+		ruleValue
+		{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueValueParserRuleCall_7_1_0()); }
 	)
 ;
 finally {

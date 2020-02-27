@@ -67,6 +67,21 @@ class ModelExtension {
 		return list;
 	}
 	
+	def List<Attribute> allNotReplayableAttributes(Model it) {
+		var list = new ArrayList<Attribute>()
+		if (it === null) {
+			return list
+		} 
+		var allAttributes = new ArrayList<Attribute>()
+		allAttributesRec(allAttributes)
+		for (attribute : allAttributes) {
+			if (attribute.notReplayableTestValue !== null) {
+				list.add(attribute);
+			}
+		}
+		return list;
+	}
+	
 	def boolean containsPrimitiveAttributes(Model it) {
 		for (attribute : attributes) {
 			if (attribute.isPrimitive) {

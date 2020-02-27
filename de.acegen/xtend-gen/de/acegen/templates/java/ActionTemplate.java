@@ -558,6 +558,9 @@ public class ActionTemplate {
     _builder.append("\t\t\t\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("this.initNotReplayableTestValues();");
+    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -706,6 +709,24 @@ public class ActionTemplate {
         _builder.newLine();
       }
     }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public void initNotReplayableTestValues() {");
+    _builder.newLine();
+    {
+      List<Attribute> _allNotReplayableAttributes = this._modelExtension.allNotReplayableAttributes(it.getModel());
+      for(final Attribute attribute_1 : _allNotReplayableAttributes) {
+        _builder.append("\t\t");
+        _builder.append("this.actionData.");
+        String _setterCall_4 = this._attributeExtension.setterCall(attribute_1, this._attributeExtension.notReplayableTestValueFrom(attribute_1));
+        _builder.append(_setterCall_4, "\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1190,6 +1211,9 @@ public class ActionTemplate {
     _builder.append("\t\t\t\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("this.initNotReplayableTestValues();");
+    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -1317,6 +1341,27 @@ public class ActionTemplate {
         _builder.newLine();
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public void initNotReplayableTestValues() {");
+    _builder.newLine();
+    {
+      List<Attribute> _allNotReplayableAttributes = this._modelExtension.allNotReplayableAttributes(it.getModel());
+      for(final Attribute attribute_1 : _allNotReplayableAttributes) {
+        _builder.append("\t\t");
+        _builder.append("this.actionData.");
+        String _setterCall_4 = this._attributeExtension.setterCall(attribute_1, this._attributeExtension.notReplayableTestValueFrom(attribute_1));
+        _builder.append(_setterCall_4, "\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1411,6 +1456,16 @@ public class ActionTemplate {
     _builder.append("\t\t");
     _builder.append("// init not replayable data here");
     _builder.newLine();
+    {
+      List<Attribute> _allNotReplayableAttributes = this._modelExtension.allNotReplayableAttributes(it.getModel());
+      for(final Attribute attribute : _allNotReplayableAttributes) {
+        _builder.append("\t\t");
+        _builder.append("// ");
+        String _name_1 = attribute.getName();
+        _builder.append(_name_1, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();

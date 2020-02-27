@@ -140,12 +140,9 @@ public class ScenarioTemplate {
       EList<Scenario> _scenarios = it.getScenarios();
       for(final Scenario scenario : _scenarios) {
         _builder.append("\t\t");
-        _builder.append("// ");
-        String _name_3 = scenario.getName();
-        _builder.append(_name_3, "\t\t");
+        CharSequence _generateActionCalls = this.generateActionCalls(scenario.getWhenBlock().getAction(), scenario.getWhenBlock().getDataDefinition(), scenario.getWhenBlock().getAuthorization(), java);
+        _builder.append(_generateActionCalls, "\t\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.newLine();
       }
     }
     _builder.append("\t");
@@ -170,8 +167,8 @@ public class ScenarioTemplate {
     }
     _builder.append("\t\t");
     _builder.append("return ");
-    CharSequence _generateActionCalls = this.generateActionCalls(it.getWhenBlock().getAction(), it.getWhenBlock().getDataDefinition(), it.getWhenBlock().getAuthorization(), java);
-    _builder.append(_generateActionCalls, "\t\t");
+    CharSequence _generateActionCalls_1 = this.generateActionCalls(it.getWhenBlock().getAction(), it.getWhenBlock().getDataDefinition(), it.getWhenBlock().getAuthorization(), java);
+    _builder.append(_generateActionCalls_1, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -473,13 +470,13 @@ public class ScenarioTemplate {
         {
           boolean _isAuthorize = aceOperation.isAuthorize();
           if (_isAuthorize) {
-            _builder.append(", authorization(");
+            _builder.append(", authorization(\"");
             String _username = authorization.getUsername();
             _builder.append(_username);
-            _builder.append(", ");
+            _builder.append("\", \"");
             String _password = authorization.getPassword();
             _builder.append(_password);
-            _builder.append(")");
+            _builder.append("\")");
           }
         }
         _builder.append(");");
@@ -508,13 +505,13 @@ public class ScenarioTemplate {
           {
             boolean _isAuthorize_1 = aceOperation.isAuthorize();
             if (_isAuthorize_1) {
-              _builder.append(", authorization(");
+              _builder.append(", authorization(\"");
               String _username_1 = authorization.getUsername();
               _builder.append(_username_1);
-              _builder.append(", ");
+              _builder.append("\", \"");
               String _password_1 = authorization.getPassword();
               _builder.append(_password_1);
-              _builder.append(")");
+              _builder.append("\")");
             }
           }
           _builder.append(");");
@@ -543,13 +540,13 @@ public class ScenarioTemplate {
             {
               boolean _isAuthorize_2 = aceOperation.isAuthorize();
               if (_isAuthorize_2) {
-                _builder.append(", authorization(");
+                _builder.append(", authorization(\"");
                 String _username_2 = authorization.getUsername();
                 _builder.append(_username_2);
-                _builder.append(", ");
+                _builder.append("\", \"");
                 String _password_2 = authorization.getPassword();
                 _builder.append(_password_2);
-                _builder.append(")");
+                _builder.append("\")");
               }
             }
             _builder.append(");");
@@ -575,13 +572,13 @@ public class ScenarioTemplate {
             {
               boolean _isAuthorize_3 = aceOperation.isAuthorize();
               if (_isAuthorize_3) {
-                _builder.append(", authorization(");
+                _builder.append(", authorization(\"");
                 String _username_3 = authorization.getUsername();
                 _builder.append(_username_3);
-                _builder.append(", ");
+                _builder.append("\", \"");
                 String _password_3 = authorization.getPassword();
                 _builder.append(_password_3);
-                _builder.append(")");
+                _builder.append("\")");
               }
             }
             _builder.append(");");
@@ -775,6 +772,20 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertIsNull(Object actual) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throw new RuntimeException(\"BaseScenario.assertIsNull not implemented\");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -896,6 +907,10 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract void assertThat(Object actual, Object expected);");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertIsNull(Object actual);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

@@ -243,6 +243,35 @@ class AttributeExtension {
 		return '''«value.intValue»'''
 	}
 
+	def String notReplayableTestValueFrom(Attribute attribute) {
+		val value = attribute.notReplayableTestValue;
+		if (value.stringValue !== null) {
+			if (attribute.type == "DateTime") {
+				return dateFrom(value.stringValue)
+			}
+			if (attribute.type == "Integer") {
+				return '''Integer.parseInt("«value.stringValue»")'''
+			}
+			if (attribute.type == "Float") {
+				return '''Float.parseFloat("«value.stringValue»")'''
+			}
+			if (attribute.type == "Boolean") {
+				return '''new Boolean("«value.stringValue»")'''
+			}
+			if (attribute.type == "Long") {
+				return '''Long.parseLong("«value.stringValue»")'''
+			}
+			return '''"«value.stringValue»"'''
+		}
+		if (value.attributeDefinitionList !== null) {
+			return "null"
+		}
+		if (value.listAttributeDefinitionList !== null) {
+			return "null"
+		}
+		return '''«value.intValue»'''
+	}
+
 	private def String valueFor(Attribute attribute, DataDefinition dataDefinition) {
 		if (dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null) {
 			for (attributeDefinition : dataDefinition.data.attributeDefinitions) {

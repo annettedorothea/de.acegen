@@ -181,7 +181,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         list?='List'? 
 	 *         (type=Type | model=[Model|QualifiedName]) 
 	 *         name=ID 
-	 *         foreignKey=[Attribute|QualifiedName]?
+	 *         foreignKey=[Attribute|QualifiedName]? 
+	 *         notReplayableTestValue=Value?
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {

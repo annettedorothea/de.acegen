@@ -172,7 +172,14 @@ AttributeDefinition:
 ;
 
 Attribute:
-	unique ?= 'Unique'? primaryKey ?= 'PrimaryKey'? (constraint = Constraint)? list ?= 'List'? (type = Type | model = [Model | QualifiedName]) name = ID ('references' foreignKey = [Attribute | QualifiedName])?
+	unique ?= 'Unique'? 
+	primaryKey ?= 'PrimaryKey'? 
+	(constraint = Constraint)? 
+	list ?= 'List'? 
+	(type = Type | model = [Model | QualifiedName]) 
+	name = ID 
+	('references' foreignKey = [Attribute | QualifiedName])? 
+	('notReplayableTestValue' notReplayableTestValue = Value)?
 ;
 
 QualifiedName:

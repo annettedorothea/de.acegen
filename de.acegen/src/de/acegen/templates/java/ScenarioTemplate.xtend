@@ -72,8 +72,7 @@ class ScenarioTemplate {
 		
 			private void given() throws Exception {
 				«FOR scenario : scenarios»
-					// «scenario.name»
-					
+					«generateActionCalls(scenario.whenBlock.action, scenario.whenBlock.dataDefinition, scenario.whenBlock.authorization, java)»
 				«ENDFOR»
 			}
 			
@@ -159,13 +158,13 @@ class ScenarioTemplate {
 
 	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
 		«IF aceOperation.getType == "POST"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSEIF aceOperation.getType == "PUT"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSEIF aceOperation.getType == "DELETE"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSE»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization(«authorization.username», «authorization.password»)«ENDIF»);
+			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ENDIF»
 	'''
 	
@@ -242,6 +241,11 @@ class ScenarioTemplate {
 			protected void assertThat(Object actual, Object expected) {
 				throw new RuntimeException("BaseScenario.assertThat not implemented");
 			}
+			
+			@Override
+			protected abstract void assertIsNull(Object actual) {
+				throw new RuntimeException("BaseScenario.assertIsNull not implemented");
+			}
 		}
 		
 	'''
@@ -298,6 +302,8 @@ class ScenarioTemplate {
 			protected abstract void assertThat(int actual, int expected);
 
 			protected abstract void assertThat(Object actual, Object expected);
+
+			protected abstract void assertIsNull(Object actual);
 		
 		}
 		

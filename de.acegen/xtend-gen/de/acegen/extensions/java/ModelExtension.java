@@ -18,6 +18,7 @@ package de.acegen.extensions.java;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Value;
 import de.acegen.extensions.java.AttributeExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +160,23 @@ public class ModelExtension {
     for (final Attribute attribute : _attributes) {
       boolean _isUnique = attribute.isUnique();
       if (_isUnique) {
+        list.add(attribute);
+      }
+    }
+    return list;
+  }
+  
+  public List<Attribute> allNotReplayableAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    if ((it == null)) {
+      return list;
+    }
+    ArrayList<Attribute> allAttributes = new ArrayList<Attribute>();
+    this.allAttributesRec(it, allAttributes);
+    for (final Attribute attribute : allAttributes) {
+      Value _notReplayableTestValue = attribute.getNotReplayableTestValue();
+      boolean _tripleNotEquals = (_notReplayableTestValue != null);
+      if (_tripleNotEquals) {
         list.add(attribute);
       }
     }
