@@ -92,28 +92,13 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					isWhen = true
 				}
 			}
-			/*if (parent instanceof ScenarioEvent) {
-			 * 	val httpServerAceWrite = (parent as ScenarioEvent).outcome.eContainer as HttpServerAceWrite;
-			 * 	if (httpServerAceWrite !== null) {
-			 * 		val aceModel = httpServerAceWrite.model;
-			 * 		if (aceModel !== null) {
-			 * 			return getScopeFor(aceModel);
-			 * 		}
-			 * 	}
-			 * }
-			 * if (parent instanceof Verification) {
-			 * 	val verification = parent as Verification;
-			 * 	val aceModel = verification.action.model;
-			 * 	if (aceModel !== null) {
-			 * 		return getScopeFor(aceModel);
-			 * 	}
-			 }*/
 			if (parent instanceof Scenario) {
 				val scenario = parent as Scenario;
 				if (isWhen) {
 					var attr = new ArrayList<Attribute>();
 					attr.addAll(scenario.whenBlock.action.payload)
 					attr.addAll(scenario.whenBlock.action.queryParams)
+					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {
 					return Scopes.scopeFor(scenario.whenBlock.action.response);

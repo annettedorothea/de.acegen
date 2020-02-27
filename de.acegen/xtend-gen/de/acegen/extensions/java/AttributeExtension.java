@@ -23,7 +23,6 @@ import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.Value;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -668,79 +667,6 @@ public class AttributeExtension {
     }
     StringConcatenation _builder_5 = new StringConcatenation();
     int _intValue = it.getValue().getIntValue();
-    _builder_5.append(_intValue);
-    return _builder_5.toString();
-  }
-  
-  public String notReplayableTestValueFrom(final Attribute attribute) {
-    final Value value = attribute.getNotReplayableTestValue();
-    String _stringValue = value.getStringValue();
-    boolean _tripleNotEquals = (_stringValue != null);
-    if (_tripleNotEquals) {
-      String _type = attribute.getType();
-      boolean _equals = Objects.equal(_type, "DateTime");
-      if (_equals) {
-        return this.dateFrom(value.getStringValue());
-      }
-      String _type_1 = attribute.getType();
-      boolean _equals_1 = Objects.equal(_type_1, "Integer");
-      if (_equals_1) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Integer.parseInt(\"");
-        String _stringValue_1 = value.getStringValue();
-        _builder.append(_stringValue_1);
-        _builder.append("\")");
-        return _builder.toString();
-      }
-      String _type_2 = attribute.getType();
-      boolean _equals_2 = Objects.equal(_type_2, "Float");
-      if (_equals_2) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("Float.parseFloat(\"");
-        String _stringValue_2 = value.getStringValue();
-        _builder_1.append(_stringValue_2);
-        _builder_1.append("\")");
-        return _builder_1.toString();
-      }
-      String _type_3 = attribute.getType();
-      boolean _equals_3 = Objects.equal(_type_3, "Boolean");
-      if (_equals_3) {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("new Boolean(\"");
-        String _stringValue_3 = value.getStringValue();
-        _builder_2.append(_stringValue_3);
-        _builder_2.append("\")");
-        return _builder_2.toString();
-      }
-      String _type_4 = attribute.getType();
-      boolean _equals_4 = Objects.equal(_type_4, "Long");
-      if (_equals_4) {
-        StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append("Long.parseLong(\"");
-        String _stringValue_4 = value.getStringValue();
-        _builder_3.append(_stringValue_4);
-        _builder_3.append("\")");
-        return _builder_3.toString();
-      }
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("\"");
-      String _stringValue_5 = value.getStringValue();
-      _builder_4.append(_stringValue_5);
-      _builder_4.append("\"");
-      return _builder_4.toString();
-    }
-    AttributeDefinitionList _attributeDefinitionList = value.getAttributeDefinitionList();
-    boolean _tripleNotEquals_1 = (_attributeDefinitionList != null);
-    if (_tripleNotEquals_1) {
-      return "null";
-    }
-    ListAttributeDefinitionList _listAttributeDefinitionList = value.getListAttributeDefinitionList();
-    boolean _tripleNotEquals_2 = (_listAttributeDefinitionList != null);
-    if (_tripleNotEquals_2) {
-      return "null";
-    }
-    StringConcatenation _builder_5 = new StringConcatenation();
-    int _intValue = value.getIntValue();
     _builder_5.append(_intValue);
     return _builder_5.toString();
   }

@@ -6245,9 +6245,9 @@ rule__Attribute__Group__7__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAttributeAccess().getGroup_7()); }
-	(rule__Attribute__Group_7__0)?
-	{ after(grammarAccess.getAttributeAccess().getGroup_7()); }
+	{ before(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7()); }
+	(rule__Attribute__NotReplayableAssignment_7)?
+	{ after(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7()); }
 )
 ;
 finally {
@@ -6302,60 +6302,6 @@ rule__Attribute__Group_6__1__Impl
 	{ before(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1()); }
 	(rule__Attribute__ForeignKeyAssignment_6_1)
 	{ after(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Attribute__Group_7__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Attribute__Group_7__0__Impl
-	rule__Attribute__Group_7__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Attribute__Group_7__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueKeyword_7_0()); }
-	'notReplayableTestValue'
-	{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueKeyword_7_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Attribute__Group_7__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Attribute__Group_7__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Attribute__Group_7__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueAssignment_7_1()); }
-	(rule__Attribute__NotReplayableTestValueAssignment_7_1)
-	{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueAssignment_7_1()); }
 )
 ;
 finally {
@@ -7976,15 +7922,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Attribute__NotReplayableTestValueAssignment_7_1
+rule__Attribute__NotReplayableAssignment_7
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getAttributeAccess().getNotReplayableTestValueValueParserRuleCall_7_1_0()); }
-		ruleValue
-		{ after(grammarAccess.getAttributeAccess().getNotReplayableTestValueValueParserRuleCall_7_1_0()); }
+		{ before(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
+		(
+			{ before(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
+			'notReplayable'
+			{ after(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
+		)
+		{ after(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
 	)
 ;
 finally {

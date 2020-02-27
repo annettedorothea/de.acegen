@@ -200,7 +200,6 @@ class ActionTemplate {
 						} else {
 							this.actionData.setSystemTime(new DateTime());
 						}
-						this.initNotReplayableTestValues();
 					}
 					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					ICommand command = this.getCommand();
@@ -250,11 +249,6 @@ class ActionTemplate {
 				}
 			«ENDIF»
 
-			public void initNotReplayableTestValues() {
-				«FOR attribute: model.allNotReplayableAttributes»
-					this.actionData.«attribute.setterCall(attribute.notReplayableTestValueFrom)»;
-				«ENDFOR»
-			}
 		}
 		
 		
@@ -406,7 +400,6 @@ class ActionTemplate {
 						} else {
 							this.actionData.setSystemTime(new DateTime());
 						}
-						this.initNotReplayableTestValues();
 					}
 					«IF isProxy»
 						if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -450,12 +443,6 @@ class ActionTemplate {
 					return new «responseDataNameWithPackage(java)»(this.actionData);
 				}
 			«ENDIF»
-			
-			public void initNotReplayableTestValues() {
-				«FOR attribute: model.allNotReplayableAttributes»
-					this.actionData.«attribute.setterCall(attribute.notReplayableTestValueFrom)»;
-				«ENDFOR»
-			}
 			
 		}
 		

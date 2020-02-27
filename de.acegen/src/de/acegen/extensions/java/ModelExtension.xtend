@@ -75,7 +75,7 @@ class ModelExtension {
 		var allAttributes = new ArrayList<Attribute>()
 		allAttributesRec(allAttributes)
 		for (attribute : allAttributes) {
-			if (attribute.notReplayableTestValue !== null) {
+			if (attribute.notReplayable) {
 				list.add(attribute);
 			}
 		}

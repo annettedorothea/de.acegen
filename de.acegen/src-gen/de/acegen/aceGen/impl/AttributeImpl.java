@@ -6,10 +6,8 @@ package de.acegen.aceGen.impl;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.Value;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -33,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getNotReplayableTestValue <em>Not Replayable Test Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
  * </ul>
  *
  * @generated
@@ -181,14 +179,24 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected Attribute foreignKey;
 
   /**
-   * The cached value of the '{@link #getNotReplayableTestValue() <em>Not Replayable Test Value</em>}' containment reference.
+   * The default value of the '{@link #isNotReplayable() <em>Not Replayable</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNotReplayableTestValue()
+   * @see #isNotReplayable()
    * @generated
    * @ordered
    */
-  protected Value notReplayableTestValue;
+  protected static final boolean NOT_REPLAYABLE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNotReplayable() <em>Not Replayable</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNotReplayable()
+   * @generated
+   * @ordered
+   */
+  protected boolean notReplayable = NOT_REPLAYABLE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -457,9 +465,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public Value getNotReplayableTestValue()
+  public boolean isNotReplayable()
   {
-    return notReplayableTestValue;
+    return notReplayable;
   }
 
   /**
@@ -467,54 +475,13 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetNotReplayableTestValue(Value newNotReplayableTestValue, NotificationChain msgs)
+  @Override
+  public void setNotReplayable(boolean newNotReplayable)
   {
-    Value oldNotReplayableTestValue = notReplayableTestValue;
-    notReplayableTestValue = newNotReplayableTestValue;
+    boolean oldNotReplayable = notReplayable;
+    notReplayable = newNotReplayable;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE, oldNotReplayableTestValue, newNotReplayableTestValue);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setNotReplayableTestValue(Value newNotReplayableTestValue)
-  {
-    if (newNotReplayableTestValue != notReplayableTestValue)
-    {
-      NotificationChain msgs = null;
-      if (notReplayableTestValue != null)
-        msgs = ((InternalEObject)notReplayableTestValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE, null, msgs);
-      if (newNotReplayableTestValue != null)
-        msgs = ((InternalEObject)newNotReplayableTestValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE, null, msgs);
-      msgs = basicSetNotReplayableTestValue(newNotReplayableTestValue, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE, newNotReplayableTestValue, newNotReplayableTestValue));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE:
-        return basicSetNotReplayableTestValue(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE, oldNotReplayable, notReplayable));
   }
 
   /**
@@ -545,8 +512,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         if (resolve) return getForeignKey();
         return basicGetForeignKey();
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE:
-        return getNotReplayableTestValue();
+      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
+        return isNotReplayable();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -585,8 +552,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)newValue);
         return;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE:
-        setNotReplayableTestValue((Value)newValue);
+      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
+        setNotReplayable((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -626,8 +593,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)null);
         return;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE:
-        setNotReplayableTestValue((Value)null);
+      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
+        setNotReplayable(NOT_REPLAYABLE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -659,8 +626,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         return foreignKey != null;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE:
-        return notReplayableTestValue != null;
+      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
+        return notReplayable != NOT_REPLAYABLE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -688,6 +655,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(type);
     result.append(", name: ");
     result.append(name);
+    result.append(", notReplayable: ");
+    result.append(notReplayable);
     result.append(')');
     return result.toString();
   }

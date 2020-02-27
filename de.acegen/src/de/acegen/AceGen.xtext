@@ -179,7 +179,7 @@ Attribute:
 	(type = Type | model = [Model | QualifiedName]) 
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
-	('notReplayableTestValue' notReplayableTestValue = Value)?
+	notReplayable ?= 'notReplayable'?
 ;
 
 QualifiedName:

@@ -1406,13 +1406,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__FOREIGN_KEY = 7;
 
   /**
-   * The feature id for the '<em><b>Not Replayable Test Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Not Replayable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE = 8;
+  int ATTRIBUTE__NOT_REPLAYABLE = 8;
 
   /**
    * The number of structural features of the '<em>Attribute</em>' class.
@@ -2588,15 +2588,15 @@ public interface AceGenPackage extends EPackage
   EReference getAttribute_ForeignKey();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Attribute#getNotReplayableTestValue <em>Not Replayable Test Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Not Replayable Test Value</em>'.
-   * @see de.acegen.aceGen.Attribute#getNotReplayableTestValue()
+   * @return the meta object for the attribute '<em>Not Replayable</em>'.
+   * @see de.acegen.aceGen.Attribute#isNotReplayable()
    * @see #getAttribute()
    * @generated
    */
-  EReference getAttribute_NotReplayableTestValue();
+  EAttribute getAttribute_NotReplayable();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.Value <em>Value</em>}'.
@@ -3550,12 +3550,12 @@ public interface AceGenPackage extends EPackage
     EReference ATTRIBUTE__FOREIGN_KEY = eINSTANCE.getAttribute_ForeignKey();
 
     /**
-     * The meta object literal for the '<em><b>Not Replayable Test Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Not Replayable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ATTRIBUTE__NOT_REPLAYABLE_TEST_VALUE = eINSTANCE.getAttribute_NotReplayableTestValue();
+    EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.

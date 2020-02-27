@@ -120,6 +120,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           ArrayList<Attribute> attr = new ArrayList<Attribute>();
           attr.addAll(scenario.getWhenBlock().getAction().getPayload());
           attr.addAll(scenario.getWhenBlock().getAction().getQueryParams());
+          attr.addAll(this._modelExtension.allNotReplayableAttributes(scenario.getWhenBlock().getAction().getModel()));
           return Scopes.scopeFor(attr);
         } else {
           if (isThen) {

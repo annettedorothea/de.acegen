@@ -1556,22 +1556,20 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cForeignKeyAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final CrossReference cForeignKeyAttributeCrossReference_6_1_0 = (CrossReference)cForeignKeyAssignment_6_1.eContents().get(0);
 		private final RuleCall cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1 = (RuleCall)cForeignKeyAttributeCrossReference_6_1_0.eContents().get(1);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cNotReplayableTestValueKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cNotReplayableTestValueAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cNotReplayableTestValueValueParserRuleCall_7_1_0 = (RuleCall)cNotReplayableTestValueAssignment_7_1.eContents().get(0);
+		private final Assignment cNotReplayableAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final Keyword cNotReplayableNotReplayableKeyword_7_0 = (Keyword)cNotReplayableAssignment_7.eContents().get(0);
 		
 		//Attribute:
 		//	unique?='Unique'?
 		//	primaryKey?='PrimaryKey'?
 		//	constraint=Constraint?
 		//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-		//	('notReplayableTestValue' notReplayableTestValue=Value)?;
+		//	notReplayable?='notReplayable'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//unique?='Unique'? primaryKey?='PrimaryKey'? constraint=Constraint? list?='List'? (type=Type |
-		//model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])? ('notReplayableTestValue'
-		//notReplayableTestValue=Value)?
+		//model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
+		//notReplayable?='notReplayable'?
 		public Group getGroup() { return cGroup; }
 		
 		//unique?='Unique'?
@@ -1637,17 +1635,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1() { return cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1; }
 		
-		//('notReplayableTestValue' notReplayableTestValue=Value)?
-		public Group getGroup_7() { return cGroup_7; }
+		//notReplayable?='notReplayable'?
+		public Assignment getNotReplayableAssignment_7() { return cNotReplayableAssignment_7; }
 		
-		//'notReplayableTestValue'
-		public Keyword getNotReplayableTestValueKeyword_7_0() { return cNotReplayableTestValueKeyword_7_0; }
-		
-		//notReplayableTestValue=Value
-		public Assignment getNotReplayableTestValueAssignment_7_1() { return cNotReplayableTestValueAssignment_7_1; }
-		
-		//Value
-		public RuleCall getNotReplayableTestValueValueParserRuleCall_7_1_0() { return cNotReplayableTestValueValueParserRuleCall_7_1_0; }
+		//'notReplayable'
+		public Keyword getNotReplayableNotReplayableKeyword_7_0() { return cNotReplayableNotReplayableKeyword_7_0; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.QualifiedName");
@@ -2203,7 +2195,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	//	primaryKey?='PrimaryKey'?
 	//	constraint=Constraint?
 	//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-	//	('notReplayableTestValue' notReplayableTestValue=Value)?;
+	//	notReplayable?='notReplayable'?;
 	public AttributeElements getAttributeAccess() {
 		return pAttribute;
 	}

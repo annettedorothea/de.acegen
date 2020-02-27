@@ -99,7 +99,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeDefinitionAccess().getGroup(), "rule__AttributeDefinition__Group__0");
 			builder.put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
 			builder.put(grammarAccess.getAttributeAccess().getGroup_6(), "rule__Attribute__Group_6__0");
-			builder.put(grammarAccess.getAttributeAccess().getGroup_7(), "rule__Attribute__Group_7__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_0_2(), "rule__Project__HttpClientAssignment_0_2");
@@ -193,7 +192,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAccess().getModelAssignment_4_1(), "rule__Attribute__ModelAssignment_4_1");
 			builder.put(grammarAccess.getAttributeAccess().getNameAssignment_5(), "rule__Attribute__NameAssignment_5");
 			builder.put(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1(), "rule__Attribute__ForeignKeyAssignment_6_1");
-			builder.put(grammarAccess.getAttributeAccess().getNotReplayableTestValueAssignment_7_1(), "rule__Attribute__NotReplayableTestValueAssignment_7_1");
+			builder.put(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7(), "rule__Attribute__NotReplayableAssignment_7");
 			builder.put(grammarAccess.getValueAccess().getStringValueAssignment_0(), "rule__Value__StringValueAssignment_0");
 			builder.put(grammarAccess.getValueAccess().getIntValueAssignment_1(), "rule__Value__IntValueAssignment_1");
 			builder.put(grammarAccess.getValueAccess().getAttributeDefinitionListAssignment_2(), "rule__Value__AttributeDefinitionListAssignment_2");

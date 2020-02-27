@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#getNotReplayableTestValue <em>Not Replayable Test Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -208,25 +208,25 @@ public interface Attribute extends EObject
   void setForeignKey(Attribute value);
 
   /**
-   * Returns the value of the '<em><b>Not Replayable Test Value</b></em>' containment reference.
+   * Returns the value of the '<em><b>Not Replayable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Not Replayable Test Value</em>' containment reference.
-   * @see #setNotReplayableTestValue(Value)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NotReplayableTestValue()
-   * @model containment="true"
+   * @return the value of the '<em>Not Replayable</em>' attribute.
+   * @see #setNotReplayable(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NotReplayable()
+   * @model
    * @generated
    */
-  Value getNotReplayableTestValue();
+  boolean isNotReplayable();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#getNotReplayableTestValue <em>Not Replayable Test Value</em>}' containment reference.
+   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Not Replayable Test Value</em>' containment reference.
-   * @see #getNotReplayableTestValue()
+   * @param value the new value of the '<em>Not Replayable</em>' attribute.
+   * @see #isNotReplayable()
    * @generated
    */
-  void setNotReplayableTestValue(Value value);
+  void setNotReplayable(boolean value);
 
 } // Attribute
