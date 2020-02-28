@@ -67,7 +67,6 @@ class ScenarioTemplate {
 		import com.anfelisa.ace.BaseScenario;
 		import com.anfelisa.ace.ITimelineItem;
 		import com.anfelisa.ace.NotReplayableDataProvider;
-		import «java.getName».ActionCalls;
 		
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
@@ -175,13 +174,13 @@ class ScenarioTemplate {
 
 	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
 		«IF aceOperation.getType == "POST"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSEIF aceOperation.getType == "PUT"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSEIF aceOperation.getType == "DELETE"»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ELSE»
-			ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
 		«ENDIF»
 	'''
 	

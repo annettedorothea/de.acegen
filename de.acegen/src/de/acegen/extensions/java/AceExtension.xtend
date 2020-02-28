@@ -58,6 +58,11 @@ class AceExtension {
 	def String responseDataNameWithPackage(HttpServerAce  it, HttpServer java) '''«java.getName».data.«getName.toFirstUpper»Response'''
 	def String responseDataInterfaceName(HttpServerAce it) '''I«getName.toFirstUpper»Response'''
 	
+	def String packageFor(HttpServerAce it) {
+		val java = eContainer as HttpServer;
+		return '''«java.getName»'''
+	}
+	
 	def String urlWithPathParams(HttpServerAce  it) {
 		if (pathParams.size == 0) {
 			return getUrl;

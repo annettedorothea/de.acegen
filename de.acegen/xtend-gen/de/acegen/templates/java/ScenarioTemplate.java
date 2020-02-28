@@ -122,17 +122,12 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.NotReplayableDataProvider;");
     _builder.newLine();
-    _builder.append("import ");
-    String _name_1 = java.getName();
-    _builder.append(_name_1);
-    _builder.append(".ActionCalls;");
-    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class Abstract");
-    String _name_2 = it.getName();
-    _builder.append(_name_2);
+    String _name_1 = it.getName();
+    _builder.append(_name_1);
     _builder.append("Scenario extends BaseScenario {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -495,7 +490,9 @@ public class ScenarioTemplate {
       String _type = aceOperation.getType();
       boolean _equals = Objects.equal(_type, "POST");
       if (_equals) {
-        _builder.append("ActionCalls.call");
+        String _packageFor = this._aceExtension.packageFor(aceOperation);
+        _builder.append(_packageFor);
+        _builder.append(".ActionCalls.call");
         String _firstUpper = StringExtensions.toFirstUpper(aceOperation.getName());
         _builder.append(_firstUpper);
         _builder.append("(");
@@ -530,7 +527,9 @@ public class ScenarioTemplate {
         String _type_1 = aceOperation.getType();
         boolean _equals_1 = Objects.equal(_type_1, "PUT");
         if (_equals_1) {
-          _builder.append("ActionCalls.call");
+          String _packageFor_1 = this._aceExtension.packageFor(aceOperation);
+          _builder.append(_packageFor_1);
+          _builder.append(".ActionCalls.call");
           String _firstUpper_1 = StringExtensions.toFirstUpper(aceOperation.getName());
           _builder.append(_firstUpper_1);
           _builder.append("(");
@@ -565,7 +564,9 @@ public class ScenarioTemplate {
           String _type_2 = aceOperation.getType();
           boolean _equals_2 = Objects.equal(_type_2, "DELETE");
           if (_equals_2) {
-            _builder.append("ActionCalls.call");
+            String _packageFor_2 = this._aceExtension.packageFor(aceOperation);
+            _builder.append(_packageFor_2);
+            _builder.append(".ActionCalls.call");
             String _firstUpper_2 = StringExtensions.toFirstUpper(aceOperation.getName());
             _builder.append(_firstUpper_2);
             _builder.append("(");
@@ -597,7 +598,9 @@ public class ScenarioTemplate {
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           } else {
-            _builder.append("ActionCalls.call");
+            String _packageFor_3 = this._aceExtension.packageFor(aceOperation);
+            _builder.append(_packageFor_3);
+            _builder.append(".ActionCalls.call");
             String _firstUpper_3 = StringExtensions.toFirstUpper(aceOperation.getName());
             _builder.append(_firstUpper_3);
             _builder.append("(");

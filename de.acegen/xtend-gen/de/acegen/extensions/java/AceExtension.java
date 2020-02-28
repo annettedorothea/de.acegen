@@ -185,6 +185,15 @@ public class AceExtension {
     return _builder.toString();
   }
   
+  public String packageFor(final HttpServerAce it) {
+    EObject _eContainer = it.eContainer();
+    final HttpServer java = ((HttpServer) _eContainer);
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = java.getName();
+    _builder.append(_name);
+    return _builder.toString();
+  }
+  
   public String urlWithPathParams(final HttpServerAce it) {
     int _size = it.getPathParams().size();
     boolean _equals = (_size == 0);

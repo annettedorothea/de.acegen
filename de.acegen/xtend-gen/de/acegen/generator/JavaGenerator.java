@@ -249,14 +249,22 @@ public class JavaGenerator {
     String _plus = (_packageFolder + "/ActionCalls.java");
     fsa.generateFile(_plus, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateActionCalls(java));
-    String _packageFolder_1 = this._javaExtension.packageFolder(java);
-    String _plus_1 = (_packageFolder_1 + "/events/EventFactory.java");
-    fsa.generateFile(_plus_1, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventFactory(java));
-    String _packageFolder_2 = this._javaExtension.packageFolder(java);
-    String _plus_2 = (_packageFolder_2 + "/actions/AceDataFactory.java");
-    fsa.generateFile(_plus_2, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
+    int _size = java.getAceOperations().size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      String _packageFolder_1 = this._javaExtension.packageFolder(java);
+      String _plus_1 = (_packageFolder_1 + "/events/EventFactory.java");
+      fsa.generateFile(_plus_1, 
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventFactory(java));
+    }
+    int _size_1 = java.getAceOperations().size();
+    boolean _greaterThan_1 = (_size_1 > 0);
+    if (_greaterThan_1) {
+      String _packageFolder_2 = this._javaExtension.packageFolder(java);
+      String _plus_2 = (_packageFolder_2 + "/actions/AceDataFactory.java");
+      fsa.generateFile(_plus_2, 
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
+    }
     fsa.generateFile("com/anfelisa/ace/EventFactory.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateEventFactory());
     String _packageFolder_3 = this._javaExtension.packageFolder(java);
