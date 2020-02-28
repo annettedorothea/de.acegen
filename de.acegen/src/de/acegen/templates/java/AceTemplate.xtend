@@ -118,8 +118,6 @@ class AceTemplate {
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
 				} else if (ServerConfiguration.DEV.equals(mode)) {
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-				} else if (ServerConfiguration.TEST.equals(mode)) {
-					environment.jersey().register(new SetSystemTimeResource(configuration));
 				}
 				
 				environment.jersey().register(new JsonProcessingExceptionMapper(true));
@@ -482,55 +480,6 @@ class AceTemplate {
 		
 	'''
 
-	def generateSetSystemTimeResource() '''
-		«copyright»
-		
-		package com.anfelisa.ace;
-		
-		import javax.validation.constraints.NotNull;
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.PUT;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.WebApplicationException;
-		
-		import org.joda.time.DateTime;
-		
-		import com.codahale.metrics.annotation.Timed;
-		
-		@Path("/test")
-		@Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public class SetSystemTimeResource {
-		
-			public static DateTime systemTime;
-			private CustomAppConfiguration configuration;
-			
-			public SetSystemTimeResource(CustomAppConfiguration configuration) {
-				super();
-				this.configuration = configuration;
-			}
-			
-			@PUT
-			@Timed
-			@Path("/system-time")
-			public Response put(@NotNull String systemTime) {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
-					throw new WebApplicationException("set system time is not available in a live environment", Response.Status.FORBIDDEN);
-				}
-				SetSystemTimeResource.systemTime = new DateTime(systemTime);
-				return Response.ok("set system time to " + systemTime).build();
-			}
-		
-		}
-		
-		
-		«sdg»
-		
-	'''
-
 	def generateEventReplayCommand() '''
 		«copyright»
 		
@@ -612,6 +561,49 @@ class AceTemplate {
 		
 		}
 		
+		
+		«sdg»
+		
+	'''
+
+	def generateNotReplayableDataProvider() '''
+		«copyright»
+		
+		package com.anfelisa.ace;
+		
+		import java.util.HashMap;
+		import java.util.Map;
+		
+		import org.joda.time.DateTime;
+		
+		public class NotReplayableDataProvider {
+			
+			private static DateTime systemTime;
+			
+			private static Map<String, Object> valueMap = new HashMap<>();
+		
+			public static DateTime getSystemTime() {
+				return systemTime;
+			}
+		
+			public static void setSystemTime(DateTime systemTime) {
+				NotReplayableDataProvider.systemTime = systemTime;
+			}
+			
+			public static void put(String key, Object value) {
+				valueMap.put(key, value);
+			}
+			
+			public static Object get(String key) {
+				return valueMap.get(key);
+			}
+			
+			public static void clear() {
+				systemTime = null;
+				valueMap.clear();
+			}
+		
+		}
 		
 		«sdg»
 		

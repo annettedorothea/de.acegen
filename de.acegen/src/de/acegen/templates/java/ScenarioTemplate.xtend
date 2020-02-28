@@ -78,7 +78,7 @@ class ScenarioTemplate {
 			
 			private Response when() throws Exception {
 				«IF whenBlock.dataDefinition.systemtime !== null»
-					setSystemTime(«dateFrom(whenBlock.dataDefinition.systemtime)», DROPWIZARD.getLocalPort());
+					// TODO
 				«ENDIF»
 				return «generateActionCalls(whenBlock.action, whenBlock.dataDefinition, whenBlock.authorization, java)»
 			}
@@ -255,16 +255,9 @@ class ScenarioTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import java.util.ArrayList;
-		import java.util.List;
 		import java.util.UUID;
 		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
 		import org.jdbi.v3.core.Handle;
-		import org.joda.time.DateTime;
 		
 		public abstract class AbstractBaseScenario {
 		
@@ -278,25 +271,6 @@ class ScenarioTemplate {
 				return UUID.randomUUID().toString();
 			}
 		
-			protected void prepare(List<ITimelineItem> timeline, int port) {
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
-						.request().put(Entity.json(timeline));
-			}
-		
-			protected void prepare(int port) {
-				List<ITimelineItem> timeline = new ArrayList<>();
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/replay-events", port))
-						.request().put(Entity.json(timeline));
-			}
-		
-			protected void setSystemTime(DateTime systemTime, int port) {
-				Client client = new JerseyClientBuilder().build();
-				client.target(String.format("http://localhost:%d/api/test/system-time", port))
-						.request().put(Entity.json(systemTime.toString()));
-			}
-			
 			protected abstract String authorization(String username, String password);
 
 			protected abstract void assertThat(int actual, int expected);

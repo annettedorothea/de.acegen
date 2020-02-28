@@ -80,7 +80,6 @@ class ActionTemplate {
 		import com.anfelisa.ace.E2E;
 		import com.anfelisa.ace.ITimelineItem;
 		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.SetSystemTimeResource;
 		import com.anfelisa.ace.JodaObjectMapper;
 		
 		import com.codahale.metrics.annotation.Timed;
@@ -194,12 +193,9 @@ class ActionTemplate {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 						this.actionData = («getModel.dataParamType»)originalData;
+						// TODO only not replayable
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (SetSystemTimeResource.systemTime != null) {
-							this.actionData.setSystemTime(SetSystemTimeResource.systemTime);
-						} else {
-							this.actionData.setSystemTime(new DateTime());
-						}
+						// TODO
 					}
 					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					ICommand command = this.getCommand();
@@ -285,7 +281,6 @@ class ActionTemplate {
 		import com.anfelisa.ace.E2E;
 		import com.anfelisa.ace.ITimelineItem;
 		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.SetSystemTimeResource;
 		import com.anfelisa.ace.JodaObjectMapper;
 		
 		import com.codahale.metrics.annotation.Timed;
@@ -394,12 +389,9 @@ class ActionTemplate {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 						this.actionData = («getModel.dataParamType»)originalData;
+						// TODO
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (SetSystemTimeResource.systemTime != null) {
-							this.actionData.setSystemTime(SetSystemTimeResource.systemTime);
-						} else {
-							this.actionData.setSystemTime(new DateTime());
-						}
+						// TODO
 					}
 					«IF isProxy»
 						if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {

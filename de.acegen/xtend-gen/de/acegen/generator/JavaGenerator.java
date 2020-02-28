@@ -277,8 +277,6 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateServerConfiguration());
     fsa.generateFile(("com/anfelisa/ace" + "/StartE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStartE2ESessionResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/SetSystemTimeResource.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateSetSystemTimeResource());
     fsa.generateFile(("com/anfelisa/ace" + "/StopE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStopE2ESessionResource());
     fsa.generateFile(("com/anfelisa/ace" + "/AceOperation.java"), 
@@ -293,6 +291,8 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateGetServerInfoResource());
     fsa.generateFile(("com/anfelisa/ace" + "/EventReplayCommand.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventReplayCommand());
+    fsa.generateFile(("com/anfelisa/ace" + "/NotReplayableDataProvider.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateNotReplayableDataProvider());
     fsa.generateFile(("com/anfelisa/ace" + "/AceDao.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateAceDao());
     fsa.generateFile(("com/anfelisa/ace" + "/AceExecutionMode.java"), 
