@@ -225,6 +225,7 @@ class ActionTemplate {
 		import com.anfelisa.ace.JodaObjectMapper;
 		import com.anfelisa.ace.ServerConfiguration;
 		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.NotReplayableDataProvider;
 		import com.anfelisa.auth.AuthUser;
 
 		import com.codahale.metrics.annotation.Timed;
@@ -323,10 +324,26 @@ class ActionTemplate {
 		} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 			ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-			this.actionData = («getModel.dataParamType»)originalData;
-			// TODO
+			«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
+			this.actionData.setSystemTime(originalActionData.getSystemTime());
+			«FOR attribute : getModel.allAttributes»
+				«IF attribute.notReplayable»
+					this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
+				«ENDIF»
+			«ENDFOR»
 		} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-			// TODO
+			if (NotReplayableDataProvider.getSystemTime() != null) {
+				this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
+			}
+			«FOR attribute : getModel.allAttributes»
+				«IF attribute.notReplayable»
+					if (NotReplayableDataProvider.get("«attribute.name»") != null) {
+						this.actionData.«attribute.setterCall('''(«attribute.type»)NotReplayableDataProvider.get("«attribute.name»")''')»;
+					} else {
+						LOG.warn("«attribute.name» is daclared as not replayable but no value was found in NotReplayableDataProvider.");
+					}
+				«ENDIF»
+			«ENDFOR»
 		}
 	'''
 
@@ -353,6 +370,9 @@ class ActionTemplate {
 			return Response.status(500).entity(x.getMessage()).build();
 		} finally {
 			databaseHandle.close();
+			if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+				NotReplayableDataProvider.clear();
+			}
 		}
 	'''
 

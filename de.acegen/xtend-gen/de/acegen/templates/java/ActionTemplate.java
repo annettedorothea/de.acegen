@@ -530,6 +530,8 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ViewProvider;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.NotReplayableDataProvider;");
+    _builder.newLine();
     _builder.append("import com.anfelisa.auth.AuthUser;");
     _builder.newLine();
     _builder.newLine();
@@ -850,19 +852,92 @@ public class ActionTemplate {
     _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("this.actionData = (");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
     _builder.append(_dataParamType, "\t");
+    _builder.append(" originalActionData = (");
+    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_1, "\t");
     _builder.append(")originalData;");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("// TODO");
+    _builder.append("this.actionData.setSystemTime(originalActionData.getSystemTime());");
     _builder.newLine();
+    {
+      List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
+      for(final Attribute attribute : _allAttributes) {
+        {
+          boolean _isNotReplayable = attribute.isNotReplayable();
+          if (_isNotReplayable) {
+            _builder.append("\t");
+            _builder.append("this.actionData.");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(originalActionData.");
+            String _terCall = this._attributeExtension.getterCall(attribute);
+            _builder_1.append(_terCall);
+            _builder_1.append(")");
+            String _setterCall = this._attributeExtension.setterCall(attribute, _builder_1.toString());
+            _builder.append(_setterCall, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
     _builder.append("} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("// TODO");
+    _builder.append("if (NotReplayableDataProvider.getSystemTime() != null) {");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    {
+      List<Attribute> _allAttributes_1 = this._modelExtension.allAttributes(it.getModel());
+      for(final Attribute attribute_1 : _allAttributes_1) {
+        {
+          boolean _isNotReplayable_1 = attribute_1.isNotReplayable();
+          if (_isNotReplayable_1) {
+            _builder.append("\t");
+            _builder.append("if (NotReplayableDataProvider.get(\"");
+            String _name = attribute_1.getName();
+            _builder.append(_name, "\t");
+            _builder.append("\") != null) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("this.actionData.");
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("(");
+            String _type = attribute_1.getType();
+            _builder_2.append(_type);
+            _builder_2.append(")NotReplayableDataProvider.get(\"");
+            String _name_1 = attribute_1.getName();
+            _builder_2.append(_name_1);
+            _builder_2.append("\")");
+            String _setterCall_1 = this._attributeExtension.setterCall(attribute_1, _builder_2.toString());
+            _builder.append(_setterCall_1, "\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("} else {");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("LOG.warn(\"");
+            String _name_2 = attribute_1.getName();
+            _builder.append(_name_2, "\t\t");
+            _builder.append(" is daclared as not replayable but no value was found in NotReplayableDataProvider.\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+      }
+    }
     _builder.append("}");
     _builder.newLine();
     return _builder;
@@ -932,6 +1007,15 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("databaseHandle.close();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("NotReplayableDataProvider.clear();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
