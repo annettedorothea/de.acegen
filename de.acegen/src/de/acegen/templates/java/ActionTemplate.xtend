@@ -53,51 +53,11 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import java.util.UUID;
+		«commonAbstractActionImports»
 		
-		import javax.validation.constraints.NotNull;
-		import javax.ws.rs.Consumes;
 		import javax.ws.rs.POST;
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.DELETE;
-		import javax.ws.rs.GET;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.QueryParam;
-		import javax.ws.rs.PathParam;
-		import io.dropwizard.auth.Auth;
-		import javax.ws.rs.HeaderParam;
-		
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.ServerConfiguration;
-		import com.anfelisa.ace.E2E;
-		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.JodaObjectMapper;
-		
-		import com.codahale.metrics.annotation.Timed;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-
-		import org.jdbi.v3.core.Jdbi;
-		import org.jdbi.v3.core.Handle;
-		
-		import com.anfelisa.ace.Action;
-		import com.anfelisa.ace.HttpMethod;
-		import com.anfelisa.ace.ICommand;
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
-		
-		import javax.ws.rs.WebApplicationException;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
 		
 		«IF isAuthorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		«getModel.dataImport»
@@ -106,29 +66,13 @@ class ActionTemplate {
 			import «commandNameWithPackage(java)»;
 		«ENDIF»
 		
-		@Path("«getUrl»")
-		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends Action<«getModel.dataParamType»> {
+		«classDeclaration»
+
+			«declarations»
 		
-			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
-
-			private DatabaseHandle databaseHandle;
-			private Jdbi jdbi;
-			protected JodaObjectMapper mapper;
-			protected CustomAppConfiguration appConfiguration;
-			protected IDaoProvider daoProvider;
-			private ViewProvider viewProvider;
-			private E2E e2e;
-
-			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			«constructor»
 				super("«actionNameWithPackage(java)»", HttpMethod.«getType»);
-				this.jdbi = jdbi;
-				mapper = new JodaObjectMapper();
-				this.appConfiguration = appConfiguration;
-				this.daoProvider = daoProvider;
-				this.viewProvider = viewProvider;
-				this.e2e = e2e;
+				«initProperties»
 			}
 		
 			@Override
@@ -140,63 +84,15 @@ class ActionTemplate {
 				«ENDIF»
 			}
 			
-			public void setActionData(IDataContainer data) {
-				this.actionData = («getModel.dataParamType»)data;
-			}
+			«setActionData»
 		
-			«IF getType !== null»@«getType»«ENDIF»
-			@Timed
-			@Produces(MediaType.APPLICATION_JSON)
-			@Consumes(MediaType.APPLICATION_JSON)
-			public Response «resourceName.toFirstLower»(
-					«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
-					«FOR param : queryParams»
-						@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
-					«ENDFOR»
-					«FOR param : pathParams»
-						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
-					«ENDFOR»
-					«IF payload.size > 0»@NotNull «getModel.dataParamType» payload)«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
-					throws JsonProcessingException {
-				this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
-				«FOR param : queryParams»
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				«ENDFOR»
-				«FOR param : pathParams»
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				«ENDFOR»
-				«FOR attribute : payload»
-					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
-				«ENDFOR»
-				«IF isAuthorize && authUser !== null»
-					«FOR param : getModel.allAttributes»
-						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
-					«ENDFOR»
-				«ENDIF»
-				
-				return this.apply();
-			}
-			
+			«method(authUser)»
+		
 			public Response apply() {
 				databaseHandle = new DatabaseHandle(jdbi);
 				databaseHandle.beginTransaction();
 				try {
-					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-							databaseHandle.commitTransaction();
-							throwBadRequest("uuid already exists - please choose another one");
-						}
-						this.actionData.setSystemTime(new DateTime());
-						this.initActionData();
-					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-						this.actionData = («getModel.dataParamType»)originalData;
-						// TODO only not replayable
-					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						// TODO
-					}
+					«initActionData»
 					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
 					ICommand command = this.getCommand();
 					«IF isProxy»
@@ -214,29 +110,7 @@ class ActionTemplate {
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
 					return response;
-				} catch (WebApplicationException x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
-						App.reportException(x);
-					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
-				} catch (Exception x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
-						App.reportException(x);
-					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(500).entity(x.getMessage()).build();
-				} finally {
-					databaseHandle.close();
-				}
+				«catchFinallyBlock»
 			}
 			
 			«IF response.size > 0»
@@ -257,76 +131,21 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import javax.validation.constraints.NotNull;
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.POST;
-		import javax.ws.rs.PUT;
-		import javax.ws.rs.DELETE;
+		«commonAbstractActionImports»
+		
 		import javax.ws.rs.GET;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.QueryParam;
-		import javax.ws.rs.PathParam;
-		import io.dropwizard.auth.Auth;
-		
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.ServerConfiguration;
-		import com.anfelisa.ace.E2E;
-		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.ace.IAction;
-		import com.anfelisa.ace.JodaObjectMapper;
-		
-		import com.codahale.metrics.annotation.Timed;
-		import com.fasterxml.jackson.core.JsonProcessingException;
-
-		import org.jdbi.v3.core.Jdbi;
-		import org.jdbi.v3.core.Handle;
-		
-		import com.anfelisa.ace.Action;
-		import com.anfelisa.ace.HttpMethod;
-		import com.anfelisa.ace.ICommand;
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
-		
-		import javax.ws.rs.WebApplicationException;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
 		
 		«IF isAuthorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
-		@Path("«getUrl»")
-		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends Action<«getModel.dataParamType»> {
+		«classDeclaration»
 		
-			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
-
-			private DatabaseHandle databaseHandle;
-			private Jdbi jdbi;
-			protected JodaObjectMapper mapper;
-			protected CustomAppConfiguration appConfiguration;
-			protected IDaoProvider daoProvider;
-			private ViewProvider viewProvider;
-			private E2E e2e;
-
-			public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			«declarations»
+			
+			«constructor»
 				super("«actionNameWithPackage(java)»", HttpMethod.«getType»);
-				this.jdbi = jdbi;
-				mapper = new JodaObjectMapper();
-				this.appConfiguration = appConfiguration;
-				this.daoProvider = daoProvider;
-				this.viewProvider = viewProvider;
-				this.e2e = e2e;
+				«initProperties»
 			}
 		
 			@Override
@@ -334,67 +153,20 @@ class ActionTemplate {
 				return null;
 			}
 			
-			public void setActionData(IDataContainer data) {
-				this.actionData = («getModel.dataParamType»)data;
-			}
+			«setActionData»
 		
 			protected abstract void loadDataForGetRequest(Handle readonlyHandle);
 		
-			«IF getType !== null»@«getType»«ENDIF»
-			@Timed
-			@Produces(MediaType.APPLICATION_JSON)
-			@Consumes(MediaType.APPLICATION_JSON)
-			public Response «resourceName.toFirstLower»(
-					«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
-					«FOR param : queryParams»
-						@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
-					«ENDFOR»
-					«FOR param : pathParams»
-						@PathParam("«param.name»") «param.resourceParamType» «param.name», 
-					«ENDFOR»
-					«IF payload.size > 0»@NotNull «getModel.dataParamType» payload)
-					«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
-					throws JsonProcessingException {
-				this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
-				«FOR param : queryParams»
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				«ENDFOR»
-				«FOR param : pathParams»
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				«ENDFOR»
-				«FOR attribute : payload»
-					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
-				«ENDFOR»
-				«IF isAuthorize && authUser !== null»
-					«FOR param : getModel.allAttributes»
-						«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
-					«ENDFOR»
-				«ENDIF»
-				return this.apply();
-			}
+			«method(authUser)»
 
 			public Response apply() {
 				databaseHandle = new DatabaseHandle(jdbi);
 				databaseHandle.beginTransaction();
 				try {
-					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-							databaseHandle.commitTransaction();
-							throwBadRequest("uuid already exists - please choose another one");
-						}
-						this.actionData.setSystemTime(new DateTime());
-						this.initActionData();
-					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-						this.actionData = («getModel.dataParamType»)originalData;
-						// TODO
-					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						// TODO
-					}
+					«initActionData»
 					«IF isProxy»
-						if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
+								|| ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())) {
 							this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
 						}
 					«ELSE»
@@ -404,29 +176,7 @@ class ActionTemplate {
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
 					return response;
-				} catch (WebApplicationException x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
-						App.reportException(x);
-					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
-				} catch (Exception x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
-						App.reportException(x);
-					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(500).entity(x.getMessage()).build();
-				} finally {
-					databaseHandle.close();
-				}
+				«catchFinallyBlock»
 			}
 		
 
@@ -442,6 +192,174 @@ class ActionTemplate {
 		«sdg»
 		
 	'''
+	
+	private def commonAbstractActionImports() '''
+		import javax.validation.constraints.NotNull;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		import javax.ws.rs.PathParam;
+		import javax.ws.rs.QueryParam;
+		
+		import org.jdbi.v3.core.Jdbi;
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import com.anfelisa.ace.Action;
+		import com.anfelisa.ace.App;
+		import com.anfelisa.ace.CustomAppConfiguration;
+		import com.anfelisa.ace.DatabaseHandle;
+		import com.anfelisa.ace.E2E;
+		import com.anfelisa.ace.HttpMethod;
+		import com.anfelisa.ace.ICommand;
+		import com.anfelisa.ace.IDaoProvider;
+		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.ITimelineItem;
+		import com.anfelisa.ace.JodaObjectMapper;
+		import com.anfelisa.ace.ServerConfiguration;
+		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.auth.AuthUser;
+
+		import com.codahale.metrics.annotation.Timed;
+		
+		import io.dropwizard.auth.Auth;
+
+		import com.fasterxml.jackson.core.JsonProcessingException;
+
+		import org.jdbi.v3.core.Handle;
+		
+	'''
+	
+	def private classDeclaration(HttpServerAce it) '''
+		@Path("«getUrl»")
+		@SuppressWarnings("unused")
+		public abstract class «abstractActionName» extends Action<«getModel.dataParamType»> {
+	'''
+	
+	private def declarations(HttpServerAce it) '''
+		static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
+
+		private DatabaseHandle databaseHandle;
+		private Jdbi jdbi;
+		protected JodaObjectMapper mapper;
+		protected CustomAppConfiguration appConfiguration;
+		protected IDaoProvider daoProvider;
+		private ViewProvider viewProvider;
+		private E2E e2e;
+
+	'''
+
+	private def constructor(HttpServerAce it) '''
+		public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+	'''
+	
+	private def initProperties() '''
+		this.jdbi = jdbi;
+		mapper = new JodaObjectMapper();
+		this.appConfiguration = appConfiguration;
+		this.daoProvider = daoProvider;
+		this.viewProvider = viewProvider;
+		this.e2e = e2e;
+	'''
+
+	private def setActionData(HttpServerAce it) '''
+		public void setActionData(IDataContainer data) {
+			this.actionData = («getModel.dataParamType»)data;
+		}
+	'''
+
+	private def method(HttpServerAce it, AuthUser authUser) '''
+		«IF getType !== null»@«getType»«ENDIF»
+		@Timed
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response «resourceName.toFirstLower»(
+				«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
+				«FOR param : queryParams»
+					@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
+				«ENDFOR»
+				«FOR param : pathParams»
+					@PathParam("«param.name»") «param.resourceParamType» «param.name», 
+				«ENDFOR»
+				«IF payload.size > 0»@NotNull «getModel.dataParamType» payload)
+				«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
+				throws JsonProcessingException {
+			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
+			«FOR param : queryParams»
+				this.actionData.«param.setterCall(param.resourceParam)»;
+			«ENDFOR»
+			«FOR param : pathParams»
+				this.actionData.«param.setterCall(param.resourceParam)»;
+			«ENDFOR»
+			«FOR attribute : payload»
+				this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+			«ENDFOR»
+			«IF isAuthorize && authUser !== null»
+				«FOR param : getModel.allAttributes»
+					«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
+				«ENDFOR»
+			«ENDIF»
+			return this.apply();
+		}
+	'''
+
+	private def initActionData(HttpServerAce it) '''
+		if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
+				|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+			if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
+				databaseHandle.commitTransaction();
+				throwBadRequest("uuid already exists - please choose another one");
+			}
+			this.actionData.setSystemTime(new DateTime());
+			this.initActionData();
+		} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+			ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
+			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+			this.actionData = («getModel.dataParamType»)originalData;
+			// TODO
+		} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+			// TODO
+		}
+	'''
+
+	private def catchFinallyBlock(HttpServerAce it) '''
+		} catch (WebApplicationException x) {
+			LOG.error(actionName + " failed " + x.getMessage());
+			try {
+				databaseHandle.rollbackTransaction();
+				daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+				App.reportException(x);
+			} catch (Exception ex) {
+				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+			}
+			return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
+		} catch (Exception x) {
+			LOG.error(actionName + " failed " + x.getMessage());
+			try {
+				databaseHandle.rollbackTransaction();
+				daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+				App.reportException(x);
+			} catch (Exception ex) {
+				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+			}
+			return Response.status(500).entity(x.getMessage()).build();
+		} finally {
+			databaseHandle.close();
+		}
+	'''
+
+
+
+
+
 
 	def generateInitialActionFile(HttpServerAce it, HttpServer java) '''
 		«copyright»

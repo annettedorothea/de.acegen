@@ -71,88 +71,15 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import java.util.UUID;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Consumes;");
+    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports();
+    _builder.append(_commonAbstractActionImports);
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import javax.ws.rs.POST;");
     _builder.newLine();
     _builder.append("import javax.ws.rs.PUT;");
     _builder.newLine();
     _builder.append("import javax.ws.rs.DELETE;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.GET;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Path;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Produces;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.core.MediaType;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.core.Response;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.QueryParam;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.PathParam;");
-    _builder.newLine();
-    _builder.append("import io.dropwizard.auth.Auth;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.HeaderParam;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.App;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseHandle;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ServerConfiguration;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.E2E;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ITimelineItem;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IAction;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.codahale.metrics.annotation.Timed;");
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Jdbi;");
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.Action;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.HttpMethod;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ICommand;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.WebApplicationException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.slf4j.Logger;");
-    _builder.newLine();
-    _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
     {
@@ -182,60 +109,19 @@ public class ActionTemplate {
       }
     }
     _builder.newLine();
-    _builder.append("@Path(\"");
-    String _url = it.getUrl();
-    _builder.append(_url);
-    _builder.append("\")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("@SuppressWarnings(\"unused\")");
-    _builder.newLine();
-    _builder.append("public abstract class ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName);
-    _builder.append(" extends Action<");
-    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType);
-    _builder.append("> {");
+    CharSequence _classDeclaration = this.classDeclaration(it);
+    _builder.append(_classDeclaration);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName_1, "\t");
-    _builder.append(".class);");
+    CharSequence _declarations = this.declarations(it);
+    _builder.append(_declarations, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private DatabaseHandle databaseHandle;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private Jdbi jdbi;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected JodaObjectMapper mapper;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected CustomAppConfiguration appConfiguration;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected IDaoProvider daoProvider;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private ViewProvider viewProvider;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private E2E e2e;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _abstractActionName_2 = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName_2, "\t");
-    _builder.append("(Jdbi jdbi, CustomAppConfiguration appConfiguration, ");
+    CharSequence _constructor = this.constructor(it);
+    _builder.append(_constructor, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("super(\"");
     String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, java);
@@ -246,23 +132,9 @@ public class ActionTemplate {
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("this.jdbi = jdbi;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("mapper = new JodaObjectMapper();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.appConfiguration = appConfiguration;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.daoProvider = daoProvider;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.viewProvider = viewProvider;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.e2e = e2e;");
-    _builder.newLine();
+    CharSequence _initProperties = this.initProperties();
+    _builder.append(_initProperties, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -295,197 +167,14 @@ public class ActionTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void setActionData(IDataContainer data) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.actionData = (");
-    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_1, "\t\t");
-    _builder.append(")data;");
+    CharSequence _setActionData = this.setActionData(it);
+    _builder.append(_setActionData, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    {
-      String _type_1 = it.getType();
-      boolean _tripleNotEquals = (_type_1 != null);
-      if (_tripleNotEquals) {
-        _builder.append("@");
-        String _type_2 = it.getType();
-        _builder.append(_type_2, "\t");
-      }
-    }
+    CharSequence _method = this.method(it, authUser);
+    _builder.append(_method, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("@Timed");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Produces(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public Response ");
-    String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
-    _builder.append(_firstLower, "\t");
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        _builder.append("@Auth ");
-        String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper_1, "\t\t\t");
-        _builder.append(" ");
-        String _firstLower_1 = StringExtensions.toFirstLower(authUser.getName());
-        _builder.append(_firstLower_1, "\t\t\t");
-        _builder.append(", ");
-      }
-    }
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _queryParams = it.getQueryParams();
-      for(final Attribute param : _queryParams) {
-        _builder.append("\t\t\t");
-        _builder.append("@QueryParam(\"");
-        String _name_1 = param.getName();
-        _builder.append(_name_1, "\t\t\t");
-        _builder.append("\") ");
-        String _resourceParamType = this._attributeExtension.resourceParamType(param);
-        _builder.append(_resourceParamType, "\t\t\t");
-        _builder.append(" ");
-        String _name_2 = param.getName();
-        _builder.append(_name_2, "\t\t\t");
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _pathParams = it.getPathParams();
-      for(final Attribute param_1 : _pathParams) {
-        _builder.append("\t\t\t");
-        _builder.append("@PathParam(\"");
-        String _name_3 = param_1.getName();
-        _builder.append(_name_3, "\t\t\t");
-        _builder.append("\") ");
-        String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1);
-        _builder.append(_resourceParamType_1, "\t\t\t");
-        _builder.append(" ");
-        String _name_4 = param_1.getName();
-        _builder.append(_name_4, "\t\t\t");
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t\t");
-    {
-      int _size_2 = it.getPayload().size();
-      boolean _greaterThan_2 = (_size_2 > 0);
-      if (_greaterThan_2) {
-        _builder.append("@NotNull ");
-        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_2, "\t\t\t");
-        _builder.append(" payload)");
-      } else {
-        _builder.append("@NotNull @QueryParam(\"uuid\") String uuid)");
-      }
-    }
-    _builder.append(" ");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.append("throws JsonProcessingException {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.actionData = new ");
-    String _dataName = this._modelExtension.dataName(it.getModel());
-    _builder.append(_dataName, "\t\t");
-    _builder.append("(");
-    {
-      int _size_3 = it.getPayload().size();
-      boolean _greaterThan_3 = (_size_3 > 0);
-      if (_greaterThan_3) {
-        _builder.append("payload.getUuid()");
-      } else {
-        _builder.append("uuid");
-      }
-    }
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _queryParams_1 = it.getQueryParams();
-      for(final Attribute param_2 : _queryParams_1) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        String _setterCall = this._attributeExtension.setterCall(param_2, this._attributeExtension.resourceParam(param_2));
-        _builder.append(_setterCall, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _pathParams_1 = it.getPathParams();
-      for(final Attribute param_3 : _pathParams_1) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        String _setterCall_1 = this._attributeExtension.setterCall(param_3, this._attributeExtension.resourceParam(param_3));
-        _builder.append(_setterCall_1, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _payload = it.getPayload();
-      for(final Attribute attribute : _payload) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("payload.");
-        String _terCall = this._attributeExtension.getterCall(attribute);
-        _builder_1.append(_terCall);
-        String _setterCall_2 = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-        _builder.append(_setterCall_2, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        {
-          List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
-          for(final Attribute param_4 : _allAttributes) {
-            _builder.append("\t\t");
-            {
-              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
-              if (_containsAttribute) {
-                _builder.append("this.actionData.");
-                StringConcatenation _builder_2 = new StringConcatenation();
-                String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
-                _builder_2.append(_firstLower_2);
-                _builder_2.append(".");
-                String _terCall_1 = this._attributeExtension.getterCall(param_4);
-                _builder_2.append(_terCall_1);
-                String _setterCall_3 = this._attributeExtension.setterCall(param_4, _builder_2.toString());
-                _builder.append(_setterCall_3, "\t\t");
-                _builder.append(";");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t\t");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return this.apply();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public Response apply() {");
@@ -500,56 +189,9 @@ public class ActionTemplate {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("databaseHandle.commitTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("throwBadRequest(\"uuid already exists - please choose another one\");");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.actionData.setSystemTime(new DateTime());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.initActionData();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.actionData = (");
-    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_3, "\t\t\t\t");
-    _builder.append(")originalData;");
+    CharSequence _initActionData = this.initActionData(it);
+    _builder.append(_initActionData, "\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("// TODO only not replayable");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("// TODO");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());");
     _builder.newLine();
@@ -603,83 +245,18 @@ public class ActionTemplate {
     _builder.append("return response;");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("} catch (WebApplicationException x) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("databaseHandle.rollbackTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} catch (Exception ex) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} catch (Exception x) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("databaseHandle.rollbackTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} catch (Exception ex) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return Response.status(500).entity(x.getMessage()).build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} finally {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("databaseHandle.close();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
+    CharSequence _catchFinallyBlock = this.catchFinallyBlock(it);
+    _builder.append(_catchFinallyBlock, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     {
-      int _size_4 = it.getResponse().size();
-      boolean _greaterThan_4 = (_size_4 > 0);
-      if (_greaterThan_4) {
+      int _size_2 = it.getResponse().size();
+      boolean _greaterThan_2 = (_size_2 > 0);
+      if (_greaterThan_2) {
         _builder.append("\t");
         _builder.append("protected Object createReponse() {");
         _builder.newLine();
@@ -719,83 +296,11 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Consumes;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.POST;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.PUT;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.DELETE;");
+    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports();
+    _builder.append(_commonAbstractActionImports);
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import javax.ws.rs.GET;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Path;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.Produces;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.core.MediaType;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.core.Response;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.QueryParam;");
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.PathParam;");
-    _builder.newLine();
-    _builder.append("import io.dropwizard.auth.Auth;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.App;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseHandle;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ServerConfiguration;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.E2E;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ITimelineItem;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IAction;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.codahale.metrics.annotation.Timed;");
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Jdbi;");
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.Action;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.HttpMethod;");
-    _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ICommand;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.ws.rs.WebApplicationException;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.slf4j.Logger;");
-    _builder.newLine();
-    _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
     {
@@ -814,60 +319,20 @@ public class ActionTemplate {
     _builder.append(_dataClassImport);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("@Path(\"");
-    String _url = it.getUrl();
-    _builder.append(_url);
-    _builder.append("\")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("@SuppressWarnings(\"unused\")");
-    _builder.newLine();
-    _builder.append("public abstract class ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName);
-    _builder.append(" extends Action<");
-    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType);
-    _builder.append("> {");
+    CharSequence _classDeclaration = this.classDeclaration(it);
+    _builder.append(_classDeclaration);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName_1, "\t");
-    _builder.append(".class);");
+    CharSequence _declarations = this.declarations(it);
+    _builder.append(_declarations, "\t");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private DatabaseHandle databaseHandle;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private Jdbi jdbi;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected JodaObjectMapper mapper;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected CustomAppConfiguration appConfiguration;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected IDaoProvider daoProvider;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private ViewProvider viewProvider;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private E2E e2e;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _abstractActionName_2 = this._aceExtension.abstractActionName(it);
-    _builder.append(_abstractActionName_2, "\t");
-    _builder.append("(Jdbi jdbi, CustomAppConfiguration appConfiguration, ");
+    CharSequence _constructor = this.constructor(it);
+    _builder.append(_constructor, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("super(\"");
     String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, java);
@@ -878,23 +343,9 @@ public class ActionTemplate {
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("this.jdbi = jdbi;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("mapper = new JodaObjectMapper();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.appConfiguration = appConfiguration;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.daoProvider = daoProvider;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.viewProvider = viewProvider;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.e2e = e2e;");
-    _builder.newLine();
+    CharSequence _initProperties = this.initProperties();
+    _builder.append(_initProperties, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -914,200 +365,18 @@ public class ActionTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void setActionData(IDataContainer data) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.actionData = (");
-    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_1, "\t\t");
-    _builder.append(")data;");
+    CharSequence _setActionData = this.setActionData(it);
+    _builder.append(_setActionData, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract void loadDataForGetRequest(Handle readonlyHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    {
-      String _type_1 = it.getType();
-      boolean _tripleNotEquals = (_type_1 != null);
-      if (_tripleNotEquals) {
-        _builder.append("@");
-        String _type_2 = it.getType();
-        _builder.append(_type_2, "\t");
-      }
-    }
+    CharSequence _method = this.method(it, authUser);
+    _builder.append(_method, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("@Timed");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Produces(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public Response ");
-    String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
-    _builder.append(_firstLower, "\t");
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        _builder.append("@Auth ");
-        String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper_1, "\t\t\t");
-        _builder.append(" ");
-        String _firstLower_1 = StringExtensions.toFirstLower(authUser.getName());
-        _builder.append(_firstLower_1, "\t\t\t");
-        _builder.append(", ");
-      }
-    }
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _queryParams = it.getQueryParams();
-      for(final Attribute param : _queryParams) {
-        _builder.append("\t\t\t");
-        _builder.append("@QueryParam(\"");
-        String _name_1 = param.getName();
-        _builder.append(_name_1, "\t\t\t");
-        _builder.append("\") ");
-        String _resourceParamType = this._attributeExtension.resourceParamType(param);
-        _builder.append(_resourceParamType, "\t\t\t");
-        _builder.append(" ");
-        String _name_2 = param.getName();
-        _builder.append(_name_2, "\t\t\t");
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _pathParams = it.getPathParams();
-      for(final Attribute param_1 : _pathParams) {
-        _builder.append("\t\t\t");
-        _builder.append("@PathParam(\"");
-        String _name_3 = param_1.getName();
-        _builder.append(_name_3, "\t\t\t");
-        _builder.append("\") ");
-        String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1);
-        _builder.append(_resourceParamType_1, "\t\t\t");
-        _builder.append(" ");
-        String _name_4 = param_1.getName();
-        _builder.append(_name_4, "\t\t\t");
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t\t");
-    {
-      int _size = it.getPayload().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("@NotNull ");
-        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_2, "\t\t\t");
-        _builder.append(" payload)");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t\t");
-      } else {
-        _builder.append("@NotNull @QueryParam(\"uuid\") String uuid)");
-      }
-    }
-    _builder.append(" ");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.append("throws JsonProcessingException {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.actionData = new ");
-    String _dataName = this._modelExtension.dataName(it.getModel());
-    _builder.append(_dataName, "\t\t");
-    _builder.append("(");
-    {
-      int _size_1 = it.getPayload().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
-        _builder.append("payload.getUuid()");
-      } else {
-        _builder.append("uuid");
-      }
-    }
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _queryParams_1 = it.getQueryParams();
-      for(final Attribute param_2 : _queryParams_1) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        String _setterCall = this._attributeExtension.setterCall(param_2, this._attributeExtension.resourceParam(param_2));
-        _builder.append(_setterCall, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _pathParams_1 = it.getPathParams();
-      for(final Attribute param_3 : _pathParams_1) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        String _setterCall_1 = this._attributeExtension.setterCall(param_3, this._attributeExtension.resourceParam(param_3));
-        _builder.append(_setterCall_1, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<Attribute> _payload = it.getPayload();
-      for(final Attribute attribute : _payload) {
-        _builder.append("\t\t");
-        _builder.append("this.actionData.");
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("payload.");
-        String _terCall = this._attributeExtension.getterCall(attribute);
-        _builder_1.append(_terCall);
-        String _setterCall_2 = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-        _builder.append(_setterCall_2, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        {
-          List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
-          for(final Attribute param_4 : _allAttributes) {
-            _builder.append("\t\t");
-            {
-              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
-              if (_containsAttribute) {
-                _builder.append("this.actionData.");
-                StringConcatenation _builder_2 = new StringConcatenation();
-                String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
-                _builder_2.append(_firstLower_2);
-                _builder_2.append(".");
-                String _terCall_1 = this._attributeExtension.getterCall(param_4);
-                _builder_2.append(_terCall_1);
-                String _setterCall_3 = this._attributeExtension.setterCall(param_4, _builder_2.toString());
-                _builder.append(_setterCall_3, "\t\t");
-                _builder.append(";");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append("return this.apply();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public Response apply() {");
@@ -1122,61 +391,18 @@ public class ActionTemplate {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("databaseHandle.commitTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("throwBadRequest(\"uuid already exists - please choose another one\");");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.actionData.setSystemTime(new DateTime());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.initActionData();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.actionData = (");
-    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_3, "\t\t\t\t");
-    _builder.append(")originalData;");
+    CharSequence _initActionData = this.initActionData(it);
+    _builder.append(_initActionData, "\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("// TODO");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("// TODO");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
     {
       boolean _isProxy = it.isProxy();
       if (_isProxy) {
         _builder.append("\t\t\t");
-        _builder.append("if (!ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
+        _builder.append("if (ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t\t");
+        _builder.append("|| ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())) {");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("\t");
@@ -1204,83 +430,18 @@ public class ActionTemplate {
     _builder.append("return response;");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("} catch (WebApplicationException x) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("databaseHandle.rollbackTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} catch (Exception ex) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} catch (Exception x) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("databaseHandle.rollbackTransaction();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} catch (Exception ex) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return Response.status(500).entity(x.getMessage()).build();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} finally {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("databaseHandle.close();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
+    CharSequence _catchFinallyBlock = this.catchFinallyBlock(it);
+    _builder.append(_catchFinallyBlock, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     {
-      int _size_2 = it.getResponse().size();
-      boolean _greaterThan_2 = (_size_2 > 0);
-      if (_greaterThan_2) {
+      int _size = it.getResponse().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
         _builder.append("\t");
         _builder.append("protected Object createReponse() {");
         _builder.newLine();
@@ -1305,6 +466,474 @@ public class ActionTemplate {
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence commonAbstractActionImports() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("import javax.validation.constraints.NotNull;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Consumes;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Path;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.Produces;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.WebApplicationException;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.MediaType;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.PathParam;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.QueryParam;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.jdbi.v3.core.Jdbi;");
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.slf4j.Logger;");
+    _builder.newLine();
+    _builder.append("import org.slf4j.LoggerFactory;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.Action;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.App;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.DatabaseHandle;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.E2E;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.HttpMethod;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.ICommand;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.ITimelineItem;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.ServerConfiguration;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.auth.AuthUser;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.Timed;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import io.dropwizard.auth.Auth;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.jdbi.v3.core.Handle;");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence classDeclaration(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("@Path(\"");
+    String _url = it.getUrl();
+    _builder.append(_url);
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public abstract class ");
+    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    _builder.append(_abstractActionName);
+    _builder.append(" extends Action<");
+    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType);
+    _builder.append("> {");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
+  private CharSequence declarations(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
+    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    _builder.append(_abstractActionName);
+    _builder.append(".class);");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("private DatabaseHandle databaseHandle;");
+    _builder.newLine();
+    _builder.append("private Jdbi jdbi;");
+    _builder.newLine();
+    _builder.append("protected JodaObjectMapper mapper;");
+    _builder.newLine();
+    _builder.append("protected CustomAppConfiguration appConfiguration;");
+    _builder.newLine();
+    _builder.append("protected IDaoProvider daoProvider;");
+    _builder.newLine();
+    _builder.append("private ViewProvider viewProvider;");
+    _builder.newLine();
+    _builder.append("private E2E e2e;");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence constructor(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public ");
+    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    _builder.append(_abstractActionName);
+    _builder.append("(Jdbi jdbi, CustomAppConfiguration appConfiguration, ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence initProperties() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("this.jdbi = jdbi;");
+    _builder.newLine();
+    _builder.append("mapper = new JodaObjectMapper();");
+    _builder.newLine();
+    _builder.append("this.appConfiguration = appConfiguration;");
+    _builder.newLine();
+    _builder.append("this.daoProvider = daoProvider;");
+    _builder.newLine();
+    _builder.append("this.viewProvider = viewProvider;");
+    _builder.newLine();
+    _builder.append("this.e2e = e2e;");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence setActionData(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public void setActionData(IDataContainer data) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("this.actionData = (");
+    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType, "\t");
+    _builder.append(")data;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence method(final HttpServerAce it, final AuthUser authUser) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _type = it.getType();
+      boolean _tripleNotEquals = (_type != null);
+      if (_tripleNotEquals) {
+        _builder.append("@");
+        String _type_1 = it.getType();
+        _builder.append(_type_1);
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("@Timed");
+    _builder.newLine();
+    _builder.append("@Produces(MediaType.APPLICATION_JSON)");
+    _builder.newLine();
+    _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
+    _builder.newLine();
+    _builder.append("public Response ");
+    String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
+    _builder.append(_firstLower);
+    _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    {
+      if ((it.isAuthorize() && (authUser != null))) {
+        _builder.append("@Auth ");
+        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper, "\t\t");
+        _builder.append(" ");
+        String _firstLower_1 = StringExtensions.toFirstLower(authUser.getName());
+        _builder.append(_firstLower_1, "\t\t");
+        _builder.append(", ");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _queryParams = it.getQueryParams();
+      for(final Attribute param : _queryParams) {
+        _builder.append("\t\t");
+        _builder.append("@QueryParam(\"");
+        String _name = param.getName();
+        _builder.append(_name, "\t\t");
+        _builder.append("\") ");
+        String _resourceParamType = this._attributeExtension.resourceParamType(param);
+        _builder.append(_resourceParamType, "\t\t");
+        _builder.append(" ");
+        String _name_1 = param.getName();
+        _builder.append(_name_1, "\t\t");
+        _builder.append(", ");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Attribute> _pathParams = it.getPathParams();
+      for(final Attribute param_1 : _pathParams) {
+        _builder.append("\t\t");
+        _builder.append("@PathParam(\"");
+        String _name_2 = param_1.getName();
+        _builder.append(_name_2, "\t\t");
+        _builder.append("\") ");
+        String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1);
+        _builder.append(_resourceParamType_1, "\t\t");
+        _builder.append(" ");
+        String _name_3 = param_1.getName();
+        _builder.append(_name_3, "\t\t");
+        _builder.append(", ");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    {
+      int _size = it.getPayload().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("@NotNull ");
+        String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType, "\t\t");
+        _builder.append(" payload)");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+      } else {
+        _builder.append("@NotNull @QueryParam(\"uuid\") String uuid)");
+      }
+    }
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("throws JsonProcessingException {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("this.actionData = new ");
+    String _dataName = this._modelExtension.dataName(it.getModel());
+    _builder.append(_dataName, "\t");
+    _builder.append("(");
+    {
+      int _size_1 = it.getPayload().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        _builder.append("payload.getUuid()");
+      } else {
+        _builder.append("uuid");
+      }
+    }
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<Attribute> _queryParams_1 = it.getQueryParams();
+      for(final Attribute param_2 : _queryParams_1) {
+        _builder.append("\t");
+        _builder.append("this.actionData.");
+        String _setterCall = this._attributeExtension.setterCall(param_2, this._attributeExtension.resourceParam(param_2));
+        _builder.append(_setterCall, "\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Attribute> _pathParams_1 = it.getPathParams();
+      for(final Attribute param_3 : _pathParams_1) {
+        _builder.append("\t");
+        _builder.append("this.actionData.");
+        String _setterCall_1 = this._attributeExtension.setterCall(param_3, this._attributeExtension.resourceParam(param_3));
+        _builder.append(_setterCall_1, "\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Attribute> _payload = it.getPayload();
+      for(final Attribute attribute : _payload) {
+        _builder.append("\t");
+        _builder.append("this.actionData.");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("payload.");
+        String _terCall = this._attributeExtension.getterCall(attribute);
+        _builder_1.append(_terCall);
+        String _setterCall_2 = this._attributeExtension.setterCall(attribute, _builder_1.toString());
+        _builder.append(_setterCall_2, "\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      if ((it.isAuthorize() && (authUser != null))) {
+        {
+          List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
+          for(final Attribute param_4 : _allAttributes) {
+            _builder.append("\t");
+            {
+              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
+              if (_containsAttribute) {
+                _builder.append("this.actionData.");
+                StringConcatenation _builder_2 = new StringConcatenation();
+                String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
+                _builder_2.append(_firstLower_2);
+                _builder_2.append(".");
+                String _terCall_1 = this._attributeExtension.getterCall(param_4);
+                _builder_2.append(_terCall_1);
+                String _setterCall_3 = this._attributeExtension.setterCall(param_4, _builder_2.toString());
+                _builder.append(_setterCall_3, "\t");
+                _builder.append(";");
+              }
+            }
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.append("return this.apply();");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence initActionData(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("databaseHandle.commitTransaction();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throwBadRequest(\"uuid already exists - please choose another one\");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("this.actionData.setSystemTime(new DateTime());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("this.initActionData();");
+    _builder.newLine();
+    _builder.append("} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("this.actionData = (");
+    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType, "\t");
+    _builder.append(")originalData;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("// TODO");
+    _builder.newLine();
+    _builder.append("} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("// TODO");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence catchFinallyBlock(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("} catch (WebApplicationException x) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("try {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("databaseHandle.rollbackTransaction();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("App.reportException(x);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("} catch (Exception ex) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();");
+    _builder.newLine();
+    _builder.append("} catch (Exception x) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("try {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("databaseHandle.rollbackTransaction();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("App.reportException(x);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("} catch (Exception ex) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("LOG.error(\"failed to rollback or to save or report exception \" + ex.getMessage());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("return Response.status(500).entity(x.getMessage()).build();");
+    _builder.newLine();
+    _builder.append("} finally {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("databaseHandle.close();");
+    _builder.newLine();
+    _builder.append("}");
     _builder.newLine();
     return _builder;
   }
