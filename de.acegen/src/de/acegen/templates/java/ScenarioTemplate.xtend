@@ -12,6 +12,7 @@ import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.aceGen.WhenBlock
 
 class ScenarioTemplate {
 
@@ -65,6 +66,7 @@ class ScenarioTemplate {
 		
 		import com.anfelisa.ace.BaseScenario;
 		import com.anfelisa.ace.ITimelineItem;
+		import com.anfelisa.ace.NotReplayableDataProvider;
 		import «java.getName».ActionCalls;
 		
 		@SuppressWarnings("unused")
@@ -72,15 +74,15 @@ class ScenarioTemplate {
 		
 			private void given() throws Exception {
 				«FOR scenario : scenarios»
-					«generateActionCalls(scenario.whenBlock.action, scenario.whenBlock.dataDefinition, scenario.whenBlock.authorization, java)»
+					«scenario.whenBlock.generatePrepare»
+					«scenario.whenBlock.generateActionCall(java)»
+
 				«ENDFOR»
 			}
 			
 			private Response when() throws Exception {
-				«IF whenBlock.dataDefinition.systemtime !== null»
-					// TODO
-				«ENDIF»
-				return «generateActionCalls(whenBlock.action, whenBlock.dataDefinition, whenBlock.authorization, java)»
+				«whenBlock.generatePrepare»
+				return «whenBlock.generateActionCall(java)»
 			}
 			
 			private void then(Response response) throws Exception {
@@ -119,6 +121,21 @@ class ScenarioTemplate {
 		«sdg»
 		
 	'''
+	
+	private def generatePrepare(WhenBlock it) '''
+		«IF dataDefinition.systemtime !== null»
+			NotReplayableDataProvider.setSystemTime(«dataDefinition.systemtime»);
+		«ENDIF»
+		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null»
+			«FOR attributeDefinition: dataDefinition.data.attributeDefinitions»
+				«IF attributeDefinition.attribute.notReplayable»
+					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", «attributeDefinition.valueFrom»);
+				«ENDIF»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	private def generateActionCall(WhenBlock it, HttpServer java) '''«generateActionCalls(action, dataDefinition, authorization, java)»'''
 	
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);

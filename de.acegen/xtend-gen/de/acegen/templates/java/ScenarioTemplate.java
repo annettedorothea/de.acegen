@@ -11,6 +11,7 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
@@ -119,6 +120,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ITimelineItem;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.NotReplayableDataProvider;");
+    _builder.newLine();
     _builder.append("import ");
     String _name_1 = java.getName();
     _builder.append(_name_1);
@@ -140,9 +143,14 @@ public class ScenarioTemplate {
       EList<Scenario> _scenarios = it.getScenarios();
       for(final Scenario scenario : _scenarios) {
         _builder.append("\t\t");
-        CharSequence _generateActionCalls = this.generateActionCalls(scenario.getWhenBlock().getAction(), scenario.getWhenBlock().getDataDefinition(), scenario.getWhenBlock().getAuthorization(), java);
-        _builder.append(_generateActionCalls, "\t\t");
+        CharSequence _generatePrepare = this.generatePrepare(scenario.getWhenBlock());
+        _builder.append(_generatePrepare, "\t\t");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        CharSequence _generateActionCall = this.generateActionCall(scenario.getWhenBlock(), java);
+        _builder.append(_generateActionCall, "\t\t");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
       }
     }
     _builder.append("\t");
@@ -153,19 +161,14 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
-    {
-      String _systemtime = it.getWhenBlock().getDataDefinition().getSystemtime();
-      boolean _tripleNotEquals = (_systemtime != null);
-      if (_tripleNotEquals) {
-        _builder.append("\t\t");
-        _builder.append("// TODO");
-        _builder.newLine();
-      }
-    }
+    _builder.append("\t\t");
+    CharSequence _generatePrepare_1 = this.generatePrepare(it.getWhenBlock());
+    _builder.append(_generatePrepare_1, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return ");
-    CharSequence _generateActionCalls_1 = this.generateActionCalls(it.getWhenBlock().getAction(), it.getWhenBlock().getDataDefinition(), it.getWhenBlock().getAuthorization(), java);
-    _builder.append(_generateActionCalls_1, "\t\t");
+    CharSequence _generateActionCall_1 = this.generateActionCall(it.getWhenBlock(), java);
+    _builder.append(_generateActionCall_1, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -177,8 +180,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     {
       int _statusCode = it.getThenBlock().getStatusCode();
-      boolean _tripleNotEquals_1 = (_statusCode != 0);
-      if (_tripleNotEquals_1) {
+      boolean _tripleNotEquals = (_statusCode != 0);
+      if (_tripleNotEquals) {
         _builder.append("\t\t");
         _builder.append("assertThat(response.getStatus(), ");
         int _statusCode_1 = it.getThenBlock().getStatusCode();
@@ -191,8 +194,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     {
       DataDefinition _response = it.getThenBlock().getResponse();
-      boolean _tripleNotEquals_2 = (_response != null);
-      if (_tripleNotEquals_2) {
+      boolean _tripleNotEquals_1 = (_response != null);
+      if (_tripleNotEquals_1) {
         _builder.append("\t\t");
         CharSequence _generateDataCreation = this.generateDataCreation(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel(), "expectedData");
         _builder.append(_generateDataCreation, "\t\t");
@@ -272,6 +275,51 @@ public class ScenarioTemplate {
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence generatePrepare(final WhenBlock it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _systemtime = it.getDataDefinition().getSystemtime();
+      boolean _tripleNotEquals = (_systemtime != null);
+      if (_tripleNotEquals) {
+        _builder.append("NotReplayableDataProvider.setSystemTime(");
+        String _systemtime_1 = it.getDataDefinition().getSystemtime();
+        _builder.append(_systemtime_1);
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      if ((((it.getDataDefinition() != null) && (it.getDataDefinition().getData() != null)) && (it.getDataDefinition().getData().getAttributeDefinitions() != null))) {
+        {
+          EList<AttributeDefinition> _attributeDefinitions = it.getDataDefinition().getData().getAttributeDefinitions();
+          for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+            {
+              boolean _isNotReplayable = attributeDefinition.getAttribute().isNotReplayable();
+              if (_isNotReplayable) {
+                _builder.append("NotReplayableDataProvider.put(\"");
+                String _name = attributeDefinition.getAttribute().getName();
+                _builder.append(_name);
+                _builder.append("\", ");
+                String _valueFrom = this._attributeExtension.valueFrom(attributeDefinition);
+                _builder.append(_valueFrom);
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java);
+    _builder.append(_generateActionCalls);
     return _builder;
   }
   
