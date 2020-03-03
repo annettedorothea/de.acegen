@@ -356,7 +356,13 @@ public class CommandTemplate {
     _builder.append("this.executeCommand(readonlyHandle);");
     _builder.newLine();
     _builder.append("\t\t");
+    _builder.append("if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

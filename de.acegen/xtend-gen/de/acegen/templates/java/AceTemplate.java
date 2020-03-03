@@ -231,11 +231,17 @@ public class AceTemplate {
     _builder.append("\t\t\t");
     _builder.append("environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));");
     _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("LOG.warn(\"You are runnin in REPLAY mode. This is a security risc.\");");
+    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("} else if (ServerConfiguration.DEV.equals(mode)) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("LOG.warn(\"You are runnin in DEV mode. This is a security risc.\");");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");

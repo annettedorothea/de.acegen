@@ -193,7 +193,13 @@ public class ActionTemplate {
     _builder.append(_initActionData, "\t\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
+    _builder.append("if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
     _builder.append("daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("ICommand command = this.getCommand();");

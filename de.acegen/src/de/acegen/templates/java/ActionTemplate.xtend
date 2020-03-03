@@ -93,7 +93,9 @@ class ActionTemplate {
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»
-					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+					if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+					}
 					ICommand command = this.getCommand();
 					«IF isProxy»
 						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {

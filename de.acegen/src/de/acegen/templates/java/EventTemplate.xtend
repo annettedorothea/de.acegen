@@ -169,7 +169,9 @@ class EventTemplate {
 			}
 		
 			public void publish(Handle handle, Handle timelineHandle) {
-				daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
+				if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
+				}
 				this.notifyListeners(handle);
 			}
 		

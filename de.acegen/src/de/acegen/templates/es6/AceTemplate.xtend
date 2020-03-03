@@ -398,15 +398,10 @@ class AceTemplate {
 		    static addItemToTimeLine(item) {
 		        let timestamp = new Date();
 		        item.timestamp = timestamp.getTime();
-		        if (ACEController.execution === ACEController.LIVE) {
-		            if (ACEController.timeline.length < AppUtils.getMaxTimelineSize()) {
-						ACEController.timeline.push(AppUtils.deepCopy(item));
-					} else {
-						console.debug(`timeline size ${AppUtils.getMaxTimelineSize()} exceeded - item was not added`, item);
-					}
-		        } else {
-		            ACEController.actualTimeline.push(AppUtils.deepCopy(item));
-		        }
+				if (ACEController.execution === ACEController.LIVE && AppUtils.isDevelopment() 
+				        || !ACEController.execution === ACEController.LIVE) {
+				    ACEController.timeline.push(AppUtils.deepCopy(item));
+				}
 		    }
 		
 		    static addActionToQueue(action) {
