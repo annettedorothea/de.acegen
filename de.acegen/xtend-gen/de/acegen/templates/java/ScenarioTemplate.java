@@ -890,8 +890,6 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import java.util.UUID;");
     _builder.newLine();
-    _builder.append("import java.util.List;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Handle;");
     _builder.newLine();
@@ -935,11 +933,6 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract void assertIsNull(Object actual);");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected abstract void assertThat(List<?> actual, List<?> expected);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");
