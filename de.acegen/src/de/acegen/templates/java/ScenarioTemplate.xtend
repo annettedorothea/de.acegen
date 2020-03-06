@@ -7,12 +7,14 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
+import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
+import java.util.ArrayList
+import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.WhenBlock
 
 class ScenarioTemplate {
 
@@ -72,9 +74,9 @@ class ScenarioTemplate {
 		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
-				«FOR scenario : scenarios»
-					«scenario.whenBlock.generatePrepare»
-					«scenario.whenBlock.generateActionCall(java)»
+				«FOR whenBlock : allWhenBlocks»
+					«whenBlock.generatePrepare»
+					«whenBlock.generateActionCall(java)»
 
 				«ENDFOR»
 			}
@@ -120,6 +122,21 @@ class ScenarioTemplate {
 		«sdg»
 		
 	'''
+	
+	private def allWhenBlocks(Scenario it) {
+		var allWhenBlocks = new ArrayList<WhenBlock>();
+		for (scenario : scenarios) {
+			allWhenBlocksRec(scenario, allWhenBlocks)
+		}
+		return allWhenBlocks
+	}
+	
+	private def void allWhenBlocksRec(Scenario it, List<WhenBlock> allWhenBlocks) {
+		for (scenario : scenarios) {
+			allWhenBlocksRec(scenario, allWhenBlocks)
+		}
+		allWhenBlocks.add(whenBlock)		
+	}
 	
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
@@ -174,13 +191,13 @@ class ScenarioTemplate {
 
 	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
 		«IF aceOperation.getType == "POST"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSEIF aceOperation.getType == "PUT"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSEIF aceOperation.getType == "DELETE"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSE»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize», authorization("«authorization.username»", "«authorization.password»")«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ENDIF»
 	'''
 	
@@ -272,6 +289,7 @@ class ScenarioTemplate {
 		package com.anfelisa.ace;
 		
 		import java.util.UUID;
+		import java.util.List;
 		
 		import org.jdbi.v3.core.Handle;
 		
@@ -294,6 +312,8 @@ class ScenarioTemplate {
 			protected abstract void assertThat(Object actual, Object expected);
 
 			protected abstract void assertIsNull(Object actual);
+			
+			protected abstract void assertThat(List<?> actual, List<?> expected);
 		
 		}
 		

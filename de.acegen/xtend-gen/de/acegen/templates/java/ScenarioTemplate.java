@@ -16,6 +16,7 @@ import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -136,14 +137,14 @@ public class ScenarioTemplate {
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
     {
-      EList<Scenario> _scenarios = it.getScenarios();
-      for(final Scenario scenario : _scenarios) {
+      ArrayList<WhenBlock> _allWhenBlocks = this.allWhenBlocks(it);
+      for(final WhenBlock whenBlock : _allWhenBlocks) {
         _builder.append("\t\t");
-        CharSequence _generatePrepare = this.generatePrepare(scenario.getWhenBlock());
+        CharSequence _generatePrepare = this.generatePrepare(whenBlock);
         _builder.append(_generatePrepare, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        CharSequence _generateActionCall = this.generateActionCall(scenario.getWhenBlock(), java);
+        CharSequence _generateActionCall = this.generateActionCall(whenBlock, java);
         _builder.append(_generateActionCall, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -276,6 +277,23 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
+  }
+  
+  private ArrayList<WhenBlock> allWhenBlocks(final Scenario it) {
+    ArrayList<WhenBlock> allWhenBlocks = new ArrayList<WhenBlock>();
+    EList<Scenario> _scenarios = it.getScenarios();
+    for (final Scenario scenario : _scenarios) {
+      this.allWhenBlocksRec(scenario, allWhenBlocks);
+    }
+    return allWhenBlocks;
+  }
+  
+  private void allWhenBlocksRec(final Scenario it, final List<WhenBlock> allWhenBlocks) {
+    EList<Scenario> _scenarios = it.getScenarios();
+    for (final Scenario scenario : _scenarios) {
+      this.allWhenBlocksRec(scenario, allWhenBlocks);
+    }
+    allWhenBlocks.add(it.getWhenBlock());
   }
   
   private CharSequence generatePrepare(final WhenBlock it) {
@@ -515,8 +533,7 @@ public class ScenarioTemplate {
           }
         }
         {
-          boolean _isAuthorize = aceOperation.isAuthorize();
-          if (_isAuthorize) {
+          if ((aceOperation.isAuthorize() && (authorization != null))) {
             _builder.append(", authorization(\"");
             String _username = authorization.getUsername();
             _builder.append(_username);
@@ -524,6 +541,11 @@ public class ScenarioTemplate {
             String _password = authorization.getPassword();
             _builder.append(_password);
             _builder.append("\")");
+          } else {
+            boolean _isAuthorize = aceOperation.isAuthorize();
+            if (_isAuthorize) {
+              _builder.append(", null");
+            }
           }
         }
         _builder.append(");");
@@ -552,8 +574,7 @@ public class ScenarioTemplate {
             }
           }
           {
-            boolean _isAuthorize_1 = aceOperation.isAuthorize();
-            if (_isAuthorize_1) {
+            if ((aceOperation.isAuthorize() && (authorization != null))) {
               _builder.append(", authorization(\"");
               String _username_1 = authorization.getUsername();
               _builder.append(_username_1);
@@ -561,6 +582,11 @@ public class ScenarioTemplate {
               String _password_1 = authorization.getPassword();
               _builder.append(_password_1);
               _builder.append("\")");
+            } else {
+              boolean _isAuthorize_1 = aceOperation.isAuthorize();
+              if (_isAuthorize_1) {
+                _builder.append(", null");
+              }
             }
           }
           _builder.append(");");
@@ -589,8 +615,7 @@ public class ScenarioTemplate {
               }
             }
             {
-              boolean _isAuthorize_2 = aceOperation.isAuthorize();
-              if (_isAuthorize_2) {
+              if ((aceOperation.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
                 String _username_2 = authorization.getUsername();
                 _builder.append(_username_2);
@@ -598,6 +623,11 @@ public class ScenarioTemplate {
                 String _password_2 = authorization.getPassword();
                 _builder.append(_password_2);
                 _builder.append("\")");
+              } else {
+                boolean _isAuthorize_2 = aceOperation.isAuthorize();
+                if (_isAuthorize_2) {
+                  _builder.append(", null");
+                }
               }
             }
             _builder.append(");");
@@ -623,8 +653,7 @@ public class ScenarioTemplate {
               }
             }
             {
-              boolean _isAuthorize_3 = aceOperation.isAuthorize();
-              if (_isAuthorize_3) {
+              if ((aceOperation.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
                 String _username_3 = authorization.getUsername();
                 _builder.append(_username_3);
@@ -632,6 +661,11 @@ public class ScenarioTemplate {
                 String _password_3 = authorization.getPassword();
                 _builder.append(_password_3);
                 _builder.append("\")");
+              } else {
+                boolean _isAuthorize_3 = aceOperation.isAuthorize();
+                if (_isAuthorize_3) {
+                  _builder.append(", null");
+                }
               }
             }
             _builder.append(");");
@@ -856,6 +890,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import java.util.UUID;");
     _builder.newLine();
+    _builder.append("import java.util.List;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Handle;");
     _builder.newLine();
@@ -899,6 +935,11 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract void assertIsNull(Object actual);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertThat(List<?> actual, List<?> expected);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");
