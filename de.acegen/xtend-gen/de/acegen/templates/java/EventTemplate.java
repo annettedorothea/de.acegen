@@ -365,7 +365,7 @@ public class EventTemplate {
     _builder.append("public void publish(Handle handle, Handle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("if (!ServerConfiguration.LIVE.equals(App.getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);");

@@ -55,7 +55,9 @@ class AceExtension {
 	def String eventNameWithPackage(HttpServerAce it, HttpServerOutcome outcome) '''«(eContainer as HttpServer).getName».events.«eventName(outcome)»'''
 
 	def String responseDataName(HttpServerAce  it) '''«getName.toFirstUpper»Response'''
+	
 	def String responseDataNameWithPackage(HttpServerAce  it, HttpServer java) '''«java.getName».data.«getName.toFirstUpper»Response'''
+	
 	def String responseDataInterfaceName(HttpServerAce it) '''I«getName.toFirstUpper»Response'''
 	
 	def String packageFor(HttpServerAce it) {

@@ -92,9 +92,9 @@ class ScenarioTemplate {
 				«IF thenBlock.response !== null»
 					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData")»
 					
-					«whenBlock.action.responseDataNameWithPackage(java)» expected = new «whenBlock.action.responseDataNameWithPackage(java)»(expectedData);
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
 
-					«whenBlock.action.responseDataNameWithPackage(java)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(java)».class);
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
 
 					assertThat(actual, expected);
 				«ENDIF»

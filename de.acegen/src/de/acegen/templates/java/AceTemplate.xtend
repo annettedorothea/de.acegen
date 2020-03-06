@@ -116,10 +116,10 @@ class AceTemplate {
 					environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));
 					environment.jersey().register(new StopE2ESessionResource(e2e, configuration));
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are runnin in REPLAY mode. This is a security risc.");
+					LOG.warn("You are running in REPLAY mode. This is a security risc.");
 				} else if (ServerConfiguration.DEV.equals(mode)) {
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are runnin in DEV mode. This is a security risc.");
+					LOG.warn("You are running in DEV mode. This is a security risc.");
 				}
 				
 				environment.jersey().register(new JsonProcessingExceptionMapper(true));
