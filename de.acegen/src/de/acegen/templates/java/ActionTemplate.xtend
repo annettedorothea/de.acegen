@@ -89,7 +89,7 @@ class ActionTemplate {
 			«method(authUser)»
 		
 			public Response apply() {
-				databaseHandle = new DatabaseHandle(jdbi);
+				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»
@@ -157,12 +157,12 @@ class ActionTemplate {
 			
 			«setActionData»
 		
-			protected abstract void loadDataForGetRequest(Handle readonlyHandle);
+			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
 		
 			«method(authUser)»
 
 			public Response apply() {
-				databaseHandle = new DatabaseHandle(jdbi);
+				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»
@@ -228,6 +228,9 @@ class ActionTemplate {
 		import com.anfelisa.ace.ServerConfiguration;
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.NotReplayableDataProvider;
+		import com.anfelisa.ace.PersistenceHandle;
+		import com.anfelisa.ace.PersistenceConnection;
+
 		import com.anfelisa.auth.AuthUser;
 
 		import com.codahale.metrics.annotation.Timed;
@@ -250,7 +253,7 @@ class ActionTemplate {
 		static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 
 		private DatabaseHandle databaseHandle;
-		private Jdbi jdbi;
+		private PersistenceConnection persistenceConnection;
 		protected JodaObjectMapper mapper;
 		protected CustomAppConfiguration appConfiguration;
 		protected IDaoProvider daoProvider;
@@ -260,12 +263,12 @@ class ActionTemplate {
 	'''
 
 	private def constructor(HttpServerAce it) '''
-		public «abstractActionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+		public «abstractActionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 	'''
 	
 	private def initProperties() '''
-		this.jdbi = jdbi;
+		this.persistenceConnection = persistenceConnection;
 		mapper = new JodaObjectMapper();
 		this.appConfiguration = appConfiguration;
 		this.daoProvider = daoProvider;
@@ -392,25 +395,27 @@ class ActionTemplate {
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.E2E;
+		import com.anfelisa.ace.PersistenceConnection;
+		«IF getType.equals("GET")»
+			import com.anfelisa.ace.PersistenceHandle;
+		«ENDIF»
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 
-		import org.jdbi.v3.core.Handle;
-		import org.jdbi.v3.core.Jdbi;
-		
 		public class «actionName» extends «abstractActionName» {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 		
-			public «actionName»(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
+			public «actionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
 					ViewProvider viewProvider, E2E e2e) {
-				super(jdbi,appConfiguration, daoProvider, viewProvider, e2e);
+				super(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);
 			}
 		
 		
 			«IF getType.equals("GET")»
-				protected void loadDataForGetRequest(Handle readonlyHandle) {
+				@Override
+				protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {
 				}
 			«ENDIF»
 			
@@ -561,9 +566,7 @@ class ActionTemplate {
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.ServerConfiguration;
 		import com.anfelisa.ace.E2E;
-		
-		import org.jdbi.v3.core.Jdbi;
-
+		import com.anfelisa.ace.PersistenceConnection;
 		
 		«IF aceOperations.size > 0»
 			import «getName».actions.*;
@@ -572,10 +575,10 @@ class ActionTemplate {
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, 
+			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.actionName»(jdbi, appConfiguration, daoProvider, viewProvider, e2e));
+					environment.jersey().register(new «aceOperation.actionName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
 				«ENDFOR»
 			}
 		

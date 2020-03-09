@@ -800,7 +800,7 @@ public class ScenarioTemplate {
     _builder.append("daoProvider = new DaoProvider();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("handle = jdbi.open();");
+    _builder.append("handle = new PersistenceHandle(jdbi.open());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -891,9 +891,6 @@ public class ScenarioTemplate {
     _builder.append("import java.util.UUID;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("public abstract class AbstractBaseScenario {");
     _builder.newLine();
     _builder.newLine();
@@ -906,7 +903,7 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected Handle handle;");
+    _builder.append("protected PersistenceHandle handle;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");

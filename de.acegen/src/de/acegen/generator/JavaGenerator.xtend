@@ -225,6 +225,12 @@ class JavaGenerator {
 		fsa.generateFile("com/anfelisa/ace" + '/EventConsumer.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventconsumer());	
 
+		fsa.generateFile("com/anfelisa/ace" + '/PersistenceConnection.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceConnection());	
+
+			fsa.generateFile("com/anfelisa/ace" + '/PersistenceHandle.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceHandle());	
+	
 		fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 			aceTemplate.generateAceMigration());
 

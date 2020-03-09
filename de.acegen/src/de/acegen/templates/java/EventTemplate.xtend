@@ -73,9 +73,8 @@ class EventTemplate {
 		
 		import com.anfelisa.ace.IDaoProvider;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
 			«renderFunction.getModel.dataImport»
 		«ENDFOR»
@@ -90,7 +89,7 @@ class EventTemplate {
 			}
 		
 			«FOR renderFunction : renderFunctions»
-				public void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, Handle handle) {
+				public void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle) {
 				}
 			«ENDFOR»
 		
@@ -106,9 +105,9 @@ class EventTemplate {
 		
 		package «java.getName».views;
 		
-		import org.jdbi.v3.core.Handle;
 		
 		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
 			«renderFunction.getModel.dataImport»
 		«ENDFOR»
@@ -117,7 +116,7 @@ class EventTemplate {
 		public interface «viewInterfaceName» {
 		
 			«FOR renderFunction : renderFunctions»
-				void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, Handle handle);
+				void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle);
 			«ENDFOR»
 		
 		}
@@ -134,8 +133,6 @@ class EventTemplate {
 		
 		import java.util.List;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		public abstract class Event<T extends IDataContainer> implements IEvent {
 		
 			protected T eventData;
@@ -151,7 +148,7 @@ class EventTemplate {
 				this.viewProvider = viewProvider;
 			}
 		
-			public void notifyListeners(Handle handle) {
+			public void notifyListeners(PersistenceHandle handle) {
 				List<EventConsumer> consumerList = viewProvider.getConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (EventConsumer consumer : consumerList) {
@@ -168,7 +165,7 @@ class EventTemplate {
 				return eventName;
 			}
 		
-			public void publish(Handle handle, Handle timelineHandle) {
+			public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				if (!ServerConfiguration.LIVE.equals(App.getMode())) {
 					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
 				}
@@ -187,17 +184,15 @@ class EventTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		public interface IEvent {
 		
 			String getEventName();
 			
 			IDataContainer getEventData();
 			
-			void publish(Handle handle, Handle timelineHandle);
+			void publish(PersistenceHandle handle, PersistenceHandle timelineHandle);
 			
-			void notifyListeners(Handle handle);
+			void notifyListeners(PersistenceHandle handle);
 		
 		}
 		

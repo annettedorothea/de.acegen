@@ -40,12 +40,12 @@ class CommandTemplate {
 		package «java.getName».commands;
 		
 		import javax.ws.rs.WebApplicationException;
-		import org.jdbi.v3.core.Handle;
 		
 		import com.anfelisa.ace.Command;
 		import com.anfelisa.ace.CustomAppConfiguration;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.PersistenceHandle;
 		
 		«getModel.dataImport»
 		
@@ -60,7 +60,7 @@ class CommandTemplate {
 			}
 		
 			@Override
-			public void publishEvents(Handle handle, Handle timelineHandle) {
+			public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				switch (this.commandData.getOutcome()) {
 				«FOR outcome : outcomes»
 					case «outcome.getName»:
@@ -89,7 +89,7 @@ class CommandTemplate {
 		import com.anfelisa.ace.ViewProvider;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.CustomAppConfiguration;
-		import org.jdbi.v3.core.Handle;
+		import com.anfelisa.ace.PersistenceHandle;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -106,7 +106,7 @@ class CommandTemplate {
 			}
 		
 			@Override
-			protected void executeCommand(Handle readonlyHandle) {
+			protected void executeCommand(PersistenceHandle readonlyHandle) {
 				«IF outcomes.size > 0»
 					this.commandData.setOutcome(«outcomes.get(0).getName»);
 				«ENDIF»
@@ -128,8 +128,6 @@ class CommandTemplate {
 		import javax.ws.rs.core.Response;
 		import com.anfelisa.ace.CustomAppConfiguration;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		public abstract class Command<T extends IDataContainer> implements ICommand {
 		
 			protected T commandData;
@@ -149,9 +147,9 @@ class CommandTemplate {
 				this.appConfiguration = appConfiguration;
 			}
 		
-			protected abstract void executeCommand(Handle readonlyHandle);
+			protected abstract void executeCommand(PersistenceHandle readonlyHandle);
 		
-			public void execute(Handle readonlyHandle, Handle timelineHandle) {
+			public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
 				this.executeCommand(readonlyHandle);
 				if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
 					daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);
@@ -214,8 +212,6 @@ class CommandTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		public interface ICommand {
 		
 			String getCommandName();
@@ -224,9 +220,9 @@ class CommandTemplate {
 			
 			void setCommandData(IDataContainer data);
 
-			void execute(Handle readonlyHandle, Handle timelineHandle);
+			void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
 		
-			void publishEvents(Handle handle, Handle timelineHandle);
+			void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);
 		}
 		
 		

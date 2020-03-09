@@ -54,8 +54,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import javax.ws.rs.WebApplicationException;");
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.Command;");
     _builder.newLine();
@@ -64,6 +62,8 @@ public class CommandTemplate {
     _builder.append("import com.anfelisa.ace.IDaoProvider;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
     _builder.newLine();
     _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
@@ -120,7 +120,7 @@ public class CommandTemplate {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void publishEvents(Handle handle, Handle timelineHandle) {");
+    _builder.append("public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("switch (this.commandData.getOutcome()) {");
@@ -196,7 +196,7 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
+    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
@@ -247,7 +247,7 @@ public class CommandTemplate {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected void executeCommand(Handle readonlyHandle) {");
+    _builder.append("protected void executeCommand(PersistenceHandle readonlyHandle) {");
     _builder.newLine();
     {
       int _size = it.getOutcomes().size();
@@ -290,9 +290,6 @@ public class CommandTemplate {
     _builder.append("import javax.ws.rs.core.Response;");
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class Command<T extends IDataContainer> implements ICommand {");
@@ -346,11 +343,11 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void executeCommand(Handle readonlyHandle);");
+    _builder.append("protected abstract void executeCommand(PersistenceHandle readonlyHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void execute(Handle readonlyHandle, Handle timelineHandle) {");
+    _builder.append("public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.executeCommand(readonlyHandle);");
@@ -505,9 +502,6 @@ public class CommandTemplate {
     _builder.append("package com.anfelisa.ace;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("public interface ICommand {");
     _builder.newLine();
     _builder.newLine();
@@ -525,11 +519,11 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void execute(Handle readonlyHandle, Handle timelineHandle);");
+    _builder.append("void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void publishEvents(Handle handle, Handle timelineHandle);");
+    _builder.append("void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

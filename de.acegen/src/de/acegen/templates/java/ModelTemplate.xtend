@@ -380,7 +380,7 @@ class ModelTemplate {
 		
 		package «java.getName».models;
 		
-		import org.jdbi.v3.core.Handle;
+		import com.anfelisa.ace.PersistenceHandle;
 		import org.jdbi.v3.core.statement.Update;
 
 		import java.util.List;
@@ -389,8 +389,8 @@ class ModelTemplate {
 		@SuppressWarnings("all")
 		public class «abstractModelDao» {
 			
-			public void insert(Handle handle, «modelName» «modelParam») {
-				Update statement = handle.createUpdate("INSERT INTO «table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
+			public void insert(PersistenceHandle handle, «modelName» «modelParam») {
+				Update statement = handle.getHandle().createUpdate("INSERT INTO «table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
 				«FOR attribute : attributes»
 					statement.bind("«attribute.name.toLowerCase»", «modelGetAttribute(attribute)»);
 				«ENDFOR»
@@ -399,8 +399,8 @@ class ModelTemplate {
 			
 			
 			«FOR attribute : allUniqueAttributes»
-				public void updateBy«attribute.name.toFirstUpper»(Handle handle, «modelName» «modelParam») {
-					Update statement = handle.createUpdate("UPDATE «table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam») {
+					Update statement = handle.getHandle().createUpdate("UPDATE «table» SET «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase» = :«attr.name.toLowerCase»«ENDFOR» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					«FOR attr : attributes»
 						statement.bind("«attr.name.toLowerCase»", «modelGetAttribute(attr)»);
 					«ENDFOR»
@@ -408,14 +408,14 @@ class ModelTemplate {
 					statement.execute();
 				}
 
-				public void deleteBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Update statement = handle.createUpdate("DELETE FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
+				public void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+					Update statement = handle.getHandle().createUpdate("DELETE FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»");
 					statement.bind("«attribute.name.toLowerCase»", «attribute.name»);
 					statement.execute();
 				}
 
-				public «modelName» selectBy«attribute.name.toFirstUpper»(Handle handle, «attribute.javaType» «attribute.name») {
-					Optional<«modelName»> optional = handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
+				public «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+					Optional<«modelName»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «attribute.name.toLowerCase» = :«attribute.name.toLowerCase»")
 						.bind("«attribute.name.toLowerCase»", «attribute.name»)
 						.map(new «modelMapper»())
 						.findFirst();
@@ -423,14 +423,14 @@ class ModelTemplate {
 				}
 			«ENDFOR»
 			
-			public List<«modelName»> selectAll(Handle handle) {
-				return handle.createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table»")
+			public List<«modelName»> selectAll(PersistenceHandle handle) {
+				return handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table»")
 					.map(new «modelMapper»())
 					.list();
 			}
 
-			public void truncate(Handle handle) {
-				Update statement = handle.createUpdate("TRUNCATE TABLE «table» CASCADE");
+			public void truncate(PersistenceHandle handle) {
+				Update statement = handle.getHandle().createUpdate("TRUNCATE TABLE «table» CASCADE");
 				statement.execute();
 			}
 
@@ -497,64 +497,62 @@ class ModelTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import org.jdbi.v3.core.Handle;
+		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
-		import org.jdbi.v3.core.Jdbi;
 		
 		public class DatabaseHandle {
 		
 			static final Logger LOG = LoggerFactory.getLogger(DatabaseHandle.class);
 		
-			private Handle handle;
-			private Handle readonlyHandle;
-			private Handle timelineHandle;
+			private PersistenceHandle writeHandle;
+			private PersistenceHandle readonlyHandle;
+			private PersistenceHandle timelineHandle;
 		
 			public DatabaseHandle(Jdbi jdbi) {
 				super();
-				this.handle = jdbi.open();
-				this.readonlyHandle = jdbi.open();
-				this.timelineHandle = jdbi.open();
+				this.writeHandle = new PersistenceHandle(jdbi.open());
+				this.readonlyHandle = new PersistenceHandle(jdbi.open());
+				this.timelineHandle = new PersistenceHandle(jdbi.open());
 			}
 		
 			synchronized public void beginTransaction() {
-				handle.begin();
-				readonlyHandle.begin();
-				timelineHandle.begin();
+				writeHandle.getHandle().begin();
+				readonlyHandle.getHandle().begin();
+				timelineHandle.getHandle().begin();
 			}
 		
 			synchronized public void commitTransaction() {
-				handle.commit();
-				readonlyHandle.rollback();
-				timelineHandle.commit();
+				writeHandle.getHandle().commit();
+				readonlyHandle.getHandle().rollback();
+				timelineHandle.getHandle().commit();
 			}
 		
 			synchronized public void rollbackTransaction() {
-				handle.rollback();
-				readonlyHandle.rollback();
-				timelineHandle.commit();
+				writeHandle.getHandle().rollback();
+				readonlyHandle.getHandle().rollback();
+				timelineHandle.getHandle().commit();
 			}
 		
 			synchronized public void close() {
-				handle.close();
-				readonlyHandle.close();
-				timelineHandle.close();
+				writeHandle.getHandle().close();
+				readonlyHandle.getHandle().close();
+				timelineHandle.getHandle().close();
 			}
 		
-			public Handle getHandle() {
-				return handle;
+			public PersistenceHandle getHandle() {
+				return writeHandle;
 			}
 		
-			public Handle getReadonlyHandle() {
+			public PersistenceHandle getReadonlyHandle() {
 				return readonlyHandle;
 			}
 		
-			public Handle getTimelineHandle() {
+			public PersistenceHandle getTimelineHandle() {
 				return timelineHandle;
 			}
 		
 		}
-
 		
 		«sdg»
 		

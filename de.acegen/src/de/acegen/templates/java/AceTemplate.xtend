@@ -131,7 +131,7 @@ class AceTemplate {
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
-				AppRegistration.registerResources(environment, jdbi, configuration, daoProvider, viewProvider, e2e);
+				AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider, viewProvider, e2e);
 				AppRegistration.registerConsumers(viewProvider, mode);
 		
 			}
@@ -153,7 +153,7 @@ class AceTemplate {
 		
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration,
+			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,
 					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 			}
 		
@@ -414,7 +414,6 @@ class AceTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -456,27 +455,26 @@ class AceTemplate {
 				}
 				e2e.init(timeline);
 				
-				Handle handle = jdbi.open();
+				PersistenceHandle handle = new PersistenceHandle(jdbi.open());
 				try {
-					handle.begin();
+					handle.getHandle().begin();
 					
 					daoProvider.getAceDao().truncateTimelineTable(handle);
 		
 					daoProvider.truncateAllViews(handle);
 		
-					handle.commit();
+					handle.getHandle().commit();
 		
 					return Response.ok().build();
 				} catch (Exception e) {
-					handle.rollback();
+					handle.getHandle().rollback();
 					throw new WebApplicationException(e);
 				} finally {
-					handle.close();
+					handle.getHandle().close();
 				}
 			}
 		
 		}
-		
 		
 		«sdg»
 		
@@ -489,7 +487,6 @@ class AceTemplate {
 		
 		import java.util.List;
 		
-		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -527,7 +524,7 @@ class AceTemplate {
 				LOG.info("START EVENT REPLAY");
 				try {
 					databaseHandle.beginTransaction();
-					Handle handle = databaseHandle.getHandle();
+					PersistenceHandle handle = databaseHandle.getHandle();
 					daoProvider.truncateAllViews(handle);
 		
 					List<ITimelineItem> timeline = daoProvider.getAceDao().selectReplayTimeline(handle);
@@ -678,7 +675,7 @@ class AceTemplate {
 
 	def generateGetServerTimelineResource() '''
 		«copyright»
-		
+
 		package com.anfelisa.ace;
 		
 		import java.util.List;
@@ -692,8 +689,6 @@ class AceTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import org.jdbi.v3.core.Jdbi;
-		
-		import org.jdbi.v3.core.Handle;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -724,19 +719,19 @@ class AceTemplate {
 				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
 					throw new WebApplicationException("get server timeline is not available in a live environment", Response.Status.FORBIDDEN);
 				}
-				Handle timelineHandle = jdbi.open();
+				PersistenceHandle timelineHandle = new PersistenceHandle(jdbi.open());
+				
 				try {
 					List<ITimelineItem> serverTimeline = aceDao.selectTimeline(timelineHandle);
 					return Response.ok(serverTimeline).build();
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				} finally {
-					timelineHandle.close();
+					timelineHandle.getHandle().close();
 				}
 			}
 		
 		}
-		
 		
 		«sdg»
 		
@@ -938,11 +933,10 @@ class AceTemplate {
 		«copyright»
 		
 		package com.anfelisa.ace;
-		
+
 		import java.util.List;
 		import java.util.Optional;
 		
-		import org.jdbi.v3.core.Handle;
 		import org.jdbi.v3.core.statement.Update;
 		
 		import com.fasterxml.jackson.core.JsonProcessingException;
@@ -952,12 +946,12 @@ class AceTemplate {
 		
 			private JodaObjectMapper mapper = new JodaObjectMapper();
 		
-			public void truncateTimelineTable(Handle handle) {
-				handle.execute("TRUNCATE TABLE timeline");
+			public void truncateTimelineTable(PersistenceHandle handle) {
+				handle.getHandle().execute("TRUNCATE TABLE timeline");
 			}
 		
-			public boolean contains(Handle handle, String uuid) {
-				Optional<Integer> optional = handle
+			public boolean contains(PersistenceHandle handle, String uuid) {
+				Optional<Integer> optional = handle.getHandle()
 						.createQuery("SELECT count(uuid) " + "FROM timeline "
 								+ "where uuid = :uuid")
 						.bind("uuid", uuid)
@@ -966,8 +960,8 @@ class AceTemplate {
 				return count > 0;
 			}
 		
-			public void insertIntoTimeline(Handle handle, String type, String method, String name, String data, String uuid) {
-				Update statement = handle.createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
+			public void insertIntoTimeline(PersistenceHandle handle, String type, String method, String name, String data, String uuid) {
+				Update statement = handle.getHandle().createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
 				statement.bind("type", type);
 				if (method != null) {
 					statement.bind("method", method);
@@ -980,27 +974,27 @@ class AceTemplate {
 				statement.execute();
 			}
 		
-			public ITimelineItem selectLastAction(Handle handle) {
-				Optional<ITimelineItem> optional = handle
+			public ITimelineItem selectLastAction(PersistenceHandle handle) {
+				Optional<ITimelineItem> optional = handle.getHandle()
 						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time desc limit 1")
 						.map(new TimelineItemMapper())
 						.findFirst();
 				return optional.isPresent() ? optional.get() : null;
 			}
 		
-			public List<ITimelineItem> selectTimeline(Handle handle) {
-				return handle
+			public List<ITimelineItem> selectTimeline(PersistenceHandle handle) {
+				return handle.getHandle()
 						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time asc")
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public List<ITimelineItem> selectReplayTimeline(Handle handle) {
-				return handle
+			public List<ITimelineItem> selectReplayTimeline(PersistenceHandle handle) {
+				return handle.getHandle()
 						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline where type = 'event' order by time asc ")
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public void addActionToTimeline(IAction action, Handle timelineHandle) {
+			public void addActionToTimeline(IAction action, PersistenceHandle timelineHandle) {
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
 					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
@@ -1010,7 +1004,7 @@ class AceTemplate {
 				}
 			}
 		
-			public void addCommandToTimeline(ICommand command, Handle timelineHandle) {
+			public void addCommandToTimeline(ICommand command, PersistenceHandle timelineHandle) {
 				try {
 					addItemToTimeline("command", null, command.getCommandName(),
 							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
@@ -1020,7 +1014,7 @@ class AceTemplate {
 				}
 			}
 		
-			public void addEventToTimeline(IEvent event, Handle timelineHandle) {
+			public void addEventToTimeline(IEvent event, PersistenceHandle timelineHandle) {
 				try {
 					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
 							event.getEventData().getUuid(), timelineHandle);
@@ -1029,7 +1023,7 @@ class AceTemplate {
 				}
 			}
 		
-			public void addPreparingEventToTimeline(IEvent event, String uuid, Handle timelineHandle) {
+			public void addPreparingEventToTimeline(IEvent event, String uuid, PersistenceHandle timelineHandle) {
 				try {
 					addItemToTimeline("preparing event", null, event.getEventName(),
 							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
@@ -1038,13 +1032,13 @@ class AceTemplate {
 				}
 			}
 		
-			public void addExceptionToTimeline(String uuid, Throwable x, Handle timelineHandle) {
+			public void addExceptionToTimeline(String uuid, Throwable x, PersistenceHandle timelineHandle) {
 				this.insertIntoTimeline(timelineHandle, "exception", "", x.getClass().getName(),
 						x.getMessage() != null ? x.getMessage() : "", uuid);
 			}
 		
 			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
-					Handle timelineHandle) {
+					PersistenceHandle timelineHandle) {
 				this.insertIntoTimeline(timelineHandle, type, method, name, json, uuid);
 			}
 		
@@ -1262,8 +1256,6 @@ class AceTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		public class DaoProvider extends AbstractDaoProvider implements IDaoProvider {
 			
 			public static IDaoProvider create() {
@@ -1271,7 +1263,7 @@ class AceTemplate {
 			}
 			
 			@Override
-			public void truncateAllViews(Handle handle) {
+			public void truncateAllViews(PersistenceHandle handle) {
 			}
 			
 		}
@@ -1290,7 +1282,7 @@ class AceTemplate {
 		
 		public interface IDaoProvider {
 			
-			void truncateAllViews(Handle handle);
+			void truncateAllViews(PersistenceHandle handle);
 			
 			AceDao getAceDao();
 		
@@ -1429,11 +1421,9 @@ class AceTemplate {
 		
 		package com.anfelisa.ace;
 		
-		import org.jdbi.v3.core.Handle;
-		
 		@FunctionalInterface
 		public interface EventConsumer {
-			public void consumeEvent(IDataContainer data, Handle handle);
+			public void consumeEvent(IDataContainer data, PersistenceHandle handle);
 		}
 		
 		«sdg»
@@ -1512,6 +1502,61 @@ class AceTemplate {
 		«sdg»
 		
 	'''
+	
+	def generatePersistenceHandle() '''
+		«copyright»
+
+		package com.anfelisa.ace;
+		
+		import org.jdbi.v3.core.Handle;
+		
+		public class PersistenceHandle {
+			
+			private Handle handle;
+		
+			public PersistenceHandle(Handle handle) {
+				super();
+				this.handle = handle;
+			}
+		
+			public Handle getHandle() {
+				return handle;
+			}
+		
+		}
+		
+		«sdg»
+		
+	'''
+
+	
+	def generatePersistenceConnection() '''
+		«copyright»
+
+		package com.anfelisa.ace;
+		
+		import org.jdbi.v3.core.Jdbi;
+		
+		public class PersistenceConnection {
+		
+			private Jdbi jdbi;
+		
+			public PersistenceConnection(Jdbi jdbi) {
+				super();
+				this.jdbi = jdbi;
+			}
+		
+			public Jdbi getJdbi() {
+				return jdbi;
+			}
+			
+		}
+		
+		«sdg»
+		
+	'''
+
+	
 
 }
 	

@@ -345,6 +345,10 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractViewProvider());
     fsa.generateFile(("com/anfelisa/ace" + "/EventConsumer.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventconsumer());
+    fsa.generateFile(("com/anfelisa/ace" + "/PersistenceConnection.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceConnection());
+    fsa.generateFile(("com/anfelisa/ace" + "/PersistenceHandle.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceHandle());
     fsa.generateFile("ace_creation.xml", ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, 
       this.aceTemplate.generateAceMigration());
     if ((authUser != null)) {

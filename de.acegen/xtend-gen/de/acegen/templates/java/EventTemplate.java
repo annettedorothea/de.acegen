@@ -130,10 +130,9 @@ public class EventTemplate {
     _builder.append("import com.anfelisa.ace.IDaoProvider;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
@@ -184,7 +183,7 @@ public class EventTemplate {
         _builder.append("(");
         String _dataInterfaceName = this._modelExtension.dataInterfaceName(renderFunction_1.getModel());
         _builder.append(_dataInterfaceName, "\t");
-        _builder.append(" data, Handle handle) {");
+        _builder.append(" data, PersistenceHandle handle) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("}");
@@ -215,10 +214,10 @@ public class EventTemplate {
     _builder.append(".views;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
@@ -247,7 +246,7 @@ public class EventTemplate {
         _builder.append("(");
         String _dataInterfaceName = this._modelExtension.dataInterfaceName(renderFunction_1.getModel());
         _builder.append(_dataInterfaceName, "\t");
-        _builder.append(" data, Handle handle);");
+        _builder.append(" data, PersistenceHandle handle);");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -273,9 +272,6 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class Event<T extends IDataContainer> implements IEvent {");
@@ -317,7 +313,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void notifyListeners(Handle handle) {");
+    _builder.append("public void notifyListeners(PersistenceHandle handle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("List<EventConsumer> consumerList = viewProvider.getConsumerForEvent(eventName);");
@@ -362,7 +358,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void publish(Handle handle, Handle timelineHandle) {");
+    _builder.append("public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("if (!ServerConfiguration.LIVE.equals(App.getMode())) {");
@@ -400,9 +396,6 @@ public class EventTemplate {
     _builder.append("package com.anfelisa.ace;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("public interface IEvent {");
     _builder.newLine();
     _builder.newLine();
@@ -417,12 +410,12 @@ public class EventTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void publish(Handle handle, Handle timelineHandle);");
+    _builder.append("void publish(PersistenceHandle handle, PersistenceHandle timelineHandle);");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void notifyListeners(Handle handle);");
+    _builder.append("void notifyListeners(PersistenceHandle handle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

@@ -180,7 +180,7 @@ public class ActionTemplate {
     _builder.append("public Response apply() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("databaseHandle = new DatabaseHandle(jdbi);");
+    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("databaseHandle.beginTransaction();");
@@ -376,7 +376,7 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void loadDataForGetRequest(Handle readonlyHandle);");
+    _builder.append("protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -388,7 +388,7 @@ public class ActionTemplate {
     _builder.append("public Response apply() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("databaseHandle = new DatabaseHandle(jdbi);");
+    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("databaseHandle.beginTransaction();");
@@ -538,6 +538,11 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.NotReplayableDataProvider;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import com.anfelisa.auth.AuthUser;");
     _builder.newLine();
     _builder.newLine();
@@ -586,7 +591,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("private DatabaseHandle databaseHandle;");
     _builder.newLine();
-    _builder.append("private Jdbi jdbi;");
+    _builder.append("private PersistenceConnection persistenceConnection;");
     _builder.newLine();
     _builder.append("protected JodaObjectMapper mapper;");
     _builder.newLine();
@@ -607,7 +612,7 @@ public class ActionTemplate {
     _builder.append("public ");
     String _abstractActionName = this._aceExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
-    _builder.append("(Jdbi jdbi, CustomAppConfiguration appConfiguration, ");
+    _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
@@ -617,7 +622,7 @@ public class ActionTemplate {
   
   private CharSequence initProperties() {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("this.jdbi = jdbi;");
+    _builder.append("this.persistenceConnection = persistenceConnection;");
     _builder.newLine();
     _builder.append("mapper = new JodaObjectMapper();");
     _builder.newLine();
@@ -1048,15 +1053,19 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.E2E;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
+    _builder.newLine();
+    {
+      boolean _equals = it.getType().equals("GET");
+      if (_equals) {
+        _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Jdbi;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
@@ -1079,13 +1088,13 @@ public class ActionTemplate {
     _builder.append("public ");
     String _actionName_2 = this._aceExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
-    _builder.append("(Jdbi jdbi, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ");
+    _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("ViewProvider viewProvider, E2E e2e) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("super(jdbi,appConfiguration, daoProvider, viewProvider, e2e);");
+    _builder.append("super(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -1093,10 +1102,13 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.newLine();
     {
-      boolean _equals = it.getType().equals("GET");
-      if (_equals) {
+      boolean _equals_1 = it.getType().equals("GET");
+      if (_equals_1) {
         _builder.append("\t");
-        _builder.append("protected void loadDataForGetRequest(Handle readonlyHandle) {");
+        _builder.append("@Override");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
@@ -1435,9 +1447,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.E2E;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Jdbi;");
-    _builder.newLine();
+    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
     _builder.newLine();
     _builder.newLine();
     {
@@ -1458,7 +1468,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerResources(Environment environment, Jdbi jdbi, CustomAppConfiguration appConfiguration, ");
+    _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
@@ -1470,7 +1480,7 @@ public class ActionTemplate {
         _builder.append("environment.jersey().register(new ");
         String _actionName = this._aceExtension.actionName(aceOperation);
         _builder.append(_actionName, "\t\t");
-        _builder.append("(jdbi, appConfiguration, daoProvider, viewProvider, e2e));");
+        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));");
         _builder.newLineIfNotEmpty();
       }
     }
