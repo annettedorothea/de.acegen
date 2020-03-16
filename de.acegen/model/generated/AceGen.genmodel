@@ -107,6 +107,7 @@
     <genClasses ecoreClass="AceGen.ecore#//DataDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/uuid"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/systemtime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/pattern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//DataDefinition/data"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Authorization">
@@ -137,6 +138,8 @@
     <genClasses ecoreClass="AceGen.ecore#//Value">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Value/stringValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Value/intValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Value/dateValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Value/pattern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Value/attributeDefinitionList"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Value/listAttributeDefinitionList"/>
     </genClasses>

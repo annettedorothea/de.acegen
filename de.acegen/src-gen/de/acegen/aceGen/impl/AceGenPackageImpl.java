@@ -1211,9 +1211,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getDataDefinition_Pattern()
+  {
+    return (EAttribute)dataDefinitionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getDataDefinition_Data()
   {
-    return (EReference)dataDefinitionEClass.getEStructuralFeatures().get(2);
+    return (EReference)dataDefinitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1475,9 +1486,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getValue_DateValue()
+  {
+    return (EAttribute)valueEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getValue_Pattern()
+  {
+    return (EAttribute)valueEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getValue_AttributeDefinitionList()
   {
-    return (EReference)valueEClass.getEStructuralFeatures().get(2);
+    return (EReference)valueEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1488,7 +1521,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getValue_ListAttributeDefinitionList()
   {
-    return (EReference)valueEClass.getEStructuralFeatures().get(3);
+    return (EReference)valueEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1624,6 +1657,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     dataDefinitionEClass = createEClass(DATA_DEFINITION);
     createEAttribute(dataDefinitionEClass, DATA_DEFINITION__UUID);
     createEAttribute(dataDefinitionEClass, DATA_DEFINITION__SYSTEMTIME);
+    createEAttribute(dataDefinitionEClass, DATA_DEFINITION__PATTERN);
     createEReference(dataDefinitionEClass, DATA_DEFINITION__DATA);
 
     authorizationEClass = createEClass(AUTHORIZATION);
@@ -1654,6 +1688,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     valueEClass = createEClass(VALUE);
     createEAttribute(valueEClass, VALUE__STRING_VALUE);
     createEAttribute(valueEClass, VALUE__INT_VALUE);
+    createEAttribute(valueEClass, VALUE__DATE_VALUE);
+    createEAttribute(valueEClass, VALUE__PATTERN);
     createEReference(valueEClass, VALUE__ATTRIBUTE_DEFINITION_LIST);
     createEReference(valueEClass, VALUE__LIST_ATTRIBUTE_DEFINITION_LIST);
   }
@@ -1793,6 +1829,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(dataDefinitionEClass, DataDefinition.class, "DataDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDataDefinition_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDataDefinition_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDataDefinition_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDataDefinition_Data(), this.getAttributeDefinitionList(), null, "data", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(authorizationEClass, Authorization.class, "Authorization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1823,6 +1860,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValue_StringValue(), ecorePackage.getEString(), "stringValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getValue_DateValue(), ecorePackage.getEString(), "dateValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getValue_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getValue_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getValue_ListAttributeDefinitionList(), this.getListAttributeDefinitionList(), null, "listAttributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

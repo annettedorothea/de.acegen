@@ -50,13 +50,14 @@ class EventTemplate {
 		import com.anfelisa.ace.Event;
 		import com.anfelisa.ace.IDaoProvider;
 		import com.anfelisa.ace.ViewProvider;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		
 		«getModel.dataImport»
 		
 		public class «eventName(outcome)» extends Event<«getModel.dataParamType»> {
 		
-			public «eventName(outcome)»(«getModel.dataParamType» eventData, IDaoProvider daoProvider, ViewProvider viewProvider) {
-				super("«java.getName».events.«eventName(outcome)»", eventData, daoProvider, viewProvider);
+			public «eventName(outcome)»(«getModel.dataParamType» eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+				super("«java.getName».events.«eventName(outcome)»", eventData, daoProvider, viewProvider, appConfiguration);
 			}
 		
 		}
@@ -139,13 +140,15 @@ class EventTemplate {
 			private String eventName;
 			protected IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
+			private CustomAppConfiguration appConfiguration;
 		
-			public Event(String eventName, T eventData, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public Event(String eventName, T eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super();
 				this.eventData = eventData;
 				this.eventName = eventName;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
+				this.appConfiguration = appConfiguration;
 			}
 		
 			public void notifyListeners(PersistenceHandle handle) {
@@ -166,7 +169,7 @@ class EventTemplate {
 			}
 		
 			public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {
-				if (!ServerConfiguration.LIVE.equals(App.getMode())) {
+				if (appConfiguration.getServerConfiguration().writeTimeline()) {
 					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
 				}
 				this.notifyListeners(handle);
@@ -213,6 +216,7 @@ class EventTemplate {
 		import com.anfelisa.ace.JodaObjectMapper;
 		import com.fasterxml.jackson.databind.DeserializationFeature;
 		import com.anfelisa.ace.IDataContainer;
+		import com.anfelisa.ace.CustomAppConfiguration;
 		
 		import java.io.IOException;
 		
@@ -228,7 +232,7 @@ class EventTemplate {
 				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			}
 		
-			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				try {
 					«FOR ace : aceOperations»
 						«ace.createEvent(it)»
@@ -240,7 +244,7 @@ class EventTemplate {
 				return null;
 			}
 		
-			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				«FOR ace : aceOperations»
 					«ace.createEventFromData(it)»
 
@@ -261,7 +265,7 @@ class EventTemplate {
 				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
 					«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
 					data.migrateLegacyData(json);
-					«eventName(outcome)» event = new «eventName(outcome)»(data, daoProvider, viewProvider);
+					«eventName(outcome)» event = new «eventName(outcome)»(data, daoProvider, viewProvider, appConfiguration);
 					return event;
 				}
 			«ENDIF»
@@ -274,7 +278,7 @@ class EventTemplate {
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
-					return new «eventName(outcome)»((«getModel.dataName»)data, daoProvider, viewProvider);
+					return new «eventName(outcome)»((«getModel.dataName»)data, daoProvider, viewProvider, appConfiguration);
 				}
 			«ENDIF»
 		«ENDFOR»
@@ -288,11 +292,11 @@ class EventTemplate {
 		package com.anfelisa.ace;
 		
 		public class EventFactory {
-			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				//delegate to package EventFactory
 				return null;
 			}
-			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider) {
+			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				//delegate to package EventFactory
 				return null;
 			}

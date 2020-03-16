@@ -193,14 +193,9 @@ public class ActionTemplate {
     _builder.append(_initActionData, "\t\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    _builder.append("if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
+    CharSequence _addActionToTimeline = this.addActionToTimeline();
+    _builder.append(_addActionToTimeline, "\t\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("ICommand command = this.getCommand();");
     _builder.newLine();
@@ -424,8 +419,11 @@ public class ActionTemplate {
       }
     }
     _builder.append("\t\t\t");
-    _builder.append("daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());");
     _builder.newLine();
+    _builder.append("\t\t\t");
+    CharSequence _addActionToTimeline = this.addActionToTimeline();
+    _builder.append(_addActionToTimeline, "\t\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("Response response = Response.ok(this.createReponse()).build();");
     _builder.newLine();
@@ -472,6 +470,30 @@ public class ActionTemplate {
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence addActionToTimeline() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence addExceptionToTimeline() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("if (appConfiguration.getServerConfiguration().writeError()) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("}");
     _builder.newLine();
     return _builder;
   }
@@ -968,8 +990,9 @@ public class ActionTemplate {
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
+    CharSequence _addExceptionToTimeline = this.addExceptionToTimeline();
+    _builder.append(_addExceptionToTimeline, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("App.reportException(x);");
     _builder.newLine();
@@ -997,8 +1020,9 @@ public class ActionTemplate {
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());");
-    _builder.newLine();
+    CharSequence _addExceptionToTimeline_1 = this.addExceptionToTimeline();
+    _builder.append(_addExceptionToTimeline_1, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("App.reportException(x);");
     _builder.newLine();

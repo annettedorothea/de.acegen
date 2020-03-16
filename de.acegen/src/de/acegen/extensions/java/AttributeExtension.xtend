@@ -213,12 +213,12 @@ class AttributeExtension {
 		return valueList;
 	}
 
-	def String dateFrom(String date) '''DateTime.parse("«date»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss"))'''
+	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»"))'''
 
 	def String valueFrom(AttributeDefinition it) {
 		if (value.stringValue !== null) {
 			if (attribute.type == "DateTime") {
-				return dateFrom(value.stringValue)
+				return dateTimeParse(value.stringValue, value.pattern)
 			}
 			if (attribute.type == "Integer") {
 				return '''Integer.parseInt("«value.stringValue»")'''

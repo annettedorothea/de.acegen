@@ -11,6 +11,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -40,6 +41,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_6_0_q;
 	protected AbstractElementAlias match_HttpServer_ViewsKeyword_4_0_q;
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
+	protected AbstractElementAlias match_Project___HttpClientKeyword_0_0_or_HttpServerKeyword_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
 	
 	@Inject
@@ -64,6 +66,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServer_ScenariosKeyword_6_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_6_0());
 		match_HttpServer_ViewsKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_4_0());
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
+		match_Project___HttpClientKeyword_0_0_or_HttpServerKeyword_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
 	}
 	
@@ -117,6 +120,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpServer_ViewsKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q.equals(syntax))
 				emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Project___HttpClientKeyword_0_0_or_HttpServerKeyword_1_0__q.equals(syntax))
+				emit_Project___HttpClientKeyword_0_0_or_HttpServerKeyword_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Scenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -437,6 +442,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     superModels+=[Model|QualifiedName] (ambiguity) (rule end)
 	 */
 	protected void emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('HttpClient' | 'HttpServer')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_Project___HttpClientKeyword_0_0_or_HttpServerKeyword_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -140,7 +140,7 @@ class ScenarioTemplate {
 	
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			NotReplayableDataProvider.setSystemTime(«dataDefinition.systemtime»);
+			NotReplayableDataProvider.setSystemTime(«dateTimeParse(dataDefinition.systemtime, dataDefinition.pattern)»);
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null»
 			«FOR attributeDefinition: dataDefinition.data.attributeDefinitions»
@@ -156,7 +156,7 @@ class ScenarioTemplate {
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
 		«IF systemtime !== null»
-			«varName».setSystemTime(DateTime.parse("«systemtime»", DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss")));
+			«varName».setSystemTime(«dateTimeParse(systemtime, pattern)»);
 		«ENDIF»
 		«FOR attributeDefinition : data.attributeDefinitions»
 			«IF attributeDefinition.value.attributeDefinitionList !== null»

@@ -68,6 +68,8 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.ViewProvider;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.newLine();
     _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
     _builder.append(_dataImport);
@@ -89,7 +91,7 @@ public class EventTemplate {
     _builder.append("(");
     String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
     _builder.append(_dataParamType_1, "\t");
-    _builder.append(" eventData, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append(" eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
@@ -98,7 +100,7 @@ public class EventTemplate {
     _builder.append(".events.");
     String _eventName_2 = this._aceExtension.eventName(it, outcome);
     _builder.append(_eventName_2, "\t\t");
-    _builder.append("\", eventData, daoProvider, viewProvider);");
+    _builder.append("\", eventData, daoProvider, viewProvider, appConfiguration);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -289,9 +291,12 @@ public class EventTemplate {
     _builder.append("\t");
     _builder.append("private ViewProvider viewProvider;");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private CustomAppConfiguration appConfiguration;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public Event(String eventName, T eventData, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append("public Event(String eventName, T eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("super();");
@@ -307,6 +312,9 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.viewProvider = viewProvider;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.appConfiguration = appConfiguration;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -361,7 +369,7 @@ public class EventTemplate {
     _builder.append("public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (!ServerConfiguration.LIVE.equals(App.getMode())) {");
+    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);");
@@ -458,6 +466,8 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import com.anfelisa.ace.IDataContainer;");
     _builder.newLine();
+    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import java.io.IOException;");
     _builder.newLine();
@@ -489,7 +499,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("try {");
@@ -521,7 +531,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations_1 = it.getAceOperations();
@@ -585,7 +595,7 @@ public class EventTemplate {
             _builder.append(" event = new ");
             String _eventName_2 = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName_2, "\t");
-            _builder.append("(data, daoProvider, viewProvider);");
+            _builder.append("(data, daoProvider, viewProvider, appConfiguration);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("return event;");
@@ -628,7 +638,7 @@ public class EventTemplate {
             _builder.append("((");
             String _dataName = this._modelExtension.dataName(it.getModel());
             _builder.append(_dataName, "\t");
-            _builder.append(")data, daoProvider, viewProvider);");
+            _builder.append(")data, daoProvider, viewProvider, appConfiguration);");
             _builder.newLineIfNotEmpty();
             _builder.append("}");
             _builder.newLine();
@@ -656,7 +666,7 @@ public class EventTemplate {
     _builder.append("public class EventFactory {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("//delegate to package EventFactory");
@@ -668,7 +678,7 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider) {");
+    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("//delegate to package EventFactory");

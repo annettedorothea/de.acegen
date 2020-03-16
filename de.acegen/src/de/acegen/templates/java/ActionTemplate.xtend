@@ -93,9 +93,7 @@ class ActionTemplate {
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»
-					if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
-						daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
-					}
+					«addActionToTimeline»
 					ICommand command = this.getCommand();
 					«IF isProxy»
 						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -174,7 +172,8 @@ class ActionTemplate {
 					«ELSE»
 						this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
 					«ENDIF»
-					daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+					
+					«addActionToTimeline»
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
 					return response;
@@ -193,6 +192,18 @@ class ActionTemplate {
 		
 		«sdg»
 		
+	'''
+	
+	private def addActionToTimeline() '''
+		if (appConfiguration.getServerConfiguration().writeTimeline()) {
+			daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+		}
+	'''
+	
+	private def addExceptionToTimeline() '''
+		if (appConfiguration.getServerConfiguration().writeError()) {
+			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+		}
 	'''
 	
 	private def commonAbstractActionImports() '''
@@ -357,7 +368,7 @@ class ActionTemplate {
 			LOG.error(actionName + " failed " + x.getMessage());
 			try {
 				databaseHandle.rollbackTransaction();
-				daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+				«addExceptionToTimeline»
 				App.reportException(x);
 			} catch (Exception ex) {
 				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
@@ -367,7 +378,7 @@ class ActionTemplate {
 			LOG.error(actionName + " failed " + x.getMessage());
 			try {
 				databaseHandle.rollbackTransaction();
-				daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+				«addExceptionToTimeline»
 				App.reportException(x);
 			} catch (Exception ex) {
 				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());

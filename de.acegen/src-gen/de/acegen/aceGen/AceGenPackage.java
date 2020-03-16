@@ -1176,13 +1176,22 @@ public interface AceGenPackage extends EPackage
   int DATA_DEFINITION__SYSTEMTIME = 1;
 
   /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DATA_DEFINITION__PATTERN = 2;
+
+  /**
    * The feature id for the '<em><b>Data</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DATA_DEFINITION__DATA = 2;
+  int DATA_DEFINITION__DATA = 3;
 
   /**
    * The number of structural features of the '<em>Data Definition</em>' class.
@@ -1191,7 +1200,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DATA_DEFINITION_FEATURE_COUNT = 3;
+  int DATA_DEFINITION_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AuthorizationImpl <em>Authorization</em>}' class.
@@ -1452,13 +1461,31 @@ public interface AceGenPackage extends EPackage
   int VALUE__INT_VALUE = 1;
 
   /**
+   * The feature id for the '<em><b>Date Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__DATE_VALUE = 2;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__PATTERN = 3;
+
+  /**
    * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__ATTRIBUTE_DEFINITION_LIST = 2;
+  int VALUE__ATTRIBUTE_DEFINITION_LIST = 4;
 
   /**
    * The feature id for the '<em><b>List Attribute Definition List</b></em>' containment reference.
@@ -1467,7 +1494,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = 3;
+  int VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = 5;
 
   /**
    * The number of structural features of the '<em>Value</em>' class.
@@ -1476,7 +1503,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VALUE_FEATURE_COUNT = 4;
+  int VALUE_FEATURE_COUNT = 6;
 
 
   /**
@@ -2373,6 +2400,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getDataDefinition_Systemtime();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see de.acegen.aceGen.DataDefinition#getPattern()
+   * @see #getDataDefinition()
+   * @generated
+   */
+  EAttribute getDataDefinition_Pattern();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.DataDefinition#getData <em>Data</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2629,6 +2667,28 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getValue_IntValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getDateValue <em>Date Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Date Value</em>'.
+   * @see de.acegen.aceGen.Value#getDateValue()
+   * @see #getValue()
+   * @generated
+   */
+  EAttribute getValue_DateValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see de.acegen.aceGen.Value#getPattern()
+   * @see #getValue()
+   * @generated
+   */
+  EAttribute getValue_Pattern();
 
   /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
@@ -3380,6 +3440,14 @@ public interface AceGenPackage extends EPackage
     EAttribute DATA_DEFINITION__SYSTEMTIME = eINSTANCE.getDataDefinition_Systemtime();
 
     /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DATA_DEFINITION__PATTERN = eINSTANCE.getDataDefinition_Pattern();
+
+    /**
      * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3582,6 +3650,22 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute VALUE__INT_VALUE = eINSTANCE.getValue_IntValue();
+
+    /**
+     * The meta object literal for the '<em><b>Date Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUE__DATE_VALUE = eINSTANCE.getValue_DateValue();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUE__PATTERN = eINSTANCE.getValue_Pattern();
 
     /**
      * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference feature.

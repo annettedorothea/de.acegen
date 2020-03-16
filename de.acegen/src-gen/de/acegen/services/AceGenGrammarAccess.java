@@ -28,36 +28,32 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Project");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cProjectAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Keyword cHttpClientKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cHttpClientAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cHttpClientHttpClientParserRuleCall_0_2_0 = (RuleCall)cHttpClientAssignment_0_2.eContents().get(0);
+		private final Keyword cHttpClientKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cHttpClientAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cHttpClientHttpClientParserRuleCall_0_1_0 = (RuleCall)cHttpClientAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Keyword cHttpServerKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cHttpServerAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cHttpServerHttpServerParserRuleCall_1_1_0 = (RuleCall)cHttpServerAssignment_1_1.eContents().get(0);
 		
 		//Project:
-		//	{Project} 'HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?;
+		//	('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Project} 'HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?
+		//('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{Project} 'HttpClient' httpClient=HttpClient?
+		//'HttpClient' httpClient=HttpClient?
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{Project}
-		public Action getProjectAction_0_0() { return cProjectAction_0_0; }
-		
 		//'HttpClient'
-		public Keyword getHttpClientKeyword_0_1() { return cHttpClientKeyword_0_1; }
+		public Keyword getHttpClientKeyword_0_0() { return cHttpClientKeyword_0_0; }
 		
 		//httpClient=HttpClient?
-		public Assignment getHttpClientAssignment_0_2() { return cHttpClientAssignment_0_2; }
+		public Assignment getHttpClientAssignment_0_1() { return cHttpClientAssignment_0_1; }
 		
 		//HttpClient
-		public RuleCall getHttpClientHttpClientParserRuleCall_0_2_0() { return cHttpClientHttpClientParserRuleCall_0_2_0; }
+		public RuleCall getHttpClientHttpClientParserRuleCall_0_1_0() { return cHttpClientHttpClientParserRuleCall_0_1_0; }
 		
 		//'HttpServer' httpServer=HttpServer?
 		public Group getGroup_1() { return cGroup_1; }
@@ -1352,15 +1348,17 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSystemTimeKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cSystemtimeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cSystemtimeSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cSystemtimeAssignment_2_1.eContents().get(0);
+		private final Assignment cPatternAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cPatternSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cPatternAssignment_2_2.eContents().get(0);
 		private final Assignment cDataAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDataAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cDataAssignment_3.eContents().get(0);
 		
 		//DataDefinition:
-		//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING)?
+		//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
 		//	data=AttributeDefinitionList?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING)? data=AttributeDefinitionList?
+		//{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)? data=AttributeDefinitionList?
 		public Group getGroup() { return cGroup; }
 		
 		//{DataDefinition}
@@ -1378,7 +1376,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getUuidSTRINGTerminalRuleCall_1_1_0() { return cUuidSTRINGTerminalRuleCall_1_1_0; }
 		
-		//('systemTime' systemtime=STRING)?
+		//('systemTime' systemtime=STRING pattern=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'systemTime'
@@ -1389,6 +1387,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getSystemtimeSTRINGTerminalRuleCall_2_1_0() { return cSystemtimeSTRINGTerminalRuleCall_2_1_0; }
+		
+		//pattern=STRING
+		public Assignment getPatternAssignment_2_2() { return cPatternAssignment_2_2; }
+		
+		//STRING
+		public RuleCall getPatternSTRINGTerminalRuleCall_2_2_0() { return cPatternSTRINGTerminalRuleCall_2_2_0; }
 		
 		//data=AttributeDefinitionList?
 		public Assignment getDataAssignment_3() { return cDataAssignment_3; }
@@ -1763,17 +1767,22 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStringValueSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringValueAssignment_0.eContents().get(0);
 		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
-		private final Assignment cAttributeDefinitionListAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0 = (RuleCall)cAttributeDefinitionListAssignment_2.eContents().get(0);
-		private final Assignment cListAttributeDefinitionListAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final RuleCall cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cListAttributeDefinitionListAssignment_3.eContents().get(0);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Assignment cDateValueAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cDateValueSTRINGTerminalRuleCall_2_0_0 = (RuleCall)cDateValueAssignment_2_0.eContents().get(0);
+		private final Assignment cPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cPatternAssignment_2_1.eContents().get(0);
+		private final Assignment cAttributeDefinitionListAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
+		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cAttributeDefinitionListAssignment_3.eContents().get(0);
+		private final Assignment cListAttributeDefinitionListAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
+		private final RuleCall cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0 = (RuleCall)cListAttributeDefinitionListAssignment_4.eContents().get(0);
 		
 		//Value:
-		//	stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
-		//	listAttributeDefinitionList=ListAttributeDefinitionList;
+		//	stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList
+		//	| listAttributeDefinitionList=ListAttributeDefinitionList;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
+		//stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList |
 		//listAttributeDefinitionList=ListAttributeDefinitionList
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
@@ -1789,17 +1798,32 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
 		
+		//dateValue=STRING pattern=STRING
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//dateValue=STRING
+		public Assignment getDateValueAssignment_2_0() { return cDateValueAssignment_2_0; }
+		
+		//STRING
+		public RuleCall getDateValueSTRINGTerminalRuleCall_2_0_0() { return cDateValueSTRINGTerminalRuleCall_2_0_0; }
+		
+		//pattern=STRING
+		public Assignment getPatternAssignment_2_1() { return cPatternAssignment_2_1; }
+		
+		//STRING
+		public RuleCall getPatternSTRINGTerminalRuleCall_2_1_0() { return cPatternSTRINGTerminalRuleCall_2_1_0; }
+		
 		//attributeDefinitionList=AttributeDefinitionList
-		public Assignment getAttributeDefinitionListAssignment_2() { return cAttributeDefinitionListAssignment_2; }
+		public Assignment getAttributeDefinitionListAssignment_3() { return cAttributeDefinitionListAssignment_3; }
 		
 		//AttributeDefinitionList
-		public RuleCall getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0() { return cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0; }
+		public RuleCall getAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0() { return cAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0; }
 		
 		//listAttributeDefinitionList=ListAttributeDefinitionList
-		public Assignment getListAttributeDefinitionListAssignment_3() { return cListAttributeDefinitionListAssignment_3; }
+		public Assignment getListAttributeDefinitionListAssignment_4() { return cListAttributeDefinitionListAssignment_4; }
 		
 		//ListAttributeDefinitionList
-		public RuleCall getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0() { return cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0; }
+		public RuleCall getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0() { return cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0; }
 	}
 	
 	
@@ -1907,7 +1931,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Project:
-	//	{Project} 'HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?;
+	//	('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
 	public ProjectElements getProjectAccess() {
 		return pProject;
 	}
@@ -2136,7 +2160,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataDefinition:
-	//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING)?
+	//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
 	//	data=AttributeDefinitionList?;
 	public DataDefinitionElements getDataDefinitionAccess() {
 		return pDataDefinition;
@@ -2255,8 +2279,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Value:
-	//	stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList |
-	//	listAttributeDefinitionList=ListAttributeDefinitionList;
+	//	stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList
+	//	| listAttributeDefinitionList=ListAttributeDefinitionList;
 	public ValueElements getValueAccess() {
 		return pValue;
 	}

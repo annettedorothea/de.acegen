@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getStringValue <em>String Value</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getIntValue <em>Int Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getDateValue <em>Date Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getAttributeDefinitionList <em>Attribute Definition List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ValueImpl#getListAttributeDefinitionList <em>List Attribute Definition List</em>}</li>
  * </ul>
@@ -74,6 +76,46 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
    * @ordered
    */
   protected int intValue = INT_VALUE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getDateValue() <em>Date Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDateValue()
+   * @generated
+   * @ordered
+   */
+  protected static final String DATE_VALUE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDateValue() <em>Date Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDateValue()
+   * @generated
+   * @ordered
+   */
+  protected String dateValue = DATE_VALUE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPattern()
+   * @generated
+   * @ordered
+   */
+  protected static final String PATTERN_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPattern()
+   * @generated
+   * @ordered
+   */
+  protected String pattern = PATTERN_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAttributeDefinitionList() <em>Attribute Definition List</em>}' containment reference.
@@ -164,6 +206,56 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
     intValue = newIntValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.VALUE__INT_VALUE, oldIntValue, intValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getDateValue()
+  {
+    return dateValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setDateValue(String newDateValue)
+  {
+    String oldDateValue = dateValue;
+    dateValue = newDateValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.VALUE__DATE_VALUE, oldDateValue, dateValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getPattern()
+  {
+    return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setPattern(String newPattern)
+  {
+    String oldPattern = pattern;
+    pattern = newPattern;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.VALUE__PATTERN, oldPattern, pattern));
   }
 
   /**
@@ -298,6 +390,10 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
         return getStringValue();
       case AceGenPackage.VALUE__INT_VALUE:
         return getIntValue();
+      case AceGenPackage.VALUE__DATE_VALUE:
+        return getDateValue();
+      case AceGenPackage.VALUE__PATTERN:
+        return getPattern();
       case AceGenPackage.VALUE__ATTRIBUTE_DEFINITION_LIST:
         return getAttributeDefinitionList();
       case AceGenPackage.VALUE__LIST_ATTRIBUTE_DEFINITION_LIST:
@@ -321,6 +417,12 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
         return;
       case AceGenPackage.VALUE__INT_VALUE:
         setIntValue((Integer)newValue);
+        return;
+      case AceGenPackage.VALUE__DATE_VALUE:
+        setDateValue((String)newValue);
+        return;
+      case AceGenPackage.VALUE__PATTERN:
+        setPattern((String)newValue);
         return;
       case AceGenPackage.VALUE__ATTRIBUTE_DEFINITION_LIST:
         setAttributeDefinitionList((AttributeDefinitionList)newValue);
@@ -348,6 +450,12 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
       case AceGenPackage.VALUE__INT_VALUE:
         setIntValue(INT_VALUE_EDEFAULT);
         return;
+      case AceGenPackage.VALUE__DATE_VALUE:
+        setDateValue(DATE_VALUE_EDEFAULT);
+        return;
+      case AceGenPackage.VALUE__PATTERN:
+        setPattern(PATTERN_EDEFAULT);
+        return;
       case AceGenPackage.VALUE__ATTRIBUTE_DEFINITION_LIST:
         setAttributeDefinitionList((AttributeDefinitionList)null);
         return;
@@ -372,6 +480,10 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
         return STRING_VALUE_EDEFAULT == null ? stringValue != null : !STRING_VALUE_EDEFAULT.equals(stringValue);
       case AceGenPackage.VALUE__INT_VALUE:
         return intValue != INT_VALUE_EDEFAULT;
+      case AceGenPackage.VALUE__DATE_VALUE:
+        return DATE_VALUE_EDEFAULT == null ? dateValue != null : !DATE_VALUE_EDEFAULT.equals(dateValue);
+      case AceGenPackage.VALUE__PATTERN:
+        return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
       case AceGenPackage.VALUE__ATTRIBUTE_DEFINITION_LIST:
         return attributeDefinitionList != null;
       case AceGenPackage.VALUE__LIST_ATTRIBUTE_DEFINITION_LIST:
@@ -395,6 +507,10 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value
     result.append(stringValue);
     result.append(", intValue: ");
     result.append(intValue);
+    result.append(", dateValue: ");
+    result.append(dateValue);
+    result.append(", pattern: ");
+    result.append(pattern);
     result.append(')');
     return result.toString();
   }

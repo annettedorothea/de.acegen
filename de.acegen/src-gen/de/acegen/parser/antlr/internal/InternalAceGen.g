@@ -77,23 +77,16 @@ ruleProject returns [EObject current=null]
 }:
 	(
 		(
-			(
-				{
-					$current = forceCreateModelElement(
-						grammarAccess.getProjectAccess().getProjectAction_0_0(),
-						$current);
-				}
-			)
-			otherlv_1='HttpClient'
+			otherlv_0='HttpClient'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getProjectAccess().getHttpClientKeyword_0_1());
+				newLeafNode(otherlv_0, grammarAccess.getProjectAccess().getHttpClientKeyword_0_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_2_0());
+						newCompositeNode(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_1_0());
 					}
-					lv_httpClient_2_0=ruleHttpClient
+					lv_httpClient_1_0=ruleHttpClient
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -101,7 +94,7 @@ ruleProject returns [EObject current=null]
 						set(
 							$current,
 							"httpClient",
-							lv_httpClient_2_0,
+							lv_httpClient_1_0,
 							"de.acegen.AceGen.HttpClient");
 						afterParserOrEnumRuleCall();
 					}
@@ -110,16 +103,16 @@ ruleProject returns [EObject current=null]
 		)
 		    |
 		(
-			otherlv_3='HttpServer'
+			otherlv_2='HttpServer'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getProjectAccess().getHttpServerKeyword_1_0());
+				newLeafNode(otherlv_2, grammarAccess.getProjectAccess().getHttpServerKeyword_1_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_0());
 					}
-					lv_httpServer_4_0=ruleHttpServer
+					lv_httpServer_3_0=ruleHttpServer
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getProjectRule());
@@ -127,14 +120,14 @@ ruleProject returns [EObject current=null]
 						set(
 							$current,
 							"httpServer",
-							lv_httpServer_4_0,
+							lv_httpServer_3_0,
 							"de.acegen.AceGen.HttpServer");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)?
 		)
-	)
+	)?
 ;
 
 // Entry rule entryRuleHttpClient
@@ -2128,13 +2121,31 @@ ruleDataDefinition returns [EObject current=null]
 					}
 				)
 			)
+			(
+				(
+					lv_pattern_5_0=RULE_STRING
+					{
+						newLeafNode(lv_pattern_5_0, grammarAccess.getDataDefinitionAccess().getPatternSTRINGTerminalRuleCall_2_2_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataDefinitionRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"pattern",
+							lv_pattern_5_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
 		)?
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getDataDefinitionAccess().getDataAttributeDefinitionListParserRuleCall_3_0());
 				}
-				lv_data_5_0=ruleAttributeDefinitionList
+				lv_data_6_0=ruleAttributeDefinitionList
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDataDefinitionRule());
@@ -2142,7 +2153,7 @@ ruleDataDefinition returns [EObject current=null]
 					set(
 						$current,
 						"data",
-						lv_data_5_0,
+						lv_data_6_0,
 						"de.acegen.AceGen.AttributeDefinitionList");
 					afterParserOrEnumRuleCall();
 				}
@@ -2788,10 +2799,49 @@ ruleValue returns [EObject current=null]
 		    |
 		(
 			(
+				(
+					lv_dateValue_2_0=RULE_STRING
+					{
+						newLeafNode(lv_dateValue_2_0, grammarAccess.getValueAccess().getDateValueSTRINGTerminalRuleCall_2_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getValueRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"dateValue",
+							lv_dateValue_2_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+			(
+				(
+					lv_pattern_3_0=RULE_STRING
+					{
+						newLeafNode(lv_pattern_3_0, grammarAccess.getValueAccess().getPatternSTRINGTerminalRuleCall_2_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getValueRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"pattern",
+							lv_pattern_3_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+		)
+		    |
+		(
+			(
 				{
-					newCompositeNode(grammarAccess.getValueAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getValueAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0());
 				}
-				lv_attributeDefinitionList_2_0=ruleAttributeDefinitionList
+				lv_attributeDefinitionList_4_0=ruleAttributeDefinitionList
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getValueRule());
@@ -2799,7 +2849,7 @@ ruleValue returns [EObject current=null]
 					set(
 						$current,
 						"attributeDefinitionList",
-						lv_attributeDefinitionList_2_0,
+						lv_attributeDefinitionList_4_0,
 						"de.acegen.AceGen.AttributeDefinitionList");
 					afterParserOrEnumRuleCall();
 				}
@@ -2809,9 +2859,9 @@ ruleValue returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getValueAccess().getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getValueAccess().getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0());
 				}
-				lv_listAttributeDefinitionList_3_0=ruleListAttributeDefinitionList
+				lv_listAttributeDefinitionList_5_0=ruleListAttributeDefinitionList
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getValueRule());
@@ -2819,7 +2869,7 @@ ruleValue returns [EObject current=null]
 					set(
 						$current,
 						"listAttributeDefinitionList",
-						lv_listAttributeDefinitionList_3_0,
+						lv_listAttributeDefinitionList_5_0,
 						"de.acegen.AceGen.ListAttributeDefinitionList");
 					afterParserOrEnumRuleCall();
 				}

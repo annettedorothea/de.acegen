@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getUuid <em>Uuid</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getSystemtime <em>Systemtime</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getData <em>Data</em>}</li>
  * </ul>
  *
@@ -72,6 +73,26 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected String systemtime = SYSTEMTIME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPattern()
+   * @generated
+   * @ordered
+   */
+  protected static final String PATTERN_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPattern()
+   * @generated
+   * @ordered
+   */
+  protected String pattern = PATTERN_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getData() <em>Data</em>}' containment reference.
@@ -160,6 +181,31 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
+  public String getPattern()
+  {
+    return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setPattern(String newPattern)
+  {
+    String oldPattern = pattern;
+    pattern = newPattern;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.DATA_DEFINITION__PATTERN, oldPattern, pattern));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public AttributeDefinitionList getData()
   {
     return data;
@@ -234,6 +280,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
         return getUuid();
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         return getSystemtime();
+      case AceGenPackage.DATA_DEFINITION__PATTERN:
+        return getPattern();
       case AceGenPackage.DATA_DEFINITION__DATA:
         return getData();
     }
@@ -255,6 +303,9 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
         return;
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         setSystemtime((String)newValue);
+        return;
+      case AceGenPackage.DATA_DEFINITION__PATTERN:
+        setPattern((String)newValue);
         return;
       case AceGenPackage.DATA_DEFINITION__DATA:
         setData((AttributeDefinitionList)newValue);
@@ -279,6 +330,9 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         setSystemtime(SYSTEMTIME_EDEFAULT);
         return;
+      case AceGenPackage.DATA_DEFINITION__PATTERN:
+        setPattern(PATTERN_EDEFAULT);
+        return;
       case AceGenPackage.DATA_DEFINITION__DATA:
         setData((AttributeDefinitionList)null);
         return;
@@ -300,6 +354,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
         return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         return SYSTEMTIME_EDEFAULT == null ? systemtime != null : !SYSTEMTIME_EDEFAULT.equals(systemtime);
+      case AceGenPackage.DATA_DEFINITION__PATTERN:
+        return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
       case AceGenPackage.DATA_DEFINITION__DATA:
         return data != null;
     }
@@ -321,6 +377,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
     result.append(uuid);
     result.append(", systemtime: ");
     result.append(systemtime);
+    result.append(", pattern: ");
+    result.append(pattern);
     result.append(')');
     return result.toString();
   }

@@ -20,7 +20,7 @@ grammar de.acegen.AceGen with org.eclipse.xtext.common.Terminals
 generate aceGen "http://www.acegen.de/AceGen"
 
 Project: 
-	{Project} 'HttpClient' httpClient = HttpClient ? | 'HttpServer' httpServer = HttpServer ?
+	('HttpClient' httpClient = HttpClient ? | 'HttpServer' httpServer = HttpServer ?)?
 ;
 
 HttpClient: 
@@ -147,7 +147,7 @@ ThenBlock:
 DataDefinition: 
 	{DataDefinition} 
 	('uuid' uuid = STRING)? 
-	('systemTime' systemtime = STRING)? 
+	('systemTime' systemtime = STRING pattern = STRING)? 
 	(data = AttributeDefinitionList)?
 ;
 
@@ -203,7 +203,7 @@ Constraint:
 ;
 
 Value:
-	stringValue = STRING | intValue = INT | attributeDefinitionList = AttributeDefinitionList | listAttributeDefinitionList = ListAttributeDefinitionList
+	stringValue = STRING | intValue = INT | dateValue = STRING pattern = STRING | attributeDefinitionList = AttributeDefinitionList | listAttributeDefinitionList = ListAttributeDefinitionList
 ;
 	
 /******* S.D.G. *******/

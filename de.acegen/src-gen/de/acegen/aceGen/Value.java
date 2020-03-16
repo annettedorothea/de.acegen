@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.Value#getStringValue <em>String Value</em>}</li>
  *   <li>{@link de.acegen.aceGen.Value#getIntValue <em>Int Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Value#getDateValue <em>Date Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Value#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}</li>
  *   <li>{@link de.acegen.aceGen.Value#getListAttributeDefinitionList <em>List Attribute Definition List</em>}</li>
  * </ul>
@@ -69,6 +71,50 @@ public interface Value extends EObject
    * @generated
    */
   void setIntValue(int value);
+
+  /**
+   * Returns the value of the '<em><b>Date Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Date Value</em>' attribute.
+   * @see #setDateValue(String)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_DateValue()
+   * @model
+   * @generated
+   */
+  String getDateValue();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getDateValue <em>Date Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Date Value</em>' attribute.
+   * @see #getDateValue()
+   * @generated
+   */
+  void setDateValue(String value);
+
+  /**
+   * Returns the value of the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Pattern</em>' attribute.
+   * @see #setPattern(String)
+   * @see de.acegen.aceGen.AceGenPackage#getValue_Pattern()
+   * @model
+   * @generated
+   */
+  String getPattern();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Value#getPattern <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Pattern</em>' attribute.
+   * @see #getPattern()
+   * @generated
+   */
+  void setPattern(String value);
 
   /**
    * Returns the value of the '<em><b>Attribute Definition List</b></em>' containment reference.

@@ -591,11 +591,13 @@ public class AttributeExtension {
     return valueList;
   }
   
-  public String dateFrom(final String date) {
+  public String dateTimeParse(final String date, final String pattern) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("DateTime.parse(\"");
     _builder.append(date);
-    _builder.append("\", DateTimeFormat.forPattern(\"dd.MM.yyyy HH:mm:ss\"))");
+    _builder.append("\", DateTimeFormat.forPattern(\"");
+    _builder.append(pattern);
+    _builder.append("\"))");
     return _builder.toString();
   }
   
@@ -606,7 +608,7 @@ public class AttributeExtension {
       String _type = it.getAttribute().getType();
       boolean _equals = Objects.equal(_type, "DateTime");
       if (_equals) {
-        return this.dateFrom(it.getValue().getStringValue());
+        return this.dateTimeParse(it.getValue().getStringValue(), it.getValue().getPattern());
       }
       String _type_1 = it.getAttribute().getType();
       boolean _equals_1 = Objects.equal(_type_1, "Integer");

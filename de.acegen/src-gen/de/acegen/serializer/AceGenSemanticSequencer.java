@@ -228,7 +228,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DataDefinition returns DataDefinition
 	 *
 	 * Constraint:
-	 *     (uuid=STRING? systemtime=STRING? data=AttributeDefinitionList?)
+	 *     (uuid=STRING? (systemtime=STRING pattern=STRING)? data=AttributeDefinitionList?)
 	 */
 	protected void sequence_DataDefinition(ISerializationContext context, DataDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -465,7 +465,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Project returns Project
 	 *
 	 * Constraint:
-	 *     (httpClient=HttpClient | httpServer=HttpServer)?
+	 *     (httpClient=HttpClient | httpServer=HttpServer)
 	 */
 	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -501,7 +501,13 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Value returns Value
 	 *
 	 * Constraint:
-	 *     (stringValue=STRING | intValue=INT | attributeDefinitionList=AttributeDefinitionList | listAttributeDefinitionList=ListAttributeDefinitionList)
+	 *     (
+	 *         stringValue=STRING | 
+	 *         intValue=INT | 
+	 *         (dateValue=STRING pattern=STRING) | 
+	 *         attributeDefinitionList=AttributeDefinitionList | 
+	 *         listAttributeDefinitionList=ListAttributeDefinitionList
+	 *     )
 	 */
 	protected void sequence_Value(ISerializationContext context, Value semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

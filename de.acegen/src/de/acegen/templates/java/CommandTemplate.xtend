@@ -65,7 +65,7 @@ class CommandTemplate {
 				«FOR outcome : outcomes»
 					case «outcome.getName»:
 						«IF outcome.listeners.size > 0»
-							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider).publish(handle, timelineHandle);
+							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);
 						«ENDIF»
 						break;
 				«ENDFOR»
@@ -151,7 +151,7 @@ class CommandTemplate {
 		
 			public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
 				this.executeCommand(readonlyHandle);
-				if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+				if (appConfiguration.getServerConfiguration().writeTimeline()) {
 					daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);
 				}
 			}

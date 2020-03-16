@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getUuid <em>Uuid</em>}</li>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getSystemtime <em>Systemtime</em>}</li>
+ *   <li>{@link de.acegen.aceGen.DataDefinition#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getData <em>Data</em>}</li>
  * </ul>
  *
@@ -68,6 +69,28 @@ public interface DataDefinition extends EObject
    * @generated
    */
   void setSystemtime(String value);
+
+  /**
+   * Returns the value of the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Pattern</em>' attribute.
+   * @see #setPattern(String)
+   * @see de.acegen.aceGen.AceGenPackage#getDataDefinition_Pattern()
+   * @model
+   * @generated
+   */
+  String getPattern();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.DataDefinition#getPattern <em>Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Pattern</em>' attribute.
+   * @see #getPattern()
+   * @generated
+   */
+  void setPattern(String value);
 
   /**
    * Returns the value of the '<em><b>Data</b></em>' containment reference.

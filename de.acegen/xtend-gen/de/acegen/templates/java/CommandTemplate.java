@@ -143,7 +143,7 @@ public class CommandTemplate {
             _builder.append("new ");
             String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
             _builder.append(_eventNameWithPackage, "\t\t\t");
-            _builder.append("(this.commandData, daoProvider, viewProvider).publish(handle, timelineHandle);");
+            _builder.append("(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
           }
         }
@@ -353,7 +353,7 @@ public class CommandTemplate {
     _builder.append("this.executeCommand(readonlyHandle);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (!ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);");

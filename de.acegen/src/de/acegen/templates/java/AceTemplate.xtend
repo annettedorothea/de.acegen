@@ -293,14 +293,20 @@ class AceTemplate {
 		package com.anfelisa.ace;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
-		
+
 		public class ServerConfiguration {
 			public static final String REPLAY = "REPLAY";
 			public static final String LIVE = "LIVE";
 			public static final String DEV = "DEV";
 			public static final String TEST = "TEST";
+		
+			public static final String ALWAYS = "ALWAYS";
+			public static final String ON_ERROR = "ON_ERROR";
+			public static final String NEVER = "NEVER";
 			
 			private String mode = DEV;
+			
+			private String writeTimeline = ON_ERROR;
 		
 			@JsonProperty("mode")
 			public String getMode() {
@@ -311,7 +317,25 @@ class AceTemplate {
 			public void setMode(String mode) {
 				this.mode = mode;
 			}
+		
+			@JsonProperty("writeTimeline")
+			public String getWriteTimeline() {
+				return writeTimeline;
+			}
+		
+			@JsonProperty("writeTimeline")
+			public void setWriteTimeline(String writeTimeline) {
+				this.writeTimeline = writeTimeline;
+			}
 			
+			public boolean writeTimeline() {
+				return !NEVER.equals(writeTimeline);
+			}
+			
+			public boolean writeError() {
+				return ON_ERROR.equals(writeTimeline) || ALWAYS.equals(writeTimeline);
+			}
+	
 		}
 		
 		«sdg»
@@ -531,7 +555,7 @@ class AceTemplate {
 		
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
-						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
+						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);
 						if (event != null) {
 							event.notifyListeners(databaseHandle.getHandle());
 							i++;
@@ -800,7 +824,7 @@ class AceTemplate {
 							ITimelineItem nextEvent = e2e.selectEvent(nextAction.getUuid());
 							if (nextEvent != null) {
 								LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
-								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider);
+								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);
 								if (event != null) {
 									event.notifyListeners(databaseHandle.getHandle());
 									daoProvider.getAceDao().addPreparingEventToTimeline(event, nextAction.getUuid(), databaseHandle.getTimelineHandle());

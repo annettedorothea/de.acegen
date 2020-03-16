@@ -303,8 +303,8 @@ public class ScenarioTemplate {
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
         _builder.append("NotReplayableDataProvider.setSystemTime(");
-        String _systemtime_1 = it.getDataDefinition().getSystemtime();
-        _builder.append(_systemtime_1);
+        String _dateTimeParse = this._attributeExtension.dateTimeParse(it.getDataDefinition().getSystemtime(), it.getDataDefinition().getPattern());
+        _builder.append(_dateTimeParse);
         _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
@@ -370,10 +370,10 @@ public class ScenarioTemplate {
       boolean _tripleNotEquals_1 = (_systemtime != null);
       if (_tripleNotEquals_1) {
         _builder.append(varName);
-        _builder.append(".setSystemTime(DateTime.parse(\"");
-        String _systemtime_1 = it.getSystemtime();
-        _builder.append(_systemtime_1);
-        _builder.append("\", DateTimeFormat.forPattern(\"dd.MM.yyyy HH:mm:ss\")));");
+        _builder.append(".setSystemTime(");
+        String _dateTimeParse = this._attributeExtension.dateTimeParse(it.getSystemtime(), it.getPattern());
+        _builder.append(_dateTimeParse);
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }
