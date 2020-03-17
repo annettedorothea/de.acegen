@@ -43,6 +43,8 @@ public class ScenarioTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
+  private int varIndex = 0;
+  
   public CharSequence generateScenario(final Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -343,6 +345,8 @@ public class ScenarioTemplate {
   
   public CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
+    this.resetVarIndex();
+    _builder.newLineIfNotEmpty();
     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
     _builder.append(_dataNameWithPackage);
     _builder.append(" ");
@@ -404,7 +408,7 @@ public class ScenarioTemplate {
             if (_tripleNotEquals_3) {
               String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
               String _plus_2 = (varName + _firstUpper_2);
-              CharSequence _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2);
+              String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2);
               _builder.append(_generateModelListCreation);
               _builder.newLineIfNotEmpty();
               _builder.append(varName);
@@ -433,78 +437,137 @@ public class ScenarioTemplate {
   
   public CharSequence generateModelCreation(final AttributeDefinition it, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.newLine();
+    _builder.append("\t");
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage);
+    _builder.append(_interfaceWithPackage, "\t");
     _builder.append(" ");
-    _builder.append(varName);
+    _builder.append(varName, "\t");
     _builder.append(" = new ");
     String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
-    _builder.append(_modelClassNameWithPackage);
+    _builder.append(_modelClassNameWithPackage, "\t");
     _builder.append("();");
     _builder.newLineIfNotEmpty();
     {
       EList<AttributeDefinition> _attributeDefinitions = it.getValue().getAttributeDefinitionList().getAttributeDefinitions();
       for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-        _builder.append(varName);
-        _builder.append(".");
-        String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
-        _builder.append(_setterCall);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
+        {
+          boolean _isList = attributeDefinition.getAttribute().isList();
+          if (_isList) {
+            _builder.append("\t");
+            final String listVarName = this.newVarName("list");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
+            _builder.append(_generateModelListCreation, "\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append(varName, "\t");
+            _builder.append(".");
+            String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
+            _builder.append(_setterCall, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          } else {
+            _builder.append("\t");
+            _builder.append(varName, "\t");
+            _builder.append(".");
+            String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+            _builder.append(_setterCall_1, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
     return _builder;
   }
   
-  public CharSequence generateModelListCreation(final AttributeDefinition it, final String varName) {
+  public String generateModelListCreation(final AttributeDefinition it, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("List<");
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage);
+    _builder.append(_interfaceWithPackage, "\t");
     _builder.append("> ");
-    _builder.append(varName);
+    _builder.append(varName, "\t");
     _builder.append(" = new ArrayList<");
     String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage_1);
+    _builder.append(_interfaceWithPackage_1, "\t");
     _builder.append(">();");
     _builder.newLineIfNotEmpty();
     {
       EList<AttributeDefinitionList> _attributeDefinitionList = it.getValue().getListAttributeDefinitionList().getAttributeDefinitionList();
       for(final AttributeDefinitionList attributeDefinitionList : _attributeDefinitionList) {
+        _builder.append("\t");
+        final String itemVarName = this.newVarName("item");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
         String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-        _builder.append(_interfaceWithPackage_2);
+        _builder.append(_interfaceWithPackage_2, "\t");
         _builder.append(" ");
-        int _indexOf = it.getValue().getListAttributeDefinitionList().getAttributeDefinitionList().indexOf(attributeDefinitionList);
-        String _plus = (varName + Integer.valueOf(_indexOf));
-        _builder.append(_plus);
+        _builder.append(itemVarName, "\t");
         _builder.append(" = new ");
         String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
-        _builder.append(_modelClassNameWithPackage);
+        _builder.append(_modelClassNameWithPackage, "\t");
         _builder.append("();");
         _builder.newLineIfNotEmpty();
         {
           EList<AttributeDefinition> _attributeDefinitions = attributeDefinitionList.getAttributeDefinitions();
           for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-            _builder.append(varName);
-            int _indexOf_1 = it.getValue().getListAttributeDefinitionList().getAttributeDefinitionList().indexOf(attributeDefinitionList);
-            _builder.append(_indexOf_1);
-            _builder.append(".");
-            String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
-            _builder.append(_setterCall);
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
+            {
+              boolean _isList = attributeDefinition.getAttribute().isList();
+              if (_isList) {
+                _builder.append("\t");
+                final String listVarName = this.newVarName("list");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
+                _builder.append(_generateModelListCreation, "\t");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append(itemVarName, "\t");
+                _builder.append(".");
+                String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
+                _builder.append(_setterCall, "\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              } else {
+                _builder.append("\t");
+                _builder.append(itemVarName, "\t");
+                _builder.append(".");
+                String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+                _builder.append(_setterCall_1, "\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
-        _builder.append(varName);
+        _builder.append("\t");
+        _builder.append(varName, "\t");
         _builder.append(".add(");
-        int _indexOf_2 = it.getValue().getListAttributeDefinitionList().getAttributeDefinitionList().indexOf(attributeDefinitionList);
-        String _plus_1 = (varName + Integer.valueOf(_indexOf_2));
-        _builder.append(_plus_1);
+        _builder.append(itemVarName, "\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
+        _builder.newLine();
       }
     }
-    return _builder;
+    _builder.append("\t");
+    _builder.newLine();
+    return _builder.toString();
+  }
+  
+  private String newVarName(final String prefix) {
+    this.varIndex++;
+    return (prefix + Integer.valueOf(this.varIndex));
+  }
+  
+  private void resetVarIndex() {
+    this.varIndex = 0;
   }
   
   public CharSequence generateActionCalls(final HttpServerAce aceOperation, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java) {

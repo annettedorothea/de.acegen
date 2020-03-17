@@ -29,6 +29,8 @@ class ScenarioTemplate {
 
 	@Inject
 	extension CommonExtension
+	
+	int varIndex = 0;
 
 	def generateScenario(Scenario it, HttpServer java) '''
 		«copyright»
@@ -154,6 +156,7 @@ class ScenarioTemplate {
 	private def generateActionCall(WhenBlock it, HttpServer java) '''«generateActionCalls(action, dataDefinition, authorization, java)»'''
 	
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
+		«resetVarIndex»
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
 		«IF systemtime !== null»
 			«varName».setSystemTime(«dateTimeParse(systemtime, pattern)»);
@@ -172,22 +175,49 @@ class ScenarioTemplate {
 	'''
 
 	def generateModelCreation(AttributeDefinition it, String varName) '''
+	
 		«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
 		«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
-			«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+			«IF attributeDefinition.attribute.isList»
+				«val listVarName = newVarName("list")»
+				«generateModelListCreation(attributeDefinition, listVarName)»
+				«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
+			«ELSE»
+				«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+			«ENDIF»
 		«ENDFOR»
+		
 	'''
 
-	def generateModelListCreation(AttributeDefinition it, String varName) '''
+	def String generateModelListCreation(AttributeDefinition it, String varName) '''
+	
 		List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
 		«FOR attributeDefinitionList : value.listAttributeDefinitionList.attributeDefinitionList»
-			«attribute.model.interfaceWithPackage» «varName + value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)» = new «attribute.model.modelClassNameWithPackage»();
+			«val itemVarName = newVarName("item")»
+			«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
 			«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
-				«varName»«value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+				«IF attributeDefinition.attribute.isList»
+					«val listVarName = newVarName("list")»
+					«generateModelListCreation(attributeDefinition, listVarName)»
+					«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
+				«ELSE»
+					«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+				«ENDIF»
 			«ENDFOR»
-			«varName».add(«varName + value.listAttributeDefinitionList.attributeDefinitionList.indexOf(attributeDefinitionList)»);
+			«varName».add(«itemVarName»);
+
 		«ENDFOR»
+		
 	'''
+	
+	private def newVarName(String prefix) {
+		varIndex++;
+		return prefix + varIndex;
+	}
+	
+	private def void resetVarIndex() {
+		varIndex = 0;
+	}
 
 	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
 		«IF aceOperation.getType == "POST"»
