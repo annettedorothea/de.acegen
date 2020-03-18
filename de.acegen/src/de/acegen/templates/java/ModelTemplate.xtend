@@ -119,7 +119,7 @@ class ModelTemplate {
 		
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
-		import com.anfelisa.ace.IDataContainer;
+		import de.acegen.IDataContainer;
 		
 		«importModel»
 		
@@ -160,8 +160,8 @@ class ModelTemplate {
 			«superModel.importModel»
 		«ENDFOR»
 		
-		import com.anfelisa.ace.AbstractData;
-		import com.anfelisa.ace.IDataContainer;
+		import de.acegen.AbstractData;
+		import de.acegen.IDataContainer;
 		
 		@SuppressWarnings("unused")
 		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
@@ -223,7 +223,7 @@ class ModelTemplate {
 		import org.joda.time.DateTime;
 		import java.util.List;
 		
-		import com.anfelisa.ace.AbstractData;
+		import de.acegen.AbstractData;
 		
 		public class «dataName» extends «abstractDataName» implements «dataInterfaceName» {
 			
@@ -260,7 +260,7 @@ class ModelTemplate {
 	def generateAbstractData() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.joda.time.DateTime;
 		
@@ -328,7 +328,7 @@ class ModelTemplate {
 		import org.joda.time.DateTime;
 		import java.util.List;
 		
-		import com.anfelisa.ace.IDataContainer;
+		import de.acegen.IDataContainer;
 		
 		@SuppressWarnings("all")
 		public class «responseDataName» implements «responseDataInterfaceName» {
@@ -380,7 +380,7 @@ class ModelTemplate {
 		
 		package «java.getName».models;
 		
-		import com.anfelisa.ace.PersistenceHandle;
+		import de.acegen.PersistenceHandle;
 		import org.jdbi.v3.core.statement.Update;
 
 		import java.util.List;
@@ -495,7 +495,7 @@ class ModelTemplate {
 	def generateDatabaseHandle() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.jdbi.v3.core.Jdbi;
 		import org.slf4j.Logger;
@@ -561,7 +561,7 @@ class ModelTemplate {
 	def generateIDataContainer() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.joda.time.DateTime;
 		

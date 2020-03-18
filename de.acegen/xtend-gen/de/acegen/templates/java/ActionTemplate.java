@@ -71,7 +71,7 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports();
+    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports(it);
     _builder.append(_commonAbstractActionImports);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -297,7 +297,7 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports();
+    CharSequence _commonAbstractActionImports = this.commonAbstractActionImports(it);
     _builder.append(_commonAbstractActionImports);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -498,7 +498,7 @@ public class ActionTemplate {
     return _builder;
   }
   
-  private CharSequence commonAbstractActionImports() {
+  private CharSequence commonAbstractActionImports(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -532,41 +532,46 @@ public class ActionTemplate {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.Action;");
+    _builder.append("import de.acegen.Action;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.App;");
+    _builder.append("import de.acegen.App;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.DatabaseHandle;");
+    _builder.append("import de.acegen.DatabaseHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.E2E;");
+    _builder.append("import de.acegen.E2E;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.HttpMethod;");
+    _builder.append("import de.acegen.HttpMethod;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ICommand;");
+    _builder.append("import de.acegen.ICommand;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ITimelineItem;");
+    _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
+    _builder.append("import de.acegen.JodaObjectMapper;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ServerConfiguration;");
+    _builder.append("import de.acegen.ServerConfiguration;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.NotReplayableDataProvider;");
+    _builder.append("import de.acegen.NotReplayableDataProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+    _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
+    _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.auth.AuthUser;");
-    _builder.newLine();
+    {
+      boolean _isAuthorize = it.isAuthorize();
+      if (_isAuthorize) {
+        _builder.append("import de.acegen.auth.AuthUser;");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("import com.codahale.metrics.annotation.Timed;");
     _builder.newLine();
@@ -1069,20 +1074,20 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.E2E;");
+    _builder.append("import de.acegen.E2E;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
+    _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
     {
       boolean _equals = it.getType().equals("GET");
       if (_equals) {
-        _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+        _builder.append("import de.acegen.PersistenceHandle;");
         _builder.newLine();
       }
     }
@@ -1178,7 +1183,7 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.ws.rs.WebApplicationException;");
@@ -1365,7 +1370,7 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public enum HttpMethod {");
@@ -1390,7 +1395,7 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.ws.rs.core.Response;");
@@ -1459,19 +1464,19 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import io.dropwizard.setup.Environment;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.AceExecutionMode;");
+    _builder.append("import de.acegen.AceExecutionMode;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ServerConfiguration;");
+    _builder.append("import de.acegen.ServerConfiguration;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.E2E;");
+    _builder.append("import de.acegen.E2E;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceConnection;");
+    _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
     _builder.newLine();
     {
@@ -1606,9 +1611,9 @@ public class ActionTemplate {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
+    _builder.append("import de.acegen.JodaObjectMapper;");
     _builder.newLine();
     _builder.append("import ");
     String _name_1 = it.getName();

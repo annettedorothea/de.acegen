@@ -206,7 +206,7 @@ class ActionTemplate {
 		}
 	'''
 	
-	private def commonAbstractActionImports() '''
+	private def commonAbstractActionImports(HttpServerAce it) '''
 		import javax.validation.constraints.NotNull;
 		
 		import javax.ws.rs.Consumes;
@@ -225,24 +225,26 @@ class ActionTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.Action;
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.DatabaseHandle;
-		import com.anfelisa.ace.E2E;
-		import com.anfelisa.ace.HttpMethod;
-		import com.anfelisa.ace.ICommand;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.ace.JodaObjectMapper;
-		import com.anfelisa.ace.ServerConfiguration;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.NotReplayableDataProvider;
-		import com.anfelisa.ace.PersistenceHandle;
-		import com.anfelisa.ace.PersistenceConnection;
+		import de.acegen.Action;
+		import de.acegen.App;
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.DatabaseHandle;
+		import de.acegen.E2E;
+		import de.acegen.HttpMethod;
+		import de.acegen.ICommand;
+		import de.acegen.IDaoProvider;
+		import de.acegen.IDataContainer;
+		import de.acegen.ITimelineItem;
+		import de.acegen.JodaObjectMapper;
+		import de.acegen.ServerConfiguration;
+		import de.acegen.ViewProvider;
+		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.PersistenceHandle;
+		import de.acegen.PersistenceConnection;
 
-		import com.anfelisa.auth.AuthUser;
+		«IF authorize»
+			import de.acegen.auth.AuthUser;
+		«ENDIF»
 
 		import com.codahale.metrics.annotation.Timed;
 		
@@ -402,13 +404,13 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.E2E;
-		import com.anfelisa.ace.PersistenceConnection;
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.ViewProvider;
+		import de.acegen.IDaoProvider;
+		import de.acegen.E2E;
+		import de.acegen.PersistenceConnection;
 		«IF getType.equals("GET")»
-			import com.anfelisa.ace.PersistenceHandle;
+			import de.acegen.PersistenceHandle;
 		«ENDIF»
 		
 		import org.slf4j.Logger;
@@ -447,7 +449,7 @@ class ActionTemplate {
 	def generateAction() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
@@ -524,7 +526,7 @@ class ActionTemplate {
 	def generateHttpMethod() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public enum HttpMethod {
 			GET, POST, PUT, DELETE
@@ -538,7 +540,7 @@ class ActionTemplate {
 	def generateIAction() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.ws.rs.core.Response;
 		
@@ -571,13 +573,13 @@ class ActionTemplate {
 		package «getName»;
 		
 		import io.dropwizard.setup.Environment;
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.AceExecutionMode;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.ServerConfiguration;
-		import com.anfelisa.ace.E2E;
-		import com.anfelisa.ace.PersistenceConnection;
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.AceExecutionMode;
+		import de.acegen.IDaoProvider;
+		import de.acegen.ViewProvider;
+		import de.acegen.ServerConfiguration;
+		import de.acegen.E2E;
+		import de.acegen.PersistenceConnection;
 		
 		«IF aceOperations.size > 0»
 			import «getName».actions.*;
@@ -632,8 +634,8 @@ class ActionTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.JodaObjectMapper;
+		import de.acegen.IDataContainer;
+		import de.acegen.JodaObjectMapper;
 		import «getName».data.*;
 		import com.fasterxml.jackson.databind.DeserializationFeature;		
 		

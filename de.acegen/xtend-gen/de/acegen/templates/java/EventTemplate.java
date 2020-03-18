@@ -62,13 +62,13 @@ public class EventTemplate {
     _builder.append(".events;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.Event;");
+    _builder.append("import de.acegen.Event;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
@@ -129,12 +129,12 @@ public class EventTemplate {
     _builder.append(".views;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+    _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
@@ -217,9 +217,9 @@ public class EventTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+    _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
@@ -270,7 +270,7 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -401,7 +401,7 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public interface IEvent {");
@@ -449,24 +449,24 @@ public class EventTemplate {
     _builder.append(".events;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDaoProvider;");
+    _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IEvent;");
+    _builder.append("import de.acegen.IEvent;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.ViewProvider;");
+    _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
     _builder.append("import ");
     String _name_1 = it.getName();
     _builder.append(_name_1);
     _builder.append(".data.*;");
     _builder.newLineIfNotEmpty();
-    _builder.append("import com.anfelisa.ace.JodaObjectMapper;");
+    _builder.append("import de.acegen.JodaObjectMapper;");
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.DeserializationFeature;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.CustomAppConfiguration;");
+    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.io.IOException;");
@@ -476,6 +476,8 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class EventFactory {");
     _builder.newLine();
@@ -501,27 +503,35 @@ public class EventTemplate {
     _builder.append("\t");
     _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("try {");
-    _builder.newLine();
     {
-      EList<HttpServerAce> _aceOperations = it.getAceOperations();
-      for(final HttpServerAce ace : _aceOperations) {
-        _builder.append("\t\t\t");
-        CharSequence _createEvent = this.createEvent(ace, it);
-        _builder.append(_createEvent, "\t\t\t");
-        _builder.newLineIfNotEmpty();
+      int _eventCount = this.eventCount(it);
+      boolean _greaterThan = (_eventCount > 0);
+      if (_greaterThan) {
+        _builder.append("\t\t");
+        _builder.append("try {");
+        _builder.newLine();
+        {
+          EList<HttpServerAce> _aceOperations = it.getAceOperations();
+          for(final HttpServerAce ace : _aceOperations) {
+            _builder.append("\t\t");
+            _builder.append("\t");
+            CharSequence _createEvent = this.createEvent(ace, it);
+            _builder.append(_createEvent, "\t\t\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t\t");
+        _builder.append("} catch (IOException e) {");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("\t");
+        _builder.append("LOG.error(\"failed to create event {} with data {}\", eventClass, json, e);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.append("} catch (IOException e) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(\"failed to create event {} with data {}\", eventClass, json, e);");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return null;");
@@ -559,6 +569,23 @@ public class EventTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
+  }
+  
+  private int eventCount(final HttpServer it) {
+    int count = 0;
+    EList<HttpServerAce> _aceOperations = it.getAceOperations();
+    for (final HttpServerAce ace : _aceOperations) {
+      if ((ace instanceof HttpServerAceWrite)) {
+        final HttpServerAceWrite writeOp = ((HttpServerAceWrite) ace);
+        EList<HttpServerOutcome> _outcomes = writeOp.getOutcomes();
+        for (final HttpServerOutcome outcome : _outcomes) {
+          int _count = count;
+          int _size = outcome.getListeners().size();
+          count = (_count + _size);
+        }
+      }
+    }
+    return count;
   }
   
   private CharSequence _createEvent(final HttpServerAceWrite it, final HttpServer java) {
@@ -660,7 +687,7 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class EventFactory {");

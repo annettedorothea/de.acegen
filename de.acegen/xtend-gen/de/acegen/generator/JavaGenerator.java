@@ -265,102 +265,102 @@ public class JavaGenerator {
       fsa.generateFile(_plus_2, 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
     }
-    fsa.generateFile("com/anfelisa/ace/EventFactory.java", 
+    fsa.generateFile("de/acegen/EventFactory.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateEventFactory());
     String _packageFolder_3 = this._javaExtension.packageFolder(java);
     String _plus_3 = (_packageFolder_3 + "/AppRegistration.java");
     fsa.generateFile(_plus_3, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAppRegistration(java));
-    fsa.generateFile(("com/anfelisa/ace" + "/App.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
+    fsa.generateFile(("de/acegen" + "/App.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.aceTemplate.generateApp());
-    fsa.generateFile(("com/anfelisa/ace" + "/AppRegistration.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
+    fsa.generateFile(("de/acegen" + "/AppRegistration.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.aceTemplate.generateAppRegistration());
-    fsa.generateFile(("com/anfelisa/ace" + "/AppConfiguration.java"), 
+    fsa.generateFile(("de/acegen" + "/AppConfiguration.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAppConfiguration());
-    fsa.generateFile(("com/anfelisa/ace" + "/CustomAppConfiguration.java"), 
+    fsa.generateFile(("de/acegen" + "/CustomAppConfiguration.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateCustomAppConfiguration());
-    fsa.generateFile(("com/anfelisa/ace" + "/E2E.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/E2E.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateE2E());
-    fsa.generateFile(("com/anfelisa/ace" + "/ServerConfiguration.java"), 
+    fsa.generateFile(("de/acegen" + "/ServerConfiguration.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateServerConfiguration());
-    fsa.generateFile(("com/anfelisa/ace" + "/StartE2ESessionResource.java"), 
+    fsa.generateFile(("de/acegen" + "/StartE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStartE2ESessionResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/StopE2ESessionResource.java"), 
+    fsa.generateFile(("de/acegen" + "/StopE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStopE2ESessionResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/AceOperation.java"), 
+    fsa.generateFile(("de/acegen" + "/AceOperation.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAceOperation());
-    fsa.generateFile(("com/anfelisa/ace" + "/PrepareE2EResource.java"), 
+    fsa.generateFile(("de/acegen" + "/PrepareE2EResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePrepareE2EResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/GetServerTimelineResource.java"), 
+    fsa.generateFile(("de/acegen" + "/GetServerTimelineResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateGetServerTimelineResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/ServerInfo.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/ServerInfo.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateServerInfo());
-    fsa.generateFile(("com/anfelisa/ace" + "/GetServerInfoResource.java"), 
+    fsa.generateFile(("de/acegen" + "/GetServerInfoResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateGetServerInfoResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/EventReplayCommand.java"), 
+    fsa.generateFile(("de/acegen" + "/EventReplayCommand.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventReplayCommand());
-    fsa.generateFile(("com/anfelisa/ace" + "/NotReplayableDataProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/NotReplayableDataProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateNotReplayableDataProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/AceDao.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/AceDao.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateAceDao());
-    fsa.generateFile(("com/anfelisa/ace" + "/AceExecutionMode.java"), 
+    fsa.generateFile(("de/acegen" + "/AceExecutionMode.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAceExecutionMode());
-    fsa.generateFile(("com/anfelisa/ace" + "/Action.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/Action.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.actionTemplate.generateAction());
-    fsa.generateFile(("com/anfelisa/ace" + "/Command.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/Command.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.commandTemplate.generateCommand());
-    fsa.generateFile(("com/anfelisa/ace" + "/DatabaseHandle.java"), 
+    fsa.generateFile(("de/acegen" + "/DatabaseHandle.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateDatabaseHandle());
-    fsa.generateFile(("com/anfelisa/ace" + "/Event.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/Event.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.eventTemplate.generateEvent());
-    fsa.generateFile(("com/anfelisa/ace" + "/HttpMethod.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/HttpMethod.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.actionTemplate.generateHttpMethod());
-    fsa.generateFile(("com/anfelisa/ace" + "/IAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/IAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.actionTemplate.generateIAction());
-    fsa.generateFile(("com/anfelisa/ace" + "/ICommand.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/ICommand.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.commandTemplate.generateICommand());
-    fsa.generateFile(("com/anfelisa/ace" + "/IDataContainer.java"), 
+    fsa.generateFile(("de/acegen" + "/IDataContainer.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateIDataContainer());
-    fsa.generateFile(("com/anfelisa/ace" + "/IEvent.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/IEvent.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.eventTemplate.generateIEvent());
-    fsa.generateFile(("com/anfelisa/ace" + "/ITimelineItem.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/ITimelineItem.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateITimelineItem());
-    fsa.generateFile(("com/anfelisa/ace" + "/JodaObjectMapper.java"), 
+    fsa.generateFile(("de/acegen" + "/JodaObjectMapper.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateJodaObjectMapper());
-    fsa.generateFile(("com/anfelisa/ace" + "/TimelineItem.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/TimelineItem.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateTimelineItem());
-    fsa.generateFile(("com/anfelisa/ace" + "/TimelineItemMapper.java"), 
+    fsa.generateFile(("de/acegen" + "/TimelineItemMapper.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateTimelineItemMapper());
-    fsa.generateFile(("com/anfelisa/ace" + "/AbstractData.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+    fsa.generateFile(("de/acegen" + "/AbstractData.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.modelTemplate.generateAbstractData());
-    fsa.generateFile(("com/anfelisa/ace" + "/AbstractDaoProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/AbstractDaoProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractDaoProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/DaoProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/DaoProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateDaoProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/IDaoProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/IDaoProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateIDaoProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/ViewProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/ViewProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateViewProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/AbstractViewProvider.java"), 
+    fsa.generateFile(("de/acegen" + "/AbstractViewProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractViewProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/EventConsumer.java"), 
+    fsa.generateFile(("de/acegen" + "/EventConsumer.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventconsumer());
-    fsa.generateFile(("com/anfelisa/ace" + "/PersistenceConnection.java"), 
+    fsa.generateFile(("de/acegen" + "/PersistenceConnection.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceConnection());
-    fsa.generateFile(("com/anfelisa/ace" + "/PersistenceHandle.java"), 
+    fsa.generateFile(("de/acegen" + "/PersistenceHandle.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceHandle());
     fsa.generateFile("ace_creation.xml", ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, 
       this.aceTemplate.generateAceMigration());
     if ((authUser != null)) {
       String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-      String _plus_4 = ("com/anfelisa/auth/" + _firstUpper);
+      String _plus_4 = ("de/acegen/auth/" + _firstUpper);
       String _plus_5 = (_plus_4 + ".java");
       fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
         this.aceTemplate.generateAuthUser(authUser));
     }
-    fsa.generateFile("com/anfelisa/ace/AbstractBaseScenario.java", 
+    fsa.generateFile("de/acegen/AbstractBaseScenario.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateAbstractBaseScenario());
-    fsa.generateFile("com/anfelisa/ace/BaseScenario.java", 
+    fsa.generateFile("de/acegen/BaseScenario.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateBaseScenario());
     EList<Scenario> _scenarios = java.getScenarios();
     for (final Scenario scenario : _scenarios) {

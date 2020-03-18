@@ -56,7 +56,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;");
@@ -102,6 +102,10 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("private static String mode;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("public static void main(String[] args) throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
@@ -129,6 +133,16 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return \"app version\";");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static String getMode() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return mode;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -294,10 +308,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Jdbi;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import io.dropwizard.setup.Environment;");
@@ -339,7 +350,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.ArrayList;");
@@ -643,7 +654,7 @@ public class AceTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -786,7 +797,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.Valid;");
@@ -918,20 +929,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.validation.Valid;");
-    _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import io.dropwizard.Configuration;");
-    _builder.newLine();
-    _builder.append("import io.dropwizard.db.DataSourceFactory;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class CustomAppConfiguration extends AppConfiguration {");
@@ -953,7 +951,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -1138,7 +1136,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -1333,7 +1331,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.HashMap;");
@@ -1429,7 +1427,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.ws.rs.Consumes;");
@@ -1503,7 +1501,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
@@ -1561,7 +1559,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -1702,7 +1700,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
@@ -1932,7 +1930,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.ws.rs.Consumes;");
@@ -2043,7 +2041,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class AceOperation {");
@@ -2156,7 +2154,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
@@ -2461,7 +2459,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public enum AceExecutionMode {");
@@ -2486,7 +2484,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
@@ -2544,7 +2542,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
@@ -2587,7 +2585,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
@@ -2790,7 +2788,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.sql.ResultSet;");
@@ -2865,7 +2863,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractDaoProvider implements IDaoProvider {");
@@ -2906,7 +2904,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class DaoProvider extends AbstractDaoProvider implements IDaoProvider {");
@@ -2952,10 +2950,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.jdbi.v3.core.Handle;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public interface IDaoProvider {");
@@ -2988,7 +2983,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ViewProvider extends AbstractViewProvider {");
@@ -3028,7 +3023,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.ArrayList;");
@@ -3177,7 +3172,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.auth;");
+    _builder.append("package de.acegen.auth;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.security.Principal;");
@@ -3275,7 +3270,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@FunctionalInterface");
@@ -3669,7 +3664,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Handle;");
@@ -3722,7 +3717,7 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Jdbi;");

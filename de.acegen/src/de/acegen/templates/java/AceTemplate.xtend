@@ -42,7 +42,7 @@ class AceTemplate {
 	def generateApp() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 		import org.jdbi.v3.core.Jdbi;
@@ -66,6 +66,8 @@ class AceTemplate {
 			
 			public static ViewProvider viewProvider;
 
+			private static String mode;
+
 			public static void main(String[] args) throws Exception {
 				new App().run(args);
 			}
@@ -79,6 +81,10 @@ class AceTemplate {
 				return "app version";
 			}
 		
+			public static String getMode() {
+				return mode;
+			}
+
 			public static void reportException(Exception x) {
 				// notify about exception
 			}
@@ -145,9 +151,7 @@ class AceTemplate {
 	def generateAppRegistration() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
-		
-		import org.jdbi.v3.core.Jdbi;
+		package de.acegen;
 		
 		import io.dropwizard.setup.Environment;
 		
@@ -169,7 +173,7 @@ class AceTemplate {
 	def generateE2E() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.ArrayList;
 		import java.util.HashMap;
@@ -290,7 +294,7 @@ class AceTemplate {
 	def generateServerConfiguration() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -345,7 +349,7 @@ class AceTemplate {
 	def generateAppConfiguration() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.validation.Valid;
 		import javax.validation.constraints.NotNull;
@@ -404,15 +408,7 @@ class AceTemplate {
 	def generateCustomAppConfiguration() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
-		
-		import javax.validation.Valid;
-		import javax.validation.constraints.NotNull;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		
-		import io.dropwizard.Configuration;
-		import io.dropwizard.db.DataSourceFactory;
+		package de.acegen;
 		
 		public class CustomAppConfiguration extends AppConfiguration {
 		
@@ -425,7 +421,7 @@ class AceTemplate {
 	def generateStartE2ESessionResource() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.List;
 		
@@ -507,7 +503,7 @@ class AceTemplate {
 	def generateEventReplayCommand() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.List;
 		
@@ -592,7 +588,7 @@ class AceTemplate {
 	def generateNotReplayableDataProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.HashMap;
 		import java.util.Map;
@@ -635,7 +631,7 @@ class AceTemplate {
 	def generateGetServerInfoResource() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.GET;
@@ -672,7 +668,7 @@ class AceTemplate {
 	def generateServerInfo() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
@@ -700,7 +696,7 @@ class AceTemplate {
 	def generateGetServerTimelineResource() '''
 		«copyright»
 
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.List;
 		
@@ -764,7 +760,7 @@ class AceTemplate {
 	def generatePrepareE2EResource() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
@@ -859,7 +855,7 @@ class AceTemplate {
 	def generateStopE2ESessionResource() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.PUT;
@@ -911,7 +907,7 @@ class AceTemplate {
 	def generateAceOperation() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public class AceOperation {
 		
@@ -956,7 +952,7 @@ class AceTemplate {
 	def generateAceDao() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 
 		import java.util.List;
 		import java.util.Optional;
@@ -1075,7 +1071,7 @@ class AceTemplate {
 	def generateAceExecutionMode() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public enum AceExecutionMode {
 			LIVE, REPLAY, DEV
@@ -1089,7 +1085,7 @@ class AceTemplate {
 	def generateITimelineItem() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.joda.time.DateTime;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -1118,7 +1114,7 @@ class AceTemplate {
 	def generateJodaObjectMapper() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -1140,7 +1136,7 @@ class AceTemplate {
 	def generateTimelineItem() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.joda.time.DateTime;
 		import com.fasterxml.jackson.annotation.JsonProperty;
@@ -1223,7 +1219,7 @@ class AceTemplate {
 	def generateTimelineItemMapper() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
@@ -1257,7 +1253,7 @@ class AceTemplate {
 	def generateAbstractDaoProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public abstract class AbstractDaoProvider implements IDaoProvider {
 		
@@ -1278,7 +1274,7 @@ class AceTemplate {
 	def generateDaoProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public class DaoProvider extends AbstractDaoProvider implements IDaoProvider {
 			
@@ -1300,9 +1296,7 @@ class AceTemplate {
 	def generateIDaoProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
-		
-		import org.jdbi.v3.core.Handle;
+		package de.acegen;
 		
 		public interface IDaoProvider {
 			
@@ -1320,7 +1314,7 @@ class AceTemplate {
 	def generateViewProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public class ViewProvider extends AbstractViewProvider {
 		
@@ -1341,7 +1335,7 @@ class AceTemplate {
 	def generateAbstractViewProvider() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.ArrayList;
 		import java.util.HashMap;
@@ -1405,7 +1399,7 @@ class AceTemplate {
 	def generateAuthUser(AuthUser it) '''
 		«copyright»
 		
-		package com.anfelisa.auth;
+		package de.acegen.auth;
 		
 		import java.security.Principal;
 		
@@ -1443,7 +1437,7 @@ class AceTemplate {
 	def generateEventconsumer() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		@FunctionalInterface
 		public interface EventConsumer {
@@ -1530,7 +1524,7 @@ class AceTemplate {
 	def generatePersistenceHandle() '''
 		«copyright»
 
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.jdbi.v3.core.Handle;
 		
@@ -1557,7 +1551,7 @@ class AceTemplate {
 	def generatePersistenceConnection() '''
 		«copyright»
 
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.jdbi.v3.core.Jdbi;
 		

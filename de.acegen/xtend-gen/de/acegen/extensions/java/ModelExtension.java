@@ -446,7 +446,7 @@ public class ModelExtension {
         _builder.append(";");
         _builder.newLineIfNotEmpty();
       } else {
-        _builder.append("import com.anfelisa.ace.IDataContainer;");
+        _builder.append("import de.acegen.IDataContainer;");
         _builder.newLine();
       }
     }
@@ -467,7 +467,7 @@ public class ModelExtension {
         _builder.append(";");
         _builder.newLineIfNotEmpty();
       } else {
-        _builder.append("import com.anfelisa.ace.IDataContainer;");
+        _builder.append("import de.acegen.IDataContainer;");
         _builder.newLine();
       }
     }

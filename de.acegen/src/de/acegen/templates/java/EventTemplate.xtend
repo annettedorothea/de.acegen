@@ -47,10 +47,10 @@ class EventTemplate {
 		
 		package «java.getName».events;
 		
-		import com.anfelisa.ace.Event;
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.ViewProvider;
-		import com.anfelisa.ace.CustomAppConfiguration;
+		import de.acegen.Event;
+		import de.acegen.IDaoProvider;
+		import de.acegen.ViewProvider;
+		import de.acegen.CustomAppConfiguration;
 		
 		«getModel.dataImport»
 		
@@ -72,10 +72,10 @@ class EventTemplate {
 		
 		package «java.getName».views;
 		
-		import com.anfelisa.ace.IDaoProvider;
+		import de.acegen.IDaoProvider;
 		
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.PersistenceHandle;
+		import de.acegen.IDataContainer;
+		import de.acegen.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
 			«renderFunction.getModel.dataImport»
 		«ENDFOR»
@@ -107,8 +107,8 @@ class EventTemplate {
 		package «java.getName».views;
 		
 		
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.PersistenceHandle;
+		import de.acegen.IDataContainer;
+		import de.acegen.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
 			«renderFunction.getModel.dataImport»
 		«ENDFOR»
@@ -130,7 +130,7 @@ class EventTemplate {
 	def generateEvent() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.List;
 		
@@ -185,7 +185,7 @@ class EventTemplate {
 	def generateIEvent() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public interface IEvent {
 		
@@ -209,20 +209,21 @@ class EventTemplate {
 		
 		package «getName».events;
 		
-		import com.anfelisa.ace.IDaoProvider;
-		import com.anfelisa.ace.IEvent;
-		import com.anfelisa.ace.ViewProvider;
+		import de.acegen.IDaoProvider;
+		import de.acegen.IEvent;
+		import de.acegen.ViewProvider;
 		import «getName».data.*;
-		import com.anfelisa.ace.JodaObjectMapper;
+		import de.acegen.JodaObjectMapper;
 		import com.fasterxml.jackson.databind.DeserializationFeature;
-		import com.anfelisa.ace.IDataContainer;
-		import com.anfelisa.ace.CustomAppConfiguration;
+		import de.acegen.IDataContainer;
+		import de.acegen.CustomAppConfiguration;
 		
 		import java.io.IOException;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		@SuppressWarnings("all")
 		public class EventFactory {
 			
 			private static JodaObjectMapper mapper = new JodaObjectMapper();
@@ -233,13 +234,15 @@ class EventTemplate {
 			}
 		
 			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				try {
-					«FOR ace : aceOperations»
-						«ace.createEvent(it)»
-					«ENDFOR»
-				} catch (IOException e) {
-					LOG.error("failed to create event {} with data {}", eventClass, json, e);
-				}
+				«IF eventCount > 0»
+					try {
+						«FOR ace : aceOperations»
+							«ace.createEvent(it)»
+						«ENDFOR»
+					} catch (IOException e) {
+						LOG.error("failed to create event {} with data {}", eventClass, json, e);
+					}
+				«ENDIF»
 		
 				return null;
 			}
@@ -258,6 +261,19 @@ class EventTemplate {
 		«sdg»
 		
 	'''
+	
+	private def int eventCount(HttpServer it) {
+		var count = 0
+		for (ace : aceOperations) {
+			if (ace instanceof HttpServerAceWrite) {
+				val writeOp = ace as HttpServerAceWrite
+				for (outcome: writeOp.outcomes) {
+					count += outcome.listeners.size
+				}
+			}
+		}
+		return count
+	}
 	
 	private def dispatch createEvent(HttpServerAceWrite it, HttpServer java) '''
 		«FOR outcome : outcomes»
@@ -289,7 +305,7 @@ class EventTemplate {
 	def generateEventFactory() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		public class EventFactory {
 			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {

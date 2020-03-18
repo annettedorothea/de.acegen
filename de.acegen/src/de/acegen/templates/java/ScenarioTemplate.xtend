@@ -68,9 +68,9 @@ class ScenarioTemplate {
 		
 		import org.junit.Test;
 		
-		import com.anfelisa.ace.BaseScenario;
-		import com.anfelisa.ace.ITimelineItem;
-		import com.anfelisa.ace.NotReplayableDataProvider;
+		import de.acegen.BaseScenario;
+		import de.acegen.ITimelineItem;
+		import de.acegen.NotReplayableDataProvider;
 		
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
@@ -236,7 +236,7 @@ class ScenarioTemplate {
 	def generateBaseScenario() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import org.jdbi.v3.core.Jdbi;
 		import org.junit.After;
@@ -246,10 +246,10 @@ class ScenarioTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.ace.AbstractBaseScenario;
-		import com.anfelisa.ace.App;
-		import com.anfelisa.ace.CustomAppConfiguration;
-		import com.anfelisa.ace.DaoProvider;
+		import de.acegen.AbstractBaseScenario;
+		import de.acegen.App;
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.DaoProvider;
 		
 		import io.dropwizard.jdbi3.JdbiFactory;
 		import io.dropwizard.testing.DropwizardTestSupport;
@@ -281,13 +281,14 @@ class ScenarioTemplate {
 		
 			@Before
 			public void before() {
-				daoProvider = new DaoProvider();
 				handle = new PersistenceHandle(jdbi.open());
+				daoProvider = new DaoProvider();
+				daoProvider.truncateAllViews(handle);
 			}
 			
 			@After
 			public void after() {
-				handle.close();
+				handle.getHandle().close();
 			}
 			
 			@Override
@@ -306,7 +307,7 @@ class ScenarioTemplate {
 			}
 			
 			@Override
-			protected abstract void assertIsNull(Object actual) {
+			protected void assertIsNull(Object actual) {
 				throw new RuntimeException("BaseScenario.assertIsNull not implemented");
 			}
 		}
@@ -316,7 +317,7 @@ class ScenarioTemplate {
 	def generateAbstractBaseScenario() '''
 		«copyright»
 		
-		package com.anfelisa.ace;
+		package de.acegen;
 		
 		import java.util.UUID;
 		

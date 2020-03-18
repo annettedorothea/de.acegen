@@ -270,7 +270,7 @@ public class ModelTemplate {
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.newLine();
     String _importModel = this._modelExtension.importModel(it);
@@ -378,9 +378,9 @@ public class ModelTemplate {
       }
     }
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.AbstractData;");
+    _builder.append("import de.acegen.AbstractData;");
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -564,7 +564,7 @@ public class ModelTemplate {
     _builder.append("import java.util.List;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.AbstractData;");
+    _builder.append("import de.acegen.AbstractData;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
@@ -669,7 +669,7 @@ public class ModelTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
@@ -822,7 +822,7 @@ public class ModelTemplate {
     _builder.append("import java.util.List;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.IDataContainer;");
+    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
@@ -960,7 +960,7 @@ public class ModelTemplate {
     _builder.append(".models;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import com.anfelisa.ace.PersistenceHandle;");
+    _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.statement.Update;");
     _builder.newLine();
@@ -1491,7 +1491,7 @@ public class ModelTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Jdbi;");
@@ -1647,7 +1647,7 @@ public class ModelTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("package com.anfelisa.ace;");
+    _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");

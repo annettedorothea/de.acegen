@@ -165,14 +165,14 @@ class ModelExtension {
 		«IF it !== null»
 			import «(eContainer as HttpServer).getName».data.«dataInterfaceName»;
 		«ELSE»
-			import com.anfelisa.ace.IDataContainer;
+			import de.acegen.IDataContainer;
 		«ENDIF»
 	'''
 	def String dataClassImport(Model it) '''
 		«IF it !== null»
 			import «(eContainer as HttpServer).getName».data.«dataName»;
 		«ELSE»
-			import com.anfelisa.ace.IDataContainer;
+			import de.acegen.IDataContainer;
 		«ENDIF»
 	'''
 	
