@@ -219,12 +219,25 @@ public class ScenarioTemplate {
         EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
         _builder.append(_responseDataNameWithPackage_1, "\t\t");
-        _builder.append(" actual = response.readEntity(");
+        _builder.append(" actual = null;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("try {");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("\t");
+        _builder.append("actual = response.readEntity(");
         EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
-        _builder.append(_responseDataNameWithPackage_2, "\t\t");
+        _builder.append(_responseDataNameWithPackage_2, "\t\t\t");
         _builder.append(".class);");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
     {

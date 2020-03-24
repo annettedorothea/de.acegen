@@ -94,7 +94,11 @@ class ScenarioTemplate {
 				«ENDIF»
 				
 				«IF whenBlock.action.isRead»
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
+					try {
+						actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+					} catch (Exception x) {
+					}
 				«ENDIF»
 				«IF thenBlock.response !== null»
 					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData")»
