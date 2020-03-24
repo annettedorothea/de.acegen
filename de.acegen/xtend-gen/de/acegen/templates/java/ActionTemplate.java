@@ -82,15 +82,6 @@ public class ActionTemplate {
     _builder.append("import javax.ws.rs.DELETE;");
     _builder.newLine();
     _builder.newLine();
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        _builder.append("import com.anfelisa.auth.");
-        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper);
-        _builder.append(";");
-      }
-    }
-    _builder.newLineIfNotEmpty();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
     _builder.append(_dataImport);
     _builder.newLineIfNotEmpty();
@@ -304,15 +295,6 @@ public class ActionTemplate {
     _builder.append("import javax.ws.rs.GET;");
     _builder.newLine();
     _builder.newLine();
-    {
-      if ((it.isAuthorize() && (authUser != null))) {
-        _builder.append("import com.anfelisa.auth.");
-        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper);
-        _builder.append(";");
-      }
-    }
-    _builder.newLineIfNotEmpty();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
     _builder.append(_dataImport);
     _builder.newLineIfNotEmpty();

@@ -59,7 +59,6 @@ class ActionTemplate {
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.DELETE;
 		
-		«IF isAuthorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		«IF outcomes.size > 0»
@@ -135,7 +134,6 @@ class ActionTemplate {
 		
 		import javax.ws.rs.GET;
 		
-		«IF isAuthorize && authUser !== null»import com.anfelisa.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
