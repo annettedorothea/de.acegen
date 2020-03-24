@@ -333,10 +333,13 @@ class ActionTemplate {
 	private def initActionData(HttpServerAce it) '''
 		if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
 				|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
-			if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-				databaseHandle.commitTransaction();
-				throwBadRequest("uuid already exists - please choose another one");
+			if (appConfiguration.getServerConfiguration().writeTimeline()) {
+				if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
+					databaseHandle.commitTransaction();
+					throwBadRequest("uuid already exists - please choose another one");
+				}
 			}
+			
 			this.actionData.setSystemTime(new DateTime());
 			this.initActionData();
 		} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {

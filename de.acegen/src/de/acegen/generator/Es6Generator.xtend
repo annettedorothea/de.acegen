@@ -50,7 +50,7 @@ class Es6Generator {
 			fsa.generateFile(httpClient.getName + '/actions/' + ace.actionName + '.js',
 				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 				actionTemplate.generateInitialActionFile(ace, httpClient));
-			if (ace.getServerCall !== null) {
+			if (ace.getServerCall !== null || ace.isAsync) {
 				fsa.generateFile(httpClient.getName + '/commands/' + ace.abstractCommandName + '.js',
 					IFileSystemAccess.DEFAULT_OUTPUT,
 					commandTemplate.generateAsynchronousAbstractCommandFile(ace, httpClient));

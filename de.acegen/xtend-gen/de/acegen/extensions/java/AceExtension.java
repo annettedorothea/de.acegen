@@ -17,6 +17,7 @@ package de.acegen.extensions.java;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
@@ -183,6 +184,10 @@ public class AceExtension {
     _builder.append(_firstUpper);
     _builder.append("Response");
     return _builder.toString();
+  }
+  
+  public boolean isRead(final HttpServerAce it) {
+    return (it instanceof HttpServerAceRead);
   }
   
   public String packageFor(final HttpServerAce it) {

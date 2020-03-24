@@ -22,6 +22,7 @@ import javax.inject.Inject
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerOutcome
+import de.acegen.aceGen.HttpServerAceRead
 
 class AceExtension {
 	
@@ -59,6 +60,10 @@ class AceExtension {
 	def String responseDataNameWithPackage(HttpServerAce  it, HttpServer java) '''«java.getName».data.«getName.toFirstUpper»Response'''
 	
 	def String responseDataInterfaceName(HttpServerAce it) '''I«getName.toFirstUpper»Response'''
+
+	def boolean isRead(HttpServerAce it) {
+		return it instanceof HttpServerAceRead
+	}
 	
 	def String packageFor(HttpServerAce it) {
 		val java = eContainer as HttpServer;

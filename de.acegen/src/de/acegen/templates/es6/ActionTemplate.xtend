@@ -37,7 +37,7 @@ class ActionTemplate {
 	def generateAbstractActionFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Action from "../../ace/«IF getServerCall !== null»AsynchronousAction«ELSE»SynchronousAction«ENDIF»";
+		import Action from "../../ace/«IF isAsync || getServerCall !== null»AsynchronousAction«ELSE»SynchronousAction«ENDIF»";
 		«IF outcomes.size > 0»
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»

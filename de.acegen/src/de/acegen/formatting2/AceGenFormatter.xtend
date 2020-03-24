@@ -3,35 +3,20 @@
  */
 package de.acegen.formatting2
 
-import com.google.inject.Inject
-import de.acegen.aceGen.AttributeDefinition
-import de.acegen.aceGen.AttributeDefinitionList
-import de.acegen.aceGen.AuthUser
-import de.acegen.aceGen.DataDefinition
-import de.acegen.aceGen.HttpClient
-import de.acegen.aceGen.HttpClientAce
-import de.acegen.aceGen.HttpClientOutcome
-import de.acegen.aceGen.HttpClientStateElement
-import de.acegen.aceGen.HttpClientTypeDefinition
-import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceRead
-import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.aceGen.HttpServerView
-import de.acegen.aceGen.ListAttributeDefinitionList
-import de.acegen.aceGen.Model
-import de.acegen.aceGen.Project
-import de.acegen.aceGen.Scenario
-import de.acegen.aceGen.ThenBlock
-import de.acegen.aceGen.Value
-import de.acegen.aceGen.WhenBlock
-import de.acegen.services.AceGenGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
+//import org.eclipse.xtext.formatting2.IFormattableDocument
+
 class AceGenFormatter extends AbstractFormatter2 {
 	
-	@Inject extension AceGenGrammarAccess
+	override format(Object obj, IFormattableDocument document) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	//@Inject extension AceGenGrammarAccess
 
+/*
 	def dispatch void format(Project project, extension IFormattableDocument document) {
 		//println(textRegionAccess.toString)
 		//project.httpClient.format()
@@ -40,10 +25,10 @@ class AceGenFormatter extends AbstractFormatter2 {
 
 	def dispatch void format(HttpClient httpClient, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		/*for (httpClientAce : httpClient.aceOperations) {
+		for (httpClientAce : httpClient.aceOperations) {
 			httpClientAce.format(document)
 		}
-		httpClient.appState.format(document)*/
+		httpClient.appState.format(document)
 	}
 	
 	def dispatch void format(HttpClientAce it, extension IFormattableDocument document) {
@@ -99,4 +84,5 @@ class AceGenFormatter extends AbstractFormatter2 {
 	
 	def dispatch void format(Value it, extension IFormattableDocument document) {
 	}
+	*/
 }

@@ -16,6 +16,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/appState"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientAce">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/async"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/input"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/serverCall"/>

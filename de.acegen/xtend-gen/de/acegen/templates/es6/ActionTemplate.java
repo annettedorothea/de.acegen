@@ -18,7 +18,6 @@ package de.acegen.templates.es6;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientStateElement;
-import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -50,9 +49,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import Action from \"../../ace/");
     {
-      HttpServerAce _serverCall = it.getServerCall();
-      boolean _tripleNotEquals = (_serverCall != null);
-      if (_tripleNotEquals) {
+      if ((it.isAsync() || (it.getServerCall() != null))) {
         _builder.append("AsynchronousAction");
       } else {
         _builder.append("SynchronousAction");
@@ -79,8 +76,8 @@ public class ActionTemplate {
     }
     {
       HttpClientStateElement _loadingFlag = it.getLoadingFlag();
-      boolean _tripleNotEquals_1 = (_loadingFlag != null);
-      if (_tripleNotEquals_1) {
+      boolean _tripleNotEquals = (_loadingFlag != null);
+      if (_tripleNotEquals) {
         _builder.append("import * as AppState from \"../../ace/WriteAppState\";");
         _builder.newLine();
       }
@@ -133,8 +130,8 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     {
       HttpClientStateElement _loadingFlag_1 = it.getLoadingFlag();
-      boolean _tripleNotEquals_2 = (_loadingFlag_1 != null);
-      if (_tripleNotEquals_2) {
+      boolean _tripleNotEquals_1 = (_loadingFlag_1 != null);
+      if (_tripleNotEquals_1) {
         _builder.append("\t\t");
         _builder.append("this.postCall = this.postCall.bind(this);");
         _builder.newLine();
@@ -167,8 +164,8 @@ public class ActionTemplate {
     _builder.newLine();
     {
       HttpClientStateElement _loadingFlag_2 = it.getLoadingFlag();
-      boolean _tripleNotEquals_3 = (_loadingFlag_2 != null);
-      if (_tripleNotEquals_3) {
+      boolean _tripleNotEquals_2 = (_loadingFlag_2 != null);
+      if (_tripleNotEquals_2) {
         _builder.append("\t");
         _builder.append("preCall() {");
         _builder.newLine();

@@ -121,108 +121,116 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	public class HttpClientAceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpClientAce");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cInputAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cInputIDTerminalRuleCall_1_1_0 = (RuleCall)cInputAssignment_1_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
-		private final Keyword cCommaKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Assignment cInputAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cInputIDTerminalRuleCall_1_2_1_0 = (RuleCall)cInputAssignment_1_2_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Assignment cAsyncAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cAsyncAsyncKeyword_0_0 = (Keyword)cAsyncAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCallKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cServerCallAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cServerCallHttpServerAceCrossReference_2_1_0 = (CrossReference)cServerCallAssignment_2_1.eContents().get(0);
-		private final RuleCall cServerCallHttpServerAceQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cServerCallHttpServerAceCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cInputAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cInputIDTerminalRuleCall_2_1_0 = (RuleCall)cInputAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cInputAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cInputIDTerminalRuleCall_2_2_1_0 = (RuleCall)cInputAssignment_2_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLoadingFlagKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cLoadingFlagAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cLoadingFlagHttpClientStateElementCrossReference_3_1_0 = (CrossReference)cLoadingFlagAssignment_3_1.eContents().get(0);
-		private final RuleCall cLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_3_1_0_1 = (RuleCall)cLoadingFlagHttpClientStateElementCrossReference_3_1_0.eContents().get(1);
-		private final Assignment cOutcomesAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cOutcomesHttpClientOutcomeParserRuleCall_4_0 = (RuleCall)cOutcomesAssignment_4.eContents().get(0);
+		private final Keyword cCallKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cServerCallAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final CrossReference cServerCallHttpServerAceCrossReference_3_1_0 = (CrossReference)cServerCallAssignment_3_1.eContents().get(0);
+		private final RuleCall cServerCallHttpServerAceQualifiedNameParserRuleCall_3_1_0_1 = (RuleCall)cServerCallHttpServerAceCrossReference_3_1_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLoadingFlagKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cLoadingFlagAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cLoadingFlagHttpClientStateElementCrossReference_4_1_0 = (CrossReference)cLoadingFlagAssignment_4_1.eContents().get(0);
+		private final RuleCall cLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_4_1_0_1 = (RuleCall)cLoadingFlagHttpClientStateElementCrossReference_4_1_0.eContents().get(1);
+		private final Assignment cOutcomesAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cOutcomesHttpClientOutcomeParserRuleCall_5_0 = (RuleCall)cOutcomesAssignment_5.eContents().get(0);
 		
 		//HttpClientAce:
-		//	name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag'
-		//	loadingFlag=[HttpClientStateElement|QualifiedName])?
+		//	async?='async'? name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])?
+		//	('loadingFlag' loadingFlag=[HttpClientStateElement|QualifiedName])?
 		//	outcomes+=HttpClientOutcome*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag'
-		//loadingFlag=[HttpClientStateElement|QualifiedName])? outcomes+=HttpClientOutcome*
+		//async?='async'? name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])?
+		//('loadingFlag' loadingFlag=[HttpClientStateElement|QualifiedName])? outcomes+=HttpClientOutcome*
 		public Group getGroup() { return cGroup; }
 		
+		//async?='async'?
+		public Assignment getAsyncAssignment_0() { return cAsyncAssignment_0; }
+		
+		//'async'
+		public Keyword getAsyncAsyncKeyword_0_0() { return cAsyncAsyncKeyword_0_0; }
+		
 		//name=ID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
 		//('<' input+=ID (',' input+=ID)* '>')?
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_1_0() { return cLessThanSignKeyword_1_0; }
-		
-		//input+=ID
-		public Assignment getInputAssignment_1_1() { return cInputAssignment_1_1; }
-		
-		//ID
-		public RuleCall getInputIDTerminalRuleCall_1_1_0() { return cInputIDTerminalRuleCall_1_1_0; }
-		
-		//(',' input+=ID)*
-		public Group getGroup_1_2() { return cGroup_1_2; }
-		
-		//','
-		public Keyword getCommaKeyword_1_2_0() { return cCommaKeyword_1_2_0; }
-		
-		//input+=ID
-		public Assignment getInputAssignment_1_2_1() { return cInputAssignment_1_2_1; }
-		
-		//ID
-		public RuleCall getInputIDTerminalRuleCall_1_2_1_0() { return cInputIDTerminalRuleCall_1_2_1_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
-		
-		//('call' serverCall=[HttpServerAce|QualifiedName])?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'call'
-		public Keyword getCallKeyword_2_0() { return cCallKeyword_2_0; }
+		//'<'
+		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
 		
-		//serverCall=[HttpServerAce|QualifiedName]
-		public Assignment getServerCallAssignment_2_1() { return cServerCallAssignment_2_1; }
+		//input+=ID
+		public Assignment getInputAssignment_2_1() { return cInputAssignment_2_1; }
 		
-		//[HttpServerAce|QualifiedName]
-		public CrossReference getServerCallHttpServerAceCrossReference_2_1_0() { return cServerCallHttpServerAceCrossReference_2_1_0; }
+		//ID
+		public RuleCall getInputIDTerminalRuleCall_2_1_0() { return cInputIDTerminalRuleCall_2_1_0; }
 		
-		//QualifiedName
-		public RuleCall getServerCallHttpServerAceQualifiedNameParserRuleCall_2_1_0_1() { return cServerCallHttpServerAceQualifiedNameParserRuleCall_2_1_0_1; }
+		//(',' input+=ID)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//('loadingFlag' loadingFlag=[HttpClientStateElement|QualifiedName])?
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//input+=ID
+		public Assignment getInputAssignment_2_2_1() { return cInputAssignment_2_2_1; }
+		
+		//ID
+		public RuleCall getInputIDTerminalRuleCall_2_2_1_0() { return cInputIDTerminalRuleCall_2_2_1_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_2_3() { return cGreaterThanSignKeyword_2_3; }
+		
+		//('call' serverCall=[HttpServerAce|QualifiedName])?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'loadingFlag'
-		public Keyword getLoadingFlagKeyword_3_0() { return cLoadingFlagKeyword_3_0; }
+		//'call'
+		public Keyword getCallKeyword_3_0() { return cCallKeyword_3_0; }
 		
-		//loadingFlag=[HttpClientStateElement|QualifiedName]
-		public Assignment getLoadingFlagAssignment_3_1() { return cLoadingFlagAssignment_3_1; }
+		//serverCall=[HttpServerAce|QualifiedName]
+		public Assignment getServerCallAssignment_3_1() { return cServerCallAssignment_3_1; }
 		
-		//[HttpClientStateElement|QualifiedName]
-		public CrossReference getLoadingFlagHttpClientStateElementCrossReference_3_1_0() { return cLoadingFlagHttpClientStateElementCrossReference_3_1_0; }
+		//[HttpServerAce|QualifiedName]
+		public CrossReference getServerCallHttpServerAceCrossReference_3_1_0() { return cServerCallHttpServerAceCrossReference_3_1_0; }
 		
 		//QualifiedName
-		public RuleCall getLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_3_1_0_1() { return cLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_3_1_0_1; }
+		public RuleCall getServerCallHttpServerAceQualifiedNameParserRuleCall_3_1_0_1() { return cServerCallHttpServerAceQualifiedNameParserRuleCall_3_1_0_1; }
+		
+		//('loadingFlag' loadingFlag=[HttpClientStateElement|QualifiedName])?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'loadingFlag'
+		public Keyword getLoadingFlagKeyword_4_0() { return cLoadingFlagKeyword_4_0; }
+		
+		//loadingFlag=[HttpClientStateElement|QualifiedName]
+		public Assignment getLoadingFlagAssignment_4_1() { return cLoadingFlagAssignment_4_1; }
+		
+		//[HttpClientStateElement|QualifiedName]
+		public CrossReference getLoadingFlagHttpClientStateElementCrossReference_4_1_0() { return cLoadingFlagHttpClientStateElementCrossReference_4_1_0; }
+		
+		//QualifiedName
+		public RuleCall getLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_4_1_0_1() { return cLoadingFlagHttpClientStateElementQualifiedNameParserRuleCall_4_1_0_1; }
 		
 		//outcomes+=HttpClientOutcome*
-		public Assignment getOutcomesAssignment_4() { return cOutcomesAssignment_4; }
+		public Assignment getOutcomesAssignment_5() { return cOutcomesAssignment_5; }
 		
 		//HttpClientOutcome
-		public RuleCall getOutcomesHttpClientOutcomeParserRuleCall_4_0() { return cOutcomesHttpClientOutcomeParserRuleCall_4_0; }
+		public RuleCall getOutcomesHttpClientOutcomeParserRuleCall_5_0() { return cOutcomesHttpClientOutcomeParserRuleCall_5_0; }
 	}
 	public class HttpClientOutcomeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpClientOutcome");
@@ -1951,8 +1959,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//HttpClientAce:
-	//	name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag'
-	//	loadingFlag=[HttpClientStateElement|QualifiedName])?
+	//	async?='async'? name=ID ('<' input+=ID (',' input+=ID)* '>')? ('call' serverCall=[HttpServerAce|QualifiedName])?
+	//	('loadingFlag' loadingFlag=[HttpClientStateElement|QualifiedName])?
 	//	outcomes+=HttpClientOutcome*;
 	public HttpClientAceElements getHttpClientAceAccess() {
 		return pHttpClientAce;

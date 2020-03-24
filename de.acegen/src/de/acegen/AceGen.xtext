@@ -30,7 +30,7 @@ HttpClient:
 ;
 
 HttpClientAce: 
-	name = ID  ('<' input += ID (',' input += ID)* '>')?  
+	(async ?= 'async')? name = ID  ('<' input += ID (',' input += ID)* '>')?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [HttpClientStateElement | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
@@ -51,7 +51,7 @@ HttpClientStateFunctionType:
 ;
 
 HttpClientStateElement:
-	name = ID list ?= 'list'? hash ?= 'location.hash'? storage ?= 'storage'? (types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
+	name = ID list ?= 'list' ? hash ?= 'location.hash'? storage ?= 'storage'? (types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
 ;
 
 HttpClientTypeDefinition:

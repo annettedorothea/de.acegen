@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getServerCall <em>Server Call</em>}</li>
@@ -45,6 +46,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements HttpClientAce
 {
+  /**
+   * The default value of the '{@link #isAsync() <em>Async</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAsync()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean ASYNC_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isAsync() <em>Async</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAsync()
+   * @generated
+   * @ordered
+   */
+  protected boolean async = ASYNC_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -124,6 +145,31 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_CLIENT_ACE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isAsync()
+  {
+    return async;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAsync(boolean newAsync)
+  {
+    boolean oldAsync = async;
+    async = newAsync;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__ASYNC, oldAsync, async));
   }
 
   /**
@@ -297,6 +343,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_ACE__ASYNC:
+        return isAsync();
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         return getName();
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
@@ -324,6 +372,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_ACE__ASYNC:
+        setAsync((Boolean)newValue);
+        return;
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         setName((String)newValue);
         return;
@@ -355,6 +406,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_ACE__ASYNC:
+        setAsync(ASYNC_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -384,6 +438,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_ACE__ASYNC:
+        return async != ASYNC_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT_ACE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
@@ -409,7 +465,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (async: ");
+    result.append(async);
+    result.append(", name: ");
     result.append(name);
     result.append(", input: ");
     result.append(input);

@@ -46,18 +46,8 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import Command from \"../../../gen/ace/");
-    {
-      HttpServerAce _serverCall = it.getServerCall();
-      boolean _tripleNotEquals = (_serverCall != null);
-      if (_tripleNotEquals) {
-        _builder.append("AsynchronousCommand");
-      } else {
-        _builder.append("SynchronousCommand");
-      }
-    }
-    _builder.append("\";");
-    _builder.newLineIfNotEmpty();
+    _builder.append("import Command from \"../../../gen/ace/AsynchronousCommand\";");
+    _builder.newLine();
     _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
     _builder.newLine();
     {
@@ -220,116 +210,137 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("execute() {");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("return new Promise((resolve, reject) => {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("let queryParams = [];");
-    _builder.newLine();
     {
-      EList<Attribute> _queryParams = it.getServerCall().getQueryParams();
-      for(final Attribute queryParam : _queryParams) {
-        _builder.append("\t\t    ");
-        _builder.append("queryParams.push({key: \"");
-        String _name_6 = queryParam.getName();
-        _builder.append(_name_6, "\t\t    ");
-        _builder.append("\",value: this.commandData.");
-        String _name_7 = queryParam.getName();
-        _builder.append(_name_7, "\t\t    ");
-        _builder.append("});");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t        ");
-    {
-      int _size_2 = it.getServerCall().getPayload().size();
-      boolean _greaterThan_2 = (_size_2 > 0);
-      if (_greaterThan_2) {
-        _builder.append("let payload = {\t");
-        _builder.newLineIfNotEmpty();
+      HttpServerAce _serverCall = it.getServerCall();
+      boolean _tripleNotEquals = (_serverCall != null);
+      if (_tripleNotEquals) {
+        _builder.append("\t");
+        _builder.append("execute() {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("    ");
+        _builder.append("return new Promise((resolve, reject) => {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("let queryParams = [];");
+        _builder.newLine();
         {
-          EList<Attribute> _payload = it.getServerCall().getPayload();
-          for(final Attribute payload : _payload) {
-            _builder.append("\t        ");
+          EList<Attribute> _queryParams = it.getServerCall().getQueryParams();
+          for(final Attribute queryParam : _queryParams) {
             _builder.append("\t");
-            String _name_8 = payload.getName();
-            _builder.append(_name_8, "\t        \t");
-            _builder.append(" : this.commandData.");
-            String _name_9 = payload.getName();
-            _builder.append(_name_9, "\t        \t");
-            _builder.append(",");
+            _builder.append("\t    ");
+            _builder.append("queryParams.push({key: \"");
+            String _name_6 = queryParam.getName();
+            _builder.append(_name_6, "\t\t    ");
+            _builder.append("\",value: this.commandData.");
+            String _name_7 = queryParam.getName();
+            _builder.append(_name_7, "\t\t    ");
+            _builder.append("});");
             _builder.newLineIfNotEmpty();
           }
         }
-        _builder.append("\t        ");
         _builder.append("\t");
-        _builder.append("};");
+        _builder.append("        ");
+        {
+          int _size_2 = it.getServerCall().getPayload().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
+            _builder.append("let payload = {\t");
+            _builder.newLineIfNotEmpty();
+            {
+              EList<Attribute> _payload = it.getServerCall().getPayload();
+              for(final Attribute payload : _payload) {
+                _builder.append("\t");
+                _builder.append("        ");
+                _builder.append("\t");
+                String _name_8 = payload.getName();
+                _builder.append(_name_8, "\t        \t");
+                _builder.append(" : this.commandData.");
+                String _name_9 = payload.getName();
+                _builder.append(_name_9, "\t        \t");
+                _builder.append(",");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("        ");
+            _builder.append("\t");
+            _builder.append("};");
+            _builder.newLine();
+          }
+        }
+        _builder.append("\t");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("this.");
+        String _httpCall = this._aceExtension.httpCall(it);
+        _builder.append(_httpCall, "\t\t\t");
+        _builder.append("(this.adjustedUrl(`");
+        String _httpUrl = this._aceExtension.httpUrl(it);
+        _builder.append(_httpUrl, "\t\t\t");
+        _builder.append("`), ");
+        {
+          boolean _isAuthorize = it.getServerCall().isAuthorize();
+          if (_isAuthorize) {
+            _builder.append("true");
+          } else {
+            _builder.append("false");
+          }
+        }
+        _builder.append(", queryParams");
+        {
+          if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
+            _builder.append(", payload");
+          }
+        }
+        _builder.append(").then((data) => {");
+        _builder.newLineIfNotEmpty();
+        {
+          EList<Attribute> _response = it.getServerCall().getResponse();
+          for(final Attribute responseAttribute : _response) {
+            _builder.append("\t");
+            _builder.append("\t\t\t");
+            _builder.append("this.commandData.");
+            String _name_10 = responseAttribute.getName();
+            _builder.append(_name_10, "\t\t\t\t");
+            _builder.append(" = data.");
+            String _name_11 = responseAttribute.getName();
+            _builder.append(_name_11, "\t\t\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append("this.handleResponse(resolve, reject);");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("}, (error) => {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append("this.commandData.error = error;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append("this.handleError(resolve, reject);");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("});");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("    ");
+        _builder.append("});");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
         _builder.newLine();
       }
     }
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("this.");
-    String _httpCall = this._aceExtension.httpCall(it);
-    _builder.append(_httpCall, "\t\t\t");
-    _builder.append("(this.adjustedUrl(`");
-    String _httpUrl = this._aceExtension.httpUrl(it);
-    _builder.append(_httpUrl, "\t\t\t");
-    _builder.append("`), ");
-    {
-      boolean _isAuthorize = it.getServerCall().isAuthorize();
-      if (_isAuthorize) {
-        _builder.append("true");
-      } else {
-        _builder.append("false");
-      }
-    }
-    _builder.append(", queryParams");
-    {
-      if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
-        _builder.append(", payload");
-      }
-    }
-    _builder.append(").then((data) => {");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Attribute> _response = it.getServerCall().getResponse();
-      for(final Attribute responseAttribute : _response) {
-        _builder.append("\t\t\t\t");
-        _builder.append("this.commandData.");
-        String _name_10 = responseAttribute.getName();
-        _builder.append(_name_10, "\t\t\t\t");
-        _builder.append(" = data.");
-        String _name_11 = responseAttribute.getName();
-        _builder.append(_name_11, "\t\t\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t\t\t");
-    _builder.append("this.handleResponse(resolve, reject);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}, (error) => {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.commandData.error = error;");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("this.handleError(resolve, reject);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -348,18 +359,8 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import Command from \"../../../gen/ace/");
-    {
-      HttpServerAce _serverCall = it.getServerCall();
-      boolean _tripleNotEquals = (_serverCall != null);
-      if (_tripleNotEquals) {
-        _builder.append("AsynchronousCommand");
-      } else {
-        _builder.append("SynchronousCommand");
-      }
-    }
-    _builder.append("\";");
-    _builder.newLineIfNotEmpty();
+    _builder.append("import Command from \"../../../gen/ace/SynchronousCommand\";");
+    _builder.newLine();
     _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
     _builder.newLine();
     {
@@ -554,49 +555,66 @@ public class CommandTemplate {
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append("initCommandData() {");
-    _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("//add from appState to commandData");
-    _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("handleResponse(resolve, reject) {");
-    _builder.newLine();
-    _builder.append("    \t");
     {
-      int _size = it.getOutcomes().size();
-      boolean _equals = (_size == 1);
-      if (_equals) {
-        _builder.append("this.commandData.outcome = this.");
-        String _name_1 = it.getOutcomes().get(0).getName();
-        _builder.append(_name_1, "    \t");
-        _builder.append(";");
+      HttpServerAce _serverCall = it.getServerCall();
+      boolean _tripleNotEquals = (_serverCall != null);
+      if (_tripleNotEquals) {
+        _builder.append("    ");
+        _builder.append("initCommandData() {");
+        _builder.newLine();
+        _builder.append("    \t");
+        _builder.append("//add from appState to commandData");
+        _builder.newLine();
+        _builder.append("    \t");
+        _builder.append("return true;");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("handleResponse(resolve, reject) {");
+        _builder.newLine();
+        _builder.append("    \t");
+        {
+          int _size = it.getOutcomes().size();
+          boolean _equals = (_size == 1);
+          if (_equals) {
+            _builder.append("this.commandData.outcome = this.");
+            String _name_1 = it.getOutcomes().get(0).getName();
+            _builder.append(_name_1, "    \t");
+            _builder.append(";");
+          }
+        }
+        _builder.newLineIfNotEmpty();
+        _builder.append("    \t");
+        _builder.append("resolve();");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("handleError(resolve, reject) {");
+        _builder.newLine();
+        _builder.append("    \t");
+        _builder.append("reject(this.commandData.error);");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("}");
+        _builder.newLine();
+      } else {
+        _builder.append("execute() {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("return new Promise((resolve, reject) => {");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("});\t\t\t    ");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
       }
     }
-    _builder.newLineIfNotEmpty();
-    _builder.append("    \t");
-    _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("handleError(resolve, reject) {");
-    _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("reject(this.commandData.error);");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

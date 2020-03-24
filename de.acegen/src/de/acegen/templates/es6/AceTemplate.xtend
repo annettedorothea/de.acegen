@@ -33,9 +33,6 @@ class AceTemplate {
 	def generateAppUtilsStub() '''
 		«copyright»
 		
-		import ACEController from "../../gen/ace/ACEController";
-		import uuid from "uuid";
-		
 		export default class AppUtils {
 		
 		    static start() {
@@ -251,36 +248,6 @@ class AceTemplate {
 		        return 2000;
 		    }
 		    
-			static getAppState() {
-			    return {};
-			}
-		    
-			static deepMerge(newState, appState) {
-			    for (let property in newState) {
-			        if (newState.hasOwnProperty(property)) {
-			            if (appState[property] === undefined) {
-			                appState[property] = newState[property];
-			            } else if (newState[property] === undefined) {
-			                appState[property] = undefined;
-			            } else if (typeof newState[property] === 'object') {
-			                AppUtils.deepMerge(newState[property], appState[property]);
-			            } else {
-			                appState[property] = newState[property];
-			            }
-			        }
-			    }
-			    return appState;
-			}
-			
-			static merge(newState, appState) {
-			    for (let property in newState) {
-			        if (newState.hasOwnProperty(property)) {
-			            appState[property] = newState[property];
-			        }
-			    }
-			    return appState;
-			}
-
 		}
 		
 		«sdg»
@@ -290,24 +257,34 @@ class AceTemplate {
 	def generateAppStub() '''
 		«copyright»
 
+
 		import AppUtils from "./AppUtils";
+		
+		//import Container from "../web/Container";
 		
 		export * from "../../gen/ace/Scenario";
 		export * from "../../gen/ace/Bug";
 		
-		AppUtils.start();
+		const React = require('react');
+		const ReactDOM = require('react-dom');
 		
-		export function deepMergeState(newAppState) {
-		    appState = AppUtils.deepMerge(newAppState, appState);
-		}
+		AppUtils.createInitialAppState();
 		
-		export function mergeState(newAppState) {
-		    appState = AppUtils.merge(newAppState, appState);
-		}
+		/*export const container = ReactDOM.render(
+		    <Container/>,
+		    document.getElementById('root')
+		);
+		
+		export function render(newAppState) {
+		    container.setState(newAppState);
+		}*/
 		
 		// add EventListenerRegistration.init() of all modules
 		// add ActionFactoryRegistrationTodo.init() of all modules
 		
+		AppUtils.start();
+		
+				
 		
 		«sdg»
 		

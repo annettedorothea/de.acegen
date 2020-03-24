@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getInput <em>Input</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getServerCall <em>Server Call</em>}</li>
@@ -29,6 +30,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpClientAce extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Async</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Async</em>' attribute.
+   * @see #setAsync(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_Async()
+   * @model
+   * @generated
+   */
+  boolean isAsync();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Async</em>' attribute.
+   * @see #isAsync()
+   * @generated
+   */
+  void setAsync(boolean value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

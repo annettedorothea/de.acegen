@@ -43,7 +43,7 @@ class ScenarioTemplate {
 		public class «name»Scenario extends Abstract«name»Scenario {
 
 			@Override
-			protected void verifications(Response response) {
+			protected void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response «ENDIF») {
 			}
 		
 		}
@@ -88,21 +88,26 @@ class ScenarioTemplate {
 				return «whenBlock.generateActionCall(java)»
 			}
 			
-			private void then(Response response) throws Exception {
+			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
 				«IF thenBlock.statusCode !== 0»
 					assertThat(response.getStatus(), «thenBlock.statusCode»);
 				«ENDIF»
 				
+				«IF whenBlock.action.isRead»
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+				«ENDIF»
 				«IF thenBlock.response !== null»
 					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData")»
 					
 					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
 
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
 
 					assertThat(actual, expected);
 				«ENDIF»
 				
+				«IF whenBlock.action.isRead»
+					return actual;
+				«ENDIF»
 			}
 			
 			@Test
@@ -111,12 +116,12 @@ class ScenarioTemplate {
 				
 				Response response = when();
 		
-				then(response);
+				«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
 				
-				verifications(response);
+				verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 			}
 			
-			protected abstract void verifications(Response response);
+			protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
 		
 		}
 		

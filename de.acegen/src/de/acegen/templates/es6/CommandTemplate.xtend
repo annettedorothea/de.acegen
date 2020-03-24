@@ -33,7 +33,7 @@ class CommandTemplate {
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/«IF getServerCall !== null»AsynchronousCommand«ELSE»SynchronousCommand«ENDIF»";
+		import Command from "../../../gen/ace/AsynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
@@ -72,30 +72,32 @@ class CommandTemplate {
 				return Promise.all(promises);
 		    }
 		    
-			execute() {
-			    return new Promise((resolve, reject) => {
-					let queryParams = [];
-				    «FOR queryParam : getServerCall.queryParams»
-				    	queryParams.push({key: "«queryParam.name»",value: this.commandData.«queryParam.name»});
-			        «ENDFOR»
-			        «IF getServerCall.payload.size > 0»let payload = {	
-			        	«FOR payload : getServerCall.payload»
-			        		«payload.name» : this.commandData.«payload.name»,
-			        	«ENDFOR»
-			        	};
-			        «ENDIF»
-		
-					this.«httpCall»(this.adjustedUrl(`«httpUrl»`), «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF», queryParams«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
-						«FOR responseAttribute : getServerCall.response»
-							this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
-						«ENDFOR»
-						this.handleResponse(resolve, reject);
-					}, (error) => {
-						this.commandData.error = error;
-						this.handleError(resolve, reject);
-					});
-			    });
-			}
+			«IF serverCall !== null»
+				execute() {
+				    return new Promise((resolve, reject) => {
+						let queryParams = [];
+					    «FOR queryParam : getServerCall.queryParams»
+					    	queryParams.push({key: "«queryParam.name»",value: this.commandData.«queryParam.name»});
+				        «ENDFOR»
+				        «IF getServerCall.payload.size > 0»let payload = {	
+				        	«FOR payload : getServerCall.payload»
+				        		«payload.name» : this.commandData.«payload.name»,
+				        	«ENDFOR»
+				        	};
+				        «ENDIF»
+				
+						this.«httpCall»(this.adjustedUrl(`«httpUrl»`), «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF», queryParams«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
+							«FOR responseAttribute : getServerCall.response»
+								this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
+							«ENDFOR»
+							this.handleResponse(resolve, reject);
+						}, (error) => {
+							this.commandData.error = error;
+							this.handleError(resolve, reject);
+						});
+				    });
+				}
+			«ENDIF»
 		
 		}
 		
@@ -107,7 +109,7 @@ class CommandTemplate {
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/«IF getServerCall !== null»AsynchronousCommand«ELSE»SynchronousCommand«ENDIF»";
+		import Command from "../../../gen/ace/SynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
@@ -158,11 +160,12 @@ class CommandTemplate {
 		
 		export default class «commandName» extends «abstractCommandName» {
 
+		«IF serverCall !== null»
 		    initCommandData() {
 		    	//add from appState to commandData
 		    	return true;
 		    }
-
+		
 		    handleResponse(resolve, reject) {
 		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).getName»;«ENDIF»
 		    	resolve();
@@ -170,6 +173,12 @@ class CommandTemplate {
 		    handleError(resolve, reject) {
 		    	reject(this.commandData.error);
 		    }
+		«ELSE»
+			execute() {
+				return new Promise((resolve, reject) => {
+			    });			    
+			}
+		«ENDIF»
 		}
 		
 		

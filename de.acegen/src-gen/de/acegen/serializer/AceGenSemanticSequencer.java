@@ -241,6 +241,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
+	 *         async?='async'? 
 	 *         name=ID 
 	 *         (input+=ID input+=ID*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 

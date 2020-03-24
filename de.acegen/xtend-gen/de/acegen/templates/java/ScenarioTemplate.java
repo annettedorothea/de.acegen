@@ -75,8 +75,18 @@ public class ScenarioTemplate {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected void verifications(Response response) {");
-    _builder.newLine();
+    _builder.append("protected void verifications(");
+    {
+      boolean _isRead = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead) {
+        EObject _eContainer = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
+        _builder.append(_responseDataNameWithPackage, "\t");
+        _builder.append(" response ");
+      }
+    }
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -175,8 +185,19 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private void then(Response response) throws Exception {");
-    _builder.newLine();
+    _builder.append("private ");
+    {
+      boolean _isRead = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead) {
+        EObject _eContainer = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
+        _builder.append(_responseDataNameWithPackage, "\t");
+      } else {
+        _builder.append("void");
+      }
+    }
+    _builder.append(" then(Response response) throws Exception {");
+    _builder.newLineIfNotEmpty();
     {
       int _statusCode = it.getThenBlock().getStatusCode();
       boolean _tripleNotEquals = (_statusCode != 0);
@@ -192,6 +213,21 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.newLine();
     {
+      boolean _isRead_1 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead_1) {
+        _builder.append("\t\t");
+        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
+        _builder.append(_responseDataNameWithPackage_1, "\t\t");
+        _builder.append(" actual = response.readEntity(");
+        EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
+        _builder.append(_responseDataNameWithPackage_2, "\t\t");
+        _builder.append(".class);");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
       DataDefinition _response = it.getThenBlock().getResponse();
       boolean _tripleNotEquals_1 = (_response != null);
       if (_tripleNotEquals_1) {
@@ -202,26 +238,16 @@ public class ScenarioTemplate {
         _builder.append("\t\t");
         _builder.newLine();
         _builder.append("\t\t");
-        EObject _eContainer = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
-        _builder.append(_responseDataNameWithPackage, "\t\t");
-        _builder.append(" expected = new ");
-        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
-        _builder.append(_responseDataNameWithPackage_1, "\t\t");
-        _builder.append("(expectedData);");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-        _builder.append("\t\t");
-        EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
-        _builder.append(_responseDataNameWithPackage_2, "\t\t");
-        _builder.append(" actual = response.readEntity(");
         EObject _eContainer_3 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_3));
         _builder.append(_responseDataNameWithPackage_3, "\t\t");
-        _builder.append(".class);");
+        _builder.append(" expected = new ");
+        EObject _eContainer_4 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_4));
+        _builder.append(_responseDataNameWithPackage_4, "\t\t");
+        _builder.append("(expectedData);");
         _builder.newLineIfNotEmpty();
+        _builder.newLine();
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("assertThat(actual, expected);");
@@ -230,6 +256,14 @@ public class ScenarioTemplate {
     }
     _builder.append("\t\t");
     _builder.newLine();
+    {
+      boolean _isRead_2 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead_2) {
+        _builder.append("\t\t");
+        _builder.append("return actual;");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -254,21 +288,47 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
+    {
+      boolean _isRead_3 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead_3) {
+        EObject _eContainer_5 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_5));
+        _builder.append(_responseDataNameWithPackage_5, "\t\t");
+        _builder.append(" actualResponse = ");
+      }
+    }
     _builder.append("then(response);");
-    _builder.newLine();
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("verifications(response);");
-    _builder.newLine();
+    _builder.append("verifications(");
+    {
+      boolean _isRead_4 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead_4) {
+        _builder.append("actualResponse");
+      }
+    }
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void verifications(Response response);");
-    _builder.newLine();
+    _builder.append("protected abstract void verifications(");
+    {
+      boolean _isRead_5 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+      if (_isRead_5) {
+        EObject _eContainer_6 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_6));
+        _builder.append(_responseDataNameWithPackage_6, "\t");
+        _builder.append(" response");
+      }
+    }
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

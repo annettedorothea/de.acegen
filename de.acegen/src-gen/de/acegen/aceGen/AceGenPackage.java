@@ -151,13 +151,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_ACE = 2;
 
   /**
+   * The feature id for the '<em><b>Async</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_CLIENT_ACE__ASYNC = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__NAME = 0;
+  int HTTP_CLIENT_ACE__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Input</b></em>' attribute list.
@@ -166,7 +175,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__INPUT = 1;
+  int HTTP_CLIENT_ACE__INPUT = 2;
 
   /**
    * The feature id for the '<em><b>Server Call</b></em>' reference.
@@ -175,7 +184,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__SERVER_CALL = 2;
+  int HTTP_CLIENT_ACE__SERVER_CALL = 3;
 
   /**
    * The feature id for the '<em><b>Loading Flag</b></em>' reference.
@@ -184,7 +193,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__LOADING_FLAG = 3;
+  int HTTP_CLIENT_ACE__LOADING_FLAG = 4;
 
   /**
    * The feature id for the '<em><b>Outcomes</b></em>' containment reference list.
@@ -193,7 +202,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__OUTCOMES = 4;
+  int HTTP_CLIENT_ACE__OUTCOMES = 5;
 
   /**
    * The number of structural features of the '<em>Http Client Ace</em>' class.
@@ -202,7 +211,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE_FEATURE_COUNT = 5;
+  int HTTP_CLIENT_ACE_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl <em>Http Client Outcome</em>}' class.
@@ -1592,6 +1601,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpClientAce();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Async</em>'.
+   * @see de.acegen.aceGen.HttpClientAce#isAsync()
+   * @see #getHttpClientAce()
+   * @generated
+   */
+  EAttribute getHttpClientAce_Async();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClientAce#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2804,6 +2824,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_CLIENT_ACE = eINSTANCE.getHttpClientAce();
+
+    /**
+     * The meta object literal for the '<em><b>Async</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_CLIENT_ACE__ASYNC = eINSTANCE.getHttpClientAce_Async();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

@@ -19,7 +19,6 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateElement;
-import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.es6.AceTemplate;
@@ -69,9 +68,7 @@ public class Es6Generator {
         fsa.generateFile(_plus_5, 
           ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
           this.actionTemplate.generateInitialActionFile(ace, httpClient));
-        HttpServerAce _serverCall = ace.getServerCall();
-        boolean _tripleNotEquals = (_serverCall != null);
-        if (_tripleNotEquals) {
+        if (((ace.getServerCall() != null) || ace.isAsync())) {
           String _name_2 = httpClient.getName();
           String _plus_6 = (_name_2 + "/commands/");
           String _abstractCommandName = this._aceExtension.abstractCommandName(ace);

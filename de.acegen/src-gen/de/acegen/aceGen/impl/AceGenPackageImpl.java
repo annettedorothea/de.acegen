@@ -386,7 +386,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClientAce_Name()
+  public EAttribute getHttpClientAce_Async()
   {
     return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(0);
   }
@@ -397,7 +397,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClientAce_Input()
+  public EAttribute getHttpClientAce_Name()
   {
     return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(1);
   }
@@ -408,9 +408,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_ServerCall()
+  public EAttribute getHttpClientAce_Input()
   {
-    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -419,7 +419,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_LoadingFlag()
+  public EReference getHttpClientAce_ServerCall()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(3);
   }
@@ -430,9 +430,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpClientAce_Outcomes()
+  public EReference getHttpClientAce_LoadingFlag()
   {
     return (EReference)httpClientAceEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpClientAce_Outcomes()
+  {
+    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1565,6 +1576,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpClientEClass, HTTP_CLIENT__APP_STATE);
 
     httpClientAceEClass = createEClass(HTTP_CLIENT_ACE);
+    createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__ASYNC);
     createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__NAME);
     createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__INPUT);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__SERVER_CALL);
@@ -1737,6 +1749,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpClient_AppState(), this.getHttpClientStateElement(), null, "appState", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpClientAceEClass, HttpClientAce.class, "HttpClientAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHttpClientAce_Async(), ecorePackage.getEBoolean(), "async", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClientAce_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClientAce_Input(), ecorePackage.getEString(), "input", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_ServerCall(), this.getHttpServerAce(), null, "serverCall", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
