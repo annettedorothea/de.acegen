@@ -4,77 +4,69 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Authorization;
+import de.acegen.aceGen.GivenRef;
+import de.acegen.aceGen.Scenario;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Authorization</b></em>'.
+ * An implementation of the model object '<em><b>Given Ref</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.AuthorizationImpl#getUsername <em>Username</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AuthorizationImpl#getPassword <em>Password</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getScenario <em>Scenario</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getTimes <em>Times</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AuthorizationImpl extends MinimalEObjectImpl.Container implements Authorization
+public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenRef
 {
   /**
-   * The default value of the '{@link #getUsername() <em>Username</em>}' attribute.
+   * The cached value of the '{@link #getScenario() <em>Scenario</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUsername()
+   * @see #getScenario()
    * @generated
    * @ordered
    */
-  protected static final String USERNAME_EDEFAULT = null;
+  protected Scenario scenario;
 
   /**
-   * The cached value of the '{@link #getUsername() <em>Username</em>}' attribute.
+   * The default value of the '{@link #getTimes() <em>Times</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUsername()
+   * @see #getTimes()
    * @generated
    * @ordered
    */
-  protected String username = USERNAME_EDEFAULT;
+  protected static final int TIMES_EDEFAULT = 0;
 
   /**
-   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
+   * The cached value of the '{@link #getTimes() <em>Times</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPassword()
+   * @see #getTimes()
    * @generated
    * @ordered
    */
-  protected static final String PASSWORD_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPassword()
-   * @generated
-   * @ordered
-   */
-  protected String password = PASSWORD_EDEFAULT;
+  protected int times = TIMES_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected AuthorizationImpl()
+  protected GivenRefImpl()
   {
     super();
   }
@@ -87,7 +79,7 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.AUTHORIZATION;
+    return AceGenPackage.Literals.GIVEN_REF;
   }
 
   /**
@@ -96,9 +88,29 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
    * @generated
    */
   @Override
-  public String getUsername()
+  public Scenario getScenario()
   {
-    return username;
+    if (scenario != null && scenario.eIsProxy())
+    {
+      InternalEObject oldScenario = (InternalEObject)scenario;
+      scenario = (Scenario)eResolveProxy(oldScenario);
+      if (scenario != oldScenario)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.GIVEN_REF__SCENARIO, oldScenario, scenario));
+      }
+    }
+    return scenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Scenario basicGetScenario()
+  {
+    return scenario;
   }
 
   /**
@@ -107,12 +119,12 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
    * @generated
    */
   @Override
-  public void setUsername(String newUsername)
+  public void setScenario(Scenario newScenario)
   {
-    String oldUsername = username;
-    username = newUsername;
+    Scenario oldScenario = scenario;
+    scenario = newScenario;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.AUTHORIZATION__USERNAME, oldUsername, username));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.GIVEN_REF__SCENARIO, oldScenario, scenario));
   }
 
   /**
@@ -121,9 +133,9 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
    * @generated
    */
   @Override
-  public String getPassword()
+  public int getTimes()
   {
-    return password;
+    return times;
   }
 
   /**
@@ -132,12 +144,12 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
    * @generated
    */
   @Override
-  public void setPassword(String newPassword)
+  public void setTimes(int newTimes)
   {
-    String oldPassword = password;
-    password = newPassword;
+    int oldTimes = times;
+    times = newTimes;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.AUTHORIZATION__PASSWORD, oldPassword, password));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.GIVEN_REF__TIMES, oldTimes, times));
   }
 
   /**
@@ -150,10 +162,11 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
   {
     switch (featureID)
     {
-      case AceGenPackage.AUTHORIZATION__USERNAME:
-        return getUsername();
-      case AceGenPackage.AUTHORIZATION__PASSWORD:
-        return getPassword();
+      case AceGenPackage.GIVEN_REF__SCENARIO:
+        if (resolve) return getScenario();
+        return basicGetScenario();
+      case AceGenPackage.GIVEN_REF__TIMES:
+        return getTimes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -168,11 +181,11 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
   {
     switch (featureID)
     {
-      case AceGenPackage.AUTHORIZATION__USERNAME:
-        setUsername((String)newValue);
+      case AceGenPackage.GIVEN_REF__SCENARIO:
+        setScenario((Scenario)newValue);
         return;
-      case AceGenPackage.AUTHORIZATION__PASSWORD:
-        setPassword((String)newValue);
+      case AceGenPackage.GIVEN_REF__TIMES:
+        setTimes((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -188,11 +201,11 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
   {
     switch (featureID)
     {
-      case AceGenPackage.AUTHORIZATION__USERNAME:
-        setUsername(USERNAME_EDEFAULT);
+      case AceGenPackage.GIVEN_REF__SCENARIO:
+        setScenario((Scenario)null);
         return;
-      case AceGenPackage.AUTHORIZATION__PASSWORD:
-        setPassword(PASSWORD_EDEFAULT);
+      case AceGenPackage.GIVEN_REF__TIMES:
+        setTimes(TIMES_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -208,10 +221,10 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
   {
     switch (featureID)
     {
-      case AceGenPackage.AUTHORIZATION__USERNAME:
-        return USERNAME_EDEFAULT == null ? username != null : !USERNAME_EDEFAULT.equals(username);
-      case AceGenPackage.AUTHORIZATION__PASSWORD:
-        return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
+      case AceGenPackage.GIVEN_REF__SCENARIO:
+        return scenario != null;
+      case AceGenPackage.GIVEN_REF__TIMES:
+        return times != TIMES_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -227,12 +240,10 @@ public class AuthorizationImpl extends MinimalEObjectImpl.Container implements A
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (username: ");
-    result.append(username);
-    result.append(", password: ");
-    result.append(password);
+    result.append(" (times: ");
+    result.append(times);
     result.append(')');
     return result.toString();
   }
 
-} //AuthorizationImpl
+} //GivenRefImpl

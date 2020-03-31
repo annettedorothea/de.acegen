@@ -139,6 +139,14 @@ public class AttributeExtension {
     return null;
   }
   
+  public List<Integer> timesIterator(final int length) {
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; (i < length); i++) {
+      list.add(Integer.valueOf(i));
+    }
+    return list;
+  }
+  
   public String mapperInit(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -558,7 +566,7 @@ public class AttributeExtension {
     return attributeList;
   }
   
-  public List<String> mergeAttributesForGetCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+  public List<String> mergeAttributesForGetCall(final HttpServerAce it, final DataDefinition dataDefinition, final Integer... index) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
     ArrayList<String> valueList = new ArrayList<String>();
@@ -571,7 +579,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(queryParam, dataDefinition));
+          valueList.add(this.valueFor(queryParam, dataDefinition, index));
         }
       }
     }
@@ -583,7 +591,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(pathParam, dataDefinition));
+          valueList.add(this.valueFor(pathParam, dataDefinition, index));
         }
       }
     }
@@ -601,7 +609,7 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String valueFrom(final AttributeDefinition it) {
+  public String valueFrom(final AttributeDefinition it, final Integer... index) {
     String _stringValue = it.getValue().getStringValue();
     boolean _tripleNotEquals = (_stringValue != null);
     if (_tripleNotEquals) {
@@ -651,10 +659,21 @@ public class AttributeExtension {
         return _builder_3.toString();
       }
       StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("\"");
+      _builder_4.append("this.templateStringValue(\"");
       String _stringValue_5 = it.getValue().getStringValue();
       _builder_4.append(_stringValue_5);
-      _builder_4.append("\"");
+      _builder_4.append("\", ");
+      {
+        int _length = index.length;
+        boolean _greaterThan = (_length > 0);
+        if (_greaterThan) {
+          Integer _get = index[0];
+          _builder_4.append(_get);
+        } else {
+          _builder_4.append("null");
+        }
+      }
+      _builder_4.append(")");
       return _builder_4.toString();
     }
     AttributeDefinitionList _attributeDefinitionList = it.getValue().getAttributeDefinitionList();
@@ -673,13 +692,13 @@ public class AttributeExtension {
     return _builder_5.toString();
   }
   
-  private String valueFor(final Attribute attribute, final DataDefinition dataDefinition) {
+  private String valueFor(final Attribute attribute, final DataDefinition dataDefinition, final Integer... index) {
     if (((dataDefinition.getData() != null) && (dataDefinition.getData().getAttributeDefinitions() != null))) {
       EList<AttributeDefinition> _attributeDefinitions = dataDefinition.getData().getAttributeDefinitions();
       for (final AttributeDefinition attributeDefinition : _attributeDefinitions) {
         boolean _equals = attributeDefinition.getAttribute().equals(attribute);
         if (_equals) {
-          return this.valueFrom(attributeDefinition);
+          return this.valueFrom(attributeDefinition, index);
         }
       }
     }
@@ -726,7 +745,7 @@ public class AttributeExtension {
     return attributeList;
   }
   
-  public List<String> mergeAttributesForPutCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+  public List<String> mergeAttributesForPutCall(final HttpServerAce it, final DataDefinition dataDefinition, final Integer... index) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
     ArrayList<String> valueList = new ArrayList<String>();
@@ -739,7 +758,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(queryParam, dataDefinition));
+          valueList.add(this.valueFor(queryParam, dataDefinition, index));
         }
       }
     }
@@ -751,7 +770,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(pathParam, dataDefinition));
+          valueList.add(this.valueFor(pathParam, dataDefinition, index));
         }
       }
     }
@@ -763,7 +782,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(attr, dataDefinition));
+          valueList.add(this.valueFor(attr, dataDefinition, index));
         }
       }
     }
@@ -811,7 +830,7 @@ public class AttributeExtension {
     return attributeList;
   }
   
-  public List<String> mergeAttributesForPostCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+  public List<String> mergeAttributesForPostCall(final HttpServerAce it, final DataDefinition dataDefinition, final Integer... index) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
     ArrayList<String> valueList = new ArrayList<String>();
@@ -824,7 +843,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(queryParam, dataDefinition));
+          valueList.add(this.valueFor(queryParam, dataDefinition, index));
         }
       }
     }
@@ -836,7 +855,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(pathParam, dataDefinition));
+          valueList.add(this.valueFor(pathParam, dataDefinition, index));
         }
       }
     }
@@ -848,7 +867,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(attr, dataDefinition));
+          valueList.add(this.valueFor(attr, dataDefinition, index));
         }
       }
     }
@@ -900,7 +919,7 @@ public class AttributeExtension {
     }
   }
   
-  public List<String> mergeAttributesForDeleteCall(final HttpServerAce it, final DataDefinition dataDefinition) {
+  public List<String> mergeAttributesForDeleteCall(final HttpServerAce it, final DataDefinition dataDefinition, final Integer... index) {
     ArrayList<String> attributeList = new ArrayList<String>();
     attributeList.add("String uuid");
     ArrayList<String> valueList = new ArrayList<String>();
@@ -913,7 +932,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(queryParam, dataDefinition));
+          valueList.add(this.valueFor(queryParam, dataDefinition, index));
         }
       }
     }
@@ -925,7 +944,7 @@ public class AttributeExtension {
         boolean _not = (!_contains);
         if (_not) {
           attributeList.add(typeWithParam);
-          valueList.add(this.valueFor(pathParam, dataDefinition));
+          valueList.add(this.valueFor(pathParam, dataDefinition, index));
         }
       }
     }

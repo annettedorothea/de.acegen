@@ -3,6 +3,7 @@ package de.acegen.templates.java
 import de.acegen.aceGen.AttributeDefinition
 import de.acegen.aceGen.Authorization
 import de.acegen.aceGen.DataDefinition
+import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
@@ -29,7 +30,7 @@ class ScenarioTemplate {
 
 	@Inject
 	extension CommonExtension
-	
+
 	int varIndex = 0;
 
 	def generateScenario(Scenario it, HttpServer java) '''
@@ -41,7 +42,7 @@ class ScenarioTemplate {
 		
 		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
-
+		
 			@Override
 			protected void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response «ENDIF») {
 			}
@@ -76,16 +77,23 @@ class ScenarioTemplate {
 		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
-				«FOR whenBlock : allWhenBlocks»
-					«whenBlock.generatePrepare»
-					«whenBlock.generateActionCall(java)»
+				«var index = 0»
+				«FOR givenRef : allGivenRefs»
+					«givenRef.scenario.whenBlock.generatePrepare»
+					«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
+					«IF givenRef.times > 1»
+						«FOR i: givenRef.times.timesIterator»
+							«givenRef.scenario.whenBlock.generatePrepare»
+							«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
+						«ENDFOR»
+					«ENDIF»
 
-				«ENDFOR»
+			«ENDFOR»
 			}
 			
 			private Response when() throws Exception {
 				«whenBlock.generatePrepare»
-				return «whenBlock.generateActionCall(java)»
+				return «whenBlock.generateActionCall(java, 0)»
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
@@ -107,46 +115,48 @@ class ScenarioTemplate {
 
 
 					assertThat(actual, expected);
-				«ENDIF»
-				
-				«IF whenBlock.action.isRead»
-					return actual;
-				«ENDIF»
-			}
-			
-			@Test
-			public void «name.toFirstLower»() throws Exception {
-				given();
-				
-				Response response = when();
-		
-				«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
-				
-				verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
-			}
-			
-			protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
-		
-		}
-		
-		
-		«sdg»
-		
+					«ENDIF»
+					
+					«IF whenBlock.action.isRead»
+						return actual;
+						«ENDIF»
+						}
+						
+						@Test
+						public void «name.toFirstLower»() throws Exception {
+							given();
+							
+							Response response = when();
+					
+							«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
+							
+							verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+					}
+					
+					protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+					
+					}
+					
+					
+					«sdg»
+					
 	'''
-	
-	private def allWhenBlocks(Scenario it) {
-		var allWhenBlocks = new ArrayList<WhenBlock>();
-		for (scenario : scenarios) {
-			allWhenBlocksRec(scenario, allWhenBlocks)
+
+	private def allGivenRefs(Scenario it) {
+		var allWhenBlocks = new ArrayList<GivenRef>();
+		for (givenRef : givenRefs) {
+			allGivenRefsRec(givenRef, allWhenBlocks)
 		}
 		return allWhenBlocks
 	}
-	
-	private def void allWhenBlocksRec(Scenario it, List<WhenBlock> allWhenBlocks) {
-		for (scenario : scenarios) {
-			allWhenBlocksRec(scenario, allWhenBlocks)
+
+	private def void allGivenRefsRec(GivenRef it, List<GivenRef> allWhenBlocks) {
+		for (scenario : scenario.givenRefs) {
+			allGivenRefsRec(scenario, allWhenBlocks)
 		}
-		allWhenBlocks.add(whenBlock)		
+		if (!allWhenBlocks.contains(it)) {
+			allWhenBlocks.add(it)
+		} 
 	}
 	
 	private def generatePrepare(WhenBlock it) '''
@@ -161,9 +171,10 @@ class ScenarioTemplate {
 			«ENDFOR»
 		«ENDIF»
 	'''
-	
-	private def generateActionCall(WhenBlock it, HttpServer java) '''«generateActionCalls(action, dataDefinition, authorization, java)»'''
-	
+
+	private def generateActionCall(WhenBlock it, HttpServer java,
+		int index) '''«generateActionCalls(action, dataDefinition, authorization, java, index)»'''
+
 	def generateDataCreation(DataDefinition it, Model model, String varName) '''
 		«resetVarIndex»
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
@@ -184,64 +195,65 @@ class ScenarioTemplate {
 	'''
 
 	def generateModelCreation(AttributeDefinition it, String varName) '''
-	
-		«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
-		«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
-			«IF attributeDefinition.attribute.isList»
-				«val listVarName = newVarName("list")»
-				«generateModelListCreation(attributeDefinition, listVarName)»
-				«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
-			«ELSE»
-				«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
-			«ENDIF»
-		«ENDFOR»
 		
-	'''
-
-	def String generateModelListCreation(AttributeDefinition it, String varName) '''
-	
-		List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
-		«FOR attributeDefinitionList : value.listAttributeDefinitionList.attributeDefinitionList»
-			«val itemVarName = newVarName("item")»
-			«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
-			«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
+			«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
+			«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
 				«IF attributeDefinition.attribute.isList»
 					«val listVarName = newVarName("list")»
 					«generateModelListCreation(attributeDefinition, listVarName)»
-					«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
+					«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
 				«ELSE»
-					«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
 				«ENDIF»
 			«ENDFOR»
-			«varName».add(«itemVarName»);
-
-		«ENDFOR»
-		
+			
 	'''
-	
+
+	def String generateModelListCreation(AttributeDefinition it, String varName) '''
+		
+			List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
+			«FOR attributeDefinitionList : value.listAttributeDefinitionList.attributeDefinitionList»
+				«val itemVarName = newVarName("item")»
+				«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
+				«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
+					«IF attributeDefinition.attribute.isList»
+						«val listVarName = newVarName("list")»
+						«generateModelListCreation(attributeDefinition, listVarName)»
+						«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
+					«ELSE»
+						«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+					«ENDIF»
+				«ENDFOR»
+				«varName».add(«itemVarName»);
+
+			«ENDFOR»
+			
+	'''
+
 	private def newVarName(String prefix) {
 		varIndex++;
 		return prefix + varIndex;
 	}
-	
+
 	private def void resetVarIndex() {
 		varIndex = 0;
 	}
 
-	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization, HttpServer java) '''
+	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization,
+		HttpServer java, int index) '''
 		«IF aceOperation.getType == "POST"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSEIF aceOperation.getType == "PUT"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSEIF aceOperation.getType == "DELETE"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ELSE»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
 		«ENDIF»
 	'''
-	
-	private def paramString(String param) '''«IF param !== null && param.length > 0»«param»«ELSE»null«ENDIF»'''	
-	
+
+	private def paramString(String param) '''«IF param !== null && param.length > 0»«param»«ELSE»null«ENDIF»'''
+
 	def generateBaseScenario() '''
 		«copyright»
 		
@@ -309,10 +321,10 @@ class ScenarioTemplate {
 			protected void assertThat(int actual, int expected) {
 				throw new RuntimeException("BaseScenario.assertThat not implemented");
 			}
-
+		
 			@Override
 			protected void assertThat(Object actual, Object expected) {
-				throw new RuntimeException("BaseScenario.assertThat not implemented");
+			throw new RuntimeException("BaseScenario.assertThat not implemented");
 			}
 			
 			@Override
@@ -342,12 +354,23 @@ class ScenarioTemplate {
 				return UUID.randomUUID().toString();
 			}
 		
+			protected String templateStringValue(String value, Integer index) {
+				String returnString = value;
+				if (index != null && value.contains("${index}")) {
+					returnString = returnString.replace("${index}", index.toString());
+				}
+				if (value.contains("${random}")) {
+					returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
+				}
+				return returnString;
+			}
+		
 			protected abstract String authorization(String username, String password);
-
+		
 			protected abstract void assertThat(int actual, int expected);
-
+		
 			protected abstract void assertThat(Object actual, Object expected);
-
+		
 			protected abstract void assertIsNull(Object actual);
 		
 		}

@@ -54,6 +54,14 @@ class AttributeExtension {
 			return '''«IF list»java.util.List<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
 		}
 	}
+	
+	def List<Integer> timesIterator(int length) {
+		var list = new ArrayList();
+		for(var i=0; i<length; i++) {
+			list.add(i);
+		}
+		return list;
+	}
 
 	def String mapperInit(Attribute it) {
 		if (type !== null) {
@@ -190,7 +198,7 @@ class AttributeExtension {
 		return attributeList;
 	}
 
-	def List<String> mergeAttributesForGetCall(HttpServerAce it, DataDefinition dataDefinition) {
+	def List<String> mergeAttributesForGetCall(HttpServerAce it, DataDefinition dataDefinition, Integer... index) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
 		var valueList = new ArrayList<String>();
@@ -199,14 +207,14 @@ class AttributeExtension {
 			val typeWithParam = queryParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(queryParam, dataDefinition));
+				valueList.add(valueFor(queryParam, dataDefinition, index));
 			}
 		}
 		for (pathParam : pathParams) {
 			val typeWithParam = pathParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(pathParam, dataDefinition));
+				valueList.add(valueFor(pathParam, dataDefinition, index));
 			}
 		}
 		valueList.add("DROPWIZARD.getLocalPort()");
@@ -215,7 +223,7 @@ class AttributeExtension {
 
 	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»"))'''
 
-	def String valueFrom(AttributeDefinition it) {
+	def String valueFrom(AttributeDefinition it, Integer... index) {
 		if (value.stringValue !== null) {
 			if (attribute.type == "DateTime") {
 				return dateTimeParse(value.stringValue, value.pattern)
@@ -232,7 +240,7 @@ class AttributeExtension {
 			if (attribute.type == "Long") {
 				return '''Long.parseLong("«value.stringValue»")'''
 			}
-			return '''"«value.stringValue»"'''
+			return '''this.templateStringValue("«value.stringValue»", «IF index.length > 0»«index.get(0)»«ELSE»null«ENDIF»)'''
 		}
 		if (value.attributeDefinitionList !== null) {
 			return "null"
@@ -242,12 +250,12 @@ class AttributeExtension {
 		}
 		return '''«value.intValue»'''
 	}
-
-	private def String valueFor(Attribute attribute, DataDefinition dataDefinition) {
+	
+	private def String valueFor(Attribute attribute, DataDefinition dataDefinition, Integer... index) {
 		if (dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null) {
 			for (attributeDefinition : dataDefinition.data.attributeDefinitions) {
 				if (attributeDefinition.attribute.equals(attribute)) {
-					return attributeDefinition.valueFrom()
+					return attributeDefinition.valueFrom(index)
 				}
 			}
 		}
@@ -279,7 +287,7 @@ class AttributeExtension {
 		return attributeList;
 	}
 
-	def List<String> mergeAttributesForPutCall(HttpServerAce it, DataDefinition dataDefinition) {
+	def List<String> mergeAttributesForPutCall(HttpServerAce it, DataDefinition dataDefinition, Integer... index) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
 		var valueList = new ArrayList<String>();
@@ -288,21 +296,21 @@ class AttributeExtension {
 			val typeWithParam = queryParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(queryParam, dataDefinition));
+				valueList.add(valueFor(queryParam, dataDefinition, index));
 			}
 		}
 		for (pathParam : pathParams) {
 			val typeWithParam = pathParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(pathParam, dataDefinition));
+				valueList.add(valueFor(pathParam, dataDefinition, index));
 			}
 		}
 		for (attr : payload) {
 			val typeWithParam = attr.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(attr, dataDefinition));
+				valueList.add(valueFor(attr, dataDefinition, index));
 			}
 		}
 		valueList.add("DROPWIZARD.getLocalPort()");
@@ -334,7 +342,7 @@ class AttributeExtension {
 		return attributeList;
 	}
 
-	def List<String> mergeAttributesForPostCall(HttpServerAce it, DataDefinition dataDefinition) {
+	def List<String> mergeAttributesForPostCall(HttpServerAce it, DataDefinition dataDefinition, Integer... index) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
 		var valueList = new ArrayList<String>();
@@ -343,21 +351,21 @@ class AttributeExtension {
 			val typeWithParam = queryParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(queryParam, dataDefinition));
+				valueList.add(valueFor(queryParam, dataDefinition, index));
 			}
 		}
 		for (pathParam : pathParams) {
 			val typeWithParam = pathParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(pathParam, dataDefinition));
+				valueList.add(valueFor(pathParam, dataDefinition, index));
 			}
 		}
 		for (attr : payload) {
 			val typeWithParam = attr.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(attr, dataDefinition));
+				valueList.add(valueFor(attr, dataDefinition, index));
 			}
 		}
 		valueList.add("DROPWIZARD.getLocalPort()");
@@ -391,7 +399,7 @@ class AttributeExtension {
 		}
 	}
 
-	def List<String> mergeAttributesForDeleteCall(HttpServerAce it, DataDefinition dataDefinition) {
+	def List<String> mergeAttributesForDeleteCall(HttpServerAce it, DataDefinition dataDefinition, Integer... index) {
 		var attributeList = new ArrayList<String>();
 		attributeList.add("String uuid");
 		var valueList = new ArrayList<String>();
@@ -400,14 +408,14 @@ class AttributeExtension {
 			val typeWithParam = queryParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(queryParam, dataDefinition));
+				valueList.add(valueFor(queryParam, dataDefinition, index));
 			}
 		}
 		for (pathParam : pathParams) {
 			val typeWithParam = pathParam.typeWithParam;
 			if (!attributeList.contains(typeWithParam)) {
 				attributeList.add(typeWithParam);
-				valueList.add(valueFor(pathParam, dataDefinition));
+				valueList.add(valueFor(pathParam, dataDefinition, index));
 			}
 		}
 		valueList.add("DROPWIZARD.getLocalPort()");

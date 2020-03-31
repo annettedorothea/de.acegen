@@ -6,6 +6,7 @@ import de.acegen.aceGen.AttributeDefinition;
 import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
@@ -148,17 +149,43 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
+    _builder.append("\t\t");
+    int index = 0;
+    _builder.newLineIfNotEmpty();
     {
-      ArrayList<WhenBlock> _allWhenBlocks = this.allWhenBlocks(it);
-      for(final WhenBlock whenBlock : _allWhenBlocks) {
+      ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
+      for(final GivenRef givenRef : _allGivenRefs) {
         _builder.append("\t\t");
-        CharSequence _generatePrepare = this.generatePrepare(whenBlock);
+        CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
         _builder.append(_generatePrepare, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        CharSequence _generateActionCall = this.generateActionCall(whenBlock, java);
+        WhenBlock _whenBlock = givenRef.getScenario().getWhenBlock();
+        int _plusPlus = index++;
+        CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus);
         _builder.append(_generateActionCall, "\t\t");
         _builder.newLineIfNotEmpty();
+        {
+          int _times = givenRef.getTimes();
+          boolean _greaterThan = (_times > 1);
+          if (_greaterThan) {
+            {
+              List<Integer> _timesIterator = this._attributeExtension.timesIterator(givenRef.getTimes());
+              for(final Integer i : _timesIterator) {
+                _builder.append("\t\t");
+                CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+                _builder.append(_generatePrepare_1, "\t\t");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                WhenBlock _whenBlock_1 = givenRef.getScenario().getWhenBlock();
+                int _plusPlus_1 = index++;
+                CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1);
+                _builder.append(_generateActionCall_1, "\t\t");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
         _builder.newLine();
       }
     }
@@ -171,13 +198,13 @@ public class ScenarioTemplate {
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
-    CharSequence _generatePrepare_1 = this.generatePrepare(it.getWhenBlock());
-    _builder.append(_generatePrepare_1, "\t\t");
+    CharSequence _generatePrepare_2 = this.generatePrepare(it.getWhenBlock());
+    _builder.append(_generatePrepare_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return ");
-    CharSequence _generateActionCall_1 = this.generateActionCall(it.getWhenBlock(), java);
-    _builder.append(_generateActionCall_1, "\t\t");
+    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, 0);
+    _builder.append(_generateActionCall_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -267,54 +294,55 @@ public class ScenarioTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.newLine();
     {
       boolean _isRead_2 = this._aceExtension.isRead(it.getWhenBlock().getAction());
       if (_isRead_2) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("return actual;");
         _builder.newLine();
       }
     }
-    _builder.append("\t");
+    _builder.append("\t\t\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t\t\t");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t\t\t");
     _builder.append("@Test");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t\t\t");
     _builder.append("public void ");
     String _firstLower = StringExtensions.toFirstLower(it.getName());
-    _builder.append(_firstLower, "\t");
+    _builder.append(_firstLower, "\t\t\t\t");
     _builder.append("() throws Exception {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.append("given();");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.append("Response response = when();");
     _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     {
       boolean _isRead_3 = this._aceExtension.isRead(it.getWhenBlock().getAction());
       if (_isRead_3) {
         EObject _eContainer_5 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_5));
-        _builder.append(_responseDataNameWithPackage_5, "\t\t");
+        _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t");
         _builder.append(" actualResponse = ");
       }
     }
     _builder.append("then(response);");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.append("verifications(");
     {
       boolean _isRead_4 = this._aceExtension.isRead(it.getWhenBlock().getAction());
@@ -324,51 +352,61 @@ public class ScenarioTemplate {
     }
     _builder.append(");");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
+    _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t\t");
     _builder.append("protected abstract void verifications(");
     {
       boolean _isRead_5 = this._aceExtension.isRead(it.getWhenBlock().getAction());
       if (_isRead_5) {
         EObject _eContainer_6 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_6));
-        _builder.append(_responseDataNameWithPackage_6, "\t");
+        _builder.append(_responseDataNameWithPackage_6, "\t\t\t");
         _builder.append(" response");
       }
     }
     _builder.append(");");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
     _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.newLine();
+    _builder.append("\t\t\t");
     String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
+    _builder.append(_sdg, "\t\t\t");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
     _builder.newLine();
     return _builder;
   }
   
-  private ArrayList<WhenBlock> allWhenBlocks(final Scenario it) {
-    ArrayList<WhenBlock> allWhenBlocks = new ArrayList<WhenBlock>();
-    EList<Scenario> _scenarios = it.getScenarios();
-    for (final Scenario scenario : _scenarios) {
-      this.allWhenBlocksRec(scenario, allWhenBlocks);
+  private ArrayList<GivenRef> allGivenRefs(final Scenario it) {
+    ArrayList<GivenRef> allWhenBlocks = new ArrayList<GivenRef>();
+    EList<GivenRef> _givenRefs = it.getGivenRefs();
+    for (final GivenRef givenRef : _givenRefs) {
+      this.allGivenRefsRec(givenRef, allWhenBlocks);
     }
     return allWhenBlocks;
   }
   
-  private void allWhenBlocksRec(final Scenario it, final List<WhenBlock> allWhenBlocks) {
-    EList<Scenario> _scenarios = it.getScenarios();
-    for (final Scenario scenario : _scenarios) {
-      this.allWhenBlocksRec(scenario, allWhenBlocks);
+  private void allGivenRefsRec(final GivenRef it, final List<GivenRef> allWhenBlocks) {
+    EList<GivenRef> _givenRefs = it.getScenario().getGivenRefs();
+    for (final GivenRef scenario : _givenRefs) {
+      this.allGivenRefsRec(scenario, allWhenBlocks);
     }
-    allWhenBlocks.add(it.getWhenBlock());
+    boolean _contains = allWhenBlocks.contains(it);
+    boolean _not = (!_contains);
+    if (_not) {
+      allWhenBlocks.add(it);
+    }
   }
   
   private CharSequence generatePrepare(final WhenBlock it) {
@@ -409,9 +447,9 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java) {
+  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java, final int index) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java);
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java, index);
     _builder.append(_generateActionCalls);
     return _builder;
   }
@@ -643,7 +681,7 @@ public class ScenarioTemplate {
     this.varIndex = 0;
   }
   
-  public CharSequence generateActionCalls(final HttpServerAce aceOperation, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java) {
+  public CharSequence generateActionCalls(final HttpServerAce aceOperation, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java, final int index) {
     StringConcatenation _builder = new StringConcatenation();
     {
       String _type = aceOperation.getType();
@@ -656,7 +694,7 @@ public class ScenarioTemplate {
         _builder.append(_firstUpper);
         _builder.append("(");
         {
-          List<String> _mergeAttributesForPostCall = this._attributeExtension.mergeAttributesForPostCall(aceOperation, dataDefinition);
+          List<String> _mergeAttributesForPostCall = this._attributeExtension.mergeAttributesForPostCall(aceOperation, dataDefinition, Integer.valueOf(index));
           boolean _hasElements = false;
           for(final String param : _mergeAttributesForPostCall) {
             if (!_hasElements) {
@@ -697,7 +735,7 @@ public class ScenarioTemplate {
           _builder.append(_firstUpper_1);
           _builder.append("(");
           {
-            List<String> _mergeAttributesForPutCall = this._attributeExtension.mergeAttributesForPutCall(aceOperation, dataDefinition);
+            List<String> _mergeAttributesForPutCall = this._attributeExtension.mergeAttributesForPutCall(aceOperation, dataDefinition, Integer.valueOf(index));
             boolean _hasElements_1 = false;
             for(final String param_1 : _mergeAttributesForPutCall) {
               if (!_hasElements_1) {
@@ -738,7 +776,7 @@ public class ScenarioTemplate {
             _builder.append(_firstUpper_2);
             _builder.append("(");
             {
-              List<String> _mergeAttributesForDeleteCall = this._attributeExtension.mergeAttributesForDeleteCall(aceOperation, dataDefinition);
+              List<String> _mergeAttributesForDeleteCall = this._attributeExtension.mergeAttributesForDeleteCall(aceOperation, dataDefinition, Integer.valueOf(index));
               boolean _hasElements_2 = false;
               for(final String param_2 : _mergeAttributesForDeleteCall) {
                 if (!_hasElements_2) {
@@ -776,7 +814,7 @@ public class ScenarioTemplate {
             _builder.append(_firstUpper_3);
             _builder.append("(");
             {
-              List<String> _mergeAttributesForGetCall = this._attributeExtension.mergeAttributesForGetCall(aceOperation, dataDefinition);
+              List<String> _mergeAttributesForGetCall = this._attributeExtension.mergeAttributesForGetCall(aceOperation, dataDefinition, Integer.valueOf(index));
               boolean _hasElements_3 = false;
               for(final String param_3 : _mergeAttributesForGetCall) {
                 if (!_hasElements_3) {
@@ -992,7 +1030,7 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("protected void assertThat(Object actual, Object expected) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.append("throw new RuntimeException(\"BaseScenario.assertThat not implemented\");");
     _builder.newLine();
     _builder.append("\t");
@@ -1050,6 +1088,37 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return UUID.randomUUID().toString();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected String templateStringValue(String value, Integer index) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String returnString = value;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (index != null && value.contains(\"${index}\")) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("returnString = returnString.replace(\"${index}\", index.toString());");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (value.contains(\"${random}\")) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("returnString = returnString.replace(\"${random}\", UUID.randomUUID().toString().substring(0, 8));");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return returnString;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
