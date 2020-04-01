@@ -155,35 +155,36 @@ public class ScenarioTemplate {
     {
       ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
       for(final GivenRef givenRef : _allGivenRefs) {
-        _builder.append("\t\t");
-        CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-        _builder.append(_generatePrepare, "\t\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        WhenBlock _whenBlock = givenRef.getScenario().getWhenBlock();
-        int _plusPlus = index++;
-        CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus);
-        _builder.append(_generateActionCall, "\t\t");
-        _builder.newLineIfNotEmpty();
         {
           int _times = givenRef.getTimes();
-          boolean _greaterThan = (_times > 1);
+          boolean _greaterThan = (_times > 0);
           if (_greaterThan) {
             {
               List<Integer> _timesIterator = this._attributeExtension.timesIterator(givenRef.getTimes());
               for(final Integer i : _timesIterator) {
                 _builder.append("\t\t");
-                CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-                _builder.append(_generatePrepare_1, "\t\t");
+                CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+                _builder.append(_generatePrepare, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
-                WhenBlock _whenBlock_1 = givenRef.getScenario().getWhenBlock();
-                int _plusPlus_1 = index++;
-                CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1);
-                _builder.append(_generateActionCall_1, "\t\t");
+                WhenBlock _whenBlock = givenRef.getScenario().getWhenBlock();
+                int _plusPlus = index++;
+                CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus);
+                _builder.append(_generateActionCall, "\t\t");
                 _builder.newLineIfNotEmpty();
               }
             }
+          } else {
+            _builder.append("\t\t");
+            CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+            _builder.append(_generatePrepare_1, "\t\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            WhenBlock _whenBlock_1 = givenRef.getScenario().getWhenBlock();
+            int _plusPlus_1 = index++;
+            CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1);
+            _builder.append(_generateActionCall_1, "\t\t");
+            _builder.newLineIfNotEmpty();
           }
         }
         _builder.newLine();

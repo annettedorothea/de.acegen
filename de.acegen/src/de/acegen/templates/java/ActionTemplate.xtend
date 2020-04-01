@@ -88,7 +88,7 @@ class ActionTemplate {
 			«method(authUser)»
 		
 			public Response apply() {
-				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());
+				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»
@@ -158,7 +158,7 @@ class ActionTemplate {
 			«method(authUser)»
 
 			public Response apply() {
-				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());
+				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
 					«initActionData»

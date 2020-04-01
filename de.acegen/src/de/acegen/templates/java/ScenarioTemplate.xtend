@@ -79,13 +79,14 @@ class ScenarioTemplate {
 			private void given() throws Exception {
 				«var index = 0»
 				«FOR givenRef : allGivenRefs»
-					«givenRef.scenario.whenBlock.generatePrepare»
-					«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
-					«IF givenRef.times > 1»
+					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
 							«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
 						«ENDFOR»
+					«ELSE»
+						«givenRef.scenario.whenBlock.generatePrepare»
+						«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
 					«ENDIF»
 
 			«ENDFOR»

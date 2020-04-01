@@ -508,36 +508,46 @@ class ModelTemplate {
 			private PersistenceHandle writeHandle;
 			private PersistenceHandle readonlyHandle;
 			private PersistenceHandle timelineHandle;
-		
-			public DatabaseHandle(Jdbi jdbi) {
+
+			public DatabaseHandle(Jdbi jdbi, CustomAppConfiguration appConfiguration) {
 				super();
 				this.writeHandle = new PersistenceHandle(jdbi.open());
 				this.readonlyHandle = new PersistenceHandle(jdbi.open());
-				this.timelineHandle = new PersistenceHandle(jdbi.open());
+				if (appConfiguration.getServerConfiguration().writeTimeline()) {
+					this.timelineHandle = new PersistenceHandle(jdbi.open());
+				}
 			}
 		
 			synchronized public void beginTransaction() {
 				writeHandle.getHandle().begin();
 				readonlyHandle.getHandle().begin();
-				timelineHandle.getHandle().begin();
+				if (timelineHandle != null) {
+					timelineHandle.getHandle().begin();
+				}
 			}
 		
 			synchronized public void commitTransaction() {
 				writeHandle.getHandle().commit();
 				readonlyHandle.getHandle().rollback();
-				timelineHandle.getHandle().commit();
+				if (timelineHandle != null) {
+					timelineHandle.getHandle().commit();
+				}
 			}
 		
 			synchronized public void rollbackTransaction() {
 				writeHandle.getHandle().rollback();
 				readonlyHandle.getHandle().rollback();
-				timelineHandle.getHandle().commit();
+				if (timelineHandle != null) {
+					timelineHandle.getHandle().commit();
+				}
 			}
 		
 			synchronized public void close() {
 				writeHandle.getHandle().close();
 				readonlyHandle.getHandle().close();
-				timelineHandle.getHandle().close();
+				if (timelineHandle != null) {
+					timelineHandle.getHandle().close();
+				}
 			}
 		
 			public PersistenceHandle getHandle() {

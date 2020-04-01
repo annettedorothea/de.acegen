@@ -1210,7 +1210,7 @@ public class AceTemplate {
     _builder.append("Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), \"data-source-name\");");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);");
+    _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(jdbi, configuration);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
@@ -1809,7 +1809,7 @@ public class AceTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(jdbi);");
+    _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(jdbi, configuration);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("LOG.info(\"PREPARE ACTION \" + uuid);");

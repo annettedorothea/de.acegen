@@ -171,7 +171,7 @@ public class ActionTemplate {
     _builder.append("public Response apply() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());");
+    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("databaseHandle.beginTransaction();");
@@ -365,7 +365,7 @@ public class ActionTemplate {
     _builder.append("public Response apply() {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi());");
+    _builder.append("databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("databaseHandle.beginTransaction();");
