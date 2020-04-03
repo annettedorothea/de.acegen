@@ -1513,24 +1513,41 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class ListAttributeDefinitionListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ListAttributeDefinitionList");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPrimitiveValueDefinitionForListParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAttributeDefinitionListForListParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//ListAttributeDefinitionList:
+		//	PrimitiveValueDefinitionForList | AttributeDefinitionListForList;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//PrimitiveValueDefinitionForList | AttributeDefinitionListForList
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//PrimitiveValueDefinitionForList
+		public RuleCall getPrimitiveValueDefinitionForListParserRuleCall_0() { return cPrimitiveValueDefinitionForListParserRuleCall_0; }
+		
+		//AttributeDefinitionListForList
+		public RuleCall getAttributeDefinitionListForListParserRuleCall_1() { return cAttributeDefinitionListForListParserRuleCall_1; }
+	}
+	public class AttributeDefinitionListForListElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinitionListForList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cListAttributeDefinitionListAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cAttributeDefinitionListForListAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cAttributeDefinitionListAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0 = (RuleCall)cAttributeDefinitionListAssignment_2.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//ListAttributeDefinitionList:
-		//	{ListAttributeDefinitionList} '['
-		//	attributeDefinitionList+=AttributeDefinitionList*
-		//	']';
+		//AttributeDefinitionListForList:
+		//	{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ListAttributeDefinitionList} '[' attributeDefinitionList+=AttributeDefinitionList* ']'
+		//{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']'
 		public Group getGroup() { return cGroup; }
 		
-		//{ListAttributeDefinitionList}
-		public Action getListAttributeDefinitionListAction_0() { return cListAttributeDefinitionListAction_0; }
+		//{AttributeDefinitionListForList}
+		public Action getAttributeDefinitionListForListAction_0() { return cAttributeDefinitionListForListAction_0; }
 		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
@@ -1543,6 +1560,37 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//']'
 		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+	}
+	public class PrimitiveValueDefinitionForListElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.PrimitiveValueDefinitionForList");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPrimitiveValueDefinitionForListAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValueDefinitionListAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueDefinitionListValueDefinitionListParserRuleCall_2_0 = (RuleCall)cValueDefinitionListAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//PrimitiveValueDefinitionForList:
+		//	{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')'
+		public Group getGroup() { return cGroup; }
+		
+		//{PrimitiveValueDefinitionForList}
+		public Action getPrimitiveValueDefinitionForListAction_0() { return cPrimitiveValueDefinitionForListAction_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//valueDefinitionList+=ValueDefinitionList*
+		public Assignment getValueDefinitionListAssignment_2() { return cValueDefinitionListAssignment_2; }
+		
+		//ValueDefinitionList
+		public RuleCall getValueDefinitionListValueDefinitionListParserRuleCall_2_0() { return cValueDefinitionListValueDefinitionListParserRuleCall_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 	public class AttributeDefinitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinition");
@@ -1578,6 +1626,21 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Value
 		public RuleCall getValueValueParserRuleCall_2_0() { return cValueValueParserRuleCall_2_0; }
+	}
+	public class ValueDefinitionListElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ValueDefinitionList");
+		private final Assignment cPrimitiveValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cPrimitiveValuePrimitiveValueParserRuleCall_0 = (RuleCall)cPrimitiveValueAssignment.eContents().get(0);
+		
+		//ValueDefinitionList:
+		//	primitiveValue=PrimitiveValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//primitiveValue=PrimitiveValue
+		public Assignment getPrimitiveValueAssignment() { return cPrimitiveValueAssignment; }
+		
+		//PrimitiveValue
+		public RuleCall getPrimitiveValuePrimitiveValueParserRuleCall_0() { return cPrimitiveValuePrimitiveValueParserRuleCall_0; }
 	}
 	public class AttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Attribute");
@@ -1868,6 +1931,33 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//ListAttributeDefinitionList
 		public RuleCall getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0() { return cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0; }
 	}
+	public class PrimitiveValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.PrimitiveValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cStringValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cStringValueSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringValueAssignment_0.eContents().get(0);
+		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
+		
+		//PrimitiveValue:
+		//	stringValue=STRING | intValue=INT;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//stringValue=STRING | intValue=INT
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//stringValue=STRING
+		public Assignment getStringValueAssignment_0() { return cStringValueAssignment_0; }
+		
+		//STRING
+		public RuleCall getStringValueSTRINGTerminalRuleCall_0_0() { return cStringValueSTRINGTerminalRuleCall_0_0; }
+		
+		//intValue=INT
+		public Assignment getIntValueAssignment_1() { return cIntValueAssignment_1; }
+		
+		//INT
+		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
+	}
 	
 	
 	private final ProjectElements pProject;
@@ -1895,7 +1985,10 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	private final AuthorizationElements pAuthorization;
 	private final AttributeDefinitionListElements pAttributeDefinitionList;
 	private final ListAttributeDefinitionListElements pListAttributeDefinitionList;
+	private final AttributeDefinitionListForListElements pAttributeDefinitionListForList;
+	private final PrimitiveValueDefinitionForListElements pPrimitiveValueDefinitionForList;
 	private final AttributeDefinitionElements pAttributeDefinition;
+	private final ValueDefinitionListElements pValueDefinitionList;
 	private final AttributeElements pAttribute;
 	private final QualifiedNameElements pQualifiedName;
 	private final WriteFunctionTypeElements pWriteFunctionType;
@@ -1903,6 +1996,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	private final TypeElements pType;
 	private final ConstraintElements pConstraint;
 	private final ValueElements pValue;
+	private final PrimitiveValueElements pPrimitiveValue;
 	
 	private final Grammar grammar;
 	
@@ -1938,7 +2032,10 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAuthorization = new AuthorizationElements();
 		this.pAttributeDefinitionList = new AttributeDefinitionListElements();
 		this.pListAttributeDefinitionList = new ListAttributeDefinitionListElements();
+		this.pAttributeDefinitionListForList = new AttributeDefinitionListForListElements();
+		this.pPrimitiveValueDefinitionForList = new PrimitiveValueDefinitionForListElements();
 		this.pAttributeDefinition = new AttributeDefinitionElements();
+		this.pValueDefinitionList = new ValueDefinitionListElements();
 		this.pAttribute = new AttributeElements();
 		this.pQualifiedName = new QualifiedNameElements();
 		this.pWriteFunctionType = new WriteFunctionTypeElements();
@@ -1946,6 +2043,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.pType = new TypeElements();
 		this.pConstraint = new ConstraintElements();
 		this.pValue = new ValueElements();
+		this.pPrimitiveValue = new PrimitiveValueElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -2248,15 +2346,33 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ListAttributeDefinitionList:
-	//	{ListAttributeDefinitionList} '['
-	//	attributeDefinitionList+=AttributeDefinitionList*
-	//	']';
+	//	PrimitiveValueDefinitionForList | AttributeDefinitionListForList;
 	public ListAttributeDefinitionListElements getListAttributeDefinitionListAccess() {
 		return pListAttributeDefinitionList;
 	}
 	
 	public ParserRule getListAttributeDefinitionListRule() {
 		return getListAttributeDefinitionListAccess().getRule();
+	}
+	
+	//AttributeDefinitionListForList:
+	//	{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']';
+	public AttributeDefinitionListForListElements getAttributeDefinitionListForListAccess() {
+		return pAttributeDefinitionListForList;
+	}
+	
+	public ParserRule getAttributeDefinitionListForListRule() {
+		return getAttributeDefinitionListForListAccess().getRule();
+	}
+	
+	//PrimitiveValueDefinitionForList:
+	//	{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')';
+	public PrimitiveValueDefinitionForListElements getPrimitiveValueDefinitionForListAccess() {
+		return pPrimitiveValueDefinitionForList;
+	}
+	
+	public ParserRule getPrimitiveValueDefinitionForListRule() {
+		return getPrimitiveValueDefinitionForListAccess().getRule();
 	}
 	
 	//AttributeDefinition:
@@ -2267,6 +2383,16 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAttributeDefinitionRule() {
 		return getAttributeDefinitionAccess().getRule();
+	}
+	
+	//ValueDefinitionList:
+	//	primitiveValue=PrimitiveValue;
+	public ValueDefinitionListElements getValueDefinitionListAccess() {
+		return pValueDefinitionList;
+	}
+	
+	public ParserRule getValueDefinitionListRule() {
+		return getValueDefinitionListAccess().getRule();
 	}
 	
 	//Attribute:
@@ -2342,6 +2468,16 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValueRule() {
 		return getValueAccess().getRule();
+	}
+	
+	//PrimitiveValue:
+	//	stringValue=STRING | intValue=INT;
+	public PrimitiveValueElements getPrimitiveValueAccess() {
+		return pPrimitiveValue;
+	}
+	
+	public ParserRule getPrimitiveValueRule() {
+		return getPrimitiveValueAccess().getRule();
 	}
 	
 	//terminal ID:

@@ -2370,26 +2370,62 @@ ruleListAttributeDefinitionList returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			newCompositeNode(grammarAccess.getListAttributeDefinitionListAccess().getPrimitiveValueDefinitionForListParserRuleCall_0());
+		}
+		this_PrimitiveValueDefinitionForList_0=rulePrimitiveValueDefinitionForList
+		{
+			$current = $this_PrimitiveValueDefinitionForList_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getListAttributeDefinitionListAccess().getAttributeDefinitionListForListParserRuleCall_1());
+		}
+		this_AttributeDefinitionListForList_1=ruleAttributeDefinitionListForList
+		{
+			$current = $this_AttributeDefinitionListForList_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleAttributeDefinitionListForList
+entryRuleAttributeDefinitionListForList returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAttributeDefinitionListForListRule()); }
+	iv_ruleAttributeDefinitionListForList=ruleAttributeDefinitionListForList
+	{ $current=$iv_ruleAttributeDefinitionListForList.current; }
+	EOF;
+
+// Rule AttributeDefinitionListForList
+ruleAttributeDefinitionListForList returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
 		(
 			{
 				$current = forceCreateModelElement(
-					grammarAccess.getListAttributeDefinitionListAccess().getListAttributeDefinitionListAction_0(),
+					grammarAccess.getAttributeDefinitionListForListAccess().getAttributeDefinitionListForListAction_0(),
 					$current);
 			}
 		)
 		otherlv_1='['
 		{
-			newLeafNode(otherlv_1, grammarAccess.getListAttributeDefinitionListAccess().getLeftSquareBracketKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getAttributeDefinitionListForListAccess().getLeftSquareBracketKeyword_1());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getListAttributeDefinitionListAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getAttributeDefinitionListForListAccess().getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0());
 				}
 				lv_attributeDefinitionList_2_0=ruleAttributeDefinitionList
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getListAttributeDefinitionListRule());
+						$current = createModelElementForParent(grammarAccess.getAttributeDefinitionListForListRule());
 					}
 					add(
 						$current,
@@ -2402,7 +2438,60 @@ ruleListAttributeDefinitionList returns [EObject current=null]
 		)*
 		otherlv_3=']'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getListAttributeDefinitionListAccess().getRightSquareBracketKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getAttributeDefinitionListForListAccess().getRightSquareBracketKeyword_3());
+		}
+	)
+;
+
+// Entry rule entryRulePrimitiveValueDefinitionForList
+entryRulePrimitiveValueDefinitionForList returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPrimitiveValueDefinitionForListRule()); }
+	iv_rulePrimitiveValueDefinitionForList=rulePrimitiveValueDefinitionForList
+	{ $current=$iv_rulePrimitiveValueDefinitionForList.current; }
+	EOF;
+
+// Rule PrimitiveValueDefinitionForList
+rulePrimitiveValueDefinitionForList returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getPrimitiveValueDefinitionForListAccess().getPrimitiveValueDefinitionForListAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getPrimitiveValueDefinitionForListAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getPrimitiveValueDefinitionForListAccess().getValueDefinitionListValueDefinitionListParserRuleCall_2_0());
+				}
+				lv_valueDefinitionList_2_0=ruleValueDefinitionList
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getPrimitiveValueDefinitionForListRule());
+					}
+					add(
+						$current,
+						"valueDefinitionList",
+						lv_valueDefinitionList_2_0,
+						"de.acegen.AceGen.ValueDefinitionList");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_3=')'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getPrimitiveValueDefinitionForListAccess().getRightParenthesisKeyword_3());
 		}
 	)
 ;
@@ -2461,6 +2550,42 @@ ruleAttributeDefinition returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
+		)
+	)
+;
+
+// Entry rule entryRuleValueDefinitionList
+entryRuleValueDefinitionList returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getValueDefinitionListRule()); }
+	iv_ruleValueDefinitionList=ruleValueDefinitionList
+	{ $current=$iv_ruleValueDefinitionList.current; }
+	EOF;
+
+// Rule ValueDefinitionList
+ruleValueDefinitionList returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				newCompositeNode(grammarAccess.getValueDefinitionListAccess().getPrimitiveValuePrimitiveValueParserRuleCall_0());
+			}
+			lv_primitiveValue_0_0=rulePrimitiveValue
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getValueDefinitionListRule());
+				}
+				set(
+					$current,
+					"primitiveValue",
+					lv_primitiveValue_0_0,
+					"de.acegen.AceGen.PrimitiveValue");
+				afterParserOrEnumRuleCall();
+			}
 		)
 	)
 ;
@@ -2948,6 +3073,62 @@ ruleValue returns [EObject current=null]
 						lv_listAttributeDefinitionList_5_0,
 						"de.acegen.AceGen.ListAttributeDefinitionList");
 					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRulePrimitiveValue
+entryRulePrimitiveValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPrimitiveValueRule()); }
+	iv_rulePrimitiveValue=rulePrimitiveValue
+	{ $current=$iv_rulePrimitiveValue.current; }
+	EOF;
+
+// Rule PrimitiveValue
+rulePrimitiveValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_stringValue_0_0=RULE_STRING
+				{
+					newLeafNode(lv_stringValue_0_0, grammarAccess.getPrimitiveValueAccess().getStringValueSTRINGTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"stringValue",
+						lv_stringValue_0_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_intValue_1_0=RULE_INT
+				{
+					newLeafNode(lv_intValue_1_0, grammarAccess.getPrimitiveValueAccess().getIntValueINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"intValue",
+						lv_intValue_1_0,
+						"org.eclipse.xtext.common.Terminals.INT");
 				}
 			)
 		)

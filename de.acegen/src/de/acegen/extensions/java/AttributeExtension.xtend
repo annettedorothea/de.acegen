@@ -22,6 +22,8 @@ import de.acegen.aceGen.AttributeDefinition
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.PrimitiveValueDefinitionForList
+import de.acegen.aceGen.ValueDefinitionList
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
@@ -246,10 +248,19 @@ class AttributeExtension {
 			return "null"
 		}
 		if (value.listAttributeDefinitionList !== null) {
-			return "null"
+			if (value.listAttributeDefinitionList instanceof PrimitiveValueDefinitionForList) {
+				val values = (value.listAttributeDefinitionList as PrimitiveValueDefinitionForList).valueDefinitionList;
+				return values.arrayValues(attribute.type).toString;
+			} else {
+				return "null"
+			}
 		}
 		return '''«value.intValue»'''
 	}
+	
+	private def arrayValues(List<ValueDefinitionList> it, String type) '''
+		new ArrayList<>(Arrays.asList(new «type»[] { «FOR value: it SEPARATOR ", "»«IF type == "String"»"«value.primitiveValue.stringValue»"«ELSE»«value.primitiveValue.intValue»«ENDIF»«ENDFOR» }))
+	'''
 	
 	private def String valueFor(Attribute attribute, DataDefinition dataDefinition, Integer... index) {
 		if (dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null) {

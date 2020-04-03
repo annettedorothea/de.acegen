@@ -243,10 +243,33 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST_FOR_LIST:
+      {
+        AttributeDefinitionListForList attributeDefinitionListForList = (AttributeDefinitionListForList)theEObject;
+        T result = caseAttributeDefinitionListForList(attributeDefinitionListForList);
+        if (result == null) result = caseListAttributeDefinitionList(attributeDefinitionListForList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST:
+      {
+        PrimitiveValueDefinitionForList primitiveValueDefinitionForList = (PrimitiveValueDefinitionForList)theEObject;
+        T result = casePrimitiveValueDefinitionForList(primitiveValueDefinitionForList);
+        if (result == null) result = caseListAttributeDefinitionList(primitiveValueDefinitionForList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.ATTRIBUTE_DEFINITION:
       {
         AttributeDefinition attributeDefinition = (AttributeDefinition)theEObject;
         T result = caseAttributeDefinition(attributeDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.VALUE_DEFINITION_LIST:
+      {
+        ValueDefinitionList valueDefinitionList = (ValueDefinitionList)theEObject;
+        T result = caseValueDefinitionList(valueDefinitionList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -261,6 +284,13 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         Value value = (Value)theEObject;
         T result = caseValue(value);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.PRIMITIVE_VALUE:
+      {
+        PrimitiveValue primitiveValue = (PrimitiveValue)theEObject;
+        T result = casePrimitiveValue(primitiveValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -653,6 +683,38 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition List For List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Definition List For List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeDefinitionListForList(AttributeDefinitionListForList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primitive Value Definition For List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primitive Value Definition For List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimitiveValueDefinitionForList(PrimitiveValueDefinitionForList object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Attribute Definition</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -664,6 +726,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAttributeDefinition(AttributeDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Value Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Value Definition List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValueDefinitionList(ValueDefinitionList object)
   {
     return null;
   }
@@ -696,6 +774,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseValue(Value object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimitiveValue(PrimitiveValue object)
   {
     return null;
   }

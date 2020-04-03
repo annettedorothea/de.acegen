@@ -166,13 +166,23 @@ AttributeDefinitionList:
 ;
 
 ListAttributeDefinitionList:
-	{ListAttributeDefinitionList} '[' 
-		attributeDefinitionList += AttributeDefinitionList*
-	']'
+	PrimitiveValueDefinitionForList | AttributeDefinitionListForList
+;
+
+AttributeDefinitionListForList:
+	{AttributeDefinitionListForList} '[' attributeDefinitionList += AttributeDefinitionList* ']'
+;
+
+PrimitiveValueDefinitionForList:
+	{PrimitiveValueDefinitionForList} '(' valueDefinitionList += ValueDefinitionList* ')'
 ;
 
 AttributeDefinition:
 	attribute = [Attribute | QualifiedName] ':' value = Value
+;
+
+ValueDefinitionList: 
+	primitiveValue = PrimitiveValue
 ;
 
 Attribute:
@@ -208,6 +218,10 @@ Constraint:
 
 Value:
 	stringValue = STRING | intValue = INT | dateValue = STRING pattern = STRING | attributeDefinitionList = AttributeDefinitionList | listAttributeDefinitionList = ListAttributeDefinitionList
+;
+
+PrimitiveValue:
+	stringValue = STRING | intValue = INT
 ;
 
 /******* S.D.G. *******/

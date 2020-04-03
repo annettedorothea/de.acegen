@@ -1324,22 +1324,69 @@ public interface AceGenPackage extends EPackage
   int LIST_ATTRIBUTE_DEFINITION_LIST = 23;
 
   /**
-   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = 0;
-
-  /**
    * The number of structural features of the '<em>List Attribute Definition List</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 1;
+  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListForListImpl <em>Attribute Definition List For List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AttributeDefinitionListForListImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionListForList()
+   * @generated
+   */
+  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST = 24;
+
+  /**
+   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Attribute Definition List For List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST_FEATURE_COUNT = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl <em>Primitive Value Definition For List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValueDefinitionForList()
+   * @generated
+   */
+  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST = 25;
+
+  /**
+   * The feature id for the '<em><b>Value Definition List</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Primitive Value Definition For List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST_FEATURE_COUNT = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
@@ -1349,7 +1396,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinition()
    * @generated
    */
-  int ATTRIBUTE_DEFINITION = 24;
+  int ATTRIBUTE_DEFINITION = 26;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1379,6 +1426,34 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE_DEFINITION_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueDefinitionListImpl <em>Value Definition List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ValueDefinitionListImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValueDefinitionList()
+   * @generated
+   */
+  int VALUE_DEFINITION_LIST = 27;
+
+  /**
+   * The feature id for the '<em><b>Primitive Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_DEFINITION_LIST__PRIMITIVE_VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Value Definition List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_DEFINITION_LIST_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1386,7 +1461,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 25;
+  int ATTRIBUTE = 28;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1486,7 +1561,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
    * @generated
    */
-  int VALUE = 26;
+  int VALUE = 29;
 
   /**
    * The feature id for the '<em><b>String Value</b></em>' attribute.
@@ -1550,6 +1625,43 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int VALUE_FEATURE_COUNT = 6;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.PrimitiveValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
+   * @generated
+   */
+  int PRIMITIVE_VALUE = 30;
+
+  /**
+   * The feature id for the '<em><b>String Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE__STRING_VALUE = 0;
+
+  /**
+   * The feature id for the '<em><b>Int Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE__INT_VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Primitive Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE_FEATURE_COUNT = 2;
 
 
   /**
@@ -2574,15 +2686,46 @@ public interface AceGenPackage extends EPackage
   EClass getListAttributeDefinitionList();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ListAttributeDefinitionList#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinitionListForList <em>Attribute Definition List For List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Definition List For List</em>'.
+   * @see de.acegen.aceGen.AttributeDefinitionListForList
+   * @generated
+   */
+  EClass getAttributeDefinitionListForList();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.AttributeDefinitionListForList#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.ListAttributeDefinitionList#getAttributeDefinitionList()
-   * @see #getListAttributeDefinitionList()
+   * @see de.acegen.aceGen.AttributeDefinitionListForList#getAttributeDefinitionList()
+   * @see #getAttributeDefinitionListForList()
    * @generated
    */
-  EReference getListAttributeDefinitionList_AttributeDefinitionList();
+  EReference getAttributeDefinitionListForList_AttributeDefinitionList();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList <em>Primitive Value Definition For List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Primitive Value Definition For List</em>'.
+   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList
+   * @generated
+   */
+  EClass getPrimitiveValueDefinitionForList();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList#getValueDefinitionList <em>Value Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Value Definition List</em>'.
+   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList#getValueDefinitionList()
+   * @see #getPrimitiveValueDefinitionForList()
+   * @generated
+   */
+  EReference getPrimitiveValueDefinitionForList_ValueDefinitionList();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
@@ -2615,6 +2758,27 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getAttributeDefinition_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.ValueDefinitionList <em>Value Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Value Definition List</em>'.
+   * @see de.acegen.aceGen.ValueDefinitionList
+   * @generated
+   */
+  EClass getValueDefinitionList();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ValueDefinitionList#getPrimitiveValue <em>Primitive Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Primitive Value</em>'.
+   * @see de.acegen.aceGen.ValueDefinitionList#getPrimitiveValue()
+   * @see #getValueDefinitionList()
+   * @generated
+   */
+  EReference getValueDefinitionList_PrimitiveValue();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.Attribute <em>Attribute</em>}'.
@@ -2800,6 +2964,38 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getValue_ListAttributeDefinitionList();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Primitive Value</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue
+   * @generated
+   */
+  EClass getPrimitiveValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getStringValue <em>String Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String Value</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue#getStringValue()
+   * @see #getPrimitiveValue()
+   * @generated
+   */
+  EAttribute getPrimitiveValue_StringValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getIntValue <em>Int Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Int Value</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue#getIntValue()
+   * @see #getPrimitiveValue()
+   * @generated
+   */
+  EAttribute getPrimitiveValue_IntValue();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -3633,12 +3829,40 @@ public interface AceGenPackage extends EPackage
     EClass LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getListAttributeDefinitionList();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListForListImpl <em>Attribute Definition List For List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AttributeDefinitionListForListImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionListForList()
+     * @generated
+     */
+    EClass ATTRIBUTE_DEFINITION_LIST_FOR_LIST = eINSTANCE.getAttributeDefinitionListForList();
+
+    /**
      * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getListAttributeDefinitionList_AttributeDefinitionList();
+    EReference ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getAttributeDefinitionListForList_AttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl <em>Primitive Value Definition For List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValueDefinitionForList()
+     * @generated
+     */
+    EClass PRIMITIVE_VALUE_DEFINITION_FOR_LIST = eINSTANCE.getPrimitiveValueDefinitionForList();
+
+    /**
+     * The meta object literal for the '<em><b>Value Definition List</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST = eINSTANCE.getPrimitiveValueDefinitionForList_ValueDefinitionList();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
@@ -3665,6 +3889,24 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference ATTRIBUTE_DEFINITION__VALUE = eINSTANCE.getAttributeDefinition_Value();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ValueDefinitionListImpl <em>Value Definition List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ValueDefinitionListImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValueDefinitionList()
+     * @generated
+     */
+    EClass VALUE_DEFINITION_LIST = eINSTANCE.getValueDefinitionList();
+
+    /**
+     * The meta object literal for the '<em><b>Primitive Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUE_DEFINITION_LIST__PRIMITIVE_VALUE = eINSTANCE.getValueDefinitionList_PrimitiveValue();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
@@ -3805,6 +4047,32 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getValue_ListAttributeDefinitionList();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.PrimitiveValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
+     * @generated
+     */
+    EClass PRIMITIVE_VALUE = eINSTANCE.getPrimitiveValue();
+
+    /**
+     * The meta object literal for the '<em><b>String Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_VALUE__STRING_VALUE = eINSTANCE.getPrimitiveValue_StringValue();
+
+    /**
+     * The meta object literal for the '<em><b>Int Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_VALUE__INT_VALUE = eINSTANCE.getPrimitiveValue_IntValue();
 
   }
 

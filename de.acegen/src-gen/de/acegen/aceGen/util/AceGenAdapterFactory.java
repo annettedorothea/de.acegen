@@ -196,9 +196,24 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createListAttributeDefinitionListAdapter();
       }
       @Override
+      public Adapter caseAttributeDefinitionListForList(AttributeDefinitionListForList object)
+      {
+        return createAttributeDefinitionListForListAdapter();
+      }
+      @Override
+      public Adapter casePrimitiveValueDefinitionForList(PrimitiveValueDefinitionForList object)
+      {
+        return createPrimitiveValueDefinitionForListAdapter();
+      }
+      @Override
       public Adapter caseAttributeDefinition(AttributeDefinition object)
       {
         return createAttributeDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseValueDefinitionList(ValueDefinitionList object)
+      {
+        return createValueDefinitionListAdapter();
       }
       @Override
       public Adapter caseAttribute(Attribute object)
@@ -209,6 +224,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseValue(Value object)
       {
         return createValueAdapter();
+      }
+      @Override
+      public Adapter casePrimitiveValue(PrimitiveValue object)
+      {
+        return createPrimitiveValueAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -593,6 +613,36 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinitionListForList <em>Attribute Definition List For List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.AttributeDefinitionListForList
+   * @generated
+   */
+  public Adapter createAttributeDefinitionListForListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList <em>Primitive Value Definition For List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList
+   * @generated
+   */
+  public Adapter createPrimitiveValueDefinitionForListAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -603,6 +653,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAttributeDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ValueDefinitionList <em>Value Definition List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ValueDefinitionList
+   * @generated
+   */
+  public Adapter createValueDefinitionListAdapter()
   {
     return null;
   }
@@ -633,6 +698,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.PrimitiveValue
+   * @generated
+   */
+  public Adapter createPrimitiveValueAdapter()
   {
     return null;
   }

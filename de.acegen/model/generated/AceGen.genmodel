@@ -122,12 +122,19 @@
     <genClasses ecoreClass="AceGen.ecore#//AttributeDefinitionList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeDefinitionList/attributeDefinitions"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//ListAttributeDefinitionList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ListAttributeDefinitionList/attributeDefinitionList"/>
+    <genClasses ecoreClass="AceGen.ecore#//ListAttributeDefinitionList"/>
+    <genClasses ecoreClass="AceGen.ecore#//AttributeDefinitionListForList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeDefinitionListForList/attributeDefinitionList"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//PrimitiveValueDefinitionForList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//PrimitiveValueDefinitionForList/valueDefinitionList"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//AttributeDefinition">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeDefinition/attribute"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeDefinition/value"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//ValueDefinitionList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ValueDefinitionList/primitiveValue"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/unique"/>
@@ -147,6 +154,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Value/pattern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Value/attributeDefinitionList"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Value/listAttributeDefinitionList"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//PrimitiveValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PrimitiveValue/stringValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PrimitiveValue/intValue"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

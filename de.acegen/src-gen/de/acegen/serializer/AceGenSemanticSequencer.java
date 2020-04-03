@@ -8,6 +8,7 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeDefinition;
 import de.acegen.aceGen.AttributeDefinitionList;
+import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
@@ -24,12 +25,14 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
-import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.Value;
+import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.services.AceGenGrammarAccess;
 import java.util.Set;
@@ -65,6 +68,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.ATTRIBUTE_DEFINITION_LIST:
 				sequence_AttributeDefinitionList(context, (AttributeDefinitionList) semanticObject); 
+				return; 
+			case AceGenPackage.ATTRIBUTE_DEFINITION_LIST_FOR_LIST:
+				sequence_AttributeDefinitionListForList(context, (AttributeDefinitionListForList) semanticObject); 
 				return; 
 			case AceGenPackage.AUTH_USER:
 				sequence_AuthUser(context, (AuthUser) semanticObject); 
@@ -114,11 +120,14 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION:
 				sequence_HttpServerViewFunction(context, (HttpServerViewFunction) semanticObject); 
 				return; 
-			case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST:
-				sequence_ListAttributeDefinitionList(context, (ListAttributeDefinitionList) semanticObject); 
-				return; 
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case AceGenPackage.PRIMITIVE_VALUE:
+				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 
+				return; 
+			case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST:
+				sequence_PrimitiveValueDefinitionForList(context, (PrimitiveValueDefinitionForList) semanticObject); 
 				return; 
 			case AceGenPackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
@@ -132,6 +141,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.VALUE:
 				sequence_Value(context, (Value) semanticObject); 
 				return; 
+			case AceGenPackage.VALUE_DEFINITION_LIST:
+				sequence_ValueDefinitionList(context, (ValueDefinitionList) semanticObject); 
+				return; 
 			case AceGenPackage.WHEN_BLOCK:
 				sequence_WhenBlock(context, (WhenBlock) semanticObject); 
 				return; 
@@ -139,6 +151,19 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     ListAttributeDefinitionList returns AttributeDefinitionListForList
+	 *     AttributeDefinitionListForList returns AttributeDefinitionListForList
+	 *
+	 * Constraint:
+	 *     attributeDefinitionList+=AttributeDefinitionList*
+	 */
+	protected void sequence_AttributeDefinitionListForList(ISerializationContext context, AttributeDefinitionListForList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -455,24 +480,37 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     ListAttributeDefinitionList returns ListAttributeDefinitionList
-	 *
-	 * Constraint:
-	 *     attributeDefinitionList+=AttributeDefinitionList*
-	 */
-	protected void sequence_ListAttributeDefinitionList(ISerializationContext context, ListAttributeDefinitionList semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Model returns Model
 	 *
 	 * Constraint:
 	 *     (persistent?='persistent'? name=ID (superModels+=[Model|QualifiedName] superModels+=[Model|QualifiedName]*)? attributes+=Attribute*)
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ListAttributeDefinitionList returns PrimitiveValueDefinitionForList
+	 *     PrimitiveValueDefinitionForList returns PrimitiveValueDefinitionForList
+	 *
+	 * Constraint:
+	 *     valueDefinitionList+=ValueDefinitionList*
+	 */
+	protected void sequence_PrimitiveValueDefinitionForList(ISerializationContext context, PrimitiveValueDefinitionForList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimitiveValue returns PrimitiveValue
+	 *
+	 * Constraint:
+	 *     (stringValue=STRING | intValue=INT)
+	 */
+	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -510,6 +548,24 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_ThenBlock(ISerializationContext context, ThenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ValueDefinitionList returns ValueDefinitionList
+	 *
+	 * Constraint:
+	 *     primitiveValue=PrimitiveValue
+	 */
+	protected void sequence_ValueDefinitionList(ISerializationContext context, ValueDefinitionList semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.VALUE_DEFINITION_LIST__PRIMITIVE_VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.VALUE_DEFINITION_LIST__PRIMITIVE_VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getValueDefinitionListAccess().getPrimitiveValuePrimitiveValueParserRuleCall_0(), semanticObject.getPrimitiveValue());
+		feeder.finish();
 	}
 	
 	

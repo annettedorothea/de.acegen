@@ -150,13 +150,22 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitions" upperBound="-1"
         eType="#//AttributeDefinition" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionListForList" eSuperTypes="#//ListAttributeDefinitionList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
         upperBound="-1" eType="#//AttributeDefinitionList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveValueDefinitionForList" eSuperTypes="#//ListAttributeDefinitionList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueDefinitionList" upperBound="-1"
+        eType="#//ValueDefinitionList" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueDefinitionList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="primitiveValue" eType="#//PrimitiveValue"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute">
@@ -179,5 +188,9 @@
         eType="#//AttributeDefinitionList" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listAttributeDefinitionList"
         eType="#//ListAttributeDefinitionList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
 </ecore:EPackage>

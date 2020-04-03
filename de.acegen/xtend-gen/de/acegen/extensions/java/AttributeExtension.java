@@ -23,6 +23,8 @@ import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PrimitiveValueDefinitionForList;
+import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -684,12 +686,51 @@ public class AttributeExtension {
     ListAttributeDefinitionList _listAttributeDefinitionList = it.getValue().getListAttributeDefinitionList();
     boolean _tripleNotEquals_2 = (_listAttributeDefinitionList != null);
     if (_tripleNotEquals_2) {
-      return "null";
+      ListAttributeDefinitionList _listAttributeDefinitionList_1 = it.getValue().getListAttributeDefinitionList();
+      if ((_listAttributeDefinitionList_1 instanceof PrimitiveValueDefinitionForList)) {
+        ListAttributeDefinitionList _listAttributeDefinitionList_2 = it.getValue().getListAttributeDefinitionList();
+        final EList<ValueDefinitionList> values = ((PrimitiveValueDefinitionForList) _listAttributeDefinitionList_2).getValueDefinitionList();
+        return this.arrayValues(values, it.getAttribute().getType()).toString();
+      } else {
+        return "null";
+      }
     }
     StringConcatenation _builder_5 = new StringConcatenation();
     int _intValue = it.getValue().getIntValue();
     _builder_5.append(_intValue);
     return _builder_5.toString();
+  }
+  
+  private CharSequence arrayValues(final List<ValueDefinitionList> it, final String type) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("new ArrayList<>(Arrays.asList(new ");
+    _builder.append(type);
+    _builder.append("[] { ");
+    {
+      boolean _hasElements = false;
+      for(final ValueDefinitionList value : it) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        {
+          boolean _equals = Objects.equal(type, "String");
+          if (_equals) {
+            _builder.append("\"");
+            String _stringValue = value.getPrimitiveValue().getStringValue();
+            _builder.append(_stringValue);
+            _builder.append("\"");
+          } else {
+            int _intValue = value.getPrimitiveValue().getIntValue();
+            _builder.append(_intValue);
+          }
+        }
+      }
+    }
+    _builder.append(" }))");
+    _builder.newLineIfNotEmpty();
+    return _builder;
   }
   
   private String valueFor(final Attribute attribute, final DataDefinition dataDefinition, final Integer... index) {

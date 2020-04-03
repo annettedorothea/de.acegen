@@ -240,6 +240,24 @@ public interface AceGenFactory extends EFactory
   ListAttributeDefinitionList createListAttributeDefinitionList();
 
   /**
+   * Returns a new object of class '<em>Attribute Definition List For List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Definition List For List</em>'.
+   * @generated
+   */
+  AttributeDefinitionListForList createAttributeDefinitionListForList();
+
+  /**
+   * Returns a new object of class '<em>Primitive Value Definition For List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primitive Value Definition For List</em>'.
+   * @generated
+   */
+  PrimitiveValueDefinitionForList createPrimitiveValueDefinitionForList();
+
+  /**
    * Returns a new object of class '<em>Attribute Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -247,6 +265,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   AttributeDefinition createAttributeDefinition();
+
+  /**
+   * Returns a new object of class '<em>Value Definition List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Value Definition List</em>'.
+   * @generated
+   */
+  ValueDefinitionList createValueDefinitionList();
 
   /**
    * Returns a new object of class '<em>Attribute</em>'.
@@ -265,6 +292,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   Value createValue();
+
+  /**
+   * Returns a new object of class '<em>Primitive Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primitive Value</em>'.
+   * @generated
+   */
+  PrimitiveValue createPrimitiveValue();
 
   /**
    * Returns the package supported by this factory.

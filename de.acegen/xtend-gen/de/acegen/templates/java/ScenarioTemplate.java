@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeDefinition;
 import de.acegen.aceGen.AttributeDefinitionList;
+import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.GivenRef;
@@ -11,7 +12,10 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
@@ -116,6 +120,8 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import java.util.ArrayList;");
+    _builder.newLine();
+    _builder.append("import java.util.Arrays;");
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
@@ -600,72 +606,93 @@ public class ScenarioTemplate {
   public String generateModelListCreation(final AttributeDefinition it, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("List<");
-    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage, "\t");
-    _builder.append("> ");
-    _builder.append(varName, "\t");
-    _builder.append(" = new ArrayList<");
-    String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage_1, "\t");
-    _builder.append(">();");
-    _builder.newLineIfNotEmpty();
     {
-      EList<AttributeDefinitionList> _attributeDefinitionList = it.getValue().getListAttributeDefinitionList().getAttributeDefinitionList();
-      for(final AttributeDefinitionList attributeDefinitionList : _attributeDefinitionList) {
+      ListAttributeDefinitionList _listAttributeDefinitionList = it.getValue().getListAttributeDefinitionList();
+      if ((_listAttributeDefinitionList instanceof AttributeDefinitionListForList)) {
         _builder.append("\t");
-        final String itemVarName = this.newVarName("item");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-        _builder.append(_interfaceWithPackage_2, "\t");
-        _builder.append(" ");
-        _builder.append(itemVarName, "\t");
-        _builder.append(" = new ");
-        String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
-        _builder.append(_modelClassNameWithPackage, "\t");
-        _builder.append("();");
+        _builder.append("List<");
+        String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
+        _builder.append(_interfaceWithPackage, "\t");
+        _builder.append("> ");
+        _builder.append(varName, "\t");
+        _builder.append(" = new ArrayList<");
+        String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
+        _builder.append(_interfaceWithPackage_1, "\t");
+        _builder.append(">();");
         _builder.newLineIfNotEmpty();
         {
-          EList<AttributeDefinition> _attributeDefinitions = attributeDefinitionList.getAttributeDefinitions();
-          for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+          ListAttributeDefinitionList _listAttributeDefinitionList_1 = it.getValue().getListAttributeDefinitionList();
+          EList<AttributeDefinitionList> _attributeDefinitionList = ((AttributeDefinitionListForList) _listAttributeDefinitionList_1).getAttributeDefinitionList();
+          for(final AttributeDefinitionList attributeDefinitionList : _attributeDefinitionList) {
+            _builder.append("\t");
+            final String itemVarName = this.newVarName("item");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
+            _builder.append(_interfaceWithPackage_2, "\t");
+            _builder.append(" ");
+            _builder.append(itemVarName, "\t");
+            _builder.append(" = new ");
+            String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
+            _builder.append(_modelClassNameWithPackage, "\t");
+            _builder.append("();");
+            _builder.newLineIfNotEmpty();
             {
-              boolean _isList = attributeDefinition.getAttribute().isList();
-              if (_isList) {
-                _builder.append("\t");
-                final String listVarName = this.newVarName("list");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
-                _builder.append(_generateModelListCreation, "\t");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append(itemVarName, "\t");
-                _builder.append(".");
-                String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
-                _builder.append(_setterCall, "\t");
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
-              } else {
-                _builder.append("\t");
-                _builder.append(itemVarName, "\t");
-                _builder.append(".");
-                String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
-                _builder.append(_setterCall_1, "\t");
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
+              EList<AttributeDefinition> _attributeDefinitions = attributeDefinitionList.getAttributeDefinitions();
+              for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+                {
+                  boolean _isList = attributeDefinition.getAttribute().isList();
+                  if (_isList) {
+                    _builder.append("\t");
+                    final String listVarName = this.newVarName("list");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
+                    _builder.append(_generateModelListCreation, "\t");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    _builder.append(itemVarName, "\t");
+                    _builder.append(".");
+                    String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
+                    _builder.append(_setterCall, "\t");
+                    _builder.append(";");
+                    _builder.newLineIfNotEmpty();
+                  } else {
+                    _builder.append("\t");
+                    _builder.append(itemVarName, "\t");
+                    _builder.append(".");
+                    String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+                    _builder.append(_setterCall_1, "\t");
+                    _builder.append(";");
+                    _builder.newLineIfNotEmpty();
+                  }
+                }
               }
             }
+            _builder.append("\t");
+            _builder.append(varName, "\t");
+            _builder.append(".add(");
+            _builder.append(itemVarName, "\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+            _builder.newLine();
           }
         }
-        _builder.append("\t");
-        _builder.append(varName, "\t");
-        _builder.append(".add(");
-        _builder.append(itemVarName, "\t");
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
+      } else {
+        {
+          ListAttributeDefinitionList _listAttributeDefinitionList_2 = it.getValue().getListAttributeDefinitionList();
+          EList<ValueDefinitionList> _valueDefinitionList = ((PrimitiveValueDefinitionForList) _listAttributeDefinitionList_2).getValueDefinitionList();
+          for(final ValueDefinitionList primitiveValueDefinitionList : _valueDefinitionList) {
+            _builder.append("\t");
+            _builder.append(varName, "\t");
+            _builder.append(".add(");
+            PrimitiveValue _primitiveValue = primitiveValueDefinitionList.getPrimitiveValue();
+            _builder.append(_primitiveValue, "\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+            _builder.newLine();
+          }
+        }
       }
     }
     _builder.append("\t");

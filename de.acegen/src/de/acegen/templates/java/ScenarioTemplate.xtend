@@ -1,12 +1,14 @@
 package de.acegen.templates.java
 
 import de.acegen.aceGen.AttributeDefinition
+import de.acegen.aceGen.AttributeDefinitionListForList
 import de.acegen.aceGen.Authorization
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.PrimitiveValueDefinitionForList
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.CommonExtension
@@ -60,6 +62,7 @@ class ScenarioTemplate {
 		package «java.getName».scenarios;
 		
 		import java.util.ArrayList;
+		import java.util.Arrays;
 		import java.util.List;
 		
 		import javax.ws.rs.core.Response;
@@ -212,22 +215,29 @@ class ScenarioTemplate {
 
 	def String generateModelListCreation(AttributeDefinition it, String varName) '''
 		
-			List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
-			«FOR attributeDefinitionList : value.listAttributeDefinitionList.attributeDefinitionList»
-				«val itemVarName = newVarName("item")»
-				«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
-				«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
-					«IF attributeDefinition.attribute.isList»
-						«val listVarName = newVarName("list")»
-						«generateModelListCreation(attributeDefinition, listVarName)»
-						«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
-					«ELSE»
-						«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
-					«ENDIF»
-				«ENDFOR»
-				«varName».add(«itemVarName»);
+			«IF value.listAttributeDefinitionList instanceof AttributeDefinitionListForList»
+				List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
+				«FOR attributeDefinitionList : (value.listAttributeDefinitionList as AttributeDefinitionListForList).attributeDefinitionList»
+					«val itemVarName = newVarName("item")»
+					«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
+					«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
+						«IF attributeDefinition.attribute.isList»
+							«val listVarName = newVarName("list")»
+							«generateModelListCreation(attributeDefinition, listVarName)»
+							«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
+						«ELSE»
+							«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+						«ENDIF»
+					«ENDFOR»
+					«varName».add(«itemVarName»);
 
-			«ENDFOR»
+				«ENDFOR»
+			«ELSE»
+				«FOR primitiveValueDefinitionList : (value.listAttributeDefinitionList as PrimitiveValueDefinitionForList).valueDefinitionList»
+					«varName».add(«primitiveValueDefinitionList.primitiveValue»);
+
+				«ENDFOR»
+			«ENDIF»
 			
 	'''
 

@@ -8,6 +8,7 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeDefinition;
 import de.acegen.aceGen.AttributeDefinitionList;
+import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
@@ -27,10 +28,13 @@ import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.Value;
+import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -221,7 +225,28 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass attributeDefinitionListForListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primitiveValueDefinitionForListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass attributeDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valueDefinitionListEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -236,6 +261,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass valueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primitiveValueEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -1351,9 +1383,42 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getListAttributeDefinitionList_AttributeDefinitionList()
+  public EClass getAttributeDefinitionListForList()
   {
-    return (EReference)listAttributeDefinitionListEClass.getEStructuralFeatures().get(0);
+    return attributeDefinitionListForListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAttributeDefinitionListForList_AttributeDefinitionList()
+  {
+    return (EReference)attributeDefinitionListForListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getPrimitiveValueDefinitionForList()
+  {
+    return primitiveValueDefinitionForListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPrimitiveValueDefinitionForList_ValueDefinitionList()
+  {
+    return (EReference)primitiveValueDefinitionForListEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1387,6 +1452,28 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getAttributeDefinition_Value()
   {
     return (EReference)attributeDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getValueDefinitionList()
+  {
+    return valueDefinitionListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getValueDefinitionList_PrimitiveValue()
+  {
+    return (EReference)valueDefinitionListEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1582,6 +1669,39 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EClass getPrimitiveValue()
+  {
+    return primitiveValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrimitiveValue_StringValue()
+  {
+    return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrimitiveValue_IntValue()
+  {
+    return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public AceGenFactory getAceGenFactory()
   {
     return (AceGenFactory)getEFactoryInstance();
@@ -1725,11 +1845,19 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeDefinitionListEClass, ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS);
 
     listAttributeDefinitionListEClass = createEClass(LIST_ATTRIBUTE_DEFINITION_LIST);
-    createEReference(listAttributeDefinitionListEClass, LIST_ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITION_LIST);
+
+    attributeDefinitionListForListEClass = createEClass(ATTRIBUTE_DEFINITION_LIST_FOR_LIST);
+    createEReference(attributeDefinitionListForListEClass, ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST);
+
+    primitiveValueDefinitionForListEClass = createEClass(PRIMITIVE_VALUE_DEFINITION_FOR_LIST);
+    createEReference(primitiveValueDefinitionForListEClass, PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST);
 
     attributeDefinitionEClass = createEClass(ATTRIBUTE_DEFINITION);
     createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__ATTRIBUTE);
     createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__VALUE);
+
+    valueDefinitionListEClass = createEClass(VALUE_DEFINITION_LIST);
+    createEReference(valueDefinitionListEClass, VALUE_DEFINITION_LIST__PRIMITIVE_VALUE);
 
     attributeEClass = createEClass(ATTRIBUTE);
     createEAttribute(attributeEClass, ATTRIBUTE__UNIQUE);
@@ -1749,6 +1877,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(valueEClass, VALUE__PATTERN);
     createEReference(valueEClass, VALUE__ATTRIBUTE_DEFINITION_LIST);
     createEReference(valueEClass, VALUE__LIST_ATTRIBUTE_DEFINITION_LIST);
+
+    primitiveValueEClass = createEClass(PRIMITIVE_VALUE);
+    createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__STRING_VALUE);
+    createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__INT_VALUE);
   }
 
   /**
@@ -1782,6 +1914,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     // Add supertypes to classes
     httpServerAceWriteEClass.getESuperTypes().add(this.getHttpServerAce());
     httpServerAceReadEClass.getESuperTypes().add(this.getHttpServerAce());
+    attributeDefinitionListForListEClass.getESuperTypes().add(this.getListAttributeDefinitionList());
+    primitiveValueDefinitionForListEClass.getESuperTypes().add(this.getListAttributeDefinitionList());
 
     // Initialize classes and features; add operations and parameters
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1902,11 +2036,19 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttributeDefinitionList_AttributeDefinitions(), this.getAttributeDefinition(), null, "attributeDefinitions", null, 0, -1, AttributeDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(listAttributeDefinitionListEClass, ListAttributeDefinitionList.class, "ListAttributeDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getListAttributeDefinitionList_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, -1, ListAttributeDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeDefinitionListForListEClass, AttributeDefinitionListForList.class, "AttributeDefinitionListForList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeDefinitionListForList_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, -1, AttributeDefinitionListForList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primitiveValueDefinitionForListEClass, PrimitiveValueDefinitionForList.class, "PrimitiveValueDefinitionForList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrimitiveValueDefinitionForList_ValueDefinitionList(), this.getValueDefinitionList(), null, "valueDefinitionList", null, 0, -1, PrimitiveValueDefinitionForList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeDefinitionEClass, AttributeDefinition.class, "AttributeDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAttributeDefinition_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeDefinition_Value(), this.getValue(), null, "value", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valueDefinitionListEClass, ValueDefinitionList.class, "ValueDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getValueDefinitionList_PrimitiveValue(), this.getPrimitiveValue(), null, "primitiveValue", null, 0, 1, ValueDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttribute_Unique(), ecorePackage.getEBoolean(), "unique", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1926,6 +2068,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getValue_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getValue_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getValue_ListAttributeDefinitionList(), this.getListAttributeDefinitionList(), null, "listAttributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primitiveValueEClass, PrimitiveValue.class, "PrimitiveValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPrimitiveValue_StringValue(), ecorePackage.getEString(), "stringValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimitiveValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
