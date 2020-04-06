@@ -289,8 +289,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import javax.ws.rs.core.Response;");
     _builder.newLine();
-    _builder.append("import de.acegen.CustomAppConfiguration;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class Command<T extends IDataContainer> implements ICommand {");
     _builder.newLine();

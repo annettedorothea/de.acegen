@@ -77,57 +77,66 @@ ruleProject returns [EObject current=null]
 }:
 	(
 		(
-			otherlv_0='HttpClient'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getProjectAccess().getHttpClientKeyword_0_0());
+				$current = forceCreateModelElement(
+					grammarAccess.getProjectAccess().getProjectAction_0(),
+					$current);
 			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_1_0());
-					}
-					lv_httpClient_1_0=ruleHttpClient
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getProjectRule());
-						}
-						set(
-							$current,
-							"httpClient",
-							lv_httpClient_1_0,
-							"de.acegen.AceGen.HttpClient");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)?
 		)
-		    |
 		(
-			otherlv_2='HttpServer'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getProjectAccess().getHttpServerKeyword_1_0());
-			}
 			(
+				otherlv_1='HttpClient'
+				{
+					newLeafNode(otherlv_1, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_0());
-					}
-					lv_httpServer_3_0=ruleHttpServer
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getProjectRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_1_0_1_0());
 						}
-						set(
-							$current,
-							"httpServer",
-							lv_httpServer_3_0,
-							"de.acegen.AceGen.HttpServer");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)?
-		)
-	)?
+						lv_httpClient_2_0=ruleHttpClient
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getProjectRule());
+							}
+							set(
+								$current,
+								"httpClient",
+								lv_httpClient_2_0,
+								"de.acegen.AceGen.HttpClient");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)?
+			)
+			    |
+			(
+				otherlv_3='HttpServer'
+				{
+					newLeafNode(otherlv_3, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_1_0());
+						}
+						lv_httpServer_4_0=ruleHttpServer
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getProjectRule());
+							}
+							set(
+								$current,
+								"httpServer",
+								lv_httpServer_4_0,
+								"de.acegen.AceGen.HttpServer");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)?
+			)
+		)?
+	)
 ;
 
 // Entry rule entryRuleHttpClient

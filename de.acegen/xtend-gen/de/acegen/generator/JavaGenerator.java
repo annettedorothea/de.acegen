@@ -248,7 +248,7 @@ public class JavaGenerator {
     String _packageFolder = this._javaExtension.packageFolder(java);
     String _plus = (_packageFolder + "/ActionCalls.java");
     fsa.generateFile(_plus, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateActionCalls(java));
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateActionCalls(java));
     int _size = java.getAceOperations().size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
@@ -344,7 +344,7 @@ public class JavaGenerator {
     fsa.generateFile(("de/acegen" + "/AbstractViewProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractViewProvider());
     fsa.generateFile(("de/acegen" + "/EventConsumer.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventconsumer());
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventconsumer());
     fsa.generateFile(("de/acegen" + "/PersistenceConnection.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceConnection());
     fsa.generateFile(("de/acegen" + "/PersistenceHandle.java"), 

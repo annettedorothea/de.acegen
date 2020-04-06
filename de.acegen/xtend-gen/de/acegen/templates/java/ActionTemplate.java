@@ -15,6 +15,7 @@
  */
 package de.acegen.templates.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
@@ -1768,6 +1769,334 @@ public class ActionTemplate {
     _builder.append("return data;");
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generateActionCalls(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package ");
+    String _name = it.getName();
+    _builder.append(_name);
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.client.Client;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.client.Entity;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.client.Invocation.Builder;");
+    _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.glassfish.jersey.client.JerseyClientBuilder;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
+    _builder.append("public class ActionCalls {");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      EList<HttpServerAce> _aceOperations = it.getAceOperations();
+      for(final HttpServerAce aceOperation : _aceOperations) {
+        {
+          String _type = aceOperation.getType();
+          boolean _equals = Objects.equal(_type, "POST");
+          if (_equals) {
+            _builder.append("\t");
+            _builder.append("public static Response call");
+            String _firstUpper = StringExtensions.toFirstUpper(aceOperation.getName());
+            _builder.append(_firstUpper, "\t");
+            _builder.append("(");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t");
+            String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
+            _builder.append(_dataInterfaceNameWithPackage, "\t\t\t");
+            _builder.append(" data,");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t");
+            _builder.append("int port");
+            {
+              boolean _isAuthorize = aceOperation.isAuthorize();
+              if (_isAuthorize) {
+                _builder.append(", ");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t");
+                _builder.append("String authorization");
+              }
+            }
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("Client client = new JerseyClientBuilder().build();");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+            String _urlWithPathParams = this._aceExtension.urlWithPathParams(aceOperation);
+            _builder.append(_urlWithPathParams, "\t\t");
+            _builder.append("\", port)).request(); ");
+            _builder.newLineIfNotEmpty();
+            {
+              boolean _isAuthorize_1 = aceOperation.isAuthorize();
+              if (_isAuthorize_1) {
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("builder.header(\"Authorization\", authorization);");
+                _builder.newLine();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("return builder.post(Entity.json(data));");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            String _type_1 = aceOperation.getType();
+            boolean _equals_1 = Objects.equal(_type_1, "PUT");
+            if (_equals_1) {
+              _builder.append("\t");
+              _builder.append("public static Response call");
+              String _firstUpper_1 = StringExtensions.toFirstUpper(aceOperation.getName());
+              _builder.append(_firstUpper_1, "\t");
+              _builder.append("(");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t");
+              String _dataInterfaceNameWithPackage_1 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
+              _builder.append(_dataInterfaceNameWithPackage_1, "\t\t\t");
+              _builder.append(" data, ");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t");
+              _builder.append("int port");
+              {
+                boolean _isAuthorize_2 = aceOperation.isAuthorize();
+                if (_isAuthorize_2) {
+                  _builder.append(", ");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t\t");
+                  _builder.append("String authorization");
+                }
+              }
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("Client client = new JerseyClientBuilder().build();");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+              String _urlWithPathParams_1 = this._aceExtension.urlWithPathParams(aceOperation);
+              _builder.append(_urlWithPathParams_1, "\t\t");
+              _builder.append("?uuid=\" + data.getUuid()");
+              {
+                EList<Attribute> _queryParams = aceOperation.getQueryParams();
+                for(final Attribute queryParam : _queryParams) {
+                  _builder.append(" + \"&");
+                  String _name_1 = queryParam.getName();
+                  _builder.append(_name_1, "\t\t");
+                  _builder.append("=\" + data.");
+                  String _terCall = this._attributeExtension.getterCall(queryParam);
+                  _builder.append(_terCall, "\t\t");
+                }
+              }
+              _builder.append(", port)).request();");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _isAuthorize_3 = aceOperation.isAuthorize();
+                if (_isAuthorize_3) {
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("builder.header(\"Authorization\", authorization);");
+                  _builder.newLine();
+                }
+              }
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("return builder.put(Entity.json(");
+              {
+                int _length = ((Object[])Conversions.unwrapArray(aceOperation.getPayload(), Object.class)).length;
+                boolean _greaterThan = (_length > 0);
+                if (_greaterThan) {
+                  _builder.append("data");
+                } else {
+                  _builder.append("null");
+                }
+              }
+              _builder.append("));");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            } else {
+              String _type_2 = aceOperation.getType();
+              boolean _equals_2 = Objects.equal(_type_2, "DELETE");
+              if (_equals_2) {
+                _builder.append("\t");
+                _builder.append("public static Response call");
+                String _firstUpper_2 = StringExtensions.toFirstUpper(aceOperation.getName());
+                _builder.append(_firstUpper_2, "\t");
+                _builder.append("(");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t");
+                String _dataInterfaceNameWithPackage_2 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
+                _builder.append(_dataInterfaceNameWithPackage_2, "\t\t\t");
+                _builder.append(" data,");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t");
+                _builder.append("int port");
+                {
+                  boolean _isAuthorize_4 = aceOperation.isAuthorize();
+                  if (_isAuthorize_4) {
+                    _builder.append(", ");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    _builder.append("\t\t");
+                    _builder.append("String authorization");
+                  }
+                }
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("Client client = new JerseyClientBuilder().build();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+                String _urlWithPathParams_2 = this._aceExtension.urlWithPathParams(aceOperation);
+                _builder.append(_urlWithPathParams_2, "\t\t");
+                _builder.append("?uuid=\" + data.getUuid()");
+                {
+                  EList<Attribute> _queryParams_1 = aceOperation.getQueryParams();
+                  for(final Attribute queryParam_1 : _queryParams_1) {
+                    _builder.append(" + \"&");
+                    String _name_2 = queryParam_1.getName();
+                    _builder.append(_name_2, "\t\t");
+                    _builder.append("=\" + data.");
+                    String _terCall_1 = this._attributeExtension.getterCall(queryParam_1);
+                    _builder.append(_terCall_1, "\t\t");
+                  }
+                }
+                _builder.append(", port)).request();");
+                _builder.newLineIfNotEmpty();
+                {
+                  boolean _isAuthorize_5 = aceOperation.isAuthorize();
+                  if (_isAuthorize_5) {
+                    _builder.append("\t");
+                    _builder.append("\t");
+                    _builder.append("builder.header(\"Authorization\", authorization);");
+                    _builder.newLine();
+                  }
+                }
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("return builder.delete();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
+              } else {
+                _builder.append("\t");
+                _builder.append("public static Response call");
+                String _firstUpper_3 = StringExtensions.toFirstUpper(aceOperation.getName());
+                _builder.append(_firstUpper_3, "\t");
+                _builder.append("(");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t");
+                String _dataInterfaceNameWithPackage_3 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
+                _builder.append(_dataInterfaceNameWithPackage_3, "\t\t\t");
+                _builder.append(" data,");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t");
+                _builder.append("int port");
+                {
+                  boolean _isAuthorize_6 = aceOperation.isAuthorize();
+                  if (_isAuthorize_6) {
+                    _builder.append(", ");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    _builder.append("\t\t");
+                    _builder.append("String authorization");
+                  }
+                }
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("Client client = new JerseyClientBuilder().build();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+                String _urlWithPathParams_3 = this._aceExtension.urlWithPathParams(aceOperation);
+                _builder.append(_urlWithPathParams_3, "\t\t");
+                _builder.append("?uuid=\" + data.getUuid()");
+                {
+                  EList<Attribute> _queryParams_2 = aceOperation.getQueryParams();
+                  for(final Attribute queryParam_2 : _queryParams_2) {
+                    _builder.append(" + \"&");
+                    String _name_3 = queryParam_2.getName();
+                    _builder.append(_name_3, "\t\t");
+                    _builder.append("=\" + data.");
+                    String _terCall_2 = this._attributeExtension.getterCall(queryParam_2);
+                    _builder.append(_terCall_2, "\t\t");
+                  }
+                }
+                _builder.append(", port)).request(); ");
+                _builder.newLineIfNotEmpty();
+                {
+                  boolean _isAuthorize_7 = aceOperation.isAuthorize();
+                  if (_isAuthorize_7) {
+                    _builder.append("\t");
+                    _builder.append("\t");
+                    _builder.append("builder.header(\"Authorization\", authorization);");
+                    _builder.newLine();
+                  }
+                }
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("return builder.get();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
   }

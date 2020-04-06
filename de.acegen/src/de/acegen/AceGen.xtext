@@ -19,7 +19,7 @@ grammar de.acegen.AceGen with org.eclipse.xtext.common.Terminals
 
 generate aceGen "http://www.acegen.de/AceGen"
 
-Project: 
+Project: {Project}
 	('HttpClient' httpClient = HttpClient ? | 'HttpServer' httpServer = HttpServer ?)?
 ;
 

@@ -727,6 +727,32 @@ public class EventTemplate {
     return _builder;
   }
   
+  public CharSequence generateEventconsumer() {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package de.acegen;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@FunctionalInterface");
+    _builder.newLine();
+    _builder.append("public interface EventConsumer {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public void consumeEvent(IDataContainer data, PersistenceHandle handle);");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
   private CharSequence createEvent(final HttpServerAce it, final HttpServer java) {
     if (it instanceof HttpServerAceRead) {
       return _createEvent((HttpServerAceRead)it, java);

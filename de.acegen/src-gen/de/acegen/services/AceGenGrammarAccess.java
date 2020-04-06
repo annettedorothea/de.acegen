@@ -26,46 +26,54 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ProjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Project");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cHttpClientKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cHttpClientAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cHttpClientHttpClientParserRuleCall_0_1_0 = (RuleCall)cHttpClientAssignment_0_1.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cHttpServerKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cHttpServerAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cHttpServerHttpServerParserRuleCall_1_1_0 = (RuleCall)cHttpServerAssignment_1_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cProjectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cHttpClientKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cHttpClientAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cHttpClientHttpClientParserRuleCall_1_0_1_0 = (RuleCall)cHttpClientAssignment_1_0_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cHttpServerKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cHttpServerAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cHttpServerHttpServerParserRuleCall_1_1_1_0 = (RuleCall)cHttpServerAssignment_1_1_1.eContents().get(0);
 		
 		//Project:
-		//	('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
+		//	{Project} ('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//{Project} ('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?
+		public Group getGroup() { return cGroup; }
+		
+		//{Project}
+		public Action getProjectAction_0() { return cProjectAction_0; }
+		
 		//('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?
-		public Alternatives getAlternatives() { return cAlternatives; }
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//'HttpClient' httpClient=HttpClient?
-		public Group getGroup_0() { return cGroup_0; }
+		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//'HttpClient'
-		public Keyword getHttpClientKeyword_0_0() { return cHttpClientKeyword_0_0; }
+		public Keyword getHttpClientKeyword_1_0_0() { return cHttpClientKeyword_1_0_0; }
 		
 		//httpClient=HttpClient?
-		public Assignment getHttpClientAssignment_0_1() { return cHttpClientAssignment_0_1; }
+		public Assignment getHttpClientAssignment_1_0_1() { return cHttpClientAssignment_1_0_1; }
 		
 		//HttpClient
-		public RuleCall getHttpClientHttpClientParserRuleCall_0_1_0() { return cHttpClientHttpClientParserRuleCall_0_1_0; }
+		public RuleCall getHttpClientHttpClientParserRuleCall_1_0_1_0() { return cHttpClientHttpClientParserRuleCall_1_0_1_0; }
 		
 		//'HttpServer' httpServer=HttpServer?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//'HttpServer'
-		public Keyword getHttpServerKeyword_1_0() { return cHttpServerKeyword_1_0; }
+		public Keyword getHttpServerKeyword_1_1_0() { return cHttpServerKeyword_1_1_0; }
 		
 		//httpServer=HttpServer?
-		public Assignment getHttpServerAssignment_1_1() { return cHttpServerAssignment_1_1; }
+		public Assignment getHttpServerAssignment_1_1_1() { return cHttpServerAssignment_1_1_1; }
 		
 		//HttpServer
-		public RuleCall getHttpServerHttpServerParserRuleCall_1_1_0() { return cHttpServerHttpServerParserRuleCall_1_1_0; }
+		public RuleCall getHttpServerHttpServerParserRuleCall_1_1_1_0() { return cHttpServerHttpServerParserRuleCall_1_1_1_0; }
 	}
 	public class HttpClientElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpClient");
@@ -2074,7 +2082,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Project:
-	//	('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
+	//	{Project} ('HttpClient' httpClient=HttpClient? | 'HttpServer' httpServer=HttpServer?)?;
 	public ProjectElements getProjectAccess() {
 		return pProject;
 	}

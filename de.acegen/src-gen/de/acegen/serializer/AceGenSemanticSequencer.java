@@ -520,7 +520,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Project returns Project
 	 *
 	 * Constraint:
-	 *     (httpClient=HttpClient | httpServer=HttpServer)
+	 *     (httpClient=HttpClient | httpServer=HttpServer)?
 	 */
 	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

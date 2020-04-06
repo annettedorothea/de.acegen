@@ -65,9 +65,9 @@ ruleProject
 	}
 	:
 	(
-		{ before(grammarAccess.getProjectAccess().getAlternatives()); }
-		(rule__Project__Alternatives)?
-		{ after(grammarAccess.getProjectAccess().getAlternatives()); }
+		{ before(grammarAccess.getProjectAccess().getGroup()); }
+		(rule__Project__Group__0)
+		{ after(grammarAccess.getProjectAccess().getGroup()); }
 	)
 ;
 finally {
@@ -974,21 +974,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Alternatives
+rule__Project__Alternatives_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getProjectAccess().getGroup_0()); }
-		(rule__Project__Group_0__0)
-		{ after(grammarAccess.getProjectAccess().getGroup_0()); }
+		{ before(grammarAccess.getProjectAccess().getGroup_1_0()); }
+		(rule__Project__Group_1_0__0)
+		{ after(grammarAccess.getProjectAccess().getGroup_1_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getProjectAccess().getGroup_1()); }
-		(rule__Project__Group_1__0)
-		{ after(grammarAccess.getProjectAccess().getGroup_1()); }
+		{ before(grammarAccess.getProjectAccess().getGroup_1_1()); }
+		(rule__Project__Group_1_1__0)
+		{ after(grammarAccess.getProjectAccess().getGroup_1_1()); }
 	)
 ;
 finally {
@@ -1244,53 +1244,107 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_0__0
+rule__Project__Group__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__Project__Group_0__0__Impl
-	rule__Project__Group_0__1
+	rule__Project__Group__0__Impl
+	rule__Project__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_0__0__Impl
+rule__Project__Group__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getProjectAccess().getHttpClientKeyword_0_0()); }
+	{ before(grammarAccess.getProjectAccess().getProjectAction_0()); }
+	()
+	{ after(grammarAccess.getProjectAccess().getProjectAction_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Project__Group__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Project__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Project__Group__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getProjectAccess().getAlternatives_1()); }
+	(rule__Project__Alternatives_1)?
+	{ after(grammarAccess.getProjectAccess().getAlternatives_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__Project__Group_1_0__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Project__Group_1_0__0__Impl
+	rule__Project__Group_1_0__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Project__Group_1_0__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()); }
 	'HttpClient'
-	{ after(grammarAccess.getProjectAccess().getHttpClientKeyword_0_0()); }
+	{ after(grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_0__1
+rule__Project__Group_1_0__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__Project__Group_0__1__Impl
+	rule__Project__Group_1_0__1__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_0__1__Impl
+rule__Project__Group_1_0__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getProjectAccess().getHttpClientAssignment_0_1()); }
-	(rule__Project__HttpClientAssignment_0_1)?
-	{ after(grammarAccess.getProjectAccess().getHttpClientAssignment_0_1()); }
+	{ before(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1()); }
+	(rule__Project__HttpClientAssignment_1_0_1)?
+	{ after(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1()); }
 )
 ;
 finally {
@@ -1298,53 +1352,53 @@ finally {
 }
 
 
-rule__Project__Group_1__0
+rule__Project__Group_1_1__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__Project__Group_1__0__Impl
-	rule__Project__Group_1__1
+	rule__Project__Group_1_1__0__Impl
+	rule__Project__Group_1_1__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_1__0__Impl
+rule__Project__Group_1_1__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getProjectAccess().getHttpServerKeyword_1_0()); }
+	{ before(grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()); }
 	'HttpServer'
-	{ after(grammarAccess.getProjectAccess().getHttpServerKeyword_1_0()); }
+	{ after(grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_1__1
+rule__Project__Group_1_1__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__Project__Group_1__1__Impl
+	rule__Project__Group_1_1__1__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__Group_1__1__Impl
+rule__Project__Group_1_1__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1()); }
-	(rule__Project__HttpServerAssignment_1_1)?
-	{ after(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1()); }
+	{ before(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1()); }
+	(rule__Project__HttpServerAssignment_1_1_1)?
+	{ after(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1()); }
 )
 ;
 finally {
@@ -6887,30 +6941,30 @@ finally {
 }
 
 
-rule__Project__HttpClientAssignment_0_1
+rule__Project__HttpClientAssignment_1_0_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_1_0()); }
+		{ before(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_1_0_1_0()); }
 		ruleHttpClient
-		{ after(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_0_1_0()); }
+		{ after(grammarAccess.getProjectAccess().getHttpClientHttpClientParserRuleCall_1_0_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Project__HttpServerAssignment_1_1
+rule__Project__HttpServerAssignment_1_1_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_0()); }
+		{ before(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_1_0()); }
 		ruleHttpServer
-		{ after(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_0()); }
+		{ after(grammarAccess.getProjectAccess().getHttpServerHttpServerParserRuleCall_1_1_1_0()); }
 	)
 ;
 finally {

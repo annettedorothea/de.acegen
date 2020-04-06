@@ -26,6 +26,5 @@ Export-Package: de.acegen.serializer,
  de.acegen.aceGen,
  de.acegen.aceGen.impl,
  de.acegen.parser.antlr.internal,
- de.acegen.generator,
- de.acegen.formatting2
+ de.acegen.generator
 Import-Package: org.apache.log4j

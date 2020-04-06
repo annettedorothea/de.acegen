@@ -12,7 +12,6 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.ListAttributeDefinitionList;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ValueDefinitionList;
@@ -175,7 +174,7 @@ public class ScenarioTemplate {
                 _builder.append("\t\t");
                 WhenBlock _whenBlock = givenRef.getScenario().getWhenBlock();
                 int _plusPlus = index++;
-                CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus);
+                CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus, false);
                 _builder.append(_generateActionCall, "\t\t");
                 _builder.newLineIfNotEmpty();
               }
@@ -188,7 +187,7 @@ public class ScenarioTemplate {
             _builder.append("\t\t");
             WhenBlock _whenBlock_1 = givenRef.getScenario().getWhenBlock();
             int _plusPlus_1 = index++;
-            CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1);
+            CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1, false);
             _builder.append(_generateActionCall_1, "\t\t");
             _builder.newLineIfNotEmpty();
           }
@@ -209,8 +208,7 @@ public class ScenarioTemplate {
     _builder.append(_generatePrepare_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("return ");
-    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, 0);
+    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, 0, true);
     _builder.append(_generateActionCall_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -454,14 +452,14 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java, final int index) {
+  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java, final int index, final boolean returnResponse) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java, index);
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java, index, returnResponse);
     _builder.append(_generateActionCalls);
     return _builder;
   }
   
-  public CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName) {
+  private CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
     this.resetVarIndex();
     _builder.newLineIfNotEmpty();
@@ -500,51 +498,55 @@ public class ScenarioTemplate {
       }
     }
     {
-      EList<AttributeDefinition> _attributeDefinitions = it.getData().getAttributeDefinitions();
-      for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+      if (((it.getData() != null) && (it.getData().getAttributeDefinitions() != null))) {
         {
-          AttributeDefinitionList _attributeDefinitionList = attributeDefinition.getValue().getAttributeDefinitionList();
-          boolean _tripleNotEquals_2 = (_attributeDefinitionList != null);
-          if (_tripleNotEquals_2) {
-            String _firstUpper = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-            String _plus = (varName + _firstUpper);
-            CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus);
-            _builder.append(_generateModelCreation);
-            _builder.newLineIfNotEmpty();
-            _builder.append(varName);
-            _builder.append(".");
-            Attribute _attribute = attributeDefinition.getAttribute();
-            String _firstUpper_1 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-            String _plus_1 = (varName + _firstUpper_1);
-            String _setterCall = this._attributeExtension.setterCall(_attribute, _plus_1);
-            _builder.append(_setterCall);
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            ListAttributeDefinitionList _listAttributeDefinitionList = attributeDefinition.getValue().getListAttributeDefinitionList();
-            boolean _tripleNotEquals_3 = (_listAttributeDefinitionList != null);
-            if (_tripleNotEquals_3) {
-              String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-              String _plus_2 = (varName + _firstUpper_2);
-              String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2);
-              _builder.append(_generateModelListCreation);
-              _builder.newLineIfNotEmpty();
-              _builder.append(varName);
-              _builder.append(".");
-              Attribute _attribute_1 = attributeDefinition.getAttribute();
-              String _firstUpper_3 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-              String _plus_3 = (varName + _firstUpper_3);
-              String _setterCall_1 = this._attributeExtension.setterCall(_attribute_1, _plus_3);
-              _builder.append(_setterCall_1);
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append(varName);
-              _builder.append(".");
-              String _setterCall_2 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
-              _builder.append(_setterCall_2);
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
+          EList<AttributeDefinition> _attributeDefinitions = it.getData().getAttributeDefinitions();
+          for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+            {
+              AttributeDefinitionList _attributeDefinitionList = attributeDefinition.getValue().getAttributeDefinitionList();
+              boolean _tripleNotEquals_2 = (_attributeDefinitionList != null);
+              if (_tripleNotEquals_2) {
+                String _firstUpper = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
+                String _plus = (varName + _firstUpper);
+                CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus);
+                _builder.append(_generateModelCreation);
+                _builder.newLineIfNotEmpty();
+                _builder.append(varName);
+                _builder.append(".");
+                Attribute _attribute = attributeDefinition.getAttribute();
+                String _firstUpper_1 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
+                String _plus_1 = (varName + _firstUpper_1);
+                String _setterCall = this._attributeExtension.setterCall(_attribute, _plus_1);
+                _builder.append(_setterCall);
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              } else {
+                ListAttributeDefinitionList _listAttributeDefinitionList = attributeDefinition.getValue().getListAttributeDefinitionList();
+                boolean _tripleNotEquals_3 = (_listAttributeDefinitionList != null);
+                if (_tripleNotEquals_3) {
+                  String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
+                  String _plus_2 = (varName + _firstUpper_2);
+                  String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2);
+                  _builder.append(_generateModelListCreation);
+                  _builder.newLineIfNotEmpty();
+                  _builder.append(varName);
+                  _builder.append(".");
+                  Attribute _attribute_1 = attributeDefinition.getAttribute();
+                  String _firstUpper_3 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
+                  String _plus_3 = (varName + _firstUpper_3);
+                  String _setterCall_1 = this._attributeExtension.setterCall(_attribute_1, _plus_3);
+                  _builder.append(_setterCall_1);
+                  _builder.append(";");
+                  _builder.newLineIfNotEmpty();
+                } else {
+                  _builder.append(varName);
+                  _builder.append(".");
+                  String _setterCall_2 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+                  _builder.append(_setterCall_2);
+                  _builder.append(";");
+                  _builder.newLineIfNotEmpty();
+                }
+              }
             }
           }
         }
@@ -553,7 +555,7 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  public CharSequence generateModelCreation(final AttributeDefinition it, final String varName) {
+  private CharSequence generateModelCreation(final AttributeDefinition it, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     _builder.append("\t");
@@ -603,7 +605,7 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  public String generateModelListCreation(final AttributeDefinition it, final String varName) {
+  private String generateModelListCreation(final AttributeDefinition it, final String varName) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     {
@@ -679,6 +681,17 @@ public class ScenarioTemplate {
           }
         }
       } else {
+        _builder.append("\t");
+        _builder.append("List<");
+        String _type = it.getAttribute().getType();
+        _builder.append(_type, "\t");
+        _builder.append("> ");
+        _builder.append(varName, "\t");
+        _builder.append(" = new ArrayList<");
+        String _type_1 = it.getAttribute().getType();
+        _builder.append(_type_1, "\t");
+        _builder.append(">();");
+        _builder.newLineIfNotEmpty();
         {
           ListAttributeDefinitionList _listAttributeDefinitionList_2 = it.getValue().getListAttributeDefinitionList();
           EList<ValueDefinitionList> _valueDefinitionList = ((PrimitiveValueDefinitionForList) _listAttributeDefinitionList_2).getValueDefinitionList();
@@ -686,8 +699,19 @@ public class ScenarioTemplate {
             _builder.append("\t");
             _builder.append(varName, "\t");
             _builder.append(".add(");
-            PrimitiveValue _primitiveValue = primitiveValueDefinitionList.getPrimitiveValue();
-            _builder.append(_primitiveValue, "\t");
+            {
+              String _stringValue = primitiveValueDefinitionList.getPrimitiveValue().getStringValue();
+              boolean _tripleNotEquals = (_stringValue != null);
+              if (_tripleNotEquals) {
+                _builder.append("\"");
+                String _stringValue_1 = primitiveValueDefinitionList.getPrimitiveValue().getStringValue();
+                _builder.append(_stringValue_1, "\t");
+                _builder.append("\"");
+              } else {
+                int _intValue = primitiveValueDefinitionList.getPrimitiveValue().getIntValue();
+                _builder.append(_intValue, "\t");
+              }
+            }
             _builder.append(");");
             _builder.newLineIfNotEmpty();
             _builder.newLine();
@@ -709,33 +733,45 @@ public class ScenarioTemplate {
     this.varIndex = 0;
   }
   
-  public CharSequence generateActionCalls(final HttpServerAce aceOperation, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java, final int index) {
+  private CharSequence generateActionCalls(final HttpServerAce it, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java, final int index, final boolean returnResponse) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      String _type = aceOperation.getType();
+      Model _model = it.getModel();
+      boolean _tripleNotEquals = (_model != null);
+      if (_tripleNotEquals) {
+        Model _model_1 = it.getModel();
+        StringConcatenation _builder_1 = new StringConcatenation();
+        String _firstLower = StringExtensions.toFirstLower(it.getName());
+        _builder_1.append(_firstLower);
+        _builder_1.append(index);
+        CharSequence _generateDataCreation = this.generateDataCreation(dataDefinition, _model_1, _builder_1.toString());
+        _builder.append(_generateDataCreation);
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    {
+      if (returnResponse) {
+        _builder.append("return ");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    {
+      String _type = it.getType();
       boolean _equals = Objects.equal(_type, "POST");
       if (_equals) {
-        String _packageFor = this._aceExtension.packageFor(aceOperation);
+        String _packageFor = this._aceExtension.packageFor(it);
         _builder.append(_packageFor);
         _builder.append(".ActionCalls.call");
-        String _firstUpper = StringExtensions.toFirstUpper(aceOperation.getName());
+        String _firstUpper = StringExtensions.toFirstUpper(it.getName());
         _builder.append(_firstUpper);
         _builder.append("(");
+        String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
+        _builder.append(_firstLower_1);
+        _builder.append(index);
+        _builder.append(", DROPWIZARD.getLocalPort()");
         {
-          List<String> _mergeAttributesForPostCall = this._attributeExtension.mergeAttributesForPostCall(aceOperation, dataDefinition, Integer.valueOf(index));
-          boolean _hasElements = false;
-          for(final String param : _mergeAttributesForPostCall) {
-            if (!_hasElements) {
-              _hasElements = true;
-            } else {
-              _builder.appendImmediate(", ", "");
-            }
-            CharSequence _paramString = this.paramString(param);
-            _builder.append(_paramString);
-          }
-        }
-        {
-          if ((aceOperation.isAuthorize() && (authorization != null))) {
+          if ((it.isAuthorize() && (authorization != null))) {
             _builder.append(", authorization(\"");
             String _username = authorization.getUsername();
             _builder.append(_username);
@@ -744,7 +780,7 @@ public class ScenarioTemplate {
             _builder.append(_password);
             _builder.append("\")");
           } else {
-            boolean _isAuthorize = aceOperation.isAuthorize();
+            boolean _isAuthorize = it.isAuthorize();
             if (_isAuthorize) {
               _builder.append(", null");
             }
@@ -753,30 +789,21 @@ public class ScenarioTemplate {
         _builder.append(");");
         _builder.newLineIfNotEmpty();
       } else {
-        String _type_1 = aceOperation.getType();
+        String _type_1 = it.getType();
         boolean _equals_1 = Objects.equal(_type_1, "PUT");
         if (_equals_1) {
-          String _packageFor_1 = this._aceExtension.packageFor(aceOperation);
+          String _packageFor_1 = this._aceExtension.packageFor(it);
           _builder.append(_packageFor_1);
           _builder.append(".ActionCalls.call");
-          String _firstUpper_1 = StringExtensions.toFirstUpper(aceOperation.getName());
+          String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
           _builder.append(_firstUpper_1);
           _builder.append("(");
+          String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
+          _builder.append(_firstLower_2);
+          _builder.append(index);
+          _builder.append(", DROPWIZARD.getLocalPort()");
           {
-            List<String> _mergeAttributesForPutCall = this._attributeExtension.mergeAttributesForPutCall(aceOperation, dataDefinition, Integer.valueOf(index));
-            boolean _hasElements_1 = false;
-            for(final String param_1 : _mergeAttributesForPutCall) {
-              if (!_hasElements_1) {
-                _hasElements_1 = true;
-              } else {
-                _builder.appendImmediate(", ", "");
-              }
-              CharSequence _paramString_1 = this.paramString(param_1);
-              _builder.append(_paramString_1);
-            }
-          }
-          {
-            if ((aceOperation.isAuthorize() && (authorization != null))) {
+            if ((it.isAuthorize() && (authorization != null))) {
               _builder.append(", authorization(\"");
               String _username_1 = authorization.getUsername();
               _builder.append(_username_1);
@@ -785,7 +812,7 @@ public class ScenarioTemplate {
               _builder.append(_password_1);
               _builder.append("\")");
             } else {
-              boolean _isAuthorize_1 = aceOperation.isAuthorize();
+              boolean _isAuthorize_1 = it.isAuthorize();
               if (_isAuthorize_1) {
                 _builder.append(", null");
               }
@@ -794,30 +821,21 @@ public class ScenarioTemplate {
           _builder.append(");");
           _builder.newLineIfNotEmpty();
         } else {
-          String _type_2 = aceOperation.getType();
+          String _type_2 = it.getType();
           boolean _equals_2 = Objects.equal(_type_2, "DELETE");
           if (_equals_2) {
-            String _packageFor_2 = this._aceExtension.packageFor(aceOperation);
+            String _packageFor_2 = this._aceExtension.packageFor(it);
             _builder.append(_packageFor_2);
             _builder.append(".ActionCalls.call");
-            String _firstUpper_2 = StringExtensions.toFirstUpper(aceOperation.getName());
+            String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
             _builder.append(_firstUpper_2);
             _builder.append("(");
+            String _firstLower_3 = StringExtensions.toFirstLower(it.getName());
+            _builder.append(_firstLower_3);
+            _builder.append(index);
+            _builder.append(", DROPWIZARD.getLocalPort()");
             {
-              List<String> _mergeAttributesForDeleteCall = this._attributeExtension.mergeAttributesForDeleteCall(aceOperation, dataDefinition, Integer.valueOf(index));
-              boolean _hasElements_2 = false;
-              for(final String param_2 : _mergeAttributesForDeleteCall) {
-                if (!_hasElements_2) {
-                  _hasElements_2 = true;
-                } else {
-                  _builder.appendImmediate(", ", "");
-                }
-                CharSequence _paramString_2 = this.paramString(param_2);
-                _builder.append(_paramString_2);
-              }
-            }
-            {
-              if ((aceOperation.isAuthorize() && (authorization != null))) {
+              if ((it.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
                 String _username_2 = authorization.getUsername();
                 _builder.append(_username_2);
@@ -826,7 +844,7 @@ public class ScenarioTemplate {
                 _builder.append(_password_2);
                 _builder.append("\")");
               } else {
-                boolean _isAuthorize_2 = aceOperation.isAuthorize();
+                boolean _isAuthorize_2 = it.isAuthorize();
                 if (_isAuthorize_2) {
                   _builder.append(", null");
                 }
@@ -835,27 +853,18 @@ public class ScenarioTemplate {
             _builder.append(");");
             _builder.newLineIfNotEmpty();
           } else {
-            String _packageFor_3 = this._aceExtension.packageFor(aceOperation);
+            String _packageFor_3 = this._aceExtension.packageFor(it);
             _builder.append(_packageFor_3);
             _builder.append(".ActionCalls.call");
-            String _firstUpper_3 = StringExtensions.toFirstUpper(aceOperation.getName());
+            String _firstUpper_3 = StringExtensions.toFirstUpper(it.getName());
             _builder.append(_firstUpper_3);
             _builder.append("(");
+            String _firstLower_4 = StringExtensions.toFirstLower(it.getName());
+            _builder.append(_firstLower_4);
+            _builder.append(index);
+            _builder.append(", DROPWIZARD.getLocalPort()");
             {
-              List<String> _mergeAttributesForGetCall = this._attributeExtension.mergeAttributesForGetCall(aceOperation, dataDefinition, Integer.valueOf(index));
-              boolean _hasElements_3 = false;
-              for(final String param_3 : _mergeAttributesForGetCall) {
-                if (!_hasElements_3) {
-                  _hasElements_3 = true;
-                } else {
-                  _builder.appendImmediate(", ", "");
-                }
-                CharSequence _paramString_3 = this.paramString(param_3);
-                _builder.append(_paramString_3);
-              }
-            }
-            {
-              if ((aceOperation.isAuthorize() && (authorization != null))) {
+              if ((it.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
                 String _username_3 = authorization.getUsername();
                 _builder.append(_username_3);
@@ -864,7 +873,7 @@ public class ScenarioTemplate {
                 _builder.append(_password_3);
                 _builder.append("\")");
               } else {
-                boolean _isAuthorize_3 = aceOperation.isAuthorize();
+                boolean _isAuthorize_3 = it.isAuthorize();
                 if (_isAuthorize_3) {
                   _builder.append(", null");
                 }
@@ -874,18 +883,6 @@ public class ScenarioTemplate {
             _builder.newLineIfNotEmpty();
           }
         }
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence paramString(final String param) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((param != null) && (param.length() > 0))) {
-        _builder.append(param);
-      } else {
-        _builder.append("null");
       }
     }
     return _builder;

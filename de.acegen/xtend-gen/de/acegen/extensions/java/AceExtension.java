@@ -222,10 +222,10 @@ public class AceExtension {
       } else {
         String _urlWithPathParam_1 = urlWithPathParam;
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("\" + ");
-        String _get_1 = urlElements.get(i);
-        _builder.append(_get_1);
-        _builder.append(" + \"");
+        _builder.append("\" + data.get");
+        String _firstUpper = StringExtensions.toFirstUpper(urlElements.get(i));
+        _builder.append(_firstUpper);
+        _builder.append("() + \"");
         urlWithPathParam = (_urlWithPathParam_1 + _builder);
       }
     }

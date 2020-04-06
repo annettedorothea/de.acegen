@@ -18,23 +18,14 @@
 package de.acegen.templates.java
 
 import de.acegen.aceGen.AuthUser
-import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class AceTemplate {
 
 	@Inject
 	extension AttributeExtension
-
-	@Inject
-	extension ModelExtension
-
-	@Inject
-	extension AceExtension
 
 	@Inject
 	extension CommonExtension
@@ -1434,93 +1425,6 @@ class AceTemplate {
 		
 	'''
 
-	def generateEventconsumer() '''
-		«copyright»
-		
-		package de.acegen;
-		
-		@FunctionalInterface
-		public interface EventConsumer {
-			public void consumeEvent(IDataContainer data, PersistenceHandle handle);
-		}
-		
-		«sdg»
-		
-	'''
-
-	def generateActionCalls(HttpServer it) '''
-		«copyright»
-		
-		package «getName»;
-		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		import javax.ws.rs.client.Invocation.Builder;
-		import javax.ws.rs.core.Response;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
-		
-		@SuppressWarnings("unused")
-		public class ActionCalls {
-		
-			«FOR aceOperation : aceOperations»
-				«IF aceOperation.getType == "POST"»
-					public static Response call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPost(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", port)).request(); 
-						«aceOperation.getModel.dataInterfaceNameWithPackage» data = new «aceOperation.getModel.dataNameWithPackage»(uuid);
-						«IF aceOperation.payload.length > 0»
-							«FOR param : aceOperation.payload»
-								data.«param.setterCall(param.name.toFirstLower)»;
-							«ENDFOR»
-						«ENDIF»
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.post(Entity.json(data));
-					}
-				«ELSEIF aceOperation.getType == "PUT"»
-					public static Response call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPut(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request();
-						«aceOperation.getModel.dataInterfaceNameWithPackage» data = new «aceOperation.getModel.dataNameWithPackage»(uuid);
-						«FOR param : aceOperation.payload»
-							data.«param.setterCall(param.name.toFirstLower)»;
-						«ENDFOR»
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
-					}
-				«ELSEIF aceOperation.getType == "DELETE"»
-					public static Response call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDelete(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request();
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.delete();
-					}
-				«ELSE»
-					public static Response call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGet(aceOperation) SEPARATOR ', '»«param»«ENDFOR»«IF aceOperation.isAuthorize», String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + uuid«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + «queryParam.name»«ENDFOR», port)).request(); 
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.get();
-					}
-				«ENDIF»
-				
-			«ENDFOR»
-			
-		}
-		
-		
-		«sdg»
-		
-	'''
-	
 	def generatePersistenceHandle() '''
 		«copyright»
 
@@ -1547,7 +1451,6 @@ class AceTemplate {
 		
 	'''
 
-	
 	def generatePersistenceConnection() '''
 		«copyright»
 

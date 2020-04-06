@@ -126,7 +126,6 @@ class CommandTemplate {
 		
 		import javax.ws.rs.WebApplicationException;
 		import javax.ws.rs.core.Response;
-		import de.acegen.CustomAppConfiguration;
 		
 		public abstract class Command<T extends IDataContainer> implements ICommand {
 		

@@ -85,7 +85,7 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''" + «urlElements.get(i)» + "'''
+				urlWithPathParam += '''" + data.get«urlElements.get(i).toFirstUpper»() + "'''
 			}
 		}
 		return urlWithPathParam;

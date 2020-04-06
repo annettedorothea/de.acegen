@@ -85,11 +85,11 @@ class ScenarioTemplate {
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
-							«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
+							«givenRef.scenario.whenBlock.generateActionCall(java, index++, false)»
 						«ENDFOR»
 					«ELSE»
 						«givenRef.scenario.whenBlock.generatePrepare»
-						«givenRef.scenario.whenBlock.generateActionCall(java, index++)»
+						«givenRef.scenario.whenBlock.generateActionCall(java, index++, false)»
 					«ENDIF»
 
 			«ENDFOR»
@@ -97,7 +97,7 @@ class ScenarioTemplate {
 			
 			private Response when() throws Exception {
 				«whenBlock.generatePrepare»
-				return «whenBlock.generateActionCall(java, 0)»
+				«whenBlock.generateActionCall(java, 0, true)»
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
@@ -176,29 +176,30 @@ class ScenarioTemplate {
 		«ENDIF»
 	'''
 
-	private def generateActionCall(WhenBlock it, HttpServer java,
-		int index) '''«generateActionCalls(action, dataDefinition, authorization, java, index)»'''
+	private def generateActionCall(WhenBlock it, HttpServer java, int index, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, index, returnResponse)»'''
 
-	def generateDataCreation(DataDefinition it, Model model, String varName) '''
+	private def generateDataCreation(DataDefinition it, Model model, String varName) '''
 		«resetVarIndex»
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
 		«IF systemtime !== null»
 			«varName».setSystemTime(«dateTimeParse(systemtime, pattern)»);
 		«ENDIF»
-		«FOR attributeDefinition : data.attributeDefinitions»
-			«IF attributeDefinition.value.attributeDefinitionList !== null»
-				«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
-				«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-			«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
-				«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
-				«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-			«ELSE»
-				«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
-			«ENDIF»
-		«ENDFOR»
+		«IF data !== null && data.attributeDefinitions !== null»
+			«FOR attributeDefinition : data.attributeDefinitions»
+				«IF attributeDefinition.value.attributeDefinitionList !== null»
+					«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
+				«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
+					«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
+				«ELSE»
+					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+				«ENDIF»
+			«ENDFOR»
+		«ENDIF»
 	'''
 
-	def generateModelCreation(AttributeDefinition it, String varName) '''
+	private def generateModelCreation(AttributeDefinition it, String varName) '''
 		
 			«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
 			«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
@@ -213,7 +214,7 @@ class ScenarioTemplate {
 			
 	'''
 
-	def String generateModelListCreation(AttributeDefinition it, String varName) '''
+	private def String generateModelListCreation(AttributeDefinition it, String varName) '''
 		
 			«IF value.listAttributeDefinitionList instanceof AttributeDefinitionListForList»
 				List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
@@ -233,8 +234,9 @@ class ScenarioTemplate {
 
 				«ENDFOR»
 			«ELSE»
+				List<«attribute.type»> «varName» = new ArrayList<«attribute.type»>();
 				«FOR primitiveValueDefinitionList : (value.listAttributeDefinitionList as PrimitiveValueDefinitionForList).valueDefinitionList»
-					«varName».add(«primitiveValueDefinitionList.primitiveValue»);
+					«varName».add(«IF primitiveValueDefinitionList.primitiveValue.stringValue !== null»"«primitiveValueDefinitionList.primitiveValue.stringValue»"«ELSE»«primitiveValueDefinitionList.primitiveValue.intValue»«ENDIF»);
 
 				«ENDFOR»
 			«ENDIF»
@@ -250,20 +252,23 @@ class ScenarioTemplate {
 		varIndex = 0;
 	}
 
-	def generateActionCalls(HttpServerAce aceOperation, DataDefinition dataDefinition, Authorization authorization,
-		HttpServer java, int index) '''
-		«IF aceOperation.getType == "POST"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPostCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
-		«ELSEIF aceOperation.getType == "PUT"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForPutCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
-		«ELSEIF aceOperation.getType == "DELETE"»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForDeleteCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
+		HttpServer java, int index, boolean returnResponse) '''
+		«IF model !== null»
+			«generateDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''')»
+		«ENDIF»
+		
+		«IF returnResponse»return «ENDIF»
+		«IF getType == "POST"»
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+		«ELSEIF getType == "PUT"»
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+		«ELSEIF getType == "DELETE"»
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSE»
-			«aceOperation.packageFor».ActionCalls.call«aceOperation.getName.toFirstUpper»(«FOR param : mergeAttributesForGetCall(aceOperation, dataDefinition, index) SEPARATOR ', '»«param.paramString»«ENDFOR»«IF aceOperation.isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF aceOperation.isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ENDIF»
 	'''
-
-	private def paramString(String param) '''«IF param !== null && param.length > 0»«param»«ELSE»null«ENDIF»'''
 
 	def generateBaseScenario() '''
 		«copyright»

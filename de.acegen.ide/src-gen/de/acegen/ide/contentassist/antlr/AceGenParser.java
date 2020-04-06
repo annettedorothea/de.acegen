@@ -31,7 +31,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, AceGenGrammarAccess grammarAccess) {
-			builder.put(grammarAccess.getProjectAccess().getAlternatives(), "rule__Project__Alternatives");
+			builder.put(grammarAccess.getProjectAccess().getAlternatives_1(), "rule__Project__Alternatives_1");
 			builder.put(grammarAccess.getHttpClientStateFunctionTypeAccess().getAlternatives(), "rule__HttpClientStateFunctionType__Alternatives");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
 			builder.put(grammarAccess.getListAttributeDefinitionListAccess().getAlternatives(), "rule__ListAttributeDefinitionList__Alternatives");
@@ -41,8 +41,9 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getConstraintAccess().getAlternatives(), "rule__Constraint__Alternatives");
 			builder.put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
-			builder.put(grammarAccess.getProjectAccess().getGroup_0(), "rule__Project__Group_0__0");
-			builder.put(grammarAccess.getProjectAccess().getGroup_1(), "rule__Project__Group_1__0");
+			builder.put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
+			builder.put(grammarAccess.getProjectAccess().getGroup_1_0(), "rule__Project__Group_1_0__0");
+			builder.put(grammarAccess.getProjectAccess().getGroup_1_1(), "rule__Project__Group_1_1__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup(), "rule__HttpClient__Group__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup_1(), "rule__HttpClient__Group_1__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup_2(), "rule__HttpClient__Group_2__0");
@@ -107,8 +108,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getValueAccess().getGroup_2(), "rule__Value__Group_2__0");
-			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_0_1(), "rule__Project__HttpClientAssignment_0_1");
-			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1(), "rule__Project__HttpServerAssignment_1_1");
+			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1(), "rule__Project__HttpClientAssignment_1_0_1");
+			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1(), "rule__Project__HttpServerAssignment_1_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
 			builder.put(grammarAccess.getHttpClientAccess().getAceOperationsAssignment_1_1(), "rule__HttpClient__AceOperationsAssignment_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getAppStateAssignment_2_1(), "rule__HttpClient__AppStateAssignment_2_1");

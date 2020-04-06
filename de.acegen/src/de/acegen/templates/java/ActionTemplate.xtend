@@ -687,6 +687,82 @@ class ActionTemplate {
 			return data;
 		}
 	'''
+
+	def generateActionCalls(HttpServer it) '''
+		«copyright»
+		
+		package «getName»;
+		
+		import javax.ws.rs.client.Client;
+		import javax.ws.rs.client.Entity;
+		import javax.ws.rs.client.Invocation.Builder;
+		import javax.ws.rs.core.Response;
+		
+		import org.glassfish.jersey.client.JerseyClientBuilder;
+		
+		@SuppressWarnings("unused")
+		public class ActionCalls {
+		
+			«FOR aceOperation : aceOperations»
+				«IF aceOperation.getType == "POST"»
+					public static Response call«aceOperation.getName.toFirstUpper»(
+							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							int port«IF aceOperation.isAuthorize», 
+							String authorization«ENDIF») {
+						Client client = new JerseyClientBuilder().build();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", port)).request(); 
+						«IF aceOperation.isAuthorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.post(Entity.json(data));
+					}
+				«ELSEIF aceOperation.getType == "PUT"»
+					public static Response call«aceOperation.getName.toFirstUpper»(
+							«aceOperation.getModel.dataInterfaceNameWithPackage» data, 
+							int port«IF aceOperation.isAuthorize», 
+							String authorization«ENDIF») {
+						Client client = new JerseyClientBuilder().build();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request();
+						«IF aceOperation.isAuthorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
+					}
+				«ELSEIF aceOperation.getType == "DELETE"»
+					public static Response call«aceOperation.getName.toFirstUpper»(
+							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							int port«IF aceOperation.isAuthorize», 
+							String authorization«ENDIF») {
+						Client client = new JerseyClientBuilder().build();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request();
+						«IF aceOperation.isAuthorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.delete();
+					}
+				«ELSE»
+					public static Response call«aceOperation.getName.toFirstUpper»(
+							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							int port«IF aceOperation.isAuthorize», 
+							String authorization«ENDIF») {
+						Client client = new JerseyClientBuilder().build();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request(); 
+						«IF aceOperation.isAuthorize»
+							builder.header("Authorization", authorization);
+						«ENDIF»
+						return builder.get();
+					}
+				«ENDIF»
+				
+			«ENDFOR»
+			
+		}
+		
+		
+		«sdg»
+		
+	'''
+	
 	
 }
 	

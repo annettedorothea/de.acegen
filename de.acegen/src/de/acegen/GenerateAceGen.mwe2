@@ -32,9 +32,9 @@ Workflow {
 			validator = {
 				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 			}
-			formatter = {
+			/*formatter = {
 				generateStub = true
-			}
+			}*/
 		}
 	}
 }
