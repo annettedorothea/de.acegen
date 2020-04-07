@@ -177,6 +177,8 @@ public class ScenarioTemplate {
                 CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus, false);
                 _builder.append(_generateActionCall, "\t\t");
                 _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.newLine();
               }
             }
           } else {
@@ -277,7 +279,7 @@ public class ScenarioTemplate {
       boolean _tripleNotEquals_1 = (_response != null);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
-        CharSequence _generateDataCreation = this.generateDataCreation(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel(), "expectedData");
+        CharSequence _generateDataCreation = this.generateDataCreation(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel(), "expectedData", null);
         _builder.append(_generateDataCreation, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -439,7 +441,7 @@ public class ScenarioTemplate {
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
                 _builder.append("\", ");
-                String _valueFrom = this._attributeExtension.valueFrom(attributeDefinition);
+                String _valueFrom = this._attributeExtension.valueFrom(attributeDefinition, null);
                 _builder.append(_valueFrom);
                 _builder.append(");");
                 _builder.newLineIfNotEmpty();
@@ -459,7 +461,7 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName) {
+  private CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName, final Integer index) {
     StringConcatenation _builder = new StringConcatenation();
     this.resetVarIndex();
     _builder.newLineIfNotEmpty();
@@ -508,7 +510,7 @@ public class ScenarioTemplate {
               if (_tripleNotEquals_2) {
                 String _firstUpper = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
                 String _plus = (varName + _firstUpper);
-                CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus);
+                CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus, index);
                 _builder.append(_generateModelCreation);
                 _builder.newLineIfNotEmpty();
                 _builder.append(varName);
@@ -526,7 +528,7 @@ public class ScenarioTemplate {
                 if (_tripleNotEquals_3) {
                   String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
                   String _plus_2 = (varName + _firstUpper_2);
-                  String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2);
+                  String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2, index);
                   _builder.append(_generateModelListCreation);
                   _builder.newLineIfNotEmpty();
                   _builder.append(varName);
@@ -541,7 +543,7 @@ public class ScenarioTemplate {
                 } else {
                   _builder.append(varName);
                   _builder.append(".");
-                  String _setterCall_2 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+                  String _setterCall_2 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
                   _builder.append(_setterCall_2);
                   _builder.append(";");
                   _builder.newLineIfNotEmpty();
@@ -550,12 +552,13 @@ public class ScenarioTemplate {
             }
           }
         }
+        _builder.newLine();
       }
     }
     return _builder;
   }
   
-  private CharSequence generateModelCreation(final AttributeDefinition it, final String varName) {
+  private CharSequence generateModelCreation(final AttributeDefinition it, final String varName, final Integer index) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     _builder.append("\t");
@@ -578,7 +581,7 @@ public class ScenarioTemplate {
             final String listVarName = this.newVarName("list");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
+            String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName, index);
             _builder.append(_generateModelListCreation, "\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -592,7 +595,7 @@ public class ScenarioTemplate {
             _builder.append("\t");
             _builder.append(varName, "\t");
             _builder.append(".");
-            String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+            String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
             _builder.append(_setterCall_1, "\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
@@ -605,7 +608,7 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private String generateModelListCreation(final AttributeDefinition it, final String varName) {
+  private String generateModelListCreation(final AttributeDefinition it, final String varName, final Integer index) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     {
@@ -649,7 +652,7 @@ public class ScenarioTemplate {
                     final String listVarName = this.newVarName("list");
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t");
-                    String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName);
+                    String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName, index);
                     _builder.append(_generateModelListCreation, "\t");
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t");
@@ -663,7 +666,7 @@ public class ScenarioTemplate {
                     _builder.append("\t");
                     _builder.append(itemVarName, "\t");
                     _builder.append(".");
-                    String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition));
+                    String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
                     _builder.append(_setterCall_1, "\t");
                     _builder.append(";");
                     _builder.newLineIfNotEmpty();
@@ -744,7 +747,7 @@ public class ScenarioTemplate {
         String _firstLower = StringExtensions.toFirstLower(it.getName());
         _builder_1.append(_firstLower);
         _builder_1.append(index);
-        CharSequence _generateDataCreation = this.generateDataCreation(dataDefinition, _model_1, _builder_1.toString());
+        CharSequence _generateDataCreation = this.generateDataCreation(dataDefinition, _model_1, _builder_1.toString(), Integer.valueOf(index));
         _builder.append(_generateDataCreation);
         _builder.newLineIfNotEmpty();
       }
@@ -885,6 +888,7 @@ public class ScenarioTemplate {
         }
       }
     }
+    _builder.newLine();
     return _builder;
   }
   

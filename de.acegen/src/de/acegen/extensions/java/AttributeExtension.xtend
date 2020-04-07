@@ -136,7 +136,7 @@ class AttributeExtension {
 
 	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»"))'''
 
-	def String valueFrom(AttributeDefinition it, Integer... index) {
+	def String valueFrom(AttributeDefinition it, Integer index) {
 		if (value.stringValue !== null) {
 			if (attribute.type == "DateTime") {
 				return dateTimeParse(value.stringValue, value.pattern)
@@ -153,7 +153,7 @@ class AttributeExtension {
 			if (attribute.type == "Long") {
 				return '''Long.parseLong("«value.stringValue»")'''
 			}
-			return '''this.templateStringValue("«value.stringValue»", «IF index.length > 0»«index.get(0)»«ELSE»null«ENDIF»)'''
+			return '''this.templateStringValue("«value.stringValue»", «IF index !== null»«index»«ELSE»null«ENDIF»)'''
 		}
 		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
 			return "null"

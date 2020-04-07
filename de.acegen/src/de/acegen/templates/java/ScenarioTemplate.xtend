@@ -86,6 +86,7 @@ class ScenarioTemplate {
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
 							«givenRef.scenario.whenBlock.generateActionCall(java, index++, false)»
+							
 						«ENDFOR»
 					«ELSE»
 						«givenRef.scenario.whenBlock.generatePrepare»
@@ -113,7 +114,7 @@ class ScenarioTemplate {
 					}
 				«ENDIF»
 				«IF thenBlock.response !== null»
-					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData")»
+					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData", null)»
 					
 					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
 
@@ -170,7 +171,7 @@ class ScenarioTemplate {
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null»
 			«FOR attributeDefinition: dataDefinition.data.attributeDefinitions»
 				«IF attributeDefinition.attribute.notReplayable»
-					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", «attributeDefinition.valueFrom»);
+					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", «attributeDefinition.valueFrom(null)»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
@@ -178,7 +179,7 @@ class ScenarioTemplate {
 
 	private def generateActionCall(WhenBlock it, HttpServer java, int index, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, index, returnResponse)»'''
 
-	private def generateDataCreation(DataDefinition it, Model model, String varName) '''
+	private def generateDataCreation(DataDefinition it, Model model, String varName, Integer index) '''
 		«resetVarIndex»
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
 		«IF systemtime !== null»
@@ -187,34 +188,35 @@ class ScenarioTemplate {
 		«IF data !== null && data.attributeDefinitions !== null»
 			«FOR attributeDefinition : data.attributeDefinitions»
 				«IF attributeDefinition.value.attributeDefinitionList !== null»
-					«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+					«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
 					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
 				«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
-					«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper)»
+					«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
 					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
 				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
 				«ENDIF»
 			«ENDFOR»
+			
 		«ENDIF»
 	'''
 
-	private def generateModelCreation(AttributeDefinition it, String varName) '''
+	private def generateModelCreation(AttributeDefinition it, String varName, Integer index) '''
 		
 			«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
 			«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
 				«IF attributeDefinition.attribute.isList»
 					«val listVarName = newVarName("list")»
-					«generateModelListCreation(attributeDefinition, listVarName)»
+					«generateModelListCreation(attributeDefinition, listVarName, index)»
 					«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
 				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
 				«ENDIF»
 			«ENDFOR»
 			
 	'''
 
-	private def String generateModelListCreation(AttributeDefinition it, String varName) '''
+	private def String generateModelListCreation(AttributeDefinition it, String varName, Integer index) '''
 		
 			«IF value.listAttributeDefinitionList instanceof AttributeDefinitionListForList»
 				List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
@@ -224,10 +226,10 @@ class ScenarioTemplate {
 					«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
 						«IF attributeDefinition.attribute.isList»
 							«val listVarName = newVarName("list")»
-							«generateModelListCreation(attributeDefinition, listVarName)»
+							«generateModelListCreation(attributeDefinition, listVarName, index)»
 							«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
 						«ELSE»
-							«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom)»;
+							«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
 						«ENDIF»
 					«ENDFOR»
 					«varName».add(«itemVarName»);
@@ -255,7 +257,7 @@ class ScenarioTemplate {
 	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
 		HttpServer java, int index, boolean returnResponse) '''
 		«IF model !== null»
-			«generateDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''')»
+			«generateDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''', index)»
 		«ENDIF»
 		
 		«IF returnResponse»return «ENDIF»
@@ -268,6 +270,7 @@ class ScenarioTemplate {
 		«ELSE»
 			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ENDIF»
+		
 	'''
 
 	def generateBaseScenario() '''

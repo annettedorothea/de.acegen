@@ -460,7 +460,7 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String valueFrom(final AttributeDefinition it, final Integer... index) {
+  public String valueFrom(final AttributeDefinition it, final Integer index) {
     String _stringValue = it.getValue().getStringValue();
     boolean _tripleNotEquals = (_stringValue != null);
     if (_tripleNotEquals) {
@@ -515,11 +515,8 @@ public class AttributeExtension {
       _builder_4.append(_stringValue_5);
       _builder_4.append("\", ");
       {
-        int _length = index.length;
-        boolean _greaterThan = (_length > 0);
-        if (_greaterThan) {
-          Integer _get = index[0];
-          _builder_4.append(_get);
+        if ((index != null)) {
+          _builder_4.append(index);
         } else {
           _builder_4.append("null");
         }
