@@ -1059,20 +1059,6 @@ class AceTemplate {
 		
 	'''
 
-	def generateAceExecutionMode() '''
-		«copyright»
-		
-		package de.acegen;
-		
-		public enum AceExecutionMode {
-			LIVE, REPLAY, DEV
-		}
-		
-		
-		«sdg»
-		
-	'''
-
 	def generateITimelineItem() '''
 		«copyright»
 		

@@ -2438,31 +2438,6 @@ public class AceTemplate {
     return _builder;
   }
   
-  public CharSequence generateAceExecutionMode() {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("package de.acegen;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("public enum AceExecutionMode {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("LIVE, REPLAY, DEV");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence generateITimelineItem() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

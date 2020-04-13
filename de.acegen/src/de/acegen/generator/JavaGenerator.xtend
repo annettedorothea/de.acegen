@@ -180,8 +180,6 @@ class JavaGenerator {
 
 		fsa.generateFile("de/acegen" + '/AceDao.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateAceDao());
-		fsa.generateFile("de/acegen" + '/AceExecutionMode.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAceExecutionMode());
 		fsa.generateFile("de/acegen" + '/Action.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			actionTemplate.generateAction());
 		fsa.generateFile("de/acegen" + '/Command.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
