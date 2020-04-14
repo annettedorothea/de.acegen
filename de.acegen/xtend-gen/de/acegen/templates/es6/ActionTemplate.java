@@ -545,7 +545,7 @@ public class ActionTemplate {
     _builder.append("AppUtils.renderNewState();");
     _builder.newLine();
     _builder.append("\t           ");
-    _builder.append("if (ACEController.execution === ACEController.LIVE) {");
+    _builder.append("if (ACEController.execution === ACEController.UI) {");
     _builder.newLine();
     _builder.append("\t               ");
     _builder.append("this.actionData.uuid = AppUtils.createUUID();");
@@ -662,7 +662,7 @@ public class ActionTemplate {
     _builder.append("applyAction() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("if (ACEController.execution === ACEController.LIVE) {");
+    _builder.append("if (ACEController.execution === ACEController.UI) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.actionData.uuid = AppUtils.createUUID();");

@@ -190,7 +190,7 @@ class ActionTemplate {
 			           	this.preCall();
 			           }
 			           AppUtils.renderNewState();
-			           if (ACEController.execution === ACEController.LIVE) {
+			           if (ACEController.execution === ACEController.UI) {
 			               this.actionData.uuid = AppUtils.createUUID();
 			               this.initActionData();
 			           }
@@ -238,7 +238,7 @@ class ActionTemplate {
 		    }
 		
 		    applyAction() {
-		    if (ACEController.execution === ACEController.LIVE) {
+		    if (ACEController.execution === ACEController.UI) {
 		        this.actionData.uuid = AppUtils.createUUID();
 		        this.initActionData();
 		    }

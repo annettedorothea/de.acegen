@@ -1457,8 +1457,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
-    _builder.append("import de.acegen.AceExecutionMode;");
-    _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
@@ -1796,8 +1794,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import org.glassfish.jersey.client.JerseyClientBuilder;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ActionCalls {");
     _builder.newLine();

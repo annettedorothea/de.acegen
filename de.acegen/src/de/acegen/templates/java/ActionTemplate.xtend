@@ -575,7 +575,6 @@ class ActionTemplate {
 		
 		import io.dropwizard.setup.Environment;
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.AceExecutionMode;
 		import de.acegen.IDaoProvider;
 		import de.acegen.ViewProvider;
 		import de.acegen.ServerConfiguration;
@@ -700,7 +699,6 @@ class ActionTemplate {
 		
 		import org.glassfish.jersey.client.JerseyClientBuilder;
 		
-		@SuppressWarnings("unused")
 		public class ActionCalls {
 		
 			«FOR aceOperation : aceOperations»
