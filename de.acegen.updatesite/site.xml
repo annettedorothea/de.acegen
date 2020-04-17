@@ -14,4 +14,5 @@
    <feature url="features/de.acegen.feature_0.7.6.jar" id="de.acegen.feature" version="0.7.6"/>
    <feature url="features/de.acegen.feature_0.7.7.jar" id="de.acegen.feature" version="0.7.7"/>
    <feature url="features/de.acegen.feature_0.7.8.jar" id="de.acegen.feature" version="0.7.8"/>
+   <feature url="features/de.acegen.feature_0.7.9.jar" id="de.acegen.feature" version="0.7.9"/>
 </site>
