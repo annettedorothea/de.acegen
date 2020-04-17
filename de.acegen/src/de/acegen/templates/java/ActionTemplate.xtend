@@ -699,6 +699,7 @@ class ActionTemplate {
 		
 		import org.glassfish.jersey.client.JerseyClientBuilder;
 		
+		@SuppressWarnings("unused")
 		public class ActionCalls {
 		
 			«FOR aceOperation : aceOperations»

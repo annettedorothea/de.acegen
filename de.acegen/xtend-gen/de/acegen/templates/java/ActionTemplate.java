@@ -1795,6 +1795,8 @@ public class ActionTemplate {
     _builder.append("import org.glassfish.jersey.client.JerseyClientBuilder;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.newLine();
     _builder.append("public class ActionCalls {");
     _builder.newLine();
     _builder.newLine();

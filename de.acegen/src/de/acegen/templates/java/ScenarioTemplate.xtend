@@ -182,9 +182,6 @@ class ScenarioTemplate {
 	private def generateDataCreation(DataDefinition it, Model model, String varName, Integer index) '''
 		«resetVarIndex»
 		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
-		«IF systemtime !== null»
-			«varName».setSystemTime(«dateTimeParse(systemtime, pattern)»);
-		«ENDIF»
 		«IF data !== null && data.attributeDefinitions !== null»
 			«FOR attributeDefinition : data.attributeDefinitions»
 				«IF attributeDefinition.value.attributeDefinitionList !== null»

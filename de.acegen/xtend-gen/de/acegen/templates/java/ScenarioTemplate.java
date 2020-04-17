@@ -488,26 +488,14 @@ public class ScenarioTemplate {
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     {
-      String _systemtime = it.getSystemtime();
-      boolean _tripleNotEquals_1 = (_systemtime != null);
-      if (_tripleNotEquals_1) {
-        _builder.append(varName);
-        _builder.append(".setSystemTime(");
-        String _dateTimeParse = this._attributeExtension.dateTimeParse(it.getSystemtime(), it.getPattern());
-        _builder.append(_dateTimeParse);
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
       if (((it.getData() != null) && (it.getData().getAttributeDefinitions() != null))) {
         {
           EList<AttributeDefinition> _attributeDefinitions = it.getData().getAttributeDefinitions();
           for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
             {
               AttributeDefinitionList _attributeDefinitionList = attributeDefinition.getValue().getAttributeDefinitionList();
-              boolean _tripleNotEquals_2 = (_attributeDefinitionList != null);
-              if (_tripleNotEquals_2) {
+              boolean _tripleNotEquals_1 = (_attributeDefinitionList != null);
+              if (_tripleNotEquals_1) {
                 String _firstUpper = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
                 String _plus = (varName + _firstUpper);
                 CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus, index);
@@ -524,8 +512,8 @@ public class ScenarioTemplate {
                 _builder.newLineIfNotEmpty();
               } else {
                 ListAttributeDefinitionList _listAttributeDefinitionList = attributeDefinition.getValue().getListAttributeDefinitionList();
-                boolean _tripleNotEquals_3 = (_listAttributeDefinitionList != null);
-                if (_tripleNotEquals_3) {
+                boolean _tripleNotEquals_2 = (_listAttributeDefinitionList != null);
+                if (_tripleNotEquals_2) {
                   String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
                   String _plus_2 = (varName + _firstUpper_2);
                   String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2, index);
