@@ -151,7 +151,7 @@ public class AttributeExtension {
             _builder.append("\") != null ? new org.joda.time.DateTime(r.getTimestamp(\"");
             String _name_1 = it.getName();
             _builder.append(_name_1);
-            _builder.append("\")) : null");
+            _builder.append("\")).withZone(org.joda.time.DateTimeZone.UTC) : null");
           } else {
             boolean _equals_1 = it.getType().equals("Integer");
             if (_equals_1) {
@@ -456,7 +456,7 @@ public class AttributeExtension {
     _builder.append(date);
     _builder.append("\", DateTimeFormat.forPattern(\"");
     _builder.append(pattern);
-    _builder.append("\"))");
+    _builder.append("\")).withZone(DateTimeZone.UTC)");
     return _builder.toString();
   }
   
@@ -465,13 +465,8 @@ public class AttributeExtension {
     boolean _tripleNotEquals = (_stringValue != null);
     if (_tripleNotEquals) {
       String _type = it.getAttribute().getType();
-      boolean _equals = Objects.equal(_type, "DateTime");
+      boolean _equals = Objects.equal(_type, "Integer");
       if (_equals) {
-        return this.dateTimeParse(it.getValue().getStringValue(), it.getValue().getPattern());
-      }
-      String _type_1 = it.getAttribute().getType();
-      boolean _equals_1 = Objects.equal(_type_1, "Integer");
-      if (_equals_1) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Integer.parseInt(\"");
         String _stringValue_1 = it.getValue().getStringValue();
@@ -479,9 +474,9 @@ public class AttributeExtension {
         _builder.append("\")");
         return _builder.toString();
       }
-      String _type_2 = it.getAttribute().getType();
-      boolean _equals_2 = Objects.equal(_type_2, "Float");
-      if (_equals_2) {
+      String _type_1 = it.getAttribute().getType();
+      boolean _equals_1 = Objects.equal(_type_1, "Float");
+      if (_equals_1) {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("Float.parseFloat(\"");
         String _stringValue_2 = it.getValue().getStringValue();
@@ -489,9 +484,9 @@ public class AttributeExtension {
         _builder_1.append("\")");
         return _builder_1.toString();
       }
-      String _type_3 = it.getAttribute().getType();
-      boolean _equals_3 = Objects.equal(_type_3, "Boolean");
-      if (_equals_3) {
+      String _type_2 = it.getAttribute().getType();
+      boolean _equals_2 = Objects.equal(_type_2, "Boolean");
+      if (_equals_2) {
         StringConcatenation _builder_2 = new StringConcatenation();
         _builder_2.append("new Boolean(\"");
         String _stringValue_3 = it.getValue().getStringValue();
@@ -499,9 +494,9 @@ public class AttributeExtension {
         _builder_2.append("\")");
         return _builder_2.toString();
       }
-      String _type_4 = it.getAttribute().getType();
-      boolean _equals_4 = Objects.equal(_type_4, "Long");
-      if (_equals_4) {
+      String _type_3 = it.getAttribute().getType();
+      boolean _equals_3 = Objects.equal(_type_3, "Long");
+      if (_equals_3) {
         StringConcatenation _builder_3 = new StringConcatenation();
         _builder_3.append("Long.parseLong(\"");
         String _stringValue_4 = it.getValue().getStringValue();
@@ -523,6 +518,11 @@ public class AttributeExtension {
       }
       _builder_4.append(")");
       return _builder_4.toString();
+    }
+    String _type_4 = it.getAttribute().getType();
+    boolean _equals_4 = Objects.equal(_type_4, "DateTime");
+    if (_equals_4) {
+      return this.dateTimeParse(it.getValue().getDateValue(), it.getValue().getPattern());
     }
     if (((it.getValue().getAttributeDefinitionList() != null) || (it.getValue().getListAttributeDefinitionList() != null))) {
       return "null";

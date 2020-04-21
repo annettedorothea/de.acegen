@@ -130,6 +130,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
+    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.newLine();
     _builder.append("import org.joda.time.format.DateTimeFormat;");
     _builder.newLine();
     _builder.newLine();

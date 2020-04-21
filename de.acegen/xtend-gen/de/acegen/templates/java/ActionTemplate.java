@@ -867,7 +867,7 @@ public class ActionTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("this.actionData.setSystemTime(new DateTime());");
+    _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("this.initActionData();");

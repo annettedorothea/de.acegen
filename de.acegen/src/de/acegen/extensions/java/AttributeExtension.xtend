@@ -57,7 +57,7 @@ class AttributeExtension {
 
 	def String mapperInit(Attribute it) {
 		if (type !== null) {
-			return '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+			return '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")).withZone(org.joda.time.DateTimeZone.UTC) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 		}
 		if (model !== null) {
 			return '''null''';
@@ -134,13 +134,10 @@ class AttributeExtension {
 		return !list && model === null;
 	}
 
-	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»"))'''
+	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»")).withZone(DateTimeZone.UTC)'''
 
 	def String valueFrom(AttributeDefinition it, Integer index) {
 		if (value.stringValue !== null) {
-			if (attribute.type == "DateTime") {
-				return dateTimeParse(value.stringValue, value.pattern)
-			}
 			if (attribute.type == "Integer") {
 				return '''Integer.parseInt("«value.stringValue»")'''
 			}
@@ -154,6 +151,9 @@ class AttributeExtension {
 				return '''Long.parseLong("«value.stringValue»")'''
 			}
 			return '''this.templateStringValue("«value.stringValue»", «IF index !== null»«index»«ELSE»null«ENDIF»)'''
+		}
+		if (attribute.type == "DateTime") {
+			return dateTimeParse(value.dateValue, value.pattern)
 		}
 		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
 			return "null"
