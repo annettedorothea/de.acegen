@@ -151,13 +151,6 @@ public class JavaGenerator {
         String _plus_26 = (_plus_25 + ".java");
         fsa.generateFile(_plus_26, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateData(model, java));
-        String _packageFolder_9 = this._javaExtension.packageFolder(java);
-        String _plus_27 = (_packageFolder_9 + "/data/");
-        String _testDataName = this._modelExtension.testDataName(model);
-        String _plus_28 = (_plus_27 + _testDataName);
-        String _plus_29 = (_plus_28 + ".java");
-        fsa.generateFile(_plus_29, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.modelTemplate.generateTestData(model, java));
       }
     }
     EList<HttpServerAce> _aceOperations = java.getAceOperations();
@@ -350,6 +343,8 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractViewProvider());
     fsa.generateFile(("de/acegen" + "/EventConsumer.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventconsumer());
+    fsa.generateFile(("de/acegen" + "/DateTimeToStringConverter.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateDateTimeToStringConverter());
     fsa.generateFile(("de/acegen" + "/PersistenceConnection.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceConnection());
     fsa.generateFile(("de/acegen" + "/PersistenceHandle.java"), 

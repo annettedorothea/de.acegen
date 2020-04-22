@@ -90,8 +90,6 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractData(model, java));
 			fsa.generateFile(java.packageFolder + '/data/' + model.dataName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
-			fsa.generateFile(java.packageFolder + '/data/' + model.testDataName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, modelTemplate.generateTestData(model, java));
 		}
 		for (ace : java.aceOperations) {
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
@@ -225,11 +223,13 @@ class JavaGenerator {
 		fsa.generateFile("de/acegen" + '/EventConsumer.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventconsumer());	
 
+		fsa.generateFile("de/acegen" + '/DateTimeToStringConverter.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateDateTimeToStringConverter());	
+
 		fsa.generateFile("de/acegen" + '/PersistenceConnection.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceConnection());	
-
-			fsa.generateFile("de/acegen" + '/PersistenceHandle.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceHandle());	
+		fsa.generateFile("de/acegen" + '/PersistenceHandle.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceHandle());	
 	
 		fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 			aceTemplate.generateAceMigration());

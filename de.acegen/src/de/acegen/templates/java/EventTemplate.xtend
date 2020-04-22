@@ -336,6 +336,26 @@ class EventTemplate {
 		
 	'''
 
+	def generateDateTimeToStringConverter() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import org.joda.time.DateTime;
+		
+		import com.fasterxml.jackson.databind.util.StdConverter;
+		
+		public class DateTimeToStringConverter extends StdConverter<DateTime, String> {
+			@Override
+			public String convert(DateTime value) {
+				return value.toString();
+			}
+		}
+		
+		«sdg»
+		
+	'''
+
 
 	
 }

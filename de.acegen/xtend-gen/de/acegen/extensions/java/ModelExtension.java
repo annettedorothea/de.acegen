@@ -379,20 +379,6 @@ public class ModelExtension {
     return _builder.toString();
   }
   
-  public String testDataName(final Model it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      if ((it != null)) {
-        String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-        _builder.append(_firstUpper);
-        _builder.append("TestData");
-      } else {
-        _builder.append("IDataContainer");
-      }
-    }
-    return _builder.toString();
-  }
-  
   public String abstractDataName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -431,17 +417,6 @@ public class ModelExtension {
     _builder.append(".data.");
     String _dataName = this.dataName(it);
     _builder.append(_dataName);
-    return _builder.toString();
-  }
-  
-  public String testDataNameWithPackage(final Model it) {
-    StringConcatenation _builder = new StringConcatenation();
-    EObject _eContainer = it.eContainer();
-    String _name = ((HttpServer) _eContainer).getName();
-    _builder.append(_name);
-    _builder.append(".data.");
-    String _testDataName = this.testDataName(it);
-    _builder.append(_testDataName);
     return _builder.toString();
   }
   

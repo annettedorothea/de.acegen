@@ -142,6 +142,9 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
     _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
@@ -149,6 +152,9 @@ public class ModelTemplate {
     _builder.append("import java.util.List;");
     _builder.newLine();
     _builder.append("import java.util.ArrayList;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import de.acegen.DateTimeToStringConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
@@ -351,6 +357,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -381,6 +389,8 @@ public class ModelTemplate {
     _builder.append("import de.acegen.AbstractData;");
     _builder.newLine();
     _builder.append("import de.acegen.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import de.acegen.DateTimeToStringConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -663,157 +673,6 @@ public class ModelTemplate {
     return _builder;
   }
   
-  public CharSequence generateTestData(final Model it, final HttpServer java) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("package ");
-    String _name = java.getName();
-    _builder.append(_name);
-    _builder.append(".data;");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import java.util.List;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
-    _builder.newLine();
-    _builder.append("public class ");
-    String _testDataName = this._modelExtension.testDataName(it);
-    _builder.append(_testDataName);
-    _builder.append(" {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private String uuid;");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      List<Attribute> _allAttributes = this._modelExtension.allAttributes(it);
-      for(final Attribute attribute : _allAttributes) {
-        _builder.append("\t");
-        String _testDeclaration = this._attributeExtension.testDeclaration(attribute);
-        _builder.append(_testDeclaration, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _testDataName_1 = this._modelExtension.testDataName(it);
-    _builder.append(_testDataName_1, "\t");
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    {
-      List<Attribute> _allAttributes_1 = this._modelExtension.allAttributes(it);
-      for(final Attribute attribute_1 : _allAttributes_1) {
-        _builder.append("\t\t");
-        String _testParam = this._attributeExtension.testParam(attribute_1);
-        _builder.append(_testParam, "\t\t");
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append("@JsonProperty(\"uuid\") String uuid");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(") {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.uuid = uuid;");
-    _builder.newLine();
-    {
-      List<Attribute> _allAttributes_2 = this._modelExtension.allAttributes(it);
-      for(final Attribute attribute_2 : _allAttributes_2) {
-        _builder.append("\t\t");
-        String _assign = this._attributeExtension.assign(attribute_2);
-        _builder.append(_assign, "\t\t");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _testDataName_2 = this._modelExtension.testDataName(it);
-    _builder.append(_testDataName_2, "\t");
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("@JsonProperty(\"uuid\") String uuid");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(") {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.uuid = uuid;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _testDataName_3 = this._modelExtension.testDataName(it);
-    _builder.append(_testDataName_3, "\t");
-    _builder.append("() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@JsonProperty");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public String getUuid() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return this.uuid;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      List<Attribute> _allAttributes_3 = this._modelExtension.allAttributes(it);
-      for(final Attribute attribute_3 : _allAttributes_3) {
-        _builder.append("\t");
-        String _testGetter = this._attributeExtension.testGetter(attribute_3);
-        _builder.append(_testGetter, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        String _testSetter = this._attributeExtension.testSetter(attribute_3);
-        _builder.append(_testSetter, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence generateAbstractData() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -963,6 +822,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonIgnore;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -974,6 +835,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import de.acegen.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import de.acegen.DateTimeToStringConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
@@ -1043,10 +906,6 @@ public class ModelTemplate {
         _builder.append("\t");
         String _ter = this._attributeExtension.getter(attribute_2, true);
         _builder.append(_ter, "\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        String _setter = this._attributeExtension.setter(attribute_2);
-        _builder.append(_setter, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.newLine();

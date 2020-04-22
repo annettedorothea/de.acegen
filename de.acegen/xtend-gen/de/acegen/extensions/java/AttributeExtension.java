@@ -125,57 +125,6 @@ public class AttributeExtension {
     return null;
   }
   
-  public String javaTestType(final Attribute it) {
-    String _type = it.getType();
-    boolean _tripleNotEquals = (_type != null);
-    if (_tripleNotEquals) {
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        boolean _isList = it.isList();
-        if (_isList) {
-          _builder.append("java.util.List<");
-        }
-      }
-      {
-        boolean _equals = it.getType().equals("DateTime");
-        if (_equals) {
-          _builder.append("String");
-        } else {
-          String _type_1 = it.getType();
-          _builder.append(_type_1);
-        }
-      }
-      {
-        boolean _isList_1 = it.isList();
-        if (_isList_1) {
-          _builder.append(">");
-        }
-      }
-      return _builder.toString();
-    }
-    Model _model = it.getModel();
-    boolean _tripleNotEquals_1 = (_model != null);
-    if (_tripleNotEquals_1) {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      {
-        boolean _isList_2 = it.isList();
-        if (_isList_2) {
-          _builder_1.append("java.util.List<");
-        }
-      }
-      String _testDataNameWithPackage = this._modelExtension.testDataNameWithPackage(it.getModel());
-      _builder_1.append(_testDataNameWithPackage);
-      {
-        boolean _isList_3 = it.isList();
-        if (_isList_3) {
-          _builder_1.append(">");
-        }
-      }
-      return _builder_1.toString();
-    }
-    return null;
-  }
-  
   public List<Integer> timesIterator(final int length) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     for (int i = 0; (i < length); i++) {
@@ -341,44 +290,6 @@ public class AttributeExtension {
     return null;
   }
   
-  public String testDeclaration(final Attribute it) {
-    String _type = it.getType();
-    boolean _tripleNotEquals = (_type != null);
-    if (_tripleNotEquals) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("private ");
-      String _javaTestType = this.javaTestType(it);
-      _builder.append(_javaTestType);
-      _builder.append(" ");
-      String _firstLower = StringExtensions.toFirstLower(it.getName());
-      _builder.append(_firstLower);
-      {
-        boolean _equals = it.getType().equals("Boolean");
-        if (_equals) {
-          _builder.append(" = false");
-        }
-      }
-      _builder.append(";");
-      _builder.newLineIfNotEmpty();
-      return _builder.toString();
-    }
-    Model _model = it.getModel();
-    boolean _tripleNotEquals_1 = (_model != null);
-    if (_tripleNotEquals_1) {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("private ");
-      String _javaTestType_1 = this.javaTestType(it);
-      _builder_1.append(_javaTestType_1);
-      _builder_1.append(" ");
-      String _name = it.getName();
-      _builder_1.append(_name);
-      _builder_1.append(";");
-      _builder_1.newLineIfNotEmpty();
-      return _builder_1.toString();
-    }
-    return null;
-  }
-  
   public String param(final Attribute it, final boolean jsonProperty) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -391,20 +302,6 @@ public class AttributeExtension {
     }
     String _javaType = this.javaType(it);
     _builder.append(_javaType);
-    _builder.append(" ");
-    String _name_1 = it.getName();
-    _builder.append(_name_1);
-    return _builder.toString();
-  }
-  
-  public String testParam(final Attribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@JsonProperty(\"");
-    String _name = it.getName();
-    _builder.append(_name);
-    _builder.append("\") ");
-    String _javaTestType = this.javaTestType(it);
-    _builder.append(_javaTestType);
     _builder.append(" ");
     String _name_1 = it.getName();
     _builder.append(_name_1);
@@ -454,33 +351,18 @@ public class AttributeExtension {
     {
       if (jsonProperty) {
         _builder.append("@JsonProperty");
+        _builder.newLine();
+        {
+          if (((it.getType() != null) && it.getType().equals("DateTime"))) {
+            _builder.append("@JsonSerialize(converter = DateTimeToStringConverter.class)");
+          }
+        }
+        _builder.newLineIfNotEmpty();
       }
     }
-    _builder.newLineIfNotEmpty();
     _builder.append("public ");
     String _javaType = this.javaType(it);
     _builder.append(_javaType);
-    _builder.append(" get");
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("return this.");
-    String _name = it.getName();
-    _builder.append(_name, "\t");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder.toString();
-  }
-  
-  public String testGetter(final Attribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public ");
-    String _javaTestType = this.javaTestType(it);
-    _builder.append(_javaTestType);
     _builder.append(" get");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
@@ -538,33 +420,6 @@ public class AttributeExtension {
     _builder.append("(");
     String _javaType = this.javaType(it);
     _builder.append(_javaType);
-    _builder.append(" ");
-    String _name = it.getName();
-    _builder.append(_name);
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("this.");
-    String _name_1 = it.getName();
-    _builder.append(_name_1, "\t");
-    _builder.append(" = ");
-    String _name_2 = it.getName();
-    _builder.append(_name_2, "\t");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder.toString();
-  }
-  
-  public String testSetter(final Attribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public void set");
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("(");
-    String _javaTestType = this.javaTestType(it);
-    _builder.append(_javaTestType);
     _builder.append(" ");
     String _name = it.getName();
     _builder.append(_name);

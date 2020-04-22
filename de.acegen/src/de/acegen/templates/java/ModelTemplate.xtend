@@ -71,10 +71,14 @@ class ModelTemplate {
 		package «java.getName».models;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
+		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
 		import java.util.List;
 		import java.util.ArrayList;
+
+		import de.acegen.DateTimeToStringConverter;
 
 		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
@@ -147,6 +151,7 @@ class ModelTemplate {
 		package «java.getName».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
+		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -162,6 +167,7 @@ class ModelTemplate {
 		
 		import de.acegen.AbstractData;
 		import de.acegen.IDataContainer;
+		import de.acegen.DateTimeToStringConverter;
 		
 		@SuppressWarnings("unused")
 		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
@@ -257,64 +263,6 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateTestData(Model it, HttpServer java) '''
-		«copyright»
-		
-		package «java.getName».data;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		
-		import org.joda.time.DateTime;
-		import java.util.List;
-		
-		@SuppressWarnings("unused")
-		public class «testDataName» {
-			
-			private String uuid;
-
-			«FOR attribute : allAttributes»
-				«attribute.testDeclaration»
-				
-			«ENDFOR»
-
-			public «testDataName»(
-				«FOR attribute : allAttributes»
-					«attribute.testParam», 
-				«ENDFOR»
-				@JsonProperty("uuid") String uuid
-			) {
-				this.uuid = uuid;
-				«FOR attribute : allAttributes»
-					«attribute.assign»
-				«ENDFOR»
-			}
-
-			public «testDataName»(
-				@JsonProperty("uuid") String uuid
-			) {
-				this.uuid = uuid;
-			}
-
-			public «testDataName»() {
-			}
-
-			@JsonProperty
-			public String getUuid() {
-				return this.uuid;
-			}
-		
-			«FOR attribute : allAttributes»
-				«attribute.testGetter»
-				«attribute.testSetter»
-				
-			«ENDFOR»
-		}
-		
-		
-		«sdg»
-		
-	'''
-	
 	def generateAbstractData() '''
 		«copyright»
 		
@@ -380,6 +328,7 @@ class ModelTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.annotation.JsonIgnore;
+		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -387,6 +336,7 @@ class ModelTemplate {
 		import java.util.List;
 		
 		import de.acegen.IDataContainer;
+		import de.acegen.DateTimeToStringConverter;
 		
 		@SuppressWarnings("all")
 		public class «responseDataName» implements «responseDataInterfaceName» {
@@ -406,7 +356,6 @@ class ModelTemplate {
 			
 			«FOR attribute : response»
 				«attribute.getter(true)»
-				«attribute.setter»
 				
 			«ENDFOR»
 		}

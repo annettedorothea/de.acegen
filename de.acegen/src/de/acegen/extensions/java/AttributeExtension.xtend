@@ -47,15 +47,6 @@ class AttributeExtension {
 		}
 	}
 	
-	def String javaTestType(Attribute it) {
-		if (type !== null) {
-			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
-		}
-		if (model !== null) {
-			return '''«IF list»java.util.List<«ENDIF»«model.testDataNameWithPackage»«IF list»>«ENDIF»'''
-		}
-	}
-	
 	def List<Integer> timesIterator(int length) {
 		var list = new ArrayList();
 		for(var i=0; i<length; i++) {
@@ -108,23 +99,8 @@ class AttributeExtension {
 		}
 	}
 
-	def String testDeclaration(Attribute it) {
-		if (type !== null) {
-			return '''
-				private «javaTestType» «name.toFirstLower»«IF type.equals('Boolean')» = false«ENDIF»;
-			'''
-		}
-		if (model !== null) {
-			return '''
-				private «javaTestType» «name»;
-			'''
-		}
-	}
-
 	def String param(Attribute it,
 		boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
-
-	def String testParam(Attribute it) '''@JsonProperty("«name»") «javaTestType» «name»'''
 
 	def String interfaceGetter(Attribute it) '''«javaType» get«name.toFirstUpper»();'''
 
@@ -133,14 +109,11 @@ class AttributeExtension {
 	def String assign(Attribute it) '''this.«name» = «name»;'''
 
 	def String getter(Attribute it, boolean jsonProperty) '''
-		«IF jsonProperty»@JsonProperty«ENDIF»
+		«IF jsonProperty»
+			@JsonProperty
+			«IF type !== null && type.equals('DateTime')»@JsonSerialize(converter = DateTimeToStringConverter.class)«ENDIF»
+		«ENDIF»
 		public «javaType» get«name.toFirstUpper»() {
-			return this.«name»;
-		}
-	'''
-
-	def String testGetter(Attribute it) '''
-		public «javaTestType» get«name.toFirstUpper»() {
 			return this.«name»;
 		}
 	'''
@@ -154,12 +127,6 @@ class AttributeExtension {
 
 	def String setter(Attribute it) '''
 		public void set«name.toFirstUpper»(«javaType» «name») {
-			this.«name» = «name»;
-		}
-	'''
-
-	def String testSetter(Attribute it) '''
-		public void set«name.toFirstUpper»(«javaTestType» «name») {
 			this.«name» = «name»;
 		}
 	'''

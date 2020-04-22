@@ -753,6 +753,45 @@ public class EventTemplate {
     return _builder;
   }
   
+  public CharSequence generateDateTimeToStringConverter() {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package de.acegen;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.util.StdConverter;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("public class DateTimeToStringConverter extends StdConverter<DateTime, String> {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public String convert(DateTime value) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return value.toString();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
   private CharSequence createEvent(final HttpServerAce it, final HttpServer java) {
     if (it instanceof HttpServerAceRead) {
       return _createEvent((HttpServerAceRead)it, java);

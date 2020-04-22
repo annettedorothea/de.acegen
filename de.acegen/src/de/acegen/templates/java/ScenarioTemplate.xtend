@@ -247,69 +247,6 @@ class ScenarioTemplate {
 			
 	'''
 
-	private def generateTestDataCreation(DataDefinition it, Model model, String varName, Integer index) '''
-		«resetVarIndex»
-		«model.testDataNameWithPackage» «varName» = new «model.testDataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
-		«IF data !== null && data.attributeDefinitions !== null»
-			«FOR attributeDefinition : data.attributeDefinitions»
-				«IF attributeDefinition.value.attributeDefinitionList !== null»
-					«generateTestModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
-					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-				«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
-					«generateTestModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
-					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.testValueFrom(index))»;
-				«ENDIF»
-			«ENDFOR»
-			
-		«ENDIF»
-	'''
-
-	private def generateTestModelCreation(AttributeDefinition it, String varName, Integer index) '''
-		
-			«attribute.model.testDataNameWithPackage» «varName» = new «attribute.model.testDataNameWithPackage»();
-			«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
-				«IF attributeDefinition.attribute.isList»
-					«val listVarName = newVarName("list")»
-					«generateTestModelListCreation(attributeDefinition, listVarName, index)»
-					«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
-				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.testValueFrom(index))»;
-				«ENDIF»
-			«ENDFOR»
-			
-	'''
-
-	private def String generateTestModelListCreation(AttributeDefinition it, String varName, Integer index) '''
-		
-			«IF value.listAttributeDefinitionList instanceof AttributeDefinitionListForList»
-				List<«attribute.model.testDataNameWithPackage»> «varName» = new ArrayList<«attribute.model.testDataNameWithPackage»>();
-				«FOR attributeDefinitionList : (value.listAttributeDefinitionList as AttributeDefinitionListForList).attributeDefinitionList»
-					«val itemVarName = newVarName("item")»
-					«attribute.model.testDataNameWithPackage» «itemVarName» = new «attribute.model.testDataNameWithPackage»();
-					«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
-						«IF attributeDefinition.attribute.isList»
-							«val listVarName = newVarName("list")»
-							«generateModelListCreation(attributeDefinition, listVarName, index)»
-							«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
-						«ELSE»
-							«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.testValueFrom(index))»;
-						«ENDIF»
-					«ENDFOR»
-					«varName».add(«itemVarName»);
-
-				«ENDFOR»
-			«ELSE»
-				List<«attribute.type»> «varName» = new ArrayList<«attribute.type»>();
-				«FOR primitiveValueDefinitionList : (value.listAttributeDefinitionList as PrimitiveValueDefinitionForList).valueDefinitionList»
-					«varName».add(«IF primitiveValueDefinitionList.primitiveValue.stringValue !== null»"«primitiveValueDefinitionList.primitiveValue.stringValue»"«ELSE»«primitiveValueDefinitionList.primitiveValue.intValue»«ENDIF»);
-
-				«ENDFOR»
-			«ENDIF»
-			
-	'''
-
 	private def newVarName(String prefix) {
 		varIndex++;
 		return prefix + varIndex;
@@ -322,7 +259,7 @@ class ScenarioTemplate {
 	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
 		HttpServer java, int index, boolean returnResponse) '''
 		«IF model !== null»
-			«generateTestDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''', index)»
+			«generateDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''', index)»
 		«ENDIF»
 		
 		«IF returnResponse»return «ENDIF»
