@@ -401,7 +401,12 @@ public class ScenarioTemplate {
     ArrayList<GivenRef> allWhenBlocks = new ArrayList<GivenRef>();
     EList<GivenRef> _givenRefs = it.getGivenRefs();
     for (final GivenRef givenRef : _givenRefs) {
-      this.allGivenRefsRec(givenRef, allWhenBlocks);
+      boolean _isExcludeGiven = givenRef.isExcludeGiven();
+      if (_isExcludeGiven) {
+        allWhenBlocks.add(givenRef);
+      } else {
+        this.allGivenRefsRec(givenRef, allWhenBlocks);
+      }
     }
     return allWhenBlocks;
   }

@@ -180,6 +180,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScenarioAccess().getThenBlockAssignment_5(), "rule__Scenario__ThenBlockAssignment_5");
 			builder.put(grammarAccess.getGivenRefAccess().getScenarioAssignment_0(), "rule__GivenRef__ScenarioAssignment_0");
 			builder.put(grammarAccess.getGivenRefAccess().getTimesAssignment_1_0(), "rule__GivenRef__TimesAssignment_1_0");
+			builder.put(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2(), "rule__GivenRef__ExcludeGivenAssignment_2");
 			builder.put(grammarAccess.getWhenBlockAccess().getActionAssignment_0(), "rule__WhenBlock__ActionAssignment_0");
 			builder.put(grammarAccess.getWhenBlockAccess().getDataDefinitionAssignment_1(), "rule__WhenBlock__DataDefinitionAssignment_1");
 			builder.put(grammarAccess.getWhenBlockAccess().getAuthorizationAssignment_2(), "rule__WhenBlock__AuthorizationAssignment_2");

@@ -151,7 +151,11 @@ class ScenarioTemplate {
 	private def allGivenRefs(Scenario it) {
 		var allWhenBlocks = new ArrayList<GivenRef>();
 		for (givenRef : givenRefs) {
-			allGivenRefsRec(givenRef, allWhenBlocks)
+			if (givenRef.excludeGiven) {
+				allWhenBlocks.add(givenRef)
+			} else {
+				allGivenRefsRec(givenRef, allWhenBlocks)
+			}
 		}
 		return allWhenBlocks
 	}

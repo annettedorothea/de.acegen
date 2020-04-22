@@ -1998,6 +1998,20 @@ ruleGivenRef returns [EObject current=null]
 				newLeafNode(otherlv_2, grammarAccess.getGivenRefAccess().getXKeyword_1_1());
 			}
 		)?
+		(
+			(
+				lv_excludeGiven_3_0='excludeGIVEN'
+				{
+					newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGivenRefRule());
+					}
+					setWithLastConsumed($current, "excludeGiven", true, "excludeGIVEN");
+				}
+			)
+		)?
 	)
 ;
 

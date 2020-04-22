@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getScenario <em>Scenario</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getTimes <em>Times</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#isExcludeGiven <em>Exclude Given</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,6 +61,26 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
    * @ordered
    */
   protected int times = TIMES_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isExcludeGiven() <em>Exclude Given</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isExcludeGiven()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean EXCLUDE_GIVEN_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isExcludeGiven() <em>Exclude Given</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isExcludeGiven()
+   * @generated
+   * @ordered
+   */
+  protected boolean excludeGiven = EXCLUDE_GIVEN_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -158,6 +179,31 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
    * @generated
    */
   @Override
+  public boolean isExcludeGiven()
+  {
+    return excludeGiven;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setExcludeGiven(boolean newExcludeGiven)
+  {
+    boolean oldExcludeGiven = excludeGiven;
+    excludeGiven = newExcludeGiven;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN, oldExcludeGiven, excludeGiven));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -167,6 +213,8 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
         return basicGetScenario();
       case AceGenPackage.GIVEN_REF__TIMES:
         return getTimes();
+      case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
+        return isExcludeGiven();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -186,6 +234,9 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
         return;
       case AceGenPackage.GIVEN_REF__TIMES:
         setTimes((Integer)newValue);
+        return;
+      case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
+        setExcludeGiven((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -207,6 +258,9 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
       case AceGenPackage.GIVEN_REF__TIMES:
         setTimes(TIMES_EDEFAULT);
         return;
+      case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
+        setExcludeGiven(EXCLUDE_GIVEN_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -225,6 +279,8 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
         return scenario != null;
       case AceGenPackage.GIVEN_REF__TIMES:
         return times != TIMES_EDEFAULT;
+      case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
+        return excludeGiven != EXCLUDE_GIVEN_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -242,6 +298,8 @@ public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenR
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (times: ");
     result.append(times);
+    result.append(", excludeGiven: ");
+    result.append(excludeGiven);
     result.append(')');
     return result.toString();
   }

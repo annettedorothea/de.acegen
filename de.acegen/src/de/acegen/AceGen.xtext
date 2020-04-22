@@ -134,7 +134,7 @@ Scenario:
 ;
 
 GivenRef:
-	scenario = [Scenario | QualifiedName] (times = INT 'x')?
+	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'excludeGIVEN')?
 ;
 
 WhenBlock: 

@@ -269,7 +269,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     GivenRef returns GivenRef
 	 *
 	 * Constraint:
-	 *     (scenario=[Scenario|QualifiedName] times=INT?)
+	 *     (scenario=[Scenario|QualifiedName] times=INT? excludeGiven?='excludeGIVEN'?)
 	 */
 	protected void sequence_GivenRef(ISerializationContext context, GivenRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

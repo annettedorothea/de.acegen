@@ -1102,13 +1102,22 @@ public interface AceGenPackage extends EPackage
   int GIVEN_REF__TIMES = 1;
 
   /**
+   * The feature id for the '<em><b>Exclude Given</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIVEN_REF__EXCLUDE_GIVEN = 2;
+
+  /**
    * The number of structural features of the '<em>Given Ref</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIVEN_REF_FEATURE_COUNT = 2;
+  int GIVEN_REF_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.WhenBlockImpl <em>When Block</em>}' class.
@@ -2494,6 +2503,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getGivenRef_Times();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.GivenRef#isExcludeGiven <em>Exclude Given</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Exclude Given</em>'.
+   * @see de.acegen.aceGen.GivenRef#isExcludeGiven()
+   * @see #getGivenRef()
+   * @generated
+   */
+  EAttribute getGivenRef_ExcludeGiven();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.WhenBlock <em>When Block</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3671,6 +3691,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute GIVEN_REF__TIMES = eINSTANCE.getGivenRef_Times();
+
+    /**
+     * The meta object literal for the '<em><b>Exclude Given</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GIVEN_REF__EXCLUDE_GIVEN = eINSTANCE.getGivenRef_ExcludeGiven();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.WhenBlockImpl <em>When Block</em>}' class.

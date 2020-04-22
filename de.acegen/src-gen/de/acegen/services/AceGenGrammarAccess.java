@@ -1283,12 +1283,14 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTimesAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cTimesINTTerminalRuleCall_1_0_0 = (RuleCall)cTimesAssignment_1_0.eContents().get(0);
 		private final Keyword cXKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cExcludeGivenAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cExcludeGivenExcludeGIVENKeyword_2_0 = (Keyword)cExcludeGivenAssignment_2.eContents().get(0);
 		
 		//GivenRef:
-		//	scenario=[Scenario|QualifiedName] (times=INT 'x')?;
+		//	scenario=[Scenario|QualifiedName] (times=INT 'x')? excludeGiven?='excludeGIVEN'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//scenario=[Scenario|QualifiedName] (times=INT 'x')?
+		//scenario=[Scenario|QualifiedName] (times=INT 'x')? excludeGiven?='excludeGIVEN'?
 		public Group getGroup() { return cGroup; }
 		
 		//scenario=[Scenario|QualifiedName]
@@ -1311,6 +1313,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'x'
 		public Keyword getXKeyword_1_1() { return cXKeyword_1_1; }
+		
+		//excludeGiven?='excludeGIVEN'?
+		public Assignment getExcludeGivenAssignment_2() { return cExcludeGivenAssignment_2; }
+		
+		//'excludeGIVEN'
+		public Keyword getExcludeGivenExcludeGIVENKeyword_2_0() { return cExcludeGivenExcludeGIVENKeyword_2_0; }
 	}
 	public class WhenBlockElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.WhenBlock");
@@ -2290,7 +2298,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//GivenRef:
-	//	scenario=[Scenario|QualifiedName] (times=INT 'x')?;
+	//	scenario=[Scenario|QualifiedName] (times=INT 'x')? excludeGiven?='excludeGIVEN'?;
 	public GivenRefElements getGivenRefAccess() {
 		return pGivenRef;
 	}

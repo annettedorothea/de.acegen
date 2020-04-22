@@ -1185,6 +1185,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getGivenRef_ExcludeGiven()
+  {
+    return (EAttribute)givenRefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getWhenBlock()
   {
     return whenBlockEClass;
@@ -1821,6 +1832,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     givenRefEClass = createEClass(GIVEN_REF);
     createEReference(givenRefEClass, GIVEN_REF__SCENARIO);
     createEAttribute(givenRefEClass, GIVEN_REF__TIMES);
+    createEAttribute(givenRefEClass, GIVEN_REF__EXCLUDE_GIVEN);
 
     whenBlockEClass = createEClass(WHEN_BLOCK);
     createEReference(whenBlockEClass, WHEN_BLOCK__ACTION);
@@ -2012,6 +2024,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(givenRefEClass, GivenRef.class, "GivenRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGivenRef_Scenario(), this.getScenario(), null, "scenario", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGivenRef_Times(), ecorePackage.getEInt(), "times", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGivenRef_ExcludeGiven(), ecorePackage.getEBoolean(), "excludeGiven", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(whenBlockEClass, WhenBlock.class, "WhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getWhenBlock_Action(), this.getHttpServerAce(), null, "action", null, 0, 1, WhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

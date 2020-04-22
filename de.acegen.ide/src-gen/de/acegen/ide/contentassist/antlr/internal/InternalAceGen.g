@@ -5489,6 +5489,7 @@ rule__GivenRef__Group__1
 	}
 :
 	rule__GivenRef__Group__1__Impl
+	rule__GivenRef__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5503,6 +5504,32 @@ rule__GivenRef__Group__1__Impl
 	{ before(grammarAccess.getGivenRefAccess().getGroup_1()); }
 	(rule__GivenRef__Group_1__0)?
 	{ after(grammarAccess.getGivenRefAccess().getGroup_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__GivenRef__Group__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__GivenRef__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__GivenRef__Group__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2()); }
+	(rule__GivenRef__ExcludeGivenAssignment_2)?
+	{ after(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2()); }
 )
 ;
 finally {
@@ -8131,6 +8158,25 @@ rule__GivenRef__TimesAssignment_1_0
 		{ before(grammarAccess.getGivenRefAccess().getTimesINTTerminalRuleCall_1_0_0()); }
 		RULE_INT
 		{ after(grammarAccess.getGivenRefAccess().getTimesINTTerminalRuleCall_1_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__GivenRef__ExcludeGivenAssignment_2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0()); }
+		(
+			{ before(grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0()); }
+			'excludeGIVEN'
+			{ after(grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0()); }
+		)
+		{ after(grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0()); }
 	)
 ;
 finally {
