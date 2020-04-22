@@ -90,6 +90,8 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractData(model, java));
 			fsa.generateFile(java.packageFolder + '/data/' + model.dataName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
+			fsa.generateFile(java.packageFolder + '/data/' + model.testDataName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, modelTemplate.generateTestData(model, java));
 		}
 		for (ace : java.aceOperations) {
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
@@ -129,7 +131,7 @@ class JavaGenerator {
 		}
 
 		fsa.generateFile(java.packageFolder + '/ActionCalls.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateActionCalls(java));
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, actionTemplate.generateActionCalls(java));
 
 		if (java.aceOperations.size > 0) {
 			fsa.generateFile(java.packageFolder + '/events/EventFactory.java',

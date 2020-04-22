@@ -257,6 +257,64 @@ class ModelTemplate {
 		
 	'''
 	
+	def generateTestData(Model it, HttpServer java) '''
+		«copyright»
+		
+		package «java.getName».data;
+		
+		import com.fasterxml.jackson.annotation.JsonProperty;
+		
+		import org.joda.time.DateTime;
+		import java.util.List;
+		
+		@SuppressWarnings("unused")
+		public class «testDataName» {
+			
+			private String uuid;
+
+			«FOR attribute : allAttributes»
+				«attribute.testDeclaration»
+				
+			«ENDFOR»
+
+			public «testDataName»(
+				«FOR attribute : allAttributes»
+					«attribute.testParam», 
+				«ENDFOR»
+				@JsonProperty("uuid") String uuid
+			) {
+				this.uuid = uuid;
+				«FOR attribute : allAttributes»
+					«attribute.assign»
+				«ENDFOR»
+			}
+
+			public «testDataName»(
+				@JsonProperty("uuid") String uuid
+			) {
+				this.uuid = uuid;
+			}
+
+			public «testDataName»() {
+			}
+
+			@JsonProperty
+			public String getUuid() {
+				return this.uuid;
+			}
+		
+			«FOR attribute : allAttributes»
+				«attribute.testGetter»
+				«attribute.testSetter»
+				
+			«ENDFOR»
+		}
+		
+		
+		«sdg»
+		
+	'''
+	
 	def generateAbstractData() '''
 		«copyright»
 		
@@ -348,6 +406,7 @@ class ModelTemplate {
 			
 			«FOR attribute : response»
 				«attribute.getter(true)»
+				«attribute.setter»
 				
 			«ENDFOR»
 		}

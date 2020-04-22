@@ -47,6 +47,15 @@ class AttributeExtension {
 		}
 	}
 	
+	def String javaTestType(Attribute it) {
+		if (type !== null) {
+			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»String«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
+		}
+		if (model !== null) {
+			return '''«IF list»java.util.List<«ENDIF»«model.testDataNameWithPackage»«IF list»>«ENDIF»'''
+		}
+	}
+	
 	def List<Integer> timesIterator(int length) {
 		var list = new ArrayList();
 		for(var i=0; i<length; i++) {
@@ -99,8 +108,23 @@ class AttributeExtension {
 		}
 	}
 
+	def String testDeclaration(Attribute it) {
+		if (type !== null) {
+			return '''
+				private «javaTestType» «name.toFirstLower»«IF type.equals('Boolean')» = false«ENDIF»;
+			'''
+		}
+		if (model !== null) {
+			return '''
+				private «javaTestType» «name»;
+			'''
+		}
+	}
+
 	def String param(Attribute it,
 		boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
+
+	def String testParam(Attribute it) '''@JsonProperty("«name»") «javaTestType» «name»'''
 
 	def String interfaceGetter(Attribute it) '''«javaType» get«name.toFirstUpper»();'''
 
@@ -110,9 +134,15 @@ class AttributeExtension {
 
 	def String getter(Attribute it, boolean jsonProperty) '''
 		«IF jsonProperty»@JsonProperty«ENDIF»
-			public «javaType» get«name.toFirstUpper»() {
-				return this.«name»;
-			}
+		public «javaType» get«name.toFirstUpper»() {
+			return this.«name»;
+		}
+	'''
+
+	def String testGetter(Attribute it) '''
+		public «javaTestType» get«name.toFirstUpper»() {
+			return this.«name»;
+		}
 	'''
 
 	def String with(Attribute it, Model model) '''
@@ -128,6 +158,12 @@ class AttributeExtension {
 		}
 	'''
 
+	def String testSetter(Attribute it) '''
+		public void set«name.toFirstUpper»(«javaTestType» «name») {
+			this.«name» = «name»;
+		}
+	'''
+
 	def String setterCall(Attribute it, String param) '''set«name.toFirstUpper»(«param»)'''
 
 	def boolean isPrimitive(Attribute it) {
@@ -135,6 +171,7 @@ class AttributeExtension {
 	}
 
 	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»")).withZone(DateTimeZone.UTC)'''
+	def String testDateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»")).withZone(DateTimeZone.UTC).toString()'''
 
 	def String valueFrom(AttributeDefinition it, Integer index) {
 		if (value.stringValue !== null) {
@@ -154,6 +191,31 @@ class AttributeExtension {
 		}
 		if (attribute.type == "DateTime") {
 			return dateTimeParse(value.dateValue, value.pattern)
+		}
+		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
+			return "null"
+		}
+		return '''«value.intValue»'''
+	}
+	
+	def String testValueFrom(AttributeDefinition it, Integer index) {
+		if (value.stringValue !== null) {
+			if (attribute.type == "Integer") {
+				return '''Integer.parseInt("«value.stringValue»")'''
+			}
+			if (attribute.type == "Float") {
+				return '''Float.parseFloat("«value.stringValue»")'''
+			}
+			if (attribute.type == "Boolean") {
+				return '''new Boolean("«value.stringValue»")'''
+			}
+			if (attribute.type == "Long") {
+				return '''Long.parseLong("«value.stringValue»")'''
+			}
+			return '''this.templateStringValue("«value.stringValue»", «IF index !== null»«index»«ELSE»null«ENDIF»)'''
+		}
+		if (attribute.type == "DateTime") {
+			return testDateTimeParse(value.dateValue, value.pattern)
 		}
 		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
 			return "null"

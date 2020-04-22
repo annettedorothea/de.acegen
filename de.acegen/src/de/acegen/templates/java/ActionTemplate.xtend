@@ -705,7 +705,7 @@ class ActionTemplate {
 			«FOR aceOperation : aceOperations»
 				«IF aceOperation.getType == "POST"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							«aceOperation.getModel.testDataNameWithPackage» data,
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
@@ -717,7 +717,7 @@ class ActionTemplate {
 					}
 				«ELSEIF aceOperation.getType == "PUT"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data, 
+							«aceOperation.getModel.testDataNameWithPackage» data, 
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
@@ -729,7 +729,7 @@ class ActionTemplate {
 					}
 				«ELSEIF aceOperation.getType == "DELETE"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							«aceOperation.getModel.testDataNameWithPackage» data,
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
@@ -741,7 +741,7 @@ class ActionTemplate {
 					}
 				«ELSE»
 					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
+							«aceOperation.getModel.testDataNameWithPackage» data,
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();

@@ -1815,8 +1815,8 @@ public class ActionTemplate {
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t\t");
-            String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
-            _builder.append(_dataInterfaceNameWithPackage, "\t\t\t");
+            String _testDataNameWithPackage = this._modelExtension.testDataNameWithPackage(aceOperation.getModel());
+            _builder.append(_testDataNameWithPackage, "\t\t\t");
             _builder.append(" data,");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -1873,8 +1873,8 @@ public class ActionTemplate {
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
               _builder.append("\t\t");
-              String _dataInterfaceNameWithPackage_1 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
-              _builder.append(_dataInterfaceNameWithPackage_1, "\t\t\t");
+              String _testDataNameWithPackage_1 = this._modelExtension.testDataNameWithPackage(aceOperation.getModel());
+              _builder.append(_testDataNameWithPackage_1, "\t\t\t");
               _builder.append(" data, ");
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
@@ -1953,8 +1953,8 @@ public class ActionTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t\t");
-                String _dataInterfaceNameWithPackage_2 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
-                _builder.append(_dataInterfaceNameWithPackage_2, "\t\t\t");
+                String _testDataNameWithPackage_2 = this._modelExtension.testDataNameWithPackage(aceOperation.getModel());
+                _builder.append(_testDataNameWithPackage_2, "\t\t\t");
                 _builder.append(" data,");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
@@ -2020,8 +2020,8 @@ public class ActionTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t\t");
-                String _dataInterfaceNameWithPackage_3 = this._modelExtension.dataInterfaceNameWithPackage(aceOperation.getModel());
-                _builder.append(_dataInterfaceNameWithPackage_3, "\t\t\t");
+                String _testDataNameWithPackage_3 = this._modelExtension.testDataNameWithPackage(aceOperation.getModel());
+                _builder.append(_testDataNameWithPackage_3, "\t\t\t");
                 _builder.append(" data,");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");

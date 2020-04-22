@@ -151,6 +151,13 @@ public class JavaGenerator {
         String _plus_26 = (_plus_25 + ".java");
         fsa.generateFile(_plus_26, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateData(model, java));
+        String _packageFolder_9 = this._javaExtension.packageFolder(java);
+        String _plus_27 = (_packageFolder_9 + "/data/");
+        String _testDataName = this._modelExtension.testDataName(model);
+        String _plus_28 = (_plus_27 + _testDataName);
+        String _plus_29 = (_plus_28 + ".java");
+        fsa.generateFile(_plus_29, 
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.modelTemplate.generateTestData(model, java));
       }
     }
     EList<HttpServerAce> _aceOperations = java.getAceOperations();
@@ -248,7 +255,7 @@ public class JavaGenerator {
     String _packageFolder = this._javaExtension.packageFolder(java);
     String _plus = (_packageFolder + "/ActionCalls.java");
     fsa.generateFile(_plus, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateActionCalls(java));
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.actionTemplate.generateActionCalls(java));
     int _size = java.getAceOperations().size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
