@@ -144,6 +144,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -155,6 +157,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import de.acegen.DateTimeToStringConverter;");
+    _builder.newLine();
+    _builder.append("import de.acegen.StringToDateTimeConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
@@ -359,6 +363,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -391,6 +397,8 @@ public class ModelTemplate {
     _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.append("import de.acegen.DateTimeToStringConverter;");
+    _builder.newLine();
+    _builder.append("import de.acegen.StringToDateTimeConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -824,6 +832,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import javax.validation.constraints.NotNull;");
     _builder.newLine();
@@ -837,6 +847,8 @@ public class ModelTemplate {
     _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.append("import de.acegen.DateTimeToStringConverter;");
+    _builder.newLine();
+    _builder.append("import de.acegen.StringToDateTimeConverter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");

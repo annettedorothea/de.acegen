@@ -97,12 +97,12 @@ public interface DataDefinition extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data</em>' containment reference.
-   * @see #setData(AttributeDefinitionList)
+   * @see #setData(JsonObject)
    * @see de.acegen.aceGen.AceGenPackage#getDataDefinition_Data()
    * @model containment="true"
    * @generated
    */
-  AttributeDefinitionList getData();
+  JsonObject getData();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.DataDefinition#getData <em>Data</em>}' containment reference.
@@ -112,6 +112,6 @@ public interface DataDefinition extends EObject
    * @see #getData()
    * @generated
    */
-  void setData(AttributeDefinitionList value);
+  void setData(JsonObject value);
 
 } // DataDefinition

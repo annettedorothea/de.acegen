@@ -344,7 +344,9 @@ public class JavaGenerator {
     fsa.generateFile(("de/acegen" + "/EventConsumer.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventconsumer());
     fsa.generateFile(("de/acegen" + "/DateTimeToStringConverter.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateDateTimeToStringConverter());
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateDateTimeToStringConverter());
+    fsa.generateFile(("de/acegen" + "/StringToDateTimeConverter.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStringToDateTimeConverter());
     fsa.generateFile(("de/acegen" + "/PersistenceConnection.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePersistenceConnection());
     fsa.generateFile(("de/acegen" + "/PersistenceHandle.java"), 

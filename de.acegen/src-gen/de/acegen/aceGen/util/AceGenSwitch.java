@@ -229,50 +229,6 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST:
-      {
-        AttributeDefinitionList attributeDefinitionList = (AttributeDefinitionList)theEObject;
-        T result = caseAttributeDefinitionList(attributeDefinitionList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST:
-      {
-        ListAttributeDefinitionList listAttributeDefinitionList = (ListAttributeDefinitionList)theEObject;
-        T result = caseListAttributeDefinitionList(listAttributeDefinitionList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST_FOR_LIST:
-      {
-        AttributeDefinitionListForList attributeDefinitionListForList = (AttributeDefinitionListForList)theEObject;
-        T result = caseAttributeDefinitionListForList(attributeDefinitionListForList);
-        if (result == null) result = caseListAttributeDefinitionList(attributeDefinitionListForList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST:
-      {
-        PrimitiveValueDefinitionForList primitiveValueDefinitionForList = (PrimitiveValueDefinitionForList)theEObject;
-        T result = casePrimitiveValueDefinitionForList(primitiveValueDefinitionForList);
-        if (result == null) result = caseListAttributeDefinitionList(primitiveValueDefinitionForList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.ATTRIBUTE_DEFINITION:
-      {
-        AttributeDefinition attributeDefinition = (AttributeDefinition)theEObject;
-        T result = caseAttributeDefinition(attributeDefinition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.VALUE_DEFINITION_LIST:
-      {
-        ValueDefinitionList valueDefinitionList = (ValueDefinitionList)theEObject;
-        T result = caseValueDefinitionList(valueDefinitionList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AceGenPackage.ATTRIBUTE:
       {
         Attribute attribute = (Attribute)theEObject;
@@ -280,17 +236,41 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.VALUE:
+      case AceGenPackage.JSON_DATE_TIME:
       {
-        Value value = (Value)theEObject;
-        T result = caseValue(value);
+        JsonDateTime jsonDateTime = (JsonDateTime)theEObject;
+        T result = caseJsonDateTime(jsonDateTime);
+        if (result == null) result = caseJsonValue(jsonDateTime);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.PRIMITIVE_VALUE:
+      case AceGenPackage.JSON_OBJECT:
       {
-        PrimitiveValue primitiveValue = (PrimitiveValue)theEObject;
-        T result = casePrimitiveValue(primitiveValue);
+        JsonObject jsonObject = (JsonObject)theEObject;
+        T result = caseJsonObject(jsonObject);
+        if (result == null) result = caseJsonValue(jsonObject);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_MEMBER:
+      {
+        JsonMember jsonMember = (JsonMember)theEObject;
+        T result = caseJsonMember(jsonMember);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_VALUE:
+      {
+        JsonValue jsonValue = (JsonValue)theEObject;
+        T result = caseJsonValue(jsonValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_ARRAY:
+      {
+        JsonArray jsonArray = (JsonArray)theEObject;
+        T result = caseJsonArray(jsonArray);
+        if (result == null) result = caseJsonValue(jsonArray);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -651,102 +631,6 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Definition List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeDefinitionList(AttributeDefinitionList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>List Attribute Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>List Attribute Definition List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseListAttributeDefinitionList(ListAttributeDefinitionList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition List For List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Definition List For List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeDefinitionListForList(AttributeDefinitionListForList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Primitive Value Definition For List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Primitive Value Definition For List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePrimitiveValueDefinitionForList(PrimitiveValueDefinitionForList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Definition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Definition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeDefinition(AttributeDefinition object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Value Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Value Definition List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseValueDefinitionList(ValueDefinitionList object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -763,33 +647,81 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseValue(Value object)
+  public T caseJsonDateTime(JsonDateTime object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Json Object</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Json Object</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePrimitiveValue(PrimitiveValue object)
+  public T caseJsonObject(JsonObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Member</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Member</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonMember(JsonMember object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonValue(JsonValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Array</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Array</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonArray(JsonArray object)
   {
     return null;
   }

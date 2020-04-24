@@ -34,13 +34,12 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProjectAccess().getAlternatives_1(), "rule__Project__Alternatives_1");
 			builder.put(grammarAccess.getHttpClientStateFunctionTypeAccess().getAlternatives(), "rule__HttpClientStateFunctionType__Alternatives");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
-			builder.put(grammarAccess.getListAttributeDefinitionListAccess().getAlternatives(), "rule__ListAttributeDefinitionList__Alternatives");
 			builder.put(grammarAccess.getAttributeAccess().getAlternatives_4(), "rule__Attribute__Alternatives_4");
 			builder.put(grammarAccess.getWriteFunctionTypeAccess().getAlternatives(), "rule__WriteFunctionType__Alternatives");
 			builder.put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
 			builder.put(grammarAccess.getConstraintAccess().getAlternatives(), "rule__Constraint__Alternatives");
-			builder.put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
+			builder.put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
+			builder.put(grammarAccess.getJsonBooleanAccess().getAlternatives(), "rule__JsonBoolean__Alternatives");
 			builder.put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
 			builder.put(grammarAccess.getProjectAccess().getGroup_1_0(), "rule__Project__Group_1_0__0");
 			builder.put(grammarAccess.getProjectAccess().getGroup_1_1(), "rule__Project__Group_1_1__0");
@@ -99,15 +98,17 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_1(), "rule__DataDefinition__Group_1__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_2(), "rule__DataDefinition__Group_2__0");
 			builder.put(grammarAccess.getAuthorizationAccess().getGroup(), "rule__Authorization__Group__0");
-			builder.put(grammarAccess.getAttributeDefinitionListAccess().getGroup(), "rule__AttributeDefinitionList__Group__0");
-			builder.put(grammarAccess.getAttributeDefinitionListForListAccess().getGroup(), "rule__AttributeDefinitionListForList__Group__0");
-			builder.put(grammarAccess.getPrimitiveValueDefinitionForListAccess().getGroup(), "rule__PrimitiveValueDefinitionForList__Group__0");
-			builder.put(grammarAccess.getAttributeDefinitionAccess().getGroup(), "rule__AttributeDefinition__Group__0");
 			builder.put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
 			builder.put(grammarAccess.getAttributeAccess().getGroup_6(), "rule__Attribute__Group_6__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
-			builder.put(grammarAccess.getValueAccess().getGroup_2(), "rule__Value__Group_2__0");
+			builder.put(grammarAccess.getJsonDateTimeAccess().getGroup(), "rule__JsonDateTime__Group__0");
+			builder.put(grammarAccess.getJsonObjectAccess().getGroup(), "rule__JsonObject__Group__0");
+			builder.put(grammarAccess.getJsonObjectAccess().getGroup_3(), "rule__JsonObject__Group_3__0");
+			builder.put(grammarAccess.getJsonMemberAccess().getGroup(), "rule__JsonMember__Group__0");
+			builder.put(grammarAccess.getJsonValueAccess().getGroup_4(), "rule__JsonValue__Group_4__0");
+			builder.put(grammarAccess.getJsonArrayAccess().getGroup(), "rule__JsonArray__Group__0");
+			builder.put(grammarAccess.getJsonArrayAccess().getGroup_3(), "rule__JsonArray__Group_3__0");
 			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1(), "rule__Project__HttpClientAssignment_1_0_1");
 			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1(), "rule__Project__HttpServerAssignment_1_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
@@ -192,12 +193,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataDefinitionAccess().getDataAssignment_3(), "rule__DataDefinition__DataAssignment_3");
 			builder.put(grammarAccess.getAuthorizationAccess().getUsernameAssignment_1(), "rule__Authorization__UsernameAssignment_1");
 			builder.put(grammarAccess.getAuthorizationAccess().getPasswordAssignment_3(), "rule__Authorization__PasswordAssignment_3");
-			builder.put(grammarAccess.getAttributeDefinitionListAccess().getAttributeDefinitionsAssignment_2(), "rule__AttributeDefinitionList__AttributeDefinitionsAssignment_2");
-			builder.put(grammarAccess.getAttributeDefinitionListForListAccess().getAttributeDefinitionListAssignment_2(), "rule__AttributeDefinitionListForList__AttributeDefinitionListAssignment_2");
-			builder.put(grammarAccess.getPrimitiveValueDefinitionForListAccess().getValueDefinitionListAssignment_2(), "rule__PrimitiveValueDefinitionForList__ValueDefinitionListAssignment_2");
-			builder.put(grammarAccess.getAttributeDefinitionAccess().getAttributeAssignment_0(), "rule__AttributeDefinition__AttributeAssignment_0");
-			builder.put(grammarAccess.getAttributeDefinitionAccess().getValueAssignment_2(), "rule__AttributeDefinition__ValueAssignment_2");
-			builder.put(grammarAccess.getValueDefinitionListAccess().getPrimitiveValueAssignment(), "rule__ValueDefinitionList__PrimitiveValueAssignment");
 			builder.put(grammarAccess.getAttributeAccess().getUniqueAssignment_0(), "rule__Attribute__UniqueAssignment_0");
 			builder.put(grammarAccess.getAttributeAccess().getPrimaryKeyAssignment_1(), "rule__Attribute__PrimaryKeyAssignment_1");
 			builder.put(grammarAccess.getAttributeAccess().getConstraintAssignment_2(), "rule__Attribute__ConstraintAssignment_2");
@@ -207,14 +202,17 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAccess().getNameAssignment_5(), "rule__Attribute__NameAssignment_5");
 			builder.put(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1(), "rule__Attribute__ForeignKeyAssignment_6_1");
 			builder.put(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7(), "rule__Attribute__NotReplayableAssignment_7");
-			builder.put(grammarAccess.getValueAccess().getStringValueAssignment_0(), "rule__Value__StringValueAssignment_0");
-			builder.put(grammarAccess.getValueAccess().getIntValueAssignment_1(), "rule__Value__IntValueAssignment_1");
-			builder.put(grammarAccess.getValueAccess().getDateValueAssignment_2_0(), "rule__Value__DateValueAssignment_2_0");
-			builder.put(grammarAccess.getValueAccess().getPatternAssignment_2_1(), "rule__Value__PatternAssignment_2_1");
-			builder.put(grammarAccess.getValueAccess().getAttributeDefinitionListAssignment_3(), "rule__Value__AttributeDefinitionListAssignment_3");
-			builder.put(grammarAccess.getValueAccess().getListAttributeDefinitionListAssignment_4(), "rule__Value__ListAttributeDefinitionListAssignment_4");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_0(), "rule__PrimitiveValue__StringValueAssignment_0");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getIntValueAssignment_1(), "rule__PrimitiveValue__IntValueAssignment_1");
+			builder.put(grammarAccess.getJsonDateTimeAccess().getDateTimeAssignment_0(), "rule__JsonDateTime__DateTimeAssignment_0");
+			builder.put(grammarAccess.getJsonDateTimeAccess().getPatternAssignment_1(), "rule__JsonDateTime__PatternAssignment_1");
+			builder.put(grammarAccess.getJsonObjectAccess().getMembersAssignment_2(), "rule__JsonObject__MembersAssignment_2");
+			builder.put(grammarAccess.getJsonObjectAccess().getMembersAssignment_3_1(), "rule__JsonObject__MembersAssignment_3_1");
+			builder.put(grammarAccess.getJsonMemberAccess().getAttributeAssignment_0(), "rule__JsonMember__AttributeAssignment_0");
+			builder.put(grammarAccess.getJsonMemberAccess().getValueAssignment_2(), "rule__JsonMember__ValueAssignment_2");
+			builder.put(grammarAccess.getJsonValueAccess().getStringAssignment_1(), "rule__JsonValue__StringAssignment_1");
+			builder.put(grammarAccess.getJsonValueAccess().getBooleanAssignment_3(), "rule__JsonValue__BooleanAssignment_3");
+			builder.put(grammarAccess.getJsonValueAccess().getLongAssignment_5(), "rule__JsonValue__LongAssignment_5");
+			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_2(), "rule__JsonArray__ValuesAssignment_2");
+			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_3_1(), "rule__JsonArray__ValuesAssignment_3_1");
 		}
 	}
 	

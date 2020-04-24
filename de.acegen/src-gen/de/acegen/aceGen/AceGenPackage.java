@@ -1295,174 +1295,6 @@ public interface AceGenPackage extends EPackage
   int AUTHORIZATION_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl <em>Attribute Definition List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.AttributeDefinitionListImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionList()
-   * @generated
-   */
-  int ATTRIBUTE_DEFINITION_LIST = 22;
-
-  /**
-   * The feature id for the '<em><b>Attribute Definitions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = 0;
-
-  /**
-   * The number of structural features of the '<em>Attribute Definition List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.ListAttributeDefinitionListImpl <em>List Attribute Definition List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.ListAttributeDefinitionListImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getListAttributeDefinitionList()
-   * @generated
-   */
-  int LIST_ATTRIBUTE_DEFINITION_LIST = 23;
-
-  /**
-   * The number of structural features of the '<em>List Attribute Definition List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListForListImpl <em>Attribute Definition List For List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.AttributeDefinitionListForListImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionListForList()
-   * @generated
-   */
-  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST = 24;
-
-  /**
-   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Attribute Definition List For List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION_LIST_FOR_LIST_FEATURE_COUNT = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl <em>Primitive Value Definition For List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValueDefinitionForList()
-   * @generated
-   */
-  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST = 25;
-
-  /**
-   * The feature id for the '<em><b>Value Definition List</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Primitive Value Definition For List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMITIVE_VALUE_DEFINITION_FOR_LIST_FEATURE_COUNT = LIST_ATTRIBUTE_DEFINITION_LIST_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.AttributeDefinitionImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinition()
-   * @generated
-   */
-  int ATTRIBUTE_DEFINITION = 26;
-
-  /**
-   * The feature id for the '<em><b>Attribute</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION__ATTRIBUTE = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Attribute Definition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DEFINITION_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueDefinitionListImpl <em>Value Definition List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.ValueDefinitionListImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValueDefinitionList()
-   * @generated
-   */
-  int VALUE_DEFINITION_LIST = 27;
-
-  /**
-   * The feature id for the '<em><b>Primitive Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VALUE_DEFINITION_LIST__PRIMITIVE_VALUE = 0;
-
-  /**
-   * The number of structural features of the '<em>Value Definition List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VALUE_DEFINITION_LIST_FEATURE_COUNT = 1;
-
-  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1470,7 +1302,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 28;
+  int ATTRIBUTE = 22;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1563,41 +1395,96 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE_FEATURE_COUNT = 9;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.ValueImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
+   * @see de.acegen.aceGen.impl.JsonValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int VALUE = 29;
+  int JSON_VALUE = 26;
 
   /**
-   * The feature id for the '<em><b>String Value</b></em>' attribute.
+   * The feature id for the '<em><b>String</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__STRING_VALUE = 0;
+  int JSON_VALUE__STRING = 0;
 
   /**
-   * The feature id for the '<em><b>Int Value</b></em>' attribute.
+   * The feature id for the '<em><b>Boolean</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__INT_VALUE = 1;
+  int JSON_VALUE__BOOLEAN = 1;
 
   /**
-   * The feature id for the '<em><b>Date Value</b></em>' attribute.
+   * The feature id for the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__DATE_VALUE = 2;
+  int JSON_VALUE__LONG = 2;
+
+  /**
+   * The number of structural features of the '<em>Json Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_VALUE_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonDateTimeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
+   * @generated
+   */
+  int JSON_DATE_TIME = 23;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__STRING = JSON_VALUE__STRING;
+
+  /**
+   * The feature id for the '<em><b>Boolean</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__BOOLEAN = JSON_VALUE__BOOLEAN;
+
+  /**
+   * The feature id for the '<em><b>Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__LONG = JSON_VALUE__LONG;
+
+  /**
+   * The feature id for the '<em><b>Date Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__DATE_TIME = JSON_VALUE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' attribute.
@@ -1606,71 +1493,163 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VALUE__PATTERN = 3;
+  int JSON_DATE_TIME__PATTERN = JSON_VALUE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Attribute Definition List</b></em>' containment reference.
+   * The number of structural features of the '<em>Json Date Time</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__ATTRIBUTE_DEFINITION_LIST = 4;
+  int JSON_DATE_TIME_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>List Attribute Definition List</b></em>' containment reference.
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonObjectImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
+   * @generated
+   */
+  int JSON_OBJECT = 24;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = 5;
+  int JSON_OBJECT__STRING = JSON_VALUE__STRING;
 
   /**
-   * The number of structural features of the '<em>Value</em>' class.
+   * The feature id for the '<em><b>Boolean</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUE_FEATURE_COUNT = 6;
+  int JSON_OBJECT__BOOLEAN = JSON_VALUE__BOOLEAN;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.PrimitiveValueImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
-   * @generated
-   */
-  int PRIMITIVE_VALUE = 30;
-
-  /**
-   * The feature id for the '<em><b>String Value</b></em>' attribute.
+   * The feature id for the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMITIVE_VALUE__STRING_VALUE = 0;
+  int JSON_OBJECT__LONG = JSON_VALUE__LONG;
 
   /**
-   * The feature id for the '<em><b>Int Value</b></em>' attribute.
+   * The feature id for the '<em><b>Members</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMITIVE_VALUE__INT_VALUE = 1;
+  int JSON_OBJECT__MEMBERS = JSON_VALUE_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Primitive Value</em>' class.
+   * The number of structural features of the '<em>Json Object</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMITIVE_VALUE_FEATURE_COUNT = 2;
+  int JSON_OBJECT_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonMemberImpl <em>Json Member</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonMemberImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
+   * @generated
+   */
+  int JSON_MEMBER = 25;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER__ATTRIBUTE = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Json Member</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonArrayImpl <em>Json Array</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonArrayImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
+   * @generated
+   */
+  int JSON_ARRAY = 27;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY__STRING = JSON_VALUE__STRING;
+
+  /**
+   * The feature id for the '<em><b>Boolean</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY__BOOLEAN = JSON_VALUE__BOOLEAN;
+
+  /**
+   * The feature id for the '<em><b>Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY__LONG = JSON_VALUE__LONG;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY__VALUES = JSON_VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Json Array</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
 
 
   /**
@@ -2675,132 +2654,6 @@ public interface AceGenPackage extends EPackage
   EAttribute getAuthorization_Password();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinitionList <em>Attribute Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.AttributeDefinitionList
-   * @generated
-   */
-  EClass getAttributeDefinitionList();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.AttributeDefinitionList#getAttributeDefinitions <em>Attribute Definitions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attribute Definitions</em>'.
-   * @see de.acegen.aceGen.AttributeDefinitionList#getAttributeDefinitions()
-   * @see #getAttributeDefinitionList()
-   * @generated
-   */
-  EReference getAttributeDefinitionList_AttributeDefinitions();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.ListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>List Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.ListAttributeDefinitionList
-   * @generated
-   */
-  EClass getListAttributeDefinitionList();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinitionListForList <em>Attribute Definition List For List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute Definition List For List</em>'.
-   * @see de.acegen.aceGen.AttributeDefinitionListForList
-   * @generated
-   */
-  EClass getAttributeDefinitionListForList();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.AttributeDefinitionListForList#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.AttributeDefinitionListForList#getAttributeDefinitionList()
-   * @see #getAttributeDefinitionListForList()
-   * @generated
-   */
-  EReference getAttributeDefinitionListForList_AttributeDefinitionList();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList <em>Primitive Value Definition For List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Primitive Value Definition For List</em>'.
-   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList
-   * @generated
-   */
-  EClass getPrimitiveValueDefinitionForList();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList#getValueDefinitionList <em>Value Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Value Definition List</em>'.
-   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList#getValueDefinitionList()
-   * @see #getPrimitiveValueDefinitionForList()
-   * @generated
-   */
-  EReference getPrimitiveValueDefinitionForList_ValueDefinitionList();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute Definition</em>'.
-   * @see de.acegen.aceGen.AttributeDefinition
-   * @generated
-   */
-  EClass getAttributeDefinition();
-
-  /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.AttributeDefinition#getAttribute <em>Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Attribute</em>'.
-   * @see de.acegen.aceGen.AttributeDefinition#getAttribute()
-   * @see #getAttributeDefinition()
-   * @generated
-   */
-  EReference getAttributeDefinition_Attribute();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.AttributeDefinition#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.acegen.aceGen.AttributeDefinition#getValue()
-   * @see #getAttributeDefinition()
-   * @generated
-   */
-  EReference getAttributeDefinition_Value();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.ValueDefinitionList <em>Value Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Value Definition List</em>'.
-   * @see de.acegen.aceGen.ValueDefinitionList
-   * @generated
-   */
-  EClass getValueDefinitionList();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ValueDefinitionList#getPrimitiveValue <em>Primitive Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Primitive Value</em>'.
-   * @see de.acegen.aceGen.ValueDefinitionList#getPrimitiveValue()
-   * @see #getValueDefinitionList()
-   * @generated
-   */
-  EReference getValueDefinitionList_PrimitiveValue();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.Attribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2910,112 +2763,153 @@ public interface AceGenPackage extends EPackage
   EAttribute getAttribute_NotReplayable();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.Value <em>Value</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Value</em>'.
-   * @see de.acegen.aceGen.Value
+   * @return the meta object for class '<em>Json Date Time</em>'.
+   * @see de.acegen.aceGen.JsonDateTime
    * @generated
    */
-  EClass getValue();
+  EClass getJsonDateTime();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getStringValue <em>String Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getDateTime <em>Date Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>String Value</em>'.
-   * @see de.acegen.aceGen.Value#getStringValue()
-   * @see #getValue()
+   * @return the meta object for the attribute '<em>Date Time</em>'.
+   * @see de.acegen.aceGen.JsonDateTime#getDateTime()
+   * @see #getJsonDateTime()
    * @generated
    */
-  EAttribute getValue_StringValue();
+  EAttribute getJsonDateTime_DateTime();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getIntValue <em>Int Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Int Value</em>'.
-   * @see de.acegen.aceGen.Value#getIntValue()
-   * @see #getValue()
-   * @generated
-   */
-  EAttribute getValue_IntValue();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getDateValue <em>Date Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Date Value</em>'.
-   * @see de.acegen.aceGen.Value#getDateValue()
-   * @see #getValue()
-   * @generated
-   */
-  EAttribute getValue_DateValue();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Value#getPattern <em>Pattern</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getPattern <em>Pattern</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Pattern</em>'.
-   * @see de.acegen.aceGen.Value#getPattern()
-   * @see #getValue()
+   * @see de.acegen.aceGen.JsonDateTime#getPattern()
+   * @see #getJsonDateTime()
    * @generated
    */
-  EAttribute getValue_Pattern();
+  EAttribute getJsonDateTime_Pattern();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Value#getAttributeDefinitionList <em>Attribute Definition List</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.Value#getAttributeDefinitionList()
-   * @see #getValue()
+   * @return the meta object for class '<em>Json Object</em>'.
+   * @see de.acegen.aceGen.JsonObject
    * @generated
    */
-  EReference getValue_AttributeDefinitionList();
+  EClass getJsonObject();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Value#getListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonObject#getMembers <em>Members</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>List Attribute Definition List</em>'.
-   * @see de.acegen.aceGen.Value#getListAttributeDefinitionList()
-   * @see #getValue()
+   * @return the meta object for the containment reference list '<em>Members</em>'.
+   * @see de.acegen.aceGen.JsonObject#getMembers()
+   * @see #getJsonObject()
    * @generated
    */
-  EReference getValue_ListAttributeDefinitionList();
+  EReference getJsonObject_Members();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonMember <em>Json Member</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Primitive Value</em>'.
-   * @see de.acegen.aceGen.PrimitiveValue
+   * @return the meta object for class '<em>Json Member</em>'.
+   * @see de.acegen.aceGen.JsonMember
    * @generated
    */
-  EClass getPrimitiveValue();
+  EClass getJsonMember();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getStringValue <em>String Value</em>}'.
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.JsonMember#getAttribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>String Value</em>'.
-   * @see de.acegen.aceGen.PrimitiveValue#getStringValue()
-   * @see #getPrimitiveValue()
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.JsonMember#getAttribute()
+   * @see #getJsonMember()
    * @generated
    */
-  EAttribute getPrimitiveValue_StringValue();
+  EReference getJsonMember_Attribute();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getIntValue <em>Int Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.JsonMember#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Int Value</em>'.
-   * @see de.acegen.aceGen.PrimitiveValue#getIntValue()
-   * @see #getPrimitiveValue()
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.acegen.aceGen.JsonMember#getValue()
+   * @see #getJsonMember()
    * @generated
    */
-  EAttribute getPrimitiveValue_IntValue();
+  EReference getJsonMember_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonValue <em>Json Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Value</em>'.
+   * @see de.acegen.aceGen.JsonValue
+   * @generated
+   */
+  EClass getJsonValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getString <em>String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String</em>'.
+   * @see de.acegen.aceGen.JsonValue#getString()
+   * @see #getJsonValue()
+   * @generated
+   */
+  EAttribute getJsonValue_String();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getBoolean <em>Boolean</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Boolean</em>'.
+   * @see de.acegen.aceGen.JsonValue#getBoolean()
+   * @see #getJsonValue()
+   * @generated
+   */
+  EAttribute getJsonValue_Boolean();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Long</em>'.
+   * @see de.acegen.aceGen.JsonValue#getLong()
+   * @see #getJsonValue()
+   * @generated
+   */
+  EAttribute getJsonValue_Long();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonArray <em>Json Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Array</em>'.
+   * @see de.acegen.aceGen.JsonArray
+   * @generated
+   */
+  EClass getJsonArray();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonArray#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Values</em>'.
+   * @see de.acegen.aceGen.JsonArray#getValues()
+   * @see #getJsonArray()
+   * @generated
+   */
+  EReference getJsonArray_Values();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -3829,114 +3723,6 @@ public interface AceGenPackage extends EPackage
     EAttribute AUTHORIZATION__PASSWORD = eINSTANCE.getAuthorization_Password();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl <em>Attribute Definition List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.AttributeDefinitionListImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionList()
-     * @generated
-     */
-    EClass ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getAttributeDefinitionList();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Definitions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS = eINSTANCE.getAttributeDefinitionList_AttributeDefinitions();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.ListAttributeDefinitionListImpl <em>List Attribute Definition List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.ListAttributeDefinitionListImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getListAttributeDefinitionList()
-     * @generated
-     */
-    EClass LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getListAttributeDefinitionList();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionListForListImpl <em>Attribute Definition List For List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.AttributeDefinitionListForListImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinitionListForList()
-     * @generated
-     */
-    EClass ATTRIBUTE_DEFINITION_LIST_FOR_LIST = eINSTANCE.getAttributeDefinitionListForList();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getAttributeDefinitionListForList_AttributeDefinitionList();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl <em>Primitive Value Definition For List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValueDefinitionForList()
-     * @generated
-     */
-    EClass PRIMITIVE_VALUE_DEFINITION_FOR_LIST = eINSTANCE.getPrimitiveValueDefinitionForList();
-
-    /**
-     * The meta object literal for the '<em><b>Value Definition List</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST = eINSTANCE.getPrimitiveValueDefinitionForList_ValueDefinitionList();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeDefinitionImpl <em>Attribute Definition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.AttributeDefinitionImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeDefinition()
-     * @generated
-     */
-    EClass ATTRIBUTE_DEFINITION = eINSTANCE.getAttributeDefinition();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ATTRIBUTE_DEFINITION__ATTRIBUTE = eINSTANCE.getAttributeDefinition_Attribute();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ATTRIBUTE_DEFINITION__VALUE = eINSTANCE.getAttributeDefinition_Value();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.ValueDefinitionListImpl <em>Value Definition List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.ValueDefinitionListImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValueDefinitionList()
-     * @generated
-     */
-    EClass VALUE_DEFINITION_LIST = eINSTANCE.getValueDefinitionList();
-
-    /**
-     * The meta object literal for the '<em><b>Primitive Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VALUE_DEFINITION_LIST__PRIMITIVE_VALUE = eINSTANCE.getValueDefinitionList_PrimitiveValue();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeImpl <em>Attribute</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4019,38 +3805,22 @@ public interface AceGenPackage extends EPackage
     EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.ValueImpl <em>Value</em>}' class.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.ValueImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getValue()
+     * @see de.acegen.aceGen.impl.JsonDateTimeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
      * @generated
      */
-    EClass VALUE = eINSTANCE.getValue();
+    EClass JSON_DATE_TIME = eINSTANCE.getJsonDateTime();
 
     /**
-     * The meta object literal for the '<em><b>String Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Date Time</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VALUE__STRING_VALUE = eINSTANCE.getValue_StringValue();
-
-    /**
-     * The meta object literal for the '<em><b>Int Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VALUE__INT_VALUE = eINSTANCE.getValue_IntValue();
-
-    /**
-     * The meta object literal for the '<em><b>Date Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VALUE__DATE_VALUE = eINSTANCE.getValue_DateValue();
+    EAttribute JSON_DATE_TIME__DATE_TIME = eINSTANCE.getJsonDateTime_DateTime();
 
     /**
      * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
@@ -4058,49 +3828,103 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VALUE__PATTERN = eINSTANCE.getValue_Pattern();
+    EAttribute JSON_DATE_TIME__PATTERN = eINSTANCE.getJsonDateTime_Pattern();
 
     /**
-     * The meta object literal for the '<em><b>Attribute Definition List</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonObjectImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
+     * @generated
+     */
+    EClass JSON_OBJECT = eINSTANCE.getJsonObject();
+
+    /**
+     * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VALUE__ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getValue_AttributeDefinitionList();
+    EReference JSON_OBJECT__MEMBERS = eINSTANCE.getJsonObject_Members();
 
     /**
-     * The meta object literal for the '<em><b>List Attribute Definition List</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonMemberImpl <em>Json Member</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonMemberImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
+     * @generated
+     */
+    EClass JSON_MEMBER = eINSTANCE.getJsonMember();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VALUE__LIST_ATTRIBUTE_DEFINITION_LIST = eINSTANCE.getValue_ListAttributeDefinitionList();
+    EReference JSON_MEMBER__ATTRIBUTE = eINSTANCE.getJsonMember_Attribute();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.PrimitiveValueImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
-     * @generated
-     */
-    EClass PRIMITIVE_VALUE = eINSTANCE.getPrimitiveValue();
-
-    /**
-     * The meta object literal for the '<em><b>String Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PRIMITIVE_VALUE__STRING_VALUE = eINSTANCE.getPrimitiveValue_StringValue();
+    EReference JSON_MEMBER__VALUE = eINSTANCE.getJsonMember_Value();
 
     /**
-     * The meta object literal for the '<em><b>Int Value</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
+     * @generated
+     */
+    EClass JSON_VALUE = eINSTANCE.getJsonValue();
+
+    /**
+     * The meta object literal for the '<em><b>String</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PRIMITIVE_VALUE__INT_VALUE = eINSTANCE.getPrimitiveValue_IntValue();
+    EAttribute JSON_VALUE__STRING = eINSTANCE.getJsonValue_String();
+
+    /**
+     * The meta object literal for the '<em><b>Boolean</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JSON_VALUE__BOOLEAN = eINSTANCE.getJsonValue_Boolean();
+
+    /**
+     * The meta object literal for the '<em><b>Long</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JSON_VALUE__LONG = eINSTANCE.getJsonValue_Long();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonArrayImpl <em>Json Array</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonArrayImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
+     * @generated
+     */
+    EClass JSON_ARRAY = eINSTANCE.getJsonArray();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JSON_ARRAY__VALUES = eINSTANCE.getJsonArray_Values();
 
   }
 

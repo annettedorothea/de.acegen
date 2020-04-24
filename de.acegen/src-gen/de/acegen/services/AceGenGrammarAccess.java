@@ -1410,14 +1410,14 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPatternAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cPatternSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cPatternAssignment_2_2.eContents().get(0);
 		private final Assignment cDataAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDataAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cDataAssignment_3.eContents().get(0);
+		private final RuleCall cDataJsonObjectParserRuleCall_3_0 = (RuleCall)cDataAssignment_3.eContents().get(0);
 		
 		//DataDefinition:
 		//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
-		//	data=AttributeDefinitionList?;
+		//	data=JsonObject?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)? data=AttributeDefinitionList?
+		//{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)? data=JsonObject?
 		public Group getGroup() { return cGroup; }
 		
 		//{DataDefinition}
@@ -1453,11 +1453,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getPatternSTRINGTerminalRuleCall_2_2_0() { return cPatternSTRINGTerminalRuleCall_2_2_0; }
 		
-		//data=AttributeDefinitionList?
+		//data=JsonObject?
 		public Assignment getDataAssignment_3() { return cDataAssignment_3; }
 		
-		//AttributeDefinitionList
-		public RuleCall getDataAttributeDefinitionListParserRuleCall_3_0() { return cDataAttributeDefinitionListParserRuleCall_3_0; }
+		//JsonObject
+		public RuleCall getDataJsonObjectParserRuleCall_3_0() { return cDataJsonObjectParserRuleCall_3_0; }
 	}
 	public class AuthorizationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Authorization");
@@ -1493,170 +1493,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getPasswordSTRINGTerminalRuleCall_3_0() { return cPasswordSTRINGTerminalRuleCall_3_0; }
-	}
-	public class AttributeDefinitionListElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinitionList");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cAttributeDefinitionListAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cAttributeDefinitionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAttributeDefinitionsAttributeDefinitionParserRuleCall_2_0 = (RuleCall)cAttributeDefinitionsAssignment_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//AttributeDefinitionList:
-		//	{AttributeDefinitionList} '{'
-		//	attributeDefinitions+=AttributeDefinition*
-		//	'}';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{AttributeDefinitionList} '{' attributeDefinitions+=AttributeDefinition* '}'
-		public Group getGroup() { return cGroup; }
-		
-		//{AttributeDefinitionList}
-		public Action getAttributeDefinitionListAction_0() { return cAttributeDefinitionListAction_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
-		
-		//attributeDefinitions+=AttributeDefinition*
-		public Assignment getAttributeDefinitionsAssignment_2() { return cAttributeDefinitionsAssignment_2; }
-		
-		//AttributeDefinition
-		public RuleCall getAttributeDefinitionsAttributeDefinitionParserRuleCall_2_0() { return cAttributeDefinitionsAttributeDefinitionParserRuleCall_2_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
-	}
-	public class ListAttributeDefinitionListElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ListAttributeDefinitionList");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cPrimitiveValueDefinitionForListParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAttributeDefinitionListForListParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//ListAttributeDefinitionList:
-		//	PrimitiveValueDefinitionForList | AttributeDefinitionListForList;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//PrimitiveValueDefinitionForList | AttributeDefinitionListForList
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//PrimitiveValueDefinitionForList
-		public RuleCall getPrimitiveValueDefinitionForListParserRuleCall_0() { return cPrimitiveValueDefinitionForListParserRuleCall_0; }
-		
-		//AttributeDefinitionListForList
-		public RuleCall getAttributeDefinitionListForListParserRuleCall_1() { return cAttributeDefinitionListForListParserRuleCall_1; }
-	}
-	public class AttributeDefinitionListForListElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinitionListForList");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cAttributeDefinitionListForListAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cAttributeDefinitionListAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0 = (RuleCall)cAttributeDefinitionListAssignment_2.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//AttributeDefinitionListForList:
-		//	{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']'
-		public Group getGroup() { return cGroup; }
-		
-		//{AttributeDefinitionListForList}
-		public Action getAttributeDefinitionListForListAction_0() { return cAttributeDefinitionListForListAction_0; }
-		
-		//'['
-		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
-		
-		//attributeDefinitionList+=AttributeDefinitionList*
-		public Assignment getAttributeDefinitionListAssignment_2() { return cAttributeDefinitionListAssignment_2; }
-		
-		//AttributeDefinitionList
-		public RuleCall getAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0() { return cAttributeDefinitionListAttributeDefinitionListParserRuleCall_2_0; }
-		
-		//']'
-		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
-	}
-	public class PrimitiveValueDefinitionForListElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.PrimitiveValueDefinitionForList");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cPrimitiveValueDefinitionForListAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueDefinitionListAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueDefinitionListValueDefinitionListParserRuleCall_2_0 = (RuleCall)cValueDefinitionListAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//PrimitiveValueDefinitionForList:
-		//	{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')'
-		public Group getGroup() { return cGroup; }
-		
-		//{PrimitiveValueDefinitionForList}
-		public Action getPrimitiveValueDefinitionForListAction_0() { return cPrimitiveValueDefinitionForListAction_0; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-		
-		//valueDefinitionList+=ValueDefinitionList*
-		public Assignment getValueDefinitionListAssignment_2() { return cValueDefinitionListAssignment_2; }
-		
-		//ValueDefinitionList
-		public RuleCall getValueDefinitionListValueDefinitionListParserRuleCall_2_0() { return cValueDefinitionListValueDefinitionListParserRuleCall_2_0; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-	public class AttributeDefinitionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeDefinition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAttributeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cAttributeAttributeCrossReference_0_0 = (CrossReference)cAttributeAssignment_0.eContents().get(0);
-		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cAttributeAttributeCrossReference_0_0.eContents().get(1);
-		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		
-		//AttributeDefinition:
-		//	attribute=[Attribute|QualifiedName] ':' value=Value;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//attribute=[Attribute|QualifiedName] ':' value=Value
-		public Group getGroup() { return cGroup; }
-		
-		//attribute=[Attribute|QualifiedName]
-		public Assignment getAttributeAssignment_0() { return cAttributeAssignment_0; }
-		
-		//[Attribute|QualifiedName]
-		public CrossReference getAttributeAttributeCrossReference_0_0() { return cAttributeAttributeCrossReference_0_0; }
-		
-		//QualifiedName
-		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_0_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_0_0_1; }
-		
-		//':'
-		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
-		
-		//value=Value
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-		
-		//Value
-		public RuleCall getValueValueParserRuleCall_2_0() { return cValueValueParserRuleCall_2_0; }
-	}
-	public class ValueDefinitionListElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ValueDefinitionList");
-		private final Assignment cPrimitiveValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cPrimitiveValuePrimitiveValueParserRuleCall_0 = (RuleCall)cPrimitiveValueAssignment.eContents().get(0);
-		
-		//ValueDefinitionList:
-		//	primitiveValue=PrimitiveValue;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//primitiveValue=PrimitiveValue
-		public Assignment getPrimitiveValueAssignment() { return cPrimitiveValueAssignment; }
-		
-		//PrimitiveValue
-		public RuleCall getPrimitiveValuePrimitiveValueParserRuleCall_0() { return cPrimitiveValuePrimitiveValueParserRuleCall_0; }
 	}
 	public class AttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Attribute");
@@ -1882,97 +1718,252 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//'NotNull'
 		public Keyword getNotNullKeyword_1() { return cNotNullKeyword_1; }
 	}
-	public class ValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Value");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cStringValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cStringValueSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringValueAssignment_0.eContents().get(0);
-		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Assignment cDateValueAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final RuleCall cDateValueSTRINGTerminalRuleCall_2_0_0 = (RuleCall)cDateValueAssignment_2_0.eContents().get(0);
-		private final Assignment cPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cPatternAssignment_2_1.eContents().get(0);
-		private final Assignment cAttributeDefinitionListAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final RuleCall cAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0 = (RuleCall)cAttributeDefinitionListAssignment_3.eContents().get(0);
-		private final Assignment cListAttributeDefinitionListAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
-		private final RuleCall cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0 = (RuleCall)cListAttributeDefinitionListAssignment_4.eContents().get(0);
+	public class JsonDateTimeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonDateTime");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cDateTimeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cDateTimeSTRINGTerminalRuleCall_0_0 = (RuleCall)cDateTimeAssignment_0.eContents().get(0);
+		private final Assignment cPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cPatternAssignment_1.eContents().get(0);
 		
-		//Value:
-		//	stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList
-		//	| listAttributeDefinitionList=ListAttributeDefinitionList;
+		//JsonDateTime:
+		//	dateTime=STRING pattern=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList |
-		//listAttributeDefinitionList=ListAttributeDefinitionList
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//dateTime=STRING pattern=STRING
+		public Group getGroup() { return cGroup; }
 		
-		//stringValue=STRING
-		public Assignment getStringValueAssignment_0() { return cStringValueAssignment_0; }
-		
-		//STRING
-		public RuleCall getStringValueSTRINGTerminalRuleCall_0_0() { return cStringValueSTRINGTerminalRuleCall_0_0; }
-		
-		//intValue=INT
-		public Assignment getIntValueAssignment_1() { return cIntValueAssignment_1; }
-		
-		//INT
-		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
-		
-		//dateValue=STRING pattern=STRING
-		public Group getGroup_2() { return cGroup_2; }
-		
-		//dateValue=STRING
-		public Assignment getDateValueAssignment_2_0() { return cDateValueAssignment_2_0; }
+		//dateTime=STRING
+		public Assignment getDateTimeAssignment_0() { return cDateTimeAssignment_0; }
 		
 		//STRING
-		public RuleCall getDateValueSTRINGTerminalRuleCall_2_0_0() { return cDateValueSTRINGTerminalRuleCall_2_0_0; }
+		public RuleCall getDateTimeSTRINGTerminalRuleCall_0_0() { return cDateTimeSTRINGTerminalRuleCall_0_0; }
 		
 		//pattern=STRING
-		public Assignment getPatternAssignment_2_1() { return cPatternAssignment_2_1; }
+		public Assignment getPatternAssignment_1() { return cPatternAssignment_1; }
 		
 		//STRING
-		public RuleCall getPatternSTRINGTerminalRuleCall_2_1_0() { return cPatternSTRINGTerminalRuleCall_2_1_0; }
-		
-		//attributeDefinitionList=AttributeDefinitionList
-		public Assignment getAttributeDefinitionListAssignment_3() { return cAttributeDefinitionListAssignment_3; }
-		
-		//AttributeDefinitionList
-		public RuleCall getAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0() { return cAttributeDefinitionListAttributeDefinitionListParserRuleCall_3_0; }
-		
-		//listAttributeDefinitionList=ListAttributeDefinitionList
-		public Assignment getListAttributeDefinitionListAssignment_4() { return cListAttributeDefinitionListAssignment_4; }
-		
-		//ListAttributeDefinitionList
-		public RuleCall getListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0() { return cListAttributeDefinitionListListAttributeDefinitionListParserRuleCall_4_0; }
+		public RuleCall getPatternSTRINGTerminalRuleCall_1_0() { return cPatternSTRINGTerminalRuleCall_1_0; }
 	}
-	public class PrimitiveValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.PrimitiveValue");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cStringValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cStringValueSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringValueAssignment_0.eContents().get(0);
-		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
+	public class JsonObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonObject");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cJsonObjectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cMembersAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cMembersJsonMemberParserRuleCall_2_0 = (RuleCall)cMembersAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cMembersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cMembersJsonMemberParserRuleCall_3_1_0 = (RuleCall)cMembersAssignment_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//PrimitiveValue:
-		//	stringValue=STRING | intValue=INT;
+		//JsonObject:
+		//	{JsonObject} '{'
+		//	members+=JsonMember? (',' members+=JsonMember)*
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//stringValue=STRING | intValue=INT
+		//{JsonObject} '{' members+=JsonMember? (',' members+=JsonMember)* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{JsonObject}
+		public Action getJsonObjectAction_0() { return cJsonObjectAction_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//members+=JsonMember?
+		public Assignment getMembersAssignment_2() { return cMembersAssignment_2; }
+		
+		//JsonMember
+		public RuleCall getMembersJsonMemberParserRuleCall_2_0() { return cMembersJsonMemberParserRuleCall_2_0; }
+		
+		//(',' members+=JsonMember)*
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		
+		//members+=JsonMember
+		public Assignment getMembersAssignment_3_1() { return cMembersAssignment_3_1; }
+		
+		//JsonMember
+		public RuleCall getMembersJsonMemberParserRuleCall_3_1_0() { return cMembersJsonMemberParserRuleCall_3_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+	public class JsonMemberElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonMember");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAttributeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cAttributeAttributeCrossReference_0_0 = (CrossReference)cAttributeAssignment_0.eContents().get(0);
+		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cAttributeAttributeCrossReference_0_0.eContents().get(1);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueJsonValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//JsonMember:
+		//	attribute=[Attribute|QualifiedName] ':' value=JsonValue;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//attribute=[Attribute|QualifiedName] ':' value=JsonValue
+		public Group getGroup() { return cGroup; }
+		
+		//attribute=[Attribute|QualifiedName]
+		public Assignment getAttributeAssignment_0() { return cAttributeAssignment_0; }
+		
+		//[Attribute|QualifiedName]
+		public CrossReference getAttributeAttributeCrossReference_0_0() { return cAttributeAttributeCrossReference_0_0; }
+		
+		//QualifiedName
+		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_0_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_0_0_1; }
+		
+		//':'
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+		
+		//value=JsonValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		
+		//JsonValue
+		public RuleCall getValueJsonValueParserRuleCall_2_0() { return cValueJsonValueParserRuleCall_2_0; }
+	}
+	public class JsonValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cJsonObjectParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Assignment cStringAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cStringSTRINGTerminalRuleCall_1_0 = (RuleCall)cStringAssignment_1.eContents().get(0);
+		private final RuleCall cJsonArrayParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final Assignment cBooleanAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
+		private final RuleCall cBooleanJsonBooleanParserRuleCall_3_0 = (RuleCall)cBooleanAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Action cJsonValueAction_4_0 = (Action)cGroup_4.eContents().get(0);
+		private final RuleCall cJsonNullParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Assignment cLongAssignment_5 = (Assignment)cAlternatives.eContents().get(5);
+		private final RuleCall cLongINTTerminalRuleCall_5_0 = (RuleCall)cLongAssignment_5.eContents().get(0);
+		private final RuleCall cJsonDateTimeParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		
+		//JsonValue:
+		//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//stringValue=STRING
-		public Assignment getStringValueAssignment_0() { return cStringValueAssignment_0; }
+		//JsonObject
+		public RuleCall getJsonObjectParserRuleCall_0() { return cJsonObjectParserRuleCall_0; }
+		
+		//string=STRING
+		public Assignment getStringAssignment_1() { return cStringAssignment_1; }
 		
 		//STRING
-		public RuleCall getStringValueSTRINGTerminalRuleCall_0_0() { return cStringValueSTRINGTerminalRuleCall_0_0; }
+		public RuleCall getStringSTRINGTerminalRuleCall_1_0() { return cStringSTRINGTerminalRuleCall_1_0; }
 		
-		//intValue=INT
-		public Assignment getIntValueAssignment_1() { return cIntValueAssignment_1; }
+		//JsonArray
+		public RuleCall getJsonArrayParserRuleCall_2() { return cJsonArrayParserRuleCall_2; }
+		
+		//boolean=JsonBoolean
+		public Assignment getBooleanAssignment_3() { return cBooleanAssignment_3; }
+		
+		//JsonBoolean
+		public RuleCall getBooleanJsonBooleanParserRuleCall_3_0() { return cBooleanJsonBooleanParserRuleCall_3_0; }
+		
+		//{JsonValue} JsonNull
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//{JsonValue}
+		public Action getJsonValueAction_4_0() { return cJsonValueAction_4_0; }
+		
+		//JsonNull
+		public RuleCall getJsonNullParserRuleCall_4_1() { return cJsonNullParserRuleCall_4_1; }
+		
+		//long=INT
+		public Assignment getLongAssignment_5() { return cLongAssignment_5; }
 		
 		//INT
-		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
+		public RuleCall getLongINTTerminalRuleCall_5_0() { return cLongINTTerminalRuleCall_5_0; }
+		
+		//JsonDateTime
+		public RuleCall getJsonDateTimeParserRuleCall_6() { return cJsonDateTimeParserRuleCall_6; }
+	}
+	public class JsonArrayElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonArray");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cJsonArrayAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesJsonValueParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValuesJsonValueParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//JsonArray:
+		//	{JsonArray} '[' values+=JsonValue? (',' values+=JsonValue)* ']';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{JsonArray} '[' values+=JsonValue? (',' values+=JsonValue)* ']'
+		public Group getGroup() { return cGroup; }
+		
+		//{JsonArray}
+		public Action getJsonArrayAction_0() { return cJsonArrayAction_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+		
+		//values+=JsonValue?
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+		
+		//JsonValue
+		public RuleCall getValuesJsonValueParserRuleCall_2_0() { return cValuesJsonValueParserRuleCall_2_0; }
+		
+		//(',' values+=JsonValue)*
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		
+		//values+=JsonValue
+		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
+		
+		//JsonValue
+		public RuleCall getValuesJsonValueParserRuleCall_3_1_0() { return cValuesJsonValueParserRuleCall_3_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+	}
+	public class JsonBooleanElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonBoolean");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cTrueKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cFalseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//JsonBoolean:
+		//	'true' | 'false';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'true' | 'false'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'true'
+		public Keyword getTrueKeyword_0() { return cTrueKeyword_0; }
+		
+		//'false'
+		public Keyword getFalseKeyword_1() { return cFalseKeyword_1; }
+	}
+	public class JsonNullElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonNull");
+		private final Keyword cNullKeyword = (Keyword)rule.eContents().get(1);
+		
+		//JsonNull:
+		//	'null';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'null'
+		public Keyword getNullKeyword() { return cNullKeyword; }
 	}
 	
 	
@@ -1999,20 +1990,19 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	private final ThenBlockElements pThenBlock;
 	private final DataDefinitionElements pDataDefinition;
 	private final AuthorizationElements pAuthorization;
-	private final AttributeDefinitionListElements pAttributeDefinitionList;
-	private final ListAttributeDefinitionListElements pListAttributeDefinitionList;
-	private final AttributeDefinitionListForListElements pAttributeDefinitionListForList;
-	private final PrimitiveValueDefinitionForListElements pPrimitiveValueDefinitionForList;
-	private final AttributeDefinitionElements pAttributeDefinition;
-	private final ValueDefinitionListElements pValueDefinitionList;
 	private final AttributeElements pAttribute;
 	private final QualifiedNameElements pQualifiedName;
 	private final WriteFunctionTypeElements pWriteFunctionType;
 	private final ReadFunctionTypeElements pReadFunctionType;
 	private final TypeElements pType;
 	private final ConstraintElements pConstraint;
-	private final ValueElements pValue;
-	private final PrimitiveValueElements pPrimitiveValue;
+	private final JsonDateTimeElements pJsonDateTime;
+	private final JsonObjectElements pJsonObject;
+	private final JsonMemberElements pJsonMember;
+	private final JsonValueElements pJsonValue;
+	private final JsonArrayElements pJsonArray;
+	private final JsonBooleanElements pJsonBoolean;
+	private final JsonNullElements pJsonNull;
 	
 	private final Grammar grammar;
 	
@@ -2046,20 +2036,19 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.pThenBlock = new ThenBlockElements();
 		this.pDataDefinition = new DataDefinitionElements();
 		this.pAuthorization = new AuthorizationElements();
-		this.pAttributeDefinitionList = new AttributeDefinitionListElements();
-		this.pListAttributeDefinitionList = new ListAttributeDefinitionListElements();
-		this.pAttributeDefinitionListForList = new AttributeDefinitionListForListElements();
-		this.pPrimitiveValueDefinitionForList = new PrimitiveValueDefinitionForListElements();
-		this.pAttributeDefinition = new AttributeDefinitionElements();
-		this.pValueDefinitionList = new ValueDefinitionListElements();
 		this.pAttribute = new AttributeElements();
 		this.pQualifiedName = new QualifiedNameElements();
 		this.pWriteFunctionType = new WriteFunctionTypeElements();
 		this.pReadFunctionType = new ReadFunctionTypeElements();
 		this.pType = new TypeElements();
 		this.pConstraint = new ConstraintElements();
-		this.pValue = new ValueElements();
-		this.pPrimitiveValue = new PrimitiveValueElements();
+		this.pJsonDateTime = new JsonDateTimeElements();
+		this.pJsonObject = new JsonObjectElements();
+		this.pJsonMember = new JsonMemberElements();
+		this.pJsonValue = new JsonValueElements();
+		this.pJsonArray = new JsonArrayElements();
+		this.pJsonBoolean = new JsonBooleanElements();
+		this.pJsonNull = new JsonNullElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -2330,7 +2319,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataDefinition:
 	//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
-	//	data=AttributeDefinitionList?;
+	//	data=JsonObject?;
 	public DataDefinitionElements getDataDefinitionAccess() {
 		return pDataDefinition;
 	}
@@ -2347,68 +2336,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAuthorizationRule() {
 		return getAuthorizationAccess().getRule();
-	}
-	
-	//AttributeDefinitionList:
-	//	{AttributeDefinitionList} '{'
-	//	attributeDefinitions+=AttributeDefinition*
-	//	'}';
-	public AttributeDefinitionListElements getAttributeDefinitionListAccess() {
-		return pAttributeDefinitionList;
-	}
-	
-	public ParserRule getAttributeDefinitionListRule() {
-		return getAttributeDefinitionListAccess().getRule();
-	}
-	
-	//ListAttributeDefinitionList:
-	//	PrimitiveValueDefinitionForList | AttributeDefinitionListForList;
-	public ListAttributeDefinitionListElements getListAttributeDefinitionListAccess() {
-		return pListAttributeDefinitionList;
-	}
-	
-	public ParserRule getListAttributeDefinitionListRule() {
-		return getListAttributeDefinitionListAccess().getRule();
-	}
-	
-	//AttributeDefinitionListForList:
-	//	{AttributeDefinitionListForList} '[' attributeDefinitionList+=AttributeDefinitionList* ']';
-	public AttributeDefinitionListForListElements getAttributeDefinitionListForListAccess() {
-		return pAttributeDefinitionListForList;
-	}
-	
-	public ParserRule getAttributeDefinitionListForListRule() {
-		return getAttributeDefinitionListForListAccess().getRule();
-	}
-	
-	//PrimitiveValueDefinitionForList:
-	//	{PrimitiveValueDefinitionForList} '(' valueDefinitionList+=ValueDefinitionList* ')';
-	public PrimitiveValueDefinitionForListElements getPrimitiveValueDefinitionForListAccess() {
-		return pPrimitiveValueDefinitionForList;
-	}
-	
-	public ParserRule getPrimitiveValueDefinitionForListRule() {
-		return getPrimitiveValueDefinitionForListAccess().getRule();
-	}
-	
-	//AttributeDefinition:
-	//	attribute=[Attribute|QualifiedName] ':' value=Value;
-	public AttributeDefinitionElements getAttributeDefinitionAccess() {
-		return pAttributeDefinition;
-	}
-	
-	public ParserRule getAttributeDefinitionRule() {
-		return getAttributeDefinitionAccess().getRule();
-	}
-	
-	//ValueDefinitionList:
-	//	primitiveValue=PrimitiveValue;
-	public ValueDefinitionListElements getValueDefinitionListAccess() {
-		return pValueDefinitionList;
-	}
-	
-	public ParserRule getValueDefinitionListRule() {
-		return getValueDefinitionListAccess().getRule();
 	}
 	
 	//Attribute:
@@ -2475,25 +2402,76 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		return getConstraintAccess().getRule();
 	}
 	
-	//Value:
-	//	stringValue=STRING | intValue=INT | dateValue=STRING pattern=STRING | attributeDefinitionList=AttributeDefinitionList
-	//	| listAttributeDefinitionList=ListAttributeDefinitionList;
-	public ValueElements getValueAccess() {
-		return pValue;
+	//JsonDateTime:
+	//	dateTime=STRING pattern=STRING;
+	public JsonDateTimeElements getJsonDateTimeAccess() {
+		return pJsonDateTime;
 	}
 	
-	public ParserRule getValueRule() {
-		return getValueAccess().getRule();
+	public ParserRule getJsonDateTimeRule() {
+		return getJsonDateTimeAccess().getRule();
 	}
 	
-	//PrimitiveValue:
-	//	stringValue=STRING | intValue=INT;
-	public PrimitiveValueElements getPrimitiveValueAccess() {
-		return pPrimitiveValue;
+	//JsonObject:
+	//	{JsonObject} '{'
+	//	members+=JsonMember? (',' members+=JsonMember)*
+	//	'}';
+	public JsonObjectElements getJsonObjectAccess() {
+		return pJsonObject;
 	}
 	
-	public ParserRule getPrimitiveValueRule() {
-		return getPrimitiveValueAccess().getRule();
+	public ParserRule getJsonObjectRule() {
+		return getJsonObjectAccess().getRule();
+	}
+	
+	//JsonMember:
+	//	attribute=[Attribute|QualifiedName] ':' value=JsonValue;
+	public JsonMemberElements getJsonMemberAccess() {
+		return pJsonMember;
+	}
+	
+	public ParserRule getJsonMemberRule() {
+		return getJsonMemberAccess().getRule();
+	}
+	
+	//JsonValue:
+	//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime;
+	public JsonValueElements getJsonValueAccess() {
+		return pJsonValue;
+	}
+	
+	public ParserRule getJsonValueRule() {
+		return getJsonValueAccess().getRule();
+	}
+	
+	//JsonArray:
+	//	{JsonArray} '[' values+=JsonValue? (',' values+=JsonValue)* ']';
+	public JsonArrayElements getJsonArrayAccess() {
+		return pJsonArray;
+	}
+	
+	public ParserRule getJsonArrayRule() {
+		return getJsonArrayAccess().getRule();
+	}
+	
+	//JsonBoolean:
+	//	'true' | 'false';
+	public JsonBooleanElements getJsonBooleanAccess() {
+		return pJsonBoolean;
+	}
+	
+	public ParserRule getJsonBooleanRule() {
+		return getJsonBooleanAccess().getRule();
+	}
+	
+	//JsonNull:
+	//	'null';
+	public JsonNullElements getJsonNullAccess() {
+		return pJsonNull;
+	}
+	
+	public ParserRule getJsonNullRule() {
+		return getJsonNullAccess().getRule();
 	}
 	
 	//terminal ID:

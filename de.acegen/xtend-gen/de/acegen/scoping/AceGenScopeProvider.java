@@ -19,13 +19,13 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
-import de.acegen.aceGen.ListAttributeDefinitionList;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
@@ -98,12 +98,12 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       };
       return new FilteringScope(scope_2, _function_2);
     }
-    if ((((context instanceof AttributeDefinitionList) || (context instanceof ListAttributeDefinitionList)) || 
-      (context instanceof AttributeDefinition))) {
+    if ((((context instanceof JsonObject) || (context instanceof JsonArray)) || 
+      (context instanceof JsonMember))) {
       EObject parent = context.eContainer();
       boolean isThen = false;
       boolean isWhen = false;
-      while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof AttributeDefinition))))) {
+      while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof JsonMember))))) {
         {
           parent = parent.eContainer();
           if ((parent instanceof ThenBlock)) {
@@ -129,12 +129,12 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           }
         }
       }
-      if ((parent instanceof AttributeDefinition)) {
-        final AttributeDefinition attributeDefinition = ((AttributeDefinition) parent);
-        Model _model = attributeDefinition.getAttribute().getModel();
+      if ((parent instanceof JsonMember)) {
+        final JsonMember jsonMember = ((JsonMember) parent);
+        Model _model = jsonMember.getAttribute().getModel();
         boolean _tripleNotEquals = (_model != null);
         if (_tripleNotEquals) {
-          Model _model_1 = attributeDefinition.getAttribute().getModel();
+          Model _model_1 = jsonMember.getAttribute().getModel();
           final Model model = ((Model) _model_1);
           return this.getScopeFor(model);
         }

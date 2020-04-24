@@ -72,6 +72,7 @@ class ModelTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -79,6 +80,7 @@ class ModelTemplate {
 		import java.util.ArrayList;
 
 		import de.acegen.DateTimeToStringConverter;
+		import de.acegen.StringToDateTimeConverter;
 
 		@SuppressWarnings("all")
 		public class «modelClassName» implements «modelName» {
@@ -152,6 +154,7 @@ class ModelTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -168,6 +171,7 @@ class ModelTemplate {
 		import de.acegen.AbstractData;
 		import de.acegen.IDataContainer;
 		import de.acegen.DateTimeToStringConverter;
+		import de.acegen.StringToDateTimeConverter;
 		
 		@SuppressWarnings("unused")
 		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
@@ -329,6 +333,7 @@ class ModelTemplate {
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.annotation.JsonIgnore;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		import javax.validation.constraints.NotNull;
 		import org.hibernate.validator.constraints.NotEmpty;
@@ -337,6 +342,7 @@ class ModelTemplate {
 		
 		import de.acegen.IDataContainer;
 		import de.acegen.DateTimeToStringConverter;
+		import de.acegen.StringToDateTimeConverter;
 		
 		@SuppressWarnings("all")
 		public class «responseDataName» implements «responseDataInterfaceName» {

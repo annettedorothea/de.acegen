@@ -6,9 +6,6 @@ package de.acegen.aceGen.impl;
 import de.acegen.aceGen.AceGenFactory;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.AttributeDefinitionList;
-import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
@@ -26,15 +23,15 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
-import de.acegen.aceGen.ListAttributeDefinitionList;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonDateTime;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.PrimitiveValue;
-import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
-import de.acegen.aceGen.Value;
-import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -211,48 +208,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass attributeDefinitionListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass listAttributeDefinitionListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeDefinitionListForListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass primitiveValueDefinitionForListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass valueDefinitionListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass attributeEClass = null;
 
   /**
@@ -260,14 +215,35 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass valueEClass = null;
+  private EClass jsonDateTimeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass primitiveValueEClass = null;
+  private EClass jsonObjectEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass jsonMemberEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass jsonValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass jsonArrayEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -1361,138 +1337,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EClass getAttributeDefinitionList()
-  {
-    return attributeDefinitionListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getAttributeDefinitionList_AttributeDefinitions()
-  {
-    return (EReference)attributeDefinitionListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getListAttributeDefinitionList()
-  {
-    return listAttributeDefinitionListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getAttributeDefinitionListForList()
-  {
-    return attributeDefinitionListForListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getAttributeDefinitionListForList_AttributeDefinitionList()
-  {
-    return (EReference)attributeDefinitionListForListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getPrimitiveValueDefinitionForList()
-  {
-    return primitiveValueDefinitionForListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getPrimitiveValueDefinitionForList_ValueDefinitionList()
-  {
-    return (EReference)primitiveValueDefinitionForListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getAttributeDefinition()
-  {
-    return attributeDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getAttributeDefinition_Attribute()
-  {
-    return (EReference)attributeDefinitionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getAttributeDefinition_Value()
-  {
-    return (EReference)attributeDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getValueDefinitionList()
-  {
-    return valueDefinitionListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getValueDefinitionList_PrimitiveValue()
-  {
-    return (EReference)valueDefinitionListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getAttribute()
   {
     return attributeEClass;
@@ -1603,9 +1447,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EClass getValue()
+  public EClass getJsonDateTime()
   {
-    return valueEClass;
+    return jsonDateTimeEClass;
   }
 
   /**
@@ -1614,9 +1458,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getValue_StringValue()
+  public EAttribute getJsonDateTime_DateTime()
   {
-    return (EAttribute)valueEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1625,9 +1469,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getValue_IntValue()
+  public EAttribute getJsonDateTime_Pattern()
   {
-    return (EAttribute)valueEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1636,9 +1480,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getValue_DateValue()
+  public EClass getJsonObject()
   {
-    return (EAttribute)valueEClass.getEStructuralFeatures().get(2);
+    return jsonObjectEClass;
   }
 
   /**
@@ -1647,9 +1491,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getValue_Pattern()
+  public EReference getJsonObject_Members()
   {
-    return (EAttribute)valueEClass.getEStructuralFeatures().get(3);
+    return (EReference)jsonObjectEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1658,9 +1502,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getValue_AttributeDefinitionList()
+  public EClass getJsonMember()
   {
-    return (EReference)valueEClass.getEStructuralFeatures().get(4);
+    return jsonMemberEClass;
   }
 
   /**
@@ -1669,9 +1513,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getValue_ListAttributeDefinitionList()
+  public EReference getJsonMember_Attribute()
   {
-    return (EReference)valueEClass.getEStructuralFeatures().get(5);
+    return (EReference)jsonMemberEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1680,9 +1524,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EClass getPrimitiveValue()
+  public EReference getJsonMember_Value()
   {
-    return primitiveValueEClass;
+    return (EReference)jsonMemberEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1691,9 +1535,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getPrimitiveValue_StringValue()
+  public EClass getJsonValue()
   {
-    return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(0);
+    return jsonValueEClass;
   }
 
   /**
@@ -1702,9 +1546,53 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getPrimitiveValue_IntValue()
+  public EAttribute getJsonValue_String()
   {
-    return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)jsonValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getJsonValue_Boolean()
+  {
+    return (EAttribute)jsonValueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getJsonValue_Long()
+  {
+    return (EAttribute)jsonValueEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getJsonArray()
+  {
+    return jsonArrayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getJsonArray_Values()
+  {
+    return (EReference)jsonArrayEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1853,24 +1741,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(authorizationEClass, AUTHORIZATION__USERNAME);
     createEAttribute(authorizationEClass, AUTHORIZATION__PASSWORD);
 
-    attributeDefinitionListEClass = createEClass(ATTRIBUTE_DEFINITION_LIST);
-    createEReference(attributeDefinitionListEClass, ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS);
-
-    listAttributeDefinitionListEClass = createEClass(LIST_ATTRIBUTE_DEFINITION_LIST);
-
-    attributeDefinitionListForListEClass = createEClass(ATTRIBUTE_DEFINITION_LIST_FOR_LIST);
-    createEReference(attributeDefinitionListForListEClass, ATTRIBUTE_DEFINITION_LIST_FOR_LIST__ATTRIBUTE_DEFINITION_LIST);
-
-    primitiveValueDefinitionForListEClass = createEClass(PRIMITIVE_VALUE_DEFINITION_FOR_LIST);
-    createEReference(primitiveValueDefinitionForListEClass, PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST);
-
-    attributeDefinitionEClass = createEClass(ATTRIBUTE_DEFINITION);
-    createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__ATTRIBUTE);
-    createEReference(attributeDefinitionEClass, ATTRIBUTE_DEFINITION__VALUE);
-
-    valueDefinitionListEClass = createEClass(VALUE_DEFINITION_LIST);
-    createEReference(valueDefinitionListEClass, VALUE_DEFINITION_LIST__PRIMITIVE_VALUE);
-
     attributeEClass = createEClass(ATTRIBUTE);
     createEAttribute(attributeEClass, ATTRIBUTE__UNIQUE);
     createEAttribute(attributeEClass, ATTRIBUTE__PRIMARY_KEY);
@@ -1882,17 +1752,24 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
     createEAttribute(attributeEClass, ATTRIBUTE__NOT_REPLAYABLE);
 
-    valueEClass = createEClass(VALUE);
-    createEAttribute(valueEClass, VALUE__STRING_VALUE);
-    createEAttribute(valueEClass, VALUE__INT_VALUE);
-    createEAttribute(valueEClass, VALUE__DATE_VALUE);
-    createEAttribute(valueEClass, VALUE__PATTERN);
-    createEReference(valueEClass, VALUE__ATTRIBUTE_DEFINITION_LIST);
-    createEReference(valueEClass, VALUE__LIST_ATTRIBUTE_DEFINITION_LIST);
+    jsonDateTimeEClass = createEClass(JSON_DATE_TIME);
+    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__DATE_TIME);
+    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__PATTERN);
 
-    primitiveValueEClass = createEClass(PRIMITIVE_VALUE);
-    createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__STRING_VALUE);
-    createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__INT_VALUE);
+    jsonObjectEClass = createEClass(JSON_OBJECT);
+    createEReference(jsonObjectEClass, JSON_OBJECT__MEMBERS);
+
+    jsonMemberEClass = createEClass(JSON_MEMBER);
+    createEReference(jsonMemberEClass, JSON_MEMBER__ATTRIBUTE);
+    createEReference(jsonMemberEClass, JSON_MEMBER__VALUE);
+
+    jsonValueEClass = createEClass(JSON_VALUE);
+    createEAttribute(jsonValueEClass, JSON_VALUE__STRING);
+    createEAttribute(jsonValueEClass, JSON_VALUE__BOOLEAN);
+    createEAttribute(jsonValueEClass, JSON_VALUE__LONG);
+
+    jsonArrayEClass = createEClass(JSON_ARRAY);
+    createEReference(jsonArrayEClass, JSON_ARRAY__VALUES);
   }
 
   /**
@@ -1926,8 +1803,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     // Add supertypes to classes
     httpServerAceWriteEClass.getESuperTypes().add(this.getHttpServerAce());
     httpServerAceReadEClass.getESuperTypes().add(this.getHttpServerAce());
-    attributeDefinitionListForListEClass.getESuperTypes().add(this.getListAttributeDefinitionList());
-    primitiveValueDefinitionForListEClass.getESuperTypes().add(this.getListAttributeDefinitionList());
+    jsonDateTimeEClass.getESuperTypes().add(this.getJsonValue());
+    jsonObjectEClass.getESuperTypes().add(this.getJsonValue());
+    jsonArrayEClass.getESuperTypes().add(this.getJsonValue());
 
     // Initialize classes and features; add operations and parameters
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2039,29 +1917,11 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getDataDefinition_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDataDefinition_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDataDefinition_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDataDefinition_Data(), this.getAttributeDefinitionList(), null, "data", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDataDefinition_Data(), this.getJsonObject(), null, "data", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(authorizationEClass, Authorization.class, "Authorization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAuthorization_Username(), ecorePackage.getEString(), "username", null, 0, 1, Authorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAuthorization_Password(), ecorePackage.getEString(), "password", null, 0, 1, Authorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeDefinitionListEClass, AttributeDefinitionList.class, "AttributeDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeDefinitionList_AttributeDefinitions(), this.getAttributeDefinition(), null, "attributeDefinitions", null, 0, -1, AttributeDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(listAttributeDefinitionListEClass, ListAttributeDefinitionList.class, "ListAttributeDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(attributeDefinitionListForListEClass, AttributeDefinitionListForList.class, "AttributeDefinitionListForList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeDefinitionListForList_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, -1, AttributeDefinitionListForList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(primitiveValueDefinitionForListEClass, PrimitiveValueDefinitionForList.class, "PrimitiveValueDefinitionForList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPrimitiveValueDefinitionForList_ValueDefinitionList(), this.getValueDefinitionList(), null, "valueDefinitionList", null, 0, -1, PrimitiveValueDefinitionForList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeDefinitionEClass, AttributeDefinition.class, "AttributeDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeDefinition_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributeDefinition_Value(), this.getValue(), null, "value", null, 0, 1, AttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(valueDefinitionListEClass, ValueDefinitionList.class, "ValueDefinitionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getValueDefinitionList_PrimitiveValue(), this.getPrimitiveValue(), null, "primitiveValue", null, 0, 1, ValueDefinitionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttribute_Unique(), ecorePackage.getEBoolean(), "unique", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2074,17 +1934,24 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_NotReplayable(), ecorePackage.getEBoolean(), "notReplayable", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getValue_StringValue(), ecorePackage.getEString(), "stringValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValue_DateValue(), ecorePackage.getEString(), "dateValue", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValue_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getValue_AttributeDefinitionList(), this.getAttributeDefinitionList(), null, "attributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getValue_ListAttributeDefinitionList(), this.getListAttributeDefinitionList(), null, "listAttributeDefinitionList", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(jsonDateTimeEClass, JsonDateTime.class, "JsonDateTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJsonDateTime_DateTime(), ecorePackage.getEString(), "dateTime", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJsonDateTime_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(primitiveValueEClass, PrimitiveValue.class, "PrimitiveValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPrimitiveValue_StringValue(), ecorePackage.getEString(), "stringValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPrimitiveValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(jsonObjectEClass, JsonObject.class, "JsonObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJsonObject_Members(), this.getJsonMember(), null, "members", null, 0, -1, JsonObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsonMemberEClass, JsonMember.class, "JsonMember", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJsonMember_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, JsonMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJsonMember_Value(), this.getJsonValue(), null, "value", null, 0, 1, JsonMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsonValueEClass, JsonValue.class, "JsonValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJsonValue_String(), ecorePackage.getEString(), "string", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJsonValue_Boolean(), ecorePackage.getEString(), "boolean", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJsonValue_Long(), ecorePackage.getEInt(), "long", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsonArrayEClass, JsonArray.class, "JsonArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJsonArray_Values(), this.getJsonValue(), null, "values", null, 0, -1, JsonArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

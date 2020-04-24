@@ -5,8 +5,8 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.Value;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonValue;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,19 +19,19 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Attribute Definition</b></em>'.
+ * An implementation of the model object '<em><b>Json Member</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.AttributeDefinitionImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeDefinitionImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonMemberImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonMemberImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implements AttributeDefinition
+public class JsonMemberImpl extends MinimalEObjectImpl.Container implements JsonMember
 {
   /**
    * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
@@ -51,14 +51,14 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
    * @generated
    * @ordered
    */
-  protected Value value;
+  protected JsonValue value;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected AttributeDefinitionImpl()
+  protected JsonMemberImpl()
   {
     super();
   }
@@ -71,7 +71,7 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.ATTRIBUTE_DEFINITION;
+    return AceGenPackage.Literals.JSON_MEMBER;
   }
 
   /**
@@ -89,7 +89,7 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
       if (attribute != oldAttribute)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE, oldAttribute, attribute));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.JSON_MEMBER__ATTRIBUTE, oldAttribute, attribute));
       }
     }
     return attribute;
@@ -116,7 +116,7 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
     Attribute oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE, oldAttribute, attribute));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER__ATTRIBUTE, oldAttribute, attribute));
   }
 
   /**
@@ -125,7 +125,7 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
    * @generated
    */
   @Override
-  public Value getValue()
+  public JsonValue getValue()
   {
     return value;
   }
@@ -135,13 +135,13 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(Value newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(JsonValue newValue, NotificationChain msgs)
   {
-    Value oldValue = value;
+    JsonValue oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE_DEFINITION__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -153,20 +153,20 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
    * @generated
    */
   @Override
-  public void setValue(Value newValue)
+  public void setValue(JsonValue newValue)
   {
     if (newValue != value)
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.ATTRIBUTE_DEFINITION__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.JSON_MEMBER__VALUE, null, msgs);
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.ATTRIBUTE_DEFINITION__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.JSON_MEMBER__VALUE, null, msgs);
       msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE_DEFINITION__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER__VALUE, newValue, newValue));
   }
 
   /**
@@ -179,7 +179,7 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION__VALUE:
+      case AceGenPackage.JSON_MEMBER__VALUE:
         return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -195,10 +195,10 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE:
+      case AceGenPackage.JSON_MEMBER__ATTRIBUTE:
         if (resolve) return getAttribute();
         return basicGetAttribute();
-      case AceGenPackage.ATTRIBUTE_DEFINITION__VALUE:
+      case AceGenPackage.JSON_MEMBER__VALUE:
         return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -214,11 +214,11 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE:
+      case AceGenPackage.JSON_MEMBER__ATTRIBUTE:
         setAttribute((Attribute)newValue);
         return;
-      case AceGenPackage.ATTRIBUTE_DEFINITION__VALUE:
-        setValue((Value)newValue);
+      case AceGenPackage.JSON_MEMBER__VALUE:
+        setValue((JsonValue)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -234,11 +234,11 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE:
+      case AceGenPackage.JSON_MEMBER__ATTRIBUTE:
         setAttribute((Attribute)null);
         return;
-      case AceGenPackage.ATTRIBUTE_DEFINITION__VALUE:
-        setValue((Value)null);
+      case AceGenPackage.JSON_MEMBER__VALUE:
+        setValue((JsonValue)null);
         return;
     }
     super.eUnset(featureID);
@@ -254,12 +254,12 @@ public class AttributeDefinitionImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION__ATTRIBUTE:
+      case AceGenPackage.JSON_MEMBER__ATTRIBUTE:
         return attribute != null;
-      case AceGenPackage.ATTRIBUTE_DEFINITION__VALUE:
+      case AceGenPackage.JSON_MEMBER__VALUE:
         return value != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //AttributeDefinitionImpl
+} //JsonMemberImpl

@@ -4,77 +4,76 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.JsonDateTime;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Primitive Value</b></em>'.
+ * An implementation of the model object '<em><b>Json Date Time</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.PrimitiveValueImpl#getStringValue <em>String Value</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.PrimitiveValueImpl#getIntValue <em>Int Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonDateTimeImpl#getDateTime <em>Date Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonDateTimeImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements PrimitiveValue
+public class JsonDateTimeImpl extends JsonValueImpl implements JsonDateTime
 {
   /**
-   * The default value of the '{@link #getStringValue() <em>String Value</em>}' attribute.
+   * The default value of the '{@link #getDateTime() <em>Date Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStringValue()
+   * @see #getDateTime()
    * @generated
    * @ordered
    */
-  protected static final String STRING_VALUE_EDEFAULT = null;
+  protected static final String DATE_TIME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getStringValue() <em>String Value</em>}' attribute.
+   * The cached value of the '{@link #getDateTime() <em>Date Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStringValue()
+   * @see #getDateTime()
    * @generated
    * @ordered
    */
-  protected String stringValue = STRING_VALUE_EDEFAULT;
+  protected String dateTime = DATE_TIME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getIntValue() <em>Int Value</em>}' attribute.
+   * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntValue()
+   * @see #getPattern()
    * @generated
    * @ordered
    */
-  protected static final int INT_VALUE_EDEFAULT = 0;
+  protected static final String PATTERN_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getIntValue() <em>Int Value</em>}' attribute.
+   * The cached value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntValue()
+   * @see #getPattern()
    * @generated
    * @ordered
    */
-  protected int intValue = INT_VALUE_EDEFAULT;
+  protected String pattern = PATTERN_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PrimitiveValueImpl()
+  protected JsonDateTimeImpl()
   {
     super();
   }
@@ -87,7 +86,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.PRIMITIVE_VALUE;
+    return AceGenPackage.Literals.JSON_DATE_TIME;
   }
 
   /**
@@ -96,9 +95,9 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public String getStringValue()
+  public String getDateTime()
   {
-    return stringValue;
+    return dateTime;
   }
 
   /**
@@ -107,12 +106,12 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public void setStringValue(String newStringValue)
+  public void setDateTime(String newDateTime)
   {
-    String oldStringValue = stringValue;
-    stringValue = newStringValue;
+    String oldDateTime = dateTime;
+    dateTime = newDateTime;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PRIMITIVE_VALUE__STRING_VALUE, oldStringValue, stringValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_DATE_TIME__DATE_TIME, oldDateTime, dateTime));
   }
 
   /**
@@ -121,9 +120,9 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public int getIntValue()
+  public String getPattern()
   {
-    return intValue;
+    return pattern;
   }
 
   /**
@@ -132,12 +131,12 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public void setIntValue(int newIntValue)
+  public void setPattern(String newPattern)
   {
-    int oldIntValue = intValue;
-    intValue = newIntValue;
+    String oldPattern = pattern;
+    pattern = newPattern;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PRIMITIVE_VALUE__INT_VALUE, oldIntValue, intValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_DATE_TIME__PATTERN, oldPattern, pattern));
   }
 
   /**
@@ -150,10 +149,10 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE__STRING_VALUE:
-        return getStringValue();
-      case AceGenPackage.PRIMITIVE_VALUE__INT_VALUE:
-        return getIntValue();
+      case AceGenPackage.JSON_DATE_TIME__DATE_TIME:
+        return getDateTime();
+      case AceGenPackage.JSON_DATE_TIME__PATTERN:
+        return getPattern();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -168,11 +167,11 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE__STRING_VALUE:
-        setStringValue((String)newValue);
+      case AceGenPackage.JSON_DATE_TIME__DATE_TIME:
+        setDateTime((String)newValue);
         return;
-      case AceGenPackage.PRIMITIVE_VALUE__INT_VALUE:
-        setIntValue((Integer)newValue);
+      case AceGenPackage.JSON_DATE_TIME__PATTERN:
+        setPattern((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -188,11 +187,11 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE__STRING_VALUE:
-        setStringValue(STRING_VALUE_EDEFAULT);
+      case AceGenPackage.JSON_DATE_TIME__DATE_TIME:
+        setDateTime(DATE_TIME_EDEFAULT);
         return;
-      case AceGenPackage.PRIMITIVE_VALUE__INT_VALUE:
-        setIntValue(INT_VALUE_EDEFAULT);
+      case AceGenPackage.JSON_DATE_TIME__PATTERN:
+        setPattern(PATTERN_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -208,10 +207,10 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE__STRING_VALUE:
-        return STRING_VALUE_EDEFAULT == null ? stringValue != null : !STRING_VALUE_EDEFAULT.equals(stringValue);
-      case AceGenPackage.PRIMITIVE_VALUE__INT_VALUE:
-        return intValue != INT_VALUE_EDEFAULT;
+      case AceGenPackage.JSON_DATE_TIME__DATE_TIME:
+        return DATE_TIME_EDEFAULT == null ? dateTime != null : !DATE_TIME_EDEFAULT.equals(dateTime);
+      case AceGenPackage.JSON_DATE_TIME__PATTERN:
+        return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
     }
     return super.eIsSet(featureID);
   }
@@ -227,12 +226,12 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (stringValue: ");
-    result.append(stringValue);
-    result.append(", intValue: ");
-    result.append(intValue);
+    result.append(" (dateTime: ");
+    result.append(dateTime);
+    result.append(", pattern: ");
+    result.append(pattern);
     result.append(')');
     return result.toString();
   }
 
-} //PrimitiveValueImpl
+} //JsonDateTimeImpl

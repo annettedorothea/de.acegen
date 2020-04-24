@@ -18,16 +18,32 @@
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
-import de.acegen.aceGen.AttributeDefinition
+import de.acegen.aceGen.JsonArray
+import de.acegen.aceGen.JsonDateTime
+import de.acegen.aceGen.JsonObject
+import de.acegen.aceGen.JsonValue
 import de.acegen.aceGen.Model
 import java.util.ArrayList
 import java.util.List
+import java.util.UUID
 import javax.inject.Inject
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import org.joda.time.format.DateTimeFormat
 
 class AttributeExtension {
 
 	@Inject
 	extension ModelExtension
+	
+	int index = 0;
+	
+	public String stringLineBreak = '''," + 
+	"'''
+
+	def void resetIndex() {
+		index = 0;
+	}
 
 	def String resourceParamType(Attribute it) '''«IF type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
@@ -46,10 +62,10 @@ class AttributeExtension {
 			return '''«IF list»java.util.List<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
 		}
 	}
-	
+
 	def List<Integer> timesIterator(int length) {
 		var list = new ArrayList();
-		for(var i=0; i<length; i++) {
+		for (var i = 0; i < length; i++) {
 			list.add(i);
 		}
 		return list;
@@ -111,7 +127,8 @@ class AttributeExtension {
 	def String getter(Attribute it, boolean jsonProperty) '''
 		«IF jsonProperty»
 			@JsonProperty
-			«IF type !== null && type.equals('DateTime')»@JsonSerialize(converter = DateTimeToStringConverter.class)«ENDIF»
+			«IF type !== null && type.equals('DateTime')»@JsonSerialize(converter = DateTimeToStringConverter.class)
+			@JsonDeserialize(converter = StringToDateTimeConverter.class)«ENDIF»
 		«ENDIF»
 		public «javaType» get«name.toFirstUpper»() {
 			return this.«name»;
@@ -137,58 +154,37 @@ class AttributeExtension {
 		return !list && model === null;
 	}
 
-	def String dateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»")).withZone(DateTimeZone.UTC)'''
-	def String testDateTimeParse(String date, String pattern) '''DateTime.parse("«date»", DateTimeFormat.forPattern("«pattern»")).withZone(DateTimeZone.UTC).toString()'''
+	def dateTimeParse(String dateString, String pattern) {
+		try {
+			return DateTime.parse(dateString, DateTimeFormat.forPattern(pattern)).withZone(DateTimeZone.UTC);
+		} catch (Exception x) {
+			return null;
+		}
+	}
 
-	def String valueFrom(AttributeDefinition it, Integer index) {
-		if (value.stringValue !== null) {
-			if (attribute.type == "Integer") {
-				return '''Integer.parseInt("«value.stringValue»")'''
+	def dispatch CharSequence valueFrom(JsonObject it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+
+	def dispatch CharSequence valueFrom(JsonValue it) {
+		if (string !== null) {
+			var returnString = string;
+			if (string.contains("${index}")) {
+				returnString = returnString.replace("${index}", index.toString());
+				index++;
 			}
-			if (attribute.type == "Float") {
-				return '''Float.parseFloat("«value.stringValue»")'''
+			if (string.contains("${random}")) {
+				returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
 			}
-			if (attribute.type == "Boolean") {
-				return '''new Boolean("«value.stringValue»")'''
-			}
-			if (attribute.type == "Long") {
-				return '''Long.parseLong("«value.stringValue»")'''
-			}
-			return '''this.templateStringValue("«value.stringValue»", «IF index !== null»«index»«ELSE»null«ENDIF»)'''
+			return '''\"«returnString»\"''';
+		} else if (boolean !== null) {
+			return boolean;
+		} else {
+			return '''«long»''';
 		}
-		if (attribute.type == "DateTime") {
-			return dateTimeParse(value.dateValue, value.pattern)
-		}
-		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
-			return "null"
-		}
-		return '''«value.intValue»'''
 	}
-	
-	def String testValueFrom(AttributeDefinition it, Integer index) {
-		if (value.stringValue !== null) {
-			if (attribute.type == "Integer") {
-				return '''Integer.parseInt("«value.stringValue»")'''
-			}
-			if (attribute.type == "Float") {
-				return '''Float.parseFloat("«value.stringValue»")'''
-			}
-			if (attribute.type == "Boolean") {
-				return '''new Boolean("«value.stringValue»")'''
-			}
-			if (attribute.type == "Long") {
-				return '''Long.parseLong("«value.stringValue»")'''
-			}
-			return '''this.templateStringValue("«value.stringValue»", «IF index !== null»«index»«ELSE»null«ENDIF»)'''
-		}
-		if (attribute.type == "DateTime") {
-			return testDateTimeParse(value.dateValue, value.pattern)
-		}
-		if (value.attributeDefinitionList !== null || value.listAttributeDefinitionList !== null) {
-			return "null"
-		}
-		return '''«value.intValue»'''
-	}
-	
+
+	def dispatch CharSequence valueFrom(JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
+
+	def dispatch CharSequence valueFrom(JsonDateTime it) '''\"«dateTimeParse(dateTime, pattern)»\"'''
+
 }
 /******* S.D.G. *******/

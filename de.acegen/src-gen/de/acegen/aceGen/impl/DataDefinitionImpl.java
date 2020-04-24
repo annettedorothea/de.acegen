@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.AttributeDefinitionList;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.JsonObject;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -102,7 +102,7 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected AttributeDefinitionList data;
+  protected JsonObject data;
 
   /**
    * <!-- begin-user-doc -->
@@ -206,7 +206,7 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public AttributeDefinitionList getData()
+  public JsonObject getData()
   {
     return data;
   }
@@ -216,9 +216,9 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetData(AttributeDefinitionList newData, NotificationChain msgs)
+  public NotificationChain basicSetData(JsonObject newData, NotificationChain msgs)
   {
-    AttributeDefinitionList oldData = data;
+    JsonObject oldData = data;
     data = newData;
     if (eNotificationRequired())
     {
@@ -234,7 +234,7 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public void setData(AttributeDefinitionList newData)
+  public void setData(JsonObject newData)
   {
     if (newData != data)
     {
@@ -308,7 +308,7 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
         setPattern((String)newValue);
         return;
       case AceGenPackage.DATA_DEFINITION__DATA:
-        setData((AttributeDefinitionList)newValue);
+        setData((JsonObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -334,7 +334,7 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
         setPattern(PATTERN_EDEFAULT);
         return;
       case AceGenPackage.DATA_DEFINITION__DATA:
-        setData((AttributeDefinitionList)null);
+        setData((JsonObject)null);
         return;
     }
     super.eUnset(featureID);

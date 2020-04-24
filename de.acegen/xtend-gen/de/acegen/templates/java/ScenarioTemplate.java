@@ -1,20 +1,14 @@
 package de.acegen.templates.java;
 
 import com.google.common.base.Objects;
-import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.AttributeDefinitionList;
-import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.aceGen.ListAttributeDefinitionList;
+import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Scenario;
-import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
@@ -22,6 +16,7 @@ import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -47,12 +42,12 @@ public class ScenarioTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
-  private int varIndex = 0;
-  
   public CharSequence generateScenario(final Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    this._attributeExtension.resetIndex();
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
@@ -156,9 +151,6 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
-    _builder.append("\t\t");
-    int index = 0;
-    _builder.newLineIfNotEmpty();
     {
       ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
       for(final GivenRef givenRef : _allGivenRefs) {
@@ -174,9 +166,7 @@ public class ScenarioTemplate {
                 _builder.append(_generatePrepare, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
-                WhenBlock _whenBlock = givenRef.getScenario().getWhenBlock();
-                int _plusPlus = index++;
-                CharSequence _generateActionCall = this.generateActionCall(_whenBlock, java, _plusPlus, false);
+                CharSequence _generateActionCall = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
                 _builder.append(_generateActionCall, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -189,9 +179,7 @@ public class ScenarioTemplate {
             _builder.append(_generatePrepare_1, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            WhenBlock _whenBlock_1 = givenRef.getScenario().getWhenBlock();
-            int _plusPlus_1 = index++;
-            CharSequence _generateActionCall_1 = this.generateActionCall(_whenBlock_1, java, _plusPlus_1, false);
+            CharSequence _generateActionCall_1 = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
             _builder.append(_generateActionCall_1, "\t\t");
             _builder.newLineIfNotEmpty();
           }
@@ -212,7 +200,7 @@ public class ScenarioTemplate {
     _builder.append(_generatePrepare_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, 0, true);
+    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, true);
     _builder.append(_generateActionCall_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -281,8 +269,12 @@ public class ScenarioTemplate {
       boolean _tripleNotEquals_1 = (_response != null);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
-        CharSequence _generateDataCreation = this.generateDataCreation(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel(), "expectedData", null);
-        _builder.append(_generateDataCreation, "\t\t");
+        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
+        _builder.append(_dataNameWithPackage, "\t\t");
+        _builder.append(" expectedData = ");
+        CharSequence _objectMapperCall = this.objectMapperCall(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
+        _builder.append(_objectMapperCall, "\t\t");
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.newLine();
@@ -429,28 +421,54 @@ public class ScenarioTemplate {
       String _systemtime = it.getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
-        _builder.append("NotReplayableDataProvider.setSystemTime(");
-        String _dateTimeParse = this._attributeExtension.dateTimeParse(it.getDataDefinition().getSystemtime(), it.getDataDefinition().getPattern());
-        _builder.append(_dateTimeParse);
-        _builder.append(");");
+        _builder.append("NotReplayableDataProvider.setSystemTime(DateTime.parse(\"");
+        String _systemtime_1 = it.getDataDefinition().getSystemtime();
+        _builder.append(_systemtime_1);
+        _builder.append("\", DateTimeFormat.forPattern(\"");
+        String _pattern = it.getDataDefinition().getPattern();
+        _builder.append(_pattern);
+        _builder.append("\")).withZone(DateTimeZone.UTC));");
         _builder.newLineIfNotEmpty();
       }
     }
     {
-      if ((((it.getDataDefinition() != null) && (it.getDataDefinition().getData() != null)) && (it.getDataDefinition().getData().getAttributeDefinitions() != null))) {
+      if ((((it.getDataDefinition() != null) && (it.getDataDefinition().getData() != null)) && (it.getDataDefinition().getData().getMembers() != null))) {
         {
-          EList<AttributeDefinition> _attributeDefinitions = it.getDataDefinition().getData().getAttributeDefinitions();
-          for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
+          EList<JsonMember> _members = it.getDataDefinition().getData().getMembers();
+          for(final JsonMember attributeDefinition : _members) {
             {
               boolean _isNotReplayable = attributeDefinition.getAttribute().isNotReplayable();
               if (_isNotReplayable) {
                 _builder.append("NotReplayableDataProvider.put(\"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
-                _builder.append("\", ");
-                String _valueFrom = this._attributeExtension.valueFrom(attributeDefinition, null);
+                _builder.append("\", objectMapper.readValue(\"");
+                CharSequence _valueFrom = this._attributeExtension.valueFrom(attributeDefinition.getValue());
                 _builder.append(_valueFrom);
-                _builder.append(");");
+                _builder.append("\",");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                {
+                  Model _model = attributeDefinition.getAttribute().getModel();
+                  boolean _tripleNotEquals_1 = (_model != null);
+                  if (_tripleNotEquals_1) {
+                    _builder.append(" ");
+                    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(attributeDefinition.getAttribute().getModel());
+                    _builder.append(_dataNameWithPackage, "\t\t");
+                    _builder.append(".class));");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t\t");
+                  } else {
+                    String _type = attributeDefinition.getAttribute().getType();
+                    boolean _tripleNotEquals_2 = (_type != null);
+                    if (_tripleNotEquals_2) {
+                      _builder.append(" ");
+                      String _javaType = this._attributeExtension.javaType(attributeDefinition.getAttribute());
+                      _builder.append(_javaType, "\t\t");
+                      _builder.append(".class));");
+                    }
+                  }
+                }
                 _builder.newLineIfNotEmpty();
               }
             }
@@ -461,292 +479,69 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java, final int index, final boolean returnResponse) {
+  private CharSequence generateActionCall(final WhenBlock it, final HttpServer java, final boolean returnResponse) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java, index, returnResponse);
+    CharSequence _generateActionCalls = this.generateActionCalls(it.getAction(), it.getDataDefinition(), it.getAuthorization(), java, returnResponse);
     _builder.append(_generateActionCalls);
     return _builder;
   }
   
-  private CharSequence generateDataCreation(final DataDefinition it, final Model model, final String varName, final Integer index) {
+  private CharSequence objectMapperCall(final DataDefinition it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
-    this.resetVarIndex();
+    _builder.append("objectMapper.readValue(\"");
+    {
+      if (((it.getData() != null) && (it.getData().getMembers() != null))) {
+        _builder.append("{\" +");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\"\\\"uuid\\\" : \\\"");
+        {
+          String _uuid = it.getUuid();
+          boolean _tripleNotEquals = (_uuid != null);
+          if (_tripleNotEquals) {
+            String _uuid_1 = it.getUuid();
+            _builder.append(_uuid_1, "\t");
+          } else {
+            UUID _randomUUID = UUID.randomUUID();
+            _builder.append(_randomUUID, "\t");
+          }
+        }
+        _builder.append("\\\"");
+        {
+          EList<JsonMember> _members = it.getData().getMembers();
+          boolean _hasElements = false;
+          for(final JsonMember member : _members) {
+            if (!_hasElements) {
+              _hasElements = true;
+              _builder.append(this._attributeExtension.stringLineBreak, "\t");
+            } else {
+              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
+            }
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name, "\t");
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            _builder.append(_valueFrom, "\t");
+          }
+        }
+        _builder.append("} ");
+      } else {
+        _builder.append("{}");
+      }
+    }
+    _builder.append("\",");
     _builder.newLineIfNotEmpty();
     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
     _builder.append(_dataNameWithPackage);
-    _builder.append(" ");
-    _builder.append(varName);
-    _builder.append(" = new ");
-    String _dataNameWithPackage_1 = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage_1);
-    _builder.append("(");
-    {
-      String _uuid = it.getUuid();
-      boolean _tripleNotEquals = (_uuid != null);
-      if (_tripleNotEquals) {
-        _builder.append("\"");
-        String _uuid_1 = it.getUuid();
-        _builder.append(_uuid_1);
-        _builder.append("\"");
-      } else {
-        _builder.append("randomUUID()");
-      }
-    }
-    _builder.append(");");
+    _builder.append(".class)");
     _builder.newLineIfNotEmpty();
-    {
-      if (((it.getData() != null) && (it.getData().getAttributeDefinitions() != null))) {
-        {
-          EList<AttributeDefinition> _attributeDefinitions = it.getData().getAttributeDefinitions();
-          for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-            {
-              AttributeDefinitionList _attributeDefinitionList = attributeDefinition.getValue().getAttributeDefinitionList();
-              boolean _tripleNotEquals_1 = (_attributeDefinitionList != null);
-              if (_tripleNotEquals_1) {
-                String _firstUpper = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-                String _plus = (varName + _firstUpper);
-                CharSequence _generateModelCreation = this.generateModelCreation(attributeDefinition, _plus, index);
-                _builder.append(_generateModelCreation);
-                _builder.newLineIfNotEmpty();
-                _builder.append(varName);
-                _builder.append(".");
-                Attribute _attribute = attributeDefinition.getAttribute();
-                String _firstUpper_1 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-                String _plus_1 = (varName + _firstUpper_1);
-                String _setterCall = this._attributeExtension.setterCall(_attribute, _plus_1);
-                _builder.append(_setterCall);
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
-              } else {
-                ListAttributeDefinitionList _listAttributeDefinitionList = attributeDefinition.getValue().getListAttributeDefinitionList();
-                boolean _tripleNotEquals_2 = (_listAttributeDefinitionList != null);
-                if (_tripleNotEquals_2) {
-                  String _firstUpper_2 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-                  String _plus_2 = (varName + _firstUpper_2);
-                  String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, _plus_2, index);
-                  _builder.append(_generateModelListCreation);
-                  _builder.newLineIfNotEmpty();
-                  _builder.append(varName);
-                  _builder.append(".");
-                  Attribute _attribute_1 = attributeDefinition.getAttribute();
-                  String _firstUpper_3 = StringExtensions.toFirstUpper(attributeDefinition.getAttribute().getName());
-                  String _plus_3 = (varName + _firstUpper_3);
-                  String _setterCall_1 = this._attributeExtension.setterCall(_attribute_1, _plus_3);
-                  _builder.append(_setterCall_1);
-                  _builder.append(";");
-                  _builder.newLineIfNotEmpty();
-                } else {
-                  _builder.append(varName);
-                  _builder.append(".");
-                  String _setterCall_2 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
-                  _builder.append(_setterCall_2);
-                  _builder.append(";");
-                  _builder.newLineIfNotEmpty();
-                }
-              }
-            }
-          }
-        }
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence generateModelCreation(final AttributeDefinition it, final String varName, final Integer index) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
-    _builder.append("\t");
-    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-    _builder.append(_interfaceWithPackage, "\t");
-    _builder.append(" ");
-    _builder.append(varName, "\t");
-    _builder.append(" = new ");
-    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
-    _builder.append(_modelClassNameWithPackage, "\t");
-    _builder.append("();");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<AttributeDefinition> _attributeDefinitions = it.getValue().getAttributeDefinitionList().getAttributeDefinitions();
-      for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-        {
-          boolean _isList = attributeDefinition.getAttribute().isList();
-          if (_isList) {
-            _builder.append("\t");
-            final String listVarName = this.newVarName("list");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName, index);
-            _builder.append(_generateModelListCreation, "\t");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append(varName, "\t");
-            _builder.append(".");
-            String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
-            _builder.append(_setterCall, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            _builder.append("\t");
-            _builder.append(varName, "\t");
-            _builder.append(".");
-            String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
-            _builder.append(_setterCall_1, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
     _builder.newLine();
     return _builder;
   }
   
-  private String generateModelListCreation(final AttributeDefinition it, final String varName, final Integer index) {
+  private CharSequence generateActionCalls(final HttpServerAce it, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java, final boolean returnResponse) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
-    {
-      ListAttributeDefinitionList _listAttributeDefinitionList = it.getValue().getListAttributeDefinitionList();
-      if ((_listAttributeDefinitionList instanceof AttributeDefinitionListForList)) {
-        _builder.append("\t");
-        _builder.append("List<");
-        String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-        _builder.append(_interfaceWithPackage, "\t");
-        _builder.append("> ");
-        _builder.append(varName, "\t");
-        _builder.append(" = new ArrayList<");
-        String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-        _builder.append(_interfaceWithPackage_1, "\t");
-        _builder.append(">();");
-        _builder.newLineIfNotEmpty();
-        {
-          ListAttributeDefinitionList _listAttributeDefinitionList_1 = it.getValue().getListAttributeDefinitionList();
-          EList<AttributeDefinitionList> _attributeDefinitionList = ((AttributeDefinitionListForList) _listAttributeDefinitionList_1).getAttributeDefinitionList();
-          for(final AttributeDefinitionList attributeDefinitionList : _attributeDefinitionList) {
-            _builder.append("\t");
-            final String itemVarName = this.newVarName("item");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getAttribute().getModel());
-            _builder.append(_interfaceWithPackage_2, "\t");
-            _builder.append(" ");
-            _builder.append(itemVarName, "\t");
-            _builder.append(" = new ");
-            String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it.getAttribute().getModel());
-            _builder.append(_modelClassNameWithPackage, "\t");
-            _builder.append("();");
-            _builder.newLineIfNotEmpty();
-            {
-              EList<AttributeDefinition> _attributeDefinitions = attributeDefinitionList.getAttributeDefinitions();
-              for(final AttributeDefinition attributeDefinition : _attributeDefinitions) {
-                {
-                  boolean _isList = attributeDefinition.getAttribute().isList();
-                  if (_isList) {
-                    _builder.append("\t");
-                    final String listVarName = this.newVarName("list");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    String _generateModelListCreation = this.generateModelListCreation(attributeDefinition, listVarName, index);
-                    _builder.append(_generateModelListCreation, "\t");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append(itemVarName, "\t");
-                    _builder.append(".");
-                    String _setterCall = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), listVarName);
-                    _builder.append(_setterCall, "\t");
-                    _builder.append(";");
-                    _builder.newLineIfNotEmpty();
-                  } else {
-                    _builder.append("\t");
-                    _builder.append(itemVarName, "\t");
-                    _builder.append(".");
-                    String _setterCall_1 = this._attributeExtension.setterCall(attributeDefinition.getAttribute(), this._attributeExtension.valueFrom(attributeDefinition, index));
-                    _builder.append(_setterCall_1, "\t");
-                    _builder.append(";");
-                    _builder.newLineIfNotEmpty();
-                  }
-                }
-              }
-            }
-            _builder.append("\t");
-            _builder.append(varName, "\t");
-            _builder.append(".add(");
-            _builder.append(itemVarName, "\t");
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
-            _builder.newLine();
-          }
-        }
-      } else {
-        _builder.append("\t");
-        _builder.append("List<");
-        String _type = it.getAttribute().getType();
-        _builder.append(_type, "\t");
-        _builder.append("> ");
-        _builder.append(varName, "\t");
-        _builder.append(" = new ArrayList<");
-        String _type_1 = it.getAttribute().getType();
-        _builder.append(_type_1, "\t");
-        _builder.append(">();");
-        _builder.newLineIfNotEmpty();
-        {
-          ListAttributeDefinitionList _listAttributeDefinitionList_2 = it.getValue().getListAttributeDefinitionList();
-          EList<ValueDefinitionList> _valueDefinitionList = ((PrimitiveValueDefinitionForList) _listAttributeDefinitionList_2).getValueDefinitionList();
-          for(final ValueDefinitionList primitiveValueDefinitionList : _valueDefinitionList) {
-            _builder.append("\t");
-            _builder.append(varName, "\t");
-            _builder.append(".add(");
-            {
-              String _stringValue = primitiveValueDefinitionList.getPrimitiveValue().getStringValue();
-              boolean _tripleNotEquals = (_stringValue != null);
-              if (_tripleNotEquals) {
-                _builder.append("\"");
-                String _stringValue_1 = primitiveValueDefinitionList.getPrimitiveValue().getStringValue();
-                _builder.append(_stringValue_1, "\t");
-                _builder.append("\"");
-              } else {
-                int _intValue = primitiveValueDefinitionList.getPrimitiveValue().getIntValue();
-                _builder.append(_intValue, "\t");
-              }
-            }
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
-            _builder.newLine();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    return _builder.toString();
-  }
-  
-  private String newVarName(final String prefix) {
-    this.varIndex++;
-    return (prefix + Integer.valueOf(this.varIndex));
-  }
-  
-  private void resetVarIndex() {
-    this.varIndex = 0;
-  }
-  
-  private CharSequence generateActionCalls(final HttpServerAce it, final DataDefinition dataDefinition, final Authorization authorization, final HttpServer java, final int index, final boolean returnResponse) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      Model _model = it.getModel();
-      boolean _tripleNotEquals = (_model != null);
-      if (_tripleNotEquals) {
-        Model _model_1 = it.getModel();
-        StringConcatenation _builder_1 = new StringConcatenation();
-        String _firstLower = StringExtensions.toFirstLower(it.getName());
-        _builder_1.append(_firstLower);
-        _builder_1.append(index);
-        CharSequence _generateDataCreation = this.generateDataCreation(dataDefinition, _model_1, _builder_1.toString(), Integer.valueOf(index));
-        _builder.append(_generateDataCreation);
-        _builder.newLineIfNotEmpty();
-      }
-    }
     _builder.newLine();
     {
       if (returnResponse) {
@@ -764,9 +559,8 @@ public class ScenarioTemplate {
         String _firstUpper = StringExtensions.toFirstUpper(it.getName());
         _builder.append(_firstUpper);
         _builder.append("(");
-        String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
-        _builder.append(_firstLower_1);
-        _builder.append(index);
+        CharSequence _objectMapperCall = this.objectMapperCall(dataDefinition, it.getModel());
+        _builder.append(_objectMapperCall);
         _builder.append(", DROPWIZARD.getLocalPort()");
         {
           if ((it.isAuthorize() && (authorization != null))) {
@@ -796,9 +590,8 @@ public class ScenarioTemplate {
           String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
           _builder.append(_firstUpper_1);
           _builder.append("(");
-          String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
-          _builder.append(_firstLower_2);
-          _builder.append(index);
+          CharSequence _objectMapperCall_1 = this.objectMapperCall(dataDefinition, it.getModel());
+          _builder.append(_objectMapperCall_1);
           _builder.append(", DROPWIZARD.getLocalPort()");
           {
             if ((it.isAuthorize() && (authorization != null))) {
@@ -828,9 +621,8 @@ public class ScenarioTemplate {
             String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
             _builder.append(_firstUpper_2);
             _builder.append("(");
-            String _firstLower_3 = StringExtensions.toFirstLower(it.getName());
-            _builder.append(_firstLower_3);
-            _builder.append(index);
+            CharSequence _objectMapperCall_2 = this.objectMapperCall(dataDefinition, it.getModel());
+            _builder.append(_objectMapperCall_2);
             _builder.append(", DROPWIZARD.getLocalPort()");
             {
               if ((it.isAuthorize() && (authorization != null))) {
@@ -857,9 +649,8 @@ public class ScenarioTemplate {
             String _firstUpper_3 = StringExtensions.toFirstUpper(it.getName());
             _builder.append(_firstUpper_3);
             _builder.append("(");
-            String _firstLower_4 = StringExtensions.toFirstLower(it.getName());
-            _builder.append(_firstLower_4);
-            _builder.append(index);
+            CharSequence _objectMapperCall_3 = this.objectMapperCall(dataDefinition, it.getModel());
+            _builder.append(_objectMapperCall_3);
             _builder.append(", DROPWIZARD.getLocalPort()");
             {
               if ((it.isAuthorize() && (authorization != null))) {
@@ -1091,6 +882,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import java.util.UUID;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractBaseScenario {");
     _builder.newLine();
@@ -1106,43 +899,28 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("protected PersistenceHandle handle;");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected ObjectMapper objectMapper;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public AbstractBaseScenario() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("objectMapper = new ObjectMapper();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public static String randomUUID() {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return UUID.randomUUID().toString();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected String templateStringValue(String value, Integer index) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("String returnString = value;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (index != null && value.contains(\"${index}\")) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("returnString = returnString.replace(\"${index}\", index.toString());");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (value.contains(\"${random}\")) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("returnString = returnString.replace(\"${random}\", UUID.randomUUID().toString().substring(0, 8));");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return returnString;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

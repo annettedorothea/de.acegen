@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.PrimitiveValueDefinitionForList;
-import de.acegen.aceGen.ValueDefinitionList;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonValue;
 
 import java.util.Collection;
 
@@ -21,35 +21,35 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Primitive Value Definition For List</b></em>'.
+ * An implementation of the model object '<em><b>Json Array</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.PrimitiveValueDefinitionForListImpl#getValueDefinitionList <em>Value Definition List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonArrayImpl#getValues <em>Values</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinitionListImpl implements PrimitiveValueDefinitionForList
+public class JsonArrayImpl extends JsonValueImpl implements JsonArray
 {
   /**
-   * The cached value of the '{@link #getValueDefinitionList() <em>Value Definition List</em>}' containment reference list.
+   * The cached value of the '{@link #getValues() <em>Values</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValueDefinitionList()
+   * @see #getValues()
    * @generated
    * @ordered
    */
-  protected EList<ValueDefinitionList> valueDefinitionList;
+  protected EList<JsonValue> values;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PrimitiveValueDefinitionForListImpl()
+  protected JsonArrayImpl()
   {
     super();
   }
@@ -62,7 +62,7 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.PRIMITIVE_VALUE_DEFINITION_FOR_LIST;
+    return AceGenPackage.Literals.JSON_ARRAY;
   }
 
   /**
@@ -71,13 +71,13 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
    * @generated
    */
   @Override
-  public EList<ValueDefinitionList> getValueDefinitionList()
+  public EList<JsonValue> getValues()
   {
-    if (valueDefinitionList == null)
+    if (values == null)
     {
-      valueDefinitionList = new EObjectContainmentEList<ValueDefinitionList>(ValueDefinitionList.class, this, AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST);
+      values = new EObjectContainmentEList<JsonValue>(JsonValue.class, this, AceGenPackage.JSON_ARRAY__VALUES);
     }
-    return valueDefinitionList;
+    return values;
   }
 
   /**
@@ -90,8 +90,8 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST:
-        return ((InternalEList<?>)getValueDefinitionList()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.JSON_ARRAY__VALUES:
+        return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -106,8 +106,8 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST:
-        return getValueDefinitionList();
+      case AceGenPackage.JSON_ARRAY__VALUES:
+        return getValues();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -123,9 +123,9 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST:
-        getValueDefinitionList().clear();
-        getValueDefinitionList().addAll((Collection<? extends ValueDefinitionList>)newValue);
+      case AceGenPackage.JSON_ARRAY__VALUES:
+        getValues().clear();
+        getValues().addAll((Collection<? extends JsonValue>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -141,8 +141,8 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST:
-        getValueDefinitionList().clear();
+      case AceGenPackage.JSON_ARRAY__VALUES:
+        getValues().clear();
         return;
     }
     super.eUnset(featureID);
@@ -158,10 +158,10 @@ public class PrimitiveValueDefinitionForListImpl extends ListAttributeDefinition
   {
     switch (featureID)
     {
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST__VALUE_DEFINITION_LIST:
-        return valueDefinitionList != null && !valueDefinitionList.isEmpty();
+      case AceGenPackage.JSON_ARRAY__VALUES:
+        return values != null && !values.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //PrimitiveValueDefinitionForListImpl
+} //JsonArrayImpl

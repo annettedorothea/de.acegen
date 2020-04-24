@@ -186,49 +186,34 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createAuthorizationAdapter();
       }
       @Override
-      public Adapter caseAttributeDefinitionList(AttributeDefinitionList object)
-      {
-        return createAttributeDefinitionListAdapter();
-      }
-      @Override
-      public Adapter caseListAttributeDefinitionList(ListAttributeDefinitionList object)
-      {
-        return createListAttributeDefinitionListAdapter();
-      }
-      @Override
-      public Adapter caseAttributeDefinitionListForList(AttributeDefinitionListForList object)
-      {
-        return createAttributeDefinitionListForListAdapter();
-      }
-      @Override
-      public Adapter casePrimitiveValueDefinitionForList(PrimitiveValueDefinitionForList object)
-      {
-        return createPrimitiveValueDefinitionForListAdapter();
-      }
-      @Override
-      public Adapter caseAttributeDefinition(AttributeDefinition object)
-      {
-        return createAttributeDefinitionAdapter();
-      }
-      @Override
-      public Adapter caseValueDefinitionList(ValueDefinitionList object)
-      {
-        return createValueDefinitionListAdapter();
-      }
-      @Override
       public Adapter caseAttribute(Attribute object)
       {
         return createAttributeAdapter();
       }
       @Override
-      public Adapter caseValue(Value object)
+      public Adapter caseJsonDateTime(JsonDateTime object)
       {
-        return createValueAdapter();
+        return createJsonDateTimeAdapter();
       }
       @Override
-      public Adapter casePrimitiveValue(PrimitiveValue object)
+      public Adapter caseJsonObject(JsonObject object)
       {
-        return createPrimitiveValueAdapter();
+        return createJsonObjectAdapter();
+      }
+      @Override
+      public Adapter caseJsonMember(JsonMember object)
+      {
+        return createJsonMemberAdapter();
+      }
+      @Override
+      public Adapter caseJsonValue(JsonValue object)
+      {
+        return createJsonValueAdapter();
+      }
+      @Override
+      public Adapter caseJsonArray(JsonArray object)
+      {
+        return createJsonArrayAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -583,96 +568,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinitionList <em>Attribute Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.AttributeDefinitionList
-   * @generated
-   */
-  public Adapter createAttributeDefinitionListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ListAttributeDefinitionList <em>List Attribute Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.ListAttributeDefinitionList
-   * @generated
-   */
-  public Adapter createListAttributeDefinitionListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinitionListForList <em>Attribute Definition List For List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.AttributeDefinitionListForList
-   * @generated
-   */
-  public Adapter createAttributeDefinitionListForListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PrimitiveValueDefinitionForList <em>Primitive Value Definition For List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.PrimitiveValueDefinitionForList
-   * @generated
-   */
-  public Adapter createPrimitiveValueDefinitionForListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeDefinition <em>Attribute Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.AttributeDefinition
-   * @generated
-   */
-  public Adapter createAttributeDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ValueDefinitionList <em>Value Definition List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.ValueDefinitionList
-   * @generated
-   */
-  public Adapter createValueDefinitionListAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Attribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -688,31 +583,76 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Value <em>Value</em>}'.
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.acegen.aceGen.Value
+   * @see de.acegen.aceGen.JsonDateTime
    * @generated
    */
-  public Adapter createValueAdapter()
+  public Adapter createJsonDateTimeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.acegen.aceGen.PrimitiveValue
+   * @see de.acegen.aceGen.JsonObject
    * @generated
    */
-  public Adapter createPrimitiveValueAdapter()
+  public Adapter createJsonObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonMember <em>Json Member</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonMember
+   * @generated
+   */
+  public Adapter createJsonMemberAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonValue <em>Json Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonValue
+   * @generated
+   */
+  public Adapter createJsonValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonArray <em>Json Array</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonArray
+   * @generated
+   */
+  public Adapter createJsonArrayAdapter()
   {
     return null;
   }

@@ -7,22 +7,22 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Attribute Definition</b></em>'.
+ * A representation of the model object '<em><b>Json Member</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.AttributeDefinition#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.AttributeDefinition#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.JsonMember#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.JsonMember#getValue <em>Value</em>}</li>
  * </ul>
  *
- * @see de.acegen.aceGen.AceGenPackage#getAttributeDefinition()
+ * @see de.acegen.aceGen.AceGenPackage#getJsonMember()
  * @model
  * @generated
  */
-public interface AttributeDefinition extends EObject
+public interface JsonMember extends EObject
 {
   /**
    * Returns the value of the '<em><b>Attribute</b></em>' reference.
@@ -30,14 +30,14 @@ public interface AttributeDefinition extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute</em>' reference.
    * @see #setAttribute(Attribute)
-   * @see de.acegen.aceGen.AceGenPackage#getAttributeDefinition_Attribute()
+   * @see de.acegen.aceGen.AceGenPackage#getJsonMember_Attribute()
    * @model
    * @generated
    */
   Attribute getAttribute();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.AttributeDefinition#getAttribute <em>Attribute</em>}' reference.
+   * Sets the value of the '{@link de.acegen.aceGen.JsonMember#getAttribute <em>Attribute</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Attribute</em>' reference.
@@ -51,21 +51,21 @@ public interface AttributeDefinition extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(Value)
-   * @see de.acegen.aceGen.AceGenPackage#getAttributeDefinition_Value()
+   * @see #setValue(JsonValue)
+   * @see de.acegen.aceGen.AceGenPackage#getJsonMember_Value()
    * @model containment="true"
    * @generated
    */
-  Value getValue();
+  JsonValue getValue();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.AttributeDefinition#getValue <em>Value</em>}' containment reference.
+   * Sets the value of the '{@link de.acegen.aceGen.JsonMember#getValue <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Value</em>' containment reference.
    * @see #getValue()
    * @generated
    */
-  void setValue(Value value);
+  void setValue(JsonValue value);
 
-} // AttributeDefinition
+} // JsonMember

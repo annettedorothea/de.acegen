@@ -1463,6 +1463,47 @@ class AceTemplate {
 		
 	'''
 
+	def generateDateTimeToStringConverter() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import org.joda.time.DateTime;
+		
+		import com.fasterxml.jackson.databind.util.StdConverter;
+		
+		public class DateTimeToStringConverter extends StdConverter<DateTime, String> {
+			@Override
+			public String convert(DateTime value) {
+				return value.toString();
+			}
+		}
+		
+		«sdg»
+		
+	'''
+
+	def generateStringToDateTimeConverter() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		import com.fasterxml.jackson.databind.util.StdConverter;
+		
+		public class StringToDateTimeConverter extends StdConverter<String, DateTime> {
+			@Override
+			public DateTime convert(String value) {
+				return DateTime.parse(value).withZone(DateTimeZone.UTC);
+			}
+		}
+		
+		«sdg»
+		
+	'''
+
 	
 
 }

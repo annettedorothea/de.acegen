@@ -1,14 +1,11 @@
 package de.acegen.templates.java
 
-import de.acegen.aceGen.AttributeDefinition
-import de.acegen.aceGen.AttributeDefinitionListForList
 import de.acegen.aceGen.Authorization
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
-import de.acegen.aceGen.PrimitiveValueDefinitionForList
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.CommonExtension
@@ -17,6 +14,7 @@ import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
+import java.util.UUID
 import javax.inject.Inject
 
 class ScenarioTemplate {
@@ -33,10 +31,9 @@ class ScenarioTemplate {
 	@Inject
 	extension CommonExtension
 
-	int varIndex = 0;
-
 	def generateScenario(Scenario it, HttpServer java) '''
 		«copyright»
+		«resetIndex»
 		
 		package «java.getName».scenarios;
 		
@@ -81,17 +78,16 @@ class ScenarioTemplate {
 		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
-				«var index = 0»
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
-							«givenRef.scenario.whenBlock.generateActionCall(java, index++, false)»
+							«givenRef.scenario.whenBlock.generateActionCall(java, false)»
 							
 						«ENDFOR»
 					«ELSE»
 						«givenRef.scenario.whenBlock.generatePrepare»
-						«givenRef.scenario.whenBlock.generateActionCall(java, index++, false)»
+						«givenRef.scenario.whenBlock.generateActionCall(java, false)»
 					«ENDIF»
 
 			«ENDFOR»
@@ -99,7 +95,7 @@ class ScenarioTemplate {
 			
 			private Response when() throws Exception {
 				«whenBlock.generatePrepare»
-				«whenBlock.generateActionCall(java, 0, true)»
+				«whenBlock.generateActionCall(java, true)»
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
@@ -115,7 +111,7 @@ class ScenarioTemplate {
 					}
 				«ENDIF»
 				«IF thenBlock.response !== null»
-					«generateDataCreation(thenBlock.response, whenBlock.action.model, "expectedData", null)»
+					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCall(thenBlock.response, whenBlock.action.model)»;
 					
 					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
 
@@ -171,106 +167,41 @@ class ScenarioTemplate {
 	
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			NotReplayableDataProvider.setSystemTime(«dateTimeParse(dataDefinition.systemtime, dataDefinition.pattern)»);
+			NotReplayableDataProvider.setSystemTime(DateTime.parse("«dataDefinition.systemtime»", DateTimeFormat.forPattern("«dataDefinition.pattern»")).withZone(DateTimeZone.UTC));
 		«ENDIF»
-		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.attributeDefinitions !== null»
-			«FOR attributeDefinition: dataDefinition.data.attributeDefinitions»
+		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.members !== null»
+			«FOR attributeDefinition: dataDefinition.data.members»
 				«IF attributeDefinition.attribute.notReplayable»
-					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", «attributeDefinition.valueFrom(null)»);
+					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", objectMapper.readValue("«attributeDefinition.value.valueFrom»",
+							«IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class));
+							«ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class));«ENDIF»
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
 	'''
 
-	private def generateActionCall(WhenBlock it, HttpServer java, int index, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, index, returnResponse)»'''
+	private def generateActionCall(WhenBlock it, HttpServer java, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, returnResponse)»'''
 
-	private def generateDataCreation(DataDefinition it, Model model, String varName, Integer index) '''
-		«resetVarIndex»
-		«model.dataNameWithPackage» «varName» = new «model.dataNameWithPackage»(«IF uuid !== null»"«uuid»"«ELSE»randomUUID()«ENDIF»);
-		«IF data !== null && data.attributeDefinitions !== null»
-			«FOR attributeDefinition : data.attributeDefinitions»
-				«IF attributeDefinition.value.attributeDefinitionList !== null»
-					«generateModelCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
-					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-				«ELSEIF attributeDefinition.value.listAttributeDefinitionList !== null»
-					«generateModelListCreation(attributeDefinition, varName + attributeDefinition.attribute.name.toFirstUpper, index)»
-					«varName».«attributeDefinition.attribute.setterCall(varName + attributeDefinition.attribute.name.toFirstUpper)»;
-				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
-				«ENDIF»
-			«ENDFOR»
-			
-		«ENDIF»
-	'''
-
-	private def generateModelCreation(AttributeDefinition it, String varName, Integer index) '''
+	private def objectMapperCall(DataDefinition it, Model model) '''
+		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
+			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»«UUID.randomUUID»«ENDIF»\"«FOR member : data.members BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+		«model.dataNameWithPackage».class)
 		
-			«attribute.model.interfaceWithPackage» «varName» = new «attribute.model.modelClassNameWithPackage»();
-			«FOR attributeDefinition : value.attributeDefinitionList.attributeDefinitions»
-				«IF attributeDefinition.attribute.isList»
-					«val listVarName = newVarName("list")»
-					«generateModelListCreation(attributeDefinition, listVarName, index)»
-					«varName».«attributeDefinition.attribute.setterCall(listVarName)»;
-				«ELSE»
-					«varName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
-				«ENDIF»
-			«ENDFOR»
-			
 	'''
-
-	private def String generateModelListCreation(AttributeDefinition it, String varName, Integer index) '''
-		
-			«IF value.listAttributeDefinitionList instanceof AttributeDefinitionListForList»
-				List<«attribute.model.interfaceWithPackage»> «varName» = new ArrayList<«attribute.model.interfaceWithPackage»>();
-				«FOR attributeDefinitionList : (value.listAttributeDefinitionList as AttributeDefinitionListForList).attributeDefinitionList»
-					«val itemVarName = newVarName("item")»
-					«attribute.model.interfaceWithPackage» «itemVarName» = new «attribute.model.modelClassNameWithPackage»();
-					«FOR attributeDefinition : attributeDefinitionList.attributeDefinitions»
-						«IF attributeDefinition.attribute.isList»
-							«val listVarName = newVarName("list")»
-							«generateModelListCreation(attributeDefinition, listVarName, index)»
-							«itemVarName».«attributeDefinition.attribute.setterCall(listVarName)»;
-						«ELSE»
-							«itemVarName».«attributeDefinition.attribute.setterCall(attributeDefinition.valueFrom(index))»;
-						«ENDIF»
-					«ENDFOR»
-					«varName».add(«itemVarName»);
-
-				«ENDFOR»
-			«ELSE»
-				List<«attribute.type»> «varName» = new ArrayList<«attribute.type»>();
-				«FOR primitiveValueDefinitionList : (value.listAttributeDefinitionList as PrimitiveValueDefinitionForList).valueDefinitionList»
-					«varName».add(«IF primitiveValueDefinitionList.primitiveValue.stringValue !== null»"«primitiveValueDefinitionList.primitiveValue.stringValue»"«ELSE»«primitiveValueDefinitionList.primitiveValue.intValue»«ENDIF»);
-
-				«ENDFOR»
-			«ENDIF»
-			
-	'''
-
-	private def newVarName(String prefix) {
-		varIndex++;
-		return prefix + varIndex;
-	}
-
-	private def void resetVarIndex() {
-		varIndex = 0;
-	}
+	
 
 	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
-		HttpServer java, int index, boolean returnResponse) '''
-		«IF model !== null»
-			«generateDataCreation(dataDefinition, model, '''«getName.toFirstLower»«index»''', index)»
-		«ENDIF»
+		HttpServer java, boolean returnResponse) '''
 		
 		«IF returnResponse»return «ENDIF»
 		«IF getType == "POST"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSEIF getType == "PUT"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSEIF getType == "DELETE"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSE»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«getName.toFirstLower»«index», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ENDIF»
 		
 	'''
@@ -362,6 +293,7 @@ class ScenarioTemplate {
 		package de.acegen;
 		
 		import java.util.UUID;
+		import com.fasterxml.jackson.databind.ObjectMapper;
 		
 		public abstract class AbstractBaseScenario {
 		
@@ -370,20 +302,15 @@ class ScenarioTemplate {
 			protected DaoProvider daoProvider;
 		
 			protected PersistenceHandle handle;
+			
+			protected ObjectMapper objectMapper;
+			
+			public AbstractBaseScenario() {
+				objectMapper = new ObjectMapper();
+			}
 		
 			public static String randomUUID() {
 				return UUID.randomUUID().toString();
-			}
-		
-			protected String templateStringValue(String value, Integer index) {
-				String returnString = value;
-				if (index != null && value.contains("${index}")) {
-					returnString = returnString.replace("${index}", index.toString());
-				}
-				if (value.contains("${random}")) {
-					returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
-				}
-				return returnString;
 			}
 		
 			protected abstract String authorization(String username, String password);

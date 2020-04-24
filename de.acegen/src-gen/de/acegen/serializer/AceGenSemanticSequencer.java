@@ -6,9 +6,6 @@ package de.acegen.serializer;
 import com.google.inject.Inject;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.AttributeDefinitionList;
-import de.acegen.aceGen.AttributeDefinitionListForList;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
@@ -25,14 +22,15 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonDateTime;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.PrimitiveValue;
-import de.acegen.aceGen.PrimitiveValueDefinitionForList;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
-import de.acegen.aceGen.Value;
-import de.acegen.aceGen.ValueDefinitionList;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.services.AceGenGrammarAccess;
 import java.util.Set;
@@ -62,15 +60,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			switch (semanticObject.eClass().getClassifierID()) {
 			case AceGenPackage.ATTRIBUTE:
 				sequence_Attribute(context, (Attribute) semanticObject); 
-				return; 
-			case AceGenPackage.ATTRIBUTE_DEFINITION:
-				sequence_AttributeDefinition(context, (AttributeDefinition) semanticObject); 
-				return; 
-			case AceGenPackage.ATTRIBUTE_DEFINITION_LIST:
-				sequence_AttributeDefinitionList(context, (AttributeDefinitionList) semanticObject); 
-				return; 
-			case AceGenPackage.ATTRIBUTE_DEFINITION_LIST_FOR_LIST:
-				sequence_AttributeDefinitionListForList(context, (AttributeDefinitionListForList) semanticObject); 
 				return; 
 			case AceGenPackage.AUTH_USER:
 				sequence_AuthUser(context, (AuthUser) semanticObject); 
@@ -120,14 +109,23 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION:
 				sequence_HttpServerViewFunction(context, (HttpServerViewFunction) semanticObject); 
 				return; 
+			case AceGenPackage.JSON_ARRAY:
+				sequence_JsonArray(context, (JsonArray) semanticObject); 
+				return; 
+			case AceGenPackage.JSON_DATE_TIME:
+				sequence_JsonDateTime(context, (JsonDateTime) semanticObject); 
+				return; 
+			case AceGenPackage.JSON_MEMBER:
+				sequence_JsonMember(context, (JsonMember) semanticObject); 
+				return; 
+			case AceGenPackage.JSON_OBJECT:
+				sequence_JsonObject(context, (JsonObject) semanticObject); 
+				return; 
+			case AceGenPackage.JSON_VALUE:
+				sequence_JsonValue(context, (JsonValue) semanticObject); 
+				return; 
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
-				return; 
-			case AceGenPackage.PRIMITIVE_VALUE:
-				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 
-				return; 
-			case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST:
-				sequence_PrimitiveValueDefinitionForList(context, (PrimitiveValueDefinitionForList) semanticObject); 
 				return; 
 			case AceGenPackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
@@ -138,12 +136,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.THEN_BLOCK:
 				sequence_ThenBlock(context, (ThenBlock) semanticObject); 
 				return; 
-			case AceGenPackage.VALUE:
-				sequence_Value(context, (Value) semanticObject); 
-				return; 
-			case AceGenPackage.VALUE_DEFINITION_LIST:
-				sequence_ValueDefinitionList(context, (ValueDefinitionList) semanticObject); 
-				return; 
 			case AceGenPackage.WHEN_BLOCK:
 				sequence_WhenBlock(context, (WhenBlock) semanticObject); 
 				return; 
@@ -151,52 +143,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
-	/**
-	 * Contexts:
-	 *     ListAttributeDefinitionList returns AttributeDefinitionListForList
-	 *     AttributeDefinitionListForList returns AttributeDefinitionListForList
-	 *
-	 * Constraint:
-	 *     attributeDefinitionList+=AttributeDefinitionList*
-	 */
-	protected void sequence_AttributeDefinitionListForList(ISerializationContext context, AttributeDefinitionListForList semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AttributeDefinitionList returns AttributeDefinitionList
-	 *
-	 * Constraint:
-	 *     attributeDefinitions+=AttributeDefinition*
-	 */
-	protected void sequence_AttributeDefinitionList(ISerializationContext context, AttributeDefinitionList semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AttributeDefinition returns AttributeDefinition
-	 *
-	 * Constraint:
-	 *     (attribute=[Attribute|QualifiedName] value=Value)
-	 */
-	protected void sequence_AttributeDefinition(ISerializationContext context, AttributeDefinition semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE));
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.ATTRIBUTE_DEFINITION__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAttributeDefinitionAccess().getAttributeAttributeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.ATTRIBUTE_DEFINITION__ATTRIBUTE, false));
-		feeder.accept(grammarAccess.getAttributeDefinitionAccess().getValueValueParserRuleCall_2_0(), semanticObject.getValue());
-		feeder.finish();
-	}
-	
 	
 	/**
 	 * Contexts:
@@ -257,7 +203,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DataDefinition returns DataDefinition
 	 *
 	 * Constraint:
-	 *     (uuid=STRING? (systemtime=STRING pattern=STRING)? data=AttributeDefinitionList?)
+	 *     (uuid=STRING? (systemtime=STRING pattern=STRING)? data=JsonObject?)
 	 */
 	protected void sequence_DataDefinition(ISerializationContext context, DataDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -480,37 +426,93 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     JsonValue returns JsonArray
+	 *     JsonArray returns JsonArray
+	 *
+	 * Constraint:
+	 *     (values+=JsonValue? values+=JsonValue*)
+	 */
+	protected void sequence_JsonArray(ISerializationContext context, JsonArray semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonDateTime returns JsonDateTime
+	 *     JsonValue returns JsonDateTime
+	 *
+	 * Constraint:
+	 *     (dateTime=STRING pattern=STRING)
+	 */
+	protected void sequence_JsonDateTime(ISerializationContext context, JsonDateTime semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.JSON_DATE_TIME__DATE_TIME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.JSON_DATE_TIME__DATE_TIME));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.JSON_DATE_TIME__PATTERN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.JSON_DATE_TIME__PATTERN));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJsonDateTimeAccess().getDateTimeSTRINGTerminalRuleCall_0_0(), semanticObject.getDateTime());
+		feeder.accept(grammarAccess.getJsonDateTimeAccess().getPatternSTRINGTerminalRuleCall_1_0(), semanticObject.getPattern());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonMember returns JsonMember
+	 *
+	 * Constraint:
+	 *     (attribute=[Attribute|QualifiedName] value=JsonValue)
+	 */
+	protected void sequence_JsonMember(ISerializationContext context, JsonMember semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.JSON_MEMBER__ATTRIBUTE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.JSON_MEMBER__ATTRIBUTE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.JSON_MEMBER__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.JSON_MEMBER__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJsonMemberAccess().getAttributeAttributeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.JSON_MEMBER__ATTRIBUTE, false));
+		feeder.accept(grammarAccess.getJsonMemberAccess().getValueJsonValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonObject returns JsonObject
+	 *     JsonValue returns JsonObject
+	 *
+	 * Constraint:
+	 *     (members+=JsonMember? members+=JsonMember*)
+	 */
+	protected void sequence_JsonObject(ISerializationContext context, JsonObject semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonValue returns JsonValue
+	 *
+	 * Constraint:
+	 *     (string=STRING | boolean=JsonBoolean | long=INT)?
+	 */
+	protected void sequence_JsonValue(ISerializationContext context, JsonValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Model returns Model
 	 *
 	 * Constraint:
 	 *     (persistent?='persistent'? name=ID (superModels+=[Model|QualifiedName] superModels+=[Model|QualifiedName]*)? attributes+=Attribute*)
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ListAttributeDefinitionList returns PrimitiveValueDefinitionForList
-	 *     PrimitiveValueDefinitionForList returns PrimitiveValueDefinitionForList
-	 *
-	 * Constraint:
-	 *     valueDefinitionList+=ValueDefinitionList*
-	 */
-	protected void sequence_PrimitiveValueDefinitionForList(ISerializationContext context, PrimitiveValueDefinitionForList semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PrimitiveValue returns PrimitiveValue
-	 *
-	 * Constraint:
-	 *     (stringValue=STRING | intValue=INT)
-	 */
-	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -547,42 +549,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (statusCode=INT response=DataDefinition?)
 	 */
 	protected void sequence_ThenBlock(ISerializationContext context, ThenBlock semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ValueDefinitionList returns ValueDefinitionList
-	 *
-	 * Constraint:
-	 *     primitiveValue=PrimitiveValue
-	 */
-	protected void sequence_ValueDefinitionList(ISerializationContext context, ValueDefinitionList semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.VALUE_DEFINITION_LIST__PRIMITIVE_VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.VALUE_DEFINITION_LIST__PRIMITIVE_VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getValueDefinitionListAccess().getPrimitiveValuePrimitiveValueParserRuleCall_0(), semanticObject.getPrimitiveValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Value returns Value
-	 *
-	 * Constraint:
-	 *     (
-	 *         stringValue=STRING | 
-	 *         intValue=INT | 
-	 *         (dateValue=STRING pattern=STRING) | 
-	 *         attributeDefinitionList=AttributeDefinitionList | 
-	 *         listAttributeDefinitionList=ListAttributeDefinitionList
-	 *     )
-	 */
-	protected void sequence_Value(ISerializationContext context, Value semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

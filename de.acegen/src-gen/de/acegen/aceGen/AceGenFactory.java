@@ -222,60 +222,6 @@ public interface AceGenFactory extends EFactory
   Authorization createAuthorization();
 
   /**
-   * Returns a new object of class '<em>Attribute Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Definition List</em>'.
-   * @generated
-   */
-  AttributeDefinitionList createAttributeDefinitionList();
-
-  /**
-   * Returns a new object of class '<em>List Attribute Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>List Attribute Definition List</em>'.
-   * @generated
-   */
-  ListAttributeDefinitionList createListAttributeDefinitionList();
-
-  /**
-   * Returns a new object of class '<em>Attribute Definition List For List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Definition List For List</em>'.
-   * @generated
-   */
-  AttributeDefinitionListForList createAttributeDefinitionListForList();
-
-  /**
-   * Returns a new object of class '<em>Primitive Value Definition For List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primitive Value Definition For List</em>'.
-   * @generated
-   */
-  PrimitiveValueDefinitionForList createPrimitiveValueDefinitionForList();
-
-  /**
-   * Returns a new object of class '<em>Attribute Definition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Definition</em>'.
-   * @generated
-   */
-  AttributeDefinition createAttributeDefinition();
-
-  /**
-   * Returns a new object of class '<em>Value Definition List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Value Definition List</em>'.
-   * @generated
-   */
-  ValueDefinitionList createValueDefinitionList();
-
-  /**
    * Returns a new object of class '<em>Attribute</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -285,22 +231,49 @@ public interface AceGenFactory extends EFactory
   Attribute createAttribute();
 
   /**
-   * Returns a new object of class '<em>Value</em>'.
+   * Returns a new object of class '<em>Json Date Time</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Value</em>'.
+   * @return a new object of class '<em>Json Date Time</em>'.
    * @generated
    */
-  Value createValue();
+  JsonDateTime createJsonDateTime();
 
   /**
-   * Returns a new object of class '<em>Primitive Value</em>'.
+   * Returns a new object of class '<em>Json Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primitive Value</em>'.
+   * @return a new object of class '<em>Json Object</em>'.
    * @generated
    */
-  PrimitiveValue createPrimitiveValue();
+  JsonObject createJsonObject();
+
+  /**
+   * Returns a new object of class '<em>Json Member</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Member</em>'.
+   * @generated
+   */
+  JsonMember createJsonMember();
+
+  /**
+   * Returns a new object of class '<em>Json Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Value</em>'.
+   * @generated
+   */
+  JsonValue createJsonValue();
+
+  /**
+   * Returns a new object of class '<em>Json Array</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Array</em>'.
+   * @generated
+   */
+  JsonArray createJsonArray();
 
   /**
    * Returns the package supported by this factory.

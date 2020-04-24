@@ -15,24 +15,53 @@
  */
 package de.acegen.extensions.java;
 
-import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AttributeDefinition;
+import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonDateTime;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import javax.inject.Inject;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 
 @SuppressWarnings("all")
 public class AttributeExtension {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
+  
+  private int index = 0;
+  
+  public String stringLineBreak = new Function0<String>() {
+    @Override
+    public String apply() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(",\" + ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("\"");
+      return _builder.toString();
+    }
+  }.apply();
+  
+  public void resetIndex() {
+    this.index = 0;
+  }
   
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -355,6 +384,8 @@ public class AttributeExtension {
         {
           if (((it.getType() != null) && it.getType().equals("DateTime"))) {
             _builder.append("@JsonSerialize(converter = DateTimeToStringConverter.class)");
+            _builder.newLineIfNotEmpty();
+            _builder.append("@JsonDeserialize(converter = StringToDateTimeConverter.class)");
           }
         }
         _builder.newLineIfNotEmpty();
@@ -454,169 +485,128 @@ public class AttributeExtension {
     return ((!it.isList()) && (it.getModel() == null));
   }
   
-  public String dateTimeParse(final String date, final String pattern) {
+  public DateTime dateTimeParse(final String dateString, final String pattern) {
+    try {
+      return DateTime.parse(dateString, DateTimeFormat.forPattern(pattern)).withZone(DateTimeZone.UTC);
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        return null;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
+  
+  protected CharSequence _valueFrom(final JsonObject it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("DateTime.parse(\"");
-    _builder.append(date);
-    _builder.append("\", DateTimeFormat.forPattern(\"");
-    _builder.append(pattern);
-    _builder.append("\")).withZone(DateTimeZone.UTC)");
-    return _builder.toString();
+    {
+      if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
+        _builder.append("{ ");
+        {
+          EList<JsonMember> _members = it.getMembers();
+          boolean _hasElements = false;
+          for(final JsonMember member : _members) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(this.stringLineBreak, "");
+            }
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name);
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("}");
+      } else {
+        _builder.append("{}");
+      }
+    }
+    return _builder;
   }
   
-  public String testDateTimeParse(final String date, final String pattern) {
+  protected CharSequence _valueFrom(final JsonValue it) {
+    String _string = it.getString();
+    boolean _tripleNotEquals = (_string != null);
+    if (_tripleNotEquals) {
+      String returnString = it.getString();
+      boolean _contains = it.getString().contains("${index}");
+      if (_contains) {
+        returnString = returnString.replace("${index}", Integer.valueOf(this.index).toString());
+        this.index++;
+      }
+      boolean _contains_1 = it.getString().contains("${random}");
+      if (_contains_1) {
+        returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
+      }
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"");
+      _builder.append(returnString);
+      _builder.append("\\\"");
+      return _builder;
+    } else {
+      String _boolean = it.getBoolean();
+      boolean _tripleNotEquals_1 = (_boolean != null);
+      if (_tripleNotEquals_1) {
+        return it.getBoolean();
+      } else {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        int _long = it.getLong();
+        _builder_1.append(_long);
+        return _builder_1;
+      }
+    }
+  }
+  
+  protected CharSequence _valueFrom(final JsonArray it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("DateTime.parse(\"");
-    _builder.append(date);
-    _builder.append("\", DateTimeFormat.forPattern(\"");
-    _builder.append(pattern);
-    _builder.append("\")).withZone(DateTimeZone.UTC).toString()");
-    return _builder.toString();
+    {
+      if ((((it != null) && (it.getValues() != null)) && (it.getValues().size() > 0))) {
+        _builder.append("[ ");
+        {
+          EList<JsonValue> _values = it.getValues();
+          boolean _hasElements = false;
+          for(final JsonValue value : _values) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(this.stringLineBreak, "");
+            }
+            CharSequence _valueFrom = this.valueFrom(value);
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("]");
+      } else {
+        _builder.append("[]");
+      }
+    }
+    return _builder;
   }
   
-  public String valueFrom(final AttributeDefinition it, final Integer index) {
-    String _stringValue = it.getValue().getStringValue();
-    boolean _tripleNotEquals = (_stringValue != null);
-    if (_tripleNotEquals) {
-      String _type = it.getAttribute().getType();
-      boolean _equals = Objects.equal(_type, "Integer");
-      if (_equals) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Integer.parseInt(\"");
-        String _stringValue_1 = it.getValue().getStringValue();
-        _builder.append(_stringValue_1);
-        _builder.append("\")");
-        return _builder.toString();
-      }
-      String _type_1 = it.getAttribute().getType();
-      boolean _equals_1 = Objects.equal(_type_1, "Float");
-      if (_equals_1) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("Float.parseFloat(\"");
-        String _stringValue_2 = it.getValue().getStringValue();
-        _builder_1.append(_stringValue_2);
-        _builder_1.append("\")");
-        return _builder_1.toString();
-      }
-      String _type_2 = it.getAttribute().getType();
-      boolean _equals_2 = Objects.equal(_type_2, "Boolean");
-      if (_equals_2) {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("new Boolean(\"");
-        String _stringValue_3 = it.getValue().getStringValue();
-        _builder_2.append(_stringValue_3);
-        _builder_2.append("\")");
-        return _builder_2.toString();
-      }
-      String _type_3 = it.getAttribute().getType();
-      boolean _equals_3 = Objects.equal(_type_3, "Long");
-      if (_equals_3) {
-        StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append("Long.parseLong(\"");
-        String _stringValue_4 = it.getValue().getStringValue();
-        _builder_3.append(_stringValue_4);
-        _builder_3.append("\")");
-        return _builder_3.toString();
-      }
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("this.templateStringValue(\"");
-      String _stringValue_5 = it.getValue().getStringValue();
-      _builder_4.append(_stringValue_5);
-      _builder_4.append("\", ");
-      {
-        if ((index != null)) {
-          _builder_4.append(index);
-        } else {
-          _builder_4.append("null");
-        }
-      }
-      _builder_4.append(")");
-      return _builder_4.toString();
-    }
-    String _type_4 = it.getAttribute().getType();
-    boolean _equals_4 = Objects.equal(_type_4, "DateTime");
-    if (_equals_4) {
-      return this.dateTimeParse(it.getValue().getDateValue(), it.getValue().getPattern());
-    }
-    if (((it.getValue().getAttributeDefinitionList() != null) || (it.getValue().getListAttributeDefinitionList() != null))) {
-      return "null";
-    }
-    StringConcatenation _builder_5 = new StringConcatenation();
-    int _intValue = it.getValue().getIntValue();
-    _builder_5.append(_intValue);
-    return _builder_5.toString();
+  protected CharSequence _valueFrom(final JsonDateTime it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\\\"");
+    DateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
+    _builder.append(_dateTimeParse);
+    _builder.append("\\\"");
+    return _builder;
   }
   
-  public String testValueFrom(final AttributeDefinition it, final Integer index) {
-    String _stringValue = it.getValue().getStringValue();
-    boolean _tripleNotEquals = (_stringValue != null);
-    if (_tripleNotEquals) {
-      String _type = it.getAttribute().getType();
-      boolean _equals = Objects.equal(_type, "Integer");
-      if (_equals) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Integer.parseInt(\"");
-        String _stringValue_1 = it.getValue().getStringValue();
-        _builder.append(_stringValue_1);
-        _builder.append("\")");
-        return _builder.toString();
-      }
-      String _type_1 = it.getAttribute().getType();
-      boolean _equals_1 = Objects.equal(_type_1, "Float");
-      if (_equals_1) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("Float.parseFloat(\"");
-        String _stringValue_2 = it.getValue().getStringValue();
-        _builder_1.append(_stringValue_2);
-        _builder_1.append("\")");
-        return _builder_1.toString();
-      }
-      String _type_2 = it.getAttribute().getType();
-      boolean _equals_2 = Objects.equal(_type_2, "Boolean");
-      if (_equals_2) {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("new Boolean(\"");
-        String _stringValue_3 = it.getValue().getStringValue();
-        _builder_2.append(_stringValue_3);
-        _builder_2.append("\")");
-        return _builder_2.toString();
-      }
-      String _type_3 = it.getAttribute().getType();
-      boolean _equals_3 = Objects.equal(_type_3, "Long");
-      if (_equals_3) {
-        StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append("Long.parseLong(\"");
-        String _stringValue_4 = it.getValue().getStringValue();
-        _builder_3.append(_stringValue_4);
-        _builder_3.append("\")");
-        return _builder_3.toString();
-      }
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("this.templateStringValue(\"");
-      String _stringValue_5 = it.getValue().getStringValue();
-      _builder_4.append(_stringValue_5);
-      _builder_4.append("\", ");
-      {
-        if ((index != null)) {
-          _builder_4.append(index);
-        } else {
-          _builder_4.append("null");
-        }
-      }
-      _builder_4.append(")");
-      return _builder_4.toString();
+  public CharSequence valueFrom(final JsonValue it) {
+    if (it instanceof JsonArray) {
+      return _valueFrom((JsonArray)it);
+    } else if (it instanceof JsonDateTime) {
+      return _valueFrom((JsonDateTime)it);
+    } else if (it instanceof JsonObject) {
+      return _valueFrom((JsonObject)it);
+    } else if (it != null) {
+      return _valueFrom(it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
     }
-    String _type_4 = it.getAttribute().getType();
-    boolean _equals_4 = Objects.equal(_type_4, "DateTime");
-    if (_equals_4) {
-      return this.testDateTimeParse(it.getValue().getDateValue(), it.getValue().getPattern());
-    }
-    if (((it.getValue().getAttributeDefinitionList() != null) || (it.getValue().getListAttributeDefinitionList() != null))) {
-      return "null";
-    }
-    StringConcatenation _builder_5 = new StringConcatenation();
-    int _intValue = it.getValue().getIntValue();
-    _builder_5.append(_intValue);
-    return _builder_5.toString();
   }
 }

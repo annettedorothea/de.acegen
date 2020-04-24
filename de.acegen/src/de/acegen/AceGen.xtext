@@ -152,37 +152,11 @@ DataDefinition:
 	{DataDefinition} 
 	('uuid' uuid = STRING)? 
 	('systemTime' systemtime = STRING pattern = STRING)? 
-	(data = AttributeDefinitionList)?
+	(data = JsonObject)?
 ;
 
 Authorization:
 	'authorization' username = STRING ':' password = STRING
-;
-
-AttributeDefinitionList:
-	{AttributeDefinitionList} '{' 
-		attributeDefinitions += AttributeDefinition*
-	'}'
-;
-
-ListAttributeDefinitionList:
-	PrimitiveValueDefinitionForList | AttributeDefinitionListForList
-;
-
-AttributeDefinitionListForList:
-	{AttributeDefinitionListForList} '[' attributeDefinitionList += AttributeDefinitionList* ']'
-;
-
-PrimitiveValueDefinitionForList:
-	{PrimitiveValueDefinitionForList} '(' valueDefinitionList += ValueDefinitionList* ')'
-;
-
-AttributeDefinition:
-	attribute = [Attribute | QualifiedName] ':' value = Value
-;
-
-ValueDefinitionList: 
-	primitiveValue = PrimitiveValue
 ;
 
 Attribute:
@@ -216,13 +190,31 @@ Constraint:
 	'NotEmpty' | 'NotNull'
 ;
 
-Value:
-	stringValue = STRING | intValue = INT | dateValue = STRING pattern = STRING | attributeDefinitionList = AttributeDefinitionList | listAttributeDefinitionList = ListAttributeDefinitionList
+JsonDateTime:
+	dateTime = STRING pattern = STRING
 ;
 
-PrimitiveValue:
-	stringValue = STRING | intValue = INT
-;
+JsonObject:
+	{JsonObject} '{' 
+		(members+=JsonMember)?
+		(',' members+=JsonMember)* 
+	
+	'}';
+
+JsonMember:
+	attribute=[Attribute | QualifiedName] ':' value=JsonValue;
+	
+JsonValue:
+	JsonObject | string = STRING | JsonArray | boolean = JsonBoolean | {JsonValue} JsonNull | long = INT | JsonDateTime;
+
+JsonArray:
+	{JsonArray} '[' (values+=JsonValue)? (',' values+=JsonValue)* ']';
+
+JsonBoolean:
+  'true' | 'false';
+
+JsonNull:
+  'null';
 
 /******* S.D.G. *******/
 	

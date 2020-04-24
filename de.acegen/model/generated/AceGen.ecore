@@ -140,34 +140,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//AttributeDefinitionList"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//JsonObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Authorization">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitions" upperBound="-1"
-        eType="#//AttributeDefinition" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefinitionList"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinitionListForList" eSuperTypes="#//ListAttributeDefinitionList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
-        upperBound="-1" eType="#//AttributeDefinitionList" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveValueDefinitionForList" eSuperTypes="#//ListAttributeDefinitionList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valueDefinitionList" upperBound="-1"
-        eType="#//ValueDefinitionList" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefinition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ValueDefinitionList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="primitiveValue" eType="#//PrimitiveValue"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unique" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -180,18 +158,26 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="notReplayable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonDateTime" eSuperTypes="#//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDefinitionList"
-        eType="#//AttributeDefinitionList" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listAttributeDefinitionList"
-        eType="#//ListAttributeDefinitionList" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveValue">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonObject" eSuperTypes="#//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//JsonMember" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonMember">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="boolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="long" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonArray" eSuperTypes="#//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//JsonValue" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -224,7 +224,10 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventconsumer());	
 
 		fsa.generateFile("de/acegen" + '/DateTimeToStringConverter.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateDateTimeToStringConverter());	
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateDateTimeToStringConverter());	
+
+		fsa.generateFile("de/acegen" + '/StringToDateTimeConverter.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStringToDateTimeConverter());	
 
 		fsa.generateFile("de/acegen" + '/PersistenceConnection.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePersistenceConnection());	

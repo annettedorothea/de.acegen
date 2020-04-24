@@ -3,7 +3,7 @@ Automatic-Module-Name: de.acegen
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 0.7.12
+Bundle-Version: 0.7.13
 Bundle-SymbolicName: de.acegen; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
@@ -28,3 +28,5 @@ Export-Package: de.acegen.serializer,
  de.acegen.parser.antlr.internal,
  de.acegen.generator
 Import-Package: org.apache.log4j
+Bundle-ClassPath: lib/joda-time-2.4.jar,
+ .

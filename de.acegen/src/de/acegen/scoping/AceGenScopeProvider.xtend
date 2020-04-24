@@ -19,13 +19,13 @@ package de.acegen.scoping
 
 import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
-import de.acegen.aceGen.AttributeDefinition
-import de.acegen.aceGen.AttributeDefinitionList
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerViewFunction
-import de.acegen.aceGen.ListAttributeDefinitionList
+import de.acegen.aceGen.JsonArray
+import de.acegen.aceGen.JsonMember
+import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.ThenBlock
@@ -78,12 +78,12 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
-		if (context instanceof AttributeDefinitionList || context instanceof ListAttributeDefinitionList ||
-			context instanceof AttributeDefinition) {
+		if (context instanceof JsonObject || context instanceof JsonArray ||
+			context instanceof JsonMember) {
 			var parent = context.eContainer
 			var isThen = false
 			var isWhen = false
-			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof AttributeDefinition))) {
+			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember))) {
 				parent = parent.eContainer
 				if (parent instanceof ThenBlock) {
 					isThen = true
@@ -105,10 +105,10 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					return Scopes.scopeFor(scenario.whenBlock.action.response);
 				}
 			}
-			if (parent instanceof AttributeDefinition) {
-				val attributeDefinition = parent as AttributeDefinition;
-				if (attributeDefinition.attribute.model !== null) {
-					val model = attributeDefinition.attribute.model as Model
+			if (parent instanceof JsonMember) {
+				val jsonMember = parent as JsonMember;
+				if (jsonMember.attribute.model !== null) {
+					val model = jsonMember.attribute.model as Model
 					return getScopeFor(model);
 				}
 			}

@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.AttributeDefinition;
-import de.acegen.aceGen.AttributeDefinitionList;
+import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonObject;
 
 import java.util.Collection;
 
@@ -16,42 +16,40 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Attribute Definition List</b></em>'.
+ * An implementation of the model object '<em><b>Json Object</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.AttributeDefinitionListImpl#getAttributeDefinitions <em>Attribute Definitions</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonObjectImpl#getMembers <em>Members</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container implements AttributeDefinitionList
+public class JsonObjectImpl extends JsonValueImpl implements JsonObject
 {
   /**
-   * The cached value of the '{@link #getAttributeDefinitions() <em>Attribute Definitions</em>}' containment reference list.
+   * The cached value of the '{@link #getMembers() <em>Members</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAttributeDefinitions()
+   * @see #getMembers()
    * @generated
    * @ordered
    */
-  protected EList<AttributeDefinition> attributeDefinitions;
+  protected EList<JsonMember> members;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected AttributeDefinitionListImpl()
+  protected JsonObjectImpl()
   {
     super();
   }
@@ -64,7 +62,7 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.ATTRIBUTE_DEFINITION_LIST;
+    return AceGenPackage.Literals.JSON_OBJECT;
   }
 
   /**
@@ -73,13 +71,13 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public EList<AttributeDefinition> getAttributeDefinitions()
+  public EList<JsonMember> getMembers()
   {
-    if (attributeDefinitions == null)
+    if (members == null)
     {
-      attributeDefinitions = new EObjectContainmentEList<AttributeDefinition>(AttributeDefinition.class, this, AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS);
+      members = new EObjectContainmentEList<JsonMember>(JsonMember.class, this, AceGenPackage.JSON_OBJECT__MEMBERS);
     }
-    return attributeDefinitions;
+    return members;
   }
 
   /**
@@ -92,8 +90,8 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS:
-        return ((InternalEList<?>)getAttributeDefinitions()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.JSON_OBJECT__MEMBERS:
+        return ((InternalEList<?>)getMembers()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -108,8 +106,8 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS:
-        return getAttributeDefinitions();
+      case AceGenPackage.JSON_OBJECT__MEMBERS:
+        return getMembers();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -125,9 +123,9 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS:
-        getAttributeDefinitions().clear();
-        getAttributeDefinitions().addAll((Collection<? extends AttributeDefinition>)newValue);
+      case AceGenPackage.JSON_OBJECT__MEMBERS:
+        getMembers().clear();
+        getMembers().addAll((Collection<? extends JsonMember>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +141,8 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS:
-        getAttributeDefinitions().clear();
+      case AceGenPackage.JSON_OBJECT__MEMBERS:
+        getMembers().clear();
         return;
     }
     super.eUnset(featureID);
@@ -160,10 +158,10 @@ public class AttributeDefinitionListImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST__ATTRIBUTE_DEFINITIONS:
-        return attributeDefinitions != null && !attributeDefinitions.isEmpty();
+      case AceGenPackage.JSON_OBJECT__MEMBERS:
+        return members != null && !members.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //AttributeDefinitionListImpl
+} //JsonObjectImpl

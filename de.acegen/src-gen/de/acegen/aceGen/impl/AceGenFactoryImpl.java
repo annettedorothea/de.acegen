@@ -87,15 +87,12 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.THEN_BLOCK: return createThenBlock();
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST: return createAttributeDefinitionList();
-      case AceGenPackage.LIST_ATTRIBUTE_DEFINITION_LIST: return createListAttributeDefinitionList();
-      case AceGenPackage.ATTRIBUTE_DEFINITION_LIST_FOR_LIST: return createAttributeDefinitionListForList();
-      case AceGenPackage.PRIMITIVE_VALUE_DEFINITION_FOR_LIST: return createPrimitiveValueDefinitionForList();
-      case AceGenPackage.ATTRIBUTE_DEFINITION: return createAttributeDefinition();
-      case AceGenPackage.VALUE_DEFINITION_LIST: return createValueDefinitionList();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
-      case AceGenPackage.VALUE: return createValue();
-      case AceGenPackage.PRIMITIVE_VALUE: return createPrimitiveValue();
+      case AceGenPackage.JSON_DATE_TIME: return createJsonDateTime();
+      case AceGenPackage.JSON_OBJECT: return createJsonObject();
+      case AceGenPackage.JSON_MEMBER: return createJsonMember();
+      case AceGenPackage.JSON_VALUE: return createJsonValue();
+      case AceGenPackage.JSON_ARRAY: return createJsonArray();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -371,78 +368,6 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public AttributeDefinitionList createAttributeDefinitionList()
-  {
-    AttributeDefinitionListImpl attributeDefinitionList = new AttributeDefinitionListImpl();
-    return attributeDefinitionList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ListAttributeDefinitionList createListAttributeDefinitionList()
-  {
-    ListAttributeDefinitionListImpl listAttributeDefinitionList = new ListAttributeDefinitionListImpl();
-    return listAttributeDefinitionList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public AttributeDefinitionListForList createAttributeDefinitionListForList()
-  {
-    AttributeDefinitionListForListImpl attributeDefinitionListForList = new AttributeDefinitionListForListImpl();
-    return attributeDefinitionListForList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PrimitiveValueDefinitionForList createPrimitiveValueDefinitionForList()
-  {
-    PrimitiveValueDefinitionForListImpl primitiveValueDefinitionForList = new PrimitiveValueDefinitionForListImpl();
-    return primitiveValueDefinitionForList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public AttributeDefinition createAttributeDefinition()
-  {
-    AttributeDefinitionImpl attributeDefinition = new AttributeDefinitionImpl();
-    return attributeDefinition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ValueDefinitionList createValueDefinitionList()
-  {
-    ValueDefinitionListImpl valueDefinitionList = new ValueDefinitionListImpl();
-    return valueDefinitionList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Attribute createAttribute()
   {
     AttributeImpl attribute = new AttributeImpl();
@@ -455,10 +380,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public Value createValue()
+  public JsonDateTime createJsonDateTime()
   {
-    ValueImpl value = new ValueImpl();
-    return value;
+    JsonDateTimeImpl jsonDateTime = new JsonDateTimeImpl();
+    return jsonDateTime;
   }
 
   /**
@@ -467,10 +392,46 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public PrimitiveValue createPrimitiveValue()
+  public JsonObject createJsonObject()
   {
-    PrimitiveValueImpl primitiveValue = new PrimitiveValueImpl();
-    return primitiveValue;
+    JsonObjectImpl jsonObject = new JsonObjectImpl();
+    return jsonObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonMember createJsonMember()
+  {
+    JsonMemberImpl jsonMember = new JsonMemberImpl();
+    return jsonMember;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonValue createJsonValue()
+  {
+    JsonValueImpl jsonValue = new JsonValueImpl();
+    return jsonValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonArray createJsonArray()
+  {
+    JsonArrayImpl jsonArray = new JsonArrayImpl();
+    return jsonArray;
   }
 
   /**
