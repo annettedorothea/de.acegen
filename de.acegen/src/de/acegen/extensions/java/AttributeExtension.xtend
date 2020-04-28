@@ -25,7 +25,6 @@ import de.acegen.aceGen.JsonValue
 import de.acegen.aceGen.Model
 import java.util.ArrayList
 import java.util.List
-import java.util.UUID
 import javax.inject.Inject
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -172,7 +171,7 @@ class AttributeExtension {
 				index++;
 			}
 			if (string.contains("${random}")) {
-				returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
+				returnString = returnString.replace("${random}",  '''" + this.randomString() + "''');
 			}
 			return '''\"«returnString»\"''';
 		} else if (boolean !== null) {

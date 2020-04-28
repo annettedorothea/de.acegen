@@ -14,7 +14,6 @@ import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
-import java.util.UUID
 import javax.inject.Inject
 
 class ScenarioTemplate {
@@ -78,16 +77,28 @@ class ScenarioTemplate {
 		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
 			private void given() throws Exception {
+				Response response;
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
 							«givenRef.scenario.whenBlock.generateActionCall(java, false)»
+							«givenRef.scenario.whenBlock.generatePrepare»
+							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+							if (response.getStatus() == 500) {
+								String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
+								assertFail(message);
+							}
 							
 						«ENDFOR»
 					«ELSE»
 						«givenRef.scenario.whenBlock.generatePrepare»
-						«givenRef.scenario.whenBlock.generateActionCall(java, false)»
+						response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+						if (response.getStatus() == 500) {
+							String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
+							assertFail(message);
+						}
+						
 					«ENDIF»
 
 			«ENDFOR»
@@ -99,6 +110,10 @@ class ScenarioTemplate {
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
+				if (response.getStatus() == 500) {
+					String message = response.readEntity(String.class);
+					assertFail(message);
+				}
 				«IF thenBlock.statusCode !== 0»
 					assertThat(response.getStatus(), «thenBlock.statusCode»);
 				«ENDIF»
@@ -133,12 +148,16 @@ class ScenarioTemplate {
 							«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
 							
 							verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+						}
+						
+						protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+						
+						@Override
+						protected String scenarioName() {
+							return "«name»";
+						}
+					
 					}
-					
-					protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
-					
-					}
-					
 					
 					«sdg»
 					
@@ -157,12 +176,12 @@ class ScenarioTemplate {
 	}
 
 	private def void allGivenRefsRec(GivenRef it, List<GivenRef> allWhenBlocks) {
-		for (scenario : scenario.givenRefs) {
-			allGivenRefsRec(scenario, allWhenBlocks)
+		if (!excludeGiven) {
+			for (scenario : scenario.givenRefs) {
+				allGivenRefsRec(scenario, allWhenBlocks)
+			}
 		}
-		if (!allWhenBlocks.contains(it)) {
-			allWhenBlocks.add(it)
-		} 
+		allWhenBlocks.add(it)
 	}
 	
 	private def generatePrepare(WhenBlock it) '''
@@ -184,7 +203,7 @@ class ScenarioTemplate {
 
 	private def objectMapperCall(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»«UUID.randomUUID»«ENDIF»\"«FOR member : data.members BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»" + this.randomUUID() + "«ENDIF»\"«FOR member : data.members BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)
 		
 	'''
@@ -226,8 +245,9 @@ class ScenarioTemplate {
 		
 		import io.dropwizard.jdbi3.JdbiFactory;
 		import io.dropwizard.testing.DropwizardTestSupport;
+		import java.util.UUID;
 		
-		public class BaseScenario extends AbstractBaseScenario {
+		public abstract class BaseScenario extends AbstractBaseScenario {
 		
 			static final Logger LOG = LoggerFactory.getLogger(BaseScenario.class);
 		
@@ -254,6 +274,9 @@ class ScenarioTemplate {
 		
 			@Before
 			public void before() {
+				LOG.info("*********************************************************************************");
+				LOG.info("********   " + this.scenarioName());
+				LOG.info("*********************************************************************************");
 				handle = new PersistenceHandle(jdbi.open());
 				daoProvider = new DaoProvider();
 				daoProvider.truncateAllViews(handle);
@@ -267,6 +290,16 @@ class ScenarioTemplate {
 			@Override
 			protected String authorization(String username, String password) {
 				return "";
+			}
+			
+			@Override
+			protected String randomString() {
+				return UUID.randomUUID().toString().substring(0, 8);
+			}
+		
+			@Override
+			protected String randomUUID() {
+				return UUID.randomUUID().toString();
 			}
 		
 			@Override
@@ -283,6 +316,11 @@ class ScenarioTemplate {
 			protected void assertIsNull(Object actual) {
 				throw new RuntimeException("BaseScenario.assertIsNull not implemented");
 			}
+
+			@Override
+			protected void assertFail(String message) {
+				org.junit.Assert.fail(message);
+			}
 		}
 		
 	'''
@@ -292,7 +330,6 @@ class ScenarioTemplate {
 		
 		package de.acegen;
 		
-		import java.util.UUID;
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		
 		public abstract class AbstractBaseScenario {
@@ -309,10 +346,10 @@ class ScenarioTemplate {
 				objectMapper = new ObjectMapper();
 			}
 		
-			public static String randomUUID() {
-				return UUID.randomUUID().toString();
-			}
-		
+			protected abstract String randomString();
+			
+			protected abstract String randomUUID();
+
 			protected abstract String authorization(String username, String password);
 		
 			protected abstract void assertThat(int actual, int expected);
@@ -321,6 +358,10 @@ class ScenarioTemplate {
 		
 			protected abstract void assertIsNull(Object actual);
 		
+			protected abstract void assertFail(String message);
+		
+			protected abstract String scenarioName();
+
 		}
 		
 		

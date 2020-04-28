@@ -26,7 +26,6 @@ import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -539,23 +538,25 @@ public class AttributeExtension {
       }
       boolean _contains_1 = it.getString().contains("${random}");
       if (_contains_1) {
-        returnString = returnString.replace("${random}", UUID.randomUUID().toString().substring(0, 8));
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\" + this.randomString() + \"");
+        returnString = returnString.replace("${random}", _builder);
       }
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("\\\"");
-      _builder.append(returnString);
-      _builder.append("\\\"");
-      return _builder;
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("\\\"");
+      _builder_1.append(returnString);
+      _builder_1.append("\\\"");
+      return _builder_1;
     } else {
       String _boolean = it.getBoolean();
       boolean _tripleNotEquals_1 = (_boolean != null);
       if (_tripleNotEquals_1) {
         return it.getBoolean();
       } else {
-        StringConcatenation _builder_1 = new StringConcatenation();
+        StringConcatenation _builder_2 = new StringConcatenation();
         int _long = it.getLong();
-        _builder_1.append(_long);
-        return _builder_1;
+        _builder_2.append(_long);
+        return _builder_2;
       }
     }
   }
