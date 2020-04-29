@@ -772,27 +772,65 @@ public class ActionTemplate {
       EList<Attribute> _queryParams_1 = it.getQueryParams();
       for(final Attribute param_2 : _queryParams_1) {
         _builder.append("\t");
+        _builder.append("try {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
         _builder.append("this.actionData.");
         String _setterCall = this._attributeExtension.setterCall(param_2, this._attributeExtension.resourceParam(param_2));
-        _builder.append(_setterCall, "\t");
+        _builder.append(_setterCall, "\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
+        String _name_4 = param_2.getName();
+        _builder.append(_name_4, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
     {
       EList<Attribute> _pathParams_1 = it.getPathParams();
       for(final Attribute param_3 : _pathParams_1) {
         _builder.append("\t");
+        _builder.append("try {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
         _builder.append("this.actionData.");
         String _setterCall_1 = this._attributeExtension.setterCall(param_3, this._attributeExtension.resourceParam(param_3));
-        _builder.append(_setterCall_1, "\t");
+        _builder.append(_setterCall_1, "\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
+        String _name_5 = param_3.getName();
+        _builder.append(_name_5, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
     {
       EList<Attribute> _payload = it.getPayload();
       for(final Attribute attribute : _payload) {
+        _builder.append("\t");
+        _builder.append("try {");
+        _builder.newLine();
+        _builder.append("\t");
         _builder.append("\t");
         _builder.append("this.actionData.");
         StringConcatenation _builder_1 = new StringConcatenation();
@@ -800,9 +838,22 @@ public class ActionTemplate {
         String _terCall = this._attributeExtension.getterCall(attribute);
         _builder_1.append(_terCall);
         String _setterCall_2 = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-        _builder.append(_setterCall_2, "\t");
+        _builder.append(_setterCall_2, "\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
+        String _name_6 = attribute.getName();
+        _builder.append(_name_6, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
     {
@@ -810,10 +861,14 @@ public class ActionTemplate {
         {
           List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
           for(final Attribute param_4 : _allAttributes) {
-            _builder.append("\t");
             {
               boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
               if (_containsAttribute) {
+                _builder.append("\t");
+                _builder.append("try {");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
                 _builder.append("this.actionData.");
                 StringConcatenation _builder_2 = new StringConcatenation();
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
@@ -822,11 +877,24 @@ public class ActionTemplate {
                 String _terCall_1 = this._attributeExtension.getterCall(param_4);
                 _builder_2.append(_terCall_1);
                 String _setterCall_3 = this._attributeExtension.setterCall(param_4, _builder_2.toString());
-                _builder.append(_setterCall_3, "\t");
+                _builder.append(_setterCall_3, "\t\t");
                 _builder.append(";");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("} catch (Exception x) {");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("LOG.warn(\"failed to parse param {}\", \"");
+                String _name_7 = param_4.getName();
+                _builder.append(_name_7, "\t\t");
+                _builder.append("\");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
               }
             }
-            _builder.newLineIfNotEmpty();
           }
         }
       }
@@ -958,7 +1026,7 @@ public class ActionTemplate {
             _builder.append("LOG.warn(\"");
             String _name_2 = attribute_1.getName();
             _builder.append(_name_2, "\t\t");
-            _builder.append(" is daclared as not replayable but no value was found in NotReplayableDataProvider.\");");
+            _builder.append(" is declared as not replayable but no value was found in NotReplayableDataProvider.\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("}");
@@ -977,7 +1045,7 @@ public class ActionTemplate {
     _builder.append("} catch (WebApplicationException x) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("LOG.error(actionName + \" failed \" + x.getMessage());");
+    _builder.append("LOG.error(actionName + \" returns {} due to {} \", x.getResponse().getStatusInfo(), x.getMessage());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("try {");

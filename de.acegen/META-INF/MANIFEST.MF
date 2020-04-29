@@ -3,7 +3,7 @@ Automatic-Module-Name: de.acegen
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 0.7.14
+Bundle-Version: 0.7.15
 Bundle-SymbolicName: de.acegen; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,

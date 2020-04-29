@@ -311,17 +311,35 @@ class ActionTemplate {
 				throws JsonProcessingException {
 			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 			«FOR param : queryParams»
-				this.actionData.«param.setterCall(param.resourceParam)»;
+				try {
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				} catch (Exception x) {
+					LOG.warn("failed to parse param {}", "«param.name»");
+				}
 			«ENDFOR»
 			«FOR param : pathParams»
-				this.actionData.«param.setterCall(param.resourceParam)»;
+				try {
+					this.actionData.«param.setterCall(param.resourceParam)»;
+				} catch (Exception x) {
+					LOG.warn("failed to parse param {}", "«param.name»");
+				}
 			«ENDFOR»
 			«FOR attribute : payload»
-				this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+				try {
+					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+				} catch (Exception x) {
+					LOG.warn("failed to parse param {}", "«attribute.name»");
+				}
 			«ENDFOR»
 			«IF isAuthorize && authUser !== null»
 				«FOR param : getModel.allAttributes»
-					«IF authUser.attributes.containsAttribute(param)»this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;«ENDIF»
+						«IF authUser.attributes.containsAttribute(param)»
+							try {
+								this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+							} catch (Exception x) {
+								LOG.warn("failed to parse param {}", "«param.name»");
+							}
+						«ENDIF»
 				«ENDFOR»
 			«ENDIF»
 			return this.apply();
@@ -359,7 +377,7 @@ class ActionTemplate {
 					if (NotReplayableDataProvider.get("«attribute.name»") != null) {
 						this.actionData.«attribute.setterCall('''(«attribute.type»)NotReplayableDataProvider.get("«attribute.name»")''')»;
 					} else {
-						LOG.warn("«attribute.name» is daclared as not replayable but no value was found in NotReplayableDataProvider.");
+						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»
@@ -368,7 +386,7 @@ class ActionTemplate {
 
 	private def catchFinallyBlock(HttpServerAce it) '''
 		} catch (WebApplicationException x) {
-			LOG.error(actionName + " failed " + x.getMessage());
+			LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
 			try {
 				databaseHandle.rollbackTransaction();
 				«addExceptionToTimeline»
