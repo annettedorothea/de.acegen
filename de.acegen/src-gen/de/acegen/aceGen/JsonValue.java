@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.JsonValue#getString <em>String</em>}</li>
  *   <li>{@link de.acegen.aceGen.JsonValue#getBoolean <em>Boolean</em>}</li>
+ *   <li>{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}</li>
  * </ul>
  *
@@ -68,6 +69,28 @@ public interface JsonValue extends EObject
    * @generated
    */
   void setBoolean(String value);
+
+  /**
+   * Returns the value of the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Null</em>' attribute.
+   * @see #setNull(String)
+   * @see de.acegen.aceGen.AceGenPackage#getJsonValue_Null()
+   * @model
+   * @generated
+   */
+  String getNull();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Null</em>' attribute.
+   * @see #getNull()
+   * @generated
+   */
+  void setNull(String value);
 
   /**
    * Returns the value of the '<em><b>Long</b></em>' attribute.

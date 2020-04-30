@@ -1423,13 +1423,22 @@ public interface AceGenPackage extends EPackage
   int JSON_VALUE__BOOLEAN = 1;
 
   /**
+   * The feature id for the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_VALUE__NULL = 2;
+
+  /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int JSON_VALUE__LONG = 2;
+  int JSON_VALUE__LONG = 3;
 
   /**
    * The number of structural features of the '<em>Json Value</em>' class.
@@ -1438,7 +1447,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JSON_VALUE_FEATURE_COUNT = 3;
+  int JSON_VALUE_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
@@ -1467,6 +1476,15 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int JSON_DATE_TIME__BOOLEAN = JSON_VALUE__BOOLEAN;
+
+  /**
+   * The feature id for the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__NULL = JSON_VALUE__NULL;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -1531,6 +1549,15 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int JSON_OBJECT__BOOLEAN = JSON_VALUE__BOOLEAN;
+
+  /**
+   * The feature id for the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_OBJECT__NULL = JSON_VALUE__NULL;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -1623,6 +1650,15 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int JSON_ARRAY__BOOLEAN = JSON_VALUE__BOOLEAN;
+
+  /**
+   * The feature id for the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY__NULL = JSON_VALUE__NULL;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -2880,6 +2916,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getJsonValue_Boolean();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Null</em>'.
+   * @see de.acegen.aceGen.JsonValue#getNull()
+   * @see #getJsonValue()
+   * @generated
+   */
+  EAttribute getJsonValue_Null();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3899,6 +3946,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute JSON_VALUE__BOOLEAN = eINSTANCE.getJsonValue_Boolean();
+
+    /**
+     * The meta object literal for the '<em><b>Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JSON_VALUE__NULL = eINSTANCE.getJsonValue_Null();
 
     /**
      * The meta object literal for the '<em><b>Long</b></em>' attribute feature.

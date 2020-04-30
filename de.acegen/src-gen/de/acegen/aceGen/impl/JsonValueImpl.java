@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.JsonValueImpl#getString <em>String</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.JsonValueImpl#getBoolean <em>Boolean</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonValueImpl#getNull <em>Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.JsonValueImpl#getLong <em>Long</em>}</li>
  * </ul>
  *
@@ -69,6 +70,26 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
    * @ordered
    */
   protected String boolean_ = BOOLEAN_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getNull() <em>Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNull()
+   * @generated
+   * @ordered
+   */
+  protected static final String NULL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getNull() <em>Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNull()
+   * @generated
+   * @ordered
+   */
+  protected String null_ = NULL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLong() <em>Long</em>}' attribute.
@@ -167,6 +188,31 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
    * @generated
    */
   @Override
+  public String getNull()
+  {
+    return null_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNull(String newNull)
+  {
+    String oldNull = null_;
+    null_ = newNull;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_VALUE__NULL, oldNull, null_));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public int getLong()
   {
     return long_;
@@ -200,6 +246,8 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
         return getString();
       case AceGenPackage.JSON_VALUE__BOOLEAN:
         return getBoolean();
+      case AceGenPackage.JSON_VALUE__NULL:
+        return getNull();
       case AceGenPackage.JSON_VALUE__LONG:
         return getLong();
     }
@@ -221,6 +269,9 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
         return;
       case AceGenPackage.JSON_VALUE__BOOLEAN:
         setBoolean((String)newValue);
+        return;
+      case AceGenPackage.JSON_VALUE__NULL:
+        setNull((String)newValue);
         return;
       case AceGenPackage.JSON_VALUE__LONG:
         setLong((Integer)newValue);
@@ -245,6 +296,9 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
       case AceGenPackage.JSON_VALUE__BOOLEAN:
         setBoolean(BOOLEAN_EDEFAULT);
         return;
+      case AceGenPackage.JSON_VALUE__NULL:
+        setNull(NULL_EDEFAULT);
+        return;
       case AceGenPackage.JSON_VALUE__LONG:
         setLong(LONG_EDEFAULT);
         return;
@@ -266,6 +320,8 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
         return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
       case AceGenPackage.JSON_VALUE__BOOLEAN:
         return BOOLEAN_EDEFAULT == null ? boolean_ != null : !BOOLEAN_EDEFAULT.equals(boolean_);
+      case AceGenPackage.JSON_VALUE__NULL:
+        return NULL_EDEFAULT == null ? null_ != null : !NULL_EDEFAULT.equals(null_);
       case AceGenPackage.JSON_VALUE__LONG:
         return long_ != LONG_EDEFAULT;
     }
@@ -287,6 +343,8 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
     result.append(string);
     result.append(", boolean: ");
     result.append(boolean_);
+    result.append(", null: ");
+    result.append(null_);
     result.append(", long: ");
     result.append(long_);
     result.append(')');

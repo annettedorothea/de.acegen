@@ -176,6 +176,8 @@ class AttributeExtension {
 			return '''\"«returnString»\"''';
 		} else if (boolean !== null) {
 			return boolean;
+		} else if (it.^null !== null) {
+			return "null";
 		} else {
 			return '''«long»''';
 		}

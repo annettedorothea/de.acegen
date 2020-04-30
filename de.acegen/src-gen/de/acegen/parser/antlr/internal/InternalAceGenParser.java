@@ -7513,29 +7513,31 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonValue"
-    // InternalAceGen.g:2880:1: ruleJsonValue returns [EObject current=null] : (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( () ruleJsonNull ) | ( (lv_long_6_0= RULE_INT ) ) | this_JsonDateTime_7= ruleJsonDateTime ) ;
+    // InternalAceGen.g:2880:1: ruleJsonValue returns [EObject current=null] : (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( (lv_null_4_0= ruleJsonNull ) ) | ( (lv_long_5_0= RULE_INT ) ) | this_JsonDateTime_6= ruleJsonDateTime ) ;
     public final EObject ruleJsonValue() throws RecognitionException {
         EObject current = null;
 
         Token lv_string_1_0=null;
-        Token lv_long_6_0=null;
+        Token lv_long_5_0=null;
         EObject this_JsonObject_0 = null;
 
         EObject this_JsonArray_2 = null;
 
         AntlrDatatypeRuleToken lv_boolean_3_0 = null;
 
-        EObject this_JsonDateTime_7 = null;
+        AntlrDatatypeRuleToken lv_null_4_0 = null;
+
+        EObject this_JsonDateTime_6 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAceGen.g:2886:2: ( (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( () ruleJsonNull ) | ( (lv_long_6_0= RULE_INT ) ) | this_JsonDateTime_7= ruleJsonDateTime ) )
-            // InternalAceGen.g:2887:2: (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( () ruleJsonNull ) | ( (lv_long_6_0= RULE_INT ) ) | this_JsonDateTime_7= ruleJsonDateTime )
+            // InternalAceGen.g:2886:2: ( (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( (lv_null_4_0= ruleJsonNull ) ) | ( (lv_long_5_0= RULE_INT ) ) | this_JsonDateTime_6= ruleJsonDateTime ) )
+            // InternalAceGen.g:2887:2: (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( (lv_null_4_0= ruleJsonNull ) ) | ( (lv_long_5_0= RULE_INT ) ) | this_JsonDateTime_6= ruleJsonDateTime )
             {
-            // InternalAceGen.g:2887:2: (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( () ruleJsonNull ) | ( (lv_long_6_0= RULE_INT ) ) | this_JsonDateTime_7= ruleJsonDateTime )
+            // InternalAceGen.g:2887:2: (this_JsonObject_0= ruleJsonObject | ( (lv_string_1_0= RULE_STRING ) ) | this_JsonArray_2= ruleJsonArray | ( (lv_boolean_3_0= ruleJsonBoolean ) ) | ( (lv_null_4_0= ruleJsonNull ) ) | ( (lv_long_5_0= RULE_INT ) ) | this_JsonDateTime_6= ruleJsonDateTime )
             int alt88=7;
             switch ( input.LA(1) ) {
             case 34:
@@ -7696,33 +7698,36 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalAceGen.g:2945:3: ( () ruleJsonNull )
+                    // InternalAceGen.g:2945:3: ( (lv_null_4_0= ruleJsonNull ) )
                     {
-                    // InternalAceGen.g:2945:3: ( () ruleJsonNull )
-                    // InternalAceGen.g:2946:4: () ruleJsonNull
+                    // InternalAceGen.g:2945:3: ( (lv_null_4_0= ruleJsonNull ) )
+                    // InternalAceGen.g:2946:4: (lv_null_4_0= ruleJsonNull )
                     {
-                    // InternalAceGen.g:2946:4: ()
-                    // InternalAceGen.g:2947:5: 
+                    // InternalAceGen.g:2946:4: (lv_null_4_0= ruleJsonNull )
+                    // InternalAceGen.g:2947:5: lv_null_4_0= ruleJsonNull
                     {
 
-                    					current = forceCreateModelElement(
-                    						grammarAccess.getJsonValueAccess().getJsonValueAction_4_0(),
-                    						current);
+                    					newCompositeNode(grammarAccess.getJsonValueAccess().getNullJsonNullParserRuleCall_4_0());
                     				
-
-                    }
-
-
-                    				newCompositeNode(grammarAccess.getJsonValueAccess().getJsonNullParserRuleCall_4_1());
-                    			
                     pushFollow(FOLLOW_2);
-                    ruleJsonNull();
+                    lv_null_4_0=ruleJsonNull();
 
                     state._fsp--;
 
 
-                    				afterParserOrEnumRuleCall();
-                    			
+                    					if (current==null) {
+                    						current = createModelElementForParent(grammarAccess.getJsonValueRule());
+                    					}
+                    					set(
+                    						current,
+                    						"null",
+                    						lv_null_4_0,
+                    						"de.acegen.AceGen.JsonNull");
+                    					afterParserOrEnumRuleCall();
+                    				
+
+                    }
+
 
                     }
 
@@ -7730,17 +7735,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalAceGen.g:2962:3: ( (lv_long_6_0= RULE_INT ) )
+                    // InternalAceGen.g:2965:3: ( (lv_long_5_0= RULE_INT ) )
                     {
-                    // InternalAceGen.g:2962:3: ( (lv_long_6_0= RULE_INT ) )
-                    // InternalAceGen.g:2963:4: (lv_long_6_0= RULE_INT )
+                    // InternalAceGen.g:2965:3: ( (lv_long_5_0= RULE_INT ) )
+                    // InternalAceGen.g:2966:4: (lv_long_5_0= RULE_INT )
                     {
-                    // InternalAceGen.g:2963:4: (lv_long_6_0= RULE_INT )
-                    // InternalAceGen.g:2964:5: lv_long_6_0= RULE_INT
+                    // InternalAceGen.g:2966:4: (lv_long_5_0= RULE_INT )
+                    // InternalAceGen.g:2967:5: lv_long_5_0= RULE_INT
                     {
-                    lv_long_6_0=(Token)match(input,RULE_INT,FOLLOW_2); 
+                    lv_long_5_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
-                    					newLeafNode(lv_long_6_0, grammarAccess.getJsonValueAccess().getLongINTTerminalRuleCall_5_0());
+                    					newLeafNode(lv_long_5_0, grammarAccess.getJsonValueAccess().getLongINTTerminalRuleCall_5_0());
                     				
 
                     					if (current==null) {
@@ -7749,7 +7754,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     					setWithLastConsumed(
                     						current,
                     						"long",
-                    						lv_long_6_0,
+                    						lv_long_5_0,
                     						"org.eclipse.xtext.common.Terminals.INT");
                     				
 
@@ -7762,18 +7767,18 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalAceGen.g:2981:3: this_JsonDateTime_7= ruleJsonDateTime
+                    // InternalAceGen.g:2984:3: this_JsonDateTime_6= ruleJsonDateTime
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonDateTimeParserRuleCall_6());
                     		
                     pushFollow(FOLLOW_2);
-                    this_JsonDateTime_7=ruleJsonDateTime();
+                    this_JsonDateTime_6=ruleJsonDateTime();
 
                     state._fsp--;
 
 
-                    			current = this_JsonDateTime_7;
+                    			current = this_JsonDateTime_6;
                     			afterParserOrEnumRuleCall();
                     		
 
@@ -7802,7 +7807,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonArray"
-    // InternalAceGen.g:2993:1: entryRuleJsonArray returns [EObject current=null] : iv_ruleJsonArray= ruleJsonArray EOF ;
+    // InternalAceGen.g:2996:1: entryRuleJsonArray returns [EObject current=null] : iv_ruleJsonArray= ruleJsonArray EOF ;
     public final EObject entryRuleJsonArray() throws RecognitionException {
         EObject current = null;
 
@@ -7810,8 +7815,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2993:50: (iv_ruleJsonArray= ruleJsonArray EOF )
-            // InternalAceGen.g:2994:2: iv_ruleJsonArray= ruleJsonArray EOF
+            // InternalAceGen.g:2996:50: (iv_ruleJsonArray= ruleJsonArray EOF )
+            // InternalAceGen.g:2997:2: iv_ruleJsonArray= ruleJsonArray EOF
             {
              newCompositeNode(grammarAccess.getJsonArrayRule()); 
             pushFollow(FOLLOW_1);
@@ -7838,7 +7843,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonArray"
-    // InternalAceGen.g:3000:1: ruleJsonArray returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) ;
+    // InternalAceGen.g:3003:1: ruleJsonArray returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) ;
     public final EObject ruleJsonArray() throws RecognitionException {
         EObject current = null;
 
@@ -7854,14 +7859,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3006:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) )
-            // InternalAceGen.g:3007:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:3009:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) )
+            // InternalAceGen.g:3010:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
             {
-            // InternalAceGen.g:3007:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
-            // InternalAceGen.g:3008:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']'
+            // InternalAceGen.g:3010:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:3011:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']'
             {
-            // InternalAceGen.g:3008:3: ()
-            // InternalAceGen.g:3009:4: 
+            // InternalAceGen.g:3011:3: ()
+            // InternalAceGen.g:3012:4: 
             {
 
             				current = forceCreateModelElement(
@@ -7875,7 +7880,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonArrayAccess().getLeftSquareBracketKeyword_1());
             		
-            // InternalAceGen.g:3019:3: ( (lv_values_2_0= ruleJsonValue ) )?
+            // InternalAceGen.g:3022:3: ( (lv_values_2_0= ruleJsonValue ) )?
             int alt89=2;
             int LA89_0 = input.LA(1);
 
@@ -7884,10 +7889,10 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt89) {
                 case 1 :
-                    // InternalAceGen.g:3020:4: (lv_values_2_0= ruleJsonValue )
+                    // InternalAceGen.g:3023:4: (lv_values_2_0= ruleJsonValue )
                     {
-                    // InternalAceGen.g:3020:4: (lv_values_2_0= ruleJsonValue )
-                    // InternalAceGen.g:3021:5: lv_values_2_0= ruleJsonValue
+                    // InternalAceGen.g:3023:4: (lv_values_2_0= ruleJsonValue )
+                    // InternalAceGen.g:3024:5: lv_values_2_0= ruleJsonValue
                     {
 
                     					newCompositeNode(grammarAccess.getJsonArrayAccess().getValuesJsonValueParserRuleCall_2_0());
@@ -7917,7 +7922,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3038:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )*
+            // InternalAceGen.g:3041:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )*
             loop90:
             do {
                 int alt90=2;
@@ -7930,17 +7935,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                 switch (alt90) {
             	case 1 :
-            	    // InternalAceGen.g:3039:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) )
+            	    // InternalAceGen.g:3042:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) )
             	    {
             	    otherlv_3=(Token)match(input,17,FOLLOW_74); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getJsonArrayAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalAceGen.g:3043:4: ( (lv_values_4_0= ruleJsonValue ) )
-            	    // InternalAceGen.g:3044:5: (lv_values_4_0= ruleJsonValue )
+            	    // InternalAceGen.g:3046:4: ( (lv_values_4_0= ruleJsonValue ) )
+            	    // InternalAceGen.g:3047:5: (lv_values_4_0= ruleJsonValue )
             	    {
-            	    // InternalAceGen.g:3044:5: (lv_values_4_0= ruleJsonValue )
-            	    // InternalAceGen.g:3045:6: lv_values_4_0= ruleJsonValue
+            	    // InternalAceGen.g:3047:5: (lv_values_4_0= ruleJsonValue )
+            	    // InternalAceGen.g:3048:6: lv_values_4_0= ruleJsonValue
             	    {
 
             	    						newCompositeNode(grammarAccess.getJsonArrayAccess().getValuesJsonValueParserRuleCall_3_1_0());
@@ -8003,7 +8008,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonBoolean"
-    // InternalAceGen.g:3071:1: entryRuleJsonBoolean returns [String current=null] : iv_ruleJsonBoolean= ruleJsonBoolean EOF ;
+    // InternalAceGen.g:3074:1: entryRuleJsonBoolean returns [String current=null] : iv_ruleJsonBoolean= ruleJsonBoolean EOF ;
     public final String entryRuleJsonBoolean() throws RecognitionException {
         String current = null;
 
@@ -8011,8 +8016,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3071:51: (iv_ruleJsonBoolean= ruleJsonBoolean EOF )
-            // InternalAceGen.g:3072:2: iv_ruleJsonBoolean= ruleJsonBoolean EOF
+            // InternalAceGen.g:3074:51: (iv_ruleJsonBoolean= ruleJsonBoolean EOF )
+            // InternalAceGen.g:3075:2: iv_ruleJsonBoolean= ruleJsonBoolean EOF
             {
              newCompositeNode(grammarAccess.getJsonBooleanRule()); 
             pushFollow(FOLLOW_1);
@@ -8039,7 +8044,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonBoolean"
-    // InternalAceGen.g:3078:1: ruleJsonBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
+    // InternalAceGen.g:3081:1: ruleJsonBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
     public final AntlrDatatypeRuleToken ruleJsonBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -8049,10 +8054,10 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3084:2: ( (kw= 'true' | kw= 'false' ) )
-            // InternalAceGen.g:3085:2: (kw= 'true' | kw= 'false' )
+            // InternalAceGen.g:3087:2: ( (kw= 'true' | kw= 'false' ) )
+            // InternalAceGen.g:3088:2: (kw= 'true' | kw= 'false' )
             {
-            // InternalAceGen.g:3085:2: (kw= 'true' | kw= 'false' )
+            // InternalAceGen.g:3088:2: (kw= 'true' | kw= 'false' )
             int alt91=2;
             int LA91_0 = input.LA(1);
 
@@ -8070,7 +8075,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt91) {
                 case 1 :
-                    // InternalAceGen.g:3086:3: kw= 'true'
+                    // InternalAceGen.g:3089:3: kw= 'true'
                     {
                     kw=(Token)match(input,77,FOLLOW_2); 
 
@@ -8081,7 +8086,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:3092:3: kw= 'false'
+                    // InternalAceGen.g:3095:3: kw= 'false'
                     {
                     kw=(Token)match(input,78,FOLLOW_2); 
 
@@ -8114,7 +8119,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonNull"
-    // InternalAceGen.g:3101:1: entryRuleJsonNull returns [String current=null] : iv_ruleJsonNull= ruleJsonNull EOF ;
+    // InternalAceGen.g:3104:1: entryRuleJsonNull returns [String current=null] : iv_ruleJsonNull= ruleJsonNull EOF ;
     public final String entryRuleJsonNull() throws RecognitionException {
         String current = null;
 
@@ -8122,8 +8127,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3101:48: (iv_ruleJsonNull= ruleJsonNull EOF )
-            // InternalAceGen.g:3102:2: iv_ruleJsonNull= ruleJsonNull EOF
+            // InternalAceGen.g:3104:48: (iv_ruleJsonNull= ruleJsonNull EOF )
+            // InternalAceGen.g:3105:2: iv_ruleJsonNull= ruleJsonNull EOF
             {
              newCompositeNode(grammarAccess.getJsonNullRule()); 
             pushFollow(FOLLOW_1);
@@ -8150,7 +8155,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonNull"
-    // InternalAceGen.g:3108:1: ruleJsonNull returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'null' ;
+    // InternalAceGen.g:3111:1: ruleJsonNull returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'null' ;
     public final AntlrDatatypeRuleToken ruleJsonNull() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -8160,8 +8165,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3114:2: (kw= 'null' )
-            // InternalAceGen.g:3115:2: kw= 'null'
+            // InternalAceGen.g:3117:2: (kw= 'null' )
+            // InternalAceGen.g:3118:2: kw= 'null'
             {
             kw=(Token)match(input,79,FOLLOW_2); 
 

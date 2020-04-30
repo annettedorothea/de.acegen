@@ -553,10 +553,16 @@ public class AttributeExtension {
       if (_tripleNotEquals_1) {
         return it.getBoolean();
       } else {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        int _long = it.getLong();
-        _builder_2.append(_long);
-        return _builder_2;
+        String _null = it.getNull();
+        boolean _tripleNotEquals_2 = (_null != null);
+        if (_tripleNotEquals_2) {
+          return "null";
+        } else {
+          StringConcatenation _builder_2 = new StringConcatenation();
+          int _long = it.getLong();
+          _builder_2.append(_long);
+          return _builder_2;
+        }
       }
     }
   }

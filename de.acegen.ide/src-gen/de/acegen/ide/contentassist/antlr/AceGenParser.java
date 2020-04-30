@@ -106,7 +106,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonObjectAccess().getGroup(), "rule__JsonObject__Group__0");
 			builder.put(grammarAccess.getJsonObjectAccess().getGroup_3(), "rule__JsonObject__Group_3__0");
 			builder.put(grammarAccess.getJsonMemberAccess().getGroup(), "rule__JsonMember__Group__0");
-			builder.put(grammarAccess.getJsonValueAccess().getGroup_4(), "rule__JsonValue__Group_4__0");
 			builder.put(grammarAccess.getJsonArrayAccess().getGroup(), "rule__JsonArray__Group__0");
 			builder.put(grammarAccess.getJsonArrayAccess().getGroup_3(), "rule__JsonArray__Group_3__0");
 			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1(), "rule__Project__HttpClientAssignment_1_0_1");
@@ -210,6 +209,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonMemberAccess().getValueAssignment_2(), "rule__JsonMember__ValueAssignment_2");
 			builder.put(grammarAccess.getJsonValueAccess().getStringAssignment_1(), "rule__JsonValue__StringAssignment_1");
 			builder.put(grammarAccess.getJsonValueAccess().getBooleanAssignment_3(), "rule__JsonValue__BooleanAssignment_3");
+			builder.put(grammarAccess.getJsonValueAccess().getNullAssignment_4(), "rule__JsonValue__NullAssignment_4");
 			builder.put(grammarAccess.getJsonValueAccess().getLongAssignment_5(), "rule__JsonValue__LongAssignment_5");
 			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_2(), "rule__JsonArray__ValuesAssignment_2");
 			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_3_1(), "rule__JsonArray__ValuesAssignment_3_1");

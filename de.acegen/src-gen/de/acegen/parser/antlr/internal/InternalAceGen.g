@@ -2945,25 +2945,28 @@ ruleJsonValue returns [EObject current=null]
 		(
 			(
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getJsonValueAccess().getJsonValueAction_4_0(),
-						$current);
+					newCompositeNode(grammarAccess.getJsonValueAccess().getNullJsonNullParserRuleCall_4_0());
+				}
+				lv_null_4_0=ruleJsonNull
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getJsonValueRule());
+					}
+					set(
+						$current,
+						"null",
+						lv_null_4_0,
+						"de.acegen.AceGen.JsonNull");
+					afterParserOrEnumRuleCall();
 				}
 			)
-			{
-				newCompositeNode(grammarAccess.getJsonValueAccess().getJsonNullParserRuleCall_4_1());
-			}
-			ruleJsonNull
-			{
-				afterParserOrEnumRuleCall();
-			}
 		)
 		    |
 		(
 			(
-				lv_long_6_0=RULE_INT
+				lv_long_5_0=RULE_INT
 				{
-					newLeafNode(lv_long_6_0, grammarAccess.getJsonValueAccess().getLongINTTerminalRuleCall_5_0());
+					newLeafNode(lv_long_5_0, grammarAccess.getJsonValueAccess().getLongINTTerminalRuleCall_5_0());
 				}
 				{
 					if ($current==null) {
@@ -2972,7 +2975,7 @@ ruleJsonValue returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"long",
-						lv_long_6_0,
+						lv_long_5_0,
 						"org.eclipse.xtext.common.Terminals.INT");
 				}
 			)
@@ -2981,9 +2984,9 @@ ruleJsonValue returns [EObject current=null]
 		{
 			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonDateTimeParserRuleCall_6());
 		}
-		this_JsonDateTime_7=ruleJsonDateTime
+		this_JsonDateTime_6=ruleJsonDateTime
 		{
-			$current = $this_JsonDateTime_7.current;
+			$current = $this_JsonDateTime_6.current;
 			afterParserOrEnumRuleCall();
 		}
 	)

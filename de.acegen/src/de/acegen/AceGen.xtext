@@ -205,7 +205,7 @@ JsonMember:
 	attribute=[Attribute | QualifiedName] ':' value=JsonValue;
 	
 JsonValue:
-	JsonObject | string = STRING | JsonArray | boolean = JsonBoolean | {JsonValue} JsonNull | long = INT | JsonDateTime;
+	JsonObject | string = STRING | JsonArray | boolean = JsonBoolean | null = JsonNull | long = INT | JsonDateTime;
 
 JsonArray:
 	{JsonArray} '[' (values+=JsonValue)? (',' values+=JsonValue)* ']';

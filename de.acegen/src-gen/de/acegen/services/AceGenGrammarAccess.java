@@ -1838,18 +1838,17 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cJsonArrayParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final Assignment cBooleanAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
 		private final RuleCall cBooleanJsonBooleanParserRuleCall_3_0 = (RuleCall)cBooleanAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final Action cJsonValueAction_4_0 = (Action)cGroup_4.eContents().get(0);
-		private final RuleCall cJsonNullParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Assignment cNullAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
+		private final RuleCall cNullJsonNullParserRuleCall_4_0 = (RuleCall)cNullAssignment_4.eContents().get(0);
 		private final Assignment cLongAssignment_5 = (Assignment)cAlternatives.eContents().get(5);
 		private final RuleCall cLongINTTerminalRuleCall_5_0 = (RuleCall)cLongAssignment_5.eContents().get(0);
 		private final RuleCall cJsonDateTimeParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//JsonValue:
-		//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime;
+		//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | null=JsonNull | long=INT | JsonDateTime;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime
+		//JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | null=JsonNull | long=INT | JsonDateTime
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//JsonObject
@@ -1870,14 +1869,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//JsonBoolean
 		public RuleCall getBooleanJsonBooleanParserRuleCall_3_0() { return cBooleanJsonBooleanParserRuleCall_3_0; }
 		
-		//{JsonValue} JsonNull
-		public Group getGroup_4() { return cGroup_4; }
-		
-		//{JsonValue}
-		public Action getJsonValueAction_4_0() { return cJsonValueAction_4_0; }
+		//null=JsonNull
+		public Assignment getNullAssignment_4() { return cNullAssignment_4; }
 		
 		//JsonNull
-		public RuleCall getJsonNullParserRuleCall_4_1() { return cJsonNullParserRuleCall_4_1; }
+		public RuleCall getNullJsonNullParserRuleCall_4_0() { return cNullJsonNullParserRuleCall_4_0; }
 		
 		//long=INT
 		public Assignment getLongAssignment_5() { return cLongAssignment_5; }
@@ -2435,7 +2431,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//JsonValue:
-	//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | {JsonValue} JsonNull | long=INT | JsonDateTime;
+	//	JsonObject | string=STRING | JsonArray | boolean=JsonBoolean | null=JsonNull | long=INT | JsonDateTime;
 	public JsonValueElements getJsonValueAccess() {
 		return pJsonValue;
 	}

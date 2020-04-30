@@ -1568,9 +1568,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getJsonValue_Long()
+  public EAttribute getJsonValue_Null()
   {
     return (EAttribute)jsonValueEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getJsonValue_Long()
+  {
+    return (EAttribute)jsonValueEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1766,6 +1777,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     jsonValueEClass = createEClass(JSON_VALUE);
     createEAttribute(jsonValueEClass, JSON_VALUE__STRING);
     createEAttribute(jsonValueEClass, JSON_VALUE__BOOLEAN);
+    createEAttribute(jsonValueEClass, JSON_VALUE__NULL);
     createEAttribute(jsonValueEClass, JSON_VALUE__LONG);
 
     jsonArrayEClass = createEClass(JSON_ARRAY);
@@ -1948,6 +1960,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(jsonValueEClass, JsonValue.class, "JsonValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJsonValue_String(), ecorePackage.getEString(), "string", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getJsonValue_Boolean(), ecorePackage.getEString(), "boolean", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJsonValue_Null(), ecorePackage.getEString(), "null", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getJsonValue_Long(), ecorePackage.getEInt(), "long", null, 0, 1, JsonValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(jsonArrayEClass, JsonArray.class, "JsonArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

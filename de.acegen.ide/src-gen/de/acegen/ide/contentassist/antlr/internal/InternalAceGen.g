@@ -1168,9 +1168,9 @@ rule__JsonValue__Alternatives
 	)
 	|
 	(
-		{ before(grammarAccess.getJsonValueAccess().getGroup_4()); }
-		(rule__JsonValue__Group_4__0)
-		{ after(grammarAccess.getJsonValueAccess().getGroup_4()); }
+		{ before(grammarAccess.getJsonValueAccess().getNullAssignment_4()); }
+		(rule__JsonValue__NullAssignment_4)
+		{ after(grammarAccess.getJsonValueAccess().getNullAssignment_4()); }
 	)
 	|
 	(
@@ -6799,60 +6799,6 @@ finally {
 }
 
 
-rule__JsonValue__Group_4__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__JsonValue__Group_4__0__Impl
-	rule__JsonValue__Group_4__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__JsonValue__Group_4__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getJsonValueAccess().getJsonValueAction_4_0()); }
-	()
-	{ after(grammarAccess.getJsonValueAccess().getJsonValueAction_4_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__JsonValue__Group_4__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__JsonValue__Group_4__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__JsonValue__Group_4__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getJsonValueAccess().getJsonNullParserRuleCall_4_1()); }
-	ruleJsonNull
-	{ after(grammarAccess.getJsonValueAccess().getJsonNullParserRuleCall_4_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 rule__JsonArray__Group__0
 	@init {
 		int stackSize = keepStackSize();
@@ -8703,6 +8649,21 @@ rule__JsonValue__BooleanAssignment_3
 		{ before(grammarAccess.getJsonValueAccess().getBooleanJsonBooleanParserRuleCall_3_0()); }
 		ruleJsonBoolean
 		{ after(grammarAccess.getJsonValueAccess().getBooleanJsonBooleanParserRuleCall_3_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__JsonValue__NullAssignment_4
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getJsonValueAccess().getNullJsonNullParserRuleCall_4_0()); }
+		ruleJsonNull
+		{ after(grammarAccess.getJsonValueAccess().getNullJsonNullParserRuleCall_4_0()); }
 	)
 ;
 finally {

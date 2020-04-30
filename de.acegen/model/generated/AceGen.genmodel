@@ -145,6 +145,7 @@
     <genClasses ecoreClass="AceGen.ecore#//JsonValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonValue/string"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonValue/boolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonValue/null"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonValue/long"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonArray">

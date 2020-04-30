@@ -498,7 +498,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     JsonValue returns JsonValue
 	 *
 	 * Constraint:
-	 *     (string=STRING | boolean=JsonBoolean | long=INT)?
+	 *     (string=STRING | boolean=JsonBoolean | null=JsonNull | long=INT)
 	 */
 	protected void sequence_JsonValue(ISerializationContext context, JsonValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
