@@ -82,8 +82,6 @@ class ScenarioTemplate {
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
-							«givenRef.scenario.whenBlock.generateActionCall(java, false)»
-							«givenRef.scenario.whenBlock.generatePrepare»
 							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
 							if (response.getStatus() == 500) {
 								String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
@@ -203,7 +201,7 @@ class ScenarioTemplate {
 
 	private def objectMapperCall(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»" + this.randomUUID() + "«ENDIF»\"«FOR member : data.members BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»" + this.randomUUID() + "«ENDIF»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)
 		
 	'''

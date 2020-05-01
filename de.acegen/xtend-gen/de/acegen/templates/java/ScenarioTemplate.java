@@ -21,6 +21,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -168,17 +170,9 @@ public class ScenarioTemplate {
                 _builder.append(_generatePrepare, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
+                _builder.append("response = ");
                 CharSequence _generateActionCall = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
                 _builder.append(_generateActionCall, "\t\t");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t\t");
-                CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-                _builder.append(_generatePrepare_1, "\t\t");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t\t");
-                _builder.append("response = ");
-                CharSequence _generateActionCall_1 = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
-                _builder.append(_generateActionCall_1, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("if (response.getStatus() == 500) {");
@@ -203,13 +197,13 @@ public class ScenarioTemplate {
             }
           } else {
             _builder.append("\t\t");
-            CharSequence _generatePrepare_2 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-            _builder.append(_generatePrepare_2, "\t\t");
+            CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+            _builder.append(_generatePrepare_1, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("response = ");
-            CharSequence _generateActionCall_2 = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
-            _builder.append(_generateActionCall_2, "\t\t");
+            CharSequence _generateActionCall_1 = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
+            _builder.append(_generateActionCall_1, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("if (response.getStatus() == 500) {");
@@ -244,12 +238,12 @@ public class ScenarioTemplate {
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
-    CharSequence _generatePrepare_3 = this.generatePrepare(it.getWhenBlock());
-    _builder.append(_generatePrepare_3, "\t\t");
+    CharSequence _generatePrepare_2 = this.generatePrepare(it.getWhenBlock());
+    _builder.append(_generatePrepare_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    CharSequence _generateActionCall_3 = this.generateActionCall(it.getWhenBlock(), java, true);
-    _builder.append(_generateActionCall_3, "\t\t");
+    CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, true);
+    _builder.append(_generateActionCall_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
@@ -582,9 +576,13 @@ public class ScenarioTemplate {
         }
         _builder.append("\\\"");
         {
-          EList<JsonMember> _members = it.getData().getMembers();
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
+            return Boolean.valueOf((!_isNotReplayable));
+          };
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
           boolean _hasElements = false;
-          for(final JsonMember member : _members) {
+          for(final JsonMember member : _filter) {
             if (!_hasElements) {
               _hasElements = true;
               _builder.append(this._attributeExtension.stringLineBreak, "\t");
