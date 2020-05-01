@@ -318,6 +318,11 @@ class ScenarioTemplate {
 			}
 
 			@Override
+			protected void assertIsNotNull(Object actual) {
+				throw new RuntimeException("BaseScenario.assertIsNotNull not implemented");
+			}
+
+			@Override
 			protected void assertFail(String message) {
 				org.junit.Assert.fail(message);
 			}
@@ -357,6 +362,8 @@ class ScenarioTemplate {
 			protected abstract void assertThat(Object actual, Object expected);
 		
 			protected abstract void assertIsNull(Object actual);
+
+			protected abstract void assertIsNotNull(Object actual);
 		
 			protected abstract void assertFail(String message);
 		
