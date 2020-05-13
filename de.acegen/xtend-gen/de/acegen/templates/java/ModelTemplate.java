@@ -147,10 +147,6 @@ public class ModelTemplate {
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
-    _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
     _builder.append("import java.util.ArrayList;");
@@ -365,10 +361,6 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
@@ -834,10 +826,6 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import javax.validation.constraints.NotNull;");
-    _builder.newLine();
-    _builder.append("import org.hibernate.validator.constraints.NotEmpty;");
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();

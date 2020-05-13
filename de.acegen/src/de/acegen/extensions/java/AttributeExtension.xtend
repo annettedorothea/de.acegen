@@ -101,9 +101,6 @@ class AttributeExtension {
 	def String declaration(Attribute it) {
 		if (type !== null) {
 			return '''
-				«IF constraint !== null»
-					@«constraint»
-				«ENDIF»
 				private «javaType» «name.toFirstLower»«IF type.equals('Boolean')» = false«ENDIF»;
 			'''
 		}

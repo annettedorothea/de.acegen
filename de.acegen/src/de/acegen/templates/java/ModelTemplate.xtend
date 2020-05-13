@@ -74,8 +74,6 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-		import javax.validation.constraints.NotNull;
-		import org.hibernate.validator.constraints.NotEmpty;
 		import java.util.List;
 		import java.util.ArrayList;
 
@@ -156,8 +154,6 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
-		import javax.validation.constraints.NotNull;
-		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
 		import org.slf4j.Logger;
@@ -335,8 +331,6 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
-		import javax.validation.constraints.NotNull;
-		import org.hibernate.validator.constraints.NotEmpty;
 		import org.joda.time.DateTime;
 		import java.util.List;
 		

@@ -305,6 +305,8 @@ public class JavaGenerator {
       this.aceTemplate.generateAceDao());
     fsa.generateFile(("de/acegen" + "/Action.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.actionTemplate.generateAction());
+    fsa.generateFile(("de/acegen" + "/ReadAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.actionTemplate.generateReadAction());
     fsa.generateFile(("de/acegen" + "/Command.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.commandTemplate.generateCommand());
     fsa.generateFile(("de/acegen" + "/DatabaseHandle.java"), 

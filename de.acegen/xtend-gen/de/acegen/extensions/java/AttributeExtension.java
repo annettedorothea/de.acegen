@@ -275,16 +275,6 @@ public class AttributeExtension {
     boolean _tripleNotEquals = (_type != null);
     if (_tripleNotEquals) {
       StringConcatenation _builder = new StringConcatenation();
-      {
-        String _constraint = it.getConstraint();
-        boolean _tripleNotEquals_1 = (_constraint != null);
-        if (_tripleNotEquals_1) {
-          _builder.append("@");
-          String _constraint_1 = it.getConstraint();
-          _builder.append(_constraint_1);
-          _builder.newLineIfNotEmpty();
-        }
-      }
       _builder.append("private ");
       String _javaType = this.javaType(it);
       _builder.append(_javaType);
@@ -302,8 +292,8 @@ public class AttributeExtension {
       return _builder.toString();
     }
     Model _model = it.getModel();
-    boolean _tripleNotEquals_2 = (_model != null);
-    if (_tripleNotEquals_2) {
+    boolean _tripleNotEquals_1 = (_model != null);
+    if (_tripleNotEquals_1) {
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("private ");
       String _javaType_1 = this.javaType(it);

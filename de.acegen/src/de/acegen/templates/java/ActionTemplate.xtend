@@ -130,54 +130,76 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		«commonAbstractActionImports»
+		import javax.validation.constraints.NotNull;
+		
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		import javax.ws.rs.PathParam;
+		import javax.ws.rs.QueryParam;
+		
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.E2E;
+		import de.acegen.IDaoProvider;
+		import de.acegen.IDataContainer;
+		import de.acegen.ViewProvider;
+		import de.acegen.PersistenceConnection;
+		import de.acegen.PersistenceHandle;
+		import de.acegen.ReadAction;
+		import de.acegen.ITimelineItem;
+		
+		«IF authorize»
+			import de.acegen.auth.AuthUser;
+		«ENDIF»
+
+		import com.codahale.metrics.annotation.Timed;
+		
+		import io.dropwizard.auth.Auth;
+
+		import com.fasterxml.jackson.core.JsonProcessingException;
 		
 		import javax.ws.rs.GET;
 		
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
-		«classDeclaration»
+		@Path("«getUrl»")
+		@SuppressWarnings("unused")
+		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
 		
-			«declarations»
+			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(java)»", HttpMethod.«getType»);
-				«initProperties»
+				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
+								viewProvider, e2e);
 			}
 		
-			@Override
-			public ICommand getCommand() {
-				return null;
-			}
-			
 			«setActionData»
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
 		
-			«method(authUser)»
-
-			public Response apply() {
-				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
-				databaseHandle.beginTransaction();
-				try {
-					«initActionData»
-					«IF isProxy»
-						if (ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
-								|| ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())) {
-							this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
-						}
-					«ELSE»
-						this.loadDataForGetRequest(this.databaseHandle.getReadonlyHandle());
+			@Override
+			protected «getModel.dataParamType» createAceData(ITimelineItem timelineItem) {
+				IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+				«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
+				this.actionData.setSystemTime(originalActionData.getSystemTime());
+				«FOR attribute : getModel.allAttributes»
+					«IF attribute.notReplayable»
+						this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
 					«ENDIF»
-					
-					«addActionToTimeline»
-					Response response = Response.ok(this.createReponse()).build();
-					databaseHandle.commitTransaction();
-					return response;
-				«catchFinallyBlock»
+				«ENDFOR»
+				return («getModel.dataParamType»)originalData;
 			}
-		
+
+			«method(authUser)»
 
 			«IF response.size > 0»
 				protected Object createReponse() {
@@ -549,6 +571,132 @@ class ActionTemplate {
 			}
 
 		}
+		
+		«sdg»
+		
+	'''
+	
+	def generateReadAction() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
+		
+			static Logger LOG;
+			
+			private PersistenceConnection persistenceConnection;
+			protected CustomAppConfiguration appConfiguration;
+			protected IDaoProvider daoProvider;
+			private E2E e2e;
+			
+			public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+				super(actionName, HttpMethod.GET);
+				this.persistenceConnection = persistenceConnection;
+				this.appConfiguration = appConfiguration;
+				this.daoProvider = daoProvider;
+				this.e2e = e2e;
+				if (LOG ==  null) {
+					LOG = LoggerFactory.getLogger(actionName);
+				}
+			}
+		
+			@Override
+			public ICommand getCommand() {
+				return null;
+			}
+			
+			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			
+			protected abstract T createAceData(ITimelineItem timelineItem);
+		
+			public Response apply() {
+				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
+				databaseHandle.beginTransaction();
+				try {
+					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
+							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (appConfiguration.getServerConfiguration().writeTimeline()) {
+							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
+								databaseHandle.commitTransaction();
+								throwBadRequest("uuid already exists - please choose another one");
+							}
+						}
+						
+						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
+						this.initActionData();
+					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
+						T originalActionData = createAceData(timelineItem);
+						this.actionData.setSystemTime(originalActionData.getSystemTime());
+					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (NotReplayableDataProvider.getSystemTime() != null) {
+							this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
+						}
+					}
+					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					
+					if (appConfiguration.getServerConfiguration().writeTimeline()) {
+						daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
+					}
+					Response response = Response.ok(this.createReponse()).build();
+					databaseHandle.commitTransaction();
+					return response;
+				} catch (WebApplicationException x) {
+					LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
+					try {
+						databaseHandle.rollbackTransaction();
+						if (appConfiguration.getServerConfiguration().writeError()) {
+							daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
+						}
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
+				} catch (Exception x) {
+					LOG.error(actionName + " failed " + x.getMessage());
+					x.printStackTrace();
+					try {
+						databaseHandle.rollbackTransaction();
+						if (appConfiguration.getServerConfiguration().writeError()) {
+							daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
+						}
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					String message = x.getMessage();
+					StackTraceElement[] stackTrace = x.getStackTrace();
+					int i = 1;
+					for (StackTraceElement stackTraceElement : stackTrace) {
+						message += "\n" + stackTraceElement.toString();
+						if (i > 3) {
+							message += "\n" + (stackTrace.length - 4) + " more...";
+							break;
+						}
+						i++;
+					}
+					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
+				} finally {
+					databaseHandle.close();
+					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+						NotReplayableDataProvider.clear();
+					}
+				}
+			}
+		
+		}
+		
 		
 		«sdg»
 		
