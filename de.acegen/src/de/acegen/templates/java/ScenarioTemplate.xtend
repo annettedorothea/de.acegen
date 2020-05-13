@@ -83,7 +83,7 @@ class ScenarioTemplate {
 						«FOR i: givenRef.times.timesIterator»
 							«givenRef.scenario.whenBlock.generatePrepare»
 							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
-							if (response.getStatus() == 500) {
+							if (response.getStatus() >= 400) {
 								String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
 								assertFail(message);
 							}
@@ -92,7 +92,7 @@ class ScenarioTemplate {
 					«ELSE»
 						«givenRef.scenario.whenBlock.generatePrepare»
 						response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
-						if (response.getStatus() == 500) {
+						if (response.getStatus() >= 400) {
 							String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
 							assertFail(message);
 						}
@@ -255,7 +255,7 @@ class ScenarioTemplate {
 			private static Jdbi jdbi;
 		
 			@BeforeClass
-			public static void beforeClass() {
+			public static void beforeClass() throws Exception {
 				DROPWIZARD.before();
 				final JdbiFactory factory = new JdbiFactory();
 				jdbi = factory.build(DROPWIZARD.getEnvironment(), DROPWIZARD.getConfiguration().getDataSourceFactory(), "testdb");

@@ -175,7 +175,7 @@ public class ScenarioTemplate {
                 _builder.append(_generateActionCall, "\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
-                _builder.append("if (response.getStatus() == 500) {");
+                _builder.append("if (response.getStatus() >= 400) {");
                 _builder.newLine();
                 _builder.append("\t\t");
                 _builder.append("\t");
@@ -206,7 +206,7 @@ public class ScenarioTemplate {
             _builder.append(_generateActionCall_1, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            _builder.append("if (response.getStatus() == 500) {");
+            _builder.append("if (response.getStatus() >= 400) {");
             _builder.newLine();
             _builder.append("\t\t");
             _builder.append("\t");
@@ -813,7 +813,7 @@ public class ScenarioTemplate {
     _builder.append("@BeforeClass");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void beforeClass() {");
+    _builder.append("public static void beforeClass() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("DROPWIZARD.before();");
