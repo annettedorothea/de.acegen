@@ -280,13 +280,13 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected T eventData;");
+    _builder.append("private T eventData;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private String eventName;");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected IDaoProvider daoProvider;");
+    _builder.append("private IDaoProvider daoProvider;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private ViewProvider viewProvider;");

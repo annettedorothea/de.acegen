@@ -136,9 +136,9 @@ class EventTemplate {
 		
 		public abstract class Event<T extends IDataContainer> implements IEvent {
 		
-			protected T eventData;
+			private T eventData;
 			private String eventName;
-			protected IDaoProvider daoProvider;
+			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 			private CustomAppConfiguration appConfiguration;
 		
