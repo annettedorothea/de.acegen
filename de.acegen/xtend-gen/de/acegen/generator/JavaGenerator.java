@@ -307,6 +307,10 @@ public class JavaGenerator {
       this.actionTemplate.generateAction());
     fsa.generateFile(("de/acegen" + "/ReadAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.actionTemplate.generateReadAction());
+    fsa.generateFile(("de/acegen" + "/WriteAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.actionTemplate.generateWriteAction(false));
+    fsa.generateFile(("de/acegen" + "/ProxyWriteAction.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.actionTemplate.generateWriteAction(true));
     fsa.generateFile(("de/acegen" + "/Command.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.commandTemplate.generateCommand());
     fsa.generateFile(("de/acegen" + "/DatabaseHandle.java"), 

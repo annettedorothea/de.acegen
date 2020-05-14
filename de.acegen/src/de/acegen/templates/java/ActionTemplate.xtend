@@ -53,8 +53,41 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		«commonAbstractActionImports»
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
+		import javax.ws.rs.PathParam;
+		import javax.ws.rs.QueryParam;
 		
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		import de.acegen.CustomAppConfiguration;
+		import de.acegen.E2E;
+		import de.acegen.HttpMethod;
+		import de.acegen.ICommand;
+		import de.acegen.IDaoProvider;
+		import de.acegen.IDataContainer;
+		import de.acegen.ITimelineItem;
+		import de.acegen.ViewProvider;
+		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.PersistenceConnection;
+		import de.acegen.«IF proxy»Proxy«ENDIF»WriteAction;
+
+		«IF authorize»
+			import de.acegen.auth.AuthUser;
+			import io.dropwizard.auth.Auth;
+		«ENDIF»
+
+		import com.codahale.metrics.annotation.Timed;
+
+		import com.fasterxml.jackson.core.JsonProcessingException;
+
 		import javax.ws.rs.POST;
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.DELETE;
@@ -65,13 +98,15 @@ class ActionTemplate {
 			import «commandNameWithPackage(java)»;
 		«ENDIF»
 		
-		«classDeclaration»
+		@Path("«getUrl»")
+		@SuppressWarnings("unused")
+		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»WriteAction<«getModel.dataParamType»> {
 
-			«declarations»
-		
+			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
+			
 			«constructor»
-				super("«actionNameWithPackage(java)»", HttpMethod.«getType»);
-				«initProperties»
+				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
+								viewProvider, e2e, HttpMethod.«getType»);
 			}
 		
 			@Override
@@ -83,35 +118,20 @@ class ActionTemplate {
 				«ENDIF»
 			}
 			
-			«setActionData»
-		
+			«initActionDataFrom»
+
+			«IF proxy»
+				@Override
+				protected IScheduledCardsData createDataFrom(ITimelineItem timelineItem) {
+					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+					return («getModel.dataParamType»)originalData;
+				}
+			«ENDIF»
+
+			«initActionDataFromNotReplayableDataProvider»		
+
 			«method(authUser)»
 		
-			public Response apply() {
-				databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
-				databaseHandle.beginTransaction();
-				try {
-					«initActionData»
-					«addActionToTimeline»
-					ICommand command = this.getCommand();
-					«IF isProxy»
-						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
-							IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-							command.setCommandData(originalData);
-						} else {
-							command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
-						}
-					«ELSE»
-						command.execute(this.databaseHandle.getReadonlyHandle(), this.databaseHandle.getTimelineHandle());
-					«ENDIF»
-					command.publishEvents(this.databaseHandle.getHandle(), this.databaseHandle.getTimelineHandle());
-					Response response = Response.ok(this.createReponse()).build();
-					databaseHandle.commitTransaction();
-					return response;
-				«catchFinallyBlock»
-			}
-			
 			«IF response.size > 0»
 				protected Object createReponse() {
 					return new «responseDataNameWithPackage(java)»(this.actionData);
@@ -129,8 +149,6 @@ class ActionTemplate {
 		«copyright»
 		
 		package «java.getName».actions;
-		
-		import javax.validation.constraints.NotNull;
 		
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.Path;
@@ -155,14 +173,14 @@ class ActionTemplate {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
+		import de.acegen.NotReplayableDataProvider;
 		
 		«IF authorize»
 			import de.acegen.auth.AuthUser;
+			import io.dropwizard.auth.Auth;
 		«ENDIF»
 
 		import com.codahale.metrics.annotation.Timed;
-		
-		import io.dropwizard.auth.Auth;
 
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
@@ -182,22 +200,11 @@ class ActionTemplate {
 								viewProvider, e2e);
 			}
 		
-			«setActionData»
-		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
 		
-			@Override
-			protected «getModel.dataParamType» createAceData(ITimelineItem timelineItem) {
-				IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-				«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
-				this.actionData.setSystemTime(originalActionData.getSystemTime());
-				«FOR attribute : getModel.allAttributes»
-					«IF attribute.notReplayable»
-						this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
-					«ENDIF»
-				«ENDFOR»
-				return («getModel.dataParamType»)originalData;
-			}
+			«initActionDataFrom»
+			
+			«initActionDataFromNotReplayableDataProvider»
 
 			«method(authUser)»
 
@@ -214,107 +221,55 @@ class ActionTemplate {
 		
 	'''
 	
+	private def initActionDataFrom(HttpServerAce it) '''
+		@Override
+		protected void initActionDataFrom(ITimelineItem timelineItem) {
+			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+			«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
+			this.actionData.setSystemTime(originalActionData.getSystemTime());
+			«FOR attribute : getModel.allAttributes»
+				«IF attribute.notReplayable»
+					this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
+				«ENDIF»
+			«ENDFOR»
+		}
+	'''
+	
+	private def initActionDataFromNotReplayableDataProvider(HttpServerAce it) '''
+		@Override
+		protected void initActionDataFromNotReplayableDataProvider() {
+			if (NotReplayableDataProvider.getSystemTime() != null) {
+				this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
+			}
+			«FOR attribute : getModel.allAttributes»
+				«IF attribute.notReplayable»
+					if (NotReplayableDataProvider.get("«attribute.name»") != null) {
+						this.actionData.«attribute.setterCall('''(«attribute.type»)NotReplayableDataProvider.get("«attribute.name»")''')»;
+					} else {
+						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
+					}
+				«ENDIF»
+			«ENDFOR»
+		}
+	'''
+	
 	private def addActionToTimeline() '''
 		if (appConfiguration.getServerConfiguration().writeTimeline()) {
-			daoProvider.getAceDao().addActionToTimeline(this, this.databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
 	private def addExceptionToTimeline() '''
 		if (appConfiguration.getServerConfiguration().writeError()) {
-			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, this.databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
-	private def commonAbstractActionImports(HttpServerAce it) '''
-		import javax.validation.constraints.NotNull;
-		
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.PathParam;
-		import javax.ws.rs.QueryParam;
-		
-		import org.jdbi.v3.core.Jdbi;
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
-		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
-		import de.acegen.Action;
-		import de.acegen.App;
-		import de.acegen.CustomAppConfiguration;
-		import de.acegen.DatabaseHandle;
-		import de.acegen.E2E;
-		import de.acegen.HttpMethod;
-		import de.acegen.ICommand;
-		import de.acegen.IDaoProvider;
-		import de.acegen.IDataContainer;
-		import de.acegen.ITimelineItem;
-		import de.acegen.JodaObjectMapper;
-		import de.acegen.ServerConfiguration;
-		import de.acegen.ViewProvider;
-		import de.acegen.NotReplayableDataProvider;
-		import de.acegen.PersistenceHandle;
-		import de.acegen.PersistenceConnection;
-
-		«IF authorize»
-			import de.acegen.auth.AuthUser;
-		«ENDIF»
-
-		import com.codahale.metrics.annotation.Timed;
-		
-		import io.dropwizard.auth.Auth;
-
-		import com.fasterxml.jackson.core.JsonProcessingException;
-
-		import org.jdbi.v3.core.Handle;
-		
-	'''
-	
-	def private classDeclaration(HttpServerAce it) '''
-		@Path("«getUrl»")
-		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends Action<«getModel.dataParamType»> {
-	'''
-	
-	private def declarations(HttpServerAce it) '''
-		static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
-
-		private DatabaseHandle databaseHandle;
-		private PersistenceConnection persistenceConnection;
-		protected JodaObjectMapper mapper;
-		protected CustomAppConfiguration appConfiguration;
-		protected IDaoProvider daoProvider;
-		private ViewProvider viewProvider;
-		private E2E e2e;
-
-	'''
-
 	private def constructor(HttpServerAce it) '''
 		public «abstractActionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 	'''
 	
-	private def initProperties() '''
-		this.persistenceConnection = persistenceConnection;
-		mapper = new JodaObjectMapper();
-		this.appConfiguration = appConfiguration;
-		this.daoProvider = daoProvider;
-		this.viewProvider = viewProvider;
-		this.e2e = e2e;
-	'''
-
-	private def setActionData(HttpServerAce it) '''
-		public void setActionData(IDataContainer data) {
-			this.actionData = («getModel.dataParamType»)data;
-		}
-	'''
-
 	private def method(HttpServerAce it, AuthUser authUser) '''
 		«IF getType !== null»@«getType»«ENDIF»
 		@Timed
@@ -328,8 +283,8 @@ class ActionTemplate {
 				«FOR param : pathParams»
 					@PathParam("«param.name»") «param.resourceParamType» «param.name», 
 				«ENDFOR»
-				«IF payload.size > 0»@NotNull «getModel.dataParamType» payload)
-				«ELSE»@NotNull @QueryParam("uuid") String uuid)«ENDIF» 
+				«IF payload.size > 0»«getModel.dataParamType» payload)
+				«ELSE»@QueryParam("uuid") String uuid)«ENDIF» 
 				throws JsonProcessingException {
 			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 			«FOR param : queryParams»
@@ -367,90 +322,6 @@ class ActionTemplate {
 			return this.apply();
 		}
 	'''
-
-	private def initActionData(HttpServerAce it) '''
-		if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-				|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
-			if (appConfiguration.getServerConfiguration().writeTimeline()) {
-				if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-					databaseHandle.commitTransaction();
-					throwBadRequest("uuid already exists - please choose another one");
-				}
-			}
-			
-			this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
-			this.initActionData();
-		} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
-			ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-			«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
-			this.actionData.setSystemTime(originalActionData.getSystemTime());
-			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
-				«ENDIF»
-			«ENDFOR»
-		} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-			if (NotReplayableDataProvider.getSystemTime() != null) {
-				this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
-			}
-			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					if (NotReplayableDataProvider.get("«attribute.name»") != null) {
-						this.actionData.«attribute.setterCall('''(«attribute.type»)NotReplayableDataProvider.get("«attribute.name»")''')»;
-					} else {
-						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
-					}
-				«ENDIF»
-			«ENDFOR»
-		}
-	'''
-
-	private def catchFinallyBlock(HttpServerAce it) '''
-		} catch (WebApplicationException x) {
-			LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
-			try {
-				databaseHandle.rollbackTransaction();
-				«addExceptionToTimeline»
-				App.reportException(x);
-			} catch (Exception ex) {
-				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-			}
-			return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
-		} catch (Exception x) {
-			LOG.error(actionName + " failed " + x.getMessage());
-			x.printStackTrace();
-			try {
-				databaseHandle.rollbackTransaction();
-				«addExceptionToTimeline»
-				App.reportException(x);
-			} catch (Exception ex) {
-				LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
-			}
-			String message = x.getMessage();
-			StackTraceElement[] stackTrace = x.getStackTrace();
-			int i = 1;
-			for (StackTraceElement stackTraceElement : stackTrace) {
-				message += "\n" + stackTraceElement.toString();
-				if (i > 3) {
-					message += "\n" + (stackTrace.length - 4) + " more...";
-					break;
-				}
-				i++;
-			}
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
-		} finally {
-			databaseHandle.close();
-			if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-				NotReplayableDataProvider.clear();
-			}
-		}
-	'''
-
-
-
-
-
 
 	def generateInitialActionFile(HttpServerAce it, HttpServer java) '''
 		«copyright»
@@ -591,7 +462,7 @@ class ActionTemplate {
 		
 		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
 		
-			static Logger LOG;
+			static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 			
 			private PersistenceConnection persistenceConnection;
 			protected CustomAppConfiguration appConfiguration;
@@ -605,19 +476,128 @@ class ActionTemplate {
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.e2e = e2e;
-				if (LOG ==  null) {
-					LOG = LoggerFactory.getLogger(actionName);
+			}
+		
+			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			
+			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
+
+			protected abstract void initActionDataFromNotReplayableDataProvider();
+
+			public Response apply() {
+				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
+				databaseHandle.beginTransaction();
+				try {
+					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
+							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (appConfiguration.getServerConfiguration().writeTimeline()) {
+							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
+								databaseHandle.commitTransaction();
+								throwBadRequest("uuid already exists - please choose another one");
+							}
+						}
+						
+						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
+						this.initActionData();
+					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
+						initActionDataFrom(timelineItem);
+					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+						initActionDataFromNotReplayableDataProvider();
+					}
+					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					
+					«addActionToTimeline»
+					Response response = Response.ok(this.createReponse()).build();
+					databaseHandle.commitTransaction();
+					return response;
+				} catch (WebApplicationException x) {
+					LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
+					try {
+						databaseHandle.rollbackTransaction();
+						«addExceptionToTimeline»
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
+				} catch (Exception x) {
+					LOG.error(actionName + " failed " + x.getMessage());
+					x.printStackTrace();
+					try {
+						databaseHandle.rollbackTransaction();
+						«addExceptionToTimeline»
+						App.reportException(x);
+					} catch (Exception ex) {
+						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
+					}
+					String message = x.getMessage();
+					StackTraceElement[] stackTrace = x.getStackTrace();
+					int i = 1;
+					for (StackTraceElement stackTraceElement : stackTrace) {
+						message += "\n" + stackTraceElement.toString();
+						if (i > 3) {
+							message += "\n" + (stackTrace.length - 4) + " more...";
+							break;
+						}
+						i++;
+					}
+					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
+				} finally {
+					databaseHandle.close();
+					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+						NotReplayableDataProvider.clear();
+					}
 				}
 			}
 		
-			@Override
-			public ICommand getCommand() {
-				return null;
+		}
+		
+		
+		«sdg»
+		
+	'''
+
+	def generateWriteAction(boolean isProxy) '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import javax.ws.rs.WebApplicationException;
+		import javax.ws.rs.core.Response;
+		
+		import org.joda.time.DateTime;
+		import org.joda.time.DateTimeZone;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		public abstract class «IF isProxy»Proxy«ENDIF»WriteAction<T extends IDataContainer> extends Action<T> {
+		
+			static final Logger LOG = LoggerFactory.getLogger(«IF isProxy»Proxy«ENDIF»WriteAction.class);
+			
+			private PersistenceConnection persistenceConnection;
+			protected CustomAppConfiguration appConfiguration;
+			protected IDaoProvider daoProvider;
+			protected ViewProvider viewProvider;
+			private E2E e2e;
+			
+			public «IF isProxy»Proxy«ENDIF»WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e, HttpMethod method) {
+				super(actionName, method);
+				this.persistenceConnection = persistenceConnection;
+				this.appConfiguration = appConfiguration;
+				this.daoProvider = daoProvider;
+				this.viewProvider = viewProvider;
+				this.e2e = e2e;
 			}
+		
+			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
+		
+			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
 			
-			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
-			
-			protected abstract T createAceData(ITimelineItem timelineItem);
+			protected abstract void initActionDataFromNotReplayableDataProvider();
+
+			protected abstract ICommand getCommand();
 		
 			public Response apply() {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
@@ -636,18 +616,25 @@ class ActionTemplate {
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						T originalActionData = createAceData(timelineItem);
-						this.actionData.setSystemTime(originalActionData.getSystemTime());
+						initActionDataFrom(timelineItem);
 					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (NotReplayableDataProvider.getSystemTime() != null) {
-							this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
-						}
+						initActionDataFromNotReplayableDataProvider();
 					}
-					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					«addActionToTimeline»
 					
-					if (appConfiguration.getServerConfiguration().writeTimeline()) {
-						daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
-					}
+					ICommand command = this.getCommand();
+					«IF isProxy»
+						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
+							T originalData = this.createDataFrom(timelineItem);
+							command.setCommandData(originalData);
+						} else {
+							command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
+						}
+					«ELSE»
+						command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
+					«ENDIF»
+					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
 					return response;
@@ -655,12 +642,10 @@ class ActionTemplate {
 					LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
 					try {
 						databaseHandle.rollbackTransaction();
-						if (appConfiguration.getServerConfiguration().writeError()) {
-							daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
-						}
+						«addExceptionToTimeline»
 						App.reportException(x);
 					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
 					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
 				} catch (Exception x) {
@@ -668,12 +653,10 @@ class ActionTemplate {
 					x.printStackTrace();
 					try {
 						databaseHandle.rollbackTransaction();
-						if (appConfiguration.getServerConfiguration().writeError()) {
-							daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
-						}
+						«addExceptionToTimeline»
 						App.reportException(x);
 					} catch (Exception ex) {
-						LOG.error("failed to rollback or to save or report exception " + ex.getMessage());
+						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
 					String message = x.getMessage();
 					StackTraceElement[] stackTrace = x.getStackTrace();
@@ -730,10 +713,6 @@ class ActionTemplate {
 			HttpMethod getHttpMethod();
 			
 			IDataContainer getActionData();
-			
-			void setActionData(IDataContainer data);
-			
-			ICommand getCommand();
 			
 		    Response apply();
 		    
