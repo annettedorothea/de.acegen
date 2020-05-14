@@ -749,31 +749,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Entry rule entryRuleConstraint
-entryRuleConstraint
-:
-{ before(grammarAccess.getConstraintRule()); }
-	 ruleConstraint
-{ after(grammarAccess.getConstraintRule()); } 
-	 EOF 
-;
-
-// Rule Constraint
-ruleConstraint 
-	@init {
-		int stackSize = keepStackSize();
-	}
-	:
-	(
-		{ before(grammarAccess.getConstraintAccess().getAlternatives()); }
-		(rule__Constraint__Alternatives)
-		{ after(grammarAccess.getConstraintAccess().getAlternatives()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 // Entry rule entryRuleJsonDateTime
 entryRuleJsonDateTime
 :
@@ -1111,27 +1086,6 @@ rule__Type__Alternatives
 		{ before(grammarAccess.getTypeAccess().getLongKeyword_5()); }
 		'Long'
 		{ after(grammarAccess.getTypeAccess().getLongKeyword_5()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Constraint__Alternatives
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getConstraintAccess().getNotEmptyKeyword_0()); }
-		'NotEmpty'
-		{ after(grammarAccess.getConstraintAccess().getNotEmptyKeyword_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getConstraintAccess().getNotNullKeyword_1()); }
-		'NotNull'
-		{ after(grammarAccess.getConstraintAccess().getNotNullKeyword_1()); }
 	)
 ;
 finally {
@@ -6169,9 +6123,9 @@ rule__Attribute__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAttributeAccess().getConstraintAssignment_2()); }
-	(rule__Attribute__ConstraintAssignment_2)?
-	{ after(grammarAccess.getAttributeAccess().getConstraintAssignment_2()); }
+	{ before(grammarAccess.getAttributeAccess().getNotNullAssignment_2()); }
+	(rule__Attribute__NotNullAssignment_2)?
+	{ after(grammarAccess.getAttributeAccess().getNotNullAssignment_2()); }
 )
 ;
 finally {
@@ -6292,6 +6246,7 @@ rule__Attribute__Group__7
 	}
 :
 	rule__Attribute__Group__7__Impl
+	rule__Attribute__Group__8
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6306,6 +6261,32 @@ rule__Attribute__Group__7__Impl
 	{ before(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7()); }
 	(rule__Attribute__NotReplayableAssignment_7)?
 	{ after(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group__8
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Attribute__Group__8__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__Group__8__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getAttributeAccess().getOptionalAssignment_8()); }
+	(rule__Attribute__OptionalAssignment_8)?
+	{ after(grammarAccess.getAttributeAccess().getOptionalAssignment_8()); }
 )
 ;
 finally {
@@ -8410,15 +8391,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Attribute__ConstraintAssignment_2
+rule__Attribute__NotNullAssignment_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_2_0()); }
-		ruleConstraint
-		{ after(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_2_0()); }
+		{ before(grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0()); }
+		(
+			{ before(grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0()); }
+			'NotNull'
+			{ after(grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0()); }
+		)
+		{ after(grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0()); }
 	)
 ;
 finally {
@@ -8525,6 +8510,25 @@ rule__Attribute__NotReplayableAssignment_7
 			{ after(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
 		)
 		{ after(grammarAccess.getAttributeAccess().getNotReplayableNotReplayableKeyword_7_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Attribute__OptionalAssignment_8
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0()); }
+		(
+			{ before(grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0()); }
+			'optional'
+			{ after(grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0()); }
+		)
+		{ after(grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0()); }
 	)
 ;
 finally {

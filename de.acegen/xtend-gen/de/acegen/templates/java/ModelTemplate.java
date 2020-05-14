@@ -1387,7 +1387,8 @@ public class ModelTemplate {
         }
         _builder.append(" ");
         {
-          if (((attribute.getConstraint() != null) && attribute.getConstraint().equals("NotNull"))) {
+          boolean _isNotNull = attribute.isNotNull();
+          if (_isNotNull) {
             _builder.append("nullable=\"false\"");
           }
         }
@@ -1396,7 +1397,7 @@ public class ModelTemplate {
           Attribute _foreignKey = attribute.getForeignKey();
           boolean _tripleNotEquals = (_foreignKey != null);
           if (_tripleNotEquals) {
-            _builder.append("\treferences=\"");
+            _builder.append(" references=\"");
             String _tableName = this._attributeExtension.tableName(attribute.getForeignKey());
             _builder.append(_tableName, "\t\t");
             _builder.append("(");

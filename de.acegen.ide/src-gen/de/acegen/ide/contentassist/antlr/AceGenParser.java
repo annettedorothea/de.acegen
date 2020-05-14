@@ -37,7 +37,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAccess().getAlternatives_4(), "rule__Attribute__Alternatives_4");
 			builder.put(grammarAccess.getWriteFunctionTypeAccess().getAlternatives(), "rule__WriteFunctionType__Alternatives");
 			builder.put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
-			builder.put(grammarAccess.getConstraintAccess().getAlternatives(), "rule__Constraint__Alternatives");
 			builder.put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
 			builder.put(grammarAccess.getJsonBooleanAccess().getAlternatives(), "rule__JsonBoolean__Alternatives");
 			builder.put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
@@ -194,13 +193,14 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAuthorizationAccess().getPasswordAssignment_3(), "rule__Authorization__PasswordAssignment_3");
 			builder.put(grammarAccess.getAttributeAccess().getUniqueAssignment_0(), "rule__Attribute__UniqueAssignment_0");
 			builder.put(grammarAccess.getAttributeAccess().getPrimaryKeyAssignment_1(), "rule__Attribute__PrimaryKeyAssignment_1");
-			builder.put(grammarAccess.getAttributeAccess().getConstraintAssignment_2(), "rule__Attribute__ConstraintAssignment_2");
+			builder.put(grammarAccess.getAttributeAccess().getNotNullAssignment_2(), "rule__Attribute__NotNullAssignment_2");
 			builder.put(grammarAccess.getAttributeAccess().getListAssignment_3(), "rule__Attribute__ListAssignment_3");
 			builder.put(grammarAccess.getAttributeAccess().getTypeAssignment_4_0(), "rule__Attribute__TypeAssignment_4_0");
 			builder.put(grammarAccess.getAttributeAccess().getModelAssignment_4_1(), "rule__Attribute__ModelAssignment_4_1");
 			builder.put(grammarAccess.getAttributeAccess().getNameAssignment_5(), "rule__Attribute__NameAssignment_5");
 			builder.put(grammarAccess.getAttributeAccess().getForeignKeyAssignment_6_1(), "rule__Attribute__ForeignKeyAssignment_6_1");
 			builder.put(grammarAccess.getAttributeAccess().getNotReplayableAssignment_7(), "rule__Attribute__NotReplayableAssignment_7");
+			builder.put(grammarAccess.getAttributeAccess().getOptionalAssignment_8(), "rule__Attribute__OptionalAssignment_8");
 			builder.put(grammarAccess.getJsonDateTimeAccess().getDateTimeAssignment_0(), "rule__JsonDateTime__DateTimeAssignment_0");
 			builder.put(grammarAccess.getJsonDateTimeAccess().getPatternAssignment_1(), "rule__JsonDateTime__PatternAssignment_1");
 			builder.put(grammarAccess.getJsonObjectAccess().getMembersAssignment_2(), "rule__JsonObject__MembersAssignment_2");

@@ -2370,20 +2370,15 @@ ruleAttribute returns [EObject current=null]
 		)?
 		(
 			(
+				lv_notNull_2_0='NotNull'
 				{
-					newCompositeNode(grammarAccess.getAttributeAccess().getConstraintConstraintParserRuleCall_2_0());
+					newLeafNode(lv_notNull_2_0, grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0());
 				}
-				lv_constraint_2_0=ruleConstraint
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getAttributeRule());
+						$current = createModelElement(grammarAccess.getAttributeRule());
 					}
-					set(
-						$current,
-						"constraint",
-						lv_constraint_2_0,
-						"de.acegen.AceGen.Constraint");
-					afterParserOrEnumRuleCall();
+					setWithLastConsumed($current, "notNull", true, "NotNull");
 				}
 			)
 		)?
@@ -2490,6 +2485,20 @@ ruleAttribute returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getAttributeRule());
 					}
 					setWithLastConsumed($current, "notReplayable", true, "notReplayable");
+				}
+			)
+		)?
+		(
+			(
+				lv_optional_10_0='optional'
+				{
+					newLeafNode(lv_optional_10_0, grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getAttributeRule());
+					}
+					setWithLastConsumed($current, "optional", true, "optional");
 				}
 			)
 		)?
@@ -2644,36 +2653,6 @@ ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 		{
 			$current.merge(kw);
 			newLeafNode(kw, grammarAccess.getTypeAccess().getLongKeyword_5());
-		}
-	)
-;
-
-// Entry rule entryRuleConstraint
-entryRuleConstraint returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getConstraintRule()); }
-	iv_ruleConstraint=ruleConstraint
-	{ $current=$iv_ruleConstraint.current.getText(); }
-	EOF;
-
-// Rule Constraint
-ruleConstraint returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		kw='NotEmpty'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getConstraintAccess().getNotEmptyKeyword_0());
-		}
-		    |
-		kw='NotNull'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getConstraintAccess().getNotNullKeyword_1());
 		}
 	)
 ;

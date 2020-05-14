@@ -162,12 +162,13 @@ Authorization:
 Attribute:
 	unique ?= 'Unique'? 
 	primaryKey ?= 'PrimaryKey'? 
-	(constraint = Constraint)? 
+	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
 	(type = Type | model = [Model | QualifiedName]) 
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
 	notReplayable ?= 'notReplayable'?
+	optional ?= 'optional'?
 ;
 
 QualifiedName:
@@ -184,10 +185,6 @@ ReadFunctionType:
 
 Type:
 	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
-;
-
-Constraint:
-	'NotEmpty' | 'NotNull'
 ;
 
 JsonDateTime:

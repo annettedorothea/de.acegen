@@ -123,13 +123,14 @@
     <genClasses ecoreClass="AceGen.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/unique"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/primaryKey"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notNull"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notReplayable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/optional"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonDateTime">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/dateTime"/>

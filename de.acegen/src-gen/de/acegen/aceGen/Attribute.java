@@ -16,13 +16,14 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.Attribute#isUnique <em>Unique</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isPrimaryKey <em>Primary Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#getConstraint <em>Constraint</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Attribute#isNotNull <em>Not Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -76,26 +77,26 @@ public interface Attribute extends EObject
   void setPrimaryKey(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Constraint</b></em>' attribute.
+   * Returns the value of the '<em><b>Not Null</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Constraint</em>' attribute.
-   * @see #setConstraint(String)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Constraint()
+   * @return the value of the '<em>Not Null</em>' attribute.
+   * @see #setNotNull(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NotNull()
    * @model
    * @generated
    */
-  String getConstraint();
+  boolean isNotNull();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#getConstraint <em>Constraint</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isNotNull <em>Not Null</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Constraint</em>' attribute.
-   * @see #getConstraint()
+   * @param value the new value of the '<em>Not Null</em>' attribute.
+   * @see #isNotNull()
    * @generated
    */
-  void setConstraint(String value);
+  void setNotNull(boolean value);
 
   /**
    * Returns the value of the '<em><b>List</b></em>' attribute.
@@ -228,5 +229,27 @@ public interface Attribute extends EObject
    * @generated
    */
   void setNotReplayable(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Optional</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Optional</em>' attribute.
+   * @see #setOptional(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Optional()
+   * @model
+   * @generated
+   */
+  boolean isOptional();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Optional</em>' attribute.
+   * @see #isOptional()
+   * @generated
+   */
+  void setOptional(boolean value);
 
 } // Attribute

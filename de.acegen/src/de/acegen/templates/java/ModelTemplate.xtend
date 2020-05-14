@@ -467,7 +467,7 @@ class ModelTemplate {
 		<createTable tableName="«name.toLowerCase»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.constraint !== null && attribute.constraint.equals('NotNull')»nullable="false"«ENDIF» «IF attribute.foreignKey !== null»	references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«table»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.notNull»nullable="false"«ENDIF» «IF attribute.foreignKey !== null» references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«table»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>

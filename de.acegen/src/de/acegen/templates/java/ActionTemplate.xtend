@@ -286,6 +286,11 @@ class ActionTemplate {
 				«IF payload.size > 0»«getModel.dataParamType» payload)
 				«ELSE»@QueryParam("uuid") String uuid)«ENDIF» 
 				throws JsonProcessingException {
+			«IF payload.size > 0»
+				if (payload == null) {
+					throwBadRequest("payload must not be null");
+				}
+			«ENDIF»
 			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 			«FOR param : queryParams»
 				try {

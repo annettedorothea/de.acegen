@@ -1501,8 +1501,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cUniqueUniqueKeyword_0_0 = (Keyword)cUniqueAssignment_0.eContents().get(0);
 		private final Assignment cPrimaryKeyAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cPrimaryKeyPrimaryKeyKeyword_1_0 = (Keyword)cPrimaryKeyAssignment_1.eContents().get(0);
-		private final Assignment cConstraintAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cConstraintConstraintParserRuleCall_2_0 = (RuleCall)cConstraintAssignment_2.eContents().get(0);
+		private final Assignment cNotNullAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cNotNullNotNullKeyword_2_0 = (Keyword)cNotNullAssignment_2.eContents().get(0);
 		private final Assignment cListAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cListListKeyword_3_0 = (Keyword)cListAssignment_3.eContents().get(0);
 		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
@@ -1520,18 +1520,20 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1 = (RuleCall)cForeignKeyAttributeCrossReference_6_1_0.eContents().get(1);
 		private final Assignment cNotReplayableAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final Keyword cNotReplayableNotReplayableKeyword_7_0 = (Keyword)cNotReplayableAssignment_7.eContents().get(0);
+		private final Assignment cOptionalAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final Keyword cOptionalOptionalKeyword_8_0 = (Keyword)cOptionalAssignment_8.eContents().get(0);
 		
 		//Attribute:
 		//	unique?='Unique'?
 		//	primaryKey?='PrimaryKey'?
-		//	constraint=Constraint?
+		//	notNull?='NotNull'?
 		//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-		//	notReplayable?='notReplayable'?;
+		//	notReplayable?='notReplayable'?
+		//	optional?='optional'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//unique?='Unique'? primaryKey?='PrimaryKey'? constraint=Constraint? list?='List'? (type=Type |
-		//model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-		//notReplayable?='notReplayable'?
+		//unique?='Unique'? primaryKey?='PrimaryKey'? notNull?='NotNull'? list?='List'? (type=Type | model=[Model|QualifiedName])
+		//name=ID ('references' foreignKey=[Attribute|QualifiedName])? notReplayable?='notReplayable'? optional?='optional'?
 		public Group getGroup() { return cGroup; }
 		
 		//unique?='Unique'?
@@ -1546,11 +1548,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//'PrimaryKey'
 		public Keyword getPrimaryKeyPrimaryKeyKeyword_1_0() { return cPrimaryKeyPrimaryKeyKeyword_1_0; }
 		
-		//constraint=Constraint?
-		public Assignment getConstraintAssignment_2() { return cConstraintAssignment_2; }
+		//notNull?='NotNull'?
+		public Assignment getNotNullAssignment_2() { return cNotNullAssignment_2; }
 		
-		//Constraint
-		public RuleCall getConstraintConstraintParserRuleCall_2_0() { return cConstraintConstraintParserRuleCall_2_0; }
+		//'NotNull'
+		public Keyword getNotNullNotNullKeyword_2_0() { return cNotNullNotNullKeyword_2_0; }
 		
 		//list?='List'?
 		public Assignment getListAssignment_3() { return cListAssignment_3; }
@@ -1602,6 +1604,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'notReplayable'
 		public Keyword getNotReplayableNotReplayableKeyword_7_0() { return cNotReplayableNotReplayableKeyword_7_0; }
+		
+		//optional?='optional'?
+		public Assignment getOptionalAssignment_8() { return cOptionalAssignment_8; }
+		
+		//'optional'
+		public Keyword getOptionalOptionalKeyword_8_0() { return cOptionalOptionalKeyword_8_0; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.QualifiedName");
@@ -1698,25 +1706,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'Long'
 		public Keyword getLongKeyword_5() { return cLongKeyword_5; }
-	}
-	public class ConstraintElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Constraint");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cNotEmptyKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cNotNullKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		
-		//Constraint:
-		//	'NotEmpty' | 'NotNull';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'NotEmpty' | 'NotNull'
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//'NotEmpty'
-		public Keyword getNotEmptyKeyword_0() { return cNotEmptyKeyword_0; }
-		
-		//'NotNull'
-		public Keyword getNotNullKeyword_1() { return cNotNullKeyword_1; }
 	}
 	public class JsonDateTimeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonDateTime");
@@ -1991,7 +1980,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	private final WriteFunctionTypeElements pWriteFunctionType;
 	private final ReadFunctionTypeElements pReadFunctionType;
 	private final TypeElements pType;
-	private final ConstraintElements pConstraint;
 	private final JsonDateTimeElements pJsonDateTime;
 	private final JsonObjectElements pJsonObject;
 	private final JsonMemberElements pJsonMember;
@@ -2037,7 +2025,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.pWriteFunctionType = new WriteFunctionTypeElements();
 		this.pReadFunctionType = new ReadFunctionTypeElements();
 		this.pType = new TypeElements();
-		this.pConstraint = new ConstraintElements();
 		this.pJsonDateTime = new JsonDateTimeElements();
 		this.pJsonObject = new JsonObjectElements();
 		this.pJsonMember = new JsonMemberElements();
@@ -2337,9 +2324,10 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	//Attribute:
 	//	unique?='Unique'?
 	//	primaryKey?='PrimaryKey'?
-	//	constraint=Constraint?
+	//	notNull?='NotNull'?
 	//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-	//	notReplayable?='notReplayable'?;
+	//	notReplayable?='notReplayable'?
+	//	optional?='optional'?;
 	public AttributeElements getAttributeAccess() {
 		return pAttribute;
 	}
@@ -2386,16 +2374,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypeRule() {
 		return getTypeAccess().getRule();
-	}
-	
-	//Constraint:
-	//	'NotEmpty' | 'NotNull';
-	public ConstraintElements getConstraintAccess() {
-		return pConstraint;
-	}
-	
-	public ParserRule getConstraintRule() {
-		return getConstraintAccess().getRule();
 	}
 	
 	//JsonDateTime:

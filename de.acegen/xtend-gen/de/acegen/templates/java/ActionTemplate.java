@@ -732,15 +732,31 @@ public class ActionTemplate {
     _builder.append("\t\t");
     _builder.append("throws JsonProcessingException {");
     _builder.newLine();
+    {
+      int _size_1 = it.getPayload().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        _builder.append("\t");
+        _builder.append("if (payload == null) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("throwBadRequest(\"payload must not be null\");");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("this.actionData = new ");
     String _dataName = this._modelExtension.dataName(it.getModel());
     _builder.append(_dataName, "\t");
     _builder.append("(");
     {
-      int _size_1 = it.getPayload().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
+      int _size_2 = it.getPayload().size();
+      boolean _greaterThan_2 = (_size_2 > 0);
+      if (_greaterThan_2) {
         _builder.append("payload.getUuid()");
       } else {
         _builder.append("uuid");

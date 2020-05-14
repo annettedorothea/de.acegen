@@ -1323,13 +1323,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__PRIMARY_KEY = 1;
 
   /**
-   * The feature id for the '<em><b>Constraint</b></em>' attribute.
+   * The feature id for the '<em><b>Not Null</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__CONSTRAINT = 2;
+  int ATTRIBUTE__NOT_NULL = 2;
 
   /**
    * The feature id for the '<em><b>List</b></em>' attribute.
@@ -1386,13 +1386,22 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__NOT_REPLAYABLE = 8;
 
   /**
+   * The feature id for the '<em><b>Optional</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE__OPTIONAL = 9;
+
+  /**
    * The number of structural features of the '<em>Attribute</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_FEATURE_COUNT = 9;
+  int ATTRIBUTE_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
@@ -2722,15 +2731,15 @@ public interface AceGenPackage extends EPackage
   EAttribute getAttribute_PrimaryKey();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#getConstraint <em>Constraint</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isNotNull <em>Not Null</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Constraint</em>'.
-   * @see de.acegen.aceGen.Attribute#getConstraint()
+   * @return the meta object for the attribute '<em>Not Null</em>'.
+   * @see de.acegen.aceGen.Attribute#isNotNull()
    * @see #getAttribute()
    * @generated
    */
-  EAttribute getAttribute_Constraint();
+  EAttribute getAttribute_NotNull();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isList <em>List</em>}'.
@@ -2797,6 +2806,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getAttribute_NotReplayable();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Optional</em>'.
+   * @see de.acegen.aceGen.Attribute#isOptional()
+   * @see #getAttribute()
+   * @generated
+   */
+  EAttribute getAttribute_Optional();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
@@ -3796,12 +3816,12 @@ public interface AceGenPackage extends EPackage
     EAttribute ATTRIBUTE__PRIMARY_KEY = eINSTANCE.getAttribute_PrimaryKey();
 
     /**
-     * The meta object literal for the '<em><b>Constraint</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Not Null</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE__CONSTRAINT = eINSTANCE.getAttribute_Constraint();
+    EAttribute ATTRIBUTE__NOT_NULL = eINSTANCE.getAttribute_NotNull();
 
     /**
      * The meta object literal for the '<em><b>List</b></em>' attribute feature.
@@ -3850,6 +3870,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
+
+    /**
+     * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE__OPTIONAL = eINSTANCE.getAttribute_Optional();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.

@@ -25,13 +25,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isUnique <em>Unique</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isPrimaryKey <em>Primary Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getConstraint <em>Constraint</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotNull <em>Not Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -79,24 +80,24 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected boolean primaryKey = PRIMARY_KEY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getConstraint() <em>Constraint</em>}' attribute.
+   * The default value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getConstraint()
+   * @see #isNotNull()
    * @generated
    * @ordered
    */
-  protected static final String CONSTRAINT_EDEFAULT = null;
+  protected static final boolean NOT_NULL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getConstraint() <em>Constraint</em>}' attribute.
+   * The cached value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getConstraint()
+   * @see #isNotNull()
    * @generated
    * @ordered
    */
-  protected String constraint = CONSTRAINT_EDEFAULT;
+  protected boolean notNull = NOT_NULL_EDEFAULT;
 
   /**
    * The default value of the '{@link #isList() <em>List</em>}' attribute.
@@ -199,6 +200,26 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected boolean notReplayable = NOT_REPLAYABLE_EDEFAULT;
 
   /**
+   * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isOptional()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean OPTIONAL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isOptional()
+   * @generated
+   * @ordered
+   */
+  protected boolean optional = OPTIONAL_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -275,9 +296,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public String getConstraint()
+  public boolean isNotNull()
   {
-    return constraint;
+    return notNull;
   }
 
   /**
@@ -286,12 +307,12 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public void setConstraint(String newConstraint)
+  public void setNotNull(boolean newNotNull)
   {
-    String oldConstraint = constraint;
-    constraint = newConstraint;
+    boolean oldNotNull = notNull;
+    notNull = newNotNull;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__CONSTRAINT, oldConstraint, constraint));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NOT_NULL, oldNotNull, notNull));
   }
 
   /**
@@ -490,6 +511,31 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
+  public boolean isOptional()
+  {
+    return optional;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setOptional(boolean newOptional)
+  {
+    boolean oldOptional = optional;
+    optional = newOptional;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__OPTIONAL, oldOptional, optional));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -498,8 +544,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return isUnique();
       case AceGenPackage.ATTRIBUTE__PRIMARY_KEY:
         return isPrimaryKey();
-      case AceGenPackage.ATTRIBUTE__CONSTRAINT:
-        return getConstraint();
+      case AceGenPackage.ATTRIBUTE__NOT_NULL:
+        return isNotNull();
       case AceGenPackage.ATTRIBUTE__LIST:
         return isList();
       case AceGenPackage.ATTRIBUTE__TYPE:
@@ -514,6 +560,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return basicGetForeignKey();
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return isNotReplayable();
+      case AceGenPackage.ATTRIBUTE__OPTIONAL:
+        return isOptional();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -534,8 +582,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__PRIMARY_KEY:
         setPrimaryKey((Boolean)newValue);
         return;
-      case AceGenPackage.ATTRIBUTE__CONSTRAINT:
-        setConstraint((String)newValue);
+      case AceGenPackage.ATTRIBUTE__NOT_NULL:
+        setNotNull((Boolean)newValue);
         return;
       case AceGenPackage.ATTRIBUTE__LIST:
         setList((Boolean)newValue);
@@ -554,6 +602,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable((Boolean)newValue);
+        return;
+      case AceGenPackage.ATTRIBUTE__OPTIONAL:
+        setOptional((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -575,8 +626,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__PRIMARY_KEY:
         setPrimaryKey(PRIMARY_KEY_EDEFAULT);
         return;
-      case AceGenPackage.ATTRIBUTE__CONSTRAINT:
-        setConstraint(CONSTRAINT_EDEFAULT);
+      case AceGenPackage.ATTRIBUTE__NOT_NULL:
+        setNotNull(NOT_NULL_EDEFAULT);
         return;
       case AceGenPackage.ATTRIBUTE__LIST:
         setList(LIST_EDEFAULT);
@@ -596,6 +647,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable(NOT_REPLAYABLE_EDEFAULT);
         return;
+      case AceGenPackage.ATTRIBUTE__OPTIONAL:
+        setOptional(OPTIONAL_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -614,8 +668,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return unique != UNIQUE_EDEFAULT;
       case AceGenPackage.ATTRIBUTE__PRIMARY_KEY:
         return primaryKey != PRIMARY_KEY_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__CONSTRAINT:
-        return CONSTRAINT_EDEFAULT == null ? constraint != null : !CONSTRAINT_EDEFAULT.equals(constraint);
+      case AceGenPackage.ATTRIBUTE__NOT_NULL:
+        return notNull != NOT_NULL_EDEFAULT;
       case AceGenPackage.ATTRIBUTE__LIST:
         return list != LIST_EDEFAULT;
       case AceGenPackage.ATTRIBUTE__TYPE:
@@ -628,6 +682,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return foreignKey != null;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return notReplayable != NOT_REPLAYABLE_EDEFAULT;
+      case AceGenPackage.ATTRIBUTE__OPTIONAL:
+        return optional != OPTIONAL_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -647,8 +703,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(unique);
     result.append(", primaryKey: ");
     result.append(primaryKey);
-    result.append(", constraint: ");
-    result.append(constraint);
+    result.append(", notNull: ");
+    result.append(notNull);
     result.append(", list: ");
     result.append(list);
     result.append(", type: ");
@@ -657,6 +713,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(name);
     result.append(", notReplayable: ");
     result.append(notReplayable);
+    result.append(", optional: ");
+    result.append(optional);
     result.append(')');
     return result.toString();
   }

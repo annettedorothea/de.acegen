@@ -152,12 +152,13 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         unique?='Unique'? 
 	 *         primaryKey?='PrimaryKey'? 
-	 *         constraint=Constraint? 
+	 *         notNull?='NotNull'? 
 	 *         list?='List'? 
 	 *         (type=Type | model=[Model|QualifiedName]) 
 	 *         name=ID 
 	 *         foreignKey=[Attribute|QualifiedName]? 
-	 *         notReplayable?='notReplayable'?
+	 *         notReplayable?='notReplayable'? 
+	 *         optional?='optional'?
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
