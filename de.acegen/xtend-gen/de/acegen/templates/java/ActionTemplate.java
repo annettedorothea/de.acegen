@@ -97,6 +97,9 @@ public class ActionTemplate {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import org.apache.commons.lang3.StringUtils;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.E2E;");
@@ -354,6 +357,9 @@ public class ActionTemplate {
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
@@ -746,6 +752,17 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
+      } else {
+        _builder.append("\t");
+        _builder.append("if (StringUtils.isBlank(uuid)) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("throwBadRequest(\"uuid must not be blank or null\");");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
     _builder.append("\t");
@@ -768,88 +785,27 @@ public class ActionTemplate {
       EList<Attribute> _queryParams_1 = it.getQueryParams();
       for(final Attribute param_2 : _queryParams_1) {
         _builder.append("\t");
-        _builder.append("try {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("this.actionData.");
-        String _setterCall = this._attributeExtension.setterCall(param_2, this._attributeExtension.resourceParam(param_2));
-        _builder.append(_setterCall, "\t\t");
-        _builder.append(";");
+        String _initActionData = this._attributeExtension.initActionData(param_2);
+        _builder.append(_initActionData, "\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("} catch (Exception x) {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
-        String _name_4 = param_2.getName();
-        _builder.append(_name_4, "\t\t");
-        _builder.append("\");");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
       }
     }
     {
       EList<Attribute> _pathParams_1 = it.getPathParams();
       for(final Attribute param_3 : _pathParams_1) {
         _builder.append("\t");
-        _builder.append("try {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("this.actionData.");
-        String _setterCall_1 = this._attributeExtension.setterCall(param_3, this._attributeExtension.resourceParam(param_3));
-        _builder.append(_setterCall_1, "\t\t");
-        _builder.append(";");
+        String _initActionData_1 = this._attributeExtension.initActionData(param_3);
+        _builder.append(_initActionData_1, "\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("} catch (Exception x) {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
-        String _name_5 = param_3.getName();
-        _builder.append(_name_5, "\t\t");
-        _builder.append("\");");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
       }
     }
     {
       EList<Attribute> _payload = it.getPayload();
       for(final Attribute attribute : _payload) {
         _builder.append("\t");
-        _builder.append("try {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("this.actionData.");
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("payload.");
-        String _terCall = this._attributeExtension.getterCall(attribute);
-        _builder_1.append(_terCall);
-        String _setterCall_2 = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-        _builder.append(_setterCall_2, "\t\t");
-        _builder.append(";");
+        String _initActionDataFromPayload = this._attributeExtension.initActionDataFromPayload(attribute);
+        _builder.append(_initActionDataFromPayload, "\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("} catch (Exception x) {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("LOG.warn(\"failed to parse param {}\", \"");
-        String _name_6 = attribute.getName();
-        _builder.append(_name_6, "\t\t");
-        _builder.append("\");");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
       }
     }
     {
@@ -861,40 +817,25 @@ public class ActionTemplate {
               boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
               if (_containsAttribute) {
                 _builder.append("\t");
-                _builder.append("try {");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
                 _builder.append("this.actionData.");
-                StringConcatenation _builder_2 = new StringConcatenation();
+                StringConcatenation _builder_1 = new StringConcatenation();
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
-                _builder_2.append(_firstLower_2);
-                _builder_2.append(".");
-                String _terCall_1 = this._attributeExtension.getterCall(param_4);
-                _builder_2.append(_terCall_1);
-                String _setterCall_3 = this._attributeExtension.setterCall(param_4, _builder_2.toString());
-                _builder.append(_setterCall_3, "\t\t");
+                _builder_1.append(_firstLower_2);
+                _builder_1.append(".");
+                String _terCall = this._attributeExtension.getterCall(param_4);
+                _builder_1.append(_terCall);
+                String _setterCall = this._attributeExtension.setterCall(param_4, _builder_1.toString());
+                _builder.append(_setterCall, "\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("} catch (Exception x) {");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("LOG.warn(\"failed to parse param {}\", \"");
-                String _name_7 = param_4.getName();
-                _builder.append(_name_7, "\t\t");
-                _builder.append("\");");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("}");
-                _builder.newLine();
               }
             }
           }
         }
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("return this.apply();");
     _builder.newLine();

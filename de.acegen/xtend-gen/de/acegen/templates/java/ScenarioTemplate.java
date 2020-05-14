@@ -265,10 +265,10 @@ public class ScenarioTemplate {
     _builder.append(" then(Response response) throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("if (response.getStatus() == 500) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
     _builder.append("String message = response.readEntity(String.class);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (response.getStatus() == 500) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("assertFail(message);");
@@ -284,7 +284,7 @@ public class ScenarioTemplate {
         _builder.append("assertThat(response.getStatus(), ");
         int _statusCode_1 = it.getThenBlock().getStatusCode();
         _builder.append(_statusCode_1, "\t\t");
-        _builder.append(");");
+        _builder.append(", message);");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -953,6 +953,19 @@ public class ScenarioTemplate {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("protected void assertThat(int actual, int expected, String message) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("throw new RuntimeException(\"BaseScenario.assertThat not implemented\");");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("protected void assertThat(Object actual, Object expected) {");
     _builder.newLine();
     _builder.append("\t");
@@ -1065,6 +1078,10 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract void assertThat(int actual, int expected);");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract void assertThat(int actual, int expected, String message);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");

@@ -67,6 +67,8 @@ class ActionTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		import org.apache.commons.lang3.StringUtils;
+		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
 		import de.acegen.HttpMethod;
@@ -163,6 +165,8 @@ class ActionTemplate {
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
+		
+		import org.apache.commons.lang3.StringUtils;
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
@@ -290,40 +294,29 @@ class ActionTemplate {
 				if (payload == null) {
 					throwBadRequest("payload must not be null");
 				}
+			«ELSE»
+				if (StringUtils.isBlank(uuid)) {
+					throwBadRequest("uuid must not be blank or null");
+				}
 			«ENDIF»
 			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
 			«FOR param : queryParams»
-				try {
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				} catch (Exception x) {
-					LOG.warn("failed to parse param {}", "«param.name»");
-				}
+				«param.initActionData»
 			«ENDFOR»
 			«FOR param : pathParams»
-				try {
-					this.actionData.«param.setterCall(param.resourceParam)»;
-				} catch (Exception x) {
-					LOG.warn("failed to parse param {}", "«param.name»");
-				}
+				«param.initActionData»
 			«ENDFOR»
 			«FOR attribute : payload»
-				try {
-					this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
-				} catch (Exception x) {
-					LOG.warn("failed to parse param {}", "«attribute.name»");
-				}
+				«attribute.initActionDataFromPayload»
 			«ENDFOR»
 			«IF isAuthorize && authUser !== null»
 				«FOR param : getModel.allAttributes»
 						«IF authUser.attributes.containsAttribute(param)»
-							try {
-								this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
-							} catch (Exception x) {
-								LOG.warn("failed to parse param {}", "«param.name»");
-							}
+							this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
 						«ENDIF»
 				«ENDFOR»
 			«ENDIF»
+			
 			return this.apply();
 		}
 	'''

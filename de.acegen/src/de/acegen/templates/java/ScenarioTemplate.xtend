@@ -108,12 +108,12 @@ class ScenarioTemplate {
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
+				String message = response.readEntity(String.class);
 				if (response.getStatus() == 500) {
-					String message = response.readEntity(String.class);
 					assertFail(message);
 				}
 				«IF thenBlock.statusCode !== 0»
-					assertThat(response.getStatus(), «thenBlock.statusCode»);
+					assertThat(response.getStatus(), «thenBlock.statusCode», message);
 				«ENDIF»
 				
 				«IF whenBlock.action.isRead»
@@ -306,6 +306,11 @@ class ScenarioTemplate {
 			}
 		
 			@Override
+			protected void assertThat(int actual, int expected, String message) {
+				throw new RuntimeException("BaseScenario.assertThat not implemented");
+			}
+		
+			@Override
 			protected void assertThat(Object actual, Object expected) {
 			throw new RuntimeException("BaseScenario.assertThat not implemented");
 			}
@@ -356,6 +361,8 @@ class ScenarioTemplate {
 			protected abstract String authorization(String username, String password);
 		
 			protected abstract void assertThat(int actual, int expected);
+
+			protected abstract void assertThat(int actual, int expected, String message);
 		
 			protected abstract void assertThat(Object actual, Object expected);
 		

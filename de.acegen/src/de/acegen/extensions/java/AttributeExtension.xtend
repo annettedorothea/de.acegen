@@ -34,9 +34,9 @@ class AttributeExtension {
 
 	@Inject
 	extension ModelExtension
-	
+
 	int index = 0;
-	
+
 	public String stringLineBreak = '''," + 
 	"'''
 
@@ -44,10 +44,59 @@ class AttributeExtension {
 		index = 0;
 	}
 
-	def String resourceParamType(Attribute it) '''«IF type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
+	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
 	def String resourceParam(
-		Attribute it) '''«IF type.equals('DateTime')»new DateTime(«name»).withZone(DateTimeZone.UTC)«ELSE»«name»«ENDIF»'''
+		Attribute it) '''«IF type !== null && type.equals('DateTime')»new DateTime(«name»).withZone(DateTimeZone.UTC)«ELSE»«name»«ENDIF»'''
+
+	def String initActionData(
+		Attribute it) '''
+		
+		«IF type !== null && type.equals('DateTime')»
+			«IF !optional»
+				if (StringUtils.isBlank(«name»)) {
+					throwBadRequest("«name» is mandatory");
+				}
+			«ENDIF»
+			if (StringUtils.isNotBlank(«name»)) {
+				try {
+					this.actionData.«setterCall(resourceParam)»;
+				} catch (Exception x) {
+					LOG.warn("failed to parse dateTime «name» - {}", «name»);
+				}
+			}
+		«ELSE»
+			«IF !optional»
+				«IF type === "String"»
+					if (StringUtils.isBlank(«name»)) {
+						throwBadRequest("«name» is mandatory");
+					}
+				«ELSE»
+					if («name» == null) {
+						throwBadRequest("«name» is mandatory");
+					}
+				«ENDIF»
+			«ENDIF»
+			this.actionData.«setterCall(resourceParam)»;
+		«ENDIF»
+	'''
+
+	def String initActionDataFromPayload(
+		Attribute it) '''
+		
+		«IF !optional»
+			«IF type === "String"»
+				if (StringUtils.isBlank(payload.«getterCall»)) {
+					throwBadRequest("«name» is mandatory");
+				}
+			«ELSE»
+				if (payload.«getterCall» == null) {
+					throwBadRequest("«name» is mandatory");
+				}
+			«ENDIF»
+		«ENDIF»
+		this.actionData.«setterCall('''payload.«getterCall»''')»;
+	'''
 
 	def String getterCall(Attribute it) {
 		return '''get«name.toFirstUpper»()''';
@@ -158,7 +207,8 @@ class AttributeExtension {
 		}
 	}
 
-	def dispatch CharSequence valueFrom(JsonObject it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+	def dispatch CharSequence valueFrom(
+		JsonObject it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
 
 	def dispatch CharSequence valueFrom(JsonValue it) {
 		if (string !== null) {
@@ -168,7 +218,7 @@ class AttributeExtension {
 				index++;
 			}
 			if (string.contains("${random}")) {
-				returnString = returnString.replace("${random}",  '''" + this.randomString() + "''');
+				returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
 			}
 			return '''\"«returnString»\"''';
 		} else if (boolean !== null) {
@@ -180,7 +230,8 @@ class AttributeExtension {
 		}
 	}
 
-	def dispatch CharSequence valueFrom(JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
+	def dispatch CharSequence valueFrom(
+		JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
 
 	def dispatch CharSequence valueFrom(JsonDateTime it) '''\"«dateTimeParse(dateTime, pattern)»\"'''
 

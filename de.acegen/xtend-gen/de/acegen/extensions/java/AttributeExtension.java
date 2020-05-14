@@ -65,8 +65,7 @@ public class AttributeExtension {
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      boolean _equals = it.getType().equals("DateTime");
-      if (_equals) {
+      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
         _builder.append("String");
       } else {
         String _type = it.getType();
@@ -79,8 +78,7 @@ public class AttributeExtension {
   public String resourceParam(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      boolean _equals = it.getType().equals("DateTime");
-      if (_equals) {
+      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
         _builder.append("new DateTime(");
         String _name = it.getName();
         _builder.append(_name);
@@ -90,6 +88,165 @@ public class AttributeExtension {
         _builder.append(_name_1);
       }
     }
+    return _builder.toString();
+  }
+  
+  public String initActionData(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.newLine();
+    {
+      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
+        {
+          boolean _isOptional = it.isOptional();
+          boolean _not = (!_isOptional);
+          if (_not) {
+            _builder.append("if (StringUtils.isBlank(");
+            String _name = it.getName();
+            _builder.append(_name);
+            _builder.append(")) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("throwBadRequest(\"");
+            String _name_1 = it.getName();
+            _builder.append(_name_1, "\t");
+            _builder.append(" is mandatory\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+        _builder.append("if (StringUtils.isNotBlank(");
+        String _name_2 = it.getName();
+        _builder.append(_name_2);
+        _builder.append(")) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("try {");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("this.actionData.");
+        String _setterCall = this.setterCall(it, this.resourceParam(it));
+        _builder.append(_setterCall, "\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("LOG.warn(\"failed to parse dateTime ");
+        String _name_3 = it.getName();
+        _builder.append(_name_3, "\t\t");
+        _builder.append(" - {}\", ");
+        String _name_4 = it.getName();
+        _builder.append(_name_4, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+      } else {
+        {
+          boolean _isOptional_1 = it.isOptional();
+          boolean _not_1 = (!_isOptional_1);
+          if (_not_1) {
+            {
+              String _type = it.getType();
+              boolean _tripleEquals = (_type == "String");
+              if (_tripleEquals) {
+                _builder.append("if (StringUtils.isBlank(");
+                String _name_5 = it.getName();
+                _builder.append(_name_5);
+                _builder.append(")) {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("throwBadRequest(\"");
+                String _name_6 = it.getName();
+                _builder.append(_name_6, "\t");
+                _builder.append(" is mandatory\");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("}");
+                _builder.newLine();
+              } else {
+                _builder.append("if (");
+                String _name_7 = it.getName();
+                _builder.append(_name_7);
+                _builder.append(" == null) {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("throwBadRequest(\"");
+                String _name_8 = it.getName();
+                _builder.append(_name_8, "\t");
+                _builder.append(" is mandatory\");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        _builder.append("this.actionData.");
+        String _setterCall_1 = this.setterCall(it, this.resourceParam(it));
+        _builder.append(_setterCall_1);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String initActionDataFromPayload(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.newLine();
+    {
+      boolean _isOptional = it.isOptional();
+      boolean _not = (!_isOptional);
+      if (_not) {
+        {
+          String _type = it.getType();
+          boolean _tripleEquals = (_type == "String");
+          if (_tripleEquals) {
+            _builder.append("if (StringUtils.isBlank(payload.");
+            String _terCall = this.getterCall(it);
+            _builder.append(_terCall);
+            _builder.append(")) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("throwBadRequest(\"");
+            String _name = it.getName();
+            _builder.append(_name, "\t");
+            _builder.append(" is mandatory\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            _builder.append("if (payload.");
+            String _terCall_1 = this.getterCall(it);
+            _builder.append(_terCall_1);
+            _builder.append(" == null) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("throwBadRequest(\"");
+            String _name_1 = it.getName();
+            _builder.append(_name_1, "\t");
+            _builder.append(" is mandatory\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+      }
+    }
+    _builder.append("this.actionData.");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("payload.");
+    String _terCall_2 = this.getterCall(it);
+    _builder_1.append(_terCall_2);
+    String _setterCall = this.setterCall(it, _builder_1.toString());
+    _builder.append(_setterCall);
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
   
