@@ -167,40 +167,40 @@ public interface HttpServerAce extends EObject
   void setAuthorize(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Path Params</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * Returns the value of the '<em><b>Path Params</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.AttributeParamRef}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Path Params</em>' reference list.
+   * @return the value of the '<em>Path Params</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce_PathParams()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  EList<Attribute> getPathParams();
+  EList<AttributeParamRef> getPathParams();
 
   /**
-   * Returns the value of the '<em><b>Query Params</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * Returns the value of the '<em><b>Query Params</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.AttributeParamRef}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Query Params</em>' reference list.
+   * @return the value of the '<em>Query Params</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce_QueryParams()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  EList<Attribute> getQueryParams();
+  EList<AttributeParamRef> getQueryParams();
 
   /**
-   * Returns the value of the '<em><b>Payload</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * Returns the value of the '<em><b>Payload</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.AttributeParamRef}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Payload</em>' reference list.
+   * @return the value of the '<em>Payload</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce_Payload()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  EList<Attribute> getPayload();
+  EList<AttributeParamRef> getPayload();
 
   /**
    * Returns the value of the '<em><b>Response</b></em>' reference list.

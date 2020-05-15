@@ -77,11 +77,11 @@ class CommandTemplate {
 				    return new Promise((resolve, reject) => {
 						let queryParams = [];
 					    «FOR queryParam : getServerCall.queryParams»
-					    	queryParams.push({key: "«queryParam.name»",value: this.commandData.«queryParam.name»});
+					    	queryParams.push({key: "«queryParam.attribute.name»",value: this.commandData.«queryParam.attribute.name»});
 				        «ENDFOR»
 				        «IF getServerCall.payload.size > 0»let payload = {	
 				        	«FOR payload : getServerCall.payload»
-				        		«payload.name» : this.commandData.«payload.name»,
+				        		«payload.attribute.name» : this.commandData.«payload.attribute.name»,
 				        	«ENDFOR»
 				        	};
 				        «ENDIF»

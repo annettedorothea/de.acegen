@@ -132,6 +132,15 @@ public interface AceGenFactory extends EFactory
   HttpServerAceRead createHttpServerAceRead();
 
   /**
+   * Returns a new object of class '<em>Attribute Param Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Param Ref</em>'.
+   * @generated
+   */
+  AttributeParamRef createAttributeParamRef();
+
+  /**
    * Returns a new object of class '<em>Http Server View</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

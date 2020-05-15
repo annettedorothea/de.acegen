@@ -136,6 +136,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpServerAceReadAdapter();
       }
       @Override
+      public Adapter caseAttributeParamRef(AttributeParamRef object)
+      {
+        return createAttributeParamRefAdapter();
+      }
+      @Override
       public Adapter caseHttpServerView(HttpServerView object)
       {
         return createHttpServerViewAdapter();
@@ -413,6 +418,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHttpServerAceReadAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeParamRef <em>Attribute Param Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.AttributeParamRef
+   * @generated
+   */
+  public Adapter createAttributeParamRefAdapter()
   {
     return null;
   }

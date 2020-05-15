@@ -6,6 +6,7 @@ package de.acegen.serializer;
 import com.google.inject.Inject;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
@@ -60,6 +61,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			switch (semanticObject.eClass().getClassifierID()) {
 			case AceGenPackage.ATTRIBUTE:
 				sequence_Attribute(context, (Attribute) semanticObject); 
+				return; 
+			case AceGenPackage.ATTRIBUTE_PARAM_REF:
+				sequence_AttributeParamRef(context, (AttributeParamRef) semanticObject); 
 				return; 
 			case AceGenPackage.AUTH_USER:
 				sequence_AuthUser(context, (AuthUser) semanticObject); 
@@ -146,6 +150,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     AttributeParamRef returns AttributeParamRef
+	 *
+	 * Constraint:
+	 *     (attribute=[Attribute|QualifiedName] optional?='optional'?)
+	 */
+	protected void sequence_AttributeParamRef(ISerializationContext context, AttributeParamRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Attribute returns Attribute
 	 *
 	 * Constraint:
@@ -157,8 +173,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (type=Type | model=[Model|QualifiedName]) 
 	 *         name=ID 
 	 *         foreignKey=[Attribute|QualifiedName]? 
-	 *         notReplayable?='notReplayable'? 
-	 *         optional?='optional'?
+	 *         notReplayable?='notReplayable'?
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
@@ -324,9 +339,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         type=ReadFunctionType 
 	 *         url=STRING 
 	 *         authorize?='authorize'? 
-	 *         pathParams+=[Attribute|QualifiedName]* 
-	 *         queryParams+=[Attribute|QualifiedName]* 
-	 *         payload+=[Attribute|QualifiedName]* 
+	 *         pathParams+=AttributeParamRef* 
+	 *         queryParams+=AttributeParamRef* 
+	 *         payload+=AttributeParamRef* 
 	 *         response+=[Attribute|QualifiedName]*
 	 *     )
 	 */
@@ -348,9 +363,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         type=WriteFunctionType 
 	 *         url=STRING 
 	 *         authorize?='authorize'? 
-	 *         pathParams+=[Attribute|QualifiedName]* 
-	 *         queryParams+=[Attribute|QualifiedName]* 
-	 *         payload+=[Attribute|QualifiedName]* 
+	 *         pathParams+=AttributeParamRef* 
+	 *         queryParams+=AttributeParamRef* 
+	 *         payload+=AttributeParamRef* 
 	 *         response+=[Attribute|QualifiedName]* 
 	 *         outcomes+=HttpServerOutcome*
 	 *     )

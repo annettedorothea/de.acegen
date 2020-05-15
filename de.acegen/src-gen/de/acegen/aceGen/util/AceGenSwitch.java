@@ -159,6 +159,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.ATTRIBUTE_PARAM_REF:
+      {
+        AttributeParamRef attributeParamRef = (AttributeParamRef)theEObject;
+        T result = caseAttributeParamRef(attributeParamRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.HTTP_SERVER_VIEW:
       {
         HttpServerView httpServerView = (HttpServerView)theEObject;
@@ -466,6 +473,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpServerAceRead(HttpServerAceRead object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Param Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Param Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeParamRef(AttributeParamRef object)
   {
     return null;
   }

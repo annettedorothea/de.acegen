@@ -17,6 +17,7 @@ package de.acegen.templates.es6;
 
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -226,15 +227,15 @@ public class CommandTemplate {
         _builder.append("let queryParams = [];");
         _builder.newLine();
         {
-          EList<Attribute> _queryParams = it.getServerCall().getQueryParams();
-          for(final Attribute queryParam : _queryParams) {
+          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
+          for(final AttributeParamRef queryParam : _queryParams) {
             _builder.append("\t");
             _builder.append("\t    ");
             _builder.append("queryParams.push({key: \"");
-            String _name_6 = queryParam.getName();
+            String _name_6 = queryParam.getAttribute().getName();
             _builder.append(_name_6, "\t\t    ");
             _builder.append("\",value: this.commandData.");
-            String _name_7 = queryParam.getName();
+            String _name_7 = queryParam.getAttribute().getName();
             _builder.append(_name_7, "\t\t    ");
             _builder.append("});");
             _builder.newLineIfNotEmpty();
@@ -249,15 +250,15 @@ public class CommandTemplate {
             _builder.append("let payload = {\t");
             _builder.newLineIfNotEmpty();
             {
-              EList<Attribute> _payload = it.getServerCall().getPayload();
-              for(final Attribute payload : _payload) {
+              EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
+              for(final AttributeParamRef payload : _payload) {
                 _builder.append("\t");
                 _builder.append("        ");
                 _builder.append("\t");
-                String _name_8 = payload.getName();
+                String _name_8 = payload.getAttribute().getName();
                 _builder.append(_name_8, "\t        \t");
                 _builder.append(" : this.commandData.");
-                String _name_9 = payload.getName();
+                String _name_9 = payload.getAttribute().getName();
                 _builder.append(_name_9, "\t        \t");
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();

@@ -282,10 +282,10 @@ class ActionTemplate {
 		public Response «resourceName.toFirstLower»(
 				«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
 				«FOR param : queryParams»
-					@QueryParam("«param.name»") «param.resourceParamType» «param.name», 
+					@QueryParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
 				«ENDFOR»
 				«FOR param : pathParams»
-					@PathParam("«param.name»") «param.resourceParamType» «param.name», 
+					@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
 				«ENDFOR»
 				«IF payload.size > 0»«getModel.dataParamType» payload)
 				«ELSE»@QueryParam("uuid") String uuid)«ENDIF» 
@@ -300,14 +300,14 @@ class ActionTemplate {
 				}
 			«ENDIF»
 			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
-			«FOR param : queryParams»
-				«param.initActionData»
+			«FOR paramRef : queryParams»
+				«paramRef.initActionData»
 			«ENDFOR»
-			«FOR param : pathParams»
-				«param.initActionData»
+			«FOR paramRef : pathParams»
+				«paramRef.initActionData»
 			«ENDFOR»
-			«FOR attribute : payload»
-				«attribute.initActionDataFromPayload»
+			«FOR attributeRef : payload»
+				«attributeRef.initActionDataFromPayload»
 			«ENDFOR»
 			«IF isAuthorize && authUser !== null»
 				«FOR param : getModel.allAttributes»
@@ -876,7 +876,7 @@ class ActionTemplate {
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request();
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -888,7 +888,7 @@ class ActionTemplate {
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request();
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request();
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -900,7 +900,7 @@ class ActionTemplate {
 							int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.name»=" + data.«queryParam.getterCall»«ENDFOR», port)).request(); 
+						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request(); 
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»

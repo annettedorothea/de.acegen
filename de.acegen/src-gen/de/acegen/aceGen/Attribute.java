@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -229,27 +228,5 @@ public interface Attribute extends EObject
    * @generated
    */
   void setNotReplayable(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Optional</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Optional</em>' attribute.
-   * @see #setOptional(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Optional()
-   * @model
-   * @generated
-   */
-  boolean isOptional();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Optional</em>' attribute.
-   * @see #isOptional()
-   * @generated
-   */
-  void setOptional(boolean value);
 
 } // Attribute

@@ -16,6 +16,7 @@
 package de.acegen.extensions.java;
 
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
@@ -91,24 +92,27 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String initActionData(final Attribute it) {
+  public String initActionData(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     {
-      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
+      if ((((it.getAttribute().getType() != null) && it.getAttribute().getType().equals("DateTime")) && (!it.getAttribute().isList()))) {
         {
           boolean _isOptional = it.isOptional();
           boolean _not = (!_isOptional);
           if (_not) {
             _builder.append("if (StringUtils.isBlank(");
-            String _name = it.getName();
+            String _name = it.getAttribute().getName();
             _builder.append(_name);
+            _builder.append(") || \"null\".equals(");
+            String _name_1 = it.getAttribute().getName();
+            _builder.append(_name_1);
             _builder.append(")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("throwBadRequest(\"");
-            String _name_1 = it.getName();
-            _builder.append(_name_1, "\t");
+            String _name_2 = it.getAttribute().getName();
+            _builder.append(_name_2, "\t");
             _builder.append(" is mandatory\");");
             _builder.newLineIfNotEmpty();
             _builder.append("}");
@@ -116,8 +120,8 @@ public class AttributeExtension {
           }
         }
         _builder.append("if (StringUtils.isNotBlank(");
-        String _name_2 = it.getName();
-        _builder.append(_name_2);
+        String _name_3 = it.getAttribute().getName();
+        _builder.append(_name_3);
         _builder.append(")) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -125,7 +129,7 @@ public class AttributeExtension {
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("this.actionData.");
-        String _setterCall = this.setterCall(it, this.resourceParam(it));
+        String _setterCall = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall, "\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -134,11 +138,11 @@ public class AttributeExtension {
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("LOG.warn(\"failed to parse dateTime ");
-        String _name_3 = it.getName();
-        _builder.append(_name_3, "\t\t");
-        _builder.append(" - {}\", ");
-        String _name_4 = it.getName();
+        String _name_4 = it.getAttribute().getName();
         _builder.append(_name_4, "\t\t");
+        _builder.append(" - {}\", ");
+        String _name_5 = it.getAttribute().getName();
+        _builder.append(_name_5, "\t\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -152,32 +156,33 @@ public class AttributeExtension {
           boolean _not_1 = (!_isOptional_1);
           if (_not_1) {
             {
-              String _type = it.getType();
-              boolean _tripleEquals = (_type == "String");
-              if (_tripleEquals) {
+              if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
                 _builder.append("if (StringUtils.isBlank(");
-                String _name_5 = it.getName();
-                _builder.append(_name_5);
+                String _name_6 = it.getAttribute().getName();
+                _builder.append(_name_6);
+                _builder.append(") || \"null\".equals(");
+                String _name_7 = it.getAttribute().getName();
+                _builder.append(_name_7);
                 _builder.append(")) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("throwBadRequest(\"");
-                String _name_6 = it.getName();
-                _builder.append(_name_6, "\t");
+                String _name_8 = it.getAttribute().getName();
+                _builder.append(_name_8, "\t");
                 _builder.append(" is mandatory\");");
                 _builder.newLineIfNotEmpty();
                 _builder.append("}");
                 _builder.newLine();
               } else {
                 _builder.append("if (");
-                String _name_7 = it.getName();
-                _builder.append(_name_7);
+                String _name_9 = it.getAttribute().getName();
+                _builder.append(_name_9);
                 _builder.append(" == null) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("throwBadRequest(\"");
-                String _name_8 = it.getName();
-                _builder.append(_name_8, "\t");
+                String _name_10 = it.getAttribute().getName();
+                _builder.append(_name_10, "\t");
                 _builder.append(" is mandatory\");");
                 _builder.newLineIfNotEmpty();
                 _builder.append("}");
@@ -187,7 +192,7 @@ public class AttributeExtension {
           }
         }
         _builder.append("this.actionData.");
-        String _setterCall_1 = this.setterCall(it, this.resourceParam(it));
+        String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall_1);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -196,7 +201,7 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
-  public String initActionDataFromPayload(final Attribute it) {
+  public String initActionDataFromPayload(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     {
@@ -204,17 +209,18 @@ public class AttributeExtension {
       boolean _not = (!_isOptional);
       if (_not) {
         {
-          String _type = it.getType();
-          boolean _tripleEquals = (_type == "String");
-          if (_tripleEquals) {
+          if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
             _builder.append("if (StringUtils.isBlank(payload.");
-            String _terCall = this.getterCall(it);
+            String _terCall = this.getterCall(it.getAttribute());
             _builder.append(_terCall);
+            _builder.append(") || \"null\".equals(payload.");
+            String _terCall_1 = this.getterCall(it.getAttribute());
+            _builder.append(_terCall_1);
             _builder.append(")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("throwBadRequest(\"");
-            String _name = it.getName();
+            String _name = it.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append(" is mandatory\");");
             _builder.newLineIfNotEmpty();
@@ -222,13 +228,13 @@ public class AttributeExtension {
             _builder.newLine();
           } else {
             _builder.append("if (payload.");
-            String _terCall_1 = this.getterCall(it);
-            _builder.append(_terCall_1);
+            String _terCall_2 = this.getterCall(it.getAttribute());
+            _builder.append(_terCall_2);
             _builder.append(" == null) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("throwBadRequest(\"");
-            String _name_1 = it.getName();
+            String _name_1 = it.getAttribute().getName();
             _builder.append(_name_1, "\t");
             _builder.append(" is mandatory\");");
             _builder.newLineIfNotEmpty();
@@ -239,11 +245,12 @@ public class AttributeExtension {
       }
     }
     _builder.append("this.actionData.");
+    Attribute _attribute = it.getAttribute();
     StringConcatenation _builder_1 = new StringConcatenation();
     _builder_1.append("payload.");
-    String _terCall_2 = this.getterCall(it);
-    _builder_1.append(_terCall_2);
-    String _setterCall = this.setterCall(it, _builder_1.toString());
+    String _terCall_3 = this.getterCall(it.getAttribute());
+    _builder_1.append(_terCall_3);
+    String _setterCall = this.setterCall(_attribute, _builder_1.toString());
     _builder.append(_setterCall);
     _builder.append(";");
     _builder.newLineIfNotEmpty();

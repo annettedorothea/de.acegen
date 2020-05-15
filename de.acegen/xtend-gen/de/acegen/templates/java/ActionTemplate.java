@@ -17,6 +17,7 @@ package de.acegen.templates.java;
 
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
@@ -686,34 +687,34 @@ public class ActionTemplate {
     }
     _builder.newLineIfNotEmpty();
     {
-      EList<Attribute> _queryParams = it.getQueryParams();
-      for(final Attribute param : _queryParams) {
+      EList<AttributeParamRef> _queryParams = it.getQueryParams();
+      for(final AttributeParamRef param : _queryParams) {
         _builder.append("\t\t");
         _builder.append("@QueryParam(\"");
-        String _name = param.getName();
+        String _name = param.getAttribute().getName();
         _builder.append(_name, "\t\t");
         _builder.append("\") ");
-        String _resourceParamType = this._attributeExtension.resourceParamType(param);
+        String _resourceParamType = this._attributeExtension.resourceParamType(param.getAttribute());
         _builder.append(_resourceParamType, "\t\t");
         _builder.append(" ");
-        String _name_1 = param.getName();
+        String _name_1 = param.getAttribute().getName();
         _builder.append(_name_1, "\t\t");
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
       }
     }
     {
-      EList<Attribute> _pathParams = it.getPathParams();
-      for(final Attribute param_1 : _pathParams) {
+      EList<AttributeParamRef> _pathParams = it.getPathParams();
+      for(final AttributeParamRef param_1 : _pathParams) {
         _builder.append("\t\t");
         _builder.append("@PathParam(\"");
-        String _name_2 = param_1.getName();
+        String _name_2 = param_1.getAttribute().getName();
         _builder.append(_name_2, "\t\t");
         _builder.append("\") ");
-        String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1);
+        String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1.getAttribute());
         _builder.append(_resourceParamType_1, "\t\t");
         _builder.append(" ");
-        String _name_3 = param_1.getName();
+        String _name_3 = param_1.getAttribute().getName();
         _builder.append(_name_3, "\t\t");
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
@@ -782,28 +783,28 @@ public class ActionTemplate {
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     {
-      EList<Attribute> _queryParams_1 = it.getQueryParams();
-      for(final Attribute param_2 : _queryParams_1) {
+      EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
+      for(final AttributeParamRef paramRef : _queryParams_1) {
         _builder.append("\t");
-        String _initActionData = this._attributeExtension.initActionData(param_2);
+        String _initActionData = this._attributeExtension.initActionData(paramRef);
         _builder.append(_initActionData, "\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
-      EList<Attribute> _pathParams_1 = it.getPathParams();
-      for(final Attribute param_3 : _pathParams_1) {
+      EList<AttributeParamRef> _pathParams_1 = it.getPathParams();
+      for(final AttributeParamRef paramRef_1 : _pathParams_1) {
         _builder.append("\t");
-        String _initActionData_1 = this._attributeExtension.initActionData(param_3);
+        String _initActionData_1 = this._attributeExtension.initActionData(paramRef_1);
         _builder.append(_initActionData_1, "\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
-      EList<Attribute> _payload = it.getPayload();
-      for(final Attribute attribute : _payload) {
+      EList<AttributeParamRef> _payload = it.getPayload();
+      for(final AttributeParamRef attributeRef : _payload) {
         _builder.append("\t");
-        String _initActionDataFromPayload = this._attributeExtension.initActionDataFromPayload(attribute);
+        String _initActionDataFromPayload = this._attributeExtension.initActionDataFromPayload(attributeRef);
         _builder.append(_initActionDataFromPayload, "\t");
         _builder.newLineIfNotEmpty();
       }
@@ -812,9 +813,9 @@ public class ActionTemplate {
       if ((it.isAuthorize() && (authUser != null))) {
         {
           List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
-          for(final Attribute param_4 : _allAttributes) {
+          for(final Attribute param_2 : _allAttributes) {
             {
-              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
+              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_2);
               if (_containsAttribute) {
                 _builder.append("\t");
                 _builder.append("this.actionData.");
@@ -822,9 +823,9 @@ public class ActionTemplate {
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
                 _builder_1.append(_firstLower_2);
                 _builder_1.append(".");
-                String _terCall = this._attributeExtension.getterCall(param_4);
+                String _terCall = this._attributeExtension.getterCall(param_2);
                 _builder_1.append(_terCall);
-                String _setterCall = this._attributeExtension.setterCall(param_4, _builder_1.toString());
+                String _setterCall = this._attributeExtension.setterCall(param_2, _builder_1.toString());
                 _builder.append(_setterCall, "\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
@@ -2340,13 +2341,13 @@ public class ActionTemplate {
               _builder.append(_urlWithPathParams_1, "\t\t");
               _builder.append("?uuid=\" + data.getUuid()");
               {
-                EList<Attribute> _queryParams = aceOperation.getQueryParams();
-                for(final Attribute queryParam : _queryParams) {
+                EList<AttributeParamRef> _queryParams = aceOperation.getQueryParams();
+                for(final AttributeParamRef queryParam : _queryParams) {
                   _builder.append(" + \"&");
-                  String _name_1 = queryParam.getName();
+                  String _name_1 = queryParam.getAttribute().getName();
                   _builder.append(_name_1, "\t\t");
                   _builder.append("=\" + data.");
-                  String _terCall = this._attributeExtension.getterCall(queryParam);
+                  String _terCall = this._attributeExtension.getterCall(queryParam.getAttribute());
                   _builder.append(_terCall, "\t\t");
                 }
               }
@@ -2420,13 +2421,13 @@ public class ActionTemplate {
                 _builder.append(_urlWithPathParams_2, "\t\t");
                 _builder.append("?uuid=\" + data.getUuid()");
                 {
-                  EList<Attribute> _queryParams_1 = aceOperation.getQueryParams();
-                  for(final Attribute queryParam_1 : _queryParams_1) {
+                  EList<AttributeParamRef> _queryParams_1 = aceOperation.getQueryParams();
+                  for(final AttributeParamRef queryParam_1 : _queryParams_1) {
                     _builder.append(" + \"&");
-                    String _name_2 = queryParam_1.getName();
+                    String _name_2 = queryParam_1.getAttribute().getName();
                     _builder.append(_name_2, "\t\t");
                     _builder.append("=\" + data.");
-                    String _terCall_1 = this._attributeExtension.getterCall(queryParam_1);
+                    String _terCall_1 = this._attributeExtension.getterCall(queryParam_1.getAttribute());
                     _builder.append(_terCall_1, "\t\t");
                   }
                 }
@@ -2487,13 +2488,13 @@ public class ActionTemplate {
                 _builder.append(_urlWithPathParams_3, "\t\t");
                 _builder.append("?uuid=\" + data.getUuid()");
                 {
-                  EList<Attribute> _queryParams_2 = aceOperation.getQueryParams();
-                  for(final Attribute queryParam_2 : _queryParams_2) {
+                  EList<AttributeParamRef> _queryParams_2 = aceOperation.getQueryParams();
+                  for(final AttributeParamRef queryParam_2 : _queryParams_2) {
                     _builder.append(" + \"&");
-                    String _name_3 = queryParam_2.getName();
+                    String _name_3 = queryParam_2.getAttribute().getName();
                     _builder.append(_name_3, "\t\t");
                     _builder.append("=\" + data.");
-                    String _terCall_2 = this._attributeExtension.getterCall(queryParam_2);
+                    String _terCall_2 = this._attributeExtension.getterCall(queryParam_2.getAttribute());
                     _builder.append(_terCall_2, "\t\t");
                   }
                 }

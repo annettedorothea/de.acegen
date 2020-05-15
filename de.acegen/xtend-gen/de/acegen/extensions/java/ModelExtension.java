@@ -411,12 +411,16 @@ public class ModelExtension {
   
   public String dataNameWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
-    EObject _eContainer = it.eContainer();
-    String _name = ((HttpServer) _eContainer).getName();
-    _builder.append(_name);
-    _builder.append(".data.");
-    String _dataName = this.dataName(it);
-    _builder.append(_dataName);
+    {
+      if ((it != null)) {
+        EObject _eContainer = it.eContainer();
+        String _name = ((HttpServer) _eContainer).getName();
+        _builder.append(_name);
+        _builder.append(".data.");
+        String _dataName = this.dataName(it);
+        _builder.append(_dataName);
+      }
+    }
     return _builder.toString();
   }
   

@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import de.acegen.aceGen.AttributeParamRef
 
 /**
  * This class contains custom scoping description.
@@ -51,12 +52,22 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension ModelExtension
 
 	override getScope(EObject context, EReference reference) {
-		if (context instanceof HttpServerAce && (
-				reference == AceGenPackage.Literals.HTTP_SERVER_ACE__QUERY_PARAMS ||
-			reference == AceGenPackage.Literals.HTTP_SERVER_ACE__PATH_PARAMS ||
-			reference == AceGenPackage.Literals.HTTP_SERVER_ACE__PAYLOAD || reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE
-			)) {
+		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE) {
 			val javaAce = context as HttpServerAce;
+			val attrs = new ArrayList<Attribute>();
+			javaAce.getModel.allAttributesRec(attrs);
+			return Scopes.scopeFor(attrs)
+		}
+		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
+			val javaAce = context as HttpServerAce;
+			val attrs = new ArrayList<Attribute>();
+			javaAce.getModel.allAttributesRec(attrs);
+			return Scopes.scopeFor(attrs)
+		}
+		if (context instanceof AttributeParamRef &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
+			val attributeParamRef = context as AttributeParamRef;
+			val javaAce = attributeParamRef.eContainer as HttpServerAce;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
 			return Scopes.scopeFor(attrs)
@@ -78,8 +89,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
-		if (context instanceof JsonObject || context instanceof JsonArray ||
-			context instanceof JsonMember) {
+		if (context instanceof JsonObject || context instanceof JsonArray || context instanceof JsonMember) {
 			var parent = context.eContainer
 			var isThen = false
 			var isWhen = false
@@ -96,9 +106,15 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				val scenario = parent as Scenario;
 				if (isWhen) {
 					var attr = new ArrayList<Attribute>();
-					attr.addAll(scenario.whenBlock.action.payload)
-					attr.addAll(scenario.whenBlock.action.queryParams)
-					attr.addAll(scenario.whenBlock.action.pathParams)
+					for (attributeRef : scenario.whenBlock.action.payload) {
+						attr.add(attributeRef.attribute)
+					}
+					for (attributeRef : scenario.whenBlock.action.queryParams) {
+						attr.add(attributeRef.attribute)
+					}
+					for (attributeRef : scenario.whenBlock.action.pathParams) {
+						attr.add(attributeRef.attribute)
+					}
 					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {

@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -198,26 +197,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @ordered
    */
   protected boolean notReplayable = NOT_REPLAYABLE_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isOptional()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean OPTIONAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isOptional()
-   * @generated
-   * @ordered
-   */
-  protected boolean optional = OPTIONAL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -511,31 +490,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public boolean isOptional()
-  {
-    return optional;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setOptional(boolean newOptional)
-  {
-    boolean oldOptional = optional;
-    optional = newOptional;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__OPTIONAL, oldOptional, optional));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -560,8 +514,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return basicGetForeignKey();
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return isNotReplayable();
-      case AceGenPackage.ATTRIBUTE__OPTIONAL:
-        return isOptional();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -602,9 +554,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable((Boolean)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE__OPTIONAL:
-        setOptional((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -647,9 +596,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable(NOT_REPLAYABLE_EDEFAULT);
         return;
-      case AceGenPackage.ATTRIBUTE__OPTIONAL:
-        setOptional(OPTIONAL_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -682,8 +628,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return foreignKey != null;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return notReplayable != NOT_REPLAYABLE_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__OPTIONAL:
-        return optional != OPTIONAL_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -713,8 +657,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(name);
     result.append(", notReplayable: ");
     result.append(notReplayable);
-    result.append(", optional: ");
-    result.append(optional);
     result.append(')');
     return result.toString();
   }

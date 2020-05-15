@@ -69,12 +69,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authorize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pathParams" unique="false"
-        upperBound="-1" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="queryParams" unique="false"
-        upperBound="-1" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="payload" unique="false"
-        upperBound="-1" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathParams" upperBound="-1"
+        eType="#//AttributeParamRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="queryParams" upperBound="-1"
+        eType="#//AttributeParamRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payload" upperBound="-1"
+        eType="#//AttributeParamRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="response" unique="false"
         upperBound="-1" eType="#//Attribute"/>
   </eClassifiers>
@@ -88,6 +88,10 @@
         upperBound="-1" eType="#//HttpServerViewFunction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceRead" eSuperTypes="#//HttpServerAce"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeParamRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerView">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
@@ -157,7 +161,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="notReplayable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JsonDateTime" eSuperTypes="#//JsonValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

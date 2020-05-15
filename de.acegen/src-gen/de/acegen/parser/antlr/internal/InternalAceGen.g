@@ -1134,15 +1134,18 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeParamRefParserRuleCall_8_1_0());
+					}
+					lv_pathParams_9_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceWriteRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeCrossReference_8_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"pathParams",
+							lv_pathParams_9_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1156,15 +1159,18 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeParamRefParserRuleCall_9_1_0());
+					}
+					lv_queryParams_11_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceWriteRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeCrossReference_9_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"queryParams",
+							lv_queryParams_11_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1178,15 +1184,18 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeParamRefParserRuleCall_10_1_0());
+					}
+					lv_payload_13_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceWriteRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeCrossReference_10_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"payload",
+							lv_payload_13_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1434,15 +1443,18 @@ ruleHttpServerAceRead returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPathParamsAttributeParamRefParserRuleCall_8_1_0());
+					}
+					lv_pathParams_9_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceReadRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceReadRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPathParamsAttributeCrossReference_8_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"pathParams",
+							lv_pathParams_9_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1456,15 +1468,18 @@ ruleHttpServerAceRead returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getQueryParamsAttributeParamRefParserRuleCall_9_1_0());
+					}
+					lv_queryParams_11_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceReadRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceReadRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getQueryParamsAttributeCrossReference_9_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"queryParams",
+							lv_queryParams_11_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1478,15 +1493,18 @@ ruleHttpServerAceRead returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPayloadAttributeParamRefParserRuleCall_10_1_0());
+					}
+					lv_payload_13_0=ruleAttributeParamRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerAceReadRule());
+							$current = createModelElementForParent(grammarAccess.getHttpServerAceReadRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPayloadAttributeCrossReference_10_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"payload",
+							lv_payload_13_0,
+							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1513,6 +1531,55 @@ ruleHttpServerAceRead returns [EObject current=null]
 					}
 				)
 			)*
+		)?
+	)
+;
+
+// Entry rule entryRuleAttributeParamRef
+entryRuleAttributeParamRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAttributeParamRefRule()); }
+	iv_ruleAttributeParamRef=ruleAttributeParamRef
+	{ $current=$iv_ruleAttributeParamRef.current; }
+	EOF;
+
+// Rule AttributeParamRef
+ruleAttributeParamRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getAttributeParamRefRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getAttributeParamRefAccess().getAttributeAttributeCrossReference_0_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				lv_optional_1_0='optional'
+				{
+					newLeafNode(lv_optional_1_0, grammarAccess.getAttributeParamRefAccess().getOptionalOptionalKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getAttributeParamRefRule());
+					}
+					setWithLastConsumed($current, "optional", true, "optional");
+				}
+			)
 		)?
 	)
 ;
@@ -2485,20 +2552,6 @@ ruleAttribute returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getAttributeRule());
 					}
 					setWithLastConsumed($current, "notReplayable", true, "notReplayable");
-				}
-			)
-		)?
-		(
-			(
-				lv_optional_10_0='optional'
-				{
-					newLeafNode(lv_optional_10_0, grammarAccess.getAttributeAccess().getOptionalOptionalKeyword_8_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getAttributeRule());
-					}
-					setWithLastConsumed($current, "optional", true, "optional");
 				}
 			)
 		)?

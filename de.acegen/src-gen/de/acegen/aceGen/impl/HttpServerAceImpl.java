@@ -5,12 +5,14 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Model;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -20,7 +22,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -157,34 +161,34 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   protected boolean authorize = AUTHORIZE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getPathParams() <em>Path Params</em>}' reference list.
+   * The cached value of the '{@link #getPathParams() <em>Path Params</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getPathParams()
    * @generated
    * @ordered
    */
-  protected EList<Attribute> pathParams;
+  protected EList<AttributeParamRef> pathParams;
 
   /**
-   * The cached value of the '{@link #getQueryParams() <em>Query Params</em>}' reference list.
+   * The cached value of the '{@link #getQueryParams() <em>Query Params</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getQueryParams()
    * @generated
    * @ordered
    */
-  protected EList<Attribute> queryParams;
+  protected EList<AttributeParamRef> queryParams;
 
   /**
-   * The cached value of the '{@link #getPayload() <em>Payload</em>}' reference list.
+   * The cached value of the '{@link #getPayload() <em>Payload</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getPayload()
    * @generated
    * @ordered
    */
-  protected EList<Attribute> payload;
+  protected EList<AttributeParamRef> payload;
 
   /**
    * The cached value of the '{@link #getResponse() <em>Response</em>}' reference list.
@@ -393,11 +397,11 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<Attribute> getPathParams()
+  public EList<AttributeParamRef> getPathParams()
   {
     if (pathParams == null)
     {
-      pathParams = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE__PATH_PARAMS);
+      pathParams = new EObjectContainmentEList<AttributeParamRef>(AttributeParamRef.class, this, AceGenPackage.HTTP_SERVER_ACE__PATH_PARAMS);
     }
     return pathParams;
   }
@@ -408,11 +412,11 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<Attribute> getQueryParams()
+  public EList<AttributeParamRef> getQueryParams()
   {
     if (queryParams == null)
     {
-      queryParams = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE__QUERY_PARAMS);
+      queryParams = new EObjectContainmentEList<AttributeParamRef>(AttributeParamRef.class, this, AceGenPackage.HTTP_SERVER_ACE__QUERY_PARAMS);
     }
     return queryParams;
   }
@@ -423,11 +427,11 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<Attribute> getPayload()
+  public EList<AttributeParamRef> getPayload()
   {
     if (payload == null)
     {
-      payload = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE__PAYLOAD);
+      payload = new EObjectContainmentEList<AttributeParamRef>(AttributeParamRef.class, this, AceGenPackage.HTTP_SERVER_ACE__PAYLOAD);
     }
     return payload;
   }
@@ -445,6 +449,26 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
       response = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE__RESPONSE);
     }
     return response;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AceGenPackage.HTTP_SERVER_ACE__PATH_PARAMS:
+        return ((InternalEList<?>)getPathParams()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_SERVER_ACE__QUERY_PARAMS:
+        return ((InternalEList<?>)getQueryParams()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_SERVER_ACE__PAYLOAD:
+        return ((InternalEList<?>)getPayload()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -513,15 +537,15 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
         return;
       case AceGenPackage.HTTP_SERVER_ACE__PATH_PARAMS:
         getPathParams().clear();
-        getPathParams().addAll((Collection<? extends Attribute>)newValue);
+        getPathParams().addAll((Collection<? extends AttributeParamRef>)newValue);
         return;
       case AceGenPackage.HTTP_SERVER_ACE__QUERY_PARAMS:
         getQueryParams().clear();
-        getQueryParams().addAll((Collection<? extends Attribute>)newValue);
+        getQueryParams().addAll((Collection<? extends AttributeParamRef>)newValue);
         return;
       case AceGenPackage.HTTP_SERVER_ACE__PAYLOAD:
         getPayload().clear();
-        getPayload().addAll((Collection<? extends Attribute>)newValue);
+        getPayload().addAll((Collection<? extends AttributeParamRef>)newValue);
         return;
       case AceGenPackage.HTTP_SERVER_ACE__RESPONSE:
         getResponse().clear();

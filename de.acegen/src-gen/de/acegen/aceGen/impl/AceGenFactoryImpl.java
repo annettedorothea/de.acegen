@@ -77,6 +77,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.HTTP_SERVER_ACE_WRITE: return createHttpServerAceWrite();
       case AceGenPackage.HTTP_SERVER_OUTCOME: return createHttpServerOutcome();
       case AceGenPackage.HTTP_SERVER_ACE_READ: return createHttpServerAceRead();
+      case AceGenPackage.ATTRIBUTE_PARAM_REF: return createAttributeParamRef();
       case AceGenPackage.HTTP_SERVER_VIEW: return createHttpServerView();
       case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION: return createHttpServerViewFunction();
       case AceGenPackage.AUTH_USER: return createAuthUser();
@@ -240,6 +241,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     HttpServerAceReadImpl httpServerAceRead = new HttpServerAceReadImpl();
     return httpServerAceRead;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AttributeParamRef createAttributeParamRef()
+  {
+    AttributeParamRefImpl attributeParamRef = new AttributeParamRefImpl();
+    return attributeParamRef;
   }
 
   /**

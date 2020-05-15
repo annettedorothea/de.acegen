@@ -169,12 +169,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'pathParams'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     authorize?='authorize' (ambiguity) 'queryParams' queryParams+=[Attribute|QualifiedName]
-	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload' payload+=[Attribute|QualifiedName]
+	 *     authorize?='authorize' (ambiguity) 'queryParams' queryParams+=AttributeParamRef
+	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload' payload+=AttributeParamRef
 	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
-	 *     url=STRING (ambiguity) 'queryParams' queryParams+=[Attribute|QualifiedName]
-	 *     url=STRING (ambiguity) 'queryParams'? 'payload' payload+=[Attribute|QualifiedName]
+	 *     url=STRING (ambiguity) 'queryParams' queryParams+=AttributeParamRef
+	 *     url=STRING (ambiguity) 'queryParams'? 'payload' payload+=AttributeParamRef
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
 	 */
@@ -189,10 +189,10 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? (ambiguity) 'response'? (rule end)
-	 *     queryParams+=[Attribute|QualifiedName] (ambiguity) 'response' response+=[Attribute|QualifiedName]
-	 *     queryParams+=[Attribute|QualifiedName] (ambiguity) 'response'? (rule end)
+	 *     pathParams+=AttributeParamRef 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef 'queryParams'? (ambiguity) 'response'? (rule end)
+	 *     queryParams+=AttributeParamRef (ambiguity) 'response' response+=[Attribute|QualifiedName]
+	 *     queryParams+=AttributeParamRef (ambiguity) 'response'? (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
 	 */
@@ -205,13 +205,13 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'queryParams'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
+	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload' payload+=AttributeParamRef
 	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload'? 'response'? (rule end)
-	 *     url=STRING 'pathParams'? (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload' payload+=AttributeParamRef
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload'? 'response'? (rule end)
+	 *     url=STRING 'pathParams'? (ambiguity) 'payload' payload+=AttributeParamRef
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
 	 */
@@ -225,9 +225,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? 'payload'? (ambiguity) (rule end)
-	 *     payload+=[Attribute|QualifiedName] (ambiguity) (rule end)
-	 *     queryParams+=[Attribute|QualifiedName] 'payload'? (ambiguity) (rule end)
+	 *     pathParams+=AttributeParamRef 'queryParams'? 'payload'? (ambiguity) (rule end)
+	 *     payload+=AttributeParamRef (ambiguity) (rule end)
+	 *     queryParams+=AttributeParamRef 'payload'? (ambiguity) (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
 	 */
 	protected void emit_HttpServerAceRead_ResponseKeyword_11_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -239,13 +239,13 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'pathParams'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     authorize?='authorize' (ambiguity) 'queryParams' queryParams+=[Attribute|QualifiedName]
-	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload' payload+=[Attribute|QualifiedName]
+	 *     authorize?='authorize' (ambiguity) 'queryParams' queryParams+=AttributeParamRef
+	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload' payload+=AttributeParamRef
 	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
 	 *     authorize?='authorize' (ambiguity) 'queryParams'? 'payload'? 'response'? outcomes+=HttpServerOutcome
-	 *     url=STRING (ambiguity) 'queryParams' queryParams+=[Attribute|QualifiedName]
-	 *     url=STRING (ambiguity) 'queryParams'? 'payload' payload+=[Attribute|QualifiedName]
+	 *     url=STRING (ambiguity) 'queryParams' queryParams+=AttributeParamRef
+	 *     url=STRING (ambiguity) 'queryParams'? 'payload' payload+=AttributeParamRef
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? outcomes+=HttpServerOutcome
@@ -262,12 +262,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? (ambiguity) 'response'? outcomes+=HttpServerOutcome
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? (ambiguity) 'response'? (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? (ambiguity) 'response'? outcomes+=HttpServerOutcome
-	 *     queryParams+=[Attribute|QualifiedName] (ambiguity) 'response' response+=[Attribute|QualifiedName]
-	 *     queryParams+=[Attribute|QualifiedName] (ambiguity) 'response'? (rule end)
-	 *     queryParams+=[Attribute|QualifiedName] (ambiguity) 'response'? outcomes+=HttpServerOutcome
+	 *     pathParams+=AttributeParamRef 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef 'queryParams'? (ambiguity) 'response'? (rule end)
+	 *     pathParams+=AttributeParamRef 'queryParams'? (ambiguity) 'response'? outcomes+=HttpServerOutcome
+	 *     queryParams+=AttributeParamRef (ambiguity) 'response' response+=[Attribute|QualifiedName]
+	 *     queryParams+=AttributeParamRef (ambiguity) 'response'? (rule end)
+	 *     queryParams+=AttributeParamRef (ambiguity) 'response'? outcomes+=HttpServerOutcome
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? outcomes+=HttpServerOutcome
@@ -281,15 +281,15 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'queryParams'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
+	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload' payload+=AttributeParamRef
 	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
 	 *     authorize?='authorize' 'pathParams'? (ambiguity) 'payload'? 'response'? outcomes+=HttpServerOutcome
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload'? 'response'? (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] (ambiguity) 'payload'? 'response'? outcomes+=HttpServerOutcome
-	 *     url=STRING 'pathParams'? (ambiguity) 'payload' payload+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload' payload+=AttributeParamRef
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload'? 'response'? (rule end)
+	 *     pathParams+=AttributeParamRef (ambiguity) 'payload'? 'response'? outcomes+=HttpServerOutcome
+	 *     url=STRING 'pathParams'? (ambiguity) 'payload' payload+=AttributeParamRef
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? outcomes+=HttpServerOutcome
@@ -305,12 +305,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
 	 *     authorize?='authorize' 'pathParams'? 'queryParams'? 'payload'? (ambiguity) outcomes+=HttpServerOutcome
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? 'payload'? (ambiguity) (rule end)
-	 *     pathParams+=[Attribute|QualifiedName] 'queryParams'? 'payload'? (ambiguity) outcomes+=HttpServerOutcome
-	 *     payload+=[Attribute|QualifiedName] (ambiguity) (rule end)
-	 *     payload+=[Attribute|QualifiedName] (ambiguity) outcomes+=HttpServerOutcome
-	 *     queryParams+=[Attribute|QualifiedName] 'payload'? (ambiguity) (rule end)
-	 *     queryParams+=[Attribute|QualifiedName] 'payload'? (ambiguity) outcomes+=HttpServerOutcome
+	 *     pathParams+=AttributeParamRef 'queryParams'? 'payload'? (ambiguity) (rule end)
+	 *     pathParams+=AttributeParamRef 'queryParams'? 'payload'? (ambiguity) outcomes+=HttpServerOutcome
+	 *     payload+=AttributeParamRef (ambiguity) (rule end)
+	 *     payload+=AttributeParamRef (ambiguity) outcomes+=HttpServerOutcome
+	 *     queryParams+=AttributeParamRef 'payload'? (ambiguity) (rule end)
+	 *     queryParams+=AttributeParamRef 'payload'? (ambiguity) outcomes+=HttpServerOutcome
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) outcomes+=HttpServerOutcome
 	 */

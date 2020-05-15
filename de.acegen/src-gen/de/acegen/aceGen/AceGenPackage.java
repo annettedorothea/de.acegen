@@ -544,7 +544,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE__AUTHORIZE = 5;
 
   /**
-   * The feature id for the '<em><b>Path Params</b></em>' reference list.
+   * The feature id for the '<em><b>Path Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -553,7 +553,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE__PATH_PARAMS = 6;
 
   /**
-   * The feature id for the '<em><b>Query Params</b></em>' reference list.
+   * The feature id for the '<em><b>Query Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -562,7 +562,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE__QUERY_PARAMS = 7;
 
   /**
-   * The feature id for the '<em><b>Payload</b></em>' reference list.
+   * The feature id for the '<em><b>Payload</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -653,7 +653,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_WRITE__AUTHORIZE = HTTP_SERVER_ACE__AUTHORIZE;
 
   /**
-   * The feature id for the '<em><b>Path Params</b></em>' reference list.
+   * The feature id for the '<em><b>Path Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -662,7 +662,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_WRITE__PATH_PARAMS = HTTP_SERVER_ACE__PATH_PARAMS;
 
   /**
-   * The feature id for the '<em><b>Query Params</b></em>' reference list.
+   * The feature id for the '<em><b>Query Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -671,7 +671,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_WRITE__QUERY_PARAMS = HTTP_SERVER_ACE__QUERY_PARAMS;
 
   /**
-   * The feature id for the '<em><b>Payload</b></em>' reference list.
+   * The feature id for the '<em><b>Payload</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -808,7 +808,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_READ__AUTHORIZE = HTTP_SERVER_ACE__AUTHORIZE;
 
   /**
-   * The feature id for the '<em><b>Path Params</b></em>' reference list.
+   * The feature id for the '<em><b>Path Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -817,7 +817,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_READ__PATH_PARAMS = HTTP_SERVER_ACE__PATH_PARAMS;
 
   /**
-   * The feature id for the '<em><b>Query Params</b></em>' reference list.
+   * The feature id for the '<em><b>Query Params</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -826,7 +826,7 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_READ__QUERY_PARAMS = HTTP_SERVER_ACE__QUERY_PARAMS;
 
   /**
-   * The feature id for the '<em><b>Payload</b></em>' reference list.
+   * The feature id for the '<em><b>Payload</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -853,6 +853,43 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_READ_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AttributeParamRefImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeParamRef()
+   * @generated
+   */
+  int ATTRIBUTE_PARAM_REF = 12;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_PARAM_REF__ATTRIBUTE = 0;
+
+  /**
+   * The feature id for the '<em><b>Optional</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_PARAM_REF__OPTIONAL = 1;
+
+  /**
+   * The number of structural features of the '<em>Attribute Param Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_PARAM_REF_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerViewImpl <em>Http Server View</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -860,7 +897,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerView()
    * @generated
    */
-  int HTTP_SERVER_VIEW = 12;
+  int HTTP_SERVER_VIEW = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -897,7 +934,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerViewFunction()
    * @generated
    */
-  int HTTP_SERVER_VIEW_FUNCTION = 13;
+  int HTTP_SERVER_VIEW_FUNCTION = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -934,7 +971,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthUser()
    * @generated
    */
-  int AUTH_USER = 14;
+  int AUTH_USER = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -971,7 +1008,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 15;
+  int MODEL = 16;
 
   /**
    * The feature id for the '<em><b>Persistent</b></em>' attribute.
@@ -1026,7 +1063,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenario()
    * @generated
    */
-  int SCENARIO = 16;
+  int SCENARIO = 17;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1081,7 +1118,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGivenRef()
    * @generated
    */
-  int GIVEN_REF = 17;
+  int GIVEN_REF = 18;
 
   /**
    * The feature id for the '<em><b>Scenario</b></em>' reference.
@@ -1127,7 +1164,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getWhenBlock()
    * @generated
    */
-  int WHEN_BLOCK = 18;
+  int WHEN_BLOCK = 19;
 
   /**
    * The feature id for the '<em><b>Action</b></em>' reference.
@@ -1173,7 +1210,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getThenBlock()
    * @generated
    */
-  int THEN_BLOCK = 19;
+  int THEN_BLOCK = 20;
 
   /**
    * The feature id for the '<em><b>Status Code</b></em>' attribute.
@@ -1210,7 +1247,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 20;
+  int DATA_DEFINITION = 21;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -1265,7 +1302,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 21;
+  int AUTHORIZATION = 22;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -1302,7 +1339,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 22;
+  int ATTRIBUTE = 23;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1386,22 +1423,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__NOT_REPLAYABLE = 8;
 
   /**
-   * The feature id for the '<em><b>Optional</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE__OPTIONAL = 9;
-
-  /**
    * The number of structural features of the '<em>Attribute</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_FEATURE_COUNT = 10;
+  int ATTRIBUTE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
@@ -1411,7 +1439,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 26;
+  int JSON_VALUE = 27;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1466,7 +1494,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 23;
+  int JSON_DATE_TIME = 24;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1539,7 +1567,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 24;
+  int JSON_OBJECT = 25;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1603,7 +1631,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 25;
+  int JSON_MEMBER = 26;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1640,7 +1668,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 27;
+  int JSON_ARRAY = 28;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2184,10 +2212,10 @@ public interface AceGenPackage extends EPackage
   EAttribute getHttpServerAce_Authorize();
 
   /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAce#getPathParams <em>Path Params</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpServerAce#getPathParams <em>Path Params</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Path Params</em>'.
+   * @return the meta object for the containment reference list '<em>Path Params</em>'.
    * @see de.acegen.aceGen.HttpServerAce#getPathParams()
    * @see #getHttpServerAce()
    * @generated
@@ -2195,10 +2223,10 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServerAce_PathParams();
 
   /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAce#getQueryParams <em>Query Params</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpServerAce#getQueryParams <em>Query Params</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Query Params</em>'.
+   * @return the meta object for the containment reference list '<em>Query Params</em>'.
    * @see de.acegen.aceGen.HttpServerAce#getQueryParams()
    * @see #getHttpServerAce()
    * @generated
@@ -2206,10 +2234,10 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServerAce_QueryParams();
 
   /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAce#getPayload <em>Payload</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpServerAce#getPayload <em>Payload</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Payload</em>'.
+   * @return the meta object for the containment reference list '<em>Payload</em>'.
    * @see de.acegen.aceGen.HttpServerAce#getPayload()
    * @see #getHttpServerAce()
    * @generated
@@ -2289,6 +2317,38 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EClass getHttpServerAceRead();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeParamRef <em>Attribute Param Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Param Ref</em>'.
+   * @see de.acegen.aceGen.AttributeParamRef
+   * @generated
+   */
+  EClass getAttributeParamRef();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.AttributeParamRef#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.AttributeParamRef#getAttribute()
+   * @see #getAttributeParamRef()
+   * @generated
+   */
+  EReference getAttributeParamRef_Attribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.AttributeParamRef#isOptional <em>Optional</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Optional</em>'.
+   * @see de.acegen.aceGen.AttributeParamRef#isOptional()
+   * @see #getAttributeParamRef()
+   * @generated
+   */
+  EAttribute getAttributeParamRef_Optional();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerView <em>Http Server View</em>}'.
@@ -2806,17 +2866,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getAttribute_NotReplayable();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isOptional <em>Optional</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Optional</em>'.
-   * @see de.acegen.aceGen.Attribute#isOptional()
-   * @see #getAttribute()
-   * @generated
-   */
-  EAttribute getAttribute_Optional();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
@@ -3380,7 +3429,7 @@ public interface AceGenPackage extends EPackage
     EAttribute HTTP_SERVER_ACE__AUTHORIZE = eINSTANCE.getHttpServerAce_Authorize();
 
     /**
-     * The meta object literal for the '<em><b>Path Params</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Path Params</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3388,7 +3437,7 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER_ACE__PATH_PARAMS = eINSTANCE.getHttpServerAce_PathParams();
 
     /**
-     * The meta object literal for the '<em><b>Query Params</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Query Params</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3396,7 +3445,7 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER_ACE__QUERY_PARAMS = eINSTANCE.getHttpServerAce_QueryParams();
 
     /**
-     * The meta object literal for the '<em><b>Payload</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Payload</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3464,6 +3513,32 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_SERVER_ACE_READ = eINSTANCE.getHttpServerAceRead();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AttributeParamRefImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeParamRef()
+     * @generated
+     */
+    EClass ATTRIBUTE_PARAM_REF = eINSTANCE.getAttributeParamRef();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_PARAM_REF__ATTRIBUTE = eINSTANCE.getAttributeParamRef_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE_PARAM_REF__OPTIONAL = eINSTANCE.getAttributeParamRef_Optional();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerViewImpl <em>Http Server View</em>}' class.
@@ -3870,14 +3945,6 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
-
-    /**
-     * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ATTRIBUTE__OPTIONAL = eINSTANCE.getAttribute_Optional();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.

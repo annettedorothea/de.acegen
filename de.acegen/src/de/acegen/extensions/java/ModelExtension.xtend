@@ -161,7 +161,7 @@ class ModelExtension {
 	
 	def String dataInterfaceName(Model it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	
-	def String dataNameWithPackage(Model it) '''«(eContainer as HttpServer).getName».data.«dataName»'''
+	def String dataNameWithPackage(Model it) '''«IF it !== null»«(eContainer as HttpServer).getName».data.«dataName»«ENDIF»'''
 	
 	def String dataInterfaceNameWithPackage(Model it) '''«(eContainer as HttpServer).getName».data.«dataInterfaceName»'''
 	

@@ -79,9 +79,9 @@ HttpServerAceWrite:
 	type = WriteFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
-	('pathParams' (pathParams += [Attribute | QualifiedName])*)?
-	('queryParams' (queryParams += [Attribute | QualifiedName])*)?
-	('payload' (payload += [Attribute | QualifiedName])*)?
+	('pathParams' (pathParams += AttributeParamRef)*)?
+	('queryParams' (queryParams += AttributeParamRef)*)?
+	('payload' (payload += AttributeParamRef)*)?
 	('response' (response += [Attribute | QualifiedName])*)?
 	(outcomes += HttpServerOutcome)*
 ;
@@ -96,10 +96,14 @@ HttpServerAceRead:
 	type = ReadFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
-	('pathParams' (pathParams += [Attribute | QualifiedName])*)?
-	('queryParams' (queryParams += [Attribute | QualifiedName])*)?
-	('payload' (payload += [Attribute | QualifiedName])*)?
+	('pathParams' (pathParams += AttributeParamRef)*)?
+	('queryParams' (queryParams += AttributeParamRef)*)?
+	('payload' (payload += AttributeParamRef)*)?
 	('response' (response += [Attribute | QualifiedName])*)?
+;
+
+AttributeParamRef:
+	attribute = [Attribute | QualifiedName] optional ?= 'optional'? 
 ;
 
 HttpServerView: 
@@ -168,7 +172,6 @@ Attribute:
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
 	notReplayable ?= 'notReplayable'?
-	optional ?= 'optional'?
 ;
 
 QualifiedName:

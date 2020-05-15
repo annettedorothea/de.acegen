@@ -29,6 +29,7 @@ import javax.inject.Inject
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
+import de.acegen.aceGen.AttributeParamRef
 
 class AttributeExtension {
 
@@ -50,52 +51,52 @@ class AttributeExtension {
 		Attribute it) '''«IF type !== null && type.equals('DateTime')»new DateTime(«name»).withZone(DateTimeZone.UTC)«ELSE»«name»«ENDIF»'''
 
 	def String initActionData(
-		Attribute it) '''
+		AttributeParamRef it) '''
 		
-		«IF type !== null && type.equals('DateTime')»
+		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
 			«IF !optional»
-				if (StringUtils.isBlank(«name»)) {
-					throwBadRequest("«name» is mandatory");
+				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
+					throwBadRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
-			if (StringUtils.isNotBlank(«name»)) {
+			if (StringUtils.isNotBlank(«attribute.name»)) {
 				try {
-					this.actionData.«setterCall(resourceParam)»;
+					this.actionData.«attribute.setterCall(attribute.resourceParam)»;
 				} catch (Exception x) {
-					LOG.warn("failed to parse dateTime «name» - {}", «name»);
+					LOG.warn("failed to parse dateTime «attribute.name» - {}", «attribute.name»);
 				}
 			}
 		«ELSE»
 			«IF !optional»
-				«IF type === "String"»
-					if (StringUtils.isBlank(«name»)) {
-						throwBadRequest("«name» is mandatory");
+				«IF "String".equals(attribute.type) && !attribute.list»
+					if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
+						throwBadRequest("«attribute.name» is mandatory");
 					}
 				«ELSE»
-					if («name» == null) {
-						throwBadRequest("«name» is mandatory");
+					if («attribute.name» == null) {
+						throwBadRequest("«attribute.name» is mandatory");
 					}
 				«ENDIF»
 			«ENDIF»
-			this.actionData.«setterCall(resourceParam)»;
+			this.actionData.«attribute.setterCall(attribute.resourceParam)»;
 		«ENDIF»
 	'''
 
 	def String initActionDataFromPayload(
-		Attribute it) '''
+		AttributeParamRef it) '''
 		
 		«IF !optional»
-			«IF type === "String"»
-				if (StringUtils.isBlank(payload.«getterCall»)) {
-					throwBadRequest("«name» is mandatory");
+			«IF "String".equals(attribute.type) && !attribute.list»
+				if (StringUtils.isBlank(payload.«attribute.getterCall») || "null".equals(payload.«attribute.getterCall»)) {
+					throwBadRequest("«attribute.name» is mandatory");
 				}
 			«ELSE»
-				if (payload.«getterCall» == null) {
-					throwBadRequest("«name» is mandatory");
+				if (payload.«attribute.getterCall» == null) {
+					throwBadRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
 		«ENDIF»
-		this.actionData.«setterCall('''payload.«getterCall»''')»;
+		this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
 	'''
 
 	def String getterCall(Attribute it) {

@@ -59,9 +59,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/url"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/authorize"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/pathParams"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/queryParams"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/payload"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/pathParams"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/queryParams"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/payload"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/response"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceWrite">
@@ -72,6 +72,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerOutcome/listeners"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceRead"/>
+    <genClasses ecoreClass="AceGen.ecore#//AttributeParamRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeParamRef/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//AttributeParamRef/optional"/>
+    </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerView">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerView/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerView/renderFunctions"/>
@@ -130,7 +134,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notReplayable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/optional"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonDateTime">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/dateTime"/>
