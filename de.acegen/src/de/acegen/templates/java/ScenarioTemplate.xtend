@@ -121,7 +121,7 @@ class ScenarioTemplate {
 			}
 			
 			private Response when() throws Exception {
-				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid»"«ELSE»this.randomUUID()«ENDIF»;
+				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateActionCall(java, true)»
 			}
@@ -161,9 +161,9 @@ class ScenarioTemplate {
 						
 						@Test
 						public void «name.toFirstLower»() throws Exception {
-							if (prerequisite("«name»")) {
-								given();
+							given();
 								
+							if (prerequisite("«name»")) {
 								Response response = when();
 				
 								LOG.info("WHEN: «whenBlock.action.name»");

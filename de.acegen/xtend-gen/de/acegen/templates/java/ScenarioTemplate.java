@@ -356,7 +356,7 @@ public class ScenarioTemplate {
         _builder.append("\"");
         String _uuid_5 = it.getWhenBlock().getDataDefinition().getUuid();
         _builder.append(_uuid_5, "\t\t");
-        _builder.append("\"");
+        _builder.append("\".replace(\"${testId}\", this.getTestId())");
       } else {
         _builder.append("this.randomUUID()");
       }
@@ -511,16 +511,16 @@ public class ScenarioTemplate {
     _builder.append("() throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t");
+    _builder.append("given();");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t\t");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t");
     _builder.append("if (prerequisite(\"");
     String _name_11 = it.getName();
     _builder.append(_name_11, "\t\t\t\t\t");
     _builder.append("\")) {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t\t");
-    _builder.append("given();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
-    _builder.newLine();
     _builder.append("\t\t\t\t\t\t");
     _builder.append("Response response = when();");
     _builder.newLine();
