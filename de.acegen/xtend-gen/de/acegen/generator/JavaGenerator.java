@@ -301,6 +301,8 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventReplayCommand());
     fsa.generateFile(("de/acegen" + "/NotReplayableDataProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateNotReplayableDataProvider());
+    fsa.generateFile(("de/acegen" + "/NotReplayableDataProviderResource.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateNotReplayableDataProviderResource());
     fsa.generateFile(("de/acegen" + "/AceDao.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateAceDao());
     fsa.generateFile(("de/acegen" + "/Action.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 

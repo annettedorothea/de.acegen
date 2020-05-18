@@ -221,6 +221,9 @@ class AttributeExtension {
 			if (string.contains("${random}")) {
 				returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
 			}
+			if (string.contains("${testId}")) {
+				returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+			}
 			return '''\"«returnString»\"''';
 		} else if (boolean !== null) {
 			return boolean;

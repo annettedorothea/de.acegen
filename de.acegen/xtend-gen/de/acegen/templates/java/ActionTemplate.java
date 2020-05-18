@@ -101,6 +101,9 @@ public class ActionTemplate {
     _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.E2E;");
@@ -204,6 +207,10 @@ public class ActionTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("private ObjectMapper objectMapper;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
     CharSequence _constructor = this.constructor(it);
     _builder.append(_constructor, "\t");
     _builder.newLineIfNotEmpty();
@@ -219,6 +226,9 @@ public class ActionTemplate {
     _builder.append(_type, "\t\t\t\t\t\t");
     _builder.append(");");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("objectMapper = new ObjectMapper();");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -363,6 +373,9 @@ public class ActionTemplate {
     _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.E2E;");
@@ -435,6 +448,11 @@ public class ActionTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("private ObjectMapper objectMapper;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
     CharSequence _constructor = this.constructor(it);
     _builder.append(_constructor, "\t");
     _builder.newLineIfNotEmpty();
@@ -446,6 +464,9 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t\t");
     _builder.append("viewProvider, e2e);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("objectMapper = new ObjectMapper();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -556,10 +577,13 @@ public class ActionTemplate {
     _builder.append("protected void initActionDataFromNotReplayableDataProvider() {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("if (NotReplayableDataProvider.getSystemTime() != null) {");
+    _builder.append("DateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("if (systemTime != null) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());");
+    _builder.append("this.actionData.setSystemTime(systemTime);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -571,34 +595,60 @@ public class ActionTemplate {
           boolean _isNotReplayable = attribute.isNotReplayable();
           if (_isNotReplayable) {
             _builder.append("\t");
-            _builder.append("if (NotReplayableDataProvider.get(\"");
+            _builder.append("Object value = NotReplayableDataProvider.consumeValue(this.actionData.getUuid(), \"");
             String _name = attribute.getName();
             _builder.append(_name, "\t");
-            _builder.append("\") != null) {");
+            _builder.append("\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
+            _builder.append("if (value != null) {");
+            _builder.newLine();
             _builder.append("\t");
-            _builder.append("this.actionData.");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("(");
+            _builder.append("\t");
+            _builder.append("try {");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t\t");
             String _type = attribute.getType();
-            _builder_1.append(_type);
-            _builder_1.append(")NotReplayableDataProvider.get(\"");
+            _builder.append(_type, "\t\t\t");
+            _builder.append(" ");
             String _name_1 = attribute.getName();
-            _builder_1.append(_name_1);
-            _builder_1.append("\")");
-            String _setterCall = this._attributeExtension.setterCall(attribute, _builder_1.toString());
-            _builder.append(_setterCall, "\t\t");
+            _builder.append(_name_1, "\t\t\t");
+            _builder.append(" = (");
+            String _type_1 = attribute.getType();
+            _builder.append(_type_1, "\t\t\t");
+            _builder.append(")value;");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t");
+            _builder.append("this.actionData.");
+            String _setterCall = this._attributeExtension.setterCall(attribute, attribute.getName());
+            _builder.append(_setterCall, "\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("} catch (Exception x) {");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t\t");
+            _builder.append("LOG.warn(\"");
+            String _name_2 = attribute.getName();
+            _builder.append(_name_2, "\t\t\t");
+            _builder.append(" is declared as not replayable and failed to parse {} from NotReplayableDataProvider.\", value);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
             _builder.append("\t");
             _builder.append("} else {");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("LOG.warn(\"");
-            String _name_2 = attribute.getName();
-            _builder.append(_name_2, "\t\t");
+            String _name_3 = attribute.getName();
+            _builder.append(_name_3, "\t\t");
             _builder.append(" is declared as not replayable but no value was found in NotReplayableDataProvider.\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -1414,15 +1464,6 @@ public class ActionTemplate {
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.close();");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("NotReplayableDataProvider.clear();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -1775,15 +1816,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.close();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("NotReplayableDataProvider.clear();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -2259,7 +2291,7 @@ public class ActionTemplate {
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t\t");
-            _builder.append("int port");
+            _builder.append("String protocol, String host, int port");
             {
               boolean _isAuthorize = aceOperation.isAuthorize();
               if (_isAuthorize) {
@@ -2278,10 +2310,10 @@ public class ActionTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
-            _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+            _builder.append("Builder builder = client.target(String.format(\"%s://%s:%d/api");
             String _urlWithPathParams = this._aceExtension.urlWithPathParams(aceOperation);
             _builder.append(_urlWithPathParams, "\t\t");
-            _builder.append("\", port)).request(); ");
+            _builder.append("\", protocol, host, port)).request(); ");
             _builder.newLineIfNotEmpty();
             {
               boolean _isAuthorize_1 = aceOperation.isAuthorize();
@@ -2317,7 +2349,7 @@ public class ActionTemplate {
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
               _builder.append("\t\t");
-              _builder.append("int port");
+              _builder.append("String protocol, String host, int port");
               {
                 boolean _isAuthorize_2 = aceOperation.isAuthorize();
                 if (_isAuthorize_2) {
@@ -2336,7 +2368,7 @@ public class ActionTemplate {
               _builder.newLine();
               _builder.append("\t");
               _builder.append("\t");
-              _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+              _builder.append("Builder builder = client.target(String.format(\"%s://%s:%d/api");
               String _urlWithPathParams_1 = this._aceExtension.urlWithPathParams(aceOperation);
               _builder.append(_urlWithPathParams_1, "\t\t");
               _builder.append("?uuid=\" + data.getUuid()");
@@ -2351,7 +2383,7 @@ public class ActionTemplate {
                   _builder.append(_terCall, "\t\t");
                 }
               }
-              _builder.append(", port)).request();");
+              _builder.append(", protocol, host, port)).request();");
               _builder.newLineIfNotEmpty();
               {
                 boolean _isAuthorize_3 = aceOperation.isAuthorize();
@@ -2397,7 +2429,7 @@ public class ActionTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t\t");
-                _builder.append("int port");
+                _builder.append("String protocol, String host, int port");
                 {
                   boolean _isAuthorize_4 = aceOperation.isAuthorize();
                   if (_isAuthorize_4) {
@@ -2416,7 +2448,7 @@ public class ActionTemplate {
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+                _builder.append("Builder builder = client.target(String.format(\"%s://%s:%d/api");
                 String _urlWithPathParams_2 = this._aceExtension.urlWithPathParams(aceOperation);
                 _builder.append(_urlWithPathParams_2, "\t\t");
                 _builder.append("?uuid=\" + data.getUuid()");
@@ -2431,7 +2463,7 @@ public class ActionTemplate {
                     _builder.append(_terCall_1, "\t\t");
                   }
                 }
-                _builder.append(", port)).request();");
+                _builder.append(", protocol, host, port)).request();");
                 _builder.newLineIfNotEmpty();
                 {
                   boolean _isAuthorize_5 = aceOperation.isAuthorize();
@@ -2464,7 +2496,7 @@ public class ActionTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t\t");
-                _builder.append("int port");
+                _builder.append("String protocol, String host, int port");
                 {
                   boolean _isAuthorize_6 = aceOperation.isAuthorize();
                   if (_isAuthorize_6) {
@@ -2483,7 +2515,7 @@ public class ActionTemplate {
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("Builder builder = client.target(String.format(\"http://localhost:%d/api");
+                _builder.append("Builder builder = client.target(String.format(\"%s://%s:%d/api");
                 String _urlWithPathParams_3 = this._aceExtension.urlWithPathParams(aceOperation);
                 _builder.append(_urlWithPathParams_3, "\t\t");
                 _builder.append("?uuid=\" + data.getUuid()");
@@ -2498,7 +2530,7 @@ public class ActionTemplate {
                     _builder.append(_terCall_2, "\t\t");
                   }
                 }
-                _builder.append(", port)).request(); ");
+                _builder.append(", protocol, host, port)).request(); ");
                 _builder.newLineIfNotEmpty();
                 {
                   boolean _isAuthorize_7 = aceOperation.isAuthorize();

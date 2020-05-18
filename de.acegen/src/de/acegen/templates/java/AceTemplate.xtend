@@ -579,41 +579,107 @@ class AceTemplate {
 	def generateNotReplayableDataProvider() '''
 		«copyright»
 		
+			package de.acegen;
+			
+			import java.util.concurrent.ConcurrentHashMap;
+			import java.util.concurrent.ConcurrentMap;
+			
+			import org.joda.time.DateTime;
+			
+			public class NotReplayableDataProvider {
+				
+				private static ConcurrentMap<String, DateTime> systemTimeMap = new ConcurrentHashMap<>();
+		
+				private static ConcurrentMap<String, ConcurrentMap<String, Object>> valueMap = new ConcurrentHashMap<>();
+			
+				public static DateTime consumeSystemTime(String uuid) {
+					DateTime value = systemTimeMap.get(uuid);
+					if (value != null) {
+						systemTimeMap.remove(uuid);
+					}
+					return value;
+				}
+			
+				public static void putSystemTime(String uuid, DateTime systemTime) {
+					systemTimeMap.put(uuid, systemTime);
+				}
+				
+				public static void put(String uuid, String key, Object value) {
+					ConcurrentMap<String, Object> mapForUuid = valueMap.get(uuid);
+					if (mapForUuid == null) {
+						mapForUuid = new ConcurrentHashMap<String, Object>();
+						valueMap.put(uuid, mapForUuid);
+					}
+					mapForUuid.put(key, value);
+				}
+				
+				public static Object consumeValue(String uuid, String key) {
+					ConcurrentMap<String, Object> mapForUuid = valueMap.get(uuid);
+					if (mapForUuid == null) {
+						return null;
+					}
+					Object value = mapForUuid.get(key);
+					mapForUuid.remove(key);
+					if (mapForUuid.size() == 0) {
+						valueMap.remove(uuid);
+					}
+					return value;
+				}
+				
+			}					
+			
+		«sdg»
+		
+	'''
+
+	def generateNotReplayableDataProviderResource() '''
+		«copyright»
+		
 		package de.acegen;
 		
-		import java.util.HashMap;
-		import java.util.Map;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.PUT;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.Produces;
+		import javax.ws.rs.QueryParam;
+		import javax.ws.rs.core.MediaType;
+		import javax.ws.rs.core.Response;
 		
 		import org.joda.time.DateTime;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
 		
-		public class NotReplayableDataProvider {
-			
-			private static DateTime systemTime;
-			
-			private static Map<String, Object> valueMap = new HashMap<>();
+		import com.codahale.metrics.annotation.Timed;
 		
-			public static DateTime getSystemTime() {
-				return systemTime;
-			}
+		@Path("/test/not-replayable")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public class NotReplayableDataProviderResource {
 		
-			public static void setSystemTime(DateTime systemTime) {
-				NotReplayableDataProvider.systemTime = systemTime;
-			}
-			
-			public static void put(String key, Object value) {
-				valueMap.put(key, value);
-			}
-			
-			public static Object get(String key) {
-				return valueMap.get(key);
-			}
-			
-			public static void clear() {
-				systemTime = null;
-				valueMap.clear();
+			static final Logger LOG = LoggerFactory.getLogger(NotReplayableDataProviderResource.class);
+		
+			public NotReplayableDataProviderResource() {
+				super();
 			}
 		
+			@PUT
+			@Timed
+			@Path("/value")
+			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key, String json) {
+				NotReplayableDataProvider.put(uuid, key, json);
+				return Response.ok().build();
+			}
+		
+			@PUT
+			@Timed
+			@Path("/system-time")
+			public Response putSystemTime(@QueryParam("uuid") String uuid, DateTime systemTime) {
+				NotReplayableDataProvider.putSystemTime(uuid, systemTime);
+				return Response.ok().build();
+			}
+			
 		}
+		
 		
 		«sdg»
 		

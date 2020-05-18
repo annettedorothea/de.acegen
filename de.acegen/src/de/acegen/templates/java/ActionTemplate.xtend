@@ -69,6 +69,8 @@ class ActionTemplate {
 		
 		import org.apache.commons.lang3.StringUtils;
 		
+		import com.fasterxml.jackson.databind.ObjectMapper;
+		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
 		import de.acegen.HttpMethod;
@@ -106,9 +108,12 @@ class ActionTemplate {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
+			private ObjectMapper objectMapper;
+
 			«constructor»
 				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e, HttpMethod.«getType»);
+				objectMapper = new ObjectMapper();
 			}
 		
 			@Override
@@ -168,6 +173,8 @@ class ActionTemplate {
 		
 		import org.apache.commons.lang3.StringUtils;
 		
+		import com.fasterxml.jackson.databind.ObjectMapper;
+		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
 		import de.acegen.IDaoProvider;
@@ -199,9 +206,12 @@ class ActionTemplate {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
+			private ObjectMapper objectMapper;
+			
 			«constructor»
 				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
+				objectMapper = new ObjectMapper();
 			}
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
@@ -242,13 +252,20 @@ class ActionTemplate {
 	private def initActionDataFromNotReplayableDataProvider(HttpServerAce it) '''
 		@Override
 		protected void initActionDataFromNotReplayableDataProvider() {
-			if (NotReplayableDataProvider.getSystemTime() != null) {
-				this.actionData.setSystemTime(NotReplayableDataProvider.getSystemTime());
+			DateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
+			if (systemTime != null) {
+				this.actionData.setSystemTime(systemTime);
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.notReplayable»
-					if (NotReplayableDataProvider.get("«attribute.name»") != null) {
-						this.actionData.«attribute.setterCall('''(«attribute.type»)NotReplayableDataProvider.get("«attribute.name»")''')»;
+					Object value = NotReplayableDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
+					if (value != null) {
+						try {
+							«attribute.type» «attribute.name» = («attribute.type»)value;
+							this.actionData.«attribute.setterCall(attribute.name)»;
+						} catch (Exception x) {
+							LOG.warn("«attribute.name» is declared as not replayable and failed to parse {} from NotReplayableDataProvider.", value);
+						}
 					} else {
 						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
 					}
@@ -543,9 +560,6 @@ class ActionTemplate {
 					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
 				} finally {
 					databaseHandle.close();
-					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						NotReplayableDataProvider.clear();
-					}
 				}
 			}
 		
@@ -670,9 +684,6 @@ class ActionTemplate {
 					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
 				} finally {
 					databaseHandle.close();
-					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						NotReplayableDataProvider.clear();
-					}
 				}
 			}
 		
@@ -861,10 +872,10 @@ class ActionTemplate {
 				«IF aceOperation.getType == "POST"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
 							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							int port«IF aceOperation.isAuthorize», 
+							String protocol, String host, int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»", port)).request(); 
+						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»", protocol, host, port)).request(); 
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -873,10 +884,10 @@ class ActionTemplate {
 				«ELSEIF aceOperation.getType == "PUT"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
 							«aceOperation.getModel.dataInterfaceNameWithPackage» data, 
-							int port«IF aceOperation.isAuthorize», 
+							String protocol, String host, int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request();
+						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request();
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -885,10 +896,10 @@ class ActionTemplate {
 				«ELSEIF aceOperation.getType == "DELETE"»
 					public static Response call«aceOperation.getName.toFirstUpper»(
 							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							int port«IF aceOperation.isAuthorize», 
+							String protocol, String host, int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request();
+						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request();
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»
@@ -897,10 +908,10 @@ class ActionTemplate {
 				«ELSE»
 					public static Response call«aceOperation.getName.toFirstUpper»(
 							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							int port«IF aceOperation.isAuthorize», 
+							String protocol, String host, int port«IF aceOperation.isAuthorize», 
 							String authorization«ENDIF») {
 						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("http://localhost:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», port)).request(); 
+						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request(); 
 						«IF aceOperation.isAuthorize»
 							builder.header("Authorization", authorization);
 						«ENDIF»

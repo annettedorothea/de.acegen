@@ -69,6 +69,9 @@ class ScenarioTemplate {
 		
 		import org.junit.Test;
 		
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
 		import de.acegen.BaseScenario;
 		import de.acegen.ITimelineItem;
 		import de.acegen.NotReplayableDataProvider;
@@ -76,25 +79,40 @@ class ScenarioTemplate {
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
 		
+			static final Logger LOG = LoggerFactory.getLogger(Abstract«name»Scenario.class);
+			
 			private void given() throws Exception {
 				Response response;
+				String uuid;
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
-							«givenRef.scenario.whenBlock.generatePrepare»
-							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
-							if (response.getStatus() >= 400) {
-								String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
-								assertFail(message);
+							if (prerequisite("«givenRef.scenario.name»")) {
+								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+								«givenRef.scenario.whenBlock.generatePrepare»
+								response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+								if (response.getStatus() >= 400) {
+									String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+									assertFail(message);
+								}
+								LOG.info("GIVEN: «givenRef.scenario.name»");
+							} else {
+								LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 							}
 							
 						«ENDFOR»
 					«ELSE»
-						«givenRef.scenario.whenBlock.generatePrepare»
-						response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
-						if (response.getStatus() >= 400) {
-							String message = "GIVEN «givenRef.scenario.whenBlock.action.name» fails\n" + response.readEntity(String.class);
-							assertFail(message);
+						if (prerequisite("«givenRef.scenario.name»")) {
+							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+							«givenRef.scenario.whenBlock.generatePrepare»
+							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+							if (response.getStatus() >= 400) {
+								String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+								assertFail(message);
+							}
+							LOG.info("GIVEN: «givenRef.scenario.name»");
+						} else {
+							LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 						}
 						
 					«ENDIF»
@@ -103,6 +121,7 @@ class ScenarioTemplate {
 			}
 			
 			private Response when() throws Exception {
+				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateActionCall(java, true)»
 			}
@@ -127,7 +146,7 @@ class ScenarioTemplate {
 					}
 				«ENDIF»
 				«IF thenBlock.response !== null»
-					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCall(thenBlock.response, whenBlock.action.model)»;
+					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
 					
 					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
 
@@ -142,13 +161,19 @@ class ScenarioTemplate {
 						
 						@Test
 						public void «name.toFirstLower»() throws Exception {
-							given();
-							
-							Response response = when();
-					
-							«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
-							
-							verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+							if (prerequisite("«name»")) {
+								given();
+								
+								Response response = when();
+				
+								LOG.info("WHEN: «whenBlock.action.name»");
+						
+								«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
+								
+								verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+							} else {
+								LOG.info("prerequisite for «name» not met");
+							}
 						}
 						
 						protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
@@ -187,14 +212,15 @@ class ScenarioTemplate {
 	
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			NotReplayableDataProvider.setSystemTime(DateTime.parse("«dataDefinition.systemtime»", DateTimeFormat.forPattern("«dataDefinition.pattern»")).withZone(DateTimeZone.UTC));
+			this.callNotReplayableDataProviderPutSystemTime(uuid, DateTime.parse("«dataDefinition.systemtime»", DateTimeFormat.forPattern("«dataDefinition.pattern»")).withZone(DateTimeZone.UTC), 
+						this.getProtocol(), this.getHost(), this.getPort());
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.members !== null»
 			«FOR attributeDefinition: dataDefinition.data.members»
 				«IF attributeDefinition.attribute.notReplayable»
-					NotReplayableDataProvider.put("«attributeDefinition.attribute.name»", objectMapper.readValue("«attributeDefinition.value.valueFrom»",
-							«IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class));
-							«ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class));«ENDIF»
+					this.callNotReplayableDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»", 
+								objectMapper.readValue("«attributeDefinition.value.valueFrom»", «IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class), «ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class),«ENDIF»
+								this.getProtocol(), this.getHost(), this.getPort());
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
@@ -204,7 +230,14 @@ class ScenarioTemplate {
 
 	private def objectMapperCall(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«IF uuid !== null»«uuid»«ELSE»" + this.randomUUID() + "«ENDIF»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+		«model.dataNameWithPackage».class)
+		
+	'''
+	
+	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
+		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
+			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)
 		
 	'''
@@ -215,13 +248,13 @@ class ScenarioTemplate {
 		
 		«IF returnResponse»return «ENDIF»
 		«IF getType == "POST"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSEIF getType == "PUT"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSEIF getType == "DELETE"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ELSE»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», DROPWIZARD.getLocalPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
 		«ENDIF»
 		
 	'''
@@ -280,7 +313,6 @@ class ScenarioTemplate {
 				LOG.info("*********************************************************************************");
 				handle = new PersistenceHandle(jdbi.open());
 				daoProvider = new DaoProvider();
-				daoProvider.truncateAllViews(handle);
 			}
 			
 			@After
@@ -337,6 +369,8 @@ class ScenarioTemplate {
 		package de.acegen;
 		
 		import com.fasterxml.jackson.databind.ObjectMapper;
+		import javax.ws.rs.core.Response;
+		import org.joda.time.DateTime;
 		
 		public abstract class AbstractBaseScenario {
 		
@@ -369,6 +403,24 @@ class ScenarioTemplate {
 			protected abstract void assertFail(String message);
 		
 			protected abstract String scenarioName();
+			
+			protected abstract String getProtocol();
+			
+			protected abstract String getHost();
+			
+			protected abstract int getPort();
+
+			protected abstract String getTestId();
+
+			protected abstract boolean prerequisite(String scenarioName);
+			
+			protected abstract Response callNotReplayableDataProviderPutValue(
+						String uuid, String key, Object data,
+						String protocol, String host, int port);
+						
+			protected abstract Response callNotReplayableDataProviderPutSystemTime(
+						String uuid, DateTime dateTime,
+						String protocol, String host, int port);
 
 		}
 		

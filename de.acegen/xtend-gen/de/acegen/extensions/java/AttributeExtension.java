@@ -696,11 +696,17 @@ public class AttributeExtension {
         _builder.append("\" + this.randomString() + \"");
         returnString = returnString.replace("${random}", _builder);
       }
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("\\\"");
-      _builder_1.append(returnString);
-      _builder_1.append("\\\"");
-      return _builder_1;
+      boolean _contains_2 = it.getString().contains("${testId}");
+      if (_contains_2) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\" + this.getTestId() + \"");
+        returnString = returnString.replace("${testId}", _builder_1);
+      }
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\\\"");
+      _builder_2.append(returnString);
+      _builder_2.append("\\\"");
+      return _builder_2;
     } else {
       String _boolean = it.getBoolean();
       boolean _tripleNotEquals_1 = (_boolean != null);
@@ -712,10 +718,10 @@ public class AttributeExtension {
         if (_tripleNotEquals_2) {
           return "null";
         } else {
-          StringConcatenation _builder_2 = new StringConcatenation();
+          StringConcatenation _builder_3 = new StringConcatenation();
           int _long = it.getLong();
-          _builder_2.append(_long);
-          return _builder_2;
+          _builder_3.append(_long);
+          return _builder_3;
         }
       }
     }

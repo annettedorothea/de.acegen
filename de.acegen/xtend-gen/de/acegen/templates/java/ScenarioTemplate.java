@@ -134,6 +134,11 @@ public class ScenarioTemplate {
     _builder.append("import org.junit.Test;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import org.slf4j.Logger;");
+    _builder.newLine();
+    _builder.append("import org.slf4j.LoggerFactory;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import de.acegen.BaseScenario;");
     _builder.newLine();
     _builder.append("import de.acegen.ITimelineItem;");
@@ -150,10 +155,21 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("static final Logger LOG = LoggerFactory.getLogger(Abstract");
+    String _name_2 = it.getName();
+    _builder.append(_name_2, "\t");
+    _builder.append("Scenario.class);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("Response response;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String uuid;");
     _builder.newLine();
     {
       ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
@@ -166,28 +182,75 @@ public class ScenarioTemplate {
               List<Integer> _timesIterator = this._attributeExtension.timesIterator(givenRef.getTimes());
               for(final Integer i : _timesIterator) {
                 _builder.append("\t\t");
-                CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-                _builder.append(_generatePrepare, "\t\t");
+                _builder.append("if (prerequisite(\"");
+                String _name_3 = givenRef.getScenario().getName();
+                _builder.append(_name_3, "\t\t");
+                _builder.append("\")) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("uuid = ");
+                {
+                  String _uuid = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
+                  boolean _tripleNotEquals = (_uuid != null);
+                  if (_tripleNotEquals) {
+                    _builder.append("\"");
+                    String _uuid_1 = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
+                    _builder.append(_uuid_1, "\t\t\t");
+                    _builder.append("\".replace(\"${testId}\", this.getTestId())");
+                  } else {
+                    _builder.append("this.randomUUID()");
+                  }
+                }
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+                _builder.append(_generatePrepare, "\t\t\t");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
                 _builder.append("response = ");
                 CharSequence _generateActionCall = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
-                _builder.append(_generateActionCall, "\t\t");
+                _builder.append(_generateActionCall, "\t\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
+                _builder.append("\t");
                 _builder.append("if (response.getStatus() >= 400) {");
                 _builder.newLine();
                 _builder.append("\t\t");
-                _builder.append("\t");
+                _builder.append("\t\t");
                 _builder.append("String message = \"GIVEN ");
-                String _name_2 = givenRef.getScenario().getWhenBlock().getAction().getName();
-                _builder.append(_name_2, "\t\t\t");
+                String _name_4 = givenRef.getScenario().getName();
+                _builder.append(_name_4, "\t\t\t\t");
                 _builder.append(" fails\\n\" + response.readEntity(String.class);");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
-                _builder.append("\t");
+                _builder.append("\t\t");
                 _builder.append("assertFail(message);");
                 _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("LOG.info(\"GIVEN: ");
+                String _name_5 = givenRef.getScenario().getName();
+                _builder.append(_name_5, "\t\t\t");
+                _builder.append("\");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("} else {");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("LOG.info(\"GIVEN: prerequisite for ");
+                String _name_6 = givenRef.getScenario().getName();
+                _builder.append(_name_6, "\t\t\t");
+                _builder.append(" not met\");");
+                _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("}");
                 _builder.newLine();
@@ -197,28 +260,75 @@ public class ScenarioTemplate {
             }
           } else {
             _builder.append("\t\t");
-            CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
-            _builder.append(_generatePrepare_1, "\t\t");
+            _builder.append("if (prerequisite(\"");
+            String _name_7 = givenRef.getScenario().getName();
+            _builder.append(_name_7, "\t\t");
+            _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("uuid = ");
+            {
+              String _uuid_2 = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
+              boolean _tripleNotEquals_1 = (_uuid_2 != null);
+              if (_tripleNotEquals_1) {
+                _builder.append("\"");
+                String _uuid_3 = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
+                _builder.append(_uuid_3, "\t\t\t");
+                _builder.append("\".replace(\"${testId}\", this.getTestId())");
+              } else {
+                _builder.append("this.randomUUID()");
+              }
+            }
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
+            _builder.append(_generatePrepare_1, "\t\t\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("response = ");
             CharSequence _generateActionCall_1 = this.generateActionCall(givenRef.getScenario().getWhenBlock(), java, false);
-            _builder.append(_generateActionCall_1, "\t\t");
+            _builder.append(_generateActionCall_1, "\t\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("if (response.getStatus() >= 400) {");
             _builder.newLine();
             _builder.append("\t\t");
-            _builder.append("\t");
+            _builder.append("\t\t");
             _builder.append("String message = \"GIVEN ");
-            String _name_3 = givenRef.getScenario().getWhenBlock().getAction().getName();
-            _builder.append(_name_3, "\t\t\t");
+            String _name_8 = givenRef.getScenario().getName();
+            _builder.append(_name_8, "\t\t\t\t");
             _builder.append(" fails\\n\" + response.readEntity(String.class);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            _builder.append("\t");
+            _builder.append("\t\t");
             _builder.append("assertFail(message);");
             _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("LOG.info(\"GIVEN: ");
+            String _name_9 = givenRef.getScenario().getName();
+            _builder.append(_name_9, "\t\t\t");
+            _builder.append("\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("} else {");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("LOG.info(\"GIVEN: prerequisite for ");
+            String _name_10 = givenRef.getScenario().getName();
+            _builder.append(_name_10, "\t\t\t");
+            _builder.append(" not met\");");
+            _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
             _builder.newLine();
@@ -237,6 +347,22 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String uuid = ");
+    {
+      String _uuid_4 = it.getWhenBlock().getDataDefinition().getUuid();
+      boolean _tripleNotEquals_2 = (_uuid_4 != null);
+      if (_tripleNotEquals_2) {
+        _builder.append("\"");
+        String _uuid_5 = it.getWhenBlock().getDataDefinition().getUuid();
+        _builder.append(_uuid_5, "\t\t");
+        _builder.append("\"");
+      } else {
+        _builder.append("this.randomUUID()");
+      }
+    }
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     CharSequence _generatePrepare_2 = this.generatePrepare(it.getWhenBlock());
     _builder.append(_generatePrepare_2, "\t\t");
@@ -278,8 +404,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     {
       int _statusCode = it.getThenBlock().getStatusCode();
-      boolean _tripleNotEquals = (_statusCode != 0);
-      if (_tripleNotEquals) {
+      boolean _tripleNotEquals_3 = (_statusCode != 0);
+      if (_tripleNotEquals_3) {
         _builder.append("\t\t");
         _builder.append("if (response.getStatus() != ");
         int _statusCode_1 = it.getThenBlock().getStatusCode();
@@ -331,14 +457,14 @@ public class ScenarioTemplate {
     }
     {
       DataDefinition _response = it.getThenBlock().getResponse();
-      boolean _tripleNotEquals_1 = (_response != null);
-      if (_tripleNotEquals_1) {
+      boolean _tripleNotEquals_4 = (_response != null);
+      if (_tripleNotEquals_4) {
         _builder.append("\t\t");
         String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
         _builder.append(_dataNameWithPackage, "\t\t");
         _builder.append(" expectedData = ");
-        CharSequence _objectMapperCall = this.objectMapperCall(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
-        _builder.append(_objectMapperCall, "\t\t");
+        CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
+        _builder.append(_objectMapperCallExpectedData, "\t\t");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -385,30 +511,44 @@ public class ScenarioTemplate {
     _builder.append("() throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t");
+    _builder.append("if (prerequisite(\"");
+    String _name_11 = it.getName();
+    _builder.append(_name_11, "\t\t\t\t\t");
+    _builder.append("\")) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t\t\t\t");
     _builder.append("given();");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t\t");
     _builder.append("Response response = when();");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t\t");
+    _builder.append("LOG.info(\"WHEN: ");
+    String _name_12 = it.getWhenBlock().getAction().getName();
+    _builder.append(_name_12, "\t\t\t\t\t\t");
+    _builder.append("\");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t\t");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t\t");
     {
       boolean _isRead_3 = this._aceExtension.isRead(it.getWhenBlock().getAction());
       if (_isRead_3) {
         EObject _eContainer_5 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_5));
-        _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t");
+        _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t\t");
         _builder.append(" actualResponse = ");
       }
     }
     _builder.append("then(response);");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t\t");
     _builder.append("verifications(");
     {
       boolean _isRead_4 = this._aceExtension.isRead(it.getWhenBlock().getAction());
@@ -418,6 +558,18 @@ public class ScenarioTemplate {
     }
     _builder.append(");");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t\t\t");
+    _builder.append("} else {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t\t");
+    _builder.append("LOG.info(\"prerequisite for ");
+    String _name_13 = it.getName();
+    _builder.append(_name_13, "\t\t\t\t\t\t");
+    _builder.append(" not met\");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -446,8 +598,8 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
     _builder.append("return \"");
-    String _name_4 = it.getName();
-    _builder.append(_name_4, "\t\t\t\t\t");
+    String _name_14 = it.getName();
+    _builder.append(_name_14, "\t\t\t\t\t");
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t");
@@ -501,14 +653,17 @@ public class ScenarioTemplate {
       String _systemtime = it.getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
-        _builder.append("NotReplayableDataProvider.setSystemTime(DateTime.parse(\"");
+        _builder.append("this.callNotReplayableDataProviderPutSystemTime(uuid, DateTime.parse(\"");
         String _systemtime_1 = it.getDataDefinition().getSystemtime();
         _builder.append(_systemtime_1);
         _builder.append("\", DateTimeFormat.forPattern(\"");
         String _pattern = it.getDataDefinition().getPattern();
         _builder.append(_pattern);
-        _builder.append("\")).withZone(DateTimeZone.UTC));");
+        _builder.append("\")).withZone(DateTimeZone.UTC), ");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t");
+        _builder.append("this.getProtocol(), this.getHost(), this.getPort());");
+        _builder.newLine();
       }
     }
     {
@@ -519,37 +674,39 @@ public class ScenarioTemplate {
             {
               boolean _isNotReplayable = attributeDefinition.getAttribute().isNotReplayable();
               if (_isNotReplayable) {
-                _builder.append("NotReplayableDataProvider.put(\"");
+                _builder.append("this.callNotReplayableDataProviderPutValue(uuid, \"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
-                _builder.append("\", objectMapper.readValue(\"");
-                CharSequence _valueFrom = this._attributeExtension.valueFrom(attributeDefinition.getValue());
-                _builder.append(_valueFrom);
-                _builder.append("\",");
+                _builder.append("\", ");
                 _builder.newLineIfNotEmpty();
-                _builder.append("\t\t");
+                _builder.append("\t\t\t");
+                _builder.append("objectMapper.readValue(\"");
+                CharSequence _valueFrom = this._attributeExtension.valueFrom(attributeDefinition.getValue());
+                _builder.append(_valueFrom, "\t\t\t");
+                _builder.append("\", ");
                 {
                   Model _model = attributeDefinition.getAttribute().getModel();
                   boolean _tripleNotEquals_1 = (_model != null);
                   if (_tripleNotEquals_1) {
                     _builder.append(" ");
                     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(attributeDefinition.getAttribute().getModel());
-                    _builder.append(_dataNameWithPackage, "\t\t");
-                    _builder.append(".class));");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t\t");
+                    _builder.append(_dataNameWithPackage, "\t\t\t");
+                    _builder.append(".class), ");
                   } else {
                     String _type = attributeDefinition.getAttribute().getType();
                     boolean _tripleNotEquals_2 = (_type != null);
                     if (_tripleNotEquals_2) {
                       _builder.append(" ");
                       String _javaType = this._attributeExtension.javaType(attributeDefinition.getAttribute());
-                      _builder.append(_javaType, "\t\t");
-                      _builder.append(".class));");
+                      _builder.append(_javaType, "\t\t\t");
+                      _builder.append(".class),");
                     }
                   }
                 }
                 _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t");
+                _builder.append("this.getProtocol(), this.getHost(), this.getPort());");
+                _builder.newLine();
               }
             }
           }
@@ -574,17 +731,55 @@ public class ScenarioTemplate {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\"\\\"uuid\\\" : \\\"");
+        _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
         {
-          String _uuid = it.getUuid();
-          boolean _tripleNotEquals = (_uuid != null);
-          if (_tripleNotEquals) {
-            String _uuid_1 = it.getUuid();
-            _builder.append(_uuid_1, "\t");
-          } else {
-            _builder.append("\" + this.randomUUID() + \"");
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
+            return Boolean.valueOf((!_isNotReplayable));
+          };
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
+          boolean _hasElements = false;
+          for(final JsonMember member : _filter) {
+            if (!_hasElements) {
+              _hasElements = true;
+              _builder.append(this._attributeExtension.stringLineBreak, "\t");
+            } else {
+              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
+            }
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name, "\t");
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            _builder.append(_valueFrom, "\t");
           }
         }
+        _builder.append("} ");
+      } else {
+        _builder.append("{}");
+      }
+    }
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
+    _builder.append(_dataNameWithPackage);
+    _builder.append(".class)");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence objectMapperCallExpectedData(final DataDefinition it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    {
+      if (((it.getData() != null) && (it.getData().getMembers() != null))) {
+        _builder.append("{\" +");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\"\\\"uuid\\\" : \\\"");
+        String _uuid = it.getUuid();
+        _builder.append(_uuid, "\t");
         _builder.append("\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
@@ -644,7 +839,7 @@ public class ScenarioTemplate {
         _builder.append("(");
         CharSequence _objectMapperCall = this.objectMapperCall(dataDefinition, it.getModel());
         _builder.append(_objectMapperCall);
-        _builder.append(", DROPWIZARD.getLocalPort()");
+        _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
         {
           if ((it.isAuthorize() && (authorization != null))) {
             _builder.append(", authorization(\"");
@@ -675,7 +870,7 @@ public class ScenarioTemplate {
           _builder.append("(");
           CharSequence _objectMapperCall_1 = this.objectMapperCall(dataDefinition, it.getModel());
           _builder.append(_objectMapperCall_1);
-          _builder.append(", DROPWIZARD.getLocalPort()");
+          _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
           {
             if ((it.isAuthorize() && (authorization != null))) {
               _builder.append(", authorization(\"");
@@ -706,7 +901,7 @@ public class ScenarioTemplate {
             _builder.append("(");
             CharSequence _objectMapperCall_2 = this.objectMapperCall(dataDefinition, it.getModel());
             _builder.append(_objectMapperCall_2);
-            _builder.append(", DROPWIZARD.getLocalPort()");
+            _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
             {
               if ((it.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
@@ -734,7 +929,7 @@ public class ScenarioTemplate {
             _builder.append("(");
             CharSequence _objectMapperCall_3 = this.objectMapperCall(dataDefinition, it.getModel());
             _builder.append(_objectMapperCall_3);
-            _builder.append(", DROPWIZARD.getLocalPort()");
+            _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
             {
               if ((it.isAuthorize() && (authorization != null))) {
                 _builder.append(", authorization(\"");
@@ -885,9 +1080,6 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.append("daoProvider = new DaoProvider();");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("daoProvider.truncateAllViews(handle);");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -1029,6 +1221,10 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
     _builder.newLine();
+    _builder.append("import javax.ws.rs.core.Response;");
+    _builder.newLine();
+    _builder.append("import org.joda.time.DateTime;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractBaseScenario {");
     _builder.newLine();
@@ -1096,6 +1292,51 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract String scenarioName();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract String getProtocol();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract String getHost();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract int getPort();");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract String getTestId();");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract boolean prerequisite(String scenarioName);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response callNotReplayableDataProviderPutValue(");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("String uuid, String key, Object data,");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("String protocol, String host, int port);");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response callNotReplayableDataProviderPutSystemTime(");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("String uuid, DateTime dateTime,");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("String protocol, String host, int port);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");
