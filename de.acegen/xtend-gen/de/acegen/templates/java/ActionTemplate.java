@@ -2340,15 +2340,7 @@ public class ActionTemplate {
             }
             _builder.append("\t");
             _builder.append("\t");
-            _builder.append("Response response = builder.post(Entity.json(data));");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("client.close();");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("return response;");
+            _builder.append("return builder.post(Entity.json(data));");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("}");
@@ -2418,7 +2410,7 @@ public class ActionTemplate {
               }
               _builder.append("\t");
               _builder.append("\t");
-              _builder.append("Response response = builder.put(Entity.json(");
+              _builder.append("return builder.put(Entity.json(");
               {
                 int _length = ((Object[])Conversions.unwrapArray(aceOperation.getPayload(), Object.class)).length;
                 boolean _greaterThan = (_length > 0);
@@ -2430,14 +2422,6 @@ public class ActionTemplate {
               }
               _builder.append("));");
               _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("\t");
-              _builder.append("client.close();");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("\t");
-              _builder.append("return response;");
-              _builder.newLine();
               _builder.append("\t");
               _builder.append("}");
               _builder.newLine();
@@ -2506,15 +2490,7 @@ public class ActionTemplate {
                 }
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("Response response = builder.delete();");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("client.close();");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("return response;");
+                _builder.append("return builder.delete();");
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("}");
@@ -2581,15 +2557,7 @@ public class ActionTemplate {
                 }
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("Response response = builder.get();");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("client.close();");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("return response;");
+                _builder.append("return builder.get();");
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("}");
