@@ -255,6 +255,8 @@ class ActionTemplate {
 			DateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
 			if (systemTime != null) {
 				this.actionData.setSystemTime(systemTime);
+			} else {
+				this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.notReplayable»
@@ -333,6 +335,8 @@ class ActionTemplate {
 						«ENDIF»
 				«ENDFOR»
 			«ENDIF»
+			
+			LOG.info("execute «name» with uuid " + this.actionData.getUuid());
 			
 			return this.apply();
 		}

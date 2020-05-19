@@ -1484,6 +1484,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import org.joda.time.DateTime;");
     _builder.newLine();
+    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
@@ -1547,10 +1549,10 @@ public class AceTemplate {
     _builder.append("@Path(\"/system-time\")");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public Response putSystemTime(@QueryParam(\"uuid\") String uuid, DateTime systemTime) {");
+    _builder.append("public Response putSystemTime(@QueryParam(\"uuid\") String uuid, @QueryParam(\"system-time\") String systemTime) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("NotReplayableDataProvider.putSystemTime(uuid, systemTime);");
+    _builder.append("NotReplayableDataProvider.putSystemTime(uuid, DateTime.parse(systemTime).withZone(DateTimeZone.UTC));");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Response.ok().build();");

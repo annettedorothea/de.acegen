@@ -586,6 +586,12 @@ public class ActionTemplate {
     _builder.append("this.actionData.setSystemTime(systemTime);");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("} else {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     {
@@ -885,6 +891,14 @@ public class ActionTemplate {
         }
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("LOG.info(\"execute ");
+    String _name_4 = it.getName();
+    _builder.append(_name_4, "\t");
+    _builder.append(" with uuid \" + this.actionData.getUuid());");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
@@ -2326,7 +2340,15 @@ public class ActionTemplate {
             }
             _builder.append("\t");
             _builder.append("\t");
-            _builder.append("return builder.post(Entity.json(data));");
+            _builder.append("Response response = builder.post(Entity.json(data));");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("client.close();");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("return response;");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("}");
@@ -2396,7 +2418,7 @@ public class ActionTemplate {
               }
               _builder.append("\t");
               _builder.append("\t");
-              _builder.append("return builder.put(Entity.json(");
+              _builder.append("Response response = builder.put(Entity.json(");
               {
                 int _length = ((Object[])Conversions.unwrapArray(aceOperation.getPayload(), Object.class)).length;
                 boolean _greaterThan = (_length > 0);
@@ -2408,6 +2430,14 @@ public class ActionTemplate {
               }
               _builder.append("));");
               _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("client.close();");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("return response;");
+              _builder.newLine();
               _builder.append("\t");
               _builder.append("}");
               _builder.newLine();
@@ -2476,7 +2506,15 @@ public class ActionTemplate {
                 }
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("return builder.delete();");
+                _builder.append("Response response = builder.delete();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("client.close();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("return response;");
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("}");
@@ -2543,7 +2581,15 @@ public class ActionTemplate {
                 }
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("return builder.get();");
+                _builder.append("Response response = builder.get();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("client.close();");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("return response;");
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("}");

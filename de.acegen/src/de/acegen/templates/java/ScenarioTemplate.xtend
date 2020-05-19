@@ -89,13 +89,15 @@ class ScenarioTemplate {
 						«FOR i: givenRef.times.timesIterator»
 							if (prerequisite("«givenRef.scenario.name»")) {
 								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+								LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 								«givenRef.scenario.whenBlock.generatePrepare»
 								response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
 								if (response.getStatus() >= 400) {
 									String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+									LOG.info("GIVEN: «givenRef.scenario.name» fails due to " + message);
 									assertFail(message);
 								}
-								LOG.info("GIVEN: «givenRef.scenario.name»");
+								LOG.info("GIVEN: «givenRef.scenario.name» success");
 							} else {
 								LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 							}
@@ -104,13 +106,15 @@ class ScenarioTemplate {
 					«ELSE»
 						if (prerequisite("«givenRef.scenario.name»")) {
 							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+							LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 							«givenRef.scenario.whenBlock.generatePrepare»
 							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
 							if (response.getStatus() >= 400) {
 								String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+								LOG.info("GIVEN: «givenRef.scenario.name» fails due to " + message);
 								assertFail(message);
 							}
-							LOG.info("GIVEN: «givenRef.scenario.name»");
+							LOG.info("GIVEN: «givenRef.scenario.name» success");
 						} else {
 							LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 						}
