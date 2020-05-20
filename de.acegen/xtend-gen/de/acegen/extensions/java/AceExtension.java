@@ -15,13 +15,16 @@
  */
 package de.acegen.extensions.java;
 
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerOutcome;
+import de.acegen.extensions.java.AttributeExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import javax.inject.Inject;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
@@ -33,6 +36,10 @@ public class AceExtension {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
+  
+  @Inject
+  @Extension
+  private AttributeExtension _attributeExtension;
   
   public String abstractActionName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -199,11 +206,35 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String urlWithPathParams(final HttpServerAce it) {
+  public String urlWithPathParams(final HttpServerAce it, final String dataVarName, final boolean generateQueryParams) {
     int _size = it.getPathParams().size();
     boolean _equals = (_size == 0);
     if (_equals) {
-      return it.getUrl();
+      String _url = it.getUrl();
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        if (generateQueryParams) {
+          _builder.append("?uuid=\" + ");
+          _builder.append(dataVarName);
+          _builder.append(".getUuid() + \"");
+          {
+            EList<AttributeParamRef> _queryParams = it.getQueryParams();
+            for(final AttributeParamRef queryParam : _queryParams) {
+              _builder.append("&");
+              String _name = queryParam.getAttribute().getName();
+              _builder.append(_name);
+              _builder.append("=\" + ");
+              _builder.append(dataVarName);
+              _builder.append(".");
+              String _terCall = this._attributeExtension.getterCall(queryParam.getAttribute());
+              _builder.append(_terCall);
+              _builder.append(" + \"");
+            }
+          }
+        }
+      }
+      String retUrl = (_url + _builder);
+      return retUrl;
     }
     final String[] split1 = it.getUrl().split("\\{");
     ArrayList<String> urlElements = new ArrayList<String>();
@@ -221,14 +252,40 @@ public class AceExtension {
         urlWithPathParam = (_urlWithPathParam + _get);
       } else {
         String _urlWithPathParam_1 = urlWithPathParam;
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("\" + data.get");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\" + ");
+        _builder_1.append(dataVarName);
+        _builder_1.append(".get");
         String _firstUpper = StringExtensions.toFirstUpper(urlElements.get(i));
-        _builder.append(_firstUpper);
-        _builder.append("() + \"");
-        urlWithPathParam = (_urlWithPathParam_1 + _builder);
+        _builder_1.append(_firstUpper);
+        _builder_1.append("() + \"");
+        urlWithPathParam = (_urlWithPathParam_1 + _builder_1);
       }
     }
+    String _urlWithPathParam = urlWithPathParam;
+    StringConcatenation _builder_1 = new StringConcatenation();
+    {
+      if (generateQueryParams) {
+        _builder_1.append("?uuid=\" + ");
+        _builder_1.append(dataVarName);
+        _builder_1.append(".getUuid() + \"");
+        {
+          EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
+          for(final AttributeParamRef queryParam_1 : _queryParams_1) {
+            _builder_1.append("&");
+            String _name_1 = queryParam_1.getAttribute().getName();
+            _builder_1.append(_name_1);
+            _builder_1.append("=\" + ");
+            _builder_1.append(dataVarName);
+            _builder_1.append(".");
+            String _terCall_1 = this._attributeExtension.getterCall(queryParam_1.getAttribute());
+            _builder_1.append(_terCall_1);
+            _builder_1.append(" + \"");
+          }
+        }
+      }
+    }
+    urlWithPathParam = (_urlWithPathParam + _builder_1);
     return urlWithPathParam;
   }
 }

@@ -29,6 +29,10 @@ class AceExtension {
 	@Inject
 	extension ModelExtension
 	
+	@Inject
+	extension AttributeExtension
+
+	
 	def String abstractActionName(HttpServerAce it) '''Abstract«getName.toFirstUpper»Action'''
 	
 	def String actionName(HttpServerAce it) '''«getName.toFirstUpper»Action'''
@@ -70,9 +74,10 @@ class AceExtension {
 		return '''«java.getName»'''
 	}
 	
-	def String urlWithPathParams(HttpServerAce  it) {
+	def String urlWithPathParams(HttpServerAce  it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
-			return getUrl;
+			var retUrl = url + '''«IF generateQueryParams»?uuid=" + «dataVarName».getUuid() + "«FOR queryParam : queryParams»&«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+			return retUrl
 		}
 		val split1 = getUrl.split('\\{')
 		var urlElements = new ArrayList();
@@ -85,10 +90,11 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''" + data.get«urlElements.get(i).toFirstUpper»() + "'''
+				urlWithPathParam += '''" + «dataVarName».get«urlElements.get(i).toFirstUpper»() + "'''
 			}
 		}
-		return urlWithPathParam;
+		urlWithPathParam += '''«IF generateQueryParams»?uuid=" + «dataVarName».getUuid() + "«FOR queryParam : queryParams»&«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+		return urlWithPathParam ;
 	}
 	
 }

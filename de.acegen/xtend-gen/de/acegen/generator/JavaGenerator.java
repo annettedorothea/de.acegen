@@ -245,31 +245,27 @@ public class JavaGenerator {
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateViewInterface(view, java));
       }
     }
-    String _packageFolder = this._javaExtension.packageFolder(java);
-    String _plus = (_packageFolder + "/ActionCalls.java");
-    fsa.generateFile(_plus, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.actionTemplate.generateActionCalls(java));
     int _size = java.getAceOperations().size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
-      String _packageFolder_1 = this._javaExtension.packageFolder(java);
-      String _plus_1 = (_packageFolder_1 + "/events/EventFactory.java");
-      fsa.generateFile(_plus_1, 
+      String _packageFolder = this._javaExtension.packageFolder(java);
+      String _plus = (_packageFolder + "/events/EventFactory.java");
+      fsa.generateFile(_plus, 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventFactory(java));
     }
     int _size_1 = java.getAceOperations().size();
     boolean _greaterThan_1 = (_size_1 > 0);
     if (_greaterThan_1) {
-      String _packageFolder_2 = this._javaExtension.packageFolder(java);
-      String _plus_2 = (_packageFolder_2 + "/actions/AceDataFactory.java");
-      fsa.generateFile(_plus_2, 
+      String _packageFolder_1 = this._javaExtension.packageFolder(java);
+      String _plus_1 = (_packageFolder_1 + "/actions/AceDataFactory.java");
+      fsa.generateFile(_plus_1, 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
     }
     fsa.generateFile("de/acegen/EventFactory.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateEventFactory());
-    String _packageFolder_3 = this._javaExtension.packageFolder(java);
-    String _plus_3 = (_packageFolder_3 + "/AppRegistration.java");
-    fsa.generateFile(_plus_3, 
+    String _packageFolder_2 = this._javaExtension.packageFolder(java);
+    String _plus_2 = (_packageFolder_2 + "/AppRegistration.java");
+    fsa.generateFile(_plus_2, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAppRegistration(java));
     fsa.generateFile(("de/acegen" + "/App.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.aceTemplate.generateApp());
@@ -363,9 +359,9 @@ public class JavaGenerator {
       this.aceTemplate.generateAceMigration());
     if ((authUser != null)) {
       String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-      String _plus_4 = ("de/acegen/auth/" + _firstUpper);
-      String _plus_5 = (_plus_4 + ".java");
-      fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      String _plus_3 = ("de/acegen/auth/" + _firstUpper);
+      String _plus_4 = (_plus_3 + ".java");
+      fsa.generateFile(_plus_4, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
         this.aceTemplate.generateAuthUser(authUser));
     }
     fsa.generateFile("de/acegen/AbstractBaseScenario.java", 
@@ -375,19 +371,19 @@ public class JavaGenerator {
     EList<Scenario> _scenarios = java.getScenarios();
     for (final Scenario scenario : _scenarios) {
       {
-        String _packageFolder_4 = this._javaExtension.packageFolder(java);
-        String _plus_6 = (_packageFolder_4 + "/scenarios/Abstract");
+        String _packageFolder_3 = this._javaExtension.packageFolder(java);
+        String _plus_5 = (_packageFolder_3 + "/scenarios/Abstract");
         String _name = scenario.getName();
-        String _plus_7 = (_plus_6 + _name);
-        String _plus_8 = (_plus_7 + "Scenario.java");
-        fsa.generateFile(_plus_8, 
+        String _plus_6 = (_plus_5 + _name);
+        String _plus_7 = (_plus_6 + "Scenario.java");
+        fsa.generateFile(_plus_7, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, this.scenarioTemplate.generateAbstractScenario(scenario, java));
-        String _packageFolder_5 = this._javaExtension.packageFolder(java);
-        String _plus_9 = (_packageFolder_5 + "/scenarios/");
+        String _packageFolder_4 = this._javaExtension.packageFolder(java);
+        String _plus_8 = (_packageFolder_4 + "/scenarios/");
         String _name_1 = scenario.getName();
-        String _plus_10 = (_plus_9 + _name_1);
-        String _plus_11 = (_plus_10 + "Scenario.java");
-        fsa.generateFile(_plus_11, 
+        String _plus_9 = (_plus_8 + _name_1);
+        String _plus_10 = (_plus_9 + "Scenario.java");
+        fsa.generateFile(_plus_10, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenario(scenario, java));
       }
     }

@@ -508,10 +508,11 @@ class ActionTemplate {
 				databaseHandle.beginTransaction();
 				try {
 					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
+							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (appConfiguration.getServerConfiguration().writeTimeline()) {
 							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-								databaseHandle.commitTransaction();
+								databaseHandle.rollbackTransaction();
 								throwBadRequest("uuid already exists - please choose another one");
 							}
 						}
@@ -521,7 +522,8 @@ class ActionTemplate {
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						initActionDataFrom(timelineItem);
-					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					}
+					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
 						initActionDataFromNotReplayableDataProvider();
 					}
 					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
@@ -620,10 +622,11 @@ class ActionTemplate {
 				databaseHandle.beginTransaction();
 				try {
 					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())) {
+							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
+							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
 						if (appConfiguration.getServerConfiguration().writeTimeline()) {
 							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-								databaseHandle.commitTransaction();
+								databaseHandle.rollbackTransaction();
 								throwBadRequest("uuid already exists - please choose another one");
 							}
 						}
@@ -633,7 +636,8 @@ class ActionTemplate {
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						initActionDataFrom(timelineItem);
-					} else if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					}
+					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
 						initActionDataFromNotReplayableDataProvider();
 					}
 					«addActionToTimeline»
@@ -857,82 +861,6 @@ class ActionTemplate {
 		}
 	'''
 
-	def generateActionCalls(HttpServer it) '''
-		«copyright»
-		
-		package «getName»;
-		
-		import javax.ws.rs.client.Client;
-		import javax.ws.rs.client.Entity;
-		import javax.ws.rs.client.Invocation.Builder;
-		import javax.ws.rs.core.Response;
-		
-		import org.glassfish.jersey.client.JerseyClientBuilder;
-		
-		@SuppressWarnings("unused")
-		public class ActionCalls {
-		
-			«FOR aceOperation : aceOperations»
-				«IF aceOperation.getType == "POST"»
-					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							String protocol, String host, int port«IF aceOperation.isAuthorize», 
-							String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»", protocol, host, port)).request(); 
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.post(Entity.json(data));
-					}
-				«ELSEIF aceOperation.getType == "PUT"»
-					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data, 
-							String protocol, String host, int port«IF aceOperation.isAuthorize», 
-							String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request();
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.put(Entity.json(«IF aceOperation.payload.length > 0»data«ELSE»null«ENDIF»));
-					}
-				«ELSEIF aceOperation.getType == "DELETE"»
-					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							String protocol, String host, int port«IF aceOperation.isAuthorize», 
-							String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request();
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.delete();
-					}
-				«ELSE»
-					public static Response call«aceOperation.getName.toFirstUpper»(
-							«aceOperation.getModel.dataInterfaceNameWithPackage» data,
-							String protocol, String host, int port«IF aceOperation.isAuthorize», 
-							String authorization«ENDIF») {
-						Client client = new JerseyClientBuilder().build();
-						Builder builder = client.target(String.format("%s://%s:%d/api«aceOperation.urlWithPathParams»?uuid=" + data.getUuid()«FOR queryParam : aceOperation.queryParams» + "&«queryParam.attribute.name»=" + data.«queryParam.attribute.getterCall»«ENDFOR», protocol, host, port)).request(); 
-						«IF aceOperation.isAuthorize»
-							builder.header("Authorization", authorization);
-						«ENDIF»
-						return builder.get();
-					}
-				«ENDIF»
-				
-			«ENDFOR»
-			
-		}
-		
-		
-		«sdg»
-		
-	'''
-	
-	
 }
 	
 	

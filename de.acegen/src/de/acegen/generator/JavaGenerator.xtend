@@ -128,9 +128,6 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
 		}
 
-		fsa.generateFile(java.packageFolder + '/ActionCalls.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, actionTemplate.generateActionCalls(java));
-
 		if (java.aceOperations.size > 0) {
 			fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));

@@ -29,6 +29,16 @@ class ScenarioTemplate {
 
 	@Inject
 	extension CommonExtension
+	
+	int index;
+	
+	private def void resetIndex() {
+		index = 0;
+	}
+
+	private def void incIndex() {
+		index += 1;
+	}
 
 	def generateScenario(Scenario it, HttpServer java) '''
 		«copyright»
@@ -84,13 +94,16 @@ class ScenarioTemplate {
 			private void given() throws Exception {
 				Response response;
 				String uuid;
+				«resetIndex»
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						«FOR i: givenRef.times.timesIterator»
+							«incIndex»
 							if (prerequisite("«givenRef.scenario.name»")) {
 								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
 								LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 								«givenRef.scenario.whenBlock.generatePrepare»
+								«givenRef.scenario.whenBlock.generateDataCreation()»
 								response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
 								if (response.getStatus() >= 400) {
 									String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
@@ -104,10 +117,12 @@ class ScenarioTemplate {
 							
 						«ENDFOR»
 					«ELSE»
+						«incIndex»
 						if (prerequisite("«givenRef.scenario.name»")) {
 							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
 							LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 							«givenRef.scenario.whenBlock.generatePrepare»
+							«givenRef.scenario.whenBlock.generateDataCreation()»
 							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
 							if (response.getStatus() >= 400) {
 								String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
@@ -125,8 +140,10 @@ class ScenarioTemplate {
 			}
 			
 			private Response when() throws Exception {
+				«resetIndex»
 				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
+				«whenBlock.generateDataCreation()»
 				«whenBlock.generateActionCall(java, true)»
 			}
 			
@@ -192,7 +209,7 @@ class ScenarioTemplate {
 					«sdg»
 					
 	'''
-
+	
 	private def allGivenRefs(Scenario it) {
 		var allWhenBlocks = new ArrayList<GivenRef>();
 		for (givenRef : givenRefs) {
@@ -231,20 +248,20 @@ class ScenarioTemplate {
 	'''
 
 	private def generateActionCall(WhenBlock it, HttpServer java, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, returnResponse)»'''
+	
+	private def generateDataCreation(WhenBlock it) '''
+		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.objectMapperCall(action.model)»;
+	'''
 
 	private def objectMapperCall(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
-		«model.dataNameWithPackage».class)
-		
-	'''
+			"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+		«model.dataNameWithPackage».class)'''
 	
 	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
 			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
-		«model.dataNameWithPackage».class)
-		
-	'''
+		«model.dataNameWithPackage».class)'''
 	
 
 	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
@@ -252,13 +269,27 @@ class ScenarioTemplate {
 		
 		«IF returnResponse»return «ENDIF»
 		«IF getType == "POST"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			this.httpPost(
+				"«urlWithPathParams('''data_«index»''', false)»", 
+				data_«index»,
+				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			);
 		«ELSEIF getType == "PUT"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			this.httpPut(
+				"«urlWithPathParams('''data_«index»''', true)»", 
+				data_«index»,
+				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			);
 		«ELSEIF getType == "DELETE"»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			this.httpDelete(
+				"«urlWithPathParams('''data_«index»''', true)»", 
+				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			);
 		«ELSE»
-			«packageFor».ActionCalls.call«getName.toFirstUpper»(«dataDefinition.objectMapperCall(model)», this.getProtocol(), this.getHost(), this.getPort()«IF isAuthorize && authorization !== null», authorization("«authorization.username»", "«authorization.password»")«ELSEIF isAuthorize», null«ENDIF»);
+			this.httpGet(
+				"«urlWithPathParams('''data_«index»''', true)»", 
+				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			);
 		«ENDIF»
 		
 	'''
@@ -390,6 +421,14 @@ class ScenarioTemplate {
 				objectMapper = new ObjectMapper();
 			}
 		
+			protected abstract Response httpGet(String path, String authorization);
+			
+			protected abstract Response httpPost(String path, Object data, String authorization);
+			
+			protected abstract Response httpPut(String path, Object data, String authorization);
+			
+			protected abstract Response httpDelete(String path, String authorization);
+			
 			protected abstract String randomString();
 			
 			protected abstract String randomUUID();

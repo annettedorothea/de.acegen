@@ -43,12 +43,23 @@ public class ScenarioTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
+  private int index;
+  
+  private void resetIndex() {
+    this.index = 0;
+  }
+  
+  private void incIndex() {
+    int _index = this.index;
+    this.index = (_index + 1);
+  }
+  
   public CharSequence generateScenario(final Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
-    this._attributeExtension.resetIndex();
+    this.resetIndex();
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
@@ -171,6 +182,9 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.append("String uuid;");
     _builder.newLine();
+    _builder.append("\t\t");
+    this.resetIndex();
+    _builder.newLineIfNotEmpty();
     {
       ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
       for(final GivenRef givenRef : _allGivenRefs) {
@@ -181,6 +195,9 @@ public class ScenarioTemplate {
             {
               List<Integer> _timesIterator = this._attributeExtension.timesIterator(givenRef.getTimes());
               for(final Integer i : _timesIterator) {
+                _builder.append("\t\t");
+                this.incIndex();
+                _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("if (prerequisite(\"");
                 String _name_3 = givenRef.getScenario().getName();
@@ -215,6 +232,11 @@ public class ScenarioTemplate {
                 _builder.append("\t");
                 CharSequence _generatePrepare = this.generatePrepare(givenRef.getScenario().getWhenBlock());
                 _builder.append(_generatePrepare, "\t\t\t");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                CharSequence _generateDataCreation = this.generateDataCreation(givenRef.getScenario().getWhenBlock());
+                _builder.append(_generateDataCreation, "\t\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
@@ -274,6 +296,9 @@ public class ScenarioTemplate {
             }
           } else {
             _builder.append("\t\t");
+            this.incIndex();
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
             _builder.append("if (prerequisite(\"");
             String _name_9 = givenRef.getScenario().getName();
             _builder.append(_name_9, "\t\t");
@@ -307,6 +332,11 @@ public class ScenarioTemplate {
             _builder.append("\t");
             CharSequence _generatePrepare_1 = this.generatePrepare(givenRef.getScenario().getWhenBlock());
             _builder.append(_generatePrepare_1, "\t\t\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("\t");
+            CharSequence _generateDataCreation_1 = this.generateDataCreation(givenRef.getScenario().getWhenBlock());
+            _builder.append(_generateDataCreation_1, "\t\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
@@ -376,6 +406,9 @@ public class ScenarioTemplate {
     _builder.append("private Response when() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
+    this.resetIndex();
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
     _builder.append("String uuid = ");
     {
       String _uuid_4 = it.getWhenBlock().getDataDefinition().getUuid();
@@ -394,6 +427,10 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     CharSequence _generatePrepare_2 = this.generatePrepare(it.getWhenBlock());
     _builder.append(_generatePrepare_2, "\t\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    CharSequence _generateDataCreation_2 = this.generateDataCreation(it.getWhenBlock());
+    _builder.append(_generateDataCreation_2, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     CharSequence _generateActionCall_2 = this.generateActionCall(it.getWhenBlock(), java, true);
@@ -751,6 +788,20 @@ public class ScenarioTemplate {
     return _builder;
   }
   
+  private CharSequence generateDataCreation(final WhenBlock it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getAction().getModel());
+    _builder.append(_dataNameWithPackage);
+    _builder.append(" data_");
+    _builder.append(this.index);
+    _builder.append(" = ");
+    CharSequence _objectMapperCall = this.objectMapperCall(it.getDataDefinition(), it.getAction().getModel());
+    _builder.append(_objectMapperCall);
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
   private CharSequence objectMapperCall(final DataDefinition it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -784,7 +835,7 @@ public class ScenarioTemplate {
         }
         _builder.append("} ");
       } else {
-        _builder.append("{}");
+        _builder.append("{ \\\"uuid\\\" : \\\"\" + uuid + \"\\\"}");
       }
     }
     _builder.append("\",");
@@ -792,8 +843,6 @@ public class ScenarioTemplate {
     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
     _builder.append(_dataNameWithPackage);
     _builder.append(".class)");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
     return _builder;
   }
   
@@ -841,8 +890,6 @@ public class ScenarioTemplate {
     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
     _builder.append(_dataNameWithPackage);
     _builder.append(".class)");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
     return _builder;
   }
   
@@ -859,123 +906,137 @@ public class ScenarioTemplate {
       String _type = it.getType();
       boolean _equals = Objects.equal(_type, "POST");
       if (_equals) {
-        String _packageFor = this._aceExtension.packageFor(it);
-        _builder.append(_packageFor);
-        _builder.append(".ActionCalls.call");
-        String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-        _builder.append(_firstUpper);
-        _builder.append("(");
-        CharSequence _objectMapperCall = this.objectMapperCall(dataDefinition, it.getModel());
-        _builder.append(_objectMapperCall);
-        _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
+        _builder.append("this.httpPost(");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\"");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("data_");
+        _builder_1.append(this.index);
+        String _urlWithPathParams = this._aceExtension.urlWithPathParams(it, _builder_1.toString(), false);
+        _builder.append(_urlWithPathParams, "\t");
+        _builder.append("\", ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("data_");
+        _builder.append(this.index, "\t");
+        _builder.append(",");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
         {
           if ((it.isAuthorize() && (authorization != null))) {
-            _builder.append(", authorization(\"");
+            _builder.append("authorization(\"");
             String _username = authorization.getUsername();
-            _builder.append(_username);
+            _builder.append(_username, "\t");
             _builder.append("\", \"");
             String _password = authorization.getPassword();
-            _builder.append(_password);
+            _builder.append(_password, "\t");
             _builder.append("\")");
           } else {
-            boolean _isAuthorize = it.isAuthorize();
-            if (_isAuthorize) {
-              _builder.append(", null");
-            }
+            _builder.append("null");
           }
         }
-        _builder.append(");");
         _builder.newLineIfNotEmpty();
+        _builder.append(");");
+        _builder.newLine();
       } else {
         String _type_1 = it.getType();
         boolean _equals_1 = Objects.equal(_type_1, "PUT");
         if (_equals_1) {
-          String _packageFor_1 = this._aceExtension.packageFor(it);
-          _builder.append(_packageFor_1);
-          _builder.append(".ActionCalls.call");
-          String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
-          _builder.append(_firstUpper_1);
-          _builder.append("(");
-          CharSequence _objectMapperCall_1 = this.objectMapperCall(dataDefinition, it.getModel());
-          _builder.append(_objectMapperCall_1);
-          _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
+          _builder.append("this.httpPut(");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("\"");
+          StringConcatenation _builder_2 = new StringConcatenation();
+          _builder_2.append("data_");
+          _builder_2.append(this.index);
+          String _urlWithPathParams_1 = this._aceExtension.urlWithPathParams(it, _builder_2.toString(), true);
+          _builder.append(_urlWithPathParams_1, "\t");
+          _builder.append("\", ");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("data_");
+          _builder.append(this.index, "\t");
+          _builder.append(",");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
           {
             if ((it.isAuthorize() && (authorization != null))) {
-              _builder.append(", authorization(\"");
+              _builder.append("authorization(\"");
               String _username_1 = authorization.getUsername();
-              _builder.append(_username_1);
+              _builder.append(_username_1, "\t");
               _builder.append("\", \"");
               String _password_1 = authorization.getPassword();
-              _builder.append(_password_1);
+              _builder.append(_password_1, "\t");
               _builder.append("\")");
             } else {
-              boolean _isAuthorize_1 = it.isAuthorize();
-              if (_isAuthorize_1) {
-                _builder.append(", null");
-              }
+              _builder.append("null");
             }
           }
-          _builder.append(");");
           _builder.newLineIfNotEmpty();
+          _builder.append(");");
+          _builder.newLine();
         } else {
           String _type_2 = it.getType();
           boolean _equals_2 = Objects.equal(_type_2, "DELETE");
           if (_equals_2) {
-            String _packageFor_2 = this._aceExtension.packageFor(it);
-            _builder.append(_packageFor_2);
-            _builder.append(".ActionCalls.call");
-            String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
-            _builder.append(_firstUpper_2);
-            _builder.append("(");
-            CharSequence _objectMapperCall_2 = this.objectMapperCall(dataDefinition, it.getModel());
-            _builder.append(_objectMapperCall_2);
-            _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
+            _builder.append("this.httpDelete(");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\"");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append("data_");
+            _builder_3.append(this.index);
+            String _urlWithPathParams_2 = this._aceExtension.urlWithPathParams(it, _builder_3.toString(), true);
+            _builder.append(_urlWithPathParams_2, "\t");
+            _builder.append("\", ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
             {
               if ((it.isAuthorize() && (authorization != null))) {
-                _builder.append(", authorization(\"");
+                _builder.append("authorization(\"");
                 String _username_2 = authorization.getUsername();
-                _builder.append(_username_2);
+                _builder.append(_username_2, "\t");
                 _builder.append("\", \"");
                 String _password_2 = authorization.getPassword();
-                _builder.append(_password_2);
+                _builder.append(_password_2, "\t");
                 _builder.append("\")");
               } else {
-                boolean _isAuthorize_2 = it.isAuthorize();
-                if (_isAuthorize_2) {
-                  _builder.append(", null");
-                }
+                _builder.append("null");
               }
             }
-            _builder.append(");");
             _builder.newLineIfNotEmpty();
+            _builder.append(");");
+            _builder.newLine();
           } else {
-            String _packageFor_3 = this._aceExtension.packageFor(it);
-            _builder.append(_packageFor_3);
-            _builder.append(".ActionCalls.call");
-            String _firstUpper_3 = StringExtensions.toFirstUpper(it.getName());
-            _builder.append(_firstUpper_3);
-            _builder.append("(");
-            CharSequence _objectMapperCall_3 = this.objectMapperCall(dataDefinition, it.getModel());
-            _builder.append(_objectMapperCall_3);
-            _builder.append(", this.getProtocol(), this.getHost(), this.getPort()");
+            _builder.append("this.httpGet(");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\"");
+            StringConcatenation _builder_4 = new StringConcatenation();
+            _builder_4.append("data_");
+            _builder_4.append(this.index);
+            String _urlWithPathParams_3 = this._aceExtension.urlWithPathParams(it, _builder_4.toString(), true);
+            _builder.append(_urlWithPathParams_3, "\t");
+            _builder.append("\", ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
             {
               if ((it.isAuthorize() && (authorization != null))) {
-                _builder.append(", authorization(\"");
+                _builder.append("authorization(\"");
                 String _username_3 = authorization.getUsername();
-                _builder.append(_username_3);
+                _builder.append(_username_3, "\t");
                 _builder.append("\", \"");
                 String _password_3 = authorization.getPassword();
-                _builder.append(_password_3);
+                _builder.append(_password_3, "\t");
                 _builder.append("\")");
               } else {
-                boolean _isAuthorize_3 = it.isAuthorize();
-                if (_isAuthorize_3) {
-                  _builder.append(", null");
-                }
+                _builder.append("null");
               }
             }
-            _builder.append(");");
             _builder.newLineIfNotEmpty();
+            _builder.append(");");
+            _builder.newLine();
           }
         }
       }
@@ -1284,6 +1345,26 @@ public class ScenarioTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response httpGet(String path, String authorization);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response httpPost(String path, Object data, String authorization);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response httpPut(String path, Object data, String authorization);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected abstract Response httpDelete(String path, String authorization);");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected abstract String randomString();");
