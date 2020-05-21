@@ -45,8 +45,6 @@ public class AttributeExtension {
   @Extension
   private ModelExtension _modelExtension;
   
-  private int index = 0;
-  
   public String stringLineBreak = new Function0<String>() {
     @Override
     public String apply() {
@@ -58,10 +56,6 @@ public class AttributeExtension {
       return _builder.toString();
     }
   }.apply();
-  
-  public void resetIndex() {
-    this.index = 0;
-  }
   
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -685,19 +679,14 @@ public class AttributeExtension {
     boolean _tripleNotEquals = (_string != null);
     if (_tripleNotEquals) {
       String returnString = it.getString();
-      boolean _contains = it.getString().contains("${index}");
+      boolean _contains = it.getString().contains("${random}");
       if (_contains) {
-        returnString = returnString.replace("${index}", Integer.valueOf(this.index).toString());
-        this.index++;
-      }
-      boolean _contains_1 = it.getString().contains("${random}");
-      if (_contains_1) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("\" + this.randomString() + \"");
         returnString = returnString.replace("${random}", _builder);
       }
-      boolean _contains_2 = it.getString().contains("${testId}");
-      if (_contains_2) {
+      boolean _contains_1 = it.getString().contains("${testId}");
+      if (_contains_1) {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("\" + this.getTestId() + \"");
         returnString = returnString.replace("${testId}", _builder_1);

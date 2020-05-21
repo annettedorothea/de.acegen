@@ -97,8 +97,7 @@ class ScenarioTemplate {
 				«resetIndex»
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
-						«FOR i: givenRef.times.timesIterator»
-							«incIndex»
+						for (int i=0; i<«givenRef.times»; i++) {
 							if (prerequisite("«givenRef.scenario.name»")) {
 								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
 								«givenRef.scenario.whenBlock.generatePrepare»
@@ -113,8 +112,9 @@ class ScenarioTemplate {
 							} else {
 								LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 							}
+						}
+						«incIndex»
 							
-						«ENDFOR»
 					«ELSE»
 						«incIndex»
 						if (prerequisite("«givenRef.scenario.name»")) {

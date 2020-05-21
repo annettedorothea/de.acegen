@@ -36,14 +36,8 @@ class AttributeExtension {
 	@Inject
 	extension ModelExtension
 
-	int index = 0;
-
 	public String stringLineBreak = '''," + 
 	"'''
-
-	def void resetIndex() {
-		index = 0;
-	}
 
 	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
@@ -214,10 +208,6 @@ class AttributeExtension {
 	def dispatch CharSequence valueFrom(JsonValue it) {
 		if (string !== null) {
 			var returnString = string;
-			if (string.contains("${index}")) {
-				returnString = returnString.replace("${index}", index.toString());
-				index++;
-			}
 			if (string.contains("${random}")) {
 				returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
 			}

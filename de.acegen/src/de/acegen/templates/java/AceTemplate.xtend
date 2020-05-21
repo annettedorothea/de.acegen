@@ -340,6 +340,7 @@ class AceTemplate {
 	def generateAppConfiguration() '''
 		«copyright»
 		
+		
 		package de.acegen;
 		
 		import javax.validation.Valid;
@@ -349,26 +350,28 @@ class AceTemplate {
 		
 		import io.dropwizard.Configuration;
 		import io.dropwizard.db.DataSourceFactory;
+		import io.dropwizard.server.DefaultServerFactory;
+		import io.dropwizard.server.ServerFactory;
 		
 		public class AppConfiguration extends Configuration {
 		
-			@Valid
+		    @Valid
+		    @NotNull
+		    private ServerFactory server = new DefaultServerFactory();
+		
+		    @JsonProperty("server")
+		    public ServerFactory getServerFactory() {
+		        return server;
+		    }
+		
+		    @JsonProperty("server")
+		    public void setServerFactory(ServerFactory factory) {
+		        this.server = factory;
+		    }
+		
+		    @Valid
 			@NotNull
 			private DataSourceFactory database = new DataSourceFactory();
-		
-			private int port;
-			
-			public int getPort() {
-				return port;
-			}
-		
-			public void setPort(int port) {
-				this.port = port;
-			}
-		
-			@Valid
-			@NotNull
-			private ServerConfiguration serverConfiguration = new ServerConfiguration();
 		
 			@JsonProperty("database")
 			public DataSourceFactory getDataSourceFactory() {
@@ -380,6 +383,10 @@ class AceTemplate {
 				this.database = dataSourceFactory;
 			}
 		
+			@Valid
+			@NotNull
+			private ServerConfiguration serverConfiguration = new ServerConfiguration();
+		
 			@JsonProperty("config")
 			public ServerConfiguration getServerConfiguration() {
 				return serverConfiguration;
@@ -389,8 +396,9 @@ class AceTemplate {
 			public void setServerConfiguration(ServerConfiguration serverConfiguration) {
 				this.serverConfiguration = serverConfiguration;
 			}
-		
+			
 		}
+				
 		
 		«sdg»
 		
