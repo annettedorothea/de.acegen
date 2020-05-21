@@ -89,6 +89,9 @@ class ActionTemplate {
 		«ENDIF»
 
 		import com.codahale.metrics.annotation.Timed;
+		import com.codahale.metrics.annotation.Metered;
+		import com.codahale.metrics.annotation.ExceptionMetered;
+		import com.codahale.metrics.annotation.ResponseMetered;
 
 		import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -192,6 +195,9 @@ class ActionTemplate {
 		«ENDIF»
 
 		import com.codahale.metrics.annotation.Timed;
+		import com.codahale.metrics.annotation.Metered;
+		import com.codahale.metrics.annotation.ExceptionMetered;
+		import com.codahale.metrics.annotation.ResponseMetered;
 
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
@@ -295,7 +301,10 @@ class ActionTemplate {
 	
 	private def method(HttpServerAce it, AuthUser authUser) '''
 		«IF getType !== null»@«getType»«ENDIF»
-		@Timed
+		@Timed(name = "«actionName»Timed")
+		@Metered(name = "«actionName»Metered")
+		@ExceptionMetered
+		@ResponseMetered
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Response «resourceName.toFirstLower»(
@@ -335,8 +344,6 @@ class ActionTemplate {
 						«ENDIF»
 				«ENDFOR»
 			«ENDIF»
-			
-			LOG.info("execute «name» with uuid " + this.actionData.getUuid());
 			
 			return this.apply();
 		}
@@ -510,13 +517,11 @@ class ActionTemplate {
 					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
 							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
 							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (appConfiguration.getServerConfiguration().writeTimeline()) {
-							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-								databaseHandle.rollbackTransaction();
-								throwBadRequest("uuid already exists - please choose another one");
-							}
+						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+							databaseHandle.rollbackTransaction();
+							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
+							return Response.status(Response.Status.OK).entity("ignoring duplicate request " +  this.actionData.getUuid()).build();
 						}
-						
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
@@ -624,13 +629,11 @@ class ActionTemplate {
 					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
 							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
 							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
-						if (appConfiguration.getServerConfiguration().writeTimeline()) {
-							if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {
-								databaseHandle.rollbackTransaction();
-								throwBadRequest("uuid already exists - please choose another one");
-							}
+						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+							databaseHandle.rollbackTransaction();
+							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
+							return Response.status(Response.Status.OK).entity("ignoring duplicate request " +  this.actionData.getUuid()).build();
 						}
-						
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
 					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {

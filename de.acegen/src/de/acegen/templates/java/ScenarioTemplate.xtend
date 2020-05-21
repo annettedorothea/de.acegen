@@ -101,7 +101,6 @@ class ScenarioTemplate {
 							«incIndex»
 							if (prerequisite("«givenRef.scenario.name»")) {
 								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
-								LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 								«givenRef.scenario.whenBlock.generatePrepare»
 								«givenRef.scenario.whenBlock.generateDataCreation()»
 								response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
@@ -120,7 +119,6 @@ class ScenarioTemplate {
 						«incIndex»
 						if (prerequisite("«givenRef.scenario.name»")) {
 							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
-							LOG.info("GIVEN: «givenRef.scenario.name» uuid " + uuid);
 							«givenRef.scenario.whenBlock.generatePrepare»
 							«givenRef.scenario.whenBlock.generateDataCreation()»
 							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
@@ -193,7 +191,7 @@ class ScenarioTemplate {
 								
 								verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 							} else {
-								LOG.info("prerequisite for «name» not met");
+								LOG.info("WHEN: prerequisite for «name» not met");
 							}
 						}
 						

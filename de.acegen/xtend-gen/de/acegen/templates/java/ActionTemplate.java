@@ -145,6 +145,12 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import com.codahale.metrics.annotation.Timed;");
     _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.Metered;");
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.ExceptionMetered;");
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.ResponseMetered;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
     _builder.newLine();
@@ -407,6 +413,12 @@ public class ActionTemplate {
     }
     _builder.newLine();
     _builder.append("import com.codahale.metrics.annotation.Timed;");
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.Metered;");
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.ExceptionMetered;");
+    _builder.newLine();
+    _builder.append("import com.codahale.metrics.annotation.ResponseMetered;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
@@ -717,7 +729,19 @@ public class ActionTemplate {
       }
     }
     _builder.newLineIfNotEmpty();
-    _builder.append("@Timed");
+    _builder.append("@Timed(name = \"");
+    String _actionName = this._aceExtension.actionName(it);
+    _builder.append(_actionName);
+    _builder.append("Timed\")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("@Metered(name = \"");
+    String _actionName_1 = this._aceExtension.actionName(it);
+    _builder.append(_actionName_1);
+    _builder.append("Metered\")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("@ExceptionMetered");
+    _builder.newLine();
+    _builder.append("@ResponseMetered");
     _builder.newLine();
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
@@ -890,14 +914,6 @@ public class ActionTemplate {
         }
       }
     }
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("LOG.info(\"execute ");
-    String _name_4 = it.getName();
-    _builder.append(_name_4, "\t");
-    _builder.append(" with uuid \" + this.actionData.getUuid());");
-    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
@@ -1315,24 +1331,19 @@ public class ActionTemplate {
     _builder.append("|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
-    _builder.append("throwBadRequest(\"uuid already exists - please choose another one\");");
+    _builder.append("\t\t\t\t\t");
+    _builder.append("LOG.error(\"duplicate request {} {} \", actionName, this.actionData.getUuid());");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("}");
+    _builder.append("return Response.status(Response.Status.OK).entity(\"ignoring duplicate request \" +  this.actionData.getUuid()).build();");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
@@ -1638,24 +1649,19 @@ public class ActionTemplate {
     _builder.append("|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("if (daoProvider.getAceDao().contains(databaseHandle.getHandle(), this.actionData.getUuid())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
-    _builder.append("throwBadRequest(\"uuid already exists - please choose another one\");");
+    _builder.append("\t\t\t\t\t");
+    _builder.append("LOG.error(\"duplicate request {} {} \", actionName, this.actionData.getUuid());");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("}");
+    _builder.append("return Response.status(Response.Status.OK).entity(\"ignoring duplicate request \" +  this.actionData.getUuid()).build();");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
