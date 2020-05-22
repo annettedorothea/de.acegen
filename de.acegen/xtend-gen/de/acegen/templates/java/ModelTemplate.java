@@ -248,11 +248,9 @@ public class ModelTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("\t");
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
-    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);

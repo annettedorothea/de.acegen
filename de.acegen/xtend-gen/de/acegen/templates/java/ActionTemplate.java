@@ -1406,9 +1406,6 @@ public class ActionTemplate {
     CharSequence _addExceptionToTimeline = this.addExceptionToTimeline();
     _builder.append(_addExceptionToTimeline, "\t\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} catch (Exception ex) {");
     _builder.newLine();
@@ -1440,9 +1437,6 @@ public class ActionTemplate {
     CharSequence _addExceptionToTimeline_1 = this.addExceptionToTimeline();
     _builder.append(_addExceptionToTimeline_1, "\t\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} catch (Exception ex) {");
     _builder.newLine();
@@ -1760,9 +1754,6 @@ public class ActionTemplate {
     CharSequence _addExceptionToTimeline = this.addExceptionToTimeline();
     _builder.append(_addExceptionToTimeline, "\t\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} catch (Exception ex) {");
     _builder.newLine();
@@ -1794,9 +1785,6 @@ public class ActionTemplate {
     CharSequence _addExceptionToTimeline_1 = this.addExceptionToTimeline();
     _builder.append(_addExceptionToTimeline_1, "\t\t\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t");
-    _builder.append("App.reportException(x);");
-    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} catch (Exception ex) {");
     _builder.newLine();

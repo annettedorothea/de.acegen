@@ -108,10 +108,8 @@ class ModelTemplate {
 				«attribute.setter»
 				
 			«ENDFOR»
-			
 		}
-		
-		
+			
 		«sdg»
 		
 	'''

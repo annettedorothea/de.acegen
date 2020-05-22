@@ -542,7 +542,6 @@ class ActionTemplate {
 					try {
 						databaseHandle.rollbackTransaction();
 						«addExceptionToTimeline»
-						App.reportException(x);
 					} catch (Exception ex) {
 						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
@@ -553,7 +552,6 @@ class ActionTemplate {
 					try {
 						databaseHandle.rollbackTransaction();
 						«addExceptionToTimeline»
-						App.reportException(x);
 					} catch (Exception ex) {
 						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
@@ -666,7 +664,6 @@ class ActionTemplate {
 					try {
 						databaseHandle.rollbackTransaction();
 						«addExceptionToTimeline»
-						App.reportException(x);
 					} catch (Exception ex) {
 						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
@@ -677,7 +674,6 @@ class ActionTemplate {
 					try {
 						databaseHandle.rollbackTransaction();
 						«addExceptionToTimeline»
-						App.reportException(x);
 					} catch (Exception ex) {
 						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
 					}
