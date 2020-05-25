@@ -44,6 +44,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientTypeDefinition/elements"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServer/authUser"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServer/authUserRef"/>

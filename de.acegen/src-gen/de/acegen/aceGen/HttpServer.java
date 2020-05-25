@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getAuthUser <em>Auth User</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getAuthUserRef <em>Auth User Ref</em>}</li>
@@ -31,6 +32,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpServer extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Type</em>' attribute.
+   * @see #setType(String)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServer_Type()
+   * @model
+   * @generated
+   */
+  String getType();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Type</em>' attribute.
+   * @see #getType()
+   * @generated
+   */
+  void setType(String value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

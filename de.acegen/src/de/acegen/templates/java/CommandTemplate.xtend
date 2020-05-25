@@ -150,7 +150,7 @@ class CommandTemplate {
 		
 			public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
 				this.executeCommand(readonlyHandle);
-				if (appConfiguration.getServerConfiguration().writeTimeline()) {
+				if (appConfiguration.getConfig().writeTimeline()) {
 					daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);
 				}
 			}

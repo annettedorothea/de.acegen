@@ -800,10 +800,37 @@ ruleHttpServer returns [EObject current=null]
 	(
 		(
 			(
+				(
+					lv_type_0_1='Dropwizard'
+					{
+						newLeafNode(lv_type_0_1, grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getHttpServerRule());
+						}
+						setWithLastConsumed($current, "type", lv_type_0_1, null);
+					}
+					    |
+					lv_type_0_2='SpringBoot'
+					{
+						newLeafNode(lv_type_0_2, grammarAccess.getHttpServerAccess().getTypeSpringBootKeyword_0_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getHttpServerRule());
+						}
+						setWithLastConsumed($current, "type", lv_type_0_2, null);
+					}
+				)
+			)
+		)?
+		(
+			(
 				{
-					newCompositeNode(grammarAccess.getHttpServerAccess().getNameQualifiedNameParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getHttpServerAccess().getNameQualifiedNameParserRuleCall_1_0());
 				}
-				lv_name_0_0=ruleQualifiedName
+				lv_name_1_0=ruleQualifiedName
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -811,23 +838,23 @@ ruleHttpServer returns [EObject current=null]
 					set(
 						$current,
 						"name",
-						lv_name_0_0,
+						lv_name_1_0,
 						"de.acegen.AceGen.QualifiedName");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_1='Authorization'
+			otherlv_2='Authorization'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getHttpServerAccess().getAuthorizationKeyword_1_0());
+				newLeafNode(otherlv_2, grammarAccess.getHttpServerAccess().getAuthorizationKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserAuthUserParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserAuthUserParserRuleCall_2_1_0());
 					}
-					lv_authUser_2_0=ruleAuthUser
+					lv_authUser_3_0=ruleAuthUser
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -835,7 +862,7 @@ ruleHttpServer returns [EObject current=null]
 						set(
 							$current,
 							"authUser",
-							lv_authUser_2_0,
+							lv_authUser_3_0,
 							"de.acegen.AceGen.AuthUser");
 						afterParserOrEnumRuleCall();
 					}
@@ -843,9 +870,9 @@ ruleHttpServer returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_3='import'
+			otherlv_4='import'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getHttpServerAccess().getImportKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getHttpServerAccess().getImportKeyword_3_0());
 			}
 			(
 				(
@@ -855,7 +882,7 @@ ruleHttpServer returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserRefAuthUserCrossReference_2_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserRefAuthUserCrossReference_3_1_0());
 					}
 					ruleQualifiedName
 					{
@@ -865,16 +892,16 @@ ruleHttpServer returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_5='ACE'
+			otherlv_6='ACE'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getHttpServerAccess().getACEKeyword_3_0());
+				newLeafNode(otherlv_6, grammarAccess.getHttpServerAccess().getACEKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getAceOperationsHttpServerAceParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getAceOperationsHttpServerAceParserRuleCall_4_1_0());
 					}
-					lv_aceOperations_6_0=ruleHttpServerAce
+					lv_aceOperations_7_0=ruleHttpServerAce
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -882,7 +909,7 @@ ruleHttpServer returns [EObject current=null]
 						add(
 							$current,
 							"aceOperations",
-							lv_aceOperations_6_0,
+							lv_aceOperations_7_0,
 							"de.acegen.AceGen.HttpServerAce");
 						afterParserOrEnumRuleCall();
 					}
@@ -890,16 +917,16 @@ ruleHttpServer returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_7='views'
+			otherlv_8='views'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getHttpServerAccess().getViewsKeyword_4_0());
+				newLeafNode(otherlv_8, grammarAccess.getHttpServerAccess().getViewsKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getViewsHttpServerViewParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getViewsHttpServerViewParserRuleCall_5_1_0());
 					}
-					lv_views_8_0=ruleHttpServerView
+					lv_views_9_0=ruleHttpServerView
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -907,7 +934,7 @@ ruleHttpServer returns [EObject current=null]
 						add(
 							$current,
 							"views",
-							lv_views_8_0,
+							lv_views_9_0,
 							"de.acegen.AceGen.HttpServerView");
 						afterParserOrEnumRuleCall();
 					}
@@ -915,16 +942,16 @@ ruleHttpServer returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_9='models'
+			otherlv_10='models'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getHttpServerAccess().getModelsKeyword_5_0());
+				newLeafNode(otherlv_10, grammarAccess.getHttpServerAccess().getModelsKeyword_6_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getModelsModelParserRuleCall_5_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getModelsModelParserRuleCall_6_1_0());
 					}
-					lv_models_10_0=ruleModel
+					lv_models_11_0=ruleModel
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -932,7 +959,7 @@ ruleHttpServer returns [EObject current=null]
 						add(
 							$current,
 							"models",
-							lv_models_10_0,
+							lv_models_11_0,
 							"de.acegen.AceGen.Model");
 						afterParserOrEnumRuleCall();
 					}
@@ -940,16 +967,16 @@ ruleHttpServer returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_11='scenarios'
+			otherlv_12='scenarios'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getHttpServerAccess().getScenariosKeyword_6_0());
+				newLeafNode(otherlv_12, grammarAccess.getHttpServerAccess().getScenariosKeyword_7_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAccess().getScenariosScenarioParserRuleCall_6_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAccess().getScenariosScenarioParserRuleCall_7_1_0());
 					}
-					lv_scenarios_12_0=ruleScenario
+					lv_scenarios_13_0=ruleScenario
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerRule());
@@ -957,7 +984,7 @@ ruleHttpServer returns [EObject current=null]
 						add(
 							$current,
 							"scenarios",
-							lv_scenarios_12_0,
+							lv_scenarios_13_0,
 							"de.acegen.AceGen.Scenario");
 						afterParserOrEnumRuleCall();
 					}

@@ -36,10 +36,10 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a;
 	protected AbstractElementAlias match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q;
-	protected AbstractElementAlias match_HttpServer_ACEKeyword_3_0_q;
-	protected AbstractElementAlias match_HttpServer_ModelsKeyword_5_0_q;
-	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_6_0_q;
-	protected AbstractElementAlias match_HttpServer_ViewsKeyword_4_0_q;
+	protected AbstractElementAlias match_HttpServer_ACEKeyword_4_0_q;
+	protected AbstractElementAlias match_HttpServer_ModelsKeyword_6_0_q;
+	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_7_0_q;
+	protected AbstractElementAlias match_HttpServer_ViewsKeyword_5_0_q;
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
 	protected AbstractElementAlias match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
@@ -61,10 +61,10 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()));
 		match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()));
-		match_HttpServer_ACEKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getACEKeyword_3_0());
-		match_HttpServer_ModelsKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getModelsKeyword_5_0());
-		match_HttpServer_ScenariosKeyword_6_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_6_0());
-		match_HttpServer_ViewsKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_4_0());
+		match_HttpServer_ACEKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getACEKeyword_4_0());
+		match_HttpServer_ModelsKeyword_6_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getModelsKeyword_6_0());
+		match_HttpServer_ScenariosKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_7_0());
+		match_HttpServer_ViewsKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_5_0());
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
 		match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
@@ -110,14 +110,14 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q.equals(syntax))
 				emit_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServer_ACEKeyword_3_0_q.equals(syntax))
-				emit_HttpServer_ACEKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServer_ModelsKeyword_5_0_q.equals(syntax))
-				emit_HttpServer_ModelsKeyword_5_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServer_ScenariosKeyword_6_0_q.equals(syntax))
-				emit_HttpServer_ScenariosKeyword_6_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServer_ViewsKeyword_4_0_q.equals(syntax))
-				emit_HttpServer_ViewsKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServer_ACEKeyword_4_0_q.equals(syntax))
+				emit_HttpServer_ACEKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServer_ModelsKeyword_6_0_q.equals(syntax))
+				emit_HttpServer_ModelsKeyword_6_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServer_ScenariosKeyword_7_0_q.equals(syntax))
+				emit_HttpServer_ScenariosKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServer_ViewsKeyword_5_0_q.equals(syntax))
+				emit_HttpServer_ViewsKeyword_5_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q.equals(syntax))
 				emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q.equals(syntax))
@@ -371,7 +371,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName (ambiguity) 'views'? 'models'? 'scenarios' scenarios+=Scenario
 	 *     name=QualifiedName (ambiguity) 'views'? 'models'? 'scenarios'? (rule end)
 	 */
-	protected void emit_HttpServer_ACEKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServer_ACEKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -391,7 +391,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     views+=HttpServerView (ambiguity) 'scenarios' scenarios+=Scenario
 	 *     views+=HttpServerView (ambiguity) 'scenarios'? (rule end)
 	 */
-	protected void emit_HttpServer_ModelsKeyword_5_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServer_ModelsKeyword_6_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -407,7 +407,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName 'ACE'? 'views'? 'models'? (ambiguity) (rule end)
 	 *     views+=HttpServerView 'models'? (ambiguity) (rule end)
 	 */
-	protected void emit_HttpServer_ScenariosKeyword_6_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServer_ScenariosKeyword_7_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -429,7 +429,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? 'scenarios' scenarios+=Scenario
 	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? 'scenarios'? (rule end)
 	 */
-	protected void emit_HttpServer_ViewsKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServer_ViewsKeyword_5_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

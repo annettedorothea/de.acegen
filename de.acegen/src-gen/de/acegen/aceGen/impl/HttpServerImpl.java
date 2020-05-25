@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUser <em>Auth User</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUserRef <em>Auth User Ref</em>}</li>
@@ -48,6 +49,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpServerImpl extends MinimalEObjectImpl.Container implements HttpServer
 {
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -147,6 +168,31 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_SERVER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__TYPE, oldType, type));
   }
 
   /**
@@ -363,6 +409,8 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__TYPE:
+        return getType();
       case AceGenPackage.HTTP_SERVER__NAME:
         return getName();
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -393,6 +441,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__TYPE:
+        setType((String)newValue);
+        return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName((String)newValue);
         return;
@@ -432,6 +483,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__TYPE:
+        setType(TYPE_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -467,6 +521,8 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case AceGenPackage.HTTP_SERVER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -496,7 +552,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (type: ");
+    result.append(type);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

@@ -426,6 +426,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
+	 *         (type='Dropwizard' | type='SpringBoot')? 
 	 *         name=QualifiedName 
 	 *         authUser=AuthUser? 
 	 *         authUserRef=[AuthUser|QualifiedName]? 

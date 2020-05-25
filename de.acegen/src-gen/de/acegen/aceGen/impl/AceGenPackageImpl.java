@@ -663,7 +663,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_Name()
+  public EAttribute getHttpServer_Type()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(0);
   }
@@ -674,9 +674,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_AuthUser()
+  public EAttribute getHttpServer_Name()
   {
-    return (EReference)httpServerEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)httpServerEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -685,7 +685,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_AuthUserRef()
+  public EReference getHttpServer_AuthUser()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(2);
   }
@@ -696,7 +696,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_AceOperations()
+  public EReference getHttpServer_AuthUserRef()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(3);
   }
@@ -707,7 +707,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_Views()
+  public EReference getHttpServer_AceOperations()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(4);
   }
@@ -718,7 +718,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_Models()
+  public EReference getHttpServer_Views()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(5);
   }
@@ -729,9 +729,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_Scenarios()
+  public EReference getHttpServer_Models()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpServer_Scenarios()
+  {
+    return (EReference)httpServerEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -1716,6 +1727,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpClientTypeDefinitionEClass, HTTP_CLIENT_TYPE_DEFINITION__ELEMENTS);
 
     httpServerEClass = createEClass(HTTP_SERVER);
+    createEAttribute(httpServerEClass, HTTP_SERVER__TYPE);
     createEAttribute(httpServerEClass, HTTP_SERVER__NAME);
     createEReference(httpServerEClass, HTTP_SERVER__AUTH_USER);
     createEReference(httpServerEClass, HTTP_SERVER__AUTH_USER_REF);
@@ -1903,6 +1915,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpClientTypeDefinition_Elements(), this.getHttpClientStateElement(), null, "elements", null, 0, -1, HttpClientTypeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerEClass, HttpServer.class, "HttpServer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHttpServer_Type(), ecorePackage.getEString(), "type", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpServer_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_AuthUser(), this.getAuthUser(), null, "authUser", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_AuthUserRef(), this.getAuthUser(), null, "authUserRef", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

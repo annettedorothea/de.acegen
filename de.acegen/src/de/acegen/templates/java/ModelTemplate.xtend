@@ -519,7 +519,7 @@ class ModelTemplate {
 				super();
 				this.writeHandle = new PersistenceHandle(jdbi.open().setReadOnly(false));
 				this.readonlyHandle = new PersistenceHandle(jdbi.open().setReadOnly(true));
-				if (appConfiguration.getServerConfiguration().writeTimeline()) {
+				if (appConfiguration.getConfig().writeTimeline()) {
 					this.timelineHandle = new PersistenceHandle(jdbi.open().setReadOnly(false));
 				}
 			}

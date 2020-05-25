@@ -97,6 +97,14 @@ class AceExtension {
 		return urlWithPathParam ;
 	}
 	
+	def boolean isDropwizard(HttpServer it) {
+		return it.type == "Dropwizard"
+	}
+	
+	def boolean isDropwizard(HttpServerAce it) {
+		return it.type == "Dropwizard"
+	}
+	
 }
 	
 	

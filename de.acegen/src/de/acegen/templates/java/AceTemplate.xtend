@@ -89,7 +89,7 @@ class AceTemplate {
 					}
 				});
 		
-				if (!ServerConfiguration.LIVE.equals(mode)) {
+				if (!Config.LIVE.equals(mode)) {
 					bootstrap.addCommand(new EventReplayCommand(this));
 				}
 			}
@@ -107,18 +107,18 @@ class AceTemplate {
 		
 				E2E e2e = new E2E();
 		
-				mode = configuration.getServerConfiguration().getMode();
+				mode = configuration.getConfig().getMode();
 				LOG.info("running in {} mode", mode);
-				if (ServerConfiguration.REPLAY.equals(mode)) {
+				if (Config.REPLAY.equals(mode)) {
 					environment.jersey().register(new PrepareE2EResource(jdbi, daoProvider, viewProvider, e2e, configuration));
 					environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));
 					environment.jersey().register(new StopE2ESessionResource(e2e, configuration));
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
 					LOG.warn("You are running in REPLAY mode. This is a security risc.");
-				} else if (ServerConfiguration.DEV.equals(mode)) {
+				} else if (Config.DEV.equals(mode)) {
 					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
 					LOG.warn("You are running in DEV mode. This is a security risc.");
-				} else if (ServerConfiguration.TEST.equals(mode)) {
+				} else if (Config.TEST.equals(mode)) {
 					LOG.warn("You are running in TEST mode and the database is going to be cleared.");
 					PersistenceHandle handle = new PersistenceHandle(jdbi.open());
 					daoProvider.truncateAllViews(handle);
@@ -320,7 +320,7 @@ class AceTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 
-		public class ServerConfiguration {
+		public class Config {
 			public static final String REPLAY = "REPLAY";
 			public static final String LIVE = "LIVE";
 			public static final String DEV = "DEV";
@@ -416,16 +416,16 @@ class AceTemplate {
 		
 			@Valid
 			@NotNull
-			private ServerConfiguration serverConfiguration = new ServerConfiguration();
+			private Config config = new Config();
 		
 			@JsonProperty("config")
-			public ServerConfiguration getServerConfiguration() {
-				return serverConfiguration;
+			public Config getConfig() {
+				return config;
 			}
 		
 			@JsonProperty("config")
-			public void setServerConfiguration(ServerConfiguration serverConfiguration) {
-				this.serverConfiguration = serverConfiguration;
+			public void setConfig(Config config) {
+				this.config = config;
 			}
 			
 		}
@@ -468,7 +468,6 @@ class AceTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		
 		@Path("/e2e")
@@ -494,10 +493,9 @@ class AceTemplate {
 			}
 		
 			@PUT
-			@Timed
 			@Path("/start")
 			public Response put(@NotNull List<ITimelineItem> timeline) throws JsonProcessingException {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new WebApplicationException("start e2e session is not available in a live environment", Response.Status.FORBIDDEN);
 				}
 				if (e2e.isSessionRunning() && e2e.getSessionStartedAt().plusMinutes(1).isAfterNow()) {
@@ -558,7 +556,7 @@ class AceTemplate {
 			@Override
 			protected void run(Environment environment, Namespace namespace, CustomAppConfiguration configuration)
 					throws Exception {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new RuntimeException("we won't truncate all views and replay events in a live environment");
 				}
 		
@@ -569,7 +567,7 @@ class AceTemplate {
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi, configuration);
 		
-				AppRegistration.registerConsumers(viewProvider, ServerConfiguration.REPLAY);
+				AppRegistration.registerConsumers(viewProvider, Config.REPLAY);
 		
 				LOG.info("START EVENT REPLAY");
 				try {
@@ -689,8 +687,6 @@ class AceTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
-		
 		@Path("/test/not-replayable")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -703,7 +699,6 @@ class AceTemplate {
 			}
 		
 			@PUT
-			@Timed
 			@Path("/value")
 			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key, String json) {
 				NotReplayableDataProvider.put(uuid, key, json);
@@ -711,7 +706,6 @@ class AceTemplate {
 			}
 		
 			@PUT
-			@Timed
 			@Path("/system-time")
 			public Response putSystemTime(@QueryParam("uuid") String uuid, @QueryParam("system-time") String systemTime) {
 				NotReplayableDataProvider.putSystemTime(uuid, DateTime.parse(systemTime).withZone(DateTimeZone.UTC));
@@ -737,8 +731,6 @@ class AceTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import com.codahale.metrics.annotation.Timed;
-		
 		@Path("/server")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -749,7 +741,6 @@ class AceTemplate {
 			}
 		
 			@GET
-			@Timed
 			@Path("/info")
 			public Response put() {
 				return Response.ok(new ServerInfo(App.getVersion())).build();
@@ -809,8 +800,6 @@ class AceTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
-		
 		@Path("/e2e")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -830,10 +819,9 @@ class AceTemplate {
 			}
 		
 			@GET
-			@Timed
 			@Path("/timeline")
 			public Response get() {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new WebApplicationException("get server timeline is not available in a live environment", Response.Status.FORBIDDEN);
 				}
 				PersistenceHandle timelineHandle = new PersistenceHandle(jdbi.open());
@@ -873,8 +861,6 @@ class AceTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
-		
 		@Path("/e2e")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -899,10 +885,9 @@ class AceTemplate {
 			}
 		
 			@PUT
-			@Timed
 			@Path("/prepare")
 			public Response put(@NotNull @QueryParam("uuid") String uuid) {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new WebApplicationException("prepare e2e replay is not available in a live environment", Response.Status.FORBIDDEN);
 				}
 				DatabaseHandle databaseHandle = new DatabaseHandle(jdbi, configuration);
@@ -965,8 +950,6 @@ class AceTemplate {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import com.codahale.metrics.annotation.Timed;
-		
 		@Path("/e2e")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -984,10 +967,9 @@ class AceTemplate {
 			}
 		
 			@PUT
-			@Timed
 			@Path("/stop")
 			public Response put() {
-				if (ServerConfiguration.LIVE.equals(configuration.getServerConfiguration().getMode())) {
+				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new WebApplicationException("stop e2e session is not available in a live environment", Response.Status.FORBIDDEN);
 				}
 				e2e.reset();

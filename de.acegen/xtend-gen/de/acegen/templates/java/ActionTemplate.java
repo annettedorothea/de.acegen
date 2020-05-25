@@ -378,9 +378,6 @@ public class ActionTemplate {
     _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.E2E;");
@@ -682,7 +679,7 @@ public class ActionTemplate {
   
   private CharSequence addActionToTimeline() {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());");
@@ -694,7 +691,7 @@ public class ActionTemplate {
   
   private CharSequence addExceptionToTimeline() {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("if (appConfiguration.getServerConfiguration().writeError()) {");
+    _builder.append("if (appConfiguration.getConfig().writeError()) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());");
@@ -1322,13 +1319,13 @@ public class ActionTemplate {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())");
+    _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())");
+    _builder.append("|| Config.LIVE.equals(appConfiguration.getConfig().getMode())");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
@@ -1352,7 +1349,7 @@ public class ActionTemplate {
     _builder.append("this.initActionData();");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
@@ -1364,7 +1361,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("initActionDataFromNotReplayableDataProvider();");
@@ -1634,13 +1631,13 @@ public class ActionTemplate {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())");
+    _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())");
+    _builder.append("|| Config.LIVE.equals(appConfiguration.getConfig().getMode())");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
@@ -1664,7 +1661,7 @@ public class ActionTemplate {
     _builder.append("this.initActionData();");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
@@ -1676,7 +1673,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {");
+    _builder.append("if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("initActionDataFromNotReplayableDataProvider();");
@@ -1696,7 +1693,7 @@ public class ActionTemplate {
     {
       if (isProxy) {
         _builder.append("\t\t\t");
-        _builder.append("if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {");
+        _builder.append("if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {");
         _builder.newLine();
         _builder.append("\t\t\t");
         _builder.append("\t");
@@ -1950,7 +1947,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import de.acegen.ServerConfiguration;");
+    _builder.append("import de.acegen.Config;");
     _builder.newLine();
     _builder.append("import de.acegen.E2E;");
     _builder.newLine();

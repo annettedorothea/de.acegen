@@ -408,13 +408,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER = 7;
 
   /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__TYPE = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__NAME = 0;
+  int HTTP_SERVER__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Auth User</b></em>' containment reference.
@@ -423,7 +432,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER = 1;
+  int HTTP_SERVER__AUTH_USER = 2;
 
   /**
    * The feature id for the '<em><b>Auth User Ref</b></em>' reference.
@@ -432,7 +441,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER_REF = 2;
+  int HTTP_SERVER__AUTH_USER_REF = 3;
 
   /**
    * The feature id for the '<em><b>Ace Operations</b></em>' containment reference list.
@@ -441,7 +450,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__ACE_OPERATIONS = 3;
+  int HTTP_SERVER__ACE_OPERATIONS = 4;
 
   /**
    * The feature id for the '<em><b>Views</b></em>' containment reference list.
@@ -450,7 +459,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__VIEWS = 4;
+  int HTTP_SERVER__VIEWS = 5;
 
   /**
    * The feature id for the '<em><b>Models</b></em>' containment reference list.
@@ -459,7 +468,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__MODELS = 5;
+  int HTTP_SERVER__MODELS = 6;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -468,7 +477,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__SCENARIOS = 6;
+  int HTTP_SERVER__SCENARIOS = 7;
 
   /**
    * The number of structural features of the '<em>Http Server</em>' class.
@@ -477,7 +486,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_FEATURE_COUNT = 7;
+  int HTTP_SERVER_FEATURE_COUNT = 8;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceImpl <em>Http Server Ace</em>}' class.
@@ -2059,6 +2068,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServer();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.acegen.aceGen.HttpServer#getType()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_Type();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3313,6 +3333,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_SERVER = eINSTANCE.getHttpServer();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__TYPE = eINSTANCE.getHttpServer_Type();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

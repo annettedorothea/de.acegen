@@ -176,8 +176,6 @@ class ActionTemplate {
 		
 		import org.apache.commons.lang3.StringUtils;
 		
-		import com.fasterxml.jackson.databind.ObjectMapper;
-		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
 		import de.acegen.IDaoProvider;
@@ -283,13 +281,13 @@ class ActionTemplate {
 	'''
 	
 	private def addActionToTimeline() '''
-		if (appConfiguration.getServerConfiguration().writeTimeline()) {
+		if (appConfiguration.getConfig().writeTimeline()) {
 			daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
 	private def addExceptionToTimeline() '''
-		if (appConfiguration.getServerConfiguration().writeError()) {
+		if (appConfiguration.getConfig().writeError()) {
 			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
 		}
 	'''
@@ -514,9 +512,9 @@ class ActionTemplate {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
+							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
+							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
 							databaseHandle.rollbackTransaction();
 							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
@@ -524,11 +522,11 @@ class ActionTemplate {
 						}
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
-					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						initActionDataFrom(timelineItem);
 					}
-					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						initActionDataFromNotReplayableDataProvider();
 					}
 					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
@@ -624,9 +622,9 @@ class ActionTemplate {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (ServerConfiguration.DEV.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.LIVE.equals(appConfiguration.getServerConfiguration().getMode())
-							|| ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
+							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
+							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
 							databaseHandle.rollbackTransaction();
 							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
@@ -634,18 +632,18 @@ class ActionTemplate {
 						}
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
-					} else if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
 						initActionDataFrom(timelineItem);
 					}
-					if (ServerConfiguration.TEST.equals(appConfiguration.getServerConfiguration().getMode())) {
+					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						initActionDataFromNotReplayableDataProvider();
 					}
 					«addActionToTimeline»
 					
 					ICommand command = this.getCommand();
 					«IF isProxy»
-						if (ServerConfiguration.REPLAY.equals(appConfiguration.getServerConfiguration().getMode())) {
+						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
 							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
 							T originalData = this.createDataFrom(timelineItem);
 							command.setCommandData(originalData);
@@ -750,7 +748,7 @@ class ActionTemplate {
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
 		import de.acegen.ViewProvider;
-		import de.acegen.ServerConfiguration;
+		import de.acegen.Config;
 		import de.acegen.E2E;
 		import de.acegen.PersistenceConnection;
 		
