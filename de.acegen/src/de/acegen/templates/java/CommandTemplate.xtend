@@ -39,8 +39,6 @@ class CommandTemplate {
 		
 		package «java.getName».commands;
 		
-		import javax.ws.rs.WebApplicationException;
-		
 		import de.acegen.Command;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
@@ -70,7 +68,7 @@ class CommandTemplate {
 						break;
 				«ENDFOR»
 				default:
-					throw new WebApplicationException("unhandled outcome " + this.commandData.getOutcome());
+					throw new RuntimeException("unhandled outcome " + this.commandData.getOutcome());
 				}
 			}
 			

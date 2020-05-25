@@ -18,7 +18,9 @@
 package de.acegen.templates.java
 
 import de.acegen.aceGen.AuthUser
+import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
+import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import javax.inject.Inject
 
@@ -29,6 +31,9 @@ class AceTemplate {
 
 	@Inject
 	extension CommonExtension
+	
+	@Inject
+	extension AceExtension
 	
 	def generateApp() '''
 		«copyright»
@@ -170,18 +175,22 @@ class AceTemplate {
 		
 	'''
 
-	def generateAppRegistration() '''
+	def generateAppRegistration(HttpServer it) '''
 		«copyright»
 		
 		package de.acegen;
 		
-		import io.dropwizard.setup.Environment;
+		«IF dropwizard»
+			import io.dropwizard.setup.Environment;
+		«ENDIF»
 		
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
-			}
+			«IF dropwizard»
+				public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,
+						IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+				}
+			«ENDIF»
 		
 			public static void registerConsumers(ViewProvider viewProvider, String mode) {
 			}
@@ -1038,7 +1047,6 @@ class AceTemplate {
 		import org.jdbi.v3.core.statement.Update;
 		
 		import com.fasterxml.jackson.core.JsonProcessingException;
-		import javax.ws.rs.WebApplicationException;
 		
 		public class AceDao {
 		
@@ -1106,13 +1114,13 @@ class AceTemplate {
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public void addActionToTimeline(IAction action, PersistenceHandle timelineHandle) {
+			public void addActionToTimeline(IAction<? extends IDataContainer> action, PersistenceHandle timelineHandle) {
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
 					addItemToTimeline("action", action.getActionName(), json,
 							action.getActionData().getUuid(), timelineHandle);
 				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
+					throw new RuntimeException(e);
 				}
 			}
 		
@@ -1122,7 +1130,7 @@ class AceTemplate {
 							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
 							timelineHandle);
 				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
+					throw new RuntimeException(e);
 				}
 			}
 		
@@ -1131,7 +1139,7 @@ class AceTemplate {
 					addItemToTimeline("event", event.getEventName(), mapper.writeValueAsString(event.getEventData()),
 							event.getEventData().getUuid(), timelineHandle);
 				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
+					throw new RuntimeException(e);
 				}
 			}
 		
@@ -1140,7 +1148,7 @@ class AceTemplate {
 					addItemToTimeline("preparing event", event.getEventName(),
 							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
 				} catch (JsonProcessingException e) {
-					throw new WebApplicationException(e);
+					throw new RuntimeException(e);
 				}
 			}
 		

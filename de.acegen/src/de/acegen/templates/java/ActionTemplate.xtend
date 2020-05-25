@@ -549,27 +549,30 @@ class ActionTemplate {
 		
 		package «getName»;
 		
-		import io.dropwizard.setup.Environment;
-		import de.acegen.CustomAppConfiguration;
-		import de.acegen.IDaoProvider;
+		«IF dropwizard»
+			import io.dropwizard.setup.Environment;
+			import de.acegen.PersistenceConnection;
+			import de.acegen.CustomAppConfiguration;
+			import de.acegen.IDaoProvider;
+			import de.acegen.E2E;
+		«ENDIF»
 		import de.acegen.ViewProvider;
-		import de.acegen.Config;
-		import de.acegen.E2E;
-		import de.acegen.PersistenceConnection;
 		
-		«IF aceOperations.size > 0»
+		«IF aceOperations.size > 0 && dropwizard»
 			import «getName».resources.*;
 		«ENDIF»
 
 		@SuppressWarnings("all")
 		public class AppRegistration {
 		
-			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
-				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
-				«ENDFOR»
-			}
+			«IF dropwizard»
+				public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+						IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					«FOR aceOperation : aceOperations»
+						environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
+					«ENDFOR»
+				}
+			«ENDIF»
 		
 			public static void registerConsumers(ViewProvider viewProvider, String mode) {
 				«FOR aceOperation : aceOperations»

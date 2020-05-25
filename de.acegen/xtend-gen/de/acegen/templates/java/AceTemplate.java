@@ -17,7 +17,9 @@ package de.acegen.templates.java;
 
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AuthUser;
+import de.acegen.aceGen.HttpServer;
 import de.acegen.extensions.CommonExtension;
+import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -34,6 +36,10 @@ public class AceTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
+  
+  @Inject
+  @Extension
+  private AceExtension _aceExtension;
   
   public CharSequence generateApp() {
     StringConcatenation _builder = new StringConcatenation();
@@ -358,7 +364,7 @@ public class AceTemplate {
     return _builder;
   }
   
-  public CharSequence generateAppRegistration() {
+  public CharSequence generateAppRegistration(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -367,21 +373,32 @@ public class AceTemplate {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import io.dropwizard.setup.Environment;");
-    _builder.newLine();
+    {
+      boolean _isDropwizard = this._aceExtension.isDropwizard(it);
+      if (_isDropwizard) {
+        _builder.append("import io.dropwizard.setup.Environment;");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("public class AppRegistration {");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
+    {
+      boolean _isDropwizard_1 = this._aceExtension.isDropwizard(it);
+      if (_isDropwizard_1) {
+        _builder.append("\t");
+        _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
@@ -2367,8 +2384,6 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.core.JsonProcessingException;");
     _builder.newLine();
-    _builder.append("import javax.ws.rs.WebApplicationException;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("public class AceDao {");
     _builder.newLine();
@@ -2548,7 +2563,7 @@ public class AceTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void addActionToTimeline(IAction action, PersistenceHandle timelineHandle) {");
+    _builder.append("public void addActionToTimeline(IAction<? extends IDataContainer> action, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("try {");
@@ -2566,7 +2581,7 @@ public class AceTemplate {
     _builder.append("} catch (JsonProcessingException e) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new WebApplicationException(e);");
+    _builder.append("throw new RuntimeException(e);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -2594,7 +2609,7 @@ public class AceTemplate {
     _builder.append("} catch (JsonProcessingException e) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new WebApplicationException(e);");
+    _builder.append("throw new RuntimeException(e);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -2619,7 +2634,7 @@ public class AceTemplate {
     _builder.append("} catch (JsonProcessingException e) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new WebApplicationException(e);");
+    _builder.append("throw new RuntimeException(e);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -2644,7 +2659,7 @@ public class AceTemplate {
     _builder.append("} catch (JsonProcessingException e) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new WebApplicationException(e);");
+    _builder.append("throw new RuntimeException(e);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");

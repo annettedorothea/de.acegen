@@ -1357,25 +1357,26 @@ public class ActionTemplate {
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import io.dropwizard.setup.Environment;");
-    _builder.newLine();
-    _builder.append("import de.acegen.CustomAppConfiguration;");
-    _builder.newLine();
-    _builder.append("import de.acegen.IDaoProvider;");
-    _builder.newLine();
+    {
+      boolean _isDropwizard = this._aceExtension.isDropwizard(it);
+      if (_isDropwizard) {
+        _builder.append("import io.dropwizard.setup.Environment;");
+        _builder.newLine();
+        _builder.append("import de.acegen.PersistenceConnection;");
+        _builder.newLine();
+        _builder.append("import de.acegen.CustomAppConfiguration;");
+        _builder.newLine();
+        _builder.append("import de.acegen.IDaoProvider;");
+        _builder.newLine();
+        _builder.append("import de.acegen.E2E;");
+        _builder.newLine();
+      }
+    }
     _builder.append("import de.acegen.ViewProvider;");
-    _builder.newLine();
-    _builder.append("import de.acegen.Config;");
-    _builder.newLine();
-    _builder.append("import de.acegen.E2E;");
-    _builder.newLine();
-    _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
     _builder.newLine();
     {
-      int _size = it.getAceOperations().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((it.getAceOperations().size() > 0) && this._aceExtension.isDropwizard(it))) {
         _builder.append("import ");
         String _name_1 = it.getName();
         _builder.append(_name_1);
@@ -1389,26 +1390,33 @@ public class ActionTemplate {
     _builder.append("public class AppRegistration {");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
-    _builder.newLine();
     {
-      EList<HttpServerAce> _aceOperations = it.getAceOperations();
-      for(final HttpServerAce aceOperation : _aceOperations) {
+      boolean _isDropwizard_1 = this._aceExtension.isDropwizard(it);
+      if (_isDropwizard_1) {
+        _builder.append("\t");
+        _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
+        _builder.newLine();
+        _builder.append("\t");
         _builder.append("\t\t");
-        _builder.append("environment.jersey().register(new ");
-        String _resourceName = this._aceExtension.resourceName(aceOperation);
-        _builder.append(_resourceName, "\t\t");
-        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));");
-        _builder.newLineIfNotEmpty();
+        _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+        _builder.newLine();
+        {
+          EList<HttpServerAce> _aceOperations = it.getAceOperations();
+          for(final HttpServerAce aceOperation : _aceOperations) {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("environment.jersey().register(new ");
+            String _resourceName = this._aceExtension.resourceName(aceOperation);
+            _builder.append(_resourceName, "\t\t");
+            _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");

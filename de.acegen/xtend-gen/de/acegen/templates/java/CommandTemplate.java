@@ -52,9 +52,6 @@ public class CommandTemplate {
     _builder.append(".commands;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import javax.ws.rs.WebApplicationException;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import de.acegen.Command;");
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
@@ -157,7 +154,7 @@ public class CommandTemplate {
     _builder.append("default:");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("throw new WebApplicationException(\"unhandled outcome \" + this.commandData.getOutcome());");
+    _builder.append("throw new RuntimeException(\"unhandled outcome \" + this.commandData.getOutcome());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
