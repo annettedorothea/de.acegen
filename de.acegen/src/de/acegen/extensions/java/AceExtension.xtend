@@ -44,7 +44,7 @@ class AceExtension {
 	def String nameUppercase(HttpServerAce it) '''«getName.toFirstUpper»'''
 	
 	def String resourceName(HttpServerAce it) '''«getName.toFirstUpper»Resource'''
-	
+
 	def String actionNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).getName».actions.«actionName»'''
 	
 	def String newAction(HttpServerAce it) '''final «actionNameWithPackage» action = new «actionNameWithPackage»(«getModel.newFromCommandData», DatabaseService.getDatabaseHandle());'''
@@ -98,10 +98,6 @@ class AceExtension {
 	}
 	
 	def boolean isDropwizard(HttpServer it) {
-		return it.type == "Dropwizard"
-	}
-	
-	def boolean isDropwizard(HttpServerAce it) {
 		return it.type == "Dropwizard"
 	}
 	

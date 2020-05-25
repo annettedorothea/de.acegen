@@ -369,7 +369,7 @@ public class EventTemplate {
     _builder.append("public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);");

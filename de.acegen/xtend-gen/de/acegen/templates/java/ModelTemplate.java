@@ -1544,7 +1544,7 @@ public class ModelTemplate {
     _builder.append("this.readonlyHandle = new PersistenceHandle(jdbi.open().setReadOnly(true));");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (appConfiguration.getServerConfiguration().writeTimeline()) {");
+    _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("this.timelineHandle = new PersistenceHandle(jdbi.open().setReadOnly(false));");

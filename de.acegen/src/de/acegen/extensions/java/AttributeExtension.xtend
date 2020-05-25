@@ -50,12 +50,12 @@ class AttributeExtension {
 		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
 			«IF !optional»
 				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
-					throwBadRequest("«attribute.name» is mandatory");
+					return badRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
 			if (StringUtils.isNotBlank(«attribute.name»)) {
 				try {
-					this.actionData.«attribute.setterCall(attribute.resourceParam)»;
+					actionData.«attribute.setterCall(attribute.resourceParam)»;
 				} catch (Exception x) {
 					LOG.warn("failed to parse dateTime «attribute.name» - {}", «attribute.name»);
 				}
@@ -64,15 +64,15 @@ class AttributeExtension {
 			«IF !optional»
 				«IF "String".equals(attribute.type) && !attribute.list»
 					if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
-						throwBadRequest("«attribute.name» is mandatory");
+						return badRequest("«attribute.name» is mandatory");
 					}
 				«ELSE»
 					if («attribute.name» == null) {
-						throwBadRequest("«attribute.name» is mandatory");
+						return badRequest("«attribute.name» is mandatory");
 					}
 				«ENDIF»
 			«ENDIF»
-			this.actionData.«attribute.setterCall(attribute.resourceParam)»;
+			actionData.«attribute.setterCall(attribute.resourceParam)»;
 		«ENDIF»
 	'''
 
@@ -82,15 +82,15 @@ class AttributeExtension {
 		«IF !optional»
 			«IF "String".equals(attribute.type) && !attribute.list»
 				if (StringUtils.isBlank(payload.«attribute.getterCall») || "null".equals(payload.«attribute.getterCall»)) {
-					throwBadRequest("«attribute.name» is mandatory");
+					return badRequest("«attribute.name» is mandatory");
 				}
 			«ELSE»
 				if (payload.«attribute.getterCall» == null) {
-					throwBadRequest("«attribute.name» is mandatory");
+					return badRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
 		«ENDIF»
-		this.actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+		actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
 	'''
 
 	def String getterCall(Attribute it) {

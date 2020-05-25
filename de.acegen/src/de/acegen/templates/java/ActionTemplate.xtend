@@ -53,14 +53,6 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.PathParam;
-		import javax.ws.rs.QueryParam;
-		
 		import org.joda.time.DateTime;
 		import org.joda.time.DateTimeZone;
 		
@@ -68,8 +60,6 @@ class ActionTemplate {
 		import org.slf4j.LoggerFactory;
 		
 		import org.apache.commons.lang3.StringUtils;
-		
-		import com.fasterxml.jackson.databind.ObjectMapper;
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.E2E;
@@ -83,40 +73,20 @@ class ActionTemplate {
 		import de.acegen.PersistenceConnection;
 		import de.acegen.«IF proxy»Proxy«ENDIF»WriteAction;
 
-		«IF authorize»
-			import de.acegen.auth.AuthUser;
-			import io.dropwizard.auth.Auth;
-		«ENDIF»
-
-		import com.codahale.metrics.annotation.Timed;
-		import com.codahale.metrics.annotation.Metered;
-		import com.codahale.metrics.annotation.ExceptionMetered;
-		import com.codahale.metrics.annotation.ResponseMetered;
-
-		import com.fasterxml.jackson.core.JsonProcessingException;
-
-		import javax.ws.rs.POST;
-		import javax.ws.rs.PUT;
-		import javax.ws.rs.DELETE;
-		
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		«IF outcomes.size > 0»
 			import «commandNameWithPackage(java)»;
 		«ENDIF»
 		
-		@Path("«getUrl»")
 		@SuppressWarnings("unused")
 		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»WriteAction<«getModel.dataParamType»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
-			private ObjectMapper objectMapper;
-
 			«constructor»
 				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider, e2e, HttpMethod.«getType»);
-				objectMapper = new ObjectMapper();
+								viewProvider, e2e);
 			}
 		
 			@Override
@@ -140,14 +110,6 @@ class ActionTemplate {
 
 			«initActionDataFromNotReplayableDataProvider»		
 
-			«method(authUser)»
-		
-			«IF response.size > 0»
-				protected Object createReponse() {
-					return new «responseDataNameWithPackage(java)»(this.actionData);
-				}
-			«ENDIF»
-
 		}
 		
 		
@@ -159,14 +121,6 @@ class ActionTemplate {
 		«copyright»
 		
 		package «java.getName».actions;
-		
-		import javax.ws.rs.Consumes;
-		import javax.ws.rs.Path;
-		import javax.ws.rs.Produces;
-		import javax.ws.rs.core.MediaType;
-		import javax.ws.rs.core.Response;
-		import javax.ws.rs.PathParam;
-		import javax.ws.rs.QueryParam;
 		
 		import org.joda.time.DateTime;
 		import org.joda.time.DateTimeZone;
@@ -189,33 +143,19 @@ class ActionTemplate {
 		
 		«IF authorize»
 			import de.acegen.auth.AuthUser;
-			import io.dropwizard.auth.Auth;
 		«ENDIF»
 
-		import com.codahale.metrics.annotation.Timed;
-		import com.codahale.metrics.annotation.Metered;
-		import com.codahale.metrics.annotation.ExceptionMetered;
-		import com.codahale.metrics.annotation.ResponseMetered;
-
-		import com.fasterxml.jackson.core.JsonProcessingException;
-		
-		import javax.ws.rs.GET;
-		
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
-		@Path("«getUrl»")
 		@SuppressWarnings("unused")
 		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
-			private ObjectMapper objectMapper;
-			
 			«constructor»
 				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
-				objectMapper = new ObjectMapper();
 			}
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
@@ -224,14 +164,6 @@ class ActionTemplate {
 			
 			«initActionDataFromNotReplayableDataProvider»
 
-			«method(authUser)»
-
-			«IF response.size > 0»
-				protected Object createReponse() {
-					return new «responseDataNameWithPackage(java)»(this.actionData);
-				}
-			«ENDIF»
-			
 		}
 		
 		
@@ -297,56 +229,6 @@ class ActionTemplate {
 				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 	'''
 	
-	private def method(HttpServerAce it, AuthUser authUser) '''
-		«IF getType !== null»@«getType»«ENDIF»
-		@Timed(name = "«actionName»Timed")
-		@Metered(name = "«actionName»Metered")
-		@ExceptionMetered
-		@ResponseMetered
-		@Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public Response «resourceName.toFirstLower»(
-				«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
-				«FOR param : queryParams»
-					@QueryParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
-				«ENDFOR»
-				«FOR param : pathParams»
-					@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
-				«ENDFOR»
-				«IF payload.size > 0»«getModel.dataParamType» payload)
-				«ELSE»@QueryParam("uuid") String uuid)«ENDIF» 
-				throws JsonProcessingException {
-			«IF payload.size > 0»
-				if (payload == null) {
-					throwBadRequest("payload must not be null");
-				}
-			«ELSE»
-				if (StringUtils.isBlank(uuid)) {
-					throwBadRequest("uuid must not be blank or null");
-				}
-			«ENDIF»
-			this.actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
-			«FOR paramRef : queryParams»
-				«paramRef.initActionData»
-			«ENDFOR»
-			«FOR paramRef : pathParams»
-				«paramRef.initActionData»
-			«ENDFOR»
-			«FOR attributeRef : payload»
-				«attributeRef.initActionDataFromPayload»
-			«ENDFOR»
-			«IF isAuthorize && authUser !== null»
-				«FOR param : getModel.allAttributes»
-						«IF authUser.attributes.containsAttribute(param)»
-							this.actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
-						«ENDIF»
-				«ENDFOR»
-			«ENDIF»
-			
-			return this.apply();
-		}
-	'''
-
 	def generateInitialActionFile(HttpServerAce it, HttpServer java) '''
 		«copyright»
 		
@@ -399,72 +281,36 @@ class ActionTemplate {
 		
 		package de.acegen;
 		
-		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.Response;
-		
-		public abstract class Action<T extends IDataContainer> implements IAction {
+		public abstract class Action<T extends IDataContainer> implements IAction<T> {
 		
 			protected T actionData;
 			protected String actionName;
-			private HttpMethod httpMethod;
 		
-			public Action(String actionName, HttpMethod httpMethod) {
+			public Action(String actionName) {
 				super();
 				this.actionName = actionName;
-				this.httpMethod = httpMethod;
+			}
+			
+			public void setActionData(T actionData) {
+				this.actionData = actionData;
 			}
 		
 			public String getActionName() {
 				return this.actionName;
 			}
 		
-			public HttpMethod getHttpMethod() {
-				return this.httpMethod;
-			}
-		
-			public IDataContainer getActionData() {
+			public T getActionData() {
 				return this.actionData;
 			}
 		
-			protected void throwUnauthorized() {
-				throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+			protected void throwSecurityException() {
+				throw new SecurityException();
 			}
 		
-			protected void throwBadRequest() {
-				throw new WebApplicationException(Response.Status.BAD_REQUEST);
+			protected void throwIllegalArgumentException(String error) {
+				throw new IllegalArgumentException(error);
 			}
 		
-			protected void throwBadRequest(String error) {
-				throw new WebApplicationException(error, Response.Status.BAD_REQUEST);
-			}
-		
-			protected void throwForbidden(String error) {
-				throw new WebApplicationException(error, Response.Status.FORBIDDEN);
-			}
-			
-			protected void throwServiceUnavailable(String error) {
-				throw new WebApplicationException(error, Response.Status.SERVICE_UNAVAILABLE);
-			}
-		
-			protected void throwInternalServerError(Exception x) {
-				String message = x.getMessage();
-				StackTraceElement[] stackTrace = x.getStackTrace();
-				int i = 1;
-				for (StackTraceElement stackTraceElement : stackTrace) {
-					message += "\n" + stackTraceElement.toString();
-					if (i > 3) {
-						message += "\n" + (stackTrace.length - 4) + " more...";
-						break;
-					}
-					i++;
-				}
-				throw new WebApplicationException(message, Response.Status.INTERNAL_SERVER_ERROR);
-			}
-		
-			protected Object createReponse() {
-				return this.actionData.getUuid();
-			}
-
 		}
 		
 		«sdg»
@@ -475,9 +321,6 @@ class ActionTemplate {
 		«copyright»
 		
 		package de.acegen;
-		
-		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.Response;
 		
 		import org.joda.time.DateTime;
 		import org.joda.time.DateTimeZone;
@@ -495,7 +338,7 @@ class ActionTemplate {
 			
 			public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
-				super(actionName, HttpMethod.GET);
+				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
@@ -508,7 +351,7 @@ class ActionTemplate {
 
 			protected abstract void initActionDataFromNotReplayableDataProvider();
 
-			public Response apply() {
+			public void apply() {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
@@ -517,8 +360,9 @@ class ActionTemplate {
 							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
 							databaseHandle.rollbackTransaction();
-							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							return Response.status(Response.Status.OK).entity("ignoring duplicate request " +  this.actionData.getUuid()).build();
+							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
+							databaseHandle.rollbackTransaction();
+							return;
 						}
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
@@ -532,42 +376,9 @@ class ActionTemplate {
 					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
 					
 					«addActionToTimeline»
-					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
-					return response;
-				} catch (WebApplicationException x) {
-					LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						«addExceptionToTimeline»
-					} catch (Exception ex) {
-						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
-				} catch (Exception x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					x.printStackTrace();
-					try {
-						databaseHandle.rollbackTransaction();
-						«addExceptionToTimeline»
-					} catch (Exception ex) {
-						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					String message = x.getMessage();
-					StackTraceElement[] stackTrace = x.getStackTrace();
-					int i = 1;
-					for (StackTraceElement stackTraceElement : stackTrace) {
-						message += "\n" + stackTraceElement.toString();
-						if (i > 3) {
-							message += "\n" + (stackTrace.length - 4) + " more...";
-							break;
-						}
-						i++;
-					}
-					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
-				} finally {
-					databaseHandle.close();
-				}
+				«catchFinallyBlock»
+				
 			}
 		
 		}
@@ -581,9 +392,6 @@ class ActionTemplate {
 		«copyright»
 		
 		package de.acegen;
-		
-		import javax.ws.rs.WebApplicationException;
-		import javax.ws.rs.core.Response;
 		
 		import org.joda.time.DateTime;
 		import org.joda.time.DateTimeZone;
@@ -601,8 +409,8 @@ class ActionTemplate {
 			private E2E e2e;
 			
 			public «IF isProxy»Proxy«ENDIF»WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e, HttpMethod method) {
-				super(actionName, method);
+					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
@@ -618,7 +426,7 @@ class ActionTemplate {
 
 			protected abstract ICommand getCommand();
 		
-			public Response apply() {
+			public void apply() {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
@@ -626,9 +434,9 @@ class ActionTemplate {
 							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
 							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
 							databaseHandle.rollbackTransaction();
-							LOG.error("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							return Response.status(Response.Status.OK).entity("ignoring duplicate request " +  this.actionData.getUuid()).build();
+							return;
 						}
 						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
 						this.initActionData();
@@ -654,42 +462,8 @@ class ActionTemplate {
 						command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
 					«ENDIF»
 					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
-					Response response = Response.ok(this.createReponse()).build();
 					databaseHandle.commitTransaction();
-					return response;
-				} catch (WebApplicationException x) {
-					LOG.error(actionName + " returns {} due to {} ", x.getResponse().getStatusInfo(), x.getMessage());
-					try {
-						databaseHandle.rollbackTransaction();
-						«addExceptionToTimeline»
-					} catch (Exception ex) {
-						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					return Response.status(x.getResponse().getStatusInfo()).entity(x.getMessage()).build();
-				} catch (Exception x) {
-					LOG.error(actionName + " failed " + x.getMessage());
-					x.printStackTrace();
-					try {
-						databaseHandle.rollbackTransaction();
-						«addExceptionToTimeline»
-					} catch (Exception ex) {
-						LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
-					}
-					String message = x.getMessage();
-					StackTraceElement[] stackTrace = x.getStackTrace();
-					int i = 1;
-					for (StackTraceElement stackTraceElement : stackTrace) {
-						message += "\n" + stackTraceElement.toString();
-						if (i > 3) {
-							message += "\n" + (stackTrace.length - 4) + " more...";
-							break;
-						}
-						i++;
-					}
-					return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
-				} finally {
-					databaseHandle.close();
-				}
+				«catchFinallyBlock»
 			}
 		
 		}
@@ -698,6 +472,39 @@ class ActionTemplate {
 		«sdg»
 		
 	'''
+	
+	def catchFinallyBlock() '''
+		} catch (IllegalArgumentException x) {
+			LOG.error(actionName + " IllegalArgumentException {} ", x.getMessage());
+			try {
+				«addExceptionToTimeline»
+				databaseHandle.rollbackTransaction();
+			} catch (Exception ex) {
+				LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
+			}
+			throw x;
+		} catch (SecurityException x) {
+			LOG.error(actionName + " SecurityException {} ", x.getMessage());
+			try {
+				«addExceptionToTimeline»
+				databaseHandle.rollbackTransaction();
+			} catch (Exception ex) {
+				LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
+			}
+			throw x;
+		} catch (Exception x) {
+			LOG.error(actionName + " Exception {} ", x.getMessage());
+			try {
+				«addExceptionToTimeline»
+				databaseHandle.rollbackTransaction();
+			} catch (Exception ex) {
+				LOG.error(actionName + ": failed to rollback or to save or report exception " + ex.getMessage());
+			}
+			throw x;
+		} finally {
+			databaseHandle.close();
+		}
+	''' 
 
 	def generateHttpMethod() '''
 		«copyright»
@@ -718,17 +525,15 @@ class ActionTemplate {
 		
 		package de.acegen;
 		
-		import javax.ws.rs.core.Response;
-		
-		public interface IAction {
+		public interface IAction<T> {
 		
 			String getActionName();
 			
-			HttpMethod getHttpMethod();
+			void setActionData(T actionData);
 			
 			IDataContainer getActionData();
 			
-		    Response apply();
+		    void apply();
 		    
 		    void initActionData();
 		    
@@ -753,7 +558,7 @@ class ActionTemplate {
 		import de.acegen.PersistenceConnection;
 		
 		«IF aceOperations.size > 0»
-			import «getName».actions.*;
+			import «getName».resources.*;
 		«ENDIF»
 
 		@SuppressWarnings("all")
@@ -762,7 +567,7 @@ class ActionTemplate {
 			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.actionName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
+					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
 				«ENDFOR»
 			}
 		

@@ -104,7 +104,7 @@ public class AttributeExtension {
             _builder.append(")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("throwBadRequest(\"");
+            _builder.append("return badRequest(\"");
             String _name_2 = it.getAttribute().getName();
             _builder.append(_name_2, "\t");
             _builder.append(" is mandatory\");");
@@ -122,7 +122,7 @@ public class AttributeExtension {
         _builder.append("try {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("this.actionData.");
+        _builder.append("actionData.");
         String _setterCall = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall, "\t\t");
         _builder.append(";");
@@ -160,7 +160,7 @@ public class AttributeExtension {
                 _builder.append(")) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
-                _builder.append("throwBadRequest(\"");
+                _builder.append("return badRequest(\"");
                 String _name_8 = it.getAttribute().getName();
                 _builder.append(_name_8, "\t");
                 _builder.append(" is mandatory\");");
@@ -174,7 +174,7 @@ public class AttributeExtension {
                 _builder.append(" == null) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
-                _builder.append("throwBadRequest(\"");
+                _builder.append("return badRequest(\"");
                 String _name_10 = it.getAttribute().getName();
                 _builder.append(_name_10, "\t");
                 _builder.append(" is mandatory\");");
@@ -185,7 +185,7 @@ public class AttributeExtension {
             }
           }
         }
-        _builder.append("this.actionData.");
+        _builder.append("actionData.");
         String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall_1);
         _builder.append(";");
@@ -213,7 +213,7 @@ public class AttributeExtension {
             _builder.append(")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("throwBadRequest(\"");
+            _builder.append("return badRequest(\"");
             String _name = it.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append(" is mandatory\");");
@@ -227,7 +227,7 @@ public class AttributeExtension {
             _builder.append(" == null) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("throwBadRequest(\"");
+            _builder.append("return badRequest(\"");
             String _name_1 = it.getAttribute().getName();
             _builder.append(_name_1, "\t");
             _builder.append(" is mandatory\");");
@@ -238,7 +238,7 @@ public class AttributeExtension {
         }
       }
     }
-    _builder.append("this.actionData.");
+    _builder.append("actionData.");
     Attribute _attribute = it.getAttribute();
     StringConcatenation _builder_1 = new StringConcatenation();
     _builder_1.append("payload.");

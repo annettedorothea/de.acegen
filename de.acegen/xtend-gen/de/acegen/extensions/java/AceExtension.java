@@ -15,6 +15,7 @@
  */
 package de.acegen.extensions.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
@@ -287,5 +288,10 @@ public class AceExtension {
     }
     urlWithPathParam = (_urlWithPathParam + _builder_1);
     return urlWithPathParam;
+  }
+  
+  public boolean isDropwizard(final HttpServer it) {
+    String _type = it.getType();
+    return Objects.equal(_type, "Dropwizard");
   }
 }

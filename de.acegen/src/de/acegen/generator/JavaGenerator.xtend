@@ -31,6 +31,7 @@ import de.acegen.templates.java.ModelTemplate
 import de.acegen.templates.java.ScenarioTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import de.acegen.templates.java.ResourceTemplate
 
 class JavaGenerator {
 	@Inject
@@ -50,6 +51,9 @@ class JavaGenerator {
 	
 	@Inject
 	ScenarioTemplate scenarioTemplate;
+
+	@Inject
+	ResourceTemplate resourceTemplate;
 
 	@Inject
 	extension ViewExtension
@@ -92,6 +96,11 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
 		}
 		for (ace : java.aceOperations) {
+			if (java.dropwizard) {
+				fsa.generateFile(java.packageFolder + '/resources/' + ace.resourceName + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+					resourceTemplate.generateResourceFile(ace, java, authUser));
+			}
 			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 				actionTemplate.generateAbstractActionFile(ace, java, authUser));
@@ -154,8 +163,8 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, aceTemplate.generateCustomAppConfiguration());
 		fsa.generateFile("de/acegen" + '/E2E.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateE2E());
-		fsa.generateFile("de/acegen" + '/ServerConfiguration.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateServerConfiguration());
+		fsa.generateFile("de/acegen" + '/Config.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateConfig());
 		fsa.generateFile("de/acegen" + '/StartE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStartE2ESessionResource());
 		fsa.generateFile("de/acegen" + '/StopE2ESessionResource.java',
@@ -185,6 +194,8 @@ class JavaGenerator {
 			actionTemplate.generateReadAction());
 		fsa.generateFile("de/acegen" + '/WriteAction.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			actionTemplate.generateWriteAction(false));
+		fsa.generateFile("de/acegen" + '/Resource.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			resourceTemplate.generateDropwizardResource());
 		fsa.generateFile("de/acegen" + '/ProxyWriteAction.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			actionTemplate.generateWriteAction(true));
 		fsa.generateFile("de/acegen" + '/Command.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,

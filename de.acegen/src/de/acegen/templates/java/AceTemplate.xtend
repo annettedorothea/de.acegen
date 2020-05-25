@@ -313,7 +313,7 @@ class AceTemplate {
 		
 	'''
 
-	def generateServerConfiguration() '''
+	def generateConfig() '''
 		«copyright»
 		
 		package de.acegen;
@@ -898,18 +898,16 @@ class AceTemplate {
 					int eventCount = 0;
 					ITimelineItem nextAction = e2e.selectNextAction();
 					while (nextAction != null && !nextAction.getUuid().equals(uuid)) {
-						if (!nextAction.getMethod().equalsIgnoreCase("GET")) {
-							ITimelineItem nextEvent = e2e.selectEvent(nextAction.getUuid());
-							if (nextEvent != null) {
-								LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
-								IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);
-								if (event != null) {
-									event.notifyListeners(databaseHandle.getHandle());
-									daoProvider.getAceDao().addPreparingEventToTimeline(event, nextAction.getUuid(), databaseHandle.getTimelineHandle());
-									eventCount++;
-								} else {
-									LOG.error("failed to create " + nextEvent.getName());
-								}
+						ITimelineItem nextEvent = e2e.selectEvent(nextAction.getUuid());
+						if (nextEvent != null) {
+							LOG.info("PUBLISH EVENT " + nextEvent.getUuid() + " - " + nextEvent.getName());
+							IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);
+							if (event != null) {
+								event.notifyListeners(databaseHandle.getHandle());
+								daoProvider.getAceDao().addPreparingEventToTimeline(event, nextAction.getUuid(), databaseHandle.getTimelineHandle());
+								eventCount++;
+							} else {
+								LOG.error("failed to create " + nextEvent.getName());
 							}
 						}
 						nextAction = e2e.selectNextAction();
@@ -1079,14 +1077,9 @@ class AceTemplate {
 				return count > 0;
 			}
 		
-			public void insertIntoTimeline(PersistenceHandle handle, String type, String method, String name, String data, String uuid) {
-				Update statement = handle.getHandle().createUpdate("INSERT INTO timeline (type, method, name, time, data, uuid) " + "VALUES (:type, :method, :name, NOW(), :data, :uuid);");
+			public void insertIntoTimeline(PersistenceHandle handle, String type, String name, String data, String uuid) {
+				Update statement = handle.getHandle().createUpdate("INSERT INTO timeline (type, name, time, data, uuid) " + "VALUES (:type, :name, NOW(), :data, :uuid);");
 				statement.bind("type", type);
-				if (method != null) {
-					statement.bind("method", method);
-				} else {
-					statement.bind("method", "---");
-				}
 				statement.bind("name", name);
 				statement.bind("data", data);
 				statement.bind("uuid", uuid);
@@ -1095,7 +1088,7 @@ class AceTemplate {
 		
 			public ITimelineItem selectLastAction(PersistenceHandle handle) {
 				Optional<ITimelineItem> optional = handle.getHandle()
-						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time desc limit 1")
+						.createQuery("SELECT type, name, time, data, uuid FROM timeline order by time desc limit 1")
 						.map(new TimelineItemMapper())
 						.findFirst();
 				return optional.isPresent() ? optional.get() : null;
@@ -1103,20 +1096,20 @@ class AceTemplate {
 		
 			public List<ITimelineItem> selectTimeline(PersistenceHandle handle) {
 				return handle.getHandle()
-						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline order by time asc")
+						.createQuery("SELECT type, name, time, data, uuid FROM timeline order by time asc")
 						.map(new TimelineItemMapper()).list();
 			}
 			
 			public List<ITimelineItem> selectReplayTimeline(PersistenceHandle handle) {
 				return handle.getHandle()
-						.createQuery("SELECT type, method, name, time, data, uuid FROM timeline where type = 'event' order by time asc ")
+						.createQuery("SELECT type, name, time, data, uuid FROM timeline where type = 'event' order by time asc ")
 						.map(new TimelineItemMapper()).list();
 			}
 			
 			public void addActionToTimeline(IAction action, PersistenceHandle timelineHandle) {
 				try {
 					String json = mapper.writeValueAsString(action.getActionData());
-					addItemToTimeline("action", action.getHttpMethod().name(), action.getActionName(), json,
+					addItemToTimeline("action", action.getActionName(), json,
 							action.getActionData().getUuid(), timelineHandle);
 				} catch (JsonProcessingException e) {
 					throw new WebApplicationException(e);
@@ -1125,7 +1118,7 @@ class AceTemplate {
 		
 			public void addCommandToTimeline(ICommand command, PersistenceHandle timelineHandle) {
 				try {
-					addItemToTimeline("command", null, command.getCommandName(),
+					addItemToTimeline("command", command.getCommandName(),
 							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
 							timelineHandle);
 				} catch (JsonProcessingException e) {
@@ -1135,7 +1128,7 @@ class AceTemplate {
 		
 			public void addEventToTimeline(IEvent event, PersistenceHandle timelineHandle) {
 				try {
-					addItemToTimeline("event", null, event.getEventName(), mapper.writeValueAsString(event.getEventData()),
+					addItemToTimeline("event", event.getEventName(), mapper.writeValueAsString(event.getEventData()),
 							event.getEventData().getUuid(), timelineHandle);
 				} catch (JsonProcessingException e) {
 					throw new WebApplicationException(e);
@@ -1144,7 +1137,7 @@ class AceTemplate {
 		
 			public void addPreparingEventToTimeline(IEvent event, String uuid, PersistenceHandle timelineHandle) {
 				try {
-					addItemToTimeline("preparing event", null, event.getEventName(),
+					addItemToTimeline("preparing event", event.getEventName(),
 							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
 				} catch (JsonProcessingException e) {
 					throw new WebApplicationException(e);
@@ -1152,13 +1145,13 @@ class AceTemplate {
 			}
 		
 			public void addExceptionToTimeline(String uuid, Throwable x, PersistenceHandle timelineHandle) {
-				this.insertIntoTimeline(timelineHandle, "exception", "", x.getClass().getName(),
+				this.insertIntoTimeline(timelineHandle, "exception", x.getClass().getName(),
 						x.getMessage() != null ? x.getMessage() : "", uuid);
 			}
 		
-			private void addItemToTimeline(String type, String method, String name, String json, String uuid,
+			private void addItemToTimeline(String type, String name, String json, String uuid,
 					PersistenceHandle timelineHandle) {
-				this.insertIntoTimeline(timelineHandle, type, method, name, json, uuid);
+				this.insertIntoTimeline(timelineHandle, type, name, json, uuid);
 			}
 		
 		}
@@ -1179,8 +1172,6 @@ class AceTemplate {
 		public interface ITimelineItem {
 		
 			String getType();
-			
-			String getMethod();
 			
 			String getName();
 			
@@ -1230,8 +1221,6 @@ class AceTemplate {
 		
 			private String type;
 			
-			private String method;
-			
 			private String name;
 			
 			private DateTime timestamp;
@@ -1243,7 +1232,6 @@ class AceTemplate {
 			
 			public TimelineItem(
 				@JsonProperty("type") String type, 
-				@JsonProperty("method") String method, 
 				@JsonProperty("name") String name, 
 				@JsonProperty("timestamp") DateTime timestamp, 
 				@JsonProperty("data") String data,
@@ -1251,7 +1239,6 @@ class AceTemplate {
 			) {
 				super();
 				this.type = type;
-				this.method = method;
 				this.name = name;
 				this.timestamp = timestamp;
 				this.data = data;
@@ -1261,11 +1248,6 @@ class AceTemplate {
 			@JsonProperty
 			public String getType() {
 				return type;
-			}
-		
-			@JsonProperty
-			public String getMethod() {
-				return method;
 			}
 		
 			@JsonProperty
@@ -1290,7 +1272,7 @@ class AceTemplate {
 			
 			@Override
 			public String toString() {
-				return "TimelineItem [type=" + type + ", method=" + method + ", name=" + name + ", timestamp="
+				return "TimelineItem [type=" + type + ", name=" + name + ", timestamp="
 						+ timestamp + ", uuid=" + uuid + "]";
 			}
 		
@@ -1322,7 +1304,6 @@ class AceTemplate {
 				DateTime time = DateTime.parse(r.getString("time"), fmt);
 				return new TimelineItem(
 					r.getString("type"),
-					r.getString("method"),
 					r.getString("name"),
 					time,
 					r.getString("data"),
@@ -1458,9 +1439,6 @@ class AceTemplate {
 	def generateAceMigration() '''
 		<createTable tableName="timeline">
 			<column name="type" type="character varying">
-				<constraints nullable="false" />
-			</column>
-			<column name="method" type="character varying">
 				<constraints nullable="false" />
 			</column>
 			<column name="name" type="character varying">
