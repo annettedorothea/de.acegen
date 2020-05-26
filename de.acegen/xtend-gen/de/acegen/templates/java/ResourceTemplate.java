@@ -176,10 +176,7 @@ public class ResourceTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();

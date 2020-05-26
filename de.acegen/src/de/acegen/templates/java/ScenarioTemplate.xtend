@@ -73,9 +73,8 @@ class ScenarioTemplate {
 		
 		import javax.ws.rs.core.Response;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
-		import org.joda.time.format.DateTimeFormat;
+		import java.time.LocalDateTime;
+		import java.time.format.DateTimeFormatter;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -229,7 +228,7 @@ class ScenarioTemplate {
 	
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			this.callNotReplayableDataProviderPutSystemTime(uuid, DateTime.parse("«dataDefinition.systemtime»", DateTimeFormat.forPattern("«dataDefinition.pattern»")).withZone(DateTimeZone.UTC));
+			this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.members !== null»
 			«FOR attributeDefinition: dataDefinition.data.members»
@@ -307,7 +306,7 @@ class ScenarioTemplate {
 		
 		import org.glassfish.jersey.client.JerseyClientBuilder;
 		import org.jdbi.v3.core.Jdbi;
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import org.junit.jupiter.api.AfterAll;
 		import org.junit.jupiter.api.AfterEach;
 		import org.junit.jupiter.api.BeforeAll;
@@ -485,7 +484,7 @@ class ScenarioTemplate {
 		
 			@Override
 			protected Response callNotReplayableDataProviderPutSystemTime(
-					String uuid, DateTime dateTime) {
+					String uuid, LocalDateTime dateTime) {
 				Client client = new JerseyClientBuilder().build();
 				Builder builder = client
 						.target(String.format(
@@ -509,7 +508,7 @@ class ScenarioTemplate {
 		
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		import javax.ws.rs.core.Response;
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		
 		public abstract class AbstractBaseScenario {
 		
@@ -561,7 +560,7 @@ class ScenarioTemplate {
 						String uuid, String key, Object data);
 						
 			protected abstract Response callNotReplayableDataProviderPutSystemTime(
-						String uuid, DateTime dateTime);
+						String uuid, LocalDateTime dateTime);
 
 		}
 		

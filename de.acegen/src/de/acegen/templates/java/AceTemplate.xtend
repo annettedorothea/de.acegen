@@ -211,7 +211,7 @@ class AceTemplate {
 		import java.util.List;
 		import java.util.Map;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -219,7 +219,7 @@ class AceTemplate {
 		
 			private boolean sessionIsRunning;
 		
-			private DateTime sessionStartedAt;
+			private LocalDateTime sessionStartedAt;
 		
 			private Map<String, AceOperation> timeline;
 		
@@ -247,7 +247,7 @@ class AceTemplate {
 				return this.sessionIsRunning;
 			}
 		
-			public DateTime getSessionStartedAt() {
+			public LocalDateTime getSessionStartedAt() {
 				return this.sessionStartedAt;
 			}
 		
@@ -290,7 +290,7 @@ class AceTemplate {
 					}
 				}
 				this.sessionIsRunning = true;
-				this.sessionStartedAt = new DateTime(System.currentTimeMillis());
+				this.sessionStartedAt = LocalDateTime.ofEpochSecond(System.currentTimeMillis(), 0, null);
 				this.index = 0;
 			}
 		
@@ -463,6 +463,7 @@ class AceTemplate {
 		package de.acegen;
 		
 		import java.util.List;
+		import java.time.LocalDateTime;
 		
 		import javax.validation.constraints.NotNull;
 		import javax.ws.rs.Consumes;
@@ -507,7 +508,7 @@ class AceTemplate {
 				if (Config.LIVE.equals(configuration.getConfig().getMode())) {
 					throw new WebApplicationException("start e2e session is not available in a live environment", Response.Status.FORBIDDEN);
 				}
-				if (e2e.isSessionRunning() && e2e.getSessionStartedAt().plusMinutes(1).isAfterNow()) {
+				if (e2e.isSessionRunning() && e2e.getSessionStartedAt().plusMinutes(1).isAfter(LocalDateTime.now())) {
 					throw new WebApplicationException("session is already running", Response.Status.SERVICE_UNAVAILABLE);
 				}
 				e2e.init(timeline);
@@ -630,23 +631,23 @@ class AceTemplate {
 			import java.util.concurrent.ConcurrentHashMap;
 			import java.util.concurrent.ConcurrentMap;
 			
-			import org.joda.time.DateTime;
+			import java.time.LocalDateTime;
 			
 			public class NotReplayableDataProvider {
 				
-				private static ConcurrentMap<String, DateTime> systemTimeMap = new ConcurrentHashMap<>();
+				private static ConcurrentMap<String, LocalDateTime> systemTimeMap = new ConcurrentHashMap<>();
 		
 				private static ConcurrentMap<String, ConcurrentMap<String, Object>> valueMap = new ConcurrentHashMap<>();
 			
-				public static DateTime consumeSystemTime(String uuid) {
-					DateTime value = systemTimeMap.get(uuid);
+				public static LocalDateTime consumeSystemTime(String uuid) {
+					LocalDateTime value = systemTimeMap.get(uuid);
 					if (value != null) {
 						systemTimeMap.remove(uuid);
 					}
 					return value;
 				}
 			
-				public static void putSystemTime(String uuid, DateTime systemTime) {
+				public static void putSystemTime(String uuid, LocalDateTime systemTime) {
 					systemTimeMap.put(uuid, systemTime);
 				}
 				
@@ -691,8 +692,7 @@ class AceTemplate {
 		import javax.ws.rs.core.MediaType;
 		import javax.ws.rs.core.Response;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -717,7 +717,7 @@ class AceTemplate {
 			@PUT
 			@Path("/system-time")
 			public Response putSystemTime(@QueryParam("uuid") String uuid, @QueryParam("system-time") String systemTime) {
-				NotReplayableDataProvider.putSystemTime(uuid, DateTime.parse(systemTime).withZone(DateTimeZone.UTC));
+				NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime));
 				return Response.ok().build();
 			}
 			
@@ -1173,7 +1173,7 @@ class AceTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
 		@JsonDeserialize(as=TimelineItem.class)
@@ -1183,7 +1183,7 @@ class AceTemplate {
 			
 			String getName();
 			
-			DateTime getTimestamp();
+			LocalDateTime getTimestamp();
 			
 			String getData();
 			
@@ -1222,7 +1222,7 @@ class AceTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
 		public class TimelineItem implements ITimelineItem {
@@ -1231,7 +1231,7 @@ class AceTemplate {
 			
 			private String name;
 			
-			private DateTime timestamp;
+			private LocalDateTime timestamp;
 			
 			private String data;
 			
@@ -1241,7 +1241,7 @@ class AceTemplate {
 			public TimelineItem(
 				@JsonProperty("type") String type, 
 				@JsonProperty("name") String name, 
-				@JsonProperty("timestamp") DateTime timestamp, 
+				@JsonProperty("timestamp") LocalDateTime timestamp, 
 				@JsonProperty("data") String data,
 				@JsonProperty("uuid") String uuid
 			) {
@@ -1264,7 +1264,7 @@ class AceTemplate {
 			}
 		
 			@JsonProperty
-			public DateTime getTimestamp() {
+			public LocalDateTime getTimestamp() {
 				return timestamp;
 			}
 		
@@ -1299,17 +1299,15 @@ class AceTemplate {
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.format.DateTimeFormat;
-		import org.joda.time.format.DateTimeFormatter;
+		import java.time.LocalDateTime;
+		import java.time.format.DateTimeFormatter;
 		import org.jdbi.v3.core.mapper.RowMapper;
 		import org.jdbi.v3.core.statement.StatementContext;
 		
 		public class TimelineItemMapper implements RowMapper<ITimelineItem> {
 			
 			public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {
-				DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-				DateTime time = DateTime.parse(r.getString("time"), fmt);
+				LocalDateTime time = LocalDateTime.parse(r.getString("time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
 				return new TimelineItem(
 					r.getString("type"),
 					r.getString("name"),
@@ -1562,13 +1560,13 @@ class AceTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		
 		import com.fasterxml.jackson.databind.util.StdConverter;
 		
-		public class DateTimeToStringConverter extends StdConverter<DateTime, String> {
+		public class DateTimeToStringConverter extends StdConverter<LocalDateTime, String> {
 			@Override
-			public String convert(DateTime value) {
+			public String convert(LocalDateTime value) {
 				return value.toString();
 			}
 		}
@@ -1582,15 +1580,14 @@ class AceTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		
 		import com.fasterxml.jackson.databind.util.StdConverter;
 		
-		public class StringToDateTimeConverter extends StdConverter<String, DateTime> {
+		public class StringToDateTimeConverter extends StdConverter<String, LocalDateTime> {
 			@Override
-			public DateTime convert(String value) {
-				return DateTime.parse(value).withZone(DateTimeZone.UTC);
+			public LocalDateTime convert(String value) {
+				return LocalDateTime.parse(value);
 			}
 		}
 		

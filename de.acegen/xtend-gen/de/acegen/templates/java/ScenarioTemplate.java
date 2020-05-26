@@ -134,11 +134,9 @@ public class ScenarioTemplate {
     _builder.append("import javax.ws.rs.core.Response;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.format.DateTimeFormat;");
+    _builder.append("import java.time.format.DateTimeFormatter;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
@@ -705,13 +703,13 @@ public class ScenarioTemplate {
       String _systemtime = it.getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
-        _builder.append("this.callNotReplayableDataProviderPutSystemTime(uuid, DateTime.parse(\"");
+        _builder.append("this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse(\"");
         String _systemtime_1 = it.getDataDefinition().getSystemtime();
         _builder.append(_systemtime_1);
-        _builder.append("\", DateTimeFormat.forPattern(\"");
+        _builder.append("\", DateTimeFormatter.ofPattern(\"");
         String _pattern = it.getDataDefinition().getPattern();
         _builder.append(_pattern);
-        _builder.append("\")).withZone(DateTimeZone.UTC));");
+        _builder.append("\")));");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -1061,7 +1059,7 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Jdbi;");
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import org.junit.jupiter.api.AfterAll;");
     _builder.newLine();
@@ -1516,7 +1514,7 @@ public class ScenarioTemplate {
     _builder.append("protected Response callNotReplayableDataProviderPutSystemTime(");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("String uuid, DateTime dateTime) {");
+    _builder.append("String uuid, LocalDateTime dateTime) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("Client client = new JerseyClientBuilder().build();");
@@ -1567,7 +1565,7 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("import javax.ws.rs.core.Response;");
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractBaseScenario {");
@@ -1684,7 +1682,7 @@ public class ScenarioTemplate {
     _builder.append("protected abstract Response callNotReplayableDataProviderPutSystemTime(");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("String uuid, DateTime dateTime);");
+    _builder.append("String uuid, LocalDateTime dateTime);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

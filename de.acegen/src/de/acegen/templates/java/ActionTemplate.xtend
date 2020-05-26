@@ -53,8 +53,7 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -122,8 +121,7 @@ class ActionTemplate {
 		
 		package «java.getName».actions;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -188,11 +186,11 @@ class ActionTemplate {
 	private def initActionDataFromNotReplayableDataProvider(HttpServerAce it) '''
 		@Override
 		protected void initActionDataFromNotReplayableDataProvider() {
-			DateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
+			LocalDateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
 			if (systemTime != null) {
 				this.actionData.setSystemTime(systemTime);
 			} else {
-				this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
+				this.actionData.setSystemTime(LocalDateTime.now());
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.notReplayable»
@@ -322,8 +320,7 @@ class ActionTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -364,7 +361,7 @@ class ActionTemplate {
 							databaseHandle.rollbackTransaction();
 							return;
 						}
-						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
+						this.actionData.setSystemTime(LocalDateTime.now());
 						this.initActionData();
 					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
@@ -393,8 +390,7 @@ class ActionTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
-		import org.joda.time.DateTimeZone;
+		import java.time.LocalDateTime;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -438,7 +434,7 @@ class ActionTemplate {
 							databaseHandle.rollbackTransaction();
 							return;
 						}
-						this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));
+						this.actionData.setSystemTime(LocalDateTime.now());
 						this.initActionData();
 					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
 						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());

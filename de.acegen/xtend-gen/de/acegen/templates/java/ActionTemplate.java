@@ -70,9 +70,7 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
@@ -261,9 +259,7 @@ public class ActionTemplate {
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
@@ -425,7 +421,7 @@ public class ActionTemplate {
     _builder.append("protected void initActionDataFromNotReplayableDataProvider() {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("DateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());");
+    _builder.append("LocalDateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("if (systemTime != null) {");
@@ -437,7 +433,7 @@ public class ActionTemplate {
     _builder.append("} else {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
+    _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -771,9 +767,7 @@ public class ActionTemplate {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
@@ -880,7 +874,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
+    _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("this.initActionData();");
@@ -948,9 +942,7 @@ public class ActionTemplate {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
-    _builder.newLine();
-    _builder.append("import org.joda.time.DateTimeZone;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
@@ -1086,7 +1078,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("this.actionData.setSystemTime(DateTime.now().withZone(DateTimeZone.UTC));");
+    _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("this.initActionData();");

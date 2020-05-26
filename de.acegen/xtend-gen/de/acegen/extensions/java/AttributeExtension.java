@@ -24,6 +24,8 @@ import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.java.ModelExtension;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,9 +37,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
 
 @SuppressWarnings("all")
 public class AttributeExtension {
@@ -74,10 +73,10 @@ public class AttributeExtension {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getType() != null) && it.getType().equals("DateTime"))) {
-        _builder.append("new DateTime(");
+        _builder.append("LocalDateTime.parse(");
         String _name = it.getName();
         _builder.append(_name);
-        _builder.append(").withZone(DateTimeZone.UTC)");
+        _builder.append(")");
       } else {
         String _name_1 = it.getName();
         _builder.append(_name_1);
@@ -274,7 +273,7 @@ public class AttributeExtension {
       {
         boolean _equals = it.getType().equals("DateTime");
         if (_equals) {
-          _builder.append("org.joda.time.DateTime");
+          _builder.append("java.time.LocalDateTime");
         } else {
           String _type_1 = it.getType();
           _builder.append(_type_1);
@@ -334,10 +333,10 @@ public class AttributeExtension {
             _builder.append("r.getTimestamp(\"");
             String _name = it.getName();
             _builder.append(_name);
-            _builder.append("\") != null ? new org.joda.time.DateTime(r.getTimestamp(\"");
+            _builder.append("\") != null ? r.getTimestamp(\"");
             String _name_1 = it.getName();
             _builder.append(_name_1);
-            _builder.append("\")).withZone(org.joda.time.DateTimeZone.UTC) : null");
+            _builder.append("\").toLocalDateTime() : null");
           } else {
             boolean _equals_1 = it.getType().equals("Integer");
             if (_equals_1) {
@@ -632,9 +631,9 @@ public class AttributeExtension {
     return ((!it.isList()) && (it.getModel() == null));
   }
   
-  public DateTime dateTimeParse(final String dateString, final String pattern) {
+  public LocalDateTime dateTimeParse(final String dateString, final String pattern) {
     try {
-      return DateTime.parse(dateString, DateTimeFormat.forPattern(pattern)).withZone(DateTimeZone.UTC);
+      return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(pattern));
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
         return null;
@@ -745,7 +744,7 @@ public class AttributeExtension {
   protected CharSequence _valueFrom(final JsonDateTime it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\\\"");
-    DateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
+    LocalDateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
     _builder.append(_dateTimeParse);
     _builder.append("\\\"");
     return _builder;

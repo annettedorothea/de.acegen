@@ -18,18 +18,17 @@
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.JsonArray
 import de.acegen.aceGen.JsonDateTime
 import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.JsonValue
 import de.acegen.aceGen.Model
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
-import org.joda.time.format.DateTimeFormat
-import de.acegen.aceGen.AttributeParamRef
 
 class AttributeExtension {
 
@@ -42,7 +41,7 @@ class AttributeExtension {
 	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
 	def String resourceParam(
-		Attribute it) '''«IF type !== null && type.equals('DateTime')»new DateTime(«name»).withZone(DateTimeZone.UTC)«ELSE»«name»«ENDIF»'''
+		Attribute it) '''«IF type !== null && type.equals('DateTime')»LocalDateTime.parse(«name»)«ELSE»«name»«ENDIF»'''
 
 	def String initActionData(
 		AttributeParamRef it) '''
@@ -99,7 +98,7 @@ class AttributeExtension {
 
 	def String javaType(Attribute it) {
 		if (type !== null) {
-			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»org.joda.time.DateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
+			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»java.time.LocalDateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
 		}
 		if (model !== null) {
 			return '''«IF list»java.util.List<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
@@ -116,7 +115,7 @@ class AttributeExtension {
 
 	def String mapperInit(Attribute it) {
 		if (type !== null) {
-			return '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? new org.joda.time.DateTime(r.getTimestamp("«name»")).withZone(org.joda.time.DateTimeZone.UTC) : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+			return '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? r.getTimestamp("«name»").toLocalDateTime() : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
 		}
 		if (model !== null) {
 			return '''null''';
@@ -194,9 +193,9 @@ class AttributeExtension {
 		return !list && model === null;
 	}
 
-	def dateTimeParse(String dateString, String pattern) {
+	def LocalDateTime dateTimeParse(String dateString, String pattern) {
 		try {
-			return DateTime.parse(dateString, DateTimeFormat.forPattern(pattern)).withZone(DateTimeZone.UTC);
+			return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(pattern));
 		} catch (Exception x) {
 			return null;
 		}

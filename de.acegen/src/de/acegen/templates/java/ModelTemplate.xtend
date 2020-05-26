@@ -152,7 +152,7 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import java.util.List;
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -224,7 +224,7 @@ class ModelTemplate {
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import java.util.List;
 		
 		import de.acegen.AbstractData;
@@ -266,7 +266,7 @@ class ModelTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
@@ -276,7 +276,7 @@ class ModelTemplate {
 			
 			private String outcome;
 			
-			private DateTime systemTime;
+			private LocalDateTime systemTime;
 			
 			public AbstractData( String uuid ) {
 				this.uuid = uuid;
@@ -293,12 +293,12 @@ class ModelTemplate {
 			}
 		
 			@JsonProperty
-			public DateTime getSystemTime() {
+			public LocalDateTime getSystemTime() {
 				return systemTime;
 			}
 		
 			@JsonProperty
-			public void setSystemTime(DateTime systemTime) {
+			public void setSystemTime(LocalDateTime systemTime) {
 				this.systemTime = systemTime;
 			}
 		
@@ -329,7 +329,7 @@ class ModelTemplate {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		import java.util.List;
 		
 		import de.acegen.IDataContainer;
@@ -579,7 +579,7 @@ class ModelTemplate {
 		
 		package de.acegen;
 		
-		import org.joda.time.DateTime;
+		import java.time.LocalDateTime;
 		
 		public interface IDataContainer {
 		
@@ -591,9 +591,9 @@ class ModelTemplate {
 
 			void setOutcome(String outcome);
 		
-			DateTime getSystemTime();
+			LocalDateTime getSystemTime();
 		
-			void setSystemTime(DateTime systemTime);
+			void setSystemTime(LocalDateTime systemTime);
 		
 			void migrateLegacyData(String json);
 

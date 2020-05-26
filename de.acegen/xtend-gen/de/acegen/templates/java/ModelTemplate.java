@@ -360,7 +360,7 @@ public class ModelTemplate {
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
@@ -567,7 +567,7 @@ public class ModelTemplate {
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
@@ -680,7 +680,7 @@ public class ModelTemplate {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
@@ -700,7 +700,7 @@ public class ModelTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private DateTime systemTime;");
+    _builder.append("private LocalDateTime systemTime;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -744,7 +744,7 @@ public class ModelTemplate {
     _builder.append("@JsonProperty");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public DateTime getSystemTime() {");
+    _builder.append("public LocalDateTime getSystemTime() {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return systemTime;");
@@ -757,7 +757,7 @@ public class ModelTemplate {
     _builder.append("@JsonProperty");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void setSystemTime(DateTime systemTime) {");
+    _builder.append("public void setSystemTime(LocalDateTime systemTime) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.systemTime = systemTime;");
@@ -825,7 +825,7 @@ public class ModelTemplate {
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
@@ -1693,7 +1693,7 @@ public class ModelTemplate {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.joda.time.DateTime;");
+    _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("public interface IDataContainer {");
@@ -1717,11 +1717,11 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("DateTime getSystemTime();");
+    _builder.append("LocalDateTime getSystemTime();");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void setSystemTime(DateTime systemTime);");
+    _builder.append("void setSystemTime(LocalDateTime systemTime);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
