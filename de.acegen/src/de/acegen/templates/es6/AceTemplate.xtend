@@ -36,8 +36,8 @@ class AceTemplate {
 		export default class AppUtils {
 		
 		    static start() {
-				AppUtils.loadSettings().then((settings) => {
-				    AppUtils.settings = settings;
+				Utils.loadSettings().then((settings) => {
+				    Utils.settings = settings;
 		    		// call initial action
 				});
 		    }
@@ -68,19 +68,19 @@ class AceTemplate {
 			}
 		
 		    static getClientVersion() {
-				return AppUtils.settings.clientVersion;
+				return Utils.settings.clientVersion;
 		    }
 		
 		    static getAceScenariosApiKey() {
-		        return AppUtils.settings.aceScenariosApiKey;
+		        return Utils.settings.aceScenariosApiKey;
 		    }
 		
 		    static getAceScenariosBaseUrl() {
-		        return AppUtils.settings.aceScenariosBaseUrl;
+		        return Utils.settings.aceScenariosBaseUrl;
 		    }
 		    
 			static isDevelopment() {
-			    return AppUtils.settings.development;
+			    return Utils.settings.development;
 			}
 			
 			static createInitialAppState() {
@@ -93,7 +93,7 @@ class AceTemplate {
 		    }
 			
 		
-		    static httpGet(url, authorize, queryParams, commandData) {
+		    static httpGet(url, authorize, commandData) {
 				return new Promise((resolve, reject) => {
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
@@ -112,7 +112,7 @@ class AceTemplate {
 				        cache: 'no-cache'
 				    };
 				
-				    const completeUrl = url + AppUtils.queryParamString(url, queryParams);
+				    const completeUrl = url + AppUtils.queryParamString(url);
 				    const request = new Request(completeUrl, options);
 				
 					let status;
@@ -146,7 +146,7 @@ class AceTemplate {
 				});
 		    }
 		
-		    static httpChange(methodType, url, authorize, queryParams, data) {
+		    static httpChange(methodType, url, authorize, data) {
 				return new Promise((resolve, reject) => {
 				    const headers = new Headers();
 				    headers.append("Content-Type", "application/json");
@@ -166,7 +166,7 @@ class AceTemplate {
 				        body: JSON.stringify(data)
 				    };
 				
-				    const completeUrl = url + AppUtils.queryParamString(url, queryParams);
+				    const completeUrl = url + AppUtils.queryParamString(url);
 				    const request = new Request(completeUrl, options);
 				
 					let status;
@@ -196,31 +196,16 @@ class AceTemplate {
 				});
 		    }
 		
-		    static httpPost(url, authorize, queryParams, data) {
-		        return AppUtils.httpChange("POST", authorize, url, queryParams, data);
+		    static httpPost(url, authorize, data) {
+		        return AppUtils.httpChange("POST", authorize, url, data);
 		    }
 		
-		    static httpPut(url, authorize, queryParams, data) {
-		        return AppUtils.httpChange("PUT", authorize, url, queryParams, data);
+		    static httpPut(url, authorize, data) {
+		        return AppUtils.httpChange("PUT", authorize, url, data);
 		    }
 		
-		    static httpDelete(url, authorize, queryParams, data) {
-		        return AppUtils.httpChange("DELETE", authorize, url, queryParams, data);
-		    }
-		
-		    static queryParamString(url, queryParams) {
-		        let queryString = "";
-		        if (queryParams && queryParams.length > 0) {
-		            for (let i = 0; i < queryParams.length; i++) {
-		                if (url.indexOf('?') < 0 && i === 0) {
-		                    queryString += '?'
-		                } else {
-		                    queryString += '&'
-		                }
-		                queryString += queryParams[i].key + "=" + queryParams[i].value;
-		            }
-		        }
-		        return queryString;
+		    static httpDelete(url, authorize, data) {
+		        return AppUtils.httpChange("DELETE", authorize, url, data);
 		    }
 		
 			static basicAuth() {
@@ -375,8 +360,11 @@ class AceTemplate {
 		    static addItemToTimeLine(item) {
 		        let timestamp = new Date();
 		        item.timestamp = timestamp.getTime();
-				if (ACEController.execution === ACEController.UI && AppUtils.isDevelopment()) {
+				if (ACEController.execution === ACEController.UI && Utils.isDevelopment() && Utils.getTimelineSize() > 0) {
 				    ACEController.timeline.push(AppUtils.deepCopy(item));
+				    if (ACEController.timeline.length > Utils.getTimelineSize()) {
+				        ACEController.timeline.pop();
+				    }
 				} else if (ACEController.execution !== ACEController.UI) {
 				    ACEController.actualTimeline.push(AppUtils.deepCopy(item));
 				}
@@ -489,7 +477,7 @@ class AceTemplate {
 		import Utils from "./Utils";
 		
 		export function runScenario(scenarioId, executor = "unknown", pauseInMillis = 0) {
-		    if (AppUtils.isDevelopment() === false) {
+		    if (Utils.isDevelopment() === false) {
 		        console.error("runScenario is only available during development");
 		    } else {
 		        Utils.loadScenario(scenarioId).then((scenario) => {
@@ -505,7 +493,7 @@ class AceTemplate {
 		}
 		
 		export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
-		    if (AppUtils.isDevelopment() === false) {
+		    if (Utils.isDevelopment() === false) {
 		        console.error("runAllScenarios is only available during development");
 		    } else {
 		        Utils.loadNextScenario(null).then((scenario) => {
@@ -525,7 +513,7 @@ class AceTemplate {
 		}
 		
 		export function saveScenario(description, creator) {
-		    if (AppUtils.isDevelopment() === false) {
+		    if (Utils.isDevelopment() === false) {
 		        console.error("saveScenario is only available during development");
 		    } else {
 		        Utils.saveScenario(description, creator).then((id) => {
@@ -617,9 +605,58 @@ class AceTemplate {
 		export default class Utils {
 		
 		    static getServerInfo() {
-		        return AppUtils.httpGet('api/server/info');
+		        return AppUtils.httpGet(Utils.getRootPath() + '/server/info');
+		    }
+
+		    static loadSettings() {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		
+		            const options = {
+		                method: 'GET',
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache'
+		            };
+		
+		            const request = new Request("settings.json", options);
+		
+		            fetch(request).then(function (response) {
+		                return response.json();
+		            }).then(function (data) {
+		                resolve(data);
+		            }).catch(function (error) {
+		                reject(error);
+		            });
+		        });
 		    }
 		
+		    static getClientVersion() {
+		        return Utils.settings ? Utils.settings.clientVersion : "";
+		    }
+		
+		    static isDevelopment() {
+		        return Utils.settings ? Utils.settings.development : false;
+		    }
+		
+		    static getAceScenariosApiKey() {
+		        return Utils.settings ? Utils.settings.aceScenariosApiKey : "";
+		    }
+		
+		    static getAceScenariosBaseUrl() {
+		        return Utils.settings ? Utils.settings.aceScenariosBaseUrl : "";
+		    }
+		
+		    static getRootPath() {
+		        return Utils.settings ? (ACEController.execution !== ACEController.E2E ? Utils.settings.rootPath :  Utils.settings.replayRootPath) : "";
+		    }
+		
+		    static getTimelineSize() {
+		        return Utils.settings ? Utils.settings.timelineSize : 0;
+		    }
+			
 		    static saveBug(description, creator) {
 		        return Utils.getServerInfo().then((serverInfo) => {
 		            const browser = Utils.getBrowserInfo();
@@ -628,36 +665,22 @@ class AceTemplate {
 		                description,
 		                timeline: JSON.stringify(ACEController.timeline),
 		                creator,
-		                clientVersion: AppUtils.getClientVersion(),
+		                clientVersion: Utils.getClientVersion(),
 		                device: browser.name + " " + browser.version,
 		                uuid,
-		                apiKey: AppUtils.getAceScenariosApiKey(),
+		                apiKey: Utils.getAceScenariosApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data);
+		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data);
 		        });
 		    }
 		
 		    static loadBug(id) {
-		        const uuid = AppUtils.createUUID();
-		        let queryParams = [];
-		        queryParams.push({
-		            key: "id",
-		            value: id
-		        });
-		        queryParams.push({
-		            key: "apiKey",
-		            value: AppUtils.getAceScenariosApiKey()
-		        });
-		        queryParams.push({
-		            key: "uuid",
-		            value: uuid
-		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', false, queryParams);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/bugs/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
 		    }
 		
 		    static saveScenario(description, creator) {
-		        return AppUtils.httpGet('api/e2e/timeline').then((serverTimeline) => {
+		        return AppUtils.httpGet(Utils.getRootPath() + '/e2e/timeline').then((serverTimeline) => {
 		            return Utils.getServerInfo().then((serverInfo) => {
 		                const browser = Utils.getBrowserInfo();
 		                const uuid = AppUtils.createUUID();
@@ -666,13 +689,13 @@ class AceTemplate {
 		                    timeline: JSON.stringify(ACEController.timeline),
 		                    serverTimeline: JSON.stringify(serverTimeline),
 		                    creator,
-		                    clientVersion: AppUtils.getClientVersion(),
+		                    clientVersion: Utils.getClientVersion(),
 		                    device: browser.name + " " + browser.version,
 		                    uuid,
-		                    apiKey: AppUtils.getAceScenariosApiKey(),
+		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data);
 		            });
 		        });
 		    }
@@ -688,51 +711,23 @@ class AceTemplate {
 		                    executor: ReplayUtils.scenarioConfig.executor,
 		                    result,
 		                    uuid,
-		                    clientVersion: AppUtils.getClientVersion(),
+		                    clientVersion: Utils.getClientVersion(),
 		                    device: browser.name + " " + browser.version,
-		                    apiKey: AppUtils.getAceScenariosApiKey(),
+		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion,
 		                    serverTimeline: JSON.stringify(serverTimeline)
 		                };
-		                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data);
 		            });
 		        });
 		    }
 		
 		    static loadScenario(id) {
-		        const uuid = AppUtils.createUUID();
-		        let queryParams = [];
-		        queryParams.push({
-		            key: "id",
-		            value: id
-		        });
-		        queryParams.push({
-		            key: "apiKey",
-		            value: AppUtils.getAceScenariosApiKey()
-		        });
-		        queryParams.push({
-		            key: "uuid",
-		            value: uuid
-		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', false, queryParams);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
 		    }
 		
 		    static loadNextScenario(lastId) {
-		        const uuid = AppUtils.createUUID();
-		        let queryParams = [];
-		        queryParams.push({
-		            key: "lastId",
-		            value: lastId
-		        });
-		        queryParams.push({
-		            key: "apiKey",
-		            value: AppUtils.getAceScenariosApiKey()
-		        });
-		        queryParams.push({
-		            key: "uuid",
-		            value: uuid
-		        });
-		        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', false, queryParams);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
 		    }
 		
 		    static getBrowserInfo() {

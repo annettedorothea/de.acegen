@@ -800,29 +800,16 @@ ruleHttpServer returns [EObject current=null]
 	(
 		(
 			(
-				(
-					lv_type_0_1='Dropwizard'
-					{
-						newLeafNode(lv_type_0_1, grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0_0());
+				lv_type_0_0='Dropwizard'
+				{
+					newLeafNode(lv_type_0_0, grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getHttpServerRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerRule());
-						}
-						setWithLastConsumed($current, "type", lv_type_0_1, null);
-					}
-					    |
-					lv_type_0_2='SpringBoot'
-					{
-						newLeafNode(lv_type_0_2, grammarAccess.getHttpServerAccess().getTypeSpringBootKeyword_0_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpServerRule());
-						}
-						setWithLastConsumed($current, "type", lv_type_0_2, null);
-					}
-				)
+					setWithLastConsumed($current, "type", lv_type_0_0, "Dropwizard");
+				}
 			)
 		)?
 		(

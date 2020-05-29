@@ -33,7 +33,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, AceGenGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getProjectAccess().getAlternatives_1(), "rule__Project__Alternatives_1");
 			builder.put(grammarAccess.getHttpClientStateFunctionTypeAccess().getAlternatives(), "rule__HttpClientStateFunctionType__Alternatives");
-			builder.put(grammarAccess.getHttpServerAccess().getTypeAlternatives_0_0(), "rule__HttpServer__TypeAlternatives_0_0");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
 			builder.put(grammarAccess.getAttributeAccess().getAlternatives_4(), "rule__Attribute__Alternatives_4");
 			builder.put(grammarAccess.getWriteFunctionTypeAccess().getAlternatives(), "rule__WriteFunctionType__Alternatives");

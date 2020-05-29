@@ -51,6 +51,10 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
     _builder.newLine();
+    _builder.append("import Utils from \"../../ace/Utils\";");
+    _builder.newLine();
+    _builder.append("import ACEController from \"../../ace/ACEController\";");
+    _builder.newLine();
     {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
@@ -222,51 +226,38 @@ public class CommandTemplate {
         _builder.append("    ");
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t\t");
-        _builder.append("let queryParams = [];");
-        _builder.newLine();
         {
-          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
-          for(final AttributeParamRef queryParam : _queryParams) {
+          String _type = it.getServerCall().getType();
+          boolean _notEquals = (!Objects.equal(_type, "GET"));
+          if (_notEquals) {
             _builder.append("\t");
-            _builder.append("\t    ");
-            _builder.append("queryParams.push({key: \"");
-            String _name_6 = queryParam.getAttribute().getName();
-            _builder.append(_name_6, "\t\t    ");
-            _builder.append("\",value: this.commandData.");
-            String _name_7 = queryParam.getAttribute().getName();
-            _builder.append(_name_7, "\t\t    ");
-            _builder.append("});");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("\t");
-        _builder.append("        ");
-        {
-          int _size_2 = it.getServerCall().getPayload().size();
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
-            _builder.append("let payload = {\t");
-            _builder.newLineIfNotEmpty();
+            _builder.append("    \t");
+            _builder.append("let payload = {");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("    \t");
+            _builder.append("\t");
+            _builder.append("uuid : this.commandData.uuid");
             {
               EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
+              boolean _hasElements_1 = false;
               for(final AttributeParamRef payload : _payload) {
-                _builder.append("\t");
-                _builder.append("        ");
-                _builder.append("\t");
-                String _name_8 = payload.getAttribute().getName();
-                _builder.append(_name_8, "\t        \t");
+                if (!_hasElements_1) {
+                  _hasElements_1 = true;
+                  _builder.append(",\n", "\t    \t\t");
+                } else {
+                  _builder.appendImmediate(",\n", "\t    \t\t");
+                }
+                String _name_6 = payload.getAttribute().getName();
+                _builder.append(_name_6, "\t    \t\t");
                 _builder.append(" : this.commandData.");
-                String _name_9 = payload.getAttribute().getName();
-                _builder.append(_name_9, "\t        \t");
-                _builder.append(",");
-                _builder.newLineIfNotEmpty();
+                String _name_7 = payload.getAttribute().getName();
+                _builder.append(_name_7, "\t    \t\t");
               }
             }
+            _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("        ");
-            _builder.append("\t");
+            _builder.append("    \t");
             _builder.append("};");
             _builder.newLine();
           }
@@ -278,10 +269,23 @@ public class CommandTemplate {
         _builder.append("this.");
         String _httpCall = this._aceExtension.httpCall(it);
         _builder.append(_httpCall, "\t\t\t");
-        _builder.append("(this.adjustedUrl(`");
+        _builder.append("(`");
         String _httpUrl = this._aceExtension.httpUrl(it);
         _builder.append(_httpUrl, "\t\t\t");
-        _builder.append("`), ");
+        _builder.append("?uuid=${this.commandData.uuid}");
+        {
+          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
+          for(final AttributeParamRef queryParam : _queryParams) {
+            _builder.append("&");
+            String _name_8 = queryParam.getAttribute().getName();
+            _builder.append(_name_8, "\t\t\t");
+            _builder.append("=${this.commandData.");
+            String _name_9 = queryParam.getAttribute().getName();
+            _builder.append(_name_9, "\t\t\t");
+            _builder.append("}");
+          }
+        }
+        _builder.append("`, ");
         {
           boolean _isAuthorize = it.getServerCall().isAuthorize();
           if (_isAuthorize) {
@@ -290,7 +294,6 @@ public class CommandTemplate {
             _builder.append("false");
           }
         }
-        _builder.append(", queryParams");
         {
           if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
             _builder.append(", payload");
@@ -845,38 +848,13 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("adjustedUrl(url) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (ACEController.execution !== ACEController.E2E) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return url;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return url.replace(\'api\', \'replay\');");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("httpGet(url, authorize, queryParams) {");
+    _builder.append("httpGet(url, authorize) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("queryParams = this.addUuidToQueryParams(queryParams);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpGet(url, authorize, queryParams);");
+    _builder.append("return AppUtils.httpGet(url, authorize);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("}, (error) => {");
@@ -892,19 +870,13 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("httpPost(url, authorize, queryParams, data) {");
+    _builder.append("httpPost(url, authorize, data) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("queryParams = this.addUuidToQueryParams(queryParams);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("data = this.addUuidToData(data);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpPost(url, authorize, queryParams, data);");
+    _builder.append("return AppUtils.httpPost(url, authorize, data);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("}, (error) => {");
@@ -920,19 +892,13 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("httpPut(url, authorize, queryParams, data) {");
+    _builder.append("httpPut(url, authorize, data) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("queryParams = this.addUuidToQueryParams(queryParams);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("data = this.addUuidToData(data);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpPut(url, authorize, queryParams, data);");
+    _builder.append("return AppUtils.httpPut(url, authorize, data);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("}, (error) => {");
@@ -948,19 +914,13 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("httpDelete(url, authorize, queryParams, data) {");
+    _builder.append("httpDelete(url, authorize, data) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("queryParams = this.addUuidToQueryParams(queryParams);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("data = this.addUuidToData(data);");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpDelete(url, authorize, queryParams, data);");
+    _builder.append("return AppUtils.httpDelete(url, authorize, data);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("}, (error) => {");
@@ -970,71 +930,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("});");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("addUuidToQueryParams(queryParams) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!queryParams) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("queryParams = [];");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (this.commandData.uuid) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("queryParams.push({");
-    _builder.newLine();
-    _builder.append("                ");
-    _builder.append("key: \"uuid\",");
-    _builder.newLine();
-    _builder.append("                ");
-    _builder.append("value: this.commandData.uuid");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return queryParams;");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("addUuidToData(data) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!data) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("data = {};");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (this.commandData.uuid) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("data.uuid = this.commandData.uuid;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return data;");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");

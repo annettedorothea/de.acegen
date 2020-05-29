@@ -186,6 +186,6 @@ public class AceExtension {
         urlWithPathParam = (_urlWithPathParam_1 + _builder);
       }
     }
-    return ("/api" + urlWithPathParam);
+    return ("/${Utils.getRootPath()}" + urlWithPathParam);
   }
 }

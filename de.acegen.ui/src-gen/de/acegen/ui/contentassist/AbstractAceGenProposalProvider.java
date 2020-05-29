@@ -89,7 +89,6 @@ public abstract class AbstractAceGenProposalProvider extends TerminalsProposalPr
 	}
 	public void completeHttpServer_Type(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
-		// subclasses may override
 	}
 	public void completeHttpServer_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

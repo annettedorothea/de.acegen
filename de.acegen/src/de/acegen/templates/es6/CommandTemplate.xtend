@@ -35,6 +35,8 @@ class CommandTemplate {
 
 		import Command from "../../../gen/ace/AsynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
+		import Utils from "../../ace/Utils";
+		import ACEController from "../../ace/ACEController";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
@@ -75,18 +77,13 @@ class CommandTemplate {
 			«IF serverCall !== null»
 				execute() {
 				    return new Promise((resolve, reject) => {
-						let queryParams = [];
-					    «FOR queryParam : getServerCall.queryParams»
-					    	queryParams.push({key: "«queryParam.attribute.name»",value: this.commandData.«queryParam.attribute.name»});
-				        «ENDFOR»
-				        «IF getServerCall.payload.size > 0»let payload = {	
-				        	«FOR payload : getServerCall.payload»
-				        		«payload.attribute.name» : this.commandData.«payload.attribute.name»,
-				        	«ENDFOR»
-				        	};
+				    	«IF serverCall.type != 'GET'»
+				    		let payload = {
+				    			uuid : this.commandData.uuid«FOR payload : getServerCall.payload BEFORE ",\n" SEPARATOR ",\n"»«payload.attribute.name» : this.commandData.«payload.attribute.name»«ENDFOR»
+				    		};
 				        «ENDIF»
 				
-						this.«httpCall»(this.adjustedUrl(`«httpUrl»`), «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF», queryParams«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
+						this.«httpCall»(`«httpUrl»?uuid=${this.commandData.uuid}«FOR queryParam : getServerCall.queryParams»&«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
 							«FOR responseAttribute : getServerCall.response»
 								this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
 							«ENDFOR»
@@ -269,74 +266,36 @@ class CommandTemplate {
 		    	return true;
 		    }
 		
-		    adjustedUrl(url) {
-		        if (ACEController.execution !== ACEController.E2E) {
-		            return url;
-		        } else {
-		            return url.replace('api', 'replay');
-		        }
-		    }
-
-		    httpGet(url, authorize, queryParams) {
+		    httpGet(url, authorize) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            queryParams = this.addUuidToQueryParams(queryParams);
-		            return AppUtils.httpGet(url, authorize, queryParams);
+		            return AppUtils.httpGet(url, authorize);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpPost(url, authorize, queryParams, data) {
+		    httpPost(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            queryParams = this.addUuidToQueryParams(queryParams);
-		            data = this.addUuidToData(data);
-		            return AppUtils.httpPost(url, authorize, queryParams, data);
+		            return AppUtils.httpPost(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpPut(url, authorize, queryParams, data) {
+		    httpPut(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            queryParams = this.addUuidToQueryParams(queryParams);
-		            data = this.addUuidToData(data);
-		            return AppUtils.httpPut(url, authorize, queryParams, data);
+		            return AppUtils.httpPut(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpDelete(url, authorize, queryParams, data) {
+		    httpDelete(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            queryParams = this.addUuidToQueryParams(queryParams);
-		            data = this.addUuidToData(data);
-		            return AppUtils.httpDelete(url, authorize, queryParams, data);
+		            return AppUtils.httpDelete(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
-		    }
-		
-		    addUuidToQueryParams(queryParams) {
-		        if (!queryParams) {
-		            queryParams = [];
-		        }
-		        if (this.commandData.uuid) {
-		            queryParams.push({
-		                key: "uuid",
-		                value: this.commandData.uuid
-		            });
-		        }
-		        return queryParams;
-		    }
-		
-		    addUuidToData(data) {
-		        if (!data) {
-		            data = {};
-		        }
-		        if (this.commandData.uuid) {
-		            data.uuid = this.commandData.uuid;
-		        }
-		        return data;
 		    }
 		
 		}

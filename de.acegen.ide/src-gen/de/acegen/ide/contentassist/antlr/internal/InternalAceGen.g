@@ -1003,27 +1003,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServer__TypeAlternatives_0_0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0_0()); }
-		'Dropwizard'
-		{ after(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getHttpServerAccess().getTypeSpringBootKeyword_0_0_1()); }
-		'SpringBoot'
-		{ after(grammarAccess.getHttpServerAccess().getTypeSpringBootKeyword_0_0_1()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 rule__HttpServerAce__Alternatives
 	@init {
 		int stackSize = keepStackSize();
@@ -7482,9 +7461,13 @@ rule__HttpServer__TypeAssignment_0
 	}
 :
 	(
-		{ before(grammarAccess.getHttpServerAccess().getTypeAlternatives_0_0()); }
-		(rule__HttpServer__TypeAlternatives_0_0)
-		{ after(grammarAccess.getHttpServerAccess().getTypeAlternatives_0_0()); }
+		{ before(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0()); }
+		(
+			{ before(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0()); }
+			'Dropwizard'
+			{ after(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0()); }
+		)
+		{ after(grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_0_0()); }
 	)
 ;
 finally {

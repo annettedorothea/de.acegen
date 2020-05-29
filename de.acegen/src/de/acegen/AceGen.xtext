@@ -61,7 +61,7 @@ HttpClientTypeDefinition:
 ;
 
 HttpServer:
-	(type = ('Dropwizard' | 'SpringBoot'))?
+	(type = ('Dropwizard'))?
 	name = QualifiedName
 	('Authorization' authUser = AuthUser)?
 	('import' authUserRef = [AuthUser | QualifiedName])?

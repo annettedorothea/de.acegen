@@ -489,9 +489,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServer");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Alternatives cTypeAlternatives_0_0 = (Alternatives)cTypeAssignment_0.eContents().get(0);
-		private final Keyword cTypeDropwizardKeyword_0_0_0 = (Keyword)cTypeAlternatives_0_0.eContents().get(0);
-		private final Keyword cTypeSpringBootKeyword_0_0_1 = (Keyword)cTypeAlternatives_0_0.eContents().get(1);
+		private final Keyword cTypeDropwizardKeyword_0_0 = (Keyword)cTypeAssignment_0.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
@@ -521,28 +519,22 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScenariosScenarioParserRuleCall_7_1_0 = (RuleCall)cScenariosAssignment_7_1.eContents().get(0);
 		
 		//HttpServer:
-		//	type=('Dropwizard' | 'SpringBoot')?
+		//	type='Dropwizard'?
 		//	name=QualifiedName ('Authorization' authUser=AuthUser)? ('import' authUserRef=[AuthUser|QualifiedName])? ('ACE'
 		//	aceOperations+=HttpServerAce*)? ('views' views+=HttpServerView*)? ('models' models+=Model*)? ('scenarios'
 		//	scenarios+=Scenario*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=('Dropwizard' | 'SpringBoot')? name=QualifiedName ('Authorization' authUser=AuthUser)? ('import'
+		//type='Dropwizard'? name=QualifiedName ('Authorization' authUser=AuthUser)? ('import'
 		//authUserRef=[AuthUser|QualifiedName])? ('ACE' aceOperations+=HttpServerAce*)? ('views' views+=HttpServerView*)?
 		//('models' models+=Model*)? ('scenarios' scenarios+=Scenario*)?
 		public Group getGroup() { return cGroup; }
 		
-		//type=('Dropwizard' | 'SpringBoot')?
+		//type='Dropwizard'?
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
-		//('Dropwizard' | 'SpringBoot')
-		public Alternatives getTypeAlternatives_0_0() { return cTypeAlternatives_0_0; }
-		
 		//'Dropwizard'
-		public Keyword getTypeDropwizardKeyword_0_0_0() { return cTypeDropwizardKeyword_0_0_0; }
-		
-		//'SpringBoot'
-		public Keyword getTypeSpringBootKeyword_0_0_1() { return cTypeSpringBootKeyword_0_0_1; }
+		public Keyword getTypeDropwizardKeyword_0_0() { return cTypeDropwizardKeyword_0_0; }
 		
 		//name=QualifiedName
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -2164,7 +2156,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//HttpServer:
-	//	type=('Dropwizard' | 'SpringBoot')?
+	//	type='Dropwizard'?
 	//	name=QualifiedName ('Authorization' authUser=AuthUser)? ('import' authUserRef=[AuthUser|QualifiedName])? ('ACE'
 	//	aceOperations+=HttpServerAce*)? ('views' views+=HttpServerView*)? ('models' models+=Model*)? ('scenarios'
 	//	scenarios+=Scenario*)?;

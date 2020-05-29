@@ -76,7 +76,7 @@ class AceExtension {
 				urlWithPathParam += '''${this.commandData.«urlElements.get(i)»}'''
 			}
 		}
-		return "/api" + urlWithPathParam;
+		return "/${Utils.getRootPath()}" + urlWithPathParam;
 	}
 
 }
