@@ -569,6 +569,63 @@ public class CommandTemplate {
         _builder.append("    \t");
         _builder.append("//add from appState to commandData");
         _builder.newLine();
+        {
+          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
+          for(final AttributeParamRef param : _queryParams) {
+            _builder.append("    \t");
+            {
+              boolean _isOptional = param.isOptional();
+              boolean _not = (!_isOptional);
+              if (_not) {
+                _builder.append("//this.commandData.");
+                String _name_1 = param.getAttribute().getName();
+                _builder.append(_name_1, "    \t");
+                _builder.append(" is mandatory ");
+                String _type = param.getAttribute().getType();
+                _builder.append(_type, "    \t");
+              }
+            }
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        {
+          EList<AttributeParamRef> _pathParams = it.getServerCall().getPathParams();
+          for(final AttributeParamRef param_1 : _pathParams) {
+            _builder.append("    \t");
+            {
+              boolean _isOptional_1 = param_1.isOptional();
+              boolean _not_1 = (!_isOptional_1);
+              if (_not_1) {
+                _builder.append("//this.commandData.");
+                String _name_2 = param_1.getAttribute().getName();
+                _builder.append(_name_2, "    \t");
+                _builder.append(" is mandatory ");
+                String _type_1 = param_1.getAttribute().getType();
+                _builder.append(_type_1, "    \t");
+              }
+            }
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        {
+          EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
+          for(final AttributeParamRef param_2 : _payload) {
+            _builder.append("    \t");
+            {
+              boolean _isOptional_2 = param_2.isOptional();
+              boolean _not_2 = (!_isOptional_2);
+              if (_not_2) {
+                _builder.append("//this.commandData.");
+                String _name_3 = param_2.getAttribute().getName();
+                _builder.append(_name_3, "    \t");
+                _builder.append(" is mandatory ");
+                String _type_2 = param_2.getAttribute().getType();
+                _builder.append(_type_2, "    \t");
+              }
+            }
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("    \t");
         _builder.append("return true;");
         _builder.newLine();
@@ -585,8 +642,8 @@ public class CommandTemplate {
           boolean _equals = (_size == 1);
           if (_equals) {
             _builder.append("this.commandData.outcome = this.");
-            String _name_1 = it.getOutcomes().get(0).getName();
-            _builder.append(_name_1, "    \t");
+            String _name_4 = it.getOutcomes().get(0).getName();
+            _builder.append(_name_4, "    \t");
             _builder.append(";");
           }
         }

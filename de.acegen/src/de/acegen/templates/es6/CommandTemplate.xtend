@@ -160,6 +160,15 @@ class CommandTemplate {
 		«IF serverCall !== null»
 		    initCommandData() {
 		    	//add from appState to commandData
+		    	«FOR param : serverCall.queryParams»
+		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    	«ENDFOR»
+		    	«FOR param : serverCall.pathParams»
+		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    	«ENDFOR»
+		    	«FOR param : serverCall.payload»
+		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    	«ENDFOR»
 		    	return true;
 		    }
 		
