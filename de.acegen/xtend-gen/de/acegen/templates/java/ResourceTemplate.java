@@ -179,6 +179,9 @@ public class ResourceTemplate {
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("import java.time.format.DateTimeFormatter;");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("import org.slf4j.Logger;");

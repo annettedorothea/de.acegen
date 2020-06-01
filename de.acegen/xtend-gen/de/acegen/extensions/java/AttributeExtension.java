@@ -76,7 +76,7 @@ public class AttributeExtension {
         _builder.append("LocalDateTime.parse(");
         String _name = it.getName();
         _builder.append(_name);
-        _builder.append(")");
+        _builder.append(", DateTimeFormatter.ISO_DATE_TIME)");
       } else {
         String _name_1 = it.getName();
         _builder.append(_name_1);

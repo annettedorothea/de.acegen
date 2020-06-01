@@ -1588,6 +1588,9 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
+    _builder.append("import java.time.format.DateTimeFormatter;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
@@ -1645,7 +1648,7 @@ public class AceTemplate {
     _builder.append("public Response putSystemTime(@QueryParam(\"uuid\") String uuid, @QueryParam(\"system-time\") String systemTime) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime));");
+    _builder.append("NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Response.ok().build();");
@@ -3600,6 +3603,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
+    _builder.append("import java.time.format.DateTimeFormatter;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.databind.util.StdConverter;");
     _builder.newLine();
@@ -3613,7 +3618,7 @@ public class AceTemplate {
     _builder.append("public LocalDateTime convert(String value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return LocalDateTime.parse(value);");
+    _builder.append("return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

@@ -693,6 +693,8 @@ class AceTemplate {
 		import javax.ws.rs.core.Response;
 		
 		import java.time.LocalDateTime;
+		import java.time.format.DateTimeFormatter;
+		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -717,7 +719,7 @@ class AceTemplate {
 			@PUT
 			@Path("/system-time")
 			public Response putSystemTime(@QueryParam("uuid") String uuid, @QueryParam("system-time") String systemTime) {
-				NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime));
+				NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));
 				return Response.ok().build();
 			}
 			
@@ -1581,13 +1583,14 @@ class AceTemplate {
 		package de.acegen;
 		
 		import java.time.LocalDateTime;
+		import java.time.format.DateTimeFormatter;
 		
 		import com.fasterxml.jackson.databind.util.StdConverter;
 		
 		public class StringToDateTimeConverter extends StdConverter<String, LocalDateTime> {
 			@Override
 			public LocalDateTime convert(String value) {
-				return LocalDateTime.parse(value);
+				return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME);
 			}
 		}
 		

@@ -41,7 +41,7 @@ class AttributeExtension {
 	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
 	def String resourceParam(
-		Attribute it) '''«IF type !== null && type.equals('DateTime')»LocalDateTime.parse(«name»)«ELSE»«name»«ENDIF»'''
+		Attribute it) '''«IF type !== null && type.equals('DateTime')»LocalDateTime.parse(«name», DateTimeFormatter.ISO_DATE_TIME)«ELSE»«name»«ENDIF»'''
 
 	def String initActionData(
 		AttributeParamRef it) '''
