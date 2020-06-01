@@ -314,6 +314,8 @@ class AceTemplate {
 
 		import AppUtils from "../../src/app/AppUtils";
 		import Utils from "./Utils";
+		import * as ReadAppState from "./ReadAppState";
+		import * as WriteAppState from "./WriteAppState";
 		
 		export default class ACEController {
 		
@@ -363,7 +365,7 @@ class AceTemplate {
 				if (ACEController.execution === ACEController.UI && Utils.isDevelopment() && Utils.getTimelineSize() > 0) {
 				    ACEController.timeline.push(AppUtils.deepCopy(item));
 				    if (ACEController.timeline.length > Utils.getTimelineSize()) {
-				        ACEController.timeline.pop();
+				        ACEController.timeline.shift();
 				    }
 				} else if (ACEController.execution !== ACEController.UI) {
 				    ACEController.actualTimeline.push(AppUtils.deepCopy(item));
@@ -381,6 +383,7 @@ class AceTemplate {
 		    }
 		
 		    static applyNextActions() {
+		    	ACEController.addItemToTimeLine({appState: ReadAppState.getState()});
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
 					if (action.asynchronous) {
@@ -433,7 +436,8 @@ class AceTemplate {
 		
 		    static readTimelineAndCreateReplayActions() {
 		        let actions = [];
-		
+				
+				let appStateWasSet = false;
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
 		            if (item.action) {
@@ -442,6 +446,11 @@ class AceTemplate {
 		                action.actionData = actionData;
 		                actions.push(action);
 		            }
+					if (item.appState && !appStateWasSet) {
+					    WriteAppState.setInitialState(item.appState);
+					    appStateWasSet = true;
+					}
+		            
 		        }
 		
 		        ACEController.actionQueue = actions;
@@ -671,7 +680,7 @@ class AceTemplate {
 		                apiKey: Utils.getAceScenariosApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data);
+		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data);
 		        });
 		    }
 		
@@ -695,7 +704,7 @@ class AceTemplate {
 		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data);
 		            });
 		        });
 		    }
@@ -717,7 +726,7 @@ class AceTemplate {
 		                    serverVersion: serverInfo.serverVersion,
 		                    serverTimeline: JSON.stringify(serverTimeline)
 		                };
-		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', false, data);
 		            });
 		        });
 		    }
@@ -765,11 +774,13 @@ class AceTemplate {
 		
 		    static replayServerless(pauseInMillis) {
 		        ReplayUtils.prepareReplay();
+		        AppUtils.createInitialAppState();
 		        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
 		    }
 		
 		    static replayE2E(pauseInMillis, serverTimeline) {
 		        ReplayUtils.prepareReplay();
+		        AppUtils.createInitialAppState();
 		        AppUtils.httpPut('replay/e2e/start', false, [], JSON.parse(serverTimeline)).then(() => {
 		            ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		        });
@@ -813,6 +824,7 @@ class AceTemplate {
 		
 		    static finishReplay() {
 		    	ReplayUtils.tearDownReplay();
+		    	AppUtils.createInitialAppState();
 		        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
 		            const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
 		            const result = ReplayUtils.compareItems(normalized.expected, normalized.actual);

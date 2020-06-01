@@ -254,6 +254,7 @@ class CommandTemplate {
 						        this.publishEvents();
 						        resolve();
 						    }, (error) => {
+						    	ACEController.addItemToTimeLine({command: this});
 						        reject(error);
 						    });
 						} else {
@@ -262,11 +263,19 @@ class CommandTemplate {
 							resolve();
 						}
 					} else {
-					    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-					    this.commandData = timelineCommand.commandData;
-					    ACEController.addItemToTimeLine({command: this});
-				        this.publishEvents();
-				        resolve();
+						const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
+						if (timelineCommand) {
+						    if (timelineCommand.commandData.error) {
+						        reject(timelineCommand.commandData.error);
+						    } else {
+						        this.commandData = timelineCommand.commandData;
+						        ACEController.addItemToTimeLine({command: this});
+						        this.publishEvents();
+						        resolve();
+						    }
+						} else {
+						    resolve();
+						}
 					}
 		        });
 		    }

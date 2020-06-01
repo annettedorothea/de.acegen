@@ -757,6 +757,10 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import Utils from \"./Utils\";");
     _builder.newLine();
+    _builder.append("import * as ReadAppState from \"./ReadAppState\";");
+    _builder.newLine();
+    _builder.append("import * as WriteAppState from \"./WriteAppState\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ACEController {");
     _builder.newLine();
@@ -894,7 +898,7 @@ public class AceTemplate {
     _builder.append("if (ACEController.timeline.length > Utils.getTimelineSize()) {");
     _builder.newLine();
     _builder.append("\t\t        ");
-    _builder.append("ACEController.timeline.pop();");
+    _builder.append("ACEController.timeline.shift();");
     _builder.newLine();
     _builder.append("\t\t    ");
     _builder.append("}");
@@ -942,6 +946,9 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("static applyNextActions() {");
+    _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("ACEController.addItemToTimeLine({appState: ReadAppState.getState()});");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("let action = ACEController.actionQueue.shift();");
@@ -1092,6 +1099,10 @@ public class AceTemplate {
     _builder.append("        ");
     _builder.append("let actions = [];");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("let appStateWasSet = false;");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("for (let i = 0; i < ACEController.expectedTimeline.length; i++) {");
@@ -1116,6 +1127,20 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("            ");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("if (item.appState && !appStateWasSet) {");
+    _builder.newLine();
+    _builder.append("\t\t\t    ");
+    _builder.append("WriteAppState.setInitialState(item.appState);");
+    _builder.newLine();
+    _builder.append("\t\t\t    ");
+    _builder.append("appStateWasSet = true;");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("            ");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("}");
@@ -1670,7 +1695,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/bugs/create\', false, [], data);");
+    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/bugs/create\', false, data);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("});");
@@ -1738,7 +1763,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/scenarios/create\', false, [], data);");
+    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/scenarios/create\', false, data);");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("});");
@@ -1802,7 +1827,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("                ");
-    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/results/create\', false, [], data);");
+    _builder.append("return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + \'api/results/create\', false, data);");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("});");
@@ -1936,6 +1961,9 @@ public class AceTemplate {
     _builder.append("ReplayUtils.prepareReplay();");
     _builder.newLine();
     _builder.append("        ");
+    _builder.append("AppUtils.createInitialAppState();");
+    _builder.newLine();
+    _builder.append("        ");
     _builder.append("ACEController.startReplay(ACEController.REPLAY, pauseInMillis)");
     _builder.newLine();
     _builder.append("    ");
@@ -1947,6 +1975,9 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("ReplayUtils.prepareReplay();");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("AppUtils.createInitialAppState();");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("AppUtils.httpPut(\'replay/e2e/start\', false, [], JSON.parse(serverTimeline)).then(() => {");
@@ -2072,6 +2103,9 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("ReplayUtils.tearDownReplay();");
+    _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("AppUtils.createInitialAppState();");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {");
