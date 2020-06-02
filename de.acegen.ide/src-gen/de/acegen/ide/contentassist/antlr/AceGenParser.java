@@ -39,6 +39,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
 			builder.put(grammarAccess.getJsonValueAccess().getAlternatives(), "rule__JsonValue__Alternatives");
 			builder.put(grammarAccess.getJsonBooleanAccess().getAlternatives(), "rule__JsonBoolean__Alternatives");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
 			builder.put(grammarAccess.getProjectAccess().getGroup(), "rule__Project__Group__0");
 			builder.put(grammarAccess.getProjectAccess().getGroup_1_0(), "rule__Project__Group_1_0__0");
 			builder.put(grammarAccess.getProjectAccess().getGroup_1_1(), "rule__Project__Group_1_1__0");
@@ -94,6 +95,9 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWhenBlockAccess().getGroup(), "rule__WhenBlock__Group__0");
 			builder.put(grammarAccess.getThenBlockAccess().getGroup(), "rule__ThenBlock__Group__0");
 			builder.put(grammarAccess.getThenBlockAccess().getGroup_1(), "rule__ThenBlock__Group_1__0");
+			builder.put(grammarAccess.getThenBlockAccess().getGroup_2(), "rule__ThenBlock__Group_2__0");
+			builder.put(grammarAccess.getThenBlockAccess().getGroup_3(), "rule__ThenBlock__Group_3__0");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getGroup(), "rule__PersistenceVerification__Group__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup(), "rule__DataDefinition__Group__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_1(), "rule__DataDefinition__Group_1__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_2(), "rule__DataDefinition__Group_2__0");
@@ -188,7 +192,14 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWhenBlockAccess().getDataDefinitionAssignment_1(), "rule__WhenBlock__DataDefinitionAssignment_1");
 			builder.put(grammarAccess.getWhenBlockAccess().getAuthorizationAssignment_2(), "rule__WhenBlock__AuthorizationAssignment_2");
 			builder.put(grammarAccess.getThenBlockAccess().getStatusCodeAssignment_0(), "rule__ThenBlock__StatusCodeAssignment_0");
-			builder.put(grammarAccess.getThenBlockAccess().getResponseAssignment_1_1(), "rule__ThenBlock__ResponseAssignment_1_1");
+			builder.put(grammarAccess.getThenBlockAccess().getResponseAssignment_1_2(), "rule__ThenBlock__ResponseAssignment_1_2");
+			builder.put(grammarAccess.getThenBlockAccess().getPersistenceVerificationsAssignment_2_1(), "rule__ThenBlock__PersistenceVerificationsAssignment_2_1");
+			builder.put(grammarAccess.getThenBlockAccess().getVerificationsAssignment_3_1(), "rule__ThenBlock__VerificationsAssignment_3_1");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getNameAssignment_0(), "rule__PersistenceVerification__NameAssignment_0");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getModelAssignment_3(), "rule__PersistenceVerification__ModelAssignment_3");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getAttributeAssignment_6(), "rule__PersistenceVerification__AttributeAssignment_6");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getValueAssignment_8(), "rule__PersistenceVerification__ValueAssignment_8");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getExpectedAssignment_11(), "rule__PersistenceVerification__ExpectedAssignment_11");
 			builder.put(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1(), "rule__DataDefinition__UuidAssignment_1_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getSystemtimeAssignment_2_1(), "rule__DataDefinition__SystemtimeAssignment_2_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getPatternAssignment_2_2(), "rule__DataDefinition__PatternAssignment_2_2");
@@ -216,6 +227,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonValueAccess().getLongAssignment_5(), "rule__JsonValue__LongAssignment_5");
 			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_2(), "rule__JsonArray__ValuesAssignment_2");
 			builder.put(grammarAccess.getJsonArrayAccess().getValuesAssignment_3_1(), "rule__JsonArray__ValuesAssignment_3_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getStringAssignment_0(), "rule__PrimitiveValue__StringAssignment_0");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getLongAssignment_1(), "rule__PrimitiveValue__LongAssignment_1");
 		}
 	}
 	

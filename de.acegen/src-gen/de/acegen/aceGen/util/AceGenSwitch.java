@@ -222,6 +222,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.PERSISTENCE_VERIFICATION:
+      {
+        PersistenceVerification persistenceVerification = (PersistenceVerification)theEObject;
+        T result = casePersistenceVerification(persistenceVerification);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.DATA_DEFINITION:
       {
         DataDefinition dataDefinition = (DataDefinition)theEObject;
@@ -278,6 +285,13 @@ public class AceGenSwitch<T> extends Switch<T>
         JsonArray jsonArray = (JsonArray)theEObject;
         T result = caseJsonArray(jsonArray);
         if (result == null) result = caseJsonValue(jsonArray);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.PRIMITIVE_VALUE:
+      {
+        PrimitiveValue primitiveValue = (PrimitiveValue)theEObject;
+        T result = casePrimitiveValue(primitiveValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -622,6 +636,22 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Persistence Verification</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Persistence Verification</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePersistenceVerification(PersistenceVerification object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Data Definition</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -745,6 +775,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJsonArray(JsonArray object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primitive Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimitiveValue(PrimitiveValue object)
   {
     return null;
   }

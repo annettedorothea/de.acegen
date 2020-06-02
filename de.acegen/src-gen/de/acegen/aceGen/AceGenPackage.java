@@ -1240,13 +1240,95 @@ public interface AceGenPackage extends EPackage
   int THEN_BLOCK__RESPONSE = 1;
 
   /**
+   * The feature id for the '<em><b>Persistence Verifications</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THEN_BLOCK__PERSISTENCE_VERIFICATIONS = 2;
+
+  /**
+   * The feature id for the '<em><b>Verifications</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THEN_BLOCK__VERIFICATIONS = 3;
+
+  /**
    * The number of structural features of the '<em>Then Block</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int THEN_BLOCK_FEATURE_COUNT = 2;
+  int THEN_BLOCK_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.PersistenceVerificationImpl <em>Persistence Verification</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.PersistenceVerificationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerification()
+   * @generated
+   */
+  int PERSISTENCE_VERIFICATION = 21;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION__MODEL = 1;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION__ATTRIBUTE = 2;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION__VALUE = 3;
+
+  /**
+   * The feature id for the '<em><b>Expected</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION__EXPECTED = 4;
+
+  /**
+   * The number of structural features of the '<em>Persistence Verification</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
@@ -1256,7 +1338,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 21;
+  int DATA_DEFINITION = 22;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -1311,7 +1393,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 22;
+  int AUTHORIZATION = 23;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -1348,7 +1430,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 23;
+  int ATTRIBUTE = 24;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1448,7 +1530,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 27;
+  int JSON_VALUE = 28;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1503,7 +1585,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 24;
+  int JSON_DATE_TIME = 25;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1576,7 +1658,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 25;
+  int JSON_OBJECT = 26;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1640,7 +1722,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 26;
+  int JSON_MEMBER = 27;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1677,7 +1759,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 28;
+  int JSON_ARRAY = 29;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1732,6 +1814,43 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int JSON_ARRAY_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.PrimitiveValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
+   * @generated
+   */
+  int PRIMITIVE_VALUE = 30;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE__STRING = 0;
+
+  /**
+   * The feature id for the '<em><b>Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE__LONG = 1;
+
+  /**
+   * The number of structural features of the '<em>Primitive Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE_FEATURE_COUNT = 2;
 
 
   /**
@@ -2693,6 +2812,93 @@ public interface AceGenPackage extends EPackage
   EReference getThenBlock_Response();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ThenBlock#getPersistenceVerifications <em>Persistence Verifications</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Persistence Verifications</em>'.
+   * @see de.acegen.aceGen.ThenBlock#getPersistenceVerifications()
+   * @see #getThenBlock()
+   * @generated
+   */
+  EReference getThenBlock_PersistenceVerifications();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.acegen.aceGen.ThenBlock#getVerifications <em>Verifications</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Verifications</em>'.
+   * @see de.acegen.aceGen.ThenBlock#getVerifications()
+   * @see #getThenBlock()
+   * @generated
+   */
+  EAttribute getThenBlock_Verifications();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.PersistenceVerification <em>Persistence Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Persistence Verification</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification
+   * @generated
+   */
+  EClass getPersistenceVerification();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PersistenceVerification#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getName()
+   * @see #getPersistenceVerification()
+   * @generated
+   */
+  EAttribute getPersistenceVerification_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.PersistenceVerification#getModel <em>Model</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Model</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getModel()
+   * @see #getPersistenceVerification()
+   * @generated
+   */
+  EReference getPersistenceVerification_Model();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.PersistenceVerification#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getAttribute()
+   * @see #getPersistenceVerification()
+   * @generated
+   */
+  EReference getPersistenceVerification_Attribute();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.PersistenceVerification#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getValue()
+   * @see #getPersistenceVerification()
+   * @generated
+   */
+  EReference getPersistenceVerification_Value();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.PersistenceVerification#getExpected <em>Expected</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expected</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getExpected()
+   * @see #getPersistenceVerification()
+   * @generated
+   */
+  EReference getPersistenceVerification_Expected();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3046,6 +3252,38 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getJsonArray_Values();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Primitive Value</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue
+   * @generated
+   */
+  EClass getPrimitiveValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getString <em>String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue#getString()
+   * @see #getPrimitiveValue()
+   * @generated
+   */
+  EAttribute getPrimitiveValue_String();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getLong <em>Long</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Long</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue#getLong()
+   * @see #getPrimitiveValue()
+   * @generated
+   */
+  EAttribute getPrimitiveValue_Long();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -3825,6 +4063,72 @@ public interface AceGenPackage extends EPackage
     EReference THEN_BLOCK__RESPONSE = eINSTANCE.getThenBlock_Response();
 
     /**
+     * The meta object literal for the '<em><b>Persistence Verifications</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference THEN_BLOCK__PERSISTENCE_VERIFICATIONS = eINSTANCE.getThenBlock_PersistenceVerifications();
+
+    /**
+     * The meta object literal for the '<em><b>Verifications</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute THEN_BLOCK__VERIFICATIONS = eINSTANCE.getThenBlock_Verifications();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.PersistenceVerificationImpl <em>Persistence Verification</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.PersistenceVerificationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerification()
+     * @generated
+     */
+    EClass PERSISTENCE_VERIFICATION = eINSTANCE.getPersistenceVerification();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PERSISTENCE_VERIFICATION__NAME = eINSTANCE.getPersistenceVerification_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Model</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PERSISTENCE_VERIFICATION__MODEL = eINSTANCE.getPersistenceVerification_Model();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PERSISTENCE_VERIFICATION__ATTRIBUTE = eINSTANCE.getPersistenceVerification_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PERSISTENCE_VERIFICATION__VALUE = eINSTANCE.getPersistenceVerification_Value();
+
+    /**
+     * The meta object literal for the '<em><b>Expected</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PERSISTENCE_VERIFICATION__EXPECTED = eINSTANCE.getPersistenceVerification_Expected();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4103,6 +4407,32 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference JSON_ARRAY__VALUES = eINSTANCE.getJsonArray_Values();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.PrimitiveValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
+     * @generated
+     */
+    EClass PRIMITIVE_VALUE = eINSTANCE.getPrimitiveValue();
+
+    /**
+     * The meta object literal for the '<em><b>String</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_VALUE__STRING = eINSTANCE.getPrimitiveValue_String();
+
+    /**
+     * The meta object literal for the '<em><b>Long</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_VALUE__LONG = eINSTANCE.getPrimitiveValue_Long();
 
   }
 

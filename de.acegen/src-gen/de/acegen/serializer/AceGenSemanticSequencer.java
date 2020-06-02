@@ -29,6 +29,8 @@ import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PersistenceVerification;
+import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
@@ -130,6 +132,12 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case AceGenPackage.PERSISTENCE_VERIFICATION:
+				sequence_PersistenceVerification(context, (PersistenceVerification) semanticObject); 
+				return; 
+			case AceGenPackage.PRIMITIVE_VALUE:
+				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 
 				return; 
 			case AceGenPackage.PROJECT:
 				sequence_Project(context, (Project) semanticObject); 
@@ -536,6 +544,48 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     PersistenceVerification returns PersistenceVerification
+	 *
+	 * Constraint:
+	 *     (name=ID model=[Model|QualifiedName] attribute=[Attribute|QualifiedName] value=PrimitiveValue expected=JsonObject)
+	 */
+	protected void sequence_PersistenceVerification(ISerializationContext context, PersistenceVerification semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__NAME));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__VALUE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__EXPECTED) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__EXPECTED));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPersistenceVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getPersistenceVerificationAccess().getModelModelQualifiedNameParserRuleCall_3_0_1(), semanticObject.eGet(AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL, false));
+		feeder.accept(grammarAccess.getPersistenceVerificationAccess().getAttributeAttributeQualifiedNameParserRuleCall_6_0_1(), semanticObject.eGet(AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE, false));
+		feeder.accept(grammarAccess.getPersistenceVerificationAccess().getValuePrimitiveValueParserRuleCall_8_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getPersistenceVerificationAccess().getExpectedJsonObjectParserRuleCall_11_0(), semanticObject.getExpected());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimitiveValue returns PrimitiveValue
+	 *
+	 * Constraint:
+	 *     (string=STRING | long=INT)
+	 */
+	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Project returns Project
 	 *
 	 * Constraint:
@@ -563,7 +613,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ThenBlock returns ThenBlock
 	 *
 	 * Constraint:
-	 *     (statusCode=INT response=DataDefinition?)
+	 *     (statusCode=INT response=DataDefinition? persistenceVerifications+=PersistenceVerification* verifications+=ID*)
 	 */
 	protected void sequence_ThenBlock(ISerializationContext context, ThenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

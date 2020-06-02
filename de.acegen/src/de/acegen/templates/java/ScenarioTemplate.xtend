@@ -5,6 +5,7 @@ import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.WhenBlock
@@ -54,6 +55,15 @@ class ScenarioTemplate {
 			@Override
 			protected void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response «ENDIF») {
 			}
+			
+			«FOR verification : thenBlock.verifications»
+				@Override
+				protected void «verification»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF») {
+					assertFail("«verification» not implemented");
+					LOG.info("THEN: «verification» passed");
+				}
+			«ENDFOR»
+			
 		
 		}
 		
@@ -151,6 +161,8 @@ class ScenarioTemplate {
 					if (response.getStatus() != «thenBlock.statusCode») {
 						String message = response.readEntity(String.class);
 						assertFail(message);
+					} else {
+						LOG.info("THEN: status «thenBlock.statusCode» passed");
 					}
 				«ENDIF»
 				
@@ -168,40 +180,65 @@ class ScenarioTemplate {
 
 
 					assertThat(actual, expected);
-					«ENDIF»
 					
-					«IF whenBlock.action.isRead»
-						return actual;
-						«ENDIF»
-						}
-						
-						@Override
-						public void runTest() throws Exception {
-							given();
-								
-							if (prerequisite("«name»")) {
-								Response response = when();
+					LOG.info("THEN: response passed");
+				«ENDIF»
 				
-								LOG.info("WHEN: «whenBlock.action.name»");
-						
-								«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
-								
-								verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
-							} else {
-								LOG.info("WHEN: prerequisite for «name» not met");
-							}
-						}
-						
-						protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
-						
-						@Override
-						protected String scenarioName() {
-							return "«name»";
-						}
+				«IF whenBlock.action.isRead»
+					return actual;
+				«ENDIF»
+			}
 					
-					}
+			@Override
+			public void runTest() throws Exception {
+				given();
 					
-					«sdg»
+				if (prerequisite("«name»")) {
+					Response response = when();
+
+					LOG.info("WHEN: «whenBlock.action.name»");
+			
+					«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
+					
+					«FOR persistenceVerification : thenBlock.persistenceVerifications»
+						this.«persistenceVerification.name»();
+					«ENDFOR»
+				
+					verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+					«FOR verification : thenBlock.verifications»
+						«verification»(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+					«ENDFOR»
+				} else {
+					LOG.info("WHEN: prerequisite for «name» not met");
+				}
+			}
+			
+			protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+			
+			«FOR verification : thenBlock.verifications»
+				protected abstract void «verification»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+			«ENDFOR»
+			
+			«FOR persistenceVerification : thenBlock.persistenceVerifications»
+				private void «persistenceVerification.name»() throws Exception {
+					«persistenceVerification.model.interfaceWithPackage» actual = daoProvider.get«persistenceVerification.model.modelDao»().selectBy«persistenceVerification.attribute.name.toFirstUpper»(handle, «persistenceVerification.value.primitiveValueFrom»);
+					
+					«persistenceVerification.model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(persistenceVerification.expected, persistenceVerification.model)»;
+					
+					assertThat(actual, expected);
+
+					LOG.info("THEN: «persistenceVerification.name» passed");
+				}
+			«ENDFOR»
+			
+			@Override
+			protected String scenarioName() {
+				return "«name»";
+			}
+		
+		}
+		
+		«sdg»
 					
 	'''
 	
@@ -255,6 +292,11 @@ class ScenarioTemplate {
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
 			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
+	
+	private def objectMapperCallExpectedPersistenceData(JsonObject it, Model model) '''
+		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
+			"«FOR member : members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+		«model.modelClassNameWithPackage».class)'''
 	
 
 	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,

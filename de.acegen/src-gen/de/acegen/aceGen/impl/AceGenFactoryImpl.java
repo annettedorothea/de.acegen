@@ -86,6 +86,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.GIVEN_REF: return createGivenRef();
       case AceGenPackage.WHEN_BLOCK: return createWhenBlock();
       case AceGenPackage.THEN_BLOCK: return createThenBlock();
+      case AceGenPackage.PERSISTENCE_VERIFICATION: return createPersistenceVerification();
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
@@ -94,6 +95,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.JSON_MEMBER: return createJsonMember();
       case AceGenPackage.JSON_VALUE: return createJsonValue();
       case AceGenPackage.JSON_ARRAY: return createJsonArray();
+      case AceGenPackage.PRIMITIVE_VALUE: return createPrimitiveValue();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -357,6 +359,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public PersistenceVerification createPersistenceVerification()
+  {
+    PersistenceVerificationImpl persistenceVerification = new PersistenceVerificationImpl();
+    return persistenceVerification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public DataDefinition createDataDefinition()
   {
     DataDefinitionImpl dataDefinition = new DataDefinitionImpl();
@@ -445,6 +459,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     JsonArrayImpl jsonArray = new JsonArrayImpl();
     return jsonArray;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public PrimitiveValue createPrimitiveValue()
+  {
+    PrimitiveValueImpl primitiveValue = new PrimitiveValueImpl();
+    return primitiveValue;
   }
 
   /**

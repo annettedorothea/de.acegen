@@ -39,6 +39,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.PersistenceVerification
 
 /**
  * This class contains custom scoping description.
@@ -89,22 +90,41 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
+		if (context instanceof PersistenceVerification &&
+			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE) {
+			val persistenceVerification = context as PersistenceVerification
+			val model = persistenceVerification.model
+			val attrs = new ArrayList<Attribute>();
+			model.allAttributesRec(attrs);
+			return Scopes.scopeFor(attrs)
+		}
 		if (context instanceof JsonObject || context instanceof JsonArray || context instanceof JsonMember) {
 			var parent = context.eContainer
 			var isThen = false
 			var isWhen = false
+			var isVerification = false
+			var PersistenceVerification persistenceVerification = null
 			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember))) {
-				parent = parent.eContainer
 				if (parent instanceof ThenBlock) {
 					isThen = true
 				}
 				if (parent instanceof WhenBlock) {
 					isWhen = true
 				}
+				if (parent instanceof PersistenceVerification) {
+					isVerification = true
+					persistenceVerification = parent as PersistenceVerification
+				}
+				parent = parent.eContainer
 			}
 			if (parent instanceof Scenario) {
 				val scenario = parent as Scenario;
-				if (isWhen) {
+				if (isVerification) {
+					val model = persistenceVerification.model
+					val attrs = new ArrayList<Attribute>();
+					model.allAttributesRec(attrs);
+					return Scopes.scopeFor(attrs)
+				} else if (isWhen) {
 					var attr = new ArrayList<Attribute>();
 					for (attributeRef : scenario.whenBlock.action.payload) {
 						attr.add(attributeRef.attribute)

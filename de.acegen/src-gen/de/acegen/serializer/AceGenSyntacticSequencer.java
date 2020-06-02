@@ -43,6 +43,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
 	protected AbstractElementAlias match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
+	protected AbstractElementAlias match_ThenBlock_PersistenceKeyword_2_0_q;
+	protected AbstractElementAlias match_ThenBlock_VerificationsKeyword_3_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -68,6 +70,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
 		match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
+		match_ThenBlock_PersistenceKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getPersistenceKeyword_2_0());
+		match_ThenBlock_VerificationsKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getVerificationsKeyword_3_0());
 	}
 	
 	@Override
@@ -124,6 +128,10 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Scenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ThenBlock_PersistenceKeyword_2_0_q.equals(syntax))
+				emit_ThenBlock_PersistenceKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ThenBlock_VerificationsKeyword_3_0_q.equals(syntax))
+				emit_ThenBlock_VerificationsKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -464,6 +472,33 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID (ambiguity) 'WHEN' whenBlock=WhenBlock
 	 */
 	protected void emit_Scenario_GIVENKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'persistence'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     response=DataDefinition (ambiguity) 'verifications' verifications+=ID
+	 *     response=DataDefinition (ambiguity) 'verifications'? (rule end)
+	 *     statusCode=INT (ambiguity) 'verifications' verifications+=ID
+	 *     statusCode=INT (ambiguity) 'verifications'? (rule end)
+	 */
+	protected void emit_ThenBlock_PersistenceKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'verifications'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     persistenceVerifications+=PersistenceVerification (ambiguity) (rule end)
+	 *     response=DataDefinition 'persistence'? (ambiguity) (rule end)
+	 *     statusCode=INT 'persistence'? (ambiguity) (rule end)
+	 */
+	protected void emit_ThenBlock_VerificationsKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

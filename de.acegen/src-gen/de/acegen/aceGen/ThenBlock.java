@@ -3,6 +3,8 @@
  */
 package de.acegen.aceGen;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,6 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.ThenBlock#getStatusCode <em>Status Code</em>}</li>
  *   <li>{@link de.acegen.aceGen.ThenBlock#getResponse <em>Response</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ThenBlock#getPersistenceVerifications <em>Persistence Verifications</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ThenBlock#getVerifications <em>Verifications</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getThenBlock()
@@ -67,5 +71,29 @@ public interface ThenBlock extends EObject
    * @generated
    */
   void setResponse(DataDefinition value);
+
+  /**
+   * Returns the value of the '<em><b>Persistence Verifications</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.PersistenceVerification}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Persistence Verifications</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getThenBlock_PersistenceVerifications()
+   * @model containment="true"
+   * @generated
+   */
+  EList<PersistenceVerification> getPersistenceVerifications();
+
+  /**
+   * Returns the value of the '<em><b>Verifications</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Verifications</em>' attribute list.
+   * @see de.acegen.aceGen.AceGenPackage#getThenBlock_Verifications()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getVerifications();
 
 } // ThenBlock

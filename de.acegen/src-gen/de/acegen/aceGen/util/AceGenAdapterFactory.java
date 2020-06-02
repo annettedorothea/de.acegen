@@ -181,6 +181,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createThenBlockAdapter();
       }
       @Override
+      public Adapter casePersistenceVerification(PersistenceVerification object)
+      {
+        return createPersistenceVerificationAdapter();
+      }
+      @Override
       public Adapter caseDataDefinition(DataDefinition object)
       {
         return createDataDefinitionAdapter();
@@ -219,6 +224,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseJsonArray(JsonArray object)
       {
         return createJsonArrayAdapter();
+      }
+      @Override
+      public Adapter casePrimitiveValue(PrimitiveValue object)
+      {
+        return createPrimitiveValueAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -558,6 +568,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PersistenceVerification <em>Persistence Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.PersistenceVerification
+   * @generated
+   */
+  public Adapter createPersistenceVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -673,6 +698,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJsonArrayAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.PrimitiveValue
+   * @generated
+   */
+  public Adapter createPrimitiveValueAdapter()
   {
     return null;
   }

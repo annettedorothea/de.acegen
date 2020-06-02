@@ -23,6 +23,7 @@ import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.extensions.java.ModelExtension;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -748,6 +749,26 @@ public class AttributeExtension {
     _builder.append(_dateTimeParse);
     _builder.append("\\\"");
     return _builder;
+  }
+  
+  public Object primitiveValueFrom(final PrimitiveValue it) {
+    String _string = it.getString();
+    boolean _tripleNotEquals = (_string != null);
+    if (_tripleNotEquals) {
+      String returnString = it.getString();
+      boolean _contains = it.getString().contains("${testId}");
+      if (_contains) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\" + this.getTestId() + \"");
+        returnString = returnString.replace("${testId}", _builder);
+      }
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("\"");
+      _builder_1.append(returnString);
+      _builder_1.append("\"");
+      return _builder_1.toString();
+    }
+    return Integer.valueOf(it.getLong());
   }
   
   public CharSequence valueFrom(final JsonValue it) {

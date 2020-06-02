@@ -87,6 +87,17 @@ public class ModelExtension {
     return _builder.toString();
   }
   
+  public String modelDaoWithPackage(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
+    _builder.append(_name);
+    _builder.append(".models.");
+    String _modelDao = this.modelDao(it);
+    _builder.append(_modelDao);
+    return _builder.toString();
+  }
+  
   public String abstractModelDao(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");

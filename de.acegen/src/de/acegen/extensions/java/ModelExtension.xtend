@@ -40,6 +40,8 @@ class ModelExtension {
 	def String modelParam(Model it) '''«name.toFirstLower»Model'''
 	
 	def String modelDao(Model it) '''«name.toFirstUpper»Dao'''
+
+	def String modelDaoWithPackage(Model it) '''«(eContainer as HttpServer).getName».models.«modelDao»'''
 	
 	def String abstractModelDao(Model it) '''Abstract«name.toFirstUpper»Dao'''
 	

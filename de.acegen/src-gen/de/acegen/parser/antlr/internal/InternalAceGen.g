@@ -2208,12 +2208,16 @@ ruleThenBlock returns [EObject current=null]
 			{
 				newLeafNode(otherlv_1, grammarAccess.getThenBlockAccess().getResponseKeyword_1_0());
 			}
+			otherlv_2='shouldBe'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getThenBlockAccess().getShouldBeKeyword_1_1());
+			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getThenBlockAccess().getResponseDataDefinitionParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getThenBlockAccess().getResponseDataDefinitionParserRuleCall_1_2_0());
 					}
-					lv_response_2_0=ruleDataDefinition
+					lv_response_3_0=ruleDataDefinition
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getThenBlockRule());
@@ -2221,13 +2225,197 @@ ruleThenBlock returns [EObject current=null]
 						set(
 							$current,
 							"response",
-							lv_response_2_0,
+							lv_response_3_0,
 							"de.acegen.AceGen.DataDefinition");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)?
+		(
+			otherlv_4='persistence'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getThenBlockAccess().getPersistenceKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getThenBlockAccess().getPersistenceVerificationsPersistenceVerificationParserRuleCall_2_1_0());
+					}
+					lv_persistenceVerifications_5_0=rulePersistenceVerification
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getThenBlockRule());
+						}
+						add(
+							$current,
+							"persistenceVerifications",
+							lv_persistenceVerifications_5_0,
+							"de.acegen.AceGen.PersistenceVerification");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+		)?
+		(
+			otherlv_6='verifications'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getThenBlockAccess().getVerificationsKeyword_3_0());
+			}
+			(
+				(
+					lv_verifications_7_0=RULE_ID
+					{
+						newLeafNode(lv_verifications_7_0, grammarAccess.getThenBlockAccess().getVerificationsIDTerminalRuleCall_3_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getThenBlockRule());
+						}
+						addWithLastConsumed(
+							$current,
+							"verifications",
+							lv_verifications_7_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
+			)*
+		)?
+	)
+;
+
+// Entry rule entryRulePersistenceVerification
+entryRulePersistenceVerification returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPersistenceVerificationRule()); }
+	iv_rulePersistenceVerification=rulePersistenceVerification
+	{ $current=$iv_rulePersistenceVerification.current; }
+	EOF;
+
+// Rule PersistenceVerification
+rulePersistenceVerification returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_name_0_0=RULE_ID
+				{
+					newLeafNode(lv_name_0_0, grammarAccess.getPersistenceVerificationAccess().getNameIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPersistenceVerificationRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_1='select'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getPersistenceVerificationAccess().getSelectKeyword_1());
+		}
+		otherlv_2='from'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getPersistenceVerificationAccess().getFromKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPersistenceVerificationRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getModelModelCrossReference_3_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_4='by'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getPersistenceVerificationAccess().getByKeyword_4());
+		}
+		otherlv_5='('
+		{
+			newLeafNode(otherlv_5, grammarAccess.getPersistenceVerificationAccess().getLeftParenthesisKeyword_5());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPersistenceVerificationRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getAttributeAttributeCrossReference_6_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_7=':'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getPersistenceVerificationAccess().getColonKeyword_7());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getValuePrimitiveValueParserRuleCall_8_0());
+				}
+				lv_value_8_0=rulePrimitiveValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getPersistenceVerificationRule());
+					}
+					set(
+						$current,
+						"value",
+						lv_value_8_0,
+						"de.acegen.AceGen.PrimitiveValue");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_9=')'
+		{
+			newLeafNode(otherlv_9, grammarAccess.getPersistenceVerificationAccess().getRightParenthesisKeyword_9());
+		}
+		otherlv_10='shouldBe'
+		{
+			newLeafNode(otherlv_10, grammarAccess.getPersistenceVerificationAccess().getShouldBeKeyword_10());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getExpectedJsonObjectParserRuleCall_11_0());
+				}
+				lv_expected_11_0=ruleJsonObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getPersistenceVerificationRule());
+					}
+					set(
+						$current,
+						"expected",
+						lv_expected_11_0,
+						"de.acegen.AceGen.JsonObject");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 	)
 ;
 
@@ -3166,6 +3354,62 @@ ruleJsonNull returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
 		$current.merge(kw);
 		newLeafNode(kw, grammarAccess.getJsonNullAccess().getNullKeyword());
 	}
+;
+
+// Entry rule entryRulePrimitiveValue
+entryRulePrimitiveValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPrimitiveValueRule()); }
+	iv_rulePrimitiveValue=rulePrimitiveValue
+	{ $current=$iv_rulePrimitiveValue.current; }
+	EOF;
+
+// Rule PrimitiveValue
+rulePrimitiveValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_string_0_0=RULE_STRING
+				{
+					newLeafNode(lv_string_0_0, grammarAccess.getPrimitiveValueAccess().getStringSTRINGTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"string",
+						lv_string_0_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_long_1_0=RULE_INT
+				{
+					newLeafNode(lv_long_1_0, grammarAccess.getPrimitiveValueAccess().getLongINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"long",
+						lv_long_1_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+	)
 ;
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

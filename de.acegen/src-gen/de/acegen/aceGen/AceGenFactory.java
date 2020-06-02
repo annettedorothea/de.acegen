@@ -213,6 +213,15 @@ public interface AceGenFactory extends EFactory
   ThenBlock createThenBlock();
 
   /**
+   * Returns a new object of class '<em>Persistence Verification</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Persistence Verification</em>'.
+   * @generated
+   */
+  PersistenceVerification createPersistenceVerification();
+
+  /**
    * Returns a new object of class '<em>Data Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -283,6 +292,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   JsonArray createJsonArray();
+
+  /**
+   * Returns a new object of class '<em>Primitive Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primitive Value</em>'.
+   * @generated
+   */
+  PrimitiveValue createPrimitiveValue();
 
   /**
    * Returns the package supported by this factory.

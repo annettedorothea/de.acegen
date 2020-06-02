@@ -24,6 +24,7 @@ import de.acegen.aceGen.JsonDateTime
 import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.JsonValue
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.PrimitiveValue
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
@@ -227,6 +228,17 @@ class AttributeExtension {
 		JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
 
 	def dispatch CharSequence valueFrom(JsonDateTime it) '''\"«dateTimeParse(dateTime, pattern)»\"'''
+	
+	def primitiveValueFrom(PrimitiveValue it) {
+		if (string !== null) {
+			var returnString = string;
+			if (string.contains("${testId}")) {
+				returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+			}
+			return '''"«returnString»"''';
+		}
+		return getLong()
+	}
 
 }
 /******* S.D.G. *******/

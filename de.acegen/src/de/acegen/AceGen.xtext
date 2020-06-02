@@ -150,7 +150,13 @@ WhenBlock:
 
 ThenBlock:
 	statusCode = INT 
-	('response' response = DataDefinition)?
+	('response' 'shouldBe' response = DataDefinition)?
+	('persistence' persistenceVerifications += PersistenceVerification*)?
+	('verifications' verifications += ID*)?
+;
+
+PersistenceVerification:
+	name = ID 'select' 'from' model = [Model | QualifiedName] 'by' '(' attribute = [Attribute|QualifiedName] ':' value = PrimitiveValue ')' 'shouldBe' expected = JsonObject
 ;
 
 DataDefinition: 
@@ -216,6 +222,10 @@ JsonBoolean:
 
 JsonNull:
   'null';
+  
+PrimitiveValue:
+	string = STRING | long = INT
+;
 
 /******* S.D.G. *******/
 	

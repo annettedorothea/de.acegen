@@ -5,16 +5,25 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.ThenBlock;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +35,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ThenBlockImpl#getStatusCode <em>Status Code</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ThenBlockImpl#getResponse <em>Response</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ThenBlockImpl#getPersistenceVerifications <em>Persistence Verifications</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ThenBlockImpl#getVerifications <em>Verifications</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,6 +72,26 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
    * @ordered
    */
   protected DataDefinition response;
+
+  /**
+   * The cached value of the '{@link #getPersistenceVerifications() <em>Persistence Verifications</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPersistenceVerifications()
+   * @generated
+   * @ordered
+   */
+  protected EList<PersistenceVerification> persistenceVerifications;
+
+  /**
+   * The cached value of the '{@link #getVerifications() <em>Verifications</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVerifications()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> verifications;
 
   /**
    * <!-- begin-user-doc -->
@@ -164,12 +195,44 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
    * @generated
    */
   @Override
+  public EList<PersistenceVerification> getPersistenceVerifications()
+  {
+    if (persistenceVerifications == null)
+    {
+      persistenceVerifications = new EObjectContainmentEList<PersistenceVerification>(PersistenceVerification.class, this, AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS);
+    }
+    return persistenceVerifications;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<String> getVerifications()
+  {
+    if (verifications == null)
+    {
+      verifications = new EDataTypeEList<String>(String.class, this, AceGenPackage.THEN_BLOCK__VERIFICATIONS);
+    }
+    return verifications;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case AceGenPackage.THEN_BLOCK__RESPONSE:
         return basicSetResponse(null, msgs);
+      case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
+        return ((InternalEList<?>)getPersistenceVerifications()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -188,6 +251,10 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
         return getStatusCode();
       case AceGenPackage.THEN_BLOCK__RESPONSE:
         return getResponse();
+      case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
+        return getPersistenceVerifications();
+      case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
+        return getVerifications();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -197,6 +264,7 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -207,6 +275,14 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
         return;
       case AceGenPackage.THEN_BLOCK__RESPONSE:
         setResponse((DataDefinition)newValue);
+        return;
+      case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
+        getPersistenceVerifications().clear();
+        getPersistenceVerifications().addAll((Collection<? extends PersistenceVerification>)newValue);
+        return;
+      case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
+        getVerifications().clear();
+        getVerifications().addAll((Collection<? extends String>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -228,6 +304,12 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
       case AceGenPackage.THEN_BLOCK__RESPONSE:
         setResponse((DataDefinition)null);
         return;
+      case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
+        getPersistenceVerifications().clear();
+        return;
+      case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
+        getVerifications().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -246,6 +328,10 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
         return statusCode != STATUS_CODE_EDEFAULT;
       case AceGenPackage.THEN_BLOCK__RESPONSE:
         return response != null;
+      case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
+        return persistenceVerifications != null && !persistenceVerifications.isEmpty();
+      case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
+        return verifications != null && !verifications.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -263,6 +349,8 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (statusCode: ");
     result.append(statusCode);
+    result.append(", verifications: ");
+    result.append(verifications);
     result.append(')');
     return result.toString();
   }

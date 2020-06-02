@@ -28,6 +28,7 @@ import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
@@ -112,42 +113,63 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       };
       return new FilteringScope(scope_2, _function_2);
     }
+    if (((context instanceof PersistenceVerification) && 
+      Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE))) {
+      final PersistenceVerification persistenceVerification = ((PersistenceVerification) context);
+      final Model model = persistenceVerification.getModel();
+      final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model, attrs_3);
+      return Scopes.scopeFor(attrs_3);
+    }
     if ((((context instanceof JsonObject) || (context instanceof JsonArray)) || (context instanceof JsonMember))) {
       EObject parent = context.eContainer();
       boolean isThen = false;
       boolean isWhen = false;
+      boolean isVerification = false;
+      PersistenceVerification persistenceVerification_1 = null;
       while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof JsonMember))))) {
         {
-          parent = parent.eContainer();
           if ((parent instanceof ThenBlock)) {
             isThen = true;
           }
           if ((parent instanceof WhenBlock)) {
             isWhen = true;
           }
+          if ((parent instanceof PersistenceVerification)) {
+            isVerification = true;
+            persistenceVerification_1 = ((PersistenceVerification) parent);
+          }
+          parent = parent.eContainer();
         }
       }
       if ((parent instanceof Scenario)) {
         final Scenario scenario = ((Scenario) parent);
-        if (isWhen) {
-          ArrayList<Attribute> attr = new ArrayList<Attribute>();
-          EList<AttributeParamRef> _payload = scenario.getWhenBlock().getAction().getPayload();
-          for (final AttributeParamRef attributeRef : _payload) {
-            attr.add(attributeRef.getAttribute());
-          }
-          EList<AttributeParamRef> _queryParams = scenario.getWhenBlock().getAction().getQueryParams();
-          for (final AttributeParamRef attributeRef_1 : _queryParams) {
-            attr.add(attributeRef_1.getAttribute());
-          }
-          EList<AttributeParamRef> _pathParams = scenario.getWhenBlock().getAction().getPathParams();
-          for (final AttributeParamRef attributeRef_2 : _pathParams) {
-            attr.add(attributeRef_2.getAttribute());
-          }
-          attr.addAll(this._modelExtension.allNotReplayableAttributes(scenario.getWhenBlock().getAction().getModel()));
-          return Scopes.scopeFor(attr);
+        if (isVerification) {
+          final Model model_1 = persistenceVerification_1.getModel();
+          final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
+          this._modelExtension.allAttributesRec(model_1, attrs_4);
+          return Scopes.scopeFor(attrs_4);
         } else {
-          if (isThen) {
-            return Scopes.scopeFor(scenario.getWhenBlock().getAction().getResponse());
+          if (isWhen) {
+            ArrayList<Attribute> attr = new ArrayList<Attribute>();
+            EList<AttributeParamRef> _payload = scenario.getWhenBlock().getAction().getPayload();
+            for (final AttributeParamRef attributeRef : _payload) {
+              attr.add(attributeRef.getAttribute());
+            }
+            EList<AttributeParamRef> _queryParams = scenario.getWhenBlock().getAction().getQueryParams();
+            for (final AttributeParamRef attributeRef_1 : _queryParams) {
+              attr.add(attributeRef_1.getAttribute());
+            }
+            EList<AttributeParamRef> _pathParams = scenario.getWhenBlock().getAction().getPathParams();
+            for (final AttributeParamRef attributeRef_2 : _pathParams) {
+              attr.add(attributeRef_2.getAttribute());
+            }
+            attr.addAll(this._modelExtension.allNotReplayableAttributes(scenario.getWhenBlock().getAction().getModel()));
+            return Scopes.scopeFor(attr);
+          } else {
+            if (isThen) {
+              return Scopes.scopeFor(scenario.getWhenBlock().getAction().getResponse());
+            }
           }
         }
       }
@@ -157,8 +179,8 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         boolean _tripleNotEquals = (_model != null);
         if (_tripleNotEquals) {
           Model _model_1 = jsonMember.getAttribute().getModel();
-          final Model model = ((Model) _model_1);
-          return this.getScopeFor(model);
+          final Model model_2 = ((Model) _model_1);
+          return this.getScopeFor(model_2);
         }
       }
     }
