@@ -361,7 +361,10 @@ class AceTemplate {
 				if (ACEController.execution === ACEController.UI && Utils.isDevelopment() && Utils.getTimelineSize() > 0) {
 				    ACEController.timeline.push(AppUtils.deepCopy(item));
 				    if (ACEController.timeline.length > Utils.getTimelineSize()) {
-				        ACEController.timeline.shift();
+		                ACEController.timeline.shift();
+				        while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
+		                    ACEController.timeline.shift();
+		                }
 				    }
 				} else if (ACEController.execution !== ACEController.UI) {
 				    ACEController.actualTimeline.push(AppUtils.deepCopy(item));
@@ -552,7 +555,7 @@ class AceTemplate {
 		}
 		
 		export function saveBug(description, creator) {
-		    Utils.saveBug(description, creator).then((id) => {
+		    return Utils.saveBug(description, creator).then((id) => {
 		        console.log(`saved bug with id ${id}`);
 		    });
 		}
@@ -661,14 +664,20 @@ class AceTemplate {
 		    static getTimelineSize() {
 		        return Utils.settings ? Utils.settings.timelineSize : 0;
 		    }
-			
+
 		    static saveBug(description, creator) {
 		        return Utils.getServerInfo().then((serverInfo) => {
 		            const browser = Utils.getBrowserInfo();
 		            const uuid = AppUtils.createUUID();
+		            const filteredTimeline = ACEController.timeline.filter((item, index) => {
+		                if (index === 0) {
+		                    return true;
+		                }
+		                return (!item.appState);
+		            });
 		            const data = {
 		                description,
-		                timeline: JSON.stringify(ACEController.timeline),
+		                timeline: JSON.stringify(filteredTimeline),
 		                creator,
 		                clientVersion: Utils.getClientVersion(),
 		                device: browser.name + " " + browser.version,
