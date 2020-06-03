@@ -7,6 +7,7 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.Verification;
 
 import java.util.Collection;
 
@@ -21,7 +22,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -84,14 +84,14 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
   protected EList<PersistenceVerification> persistenceVerifications;
 
   /**
-   * The cached value of the '{@link #getVerifications() <em>Verifications</em>}' attribute list.
+   * The cached value of the '{@link #getVerifications() <em>Verifications</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getVerifications()
    * @generated
    * @ordered
    */
-  protected EList<String> verifications;
+  protected EList<Verification> verifications;
 
   /**
    * <!-- begin-user-doc -->
@@ -210,11 +210,11 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
    * @generated
    */
   @Override
-  public EList<String> getVerifications()
+  public EList<Verification> getVerifications()
   {
     if (verifications == null)
     {
-      verifications = new EDataTypeEList<String>(String.class, this, AceGenPackage.THEN_BLOCK__VERIFICATIONS);
+      verifications = new EObjectContainmentEList<Verification>(Verification.class, this, AceGenPackage.THEN_BLOCK__VERIFICATIONS);
     }
     return verifications;
   }
@@ -233,6 +233,8 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
         return basicSetResponse(null, msgs);
       case AceGenPackage.THEN_BLOCK__PERSISTENCE_VERIFICATIONS:
         return ((InternalEList<?>)getPersistenceVerifications()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
+        return ((InternalEList<?>)getVerifications()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -282,7 +284,7 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
         return;
       case AceGenPackage.THEN_BLOCK__VERIFICATIONS:
         getVerifications().clear();
-        getVerifications().addAll((Collection<? extends String>)newValue);
+        getVerifications().addAll((Collection<? extends Verification>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -349,8 +351,6 @@ public class ThenBlockImpl extends MinimalEObjectImpl.Container implements ThenB
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (statusCode: ");
     result.append(statusCode);
-    result.append(", verifications: ");
-    result.append(verifications);
     result.append(')');
     return result.toString();
   }

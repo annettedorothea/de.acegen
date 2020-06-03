@@ -152,11 +152,19 @@ ThenBlock:
 	statusCode = INT 
 	('response' 'shouldBe' response = DataDefinition)?
 	('persistence' persistenceVerifications += PersistenceVerification*)?
-	('verifications' verifications += ID*)?
+	('verifications' verifications += Verification*)?
 ;
 
 PersistenceVerification:
-	name = ID 'select' 'from' model = [Model | QualifiedName] 'by' '(' attribute = [Attribute|QualifiedName] ':' value = PrimitiveValue ')' 'shouldBe' expected = JsonObject
+	name = ID model = [Model | QualifiedName] 'selectBy' '(' attribute = [Attribute|QualifiedName] ':' value = PrimitiveValue ')' 'shouldBe' expected = Expectation
+;
+
+Verification:
+	name = ID
+;
+
+Expectation:
+	object = JsonObject | isNull ?= 'null' | isNotNull ?= 'notNull'	
 ;
 
 DataDefinition: 

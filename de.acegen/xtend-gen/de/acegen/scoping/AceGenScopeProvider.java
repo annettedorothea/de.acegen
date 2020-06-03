@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
@@ -119,7 +120,31 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final Model model = persistenceVerification.getModel();
       final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(model, attrs_3);
-      return Scopes.scopeFor(attrs_3);
+      final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
+      for (final Attribute attribute : attrs_3) {
+        boolean _isUnique = attribute.isUnique();
+        if (_isUnique) {
+          filtered.add(attribute);
+        }
+      }
+      return Scopes.scopeFor(filtered);
+    }
+    if (((context instanceof PersistenceVerification) && 
+      Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL))) {
+      final IScope scope_3 = super.getScope(context, reference);
+      final ArrayList<Model> models = new ArrayList<Model>();
+      Iterable<IEObjectDescription> _allElements = scope_3.getAllElements();
+      for (final IEObjectDescription element : _allElements) {
+        {
+          EObject _resolve = EcoreUtil2.resolve(element.getEObjectOrProxy(), context);
+          final Model model_1 = ((Model) _resolve);
+          boolean _isPersistent = model_1.isPersistent();
+          if (_isPersistent) {
+            models.add(model_1);
+          }
+        }
+      }
+      return Scopes.scopeFor(models);
     }
     if ((((context instanceof JsonObject) || (context instanceof JsonArray)) || (context instanceof JsonMember))) {
       EObject parent = context.eContainer();

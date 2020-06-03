@@ -120,12 +120,12 @@ public interface PersistenceVerification extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expected</em>' containment reference.
-   * @see #setExpected(JsonObject)
+   * @see #setExpected(Expectation)
    * @see de.acegen.aceGen.AceGenPackage#getPersistenceVerification_Expected()
    * @model containment="true"
    * @generated
    */
-  JsonObject getExpected();
+  Expectation getExpected();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.PersistenceVerification#getExpected <em>Expected</em>}' containment reference.
@@ -135,6 +135,6 @@ public interface PersistenceVerification extends EObject
    * @see #getExpected()
    * @generated
    */
-  void setExpected(JsonObject value);
+  void setExpected(Expectation value);
 
 } // PersistenceVerification

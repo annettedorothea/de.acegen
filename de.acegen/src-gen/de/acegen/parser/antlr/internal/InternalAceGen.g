@@ -2264,19 +2264,20 @@ ruleThenBlock returns [EObject current=null]
 			}
 			(
 				(
-					lv_verifications_7_0=RULE_ID
 					{
-						newLeafNode(lv_verifications_7_0, grammarAccess.getThenBlockAccess().getVerificationsIDTerminalRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getThenBlockAccess().getVerificationsVerificationParserRuleCall_3_1_0());
 					}
+					lv_verifications_7_0=ruleVerification
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getThenBlockRule());
+							$current = createModelElementForParent(grammarAccess.getThenBlockRule());
 						}
-						addWithLastConsumed(
+						add(
 							$current,
 							"verifications",
 							lv_verifications_7_0,
-							"org.eclipse.xtext.common.Terminals.ID");
+							"de.acegen.AceGen.Verification");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
@@ -2318,13 +2319,29 @@ rulePersistenceVerification returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_1='select'
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPersistenceVerificationRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getModelModelCrossReference_1_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_2='selectBy'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getPersistenceVerificationAccess().getSelectKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getPersistenceVerificationAccess().getSelectByKeyword_2());
 		}
-		otherlv_2='from'
+		otherlv_3='('
 		{
-			newLeafNode(otherlv_2, grammarAccess.getPersistenceVerificationAccess().getFromKeyword_2());
+			newLeafNode(otherlv_3, grammarAccess.getPersistenceVerificationAccess().getLeftParenthesisKeyword_3());
 		}
 		(
 			(
@@ -2334,7 +2351,7 @@ rulePersistenceVerification returns [EObject current=null]
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getModelModelCrossReference_3_0());
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getAttributeAttributeCrossReference_4_0());
 				}
 				ruleQualifiedName
 				{
@@ -2342,40 +2359,16 @@ rulePersistenceVerification returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_4='by'
+		otherlv_5=':'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getPersistenceVerificationAccess().getByKeyword_4());
-		}
-		otherlv_5='('
-		{
-			newLeafNode(otherlv_5, grammarAccess.getPersistenceVerificationAccess().getLeftParenthesisKeyword_5());
+			newLeafNode(otherlv_5, grammarAccess.getPersistenceVerificationAccess().getColonKeyword_5());
 		}
 		(
 			(
 				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPersistenceVerificationRule());
-					}
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getValuePrimitiveValueParserRuleCall_6_0());
 				}
-				{
-					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getAttributeAttributeCrossReference_6_0());
-				}
-				ruleQualifiedName
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_7=':'
-		{
-			newLeafNode(otherlv_7, grammarAccess.getPersistenceVerificationAccess().getColonKeyword_7());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getValuePrimitiveValueParserRuleCall_8_0());
-				}
-				lv_value_8_0=rulePrimitiveValue
+				lv_value_6_0=rulePrimitiveValue
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getPersistenceVerificationRule());
@@ -2383,26 +2376,26 @@ rulePersistenceVerification returns [EObject current=null]
 					set(
 						$current,
 						"value",
-						lv_value_8_0,
+						lv_value_6_0,
 						"de.acegen.AceGen.PrimitiveValue");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_9=')'
+		otherlv_7=')'
 		{
-			newLeafNode(otherlv_9, grammarAccess.getPersistenceVerificationAccess().getRightParenthesisKeyword_9());
+			newLeafNode(otherlv_7, grammarAccess.getPersistenceVerificationAccess().getRightParenthesisKeyword_7());
 		}
-		otherlv_10='shouldBe'
+		otherlv_8='shouldBe'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getPersistenceVerificationAccess().getShouldBeKeyword_10());
+			newLeafNode(otherlv_8, grammarAccess.getPersistenceVerificationAccess().getShouldBeKeyword_8());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getExpectedJsonObjectParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getExpectedExpectationParserRuleCall_9_0());
 				}
-				lv_expected_11_0=ruleJsonObject
+				lv_expected_9_0=ruleExpectation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getPersistenceVerificationRule());
@@ -2410,9 +2403,112 @@ rulePersistenceVerification returns [EObject current=null]
 					set(
 						$current,
 						"expected",
-						lv_expected_11_0,
+						lv_expected_9_0,
+						"de.acegen.AceGen.Expectation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleVerification
+entryRuleVerification returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getVerificationRule()); }
+	iv_ruleVerification=ruleVerification
+	{ $current=$iv_ruleVerification.current; }
+	EOF;
+
+// Rule Verification
+ruleVerification returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			lv_name_0_0=RULE_ID
+			{
+				newLeafNode(lv_name_0_0, grammarAccess.getVerificationAccess().getNameIDTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getVerificationRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"name",
+					lv_name_0_0,
+					"org.eclipse.xtext.common.Terminals.ID");
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleExpectation
+entryRuleExpectation returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getExpectationRule()); }
+	iv_ruleExpectation=ruleExpectation
+	{ $current=$iv_ruleExpectation.current; }
+	EOF;
+
+// Rule Expectation
+ruleExpectation returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getExpectationAccess().getObjectJsonObjectParserRuleCall_0_0());
+				}
+				lv_object_0_0=ruleJsonObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getExpectationRule());
+					}
+					set(
+						$current,
+						"object",
+						lv_object_0_0,
 						"de.acegen.AceGen.JsonObject");
 					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_isNull_1_0='null'
+				{
+					newLeafNode(lv_isNull_1_0, grammarAccess.getExpectationAccess().getIsNullNullKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getExpectationRule());
+					}
+					setWithLastConsumed($current, "isNull", true, "null");
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_isNotNull_2_0='notNull'
+				{
+					newLeafNode(lv_isNotNull_2_0, grammarAccess.getExpectationAccess().getIsNotNullNotNullKeyword_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getExpectationRule());
+					}
+					setWithLastConsumed($current, "isNotNull", true, "notNull");
 				}
 			)
 		)

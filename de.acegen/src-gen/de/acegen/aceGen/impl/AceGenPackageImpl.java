@@ -10,6 +10,7 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.Expectation;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
@@ -35,6 +36,7 @@ import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.Project;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -205,6 +207,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass persistenceVerificationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass verificationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expectationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1328,9 +1344,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getThenBlock_Verifications()
+  public EReference getThenBlock_Verifications()
   {
-    return (EAttribute)thenBlockEClass.getEStructuralFeatures().get(3);
+    return (EReference)thenBlockEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1397,6 +1413,72 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getPersistenceVerification_Expected()
   {
     return (EReference)persistenceVerificationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getVerification()
+  {
+    return verificationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getVerification_Name()
+  {
+    return (EAttribute)verificationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getExpectation()
+  {
+    return expectationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getExpectation_Object()
+  {
+    return (EReference)expectationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getExpectation_IsNull()
+  {
+    return (EAttribute)expectationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getExpectation_IsNotNull()
+  {
+    return (EAttribute)expectationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1936,7 +2018,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(thenBlockEClass, THEN_BLOCK__STATUS_CODE);
     createEReference(thenBlockEClass, THEN_BLOCK__RESPONSE);
     createEReference(thenBlockEClass, THEN_BLOCK__PERSISTENCE_VERIFICATIONS);
-    createEAttribute(thenBlockEClass, THEN_BLOCK__VERIFICATIONS);
+    createEReference(thenBlockEClass, THEN_BLOCK__VERIFICATIONS);
 
     persistenceVerificationEClass = createEClass(PERSISTENCE_VERIFICATION);
     createEAttribute(persistenceVerificationEClass, PERSISTENCE_VERIFICATION__NAME);
@@ -1944,6 +2026,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(persistenceVerificationEClass, PERSISTENCE_VERIFICATION__ATTRIBUTE);
     createEReference(persistenceVerificationEClass, PERSISTENCE_VERIFICATION__VALUE);
     createEReference(persistenceVerificationEClass, PERSISTENCE_VERIFICATION__EXPECTED);
+
+    verificationEClass = createEClass(VERIFICATION);
+    createEAttribute(verificationEClass, VERIFICATION__NAME);
+
+    expectationEClass = createEClass(EXPECTATION);
+    createEReference(expectationEClass, EXPECTATION__OBJECT);
+    createEAttribute(expectationEClass, EXPECTATION__IS_NULL);
+    createEAttribute(expectationEClass, EXPECTATION__IS_NOT_NULL);
 
     dataDefinitionEClass = createEClass(DATA_DEFINITION);
     createEAttribute(dataDefinitionEClass, DATA_DEFINITION__UUID);
@@ -2137,14 +2227,22 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getThenBlock_StatusCode(), ecorePackage.getEInt(), "statusCode", null, 0, 1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getThenBlock_Response(), this.getDataDefinition(), null, "response", null, 0, 1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getThenBlock_PersistenceVerifications(), this.getPersistenceVerification(), null, "persistenceVerifications", null, 0, -1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getThenBlock_Verifications(), ecorePackage.getEString(), "verifications", null, 0, -1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getThenBlock_Verifications(), this.getVerification(), null, "verifications", null, 0, -1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(persistenceVerificationEClass, PersistenceVerification.class, "PersistenceVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPersistenceVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPersistenceVerification_Model(), this.getModel(), null, "model", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPersistenceVerification_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPersistenceVerification_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPersistenceVerification_Expected(), this.getJsonObject(), null, "expected", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPersistenceVerification_Expected(), this.getExpectation(), null, "expected", null, 0, 1, PersistenceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(verificationEClass, Verification.class, "Verification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expectationEClass, Expectation.class, "Expectation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpectation_Object(), this.getJsonObject(), null, "object", null, 0, 1, Expectation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getExpectation_IsNull(), ecorePackage.getEBoolean(), "isNull", null, 0, 1, Expectation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getExpectation_IsNotNull(), ecorePackage.getEBoolean(), "isNotNull", null, 0, 1, Expectation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dataDefinitionEClass, DataDefinition.class, "DataDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDataDefinition_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

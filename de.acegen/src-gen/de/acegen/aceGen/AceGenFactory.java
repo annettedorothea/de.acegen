@@ -222,6 +222,24 @@ public interface AceGenFactory extends EFactory
   PersistenceVerification createPersistenceVerification();
 
   /**
+   * Returns a new object of class '<em>Verification</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Verification</em>'.
+   * @generated
+   */
+  Verification createVerification();
+
+  /**
+   * Returns a new object of class '<em>Expectation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expectation</em>'.
+   * @generated
+   */
+  Expectation createExpectation();
+
+  /**
    * Returns a new object of class '<em>Data Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -142,8 +142,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="persistenceVerifications"
         upperBound="-1" eType="#//PersistenceVerification" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verifications" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
+        eType="#//Verification" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PersistenceVerification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -151,8 +151,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PrimitiveValue"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expected" eType="#//JsonObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expected" eType="#//Expectation"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Verification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expectation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="#//JsonObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -85,15 +85,15 @@ public interface ThenBlock extends EObject
   EList<PersistenceVerification> getPersistenceVerifications();
 
   /**
-   * Returns the value of the '<em><b>Verifications</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Verifications</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Verification}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Verifications</em>' attribute list.
+   * @return the value of the '<em>Verifications</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getThenBlock_Verifications()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getVerifications();
+  EList<Verification> getVerifications();
 
 } // ThenBlock

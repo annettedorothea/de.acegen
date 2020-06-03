@@ -34,6 +34,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProjectAccess().getAlternatives_1(), "rule__Project__Alternatives_1");
 			builder.put(grammarAccess.getHttpClientStateFunctionTypeAccess().getAlternatives(), "rule__HttpClientStateFunctionType__Alternatives");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
+			builder.put(grammarAccess.getExpectationAccess().getAlternatives(), "rule__Expectation__Alternatives");
 			builder.put(grammarAccess.getAttributeAccess().getAlternatives_4(), "rule__Attribute__Alternatives_4");
 			builder.put(grammarAccess.getWriteFunctionTypeAccess().getAlternatives(), "rule__WriteFunctionType__Alternatives");
 			builder.put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
@@ -196,10 +197,14 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getThenBlockAccess().getPersistenceVerificationsAssignment_2_1(), "rule__ThenBlock__PersistenceVerificationsAssignment_2_1");
 			builder.put(grammarAccess.getThenBlockAccess().getVerificationsAssignment_3_1(), "rule__ThenBlock__VerificationsAssignment_3_1");
 			builder.put(grammarAccess.getPersistenceVerificationAccess().getNameAssignment_0(), "rule__PersistenceVerification__NameAssignment_0");
-			builder.put(grammarAccess.getPersistenceVerificationAccess().getModelAssignment_3(), "rule__PersistenceVerification__ModelAssignment_3");
-			builder.put(grammarAccess.getPersistenceVerificationAccess().getAttributeAssignment_6(), "rule__PersistenceVerification__AttributeAssignment_6");
-			builder.put(grammarAccess.getPersistenceVerificationAccess().getValueAssignment_8(), "rule__PersistenceVerification__ValueAssignment_8");
-			builder.put(grammarAccess.getPersistenceVerificationAccess().getExpectedAssignment_11(), "rule__PersistenceVerification__ExpectedAssignment_11");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getModelAssignment_1(), "rule__PersistenceVerification__ModelAssignment_1");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getAttributeAssignment_4(), "rule__PersistenceVerification__AttributeAssignment_4");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getValueAssignment_6(), "rule__PersistenceVerification__ValueAssignment_6");
+			builder.put(grammarAccess.getPersistenceVerificationAccess().getExpectedAssignment_9(), "rule__PersistenceVerification__ExpectedAssignment_9");
+			builder.put(grammarAccess.getVerificationAccess().getNameAssignment(), "rule__Verification__NameAssignment");
+			builder.put(grammarAccess.getExpectationAccess().getObjectAssignment_0(), "rule__Expectation__ObjectAssignment_0");
+			builder.put(grammarAccess.getExpectationAccess().getIsNullAssignment_1(), "rule__Expectation__IsNullAssignment_1");
+			builder.put(grammarAccess.getExpectationAccess().getIsNotNullAssignment_2(), "rule__Expectation__IsNotNullAssignment_2");
 			builder.put(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1(), "rule__DataDefinition__UuidAssignment_1_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getSystemtimeAssignment_2_1(), "rule__DataDefinition__SystemtimeAssignment_2_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getPatternAssignment_2_2(), "rule__DataDefinition__PatternAssignment_2_2");

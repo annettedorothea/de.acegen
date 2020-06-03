@@ -19,6 +19,7 @@ package de.acegen.scoping
 
 import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
@@ -27,6 +28,7 @@ import de.acegen.aceGen.JsonArray
 import de.acegen.aceGen.JsonMember
 import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
@@ -35,11 +37,10 @@ import java.util.ArrayList
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.AttributeParamRef
-import de.acegen.aceGen.PersistenceVerification
 
 /**
  * This class contains custom scoping description.
@@ -96,7 +97,25 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val model = persistenceVerification.model
 			val attrs = new ArrayList<Attribute>();
 			model.allAttributesRec(attrs);
-			return Scopes.scopeFor(attrs)
+			val filtered = new ArrayList<Attribute>();
+			for (attribute : attrs) {
+				if (attribute.unique) {
+					filtered.add(attribute)
+				}
+			}
+			return Scopes.scopeFor(filtered)
+		}
+		if (context instanceof PersistenceVerification &&
+			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL) {
+			val scope = super.getScope(context, reference);
+			val models = new ArrayList<Model>();
+			for (element: scope.allElements) {
+				val model = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Model
+				if (model.persistent) {
+					models.add(model)
+				}
+			}
+			return Scopes.scopeFor(models)
 		}
 		if (context instanceof JsonObject || context instanceof JsonArray || context instanceof JsonMember) {
 			var parent = context.eContainer

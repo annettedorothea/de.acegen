@@ -87,6 +87,8 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.WHEN_BLOCK: return createWhenBlock();
       case AceGenPackage.THEN_BLOCK: return createThenBlock();
       case AceGenPackage.PERSISTENCE_VERIFICATION: return createPersistenceVerification();
+      case AceGenPackage.VERIFICATION: return createVerification();
+      case AceGenPackage.EXPECTATION: return createExpectation();
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
@@ -363,6 +365,30 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     PersistenceVerificationImpl persistenceVerification = new PersistenceVerificationImpl();
     return persistenceVerification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Verification createVerification()
+  {
+    VerificationImpl verification = new VerificationImpl();
+    return verification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Expectation createExpectation()
+  {
+    ExpectationImpl expectation = new ExpectationImpl();
+    return expectation;
   }
 
   /**

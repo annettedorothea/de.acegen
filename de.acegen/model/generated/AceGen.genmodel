@@ -115,7 +115,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ThenBlock/statusCode"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ThenBlock/response"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ThenBlock/persistenceVerifications"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ThenBlock/verifications"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ThenBlock/verifications"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//PersistenceVerification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PersistenceVerification/name"/>
@@ -123,6 +123,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//PersistenceVerification/attribute"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//PersistenceVerification/value"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//PersistenceVerification/expected"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//Verification">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Verification/name"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//Expectation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Expectation/object"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Expectation/isNull"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Expectation/isNotNull"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//DataDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/uuid"/>

@@ -1249,7 +1249,7 @@ public interface AceGenPackage extends EPackage
   int THEN_BLOCK__PERSISTENCE_VERIFICATIONS = 2;
 
   /**
-   * The feature id for the '<em><b>Verifications</b></em>' attribute list.
+   * The feature id for the '<em><b>Verifications</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1331,6 +1331,80 @@ public interface AceGenPackage extends EPackage
   int PERSISTENCE_VERIFICATION_FEATURE_COUNT = 5;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.VerificationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
+   * @generated
+   */
+  int VERIFICATION = 22;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Verification</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERIFICATION_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ExpectationImpl <em>Expectation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ExpectationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExpectation()
+   * @generated
+   */
+  int EXPECTATION = 23;
+
+  /**
+   * The feature id for the '<em><b>Object</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPECTATION__OBJECT = 0;
+
+  /**
+   * The feature id for the '<em><b>Is Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPECTATION__IS_NULL = 1;
+
+  /**
+   * The feature id for the '<em><b>Is Not Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPECTATION__IS_NOT_NULL = 2;
+
+  /**
+   * The number of structural features of the '<em>Expectation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPECTATION_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1338,7 +1412,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 22;
+  int DATA_DEFINITION = 24;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -1393,7 +1467,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 23;
+  int AUTHORIZATION = 25;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -1430,7 +1504,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 24;
+  int ATTRIBUTE = 26;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1530,7 +1604,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 28;
+  int JSON_VALUE = 30;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1585,7 +1659,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 25;
+  int JSON_DATE_TIME = 27;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1658,7 +1732,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 26;
+  int JSON_OBJECT = 28;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1722,7 +1796,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 27;
+  int JSON_MEMBER = 29;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1759,7 +1833,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 29;
+  int JSON_ARRAY = 31;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1823,7 +1897,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 30;
+  int PRIMITIVE_VALUE = 32;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2823,15 +2897,15 @@ public interface AceGenPackage extends EPackage
   EReference getThenBlock_PersistenceVerifications();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.acegen.aceGen.ThenBlock#getVerifications <em>Verifications</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ThenBlock#getVerifications <em>Verifications</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Verifications</em>'.
+   * @return the meta object for the containment reference list '<em>Verifications</em>'.
    * @see de.acegen.aceGen.ThenBlock#getVerifications()
    * @see #getThenBlock()
    * @generated
    */
-  EAttribute getThenBlock_Verifications();
+  EReference getThenBlock_Verifications();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.PersistenceVerification <em>Persistence Verification</em>}'.
@@ -2897,6 +2971,70 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getPersistenceVerification_Expected();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Verification</em>'.
+   * @see de.acegen.aceGen.Verification
+   * @generated
+   */
+  EClass getVerification();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Verification#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.Verification#getName()
+   * @see #getVerification()
+   * @generated
+   */
+  EAttribute getVerification_Name();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Expectation <em>Expectation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expectation</em>'.
+   * @see de.acegen.aceGen.Expectation
+   * @generated
+   */
+  EClass getExpectation();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Expectation#getObject <em>Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Object</em>'.
+   * @see de.acegen.aceGen.Expectation#getObject()
+   * @see #getExpectation()
+   * @generated
+   */
+  EReference getExpectation_Object();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Expectation#isIsNull <em>Is Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Null</em>'.
+   * @see de.acegen.aceGen.Expectation#isIsNull()
+   * @see #getExpectation()
+   * @generated
+   */
+  EAttribute getExpectation_IsNull();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Expectation#isIsNotNull <em>Is Not Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Not Null</em>'.
+   * @see de.acegen.aceGen.Expectation#isIsNotNull()
+   * @see #getExpectation()
+   * @generated
+   */
+  EAttribute getExpectation_IsNotNull();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
@@ -4071,12 +4209,12 @@ public interface AceGenPackage extends EPackage
     EReference THEN_BLOCK__PERSISTENCE_VERIFICATIONS = eINSTANCE.getThenBlock_PersistenceVerifications();
 
     /**
-     * The meta object literal for the '<em><b>Verifications</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Verifications</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute THEN_BLOCK__VERIFICATIONS = eINSTANCE.getThenBlock_Verifications();
+    EReference THEN_BLOCK__VERIFICATIONS = eINSTANCE.getThenBlock_Verifications();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.PersistenceVerificationImpl <em>Persistence Verification</em>}' class.
@@ -4127,6 +4265,58 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference PERSISTENCE_VERIFICATION__EXPECTED = eINSTANCE.getPersistenceVerification_Expected();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.VerificationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
+     * @generated
+     */
+    EClass VERIFICATION = eINSTANCE.getVerification();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VERIFICATION__NAME = eINSTANCE.getVerification_Name();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ExpectationImpl <em>Expectation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ExpectationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExpectation()
+     * @generated
+     */
+    EClass EXPECTATION = eINSTANCE.getExpectation();
+
+    /**
+     * The meta object literal for the '<em><b>Object</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXPECTATION__OBJECT = eINSTANCE.getExpectation_Object();
+
+    /**
+     * The meta object literal for the '<em><b>Is Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXPECTATION__IS_NULL = eINSTANCE.getExpectation_IsNull();
+
+    /**
+     * The meta object literal for the '<em><b>Is Not Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXPECTATION__IS_NOT_NULL = eINSTANCE.getExpectation_IsNotNull();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.

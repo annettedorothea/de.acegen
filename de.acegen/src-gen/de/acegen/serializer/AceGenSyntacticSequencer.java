@@ -480,9 +480,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'persistence'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     response=DataDefinition (ambiguity) 'verifications' verifications+=ID
+	 *     response=DataDefinition (ambiguity) 'verifications' verifications+=Verification
 	 *     response=DataDefinition (ambiguity) 'verifications'? (rule end)
-	 *     statusCode=INT (ambiguity) 'verifications' verifications+=ID
+	 *     statusCode=INT (ambiguity) 'verifications' verifications+=Verification
 	 *     statusCode=INT (ambiguity) 'verifications'? (rule end)
 	 */
 	protected void emit_ThenBlock_PersistenceKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

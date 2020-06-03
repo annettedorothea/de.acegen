@@ -229,6 +229,20 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.VERIFICATION:
+      {
+        Verification verification = (Verification)theEObject;
+        T result = caseVerification(verification);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.EXPECTATION:
+      {
+        Expectation expectation = (Expectation)theEObject;
+        T result = caseExpectation(expectation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.DATA_DEFINITION:
       {
         DataDefinition dataDefinition = (DataDefinition)theEObject;
@@ -647,6 +661,38 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePersistenceVerification(PersistenceVerification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Verification</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Verification</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVerification(Verification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expectation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expectation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpectation(Expectation object)
   {
     return null;
   }

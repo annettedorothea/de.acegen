@@ -5,7 +5,7 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.Expectation;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PrimitiveValue;
@@ -96,7 +96,7 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * @generated
    * @ordered
    */
-  protected JsonObject expected;
+  protected Expectation expected;
 
   /**
    * <!-- begin-user-doc -->
@@ -290,7 +290,7 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public JsonObject getExpected()
+  public Expectation getExpected()
   {
     return expected;
   }
@@ -300,9 +300,9 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpected(JsonObject newExpected, NotificationChain msgs)
+  public NotificationChain basicSetExpected(Expectation newExpected, NotificationChain msgs)
   {
-    JsonObject oldExpected = expected;
+    Expectation oldExpected = expected;
     expected = newExpected;
     if (eNotificationRequired())
     {
@@ -318,7 +318,7 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public void setExpected(JsonObject newExpected)
+  public void setExpected(Expectation newExpected)
   {
     if (newExpected != expected)
     {
@@ -401,7 +401,7 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
         setValue((PrimitiveValue)newValue);
         return;
       case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        setExpected((JsonObject)newValue);
+        setExpected((Expectation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -430,7 +430,7 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
         setValue((PrimitiveValue)null);
         return;
       case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        setExpected((JsonObject)null);
+        setExpected((Expectation)null);
         return;
     }
     super.eUnset(featureID);

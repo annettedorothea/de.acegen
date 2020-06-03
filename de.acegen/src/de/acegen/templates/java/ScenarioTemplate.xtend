@@ -47,9 +47,10 @@ class ScenarioTemplate {
 		
 		package «java.getName».scenarios;
 		
-		import javax.ws.rs.core.Response;
+		«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»
+			import javax.ws.rs.core.Response;
+		«ENDIF»
 		
-		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
 		
 			@Override
@@ -206,7 +207,7 @@ class ScenarioTemplate {
 				
 					verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 					«FOR verification : thenBlock.verifications»
-						«verification»(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+						«verification.name»(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 					«ENDFOR»
 				} else {
 					LOG.info("WHEN: prerequisite for «name» not met");
@@ -216,16 +217,23 @@ class ScenarioTemplate {
 			protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
 			
 			«FOR verification : thenBlock.verifications»
-				protected abstract void «verification»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+				protected abstract void «verification.name»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
 			«ENDFOR»
 			
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»
 				private void «persistenceVerification.name»() throws Exception {
 					«persistenceVerification.model.interfaceWithPackage» actual = daoProvider.get«persistenceVerification.model.modelDao»().selectBy«persistenceVerification.attribute.name.toFirstUpper»(handle, «persistenceVerification.value.primitiveValueFrom»);
 					
-					«persistenceVerification.model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(persistenceVerification.expected, persistenceVerification.model)»;
+					«IF persistenceVerification.expected.object !== null»
+						«persistenceVerification.model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(persistenceVerification.expected.object, persistenceVerification.model)»;
+						assertThat(actual, expected);
+					«ELSEIF persistenceVerification.expected.isNull»
+						assertIsNull(actual);
+					«ELSEIF persistenceVerification.expected.isNotNull»
+						assertIsNotNull(actual);
+					«ENDIF»
 					
-					assertThat(actual, expected);
+					
 
 					LOG.info("THEN: «persistenceVerification.name» passed");
 				}
@@ -295,7 +303,7 @@ class ScenarioTemplate {
 	
 	private def objectMapperCallExpectedPersistenceData(JsonObject it, Model model) '''
 		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
-			"«FOR member : members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"«FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.modelClassNameWithPackage».class)'''
 	
 

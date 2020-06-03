@@ -186,6 +186,16 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createPersistenceVerificationAdapter();
       }
       @Override
+      public Adapter caseVerification(Verification object)
+      {
+        return createVerificationAdapter();
+      }
+      @Override
+      public Adapter caseExpectation(Expectation object)
+      {
+        return createExpectationAdapter();
+      }
+      @Override
       public Adapter caseDataDefinition(DataDefinition object)
       {
         return createDataDefinitionAdapter();
@@ -578,6 +588,36 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPersistenceVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Verification
+   * @generated
+   */
+  public Adapter createVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Expectation <em>Expectation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Expectation
+   * @generated
+   */
+  public Adapter createExpectationAdapter()
   {
     return null;
   }
