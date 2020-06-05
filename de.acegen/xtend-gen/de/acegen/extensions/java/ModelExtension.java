@@ -176,6 +176,18 @@ public class ModelExtension {
     return list;
   }
   
+  public List<Attribute> allPrimaryKeyAttributes(final Model it) {
+    ArrayList<Attribute> list = new ArrayList<Attribute>();
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attribute : _attributes) {
+      boolean _isPrimaryKey = attribute.isPrimaryKey();
+      if (_isPrimaryKey) {
+        list.add(attribute);
+      }
+    }
+    return list;
+  }
+  
   public List<Attribute> allNotReplayableAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     if ((it == null)) {

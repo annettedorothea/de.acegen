@@ -207,14 +207,7 @@ class AttributeExtension {
 
 	def dispatch CharSequence valueFrom(JsonValue it) {
 		if (string !== null) {
-			var returnString = string;
-			if (string.contains("${random}")) {
-				returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
-			}
-			if (string.contains("${testId}")) {
-				returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
-			}
-			return '''\"«returnString»\"''';
+			return '''\"«string.valueFromString»\"''';
 		} else if (boolean !== null) {
 			return boolean;
 		} else if (it.^null !== null) {
@@ -222,6 +215,17 @@ class AttributeExtension {
 		} else {
 			return '''«long»''';
 		}
+	}
+	
+	def CharSequence valueFromString(String it) {
+		var returnString = it;
+		if (it.contains("${random}")) {
+			returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
+		}
+		if (it.contains("${testId}")) {
+			returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+		}
+		return '''«returnString»''';
 	}
 
 	def dispatch CharSequence valueFrom(

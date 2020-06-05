@@ -390,6 +390,7 @@ class ModelTemplate {
 		import org.jdbi.v3.core.statement.Update;
 
 		import java.util.List;
+		import java.util.Map;
 		import java.util.Optional;
 		
 		@SuppressWarnings("all")
@@ -429,6 +430,34 @@ class ModelTemplate {
 				}
 			«ENDFOR»
 			
+			«IF allPrimaryKeyAttributes.length > 0»
+				public «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
+					Optional<«modelName»> optional = handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table» WHERE «FOR attribute : allPrimaryKeyAttributes SEPARATOR ' AND '»«attribute.name.toLowerCase» = :«attribute.name.toLowerCase»«ENDFOR»")
+						«FOR attribute : allPrimaryKeyAttributes»
+							.bind("«attribute.name.toLowerCase»", «attribute.name»)
+						«ENDFOR»
+						.map(new «modelMapper»())
+						.findFirst();
+					return optional.isPresent() ? optional.get() : null;
+				}
+			«ENDIF»
+			
+			public int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap) {
+				String sql = "SELECT count(*) FROM «table»";
+				if (filterMap != null) {
+					int i = 0;
+					for(String key : filterMap.keySet()) {
+						if (i == 0) {
+							sql += " WHERE " + key + " = '" + filterMap.get(key) + "'";
+						} else {
+							sql += " AND " + key + " = '" + filterMap.get(key) + "'";
+						}
+						i++;
+					}
+				}
+				return handle.getHandle().createQuery(sql).mapTo(Integer.class).first();
+			}
+
 			public List<«modelName»> selectAll(PersistenceHandle handle) {
 				return handle.getHandle().createQuery("SELECT «FOR attr : attributes SEPARATOR ', '»«attr.name.toLowerCase»«ENDFOR» FROM «table»")
 					.map(new «modelMapper»())

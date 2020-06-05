@@ -87,8 +87,13 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.WHEN_BLOCK: return createWhenBlock();
       case AceGenPackage.THEN_BLOCK: return createThenBlock();
       case AceGenPackage.PERSISTENCE_VERIFICATION: return createPersistenceVerification();
+      case AceGenPackage.PERSISTENCE_VERIFICATION_EXPRESSION: return createPersistenceVerificationExpression();
+      case AceGenPackage.SELECT_BY_PRIMARY_KEYS: return createSelectByPrimaryKeys();
+      case AceGenPackage.SELECT_BY_UNIQUE_ATTRIBUTE: return createSelectByUniqueAttribute();
+      case AceGenPackage.COUNT: return createCount();
+      case AceGenPackage.ATTRIBUTE_AND_VALUE: return createAttributeAndValue();
       case AceGenPackage.VERIFICATION: return createVerification();
-      case AceGenPackage.EXPECTATION: return createExpectation();
+      case AceGenPackage.SELECT_BY_EXPECTATION: return createSelectByExpectation();
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
@@ -373,6 +378,66 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public PersistenceVerificationExpression createPersistenceVerificationExpression()
+  {
+    PersistenceVerificationExpressionImpl persistenceVerificationExpression = new PersistenceVerificationExpressionImpl();
+    return persistenceVerificationExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SelectByPrimaryKeys createSelectByPrimaryKeys()
+  {
+    SelectByPrimaryKeysImpl selectByPrimaryKeys = new SelectByPrimaryKeysImpl();
+    return selectByPrimaryKeys;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SelectByUniqueAttribute createSelectByUniqueAttribute()
+  {
+    SelectByUniqueAttributeImpl selectByUniqueAttribute = new SelectByUniqueAttributeImpl();
+    return selectByUniqueAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Count createCount()
+  {
+    CountImpl count = new CountImpl();
+    return count;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AttributeAndValue createAttributeAndValue()
+  {
+    AttributeAndValueImpl attributeAndValue = new AttributeAndValueImpl();
+    return attributeAndValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Verification createVerification()
   {
     VerificationImpl verification = new VerificationImpl();
@@ -385,10 +450,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public Expectation createExpectation()
+  public SelectByExpectation createSelectByExpectation()
   {
-    ExpectationImpl expectation = new ExpectationImpl();
-    return expectation;
+    SelectByExpectationImpl selectByExpectation = new SelectByExpectationImpl();
+    return selectByExpectation;
   }
 
   /**

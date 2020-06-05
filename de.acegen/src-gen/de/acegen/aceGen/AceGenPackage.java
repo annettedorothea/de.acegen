@@ -1295,31 +1295,13 @@ public interface AceGenPackage extends EPackage
   int PERSISTENCE_VERIFICATION__MODEL = 1;
 
   /**
-   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PERSISTENCE_VERIFICATION__ATTRIBUTE = 2;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PERSISTENCE_VERIFICATION__VALUE = 3;
-
-  /**
-   * The feature id for the '<em><b>Expected</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PERSISTENCE_VERIFICATION__EXPECTED = 4;
+  int PERSISTENCE_VERIFICATION__EXPRESSION = 2;
 
   /**
    * The number of structural features of the '<em>Persistence Verification</em>' class.
@@ -1328,7 +1310,174 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PERSISTENCE_VERIFICATION_FEATURE_COUNT = 5;
+  int PERSISTENCE_VERIFICATION_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.PersistenceVerificationExpressionImpl <em>Persistence Verification Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.PersistenceVerificationExpressionImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerificationExpression()
+   * @generated
+   */
+  int PERSISTENCE_VERIFICATION_EXPRESSION = 22;
+
+  /**
+   * The number of structural features of the '<em>Persistence Verification Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.SelectByPrimaryKeysImpl <em>Select By Primary Keys</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.SelectByPrimaryKeysImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByPrimaryKeys()
+   * @generated
+   */
+  int SELECT_BY_PRIMARY_KEYS = 23;
+
+  /**
+   * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_PRIMARY_KEYS__ATTRIBUTE_AND_VALUES = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expected</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_PRIMARY_KEYS__EXPECTED = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Select By Primary Keys</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_PRIMARY_KEYS_FEATURE_COUNT = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.SelectByUniqueAttributeImpl <em>Select By Unique Attribute</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.SelectByUniqueAttributeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByUniqueAttribute()
+   * @generated
+   */
+  int SELECT_BY_UNIQUE_ATTRIBUTE = 24;
+
+  /**
+   * The feature id for the '<em><b>Attribute And Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_UNIQUE_ATTRIBUTE__ATTRIBUTE_AND_VALUE = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expected</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_UNIQUE_ATTRIBUTE__EXPECTED = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Select By Unique Attribute</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_UNIQUE_ATTRIBUTE_FEATURE_COUNT = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.CountImpl <em>Count</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.CountImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCount()
+   * @generated
+   */
+  int COUNT = 25;
+
+  /**
+   * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COUNT__ATTRIBUTE_AND_VALUES = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expected</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COUNT__EXPECTED = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Count</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COUNT_FEATURE_COUNT = PERSISTENCE_VERIFICATION_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeAndValueImpl <em>Attribute And Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.AttributeAndValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeAndValue()
+   * @generated
+   */
+  int ATTRIBUTE_AND_VALUE = 26;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_AND_VALUE__ATTRIBUTE = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_AND_VALUE__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Attribute And Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_AND_VALUE_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
@@ -1338,7 +1487,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
    * @generated
    */
-  int VERIFICATION = 22;
+  int VERIFICATION = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1359,14 +1508,14 @@ public interface AceGenPackage extends EPackage
   int VERIFICATION_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.ExpectationImpl <em>Expectation</em>}' class.
+   * The meta object id for the '{@link de.acegen.aceGen.impl.SelectByExpectationImpl <em>Select By Expectation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.ExpectationImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExpectation()
+   * @see de.acegen.aceGen.impl.SelectByExpectationImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
    * @generated
    */
-  int EXPECTATION = 23;
+  int SELECT_BY_EXPECTATION = 28;
 
   /**
    * The feature id for the '<em><b>Object</b></em>' containment reference.
@@ -1375,16 +1524,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPECTATION__OBJECT = 0;
-
-  /**
-   * The feature id for the '<em><b>Is Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPECTATION__IS_NULL = 1;
+  int SELECT_BY_EXPECTATION__OBJECT = 0;
 
   /**
    * The feature id for the '<em><b>Is Not Null</b></em>' attribute.
@@ -1393,16 +1533,25 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPECTATION__IS_NOT_NULL = 2;
+  int SELECT_BY_EXPECTATION__IS_NOT_NULL = 1;
 
   /**
-   * The number of structural features of the '<em>Expectation</em>' class.
+   * The feature id for the '<em><b>Is Null</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPECTATION_FEATURE_COUNT = 3;
+  int SELECT_BY_EXPECTATION__IS_NULL = 2;
+
+  /**
+   * The number of structural features of the '<em>Select By Expectation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_BY_EXPECTATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.
@@ -1412,7 +1561,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 24;
+  int DATA_DEFINITION = 29;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -1467,7 +1616,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 25;
+  int AUTHORIZATION = 30;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -1504,7 +1653,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 26;
+  int ATTRIBUTE = 31;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -1604,7 +1753,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 30;
+  int JSON_VALUE = 35;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1659,7 +1808,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 27;
+  int JSON_DATE_TIME = 32;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1732,7 +1881,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 28;
+  int JSON_OBJECT = 33;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1796,7 +1945,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 29;
+  int JSON_MEMBER = 34;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1833,7 +1982,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 31;
+  int JSON_ARRAY = 36;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -1897,7 +2046,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 32;
+  int PRIMITIVE_VALUE = 37;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2940,37 +3089,153 @@ public interface AceGenPackage extends EPackage
   EReference getPersistenceVerification_Model();
 
   /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.PersistenceVerification#getAttribute <em>Attribute</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.PersistenceVerification#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Attribute</em>'.
-   * @see de.acegen.aceGen.PersistenceVerification#getAttribute()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.acegen.aceGen.PersistenceVerification#getExpression()
    * @see #getPersistenceVerification()
    * @generated
    */
-  EReference getPersistenceVerification_Attribute();
+  EReference getPersistenceVerification_Expression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.PersistenceVerification#getValue <em>Value</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.PersistenceVerificationExpression <em>Persistence Verification Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.acegen.aceGen.PersistenceVerification#getValue()
-   * @see #getPersistenceVerification()
+   * @return the meta object for class '<em>Persistence Verification Expression</em>'.
+   * @see de.acegen.aceGen.PersistenceVerificationExpression
    * @generated
    */
-  EReference getPersistenceVerification_Value();
+  EClass getPersistenceVerificationExpression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.PersistenceVerification#getExpected <em>Expected</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.SelectByPrimaryKeys <em>Select By Primary Keys</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Select By Primary Keys</em>'.
+   * @see de.acegen.aceGen.SelectByPrimaryKeys
+   * @generated
+   */
+  EClass getSelectByPrimaryKeys();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.SelectByPrimaryKeys#getAttributeAndValues <em>Attribute And Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Attribute And Values</em>'.
+   * @see de.acegen.aceGen.SelectByPrimaryKeys#getAttributeAndValues()
+   * @see #getSelectByPrimaryKeys()
+   * @generated
+   */
+  EReference getSelectByPrimaryKeys_AttributeAndValues();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.SelectByPrimaryKeys#getExpected <em>Expected</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Expected</em>'.
-   * @see de.acegen.aceGen.PersistenceVerification#getExpected()
-   * @see #getPersistenceVerification()
+   * @see de.acegen.aceGen.SelectByPrimaryKeys#getExpected()
+   * @see #getSelectByPrimaryKeys()
    * @generated
    */
-  EReference getPersistenceVerification_Expected();
+  EReference getSelectByPrimaryKeys_Expected();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.SelectByUniqueAttribute <em>Select By Unique Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Select By Unique Attribute</em>'.
+   * @see de.acegen.aceGen.SelectByUniqueAttribute
+   * @generated
+   */
+  EClass getSelectByUniqueAttribute();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.SelectByUniqueAttribute#getAttributeAndValue <em>Attribute And Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Attribute And Value</em>'.
+   * @see de.acegen.aceGen.SelectByUniqueAttribute#getAttributeAndValue()
+   * @see #getSelectByUniqueAttribute()
+   * @generated
+   */
+  EReference getSelectByUniqueAttribute_AttributeAndValue();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.SelectByUniqueAttribute#getExpected <em>Expected</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expected</em>'.
+   * @see de.acegen.aceGen.SelectByUniqueAttribute#getExpected()
+   * @see #getSelectByUniqueAttribute()
+   * @generated
+   */
+  EReference getSelectByUniqueAttribute_Expected();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Count <em>Count</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Count</em>'.
+   * @see de.acegen.aceGen.Count
+   * @generated
+   */
+  EClass getCount();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Count#getAttributeAndValues <em>Attribute And Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Attribute And Values</em>'.
+   * @see de.acegen.aceGen.Count#getAttributeAndValues()
+   * @see #getCount()
+   * @generated
+   */
+  EReference getCount_AttributeAndValues();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Count#getExpected <em>Expected</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Expected</em>'.
+   * @see de.acegen.aceGen.Count#getExpected()
+   * @see #getCount()
+   * @generated
+   */
+  EAttribute getCount_Expected();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.AttributeAndValue <em>Attribute And Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute And Value</em>'.
+   * @see de.acegen.aceGen.AttributeAndValue
+   * @generated
+   */
+  EClass getAttributeAndValue();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.AttributeAndValue#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.AttributeAndValue#getAttribute()
+   * @see #getAttributeAndValue()
+   * @generated
+   */
+  EReference getAttributeAndValue_Attribute();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.AttributeAndValue#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.acegen.aceGen.AttributeAndValue#getValue()
+   * @see #getAttributeAndValue()
+   * @generated
+   */
+  EReference getAttributeAndValue_Value();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
@@ -2994,47 +3259,47 @@ public interface AceGenPackage extends EPackage
   EAttribute getVerification_Name();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.Expectation <em>Expectation</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.SelectByExpectation <em>Select By Expectation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Expectation</em>'.
-   * @see de.acegen.aceGen.Expectation
+   * @return the meta object for class '<em>Select By Expectation</em>'.
+   * @see de.acegen.aceGen.SelectByExpectation
    * @generated
    */
-  EClass getExpectation();
+  EClass getSelectByExpectation();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Expectation#getObject <em>Object</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.SelectByExpectation#getObject <em>Object</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Object</em>'.
-   * @see de.acegen.aceGen.Expectation#getObject()
-   * @see #getExpectation()
+   * @see de.acegen.aceGen.SelectByExpectation#getObject()
+   * @see #getSelectByExpectation()
    * @generated
    */
-  EReference getExpectation_Object();
+  EReference getSelectByExpectation_Object();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Expectation#isIsNull <em>Is Null</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Null</em>'.
-   * @see de.acegen.aceGen.Expectation#isIsNull()
-   * @see #getExpectation()
-   * @generated
-   */
-  EAttribute getExpectation_IsNull();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Expectation#isIsNotNull <em>Is Not Null</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SelectByExpectation#isIsNotNull <em>Is Not Null</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Is Not Null</em>'.
-   * @see de.acegen.aceGen.Expectation#isIsNotNull()
-   * @see #getExpectation()
+   * @see de.acegen.aceGen.SelectByExpectation#isIsNotNull()
+   * @see #getSelectByExpectation()
    * @generated
    */
-  EAttribute getExpectation_IsNotNull();
+  EAttribute getSelectByExpectation_IsNotNull();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SelectByExpectation#isIsNull <em>Is Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Null</em>'.
+   * @see de.acegen.aceGen.SelectByExpectation#isIsNull()
+   * @see #getSelectByExpectation()
+   * @generated
+   */
+  EAttribute getSelectByExpectation_IsNull();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.DataDefinition <em>Data Definition</em>}'.
@@ -4243,20 +4508,40 @@ public interface AceGenPackage extends EPackage
     EReference PERSISTENCE_VERIFICATION__MODEL = eINSTANCE.getPersistenceVerification_Model();
 
     /**
-     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PERSISTENCE_VERIFICATION__ATTRIBUTE = eINSTANCE.getPersistenceVerification_Attribute();
+    EReference PERSISTENCE_VERIFICATION__EXPRESSION = eINSTANCE.getPersistenceVerification_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.PersistenceVerificationExpressionImpl <em>Persistence Verification Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.PersistenceVerificationExpressionImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerificationExpression()
+     * @generated
+     */
+    EClass PERSISTENCE_VERIFICATION_EXPRESSION = eINSTANCE.getPersistenceVerificationExpression();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.SelectByPrimaryKeysImpl <em>Select By Primary Keys</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.SelectByPrimaryKeysImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByPrimaryKeys()
+     * @generated
+     */
+    EClass SELECT_BY_PRIMARY_KEYS = eINSTANCE.getSelectByPrimaryKeys();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute And Values</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PERSISTENCE_VERIFICATION__VALUE = eINSTANCE.getPersistenceVerification_Value();
+    EReference SELECT_BY_PRIMARY_KEYS__ATTRIBUTE_AND_VALUES = eINSTANCE.getSelectByPrimaryKeys_AttributeAndValues();
 
     /**
      * The meta object literal for the '<em><b>Expected</b></em>' containment reference feature.
@@ -4264,7 +4549,85 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PERSISTENCE_VERIFICATION__EXPECTED = eINSTANCE.getPersistenceVerification_Expected();
+    EReference SELECT_BY_PRIMARY_KEYS__EXPECTED = eINSTANCE.getSelectByPrimaryKeys_Expected();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.SelectByUniqueAttributeImpl <em>Select By Unique Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.SelectByUniqueAttributeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByUniqueAttribute()
+     * @generated
+     */
+    EClass SELECT_BY_UNIQUE_ATTRIBUTE = eINSTANCE.getSelectByUniqueAttribute();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute And Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SELECT_BY_UNIQUE_ATTRIBUTE__ATTRIBUTE_AND_VALUE = eINSTANCE.getSelectByUniqueAttribute_AttributeAndValue();
+
+    /**
+     * The meta object literal for the '<em><b>Expected</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SELECT_BY_UNIQUE_ATTRIBUTE__EXPECTED = eINSTANCE.getSelectByUniqueAttribute_Expected();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.CountImpl <em>Count</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.CountImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCount()
+     * @generated
+     */
+    EClass COUNT = eINSTANCE.getCount();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute And Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COUNT__ATTRIBUTE_AND_VALUES = eINSTANCE.getCount_AttributeAndValues();
+
+    /**
+     * The meta object literal for the '<em><b>Expected</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COUNT__EXPECTED = eINSTANCE.getCount_Expected();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeAndValueImpl <em>Attribute And Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.AttributeAndValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeAndValue()
+     * @generated
+     */
+    EClass ATTRIBUTE_AND_VALUE = eINSTANCE.getAttributeAndValue();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_AND_VALUE__ATTRIBUTE = eINSTANCE.getAttributeAndValue_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_AND_VALUE__VALUE = eINSTANCE.getAttributeAndValue_Value();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.VerificationImpl <em>Verification</em>}' class.
@@ -4285,14 +4648,14 @@ public interface AceGenPackage extends EPackage
     EAttribute VERIFICATION__NAME = eINSTANCE.getVerification_Name();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.ExpectationImpl <em>Expectation</em>}' class.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.SelectByExpectationImpl <em>Select By Expectation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.ExpectationImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExpectation()
+     * @see de.acegen.aceGen.impl.SelectByExpectationImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
      * @generated
      */
-    EClass EXPECTATION = eINSTANCE.getExpectation();
+    EClass SELECT_BY_EXPECTATION = eINSTANCE.getSelectByExpectation();
 
     /**
      * The meta object literal for the '<em><b>Object</b></em>' containment reference feature.
@@ -4300,15 +4663,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference EXPECTATION__OBJECT = eINSTANCE.getExpectation_Object();
-
-    /**
-     * The meta object literal for the '<em><b>Is Null</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXPECTATION__IS_NULL = eINSTANCE.getExpectation_IsNull();
+    EReference SELECT_BY_EXPECTATION__OBJECT = eINSTANCE.getSelectByExpectation_Object();
 
     /**
      * The meta object literal for the '<em><b>Is Not Null</b></em>' attribute feature.
@@ -4316,7 +4671,15 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EXPECTATION__IS_NOT_NULL = eINSTANCE.getExpectation_IsNotNull();
+    EAttribute SELECT_BY_EXPECTATION__IS_NOT_NULL = eINSTANCE.getSelectByExpectation_IsNotNull();
+
+    /**
+     * The meta object literal for the '<em><b>Is Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SELECT_BY_EXPECTATION__IS_NULL = eINSTANCE.getSelectByExpectation_IsNull();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.DataDefinitionImpl <em>Data Definition</em>}' class.

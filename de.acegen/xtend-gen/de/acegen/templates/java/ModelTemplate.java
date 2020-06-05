@@ -979,6 +979,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("import java.util.List;");
     _builder.newLine();
+    _builder.append("import java.util.Map;");
+    _builder.newLine();
     _builder.append("import java.util.Optional;");
     _builder.newLine();
     _builder.newLine();
@@ -1256,36 +1258,190 @@ public class ModelTemplate {
     }
     _builder.append("\t");
     _builder.newLine();
+    {
+      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allPrimaryKeyAttributes(it), Object.class)).length;
+      boolean _greaterThan = (_length > 0);
+      if (_greaterThan) {
+        _builder.append("\t");
+        _builder.append("public ");
+        String _modelName_4 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_4, "\t");
+        _builder.append(" selectByPrimaryKey(PersistenceHandle handle, ");
+        {
+          List<Attribute> _allPrimaryKeyAttributes = this._modelExtension.allPrimaryKeyAttributes(it);
+          boolean _hasElements_4 = false;
+          for(final Attribute attribute_4 : _allPrimaryKeyAttributes) {
+            if (!_hasElements_4) {
+              _hasElements_4 = true;
+            } else {
+              _builder.appendImmediate(", ", "\t");
+            }
+            String _javaType_2 = this._attributeExtension.javaType(attribute_4);
+            _builder.append(_javaType_2, "\t");
+            _builder.append(" ");
+            String _name_5 = attribute_4.getName();
+            _builder.append(_name_5, "\t");
+          }
+        }
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("Optional<");
+        String _modelName_5 = this._modelExtension.modelName(it);
+        _builder.append(_modelName_5, "\t\t");
+        _builder.append("> optional = handle.getHandle().createQuery(\"SELECT ");
+        {
+          EList<Attribute> _attributes_6 = it.getAttributes();
+          boolean _hasElements_5 = false;
+          for(final Attribute attr_3 : _attributes_6) {
+            if (!_hasElements_5) {
+              _hasElements_5 = true;
+            } else {
+              _builder.appendImmediate(", ", "\t\t");
+            }
+            String _lowerCase_15 = attr_3.getName().toLowerCase();
+            _builder.append(_lowerCase_15, "\t\t");
+          }
+        }
+        _builder.append(" FROM ");
+        String _table_4 = this._modelExtension.table(it);
+        _builder.append(_table_4, "\t\t");
+        _builder.append(" WHERE ");
+        {
+          List<Attribute> _allPrimaryKeyAttributes_1 = this._modelExtension.allPrimaryKeyAttributes(it);
+          boolean _hasElements_6 = false;
+          for(final Attribute attribute_5 : _allPrimaryKeyAttributes_1) {
+            if (!_hasElements_6) {
+              _hasElements_6 = true;
+            } else {
+              _builder.appendImmediate(" AND ", "\t\t");
+            }
+            String _lowerCase_16 = attribute_5.getName().toLowerCase();
+            _builder.append(_lowerCase_16, "\t\t");
+            _builder.append(" = :");
+            String _lowerCase_17 = attribute_5.getName().toLowerCase();
+            _builder.append(_lowerCase_17, "\t\t");
+          }
+        }
+        _builder.append("\")");
+        _builder.newLineIfNotEmpty();
+        {
+          List<Attribute> _allPrimaryKeyAttributes_2 = this._modelExtension.allPrimaryKeyAttributes(it);
+          for(final Attribute attribute_6 : _allPrimaryKeyAttributes_2) {
+            _builder.append("\t");
+            _builder.append("\t\t");
+            _builder.append(".bind(\"");
+            String _lowerCase_18 = attribute_6.getName().toLowerCase();
+            _builder.append(_lowerCase_18, "\t\t\t");
+            _builder.append("\", ");
+            String _name_6 = attribute_6.getName();
+            _builder.append(_name_6, "\t\t\t");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append(".map(new ");
+        String _modelMapper_1 = this._modelExtension.modelMapper(it);
+        _builder.append(_modelMapper_1, "\t\t\t");
+        _builder.append("())");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append(".findFirst();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("return optional.isPresent() ? optional.get() : null;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String sql = \"SELECT count(*) FROM ");
+    String _table_5 = this._modelExtension.table(it);
+    _builder.append(_table_5, "\t\t");
+    _builder.append("\";");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("if (filterMap != null) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("int i = 0;");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("for(String key : filterMap.keySet()) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("if (i == 0) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t");
+    _builder.append("sql += \" WHERE \" + key + \" = \'\" + filterMap.get(key) + \"\'\";");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("} else {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t\t");
+    _builder.append("sql += \" AND \" + key + \" = \'\" + filterMap.get(key) + \"\'\";");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("i++;");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return handle.getHandle().createQuery(sql).mapTo(Integer.class).first();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("public List<");
-    String _modelName_4 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_4, "\t");
+    String _modelName_6 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_6, "\t");
     _builder.append("> selectAll(PersistenceHandle handle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return handle.getHandle().createQuery(\"SELECT ");
     {
-      EList<Attribute> _attributes_6 = it.getAttributes();
-      boolean _hasElements_4 = false;
-      for(final Attribute attr_3 : _attributes_6) {
-        if (!_hasElements_4) {
-          _hasElements_4 = true;
+      EList<Attribute> _attributes_7 = it.getAttributes();
+      boolean _hasElements_7 = false;
+      for(final Attribute attr_4 : _attributes_7) {
+        if (!_hasElements_7) {
+          _hasElements_7 = true;
         } else {
           _builder.appendImmediate(", ", "\t\t");
         }
-        String _lowerCase_15 = attr_3.getName().toLowerCase();
-        _builder.append(_lowerCase_15, "\t\t");
+        String _lowerCase_19 = attr_4.getName().toLowerCase();
+        _builder.append(_lowerCase_19, "\t\t");
       }
     }
     _builder.append(" FROM ");
-    String _table_4 = this._modelExtension.table(it);
-    _builder.append(_table_4, "\t\t");
+    String _table_6 = this._modelExtension.table(it);
+    _builder.append(_table_6, "\t\t");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append(".map(new ");
-    String _modelMapper_1 = this._modelExtension.modelMapper(it);
-    _builder.append(_modelMapper_1, "\t\t\t");
+    String _modelMapper_2 = this._modelExtension.modelMapper(it);
+    _builder.append(_modelMapper_2, "\t\t\t");
     _builder.append("())");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
@@ -1300,8 +1456,8 @@ public class ModelTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("Update statement = handle.getHandle().createUpdate(\"TRUNCATE TABLE ");
-    String _table_5 = this._modelExtension.table(it);
-    _builder.append(_table_5, "\t\t");
+    String _table_7 = this._modelExtension.table(it);
+    _builder.append(_table_7, "\t\t");
     _builder.append(" CASCADE\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");

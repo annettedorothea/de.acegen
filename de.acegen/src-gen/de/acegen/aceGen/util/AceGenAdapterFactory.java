@@ -186,14 +186,39 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createPersistenceVerificationAdapter();
       }
       @Override
+      public Adapter casePersistenceVerificationExpression(PersistenceVerificationExpression object)
+      {
+        return createPersistenceVerificationExpressionAdapter();
+      }
+      @Override
+      public Adapter caseSelectByPrimaryKeys(SelectByPrimaryKeys object)
+      {
+        return createSelectByPrimaryKeysAdapter();
+      }
+      @Override
+      public Adapter caseSelectByUniqueAttribute(SelectByUniqueAttribute object)
+      {
+        return createSelectByUniqueAttributeAdapter();
+      }
+      @Override
+      public Adapter caseCount(Count object)
+      {
+        return createCountAdapter();
+      }
+      @Override
+      public Adapter caseAttributeAndValue(AttributeAndValue object)
+      {
+        return createAttributeAndValueAdapter();
+      }
+      @Override
       public Adapter caseVerification(Verification object)
       {
         return createVerificationAdapter();
       }
       @Override
-      public Adapter caseExpectation(Expectation object)
+      public Adapter caseSelectByExpectation(SelectByExpectation object)
       {
-        return createExpectationAdapter();
+        return createSelectByExpectationAdapter();
       }
       @Override
       public Adapter caseDataDefinition(DataDefinition object)
@@ -593,6 +618,81 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.PersistenceVerificationExpression <em>Persistence Verification Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.PersistenceVerificationExpression
+   * @generated
+   */
+  public Adapter createPersistenceVerificationExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.SelectByPrimaryKeys <em>Select By Primary Keys</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.SelectByPrimaryKeys
+   * @generated
+   */
+  public Adapter createSelectByPrimaryKeysAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.SelectByUniqueAttribute <em>Select By Unique Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.SelectByUniqueAttribute
+   * @generated
+   */
+  public Adapter createSelectByUniqueAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Count <em>Count</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Count
+   * @generated
+   */
+  public Adapter createCountAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.AttributeAndValue <em>Attribute And Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.AttributeAndValue
+   * @generated
+   */
+  public Adapter createAttributeAndValueAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Verification <em>Verification</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -608,16 +708,16 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Expectation <em>Expectation</em>}'.
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.SelectByExpectation <em>Select By Expectation</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.acegen.aceGen.Expectation
+   * @see de.acegen.aceGen.SelectByExpectation
    * @generated
    */
-  public Adapter createExpectationAdapter()
+  public Adapter createSelectByExpectationAdapter()
   {
     return null;
   }

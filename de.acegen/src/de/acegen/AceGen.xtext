@@ -156,15 +156,35 @@ ThenBlock:
 ;
 
 PersistenceVerification:
-	name = ID model = [Model | QualifiedName] 'selectBy' '(' attribute = [Attribute|QualifiedName] ':' value = PrimitiveValue ')' 'shouldBe' expected = Expectation
+	name = ID model = [Model | QualifiedName] expression = PersistenceVerificationExpression
+;
+
+PersistenceVerificationExpression:
+	SelectByUniqueAttribute | SelectByPrimaryKeys | Count
+;
+
+SelectByPrimaryKeys: 
+	'selectByPrimaryKey' '(' attributeAndValues += AttributeAndValue (',' attributeAndValues += AttributeAndValue*)? ')' 'shouldBe' expected = SelectByExpectation
+;
+
+SelectByUniqueAttribute: 
+	'selectBy' '(' attributeAndValue = AttributeAndValue ')' 'shouldBe' expected = SelectByExpectation
+;
+
+Count: 
+	'filterAndCountBy' '(' attributeAndValues += AttributeAndValue (',' attributeAndValues += AttributeAndValue*)? ')' 'shouldBe' expected = INT
+;
+
+AttributeAndValue:
+	attribute = [Attribute|QualifiedName] ':' value = PrimitiveValue
 ;
 
 Verification:
 	name = ID
 ;
 
-Expectation:
-	object = JsonObject | isNull ?= 'null' | isNotNull ?= 'notNull'	
+SelectByExpectation:
+	object = JsonObject | isNotNull ?= 'notNull' | isNull ?= 'null'	
 ;
 
 DataDefinition: 

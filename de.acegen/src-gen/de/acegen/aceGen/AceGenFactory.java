@@ -222,6 +222,51 @@ public interface AceGenFactory extends EFactory
   PersistenceVerification createPersistenceVerification();
 
   /**
+   * Returns a new object of class '<em>Persistence Verification Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Persistence Verification Expression</em>'.
+   * @generated
+   */
+  PersistenceVerificationExpression createPersistenceVerificationExpression();
+
+  /**
+   * Returns a new object of class '<em>Select By Primary Keys</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Select By Primary Keys</em>'.
+   * @generated
+   */
+  SelectByPrimaryKeys createSelectByPrimaryKeys();
+
+  /**
+   * Returns a new object of class '<em>Select By Unique Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Select By Unique Attribute</em>'.
+   * @generated
+   */
+  SelectByUniqueAttribute createSelectByUniqueAttribute();
+
+  /**
+   * Returns a new object of class '<em>Count</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Count</em>'.
+   * @generated
+   */
+  Count createCount();
+
+  /**
+   * Returns a new object of class '<em>Attribute And Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute And Value</em>'.
+   * @generated
+   */
+  AttributeAndValue createAttributeAndValue();
+
+  /**
    * Returns a new object of class '<em>Verification</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -231,13 +276,13 @@ public interface AceGenFactory extends EFactory
   Verification createVerification();
 
   /**
-   * Returns a new object of class '<em>Expectation</em>'.
+   * Returns a new object of class '<em>Select By Expectation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expectation</em>'.
+   * @return a new object of class '<em>Select By Expectation</em>'.
    * @generated
    */
-  Expectation createExpectation();
+  SelectByExpectation createSelectByExpectation();
 
   /**
    * Returns a new object of class '<em>Data Definition</em>'.

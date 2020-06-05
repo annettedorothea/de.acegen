@@ -19,7 +19,9 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.Count;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
@@ -30,6 +32,8 @@ import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.Scenario;
+import de.acegen.aceGen.SelectByPrimaryKeys;
+import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
@@ -114,20 +118,68 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       };
       return new FilteringScope(scope_2, _function_2);
     }
-    if (((context instanceof PersistenceVerification) && 
-      Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE))) {
-      final PersistenceVerification persistenceVerification = ((PersistenceVerification) context);
+    if (((context instanceof AttributeAndValue) && 
+      Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
+      EObject _eContainer_2 = context.eContainer().eContainer();
+      final PersistenceVerification persistenceVerification = ((PersistenceVerification) _eContainer_2);
       final Model model = persistenceVerification.getModel();
       final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(model, attrs_3);
-      final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
-      for (final Attribute attribute : attrs_3) {
-        boolean _isUnique = attribute.isUnique();
-        if (_isUnique) {
-          filtered.add(attribute);
+      EObject _eContainer_3 = context.eContainer();
+      final boolean selectByUnique = (_eContainer_3 instanceof SelectByUniqueAttribute);
+      EObject _eContainer_4 = context.eContainer();
+      final boolean selectByPrimary = (_eContainer_4 instanceof SelectByPrimaryKeys);
+      if ((selectByUnique || selectByPrimary)) {
+        final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
+        for (final Attribute attribute : attrs_3) {
+          if (((attribute.isUnique() && selectByUnique) || (attribute.isPrimaryKey() && selectByPrimary))) {
+            filtered.add(attribute);
+          }
+        }
+        return Scopes.scopeFor(filtered);
+      }
+      return Scopes.scopeFor(attrs_3);
+    }
+    if (((context instanceof SelectByPrimaryKeys) && 
+      Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
+      EObject _eContainer_5 = context.eContainer();
+      final PersistenceVerification persistenceVerification_1 = ((PersistenceVerification) _eContainer_5);
+      final Model model_1 = persistenceVerification_1.getModel();
+      final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_1, attrs_4);
+      final ArrayList<Attribute> filtered_1 = new ArrayList<Attribute>();
+      for (final Attribute attribute_1 : attrs_4) {
+        boolean _isPrimaryKey = attribute_1.isPrimaryKey();
+        if (_isPrimaryKey) {
+          filtered_1.add(attribute_1);
         }
       }
-      return Scopes.scopeFor(filtered);
+      return Scopes.scopeFor(filtered_1);
+    }
+    if (((context instanceof SelectByUniqueAttribute) && 
+      Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
+      EObject _eContainer_6 = context.eContainer();
+      final PersistenceVerification persistenceVerification_2 = ((PersistenceVerification) _eContainer_6);
+      final Model model_2 = persistenceVerification_2.getModel();
+      final ArrayList<Attribute> attrs_5 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_2, attrs_5);
+      final ArrayList<Attribute> filtered_2 = new ArrayList<Attribute>();
+      for (final Attribute attribute_2 : attrs_5) {
+        boolean _isUnique = attribute_2.isUnique();
+        if (_isUnique) {
+          filtered_2.add(attribute_2);
+        }
+      }
+      return Scopes.scopeFor(filtered_2);
+    }
+    if (((context instanceof Count) && 
+      Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
+      EObject _eContainer_7 = context.eContainer();
+      final PersistenceVerification persistenceVerification_3 = ((PersistenceVerification) _eContainer_7);
+      final Model model_3 = persistenceVerification_3.getModel();
+      final ArrayList<Attribute> attrs_6 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_3, attrs_6);
+      return Scopes.scopeFor(attrs_6);
     }
     if (((context instanceof PersistenceVerification) && 
       Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL))) {
@@ -137,10 +189,10 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       for (final IEObjectDescription element : _allElements) {
         {
           EObject _resolve = EcoreUtil2.resolve(element.getEObjectOrProxy(), context);
-          final Model model_1 = ((Model) _resolve);
-          boolean _isPersistent = model_1.isPersistent();
+          final Model model_4 = ((Model) _resolve);
+          boolean _isPersistent = model_4.isPersistent();
           if (_isPersistent) {
-            models.add(model_1);
+            models.add(model_4);
           }
         }
       }
@@ -151,7 +203,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       boolean isThen = false;
       boolean isWhen = false;
       boolean isVerification = false;
-      PersistenceVerification persistenceVerification_1 = null;
+      PersistenceVerification persistenceVerification_4 = null;
       while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof JsonMember))))) {
         {
           if ((parent instanceof ThenBlock)) {
@@ -162,7 +214,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           }
           if ((parent instanceof PersistenceVerification)) {
             isVerification = true;
-            persistenceVerification_1 = ((PersistenceVerification) parent);
+            persistenceVerification_4 = ((PersistenceVerification) parent);
           }
           parent = parent.eContainer();
         }
@@ -170,10 +222,10 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       if ((parent instanceof Scenario)) {
         final Scenario scenario = ((Scenario) parent);
         if (isVerification) {
-          final Model model_1 = persistenceVerification_1.getModel();
-          final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
-          this._modelExtension.allAttributesRec(model_1, attrs_4);
-          return Scopes.scopeFor(attrs_4);
+          final Model model_4 = persistenceVerification_4.getModel();
+          final ArrayList<Attribute> attrs_7 = new ArrayList<Attribute>();
+          this._modelExtension.allAttributesRec(model_4, attrs_7);
+          return Scopes.scopeFor(attrs_7);
         } else {
           if (isWhen) {
             ArrayList<Attribute> attr = new ArrayList<Attribute>();
@@ -204,8 +256,8 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         boolean _tripleNotEquals = (_model != null);
         if (_tripleNotEquals) {
           Model _model_1 = jsonMember.getAttribute().getModel();
-          final Model model_2 = ((Model) _model_1);
-          return this.getScopeFor(model_2);
+          final Model model_5 = ((Model) _model_1);
+          return this.getScopeFor(model_5);
         }
       }
     }

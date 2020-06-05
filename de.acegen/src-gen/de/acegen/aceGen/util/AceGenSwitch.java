@@ -229,6 +229,44 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.PERSISTENCE_VERIFICATION_EXPRESSION:
+      {
+        PersistenceVerificationExpression persistenceVerificationExpression = (PersistenceVerificationExpression)theEObject;
+        T result = casePersistenceVerificationExpression(persistenceVerificationExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.SELECT_BY_PRIMARY_KEYS:
+      {
+        SelectByPrimaryKeys selectByPrimaryKeys = (SelectByPrimaryKeys)theEObject;
+        T result = caseSelectByPrimaryKeys(selectByPrimaryKeys);
+        if (result == null) result = casePersistenceVerificationExpression(selectByPrimaryKeys);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.SELECT_BY_UNIQUE_ATTRIBUTE:
+      {
+        SelectByUniqueAttribute selectByUniqueAttribute = (SelectByUniqueAttribute)theEObject;
+        T result = caseSelectByUniqueAttribute(selectByUniqueAttribute);
+        if (result == null) result = casePersistenceVerificationExpression(selectByUniqueAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.COUNT:
+      {
+        Count count = (Count)theEObject;
+        T result = caseCount(count);
+        if (result == null) result = casePersistenceVerificationExpression(count);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.ATTRIBUTE_AND_VALUE:
+      {
+        AttributeAndValue attributeAndValue = (AttributeAndValue)theEObject;
+        T result = caseAttributeAndValue(attributeAndValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.VERIFICATION:
       {
         Verification verification = (Verification)theEObject;
@@ -236,10 +274,10 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.EXPECTATION:
+      case AceGenPackage.SELECT_BY_EXPECTATION:
       {
-        Expectation expectation = (Expectation)theEObject;
-        T result = caseExpectation(expectation);
+        SelectByExpectation selectByExpectation = (SelectByExpectation)theEObject;
+        T result = caseSelectByExpectation(selectByExpectation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -666,6 +704,86 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Persistence Verification Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Persistence Verification Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePersistenceVerificationExpression(PersistenceVerificationExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Select By Primary Keys</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Select By Primary Keys</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSelectByPrimaryKeys(SelectByPrimaryKeys object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Select By Unique Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Select By Unique Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSelectByUniqueAttribute(SelectByUniqueAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Count</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Count</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCount(Count object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute And Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute And Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeAndValue(AttributeAndValue object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Verification</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -682,17 +800,17 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Expectation</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Select By Expectation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Expectation</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Select By Expectation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseExpectation(Expectation object)
+  public T caseSelectByExpectation(SelectByExpectation object)
   {
     return null;
   }

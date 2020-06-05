@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Expectation;
 import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.SelectByExpectation;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -18,20 +18,20 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Expectation</b></em>'.
+ * An implementation of the model object '<em><b>Select By Expectation</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.ExpectationImpl#getObject <em>Object</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ExpectationImpl#isIsNull <em>Is Null</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ExpectationImpl#isIsNotNull <em>Is Not Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SelectByExpectationImpl#getObject <em>Object</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SelectByExpectationImpl#isIsNotNull <em>Is Not Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SelectByExpectationImpl#isIsNull <em>Is Null</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ExpectationImpl extends MinimalEObjectImpl.Container implements Expectation
+public class SelectByExpectationImpl extends MinimalEObjectImpl.Container implements SelectByExpectation
 {
   /**
    * The cached value of the '{@link #getObject() <em>Object</em>}' containment reference.
@@ -42,26 +42,6 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
    * @ordered
    */
   protected JsonObject object;
-
-  /**
-   * The default value of the '{@link #isIsNull() <em>Is Null</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isIsNull()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean IS_NULL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isIsNull() <em>Is Null</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isIsNull()
-   * @generated
-   * @ordered
-   */
-  protected boolean isNull = IS_NULL_EDEFAULT;
 
   /**
    * The default value of the '{@link #isIsNotNull() <em>Is Not Null</em>}' attribute.
@@ -84,11 +64,31 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   protected boolean isNotNull = IS_NOT_NULL_EDEFAULT;
 
   /**
+   * The default value of the '{@link #isIsNull() <em>Is Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsNull()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean IS_NULL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isIsNull() <em>Is Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsNull()
+   * @generated
+   * @ordered
+   */
+  protected boolean isNull = IS_NULL_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ExpectationImpl()
+  protected SelectByExpectationImpl()
   {
     super();
   }
@@ -101,7 +101,7 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.EXPECTATION;
+    return AceGenPackage.Literals.SELECT_BY_EXPECTATION;
   }
 
   /**
@@ -126,7 +126,7 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
     object = newObject;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.EXPECTATION__OBJECT, oldObject, newObject);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.SELECT_BY_EXPECTATION__OBJECT, oldObject, newObject);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -144,39 +144,14 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
     {
       NotificationChain msgs = null;
       if (object != null)
-        msgs = ((InternalEObject)object).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.EXPECTATION__OBJECT, null, msgs);
+        msgs = ((InternalEObject)object).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.SELECT_BY_EXPECTATION__OBJECT, null, msgs);
       if (newObject != null)
-        msgs = ((InternalEObject)newObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.EXPECTATION__OBJECT, null, msgs);
+        msgs = ((InternalEObject)newObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.SELECT_BY_EXPECTATION__OBJECT, null, msgs);
       msgs = basicSetObject(newObject, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.EXPECTATION__OBJECT, newObject, newObject));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean isIsNull()
-  {
-    return isNull;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setIsNull(boolean newIsNull)
-  {
-    boolean oldIsNull = isNull;
-    isNull = newIsNull;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.EXPECTATION__IS_NULL, oldIsNull, isNull));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SELECT_BY_EXPECTATION__OBJECT, newObject, newObject));
   }
 
   /**
@@ -201,7 +176,32 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
     boolean oldIsNotNull = isNotNull;
     isNotNull = newIsNotNull;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.EXPECTATION__IS_NOT_NULL, oldIsNotNull, isNotNull));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SELECT_BY_EXPECTATION__IS_NOT_NULL, oldIsNotNull, isNotNull));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isIsNull()
+  {
+    return isNull;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setIsNull(boolean newIsNull)
+  {
+    boolean oldIsNull = isNull;
+    isNull = newIsNull;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SELECT_BY_EXPECTATION__IS_NULL, oldIsNull, isNull));
   }
 
   /**
@@ -214,7 +214,7 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case AceGenPackage.EXPECTATION__OBJECT:
+      case AceGenPackage.SELECT_BY_EXPECTATION__OBJECT:
         return basicSetObject(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -230,12 +230,12 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case AceGenPackage.EXPECTATION__OBJECT:
+      case AceGenPackage.SELECT_BY_EXPECTATION__OBJECT:
         return getObject();
-      case AceGenPackage.EXPECTATION__IS_NULL:
-        return isIsNull();
-      case AceGenPackage.EXPECTATION__IS_NOT_NULL:
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NOT_NULL:
         return isIsNotNull();
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NULL:
+        return isIsNull();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -250,14 +250,14 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case AceGenPackage.EXPECTATION__OBJECT:
+      case AceGenPackage.SELECT_BY_EXPECTATION__OBJECT:
         setObject((JsonObject)newValue);
         return;
-      case AceGenPackage.EXPECTATION__IS_NULL:
-        setIsNull((Boolean)newValue);
-        return;
-      case AceGenPackage.EXPECTATION__IS_NOT_NULL:
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NOT_NULL:
         setIsNotNull((Boolean)newValue);
+        return;
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NULL:
+        setIsNull((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -273,14 +273,14 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case AceGenPackage.EXPECTATION__OBJECT:
+      case AceGenPackage.SELECT_BY_EXPECTATION__OBJECT:
         setObject((JsonObject)null);
         return;
-      case AceGenPackage.EXPECTATION__IS_NULL:
-        setIsNull(IS_NULL_EDEFAULT);
-        return;
-      case AceGenPackage.EXPECTATION__IS_NOT_NULL:
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NOT_NULL:
         setIsNotNull(IS_NOT_NULL_EDEFAULT);
+        return;
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NULL:
+        setIsNull(IS_NULL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -296,12 +296,12 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case AceGenPackage.EXPECTATION__OBJECT:
+      case AceGenPackage.SELECT_BY_EXPECTATION__OBJECT:
         return object != null;
-      case AceGenPackage.EXPECTATION__IS_NULL:
-        return isNull != IS_NULL_EDEFAULT;
-      case AceGenPackage.EXPECTATION__IS_NOT_NULL:
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NOT_NULL:
         return isNotNull != IS_NOT_NULL_EDEFAULT;
+      case AceGenPackage.SELECT_BY_EXPECTATION__IS_NULL:
+        return isNull != IS_NULL_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -317,12 +317,12 @@ public class ExpectationImpl extends MinimalEObjectImpl.Container implements Exp
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (isNull: ");
-    result.append(isNull);
-    result.append(", isNotNull: ");
+    result.append(" (isNotNull: ");
     result.append(isNotNull);
+    result.append(", isNull: ");
+    result.append(isNull);
     result.append(')');
     return result.toString();
   }
 
-} //ExpectationImpl
+} //SelectByExpectationImpl

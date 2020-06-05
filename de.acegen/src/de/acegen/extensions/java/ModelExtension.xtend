@@ -69,6 +69,16 @@ class ModelExtension {
 		return list;
 	}
 	
+	def List<Attribute> allPrimaryKeyAttributes(Model it) {
+		var list = new ArrayList<Attribute>();
+		for (attribute : attributes) {
+			if (attribute.primaryKey) {
+				list.add(attribute);
+			}
+		}
+		return list;
+	}
+	
 	def List<Attribute> allNotReplayableAttributes(Model it) {
 		var list = new ArrayList<Attribute>()
 		if (it === null) {

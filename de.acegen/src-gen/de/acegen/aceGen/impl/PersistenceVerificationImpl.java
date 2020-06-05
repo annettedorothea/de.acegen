@@ -4,11 +4,9 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.Expectation;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
-import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.PersistenceVerificationExpression;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,9 +27,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getModel <em>Model</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getExpected <em>Expected</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.PersistenceVerificationImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -69,34 +65,14 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
   protected Model model;
 
   /**
-   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAttribute()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Attribute attribute;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected PrimitiveValue value;
-
-  /**
-   * The cached value of the '{@link #getExpected() <em>Expected</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpected()
-   * @generated
-   * @ordered
-   */
-  protected Expectation expected;
+  protected PersistenceVerificationExpression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -195,19 +171,9 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public Attribute getAttribute()
+  public PersistenceVerificationExpression getExpression()
   {
-    if (attribute != null && attribute.eIsProxy())
-    {
-      InternalEObject oldAttribute = (InternalEObject)attribute;
-      attribute = (Attribute)eResolveProxy(oldAttribute);
-      if (attribute != oldAttribute)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE, oldAttribute, attribute));
-      }
-    }
-    return attribute;
+    return expression;
   }
 
   /**
@@ -215,48 +181,13 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
-  public Attribute basicGetAttribute()
+  public NotificationChain basicSetExpression(PersistenceVerificationExpression newExpression, NotificationChain msgs)
   {
-    return attribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setAttribute(Attribute newAttribute)
-  {
-    Attribute oldAttribute = attribute;
-    attribute = newAttribute;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE, oldAttribute, attribute));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PrimitiveValue getValue()
-  {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetValue(PrimitiveValue newValue, NotificationChain msgs)
-  {
-    PrimitiveValue oldValue = value;
-    value = newValue;
+    PersistenceVerificationExpression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -268,70 +199,20 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public void setValue(PrimitiveValue newValue)
+  public void setExpression(PersistenceVerificationExpression newExpression)
   {
-    if (newValue != value)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__VALUE, null, msgs);
-      if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__VALUE, null, msgs);
-      msgs = basicSetValue(newValue, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__VALUE, newValue, newValue));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Expectation getExpected()
-  {
-    return expected;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpected(Expectation newExpected, NotificationChain msgs)
-  {
-    Expectation oldExpected = expected;
-    expected = newExpected;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED, oldExpected, newExpected);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setExpected(Expectation newExpected)
-  {
-    if (newExpected != expected)
-    {
-      NotificationChain msgs = null;
-      if (expected != null)
-        msgs = ((InternalEObject)expected).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED, null, msgs);
-      if (newExpected != null)
-        msgs = ((InternalEObject)newExpected).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED, null, msgs);
-      msgs = basicSetExpected(newExpected, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED, newExpected, newExpected));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -344,10 +225,8 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
   {
     switch (featureID)
     {
-      case AceGenPackage.PERSISTENCE_VERIFICATION__VALUE:
-        return basicSetValue(null, msgs);
-      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        return basicSetExpected(null, msgs);
+      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -367,13 +246,8 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
       case AceGenPackage.PERSISTENCE_VERIFICATION__MODEL:
         if (resolve) return getModel();
         return basicGetModel();
-      case AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE:
-        if (resolve) return getAttribute();
-        return basicGetAttribute();
-      case AceGenPackage.PERSISTENCE_VERIFICATION__VALUE:
-        return getValue();
-      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        return getExpected();
+      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -394,14 +268,8 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
       case AceGenPackage.PERSISTENCE_VERIFICATION__MODEL:
         setModel((Model)newValue);
         return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE:
-        setAttribute((Attribute)newValue);
-        return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__VALUE:
-        setValue((PrimitiveValue)newValue);
-        return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        setExpected((Expectation)newValue);
+      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION:
+        setExpression((PersistenceVerificationExpression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -423,14 +291,8 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
       case AceGenPackage.PERSISTENCE_VERIFICATION__MODEL:
         setModel((Model)null);
         return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE:
-        setAttribute((Attribute)null);
-        return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__VALUE:
-        setValue((PrimitiveValue)null);
-        return;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        setExpected((Expectation)null);
+      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION:
+        setExpression((PersistenceVerificationExpression)null);
         return;
     }
     super.eUnset(featureID);
@@ -450,12 +312,8 @@ public class PersistenceVerificationImpl extends MinimalEObjectImpl.Container im
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.PERSISTENCE_VERIFICATION__MODEL:
         return model != null;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__ATTRIBUTE:
-        return attribute != null;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__VALUE:
-        return value != null;
-      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPECTED:
-        return expected != null;
+      case AceGenPackage.PERSISTENCE_VERIFICATION__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

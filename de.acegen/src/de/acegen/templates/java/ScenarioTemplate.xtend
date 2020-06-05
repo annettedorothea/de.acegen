@@ -1,13 +1,16 @@
 package de.acegen.templates.java
 
-import de.acegen.aceGen.Authorization
+import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeAndValue
+import de.acegen.aceGen.Count
 import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.Scenario
+import de.acegen.aceGen.SelectByPrimaryKeys
+import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
@@ -81,6 +84,8 @@ class ScenarioTemplate {
 		import java.util.ArrayList;
 		import java.util.Arrays;
 		import java.util.List;
+		import java.util.Map;
+		import java.util.HashMap;
 		
 		import javax.ws.rs.core.Response;
 		
@@ -102,21 +107,27 @@ class ScenarioTemplate {
 			private void given() throws Exception {
 				Response response;
 				String uuid;
+				long timeBeforeRequest;
+				long timeAfterRequest;
 				«resetIndex»
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						for (int i=0; i<«givenRef.times»; i++) {
 							if (prerequisite("«givenRef.scenario.name»")) {
-								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 								«givenRef.scenario.whenBlock.generatePrepare»
 								«givenRef.scenario.whenBlock.generateDataCreation()»
-								response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+								timeBeforeRequest = System.currentTimeMillis();
+								response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
+								timeAfterRequest = System.currentTimeMillis();
 								if (response.getStatus() >= 400) {
 									String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
-									LOG.info("GIVEN: «givenRef.scenario.name» fails due to " + message);
+									LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
+									addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 									assertFail(message);
 								}
-								LOG.info("GIVEN: «givenRef.scenario.name» success");
+								LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
+								addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 							} else {
 								LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 							}
@@ -126,16 +137,20 @@ class ScenarioTemplate {
 					«ELSE»
 						«incIndex»
 						if (prerequisite("«givenRef.scenario.name»")) {
-							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 							«givenRef.scenario.whenBlock.generatePrepare»
 							«givenRef.scenario.whenBlock.generateDataCreation()»
-							response = «givenRef.scenario.whenBlock.generateActionCall(java, false)»
+							timeBeforeRequest = System.currentTimeMillis();
+							response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
+							timeAfterRequest = System.currentTimeMillis();
 							if (response.getStatus() >= 400) {
 								String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
-								LOG.info("GIVEN: «givenRef.scenario.name» fails due to " + message);
+								LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
+								addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 								assertFail(message);
 							}
-							LOG.info("GIVEN: «givenRef.scenario.name» success");
+							LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
+							addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 						} else {
 							LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 						}
@@ -147,10 +162,15 @@ class ScenarioTemplate {
 			
 			private Response when() throws Exception {
 				«resetIndex»
-				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid»".replace("${testId}", this.getTestId())«ELSE»this.randomUUID()«ENDIF»;
+				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateDataCreation()»
-				«whenBlock.generateActionCall(java, true)»
+				long timeBeforeRequest = System.currentTimeMillis();
+				Response response = «whenBlock.generateActionCalls(java)»
+				long timeAfterRequest = System.currentTimeMillis();
+				LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", (timeAfterRequest-timeBeforeRequest));
+				addToMetrics("«whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+				return response;
 			}
 			
 			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
@@ -197,8 +217,6 @@ class ScenarioTemplate {
 				if (prerequisite("«name»")) {
 					Response response = when();
 
-					LOG.info("WHEN: «whenBlock.action.name»");
-			
 					«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
 					
 					«FOR persistenceVerification : thenBlock.persistenceVerifications»
@@ -222,18 +240,7 @@ class ScenarioTemplate {
 			
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»
 				private void «persistenceVerification.name»() throws Exception {
-					«persistenceVerification.model.interfaceWithPackage» actual = daoProvider.get«persistenceVerification.model.modelDao»().selectBy«persistenceVerification.attribute.name.toFirstUpper»(handle, «persistenceVerification.value.primitiveValueFrom»);
-					
-					«IF persistenceVerification.expected.object !== null»
-						«persistenceVerification.model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(persistenceVerification.expected.object, persistenceVerification.model)»;
-						assertThat(actual, expected);
-					«ELSEIF persistenceVerification.expected.isNull»
-						assertIsNull(actual);
-					«ELSEIF persistenceVerification.expected.isNotNull»
-						assertIsNotNull(actual);
-					«ENDIF»
-					
-					
+					«persistenceVerification.expression.persistenceVerification(persistenceVerification.model)»
 
 					LOG.info("THEN: «persistenceVerification.name» passed");
 				}
@@ -249,6 +256,51 @@ class ScenarioTemplate {
 		«sdg»
 					
 	'''
+	
+	private dispatch def persistenceVerification(SelectByUniqueAttribute it, Model model) '''
+		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectBy«attributeAndValue.attribute.name.toFirstUpper»(handle, «attributeAndValue.value.primitiveValueFrom»);
+		
+		«IF expected.object !== null»
+			«model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(expected.object, model)»;
+			assertThat(actual, expected);
+		«ELSEIF expected.isNull»
+			assertIsNull(actual);
+		«ELSEIF expected.isNotNull»
+			assertIsNotNull(actual);
+		«ENDIF»
+	'''
+	
+	private dispatch def persistenceVerification(SelectByPrimaryKeys it, Model model) '''
+		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute: model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
+		
+		«IF expected.object !== null»
+			«model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(expected.object, model)»;
+			assertThat(actual, expected);
+		«ELSEIF expected.isNull»
+			assertIsNull(actual);
+		«ELSEIF expected.isNotNull»
+			assertIsNotNull(actual);
+		«ENDIF»
+	'''
+	
+	private dispatch def persistenceVerification(Count it, Model model) '''
+		Map<String, String> filterMap = new HashMap<String, String>();
+		«FOR attributeValue: attributeAndValues»
+			filterMap.put("«attributeValue.attribute.name»", «attributeValue.value.primitiveValueFrom»);
+		«ENDFOR»
+		int actual = daoProvider.get«model.modelDao»().filterAndCountBy(handle, filterMap);
+		
+		assertThat(actual, «expected»);
+	'''
+	
+	private def AttributeAndValue findForPrimaryKey(Attribute it, List<AttributeAndValue> list) {
+		for(attributeAndValue: list) {
+			if (attributeAndValue.attribute.name == name) {
+				return attributeAndValue
+			}
+		}
+		return null;
+	}
 	
 	private def allGivenRefs(Scenario it) {
 		var allWhenBlocks = new ArrayList<GivenRef>();
@@ -285,8 +337,6 @@ class ScenarioTemplate {
 		«ENDIF»
 	'''
 
-	private def generateActionCall(WhenBlock it, HttpServer java, boolean returnResponse) '''«generateActionCalls(action, dataDefinition, authorization, java, returnResponse)»'''
-	
 	private def generateDataCreation(WhenBlock it) '''
 		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.objectMapperCall(action.model)»;
 	'''
@@ -306,32 +356,29 @@ class ScenarioTemplate {
 			"«FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.modelClassNameWithPackage».class)'''
 	
-
-	private def generateActionCalls(HttpServerAce it, DataDefinition dataDefinition, Authorization authorization,
-		HttpServer java, boolean returnResponse) '''
+	private def generateActionCalls(WhenBlock it, HttpServer java) '''
 		
-		«IF returnResponse»return «ENDIF»
-		«IF getType == "POST"»
+		«IF action.getType == "POST"»
 			this.httpPost(
-				"«urlWithPathParams('''data_«index»''', false)»", 
+				"«action.urlWithPathParams('''data_«index»''', false)»", 
 				data_«index»,
-				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
 			);
-		«ELSEIF getType == "PUT"»
+		«ELSEIF action.getType == "PUT"»
 			this.httpPut(
-				"«urlWithPathParams('''data_«index»''', true)»", 
+				"«action.urlWithPathParams('''data_«index»''', true)»", 
 				data_«index»,
-				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
 			);
-		«ELSEIF getType == "DELETE"»
+		«ELSEIF action.getType == "DELETE"»
 			this.httpDelete(
-				"«urlWithPathParams('''data_«index»''', true)»", 
-				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				"«action.urlWithPathParams('''data_«index»''', true)»", 
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
 			);
 		«ELSE»
 			this.httpGet(
-				"«urlWithPathParams('''data_«index»''', true)»", 
-				«IF isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				"«action.urlWithPathParams('''data_«index»''', true)»", 
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
 			);
 		«ENDIF»
 		
@@ -611,6 +658,8 @@ class ScenarioTemplate {
 						
 			protected abstract Response callNotReplayableDataProviderPutSystemTime(
 						String uuid, LocalDateTime dateTime);
+						
+			protected abstract void addToMetrics(String action, Long duration);
 
 		}
 		

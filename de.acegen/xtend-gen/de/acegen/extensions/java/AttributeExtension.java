@@ -678,24 +678,12 @@ public class AttributeExtension {
     String _string = it.getString();
     boolean _tripleNotEquals = (_string != null);
     if (_tripleNotEquals) {
-      String returnString = it.getString();
-      boolean _contains = it.getString().contains("${random}");
-      if (_contains) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("\" + this.randomString() + \"");
-        returnString = returnString.replace("${random}", _builder);
-      }
-      boolean _contains_1 = it.getString().contains("${testId}");
-      if (_contains_1) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("\" + this.getTestId() + \"");
-        returnString = returnString.replace("${testId}", _builder_1);
-      }
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("\\\"");
-      _builder_2.append(returnString);
-      _builder_2.append("\\\"");
-      return _builder_2;
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"");
+      CharSequence _valueFromString = this.valueFromString(it.getString());
+      _builder.append(_valueFromString);
+      _builder.append("\\\"");
+      return _builder;
     } else {
       String _boolean = it.getBoolean();
       boolean _tripleNotEquals_1 = (_boolean != null);
@@ -707,13 +695,32 @@ public class AttributeExtension {
         if (_tripleNotEquals_2) {
           return "null";
         } else {
-          StringConcatenation _builder_3 = new StringConcatenation();
+          StringConcatenation _builder_1 = new StringConcatenation();
           int _long = it.getLong();
-          _builder_3.append(_long);
-          return _builder_3;
+          _builder_1.append(_long);
+          return _builder_1;
         }
       }
     }
+  }
+  
+  public CharSequence valueFromString(final String it) {
+    String returnString = it;
+    boolean _contains = it.contains("${random}");
+    if (_contains) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\" + this.randomString() + \"");
+      returnString = returnString.replace("${random}", _builder);
+    }
+    boolean _contains_1 = it.contains("${testId}");
+    if (_contains_1) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("\" + this.getTestId() + \"");
+      returnString = returnString.replace("${testId}", _builder_1);
+    }
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append(returnString);
+    return _builder_2;
   }
   
   protected CharSequence _valueFrom(final JsonArray it) {

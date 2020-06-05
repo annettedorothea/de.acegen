@@ -22,6 +22,7 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected AceGenGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Count_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q;
 	protected AbstractElementAlias match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_HttpClient_ACEKeyword_1_0_q;
@@ -43,12 +44,14 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
 	protected AbstractElementAlias match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
+	protected AbstractElementAlias match_SelectByPrimaryKeys_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_ThenBlock_PersistenceKeyword_2_0_q;
 	protected AbstractElementAlias match_ThenBlock_VerificationsKeyword_3_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (AceGenGrammarAccess) access;
+		match_Count_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCountAccess().getCommaKeyword_3_0());
 		match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_HttpClient_ACEKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_1_0());
@@ -70,6 +73,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
 		match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
+		match_SelectByPrimaryKeys_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getSelectByPrimaryKeysAccess().getCommaKeyword_3_0());
 		match_ThenBlock_PersistenceKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getPersistenceKeyword_2_0());
 		match_ThenBlock_VerificationsKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getVerificationsKeyword_3_0());
 	}
@@ -86,7 +90,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q.equals(syntax))
+			if (match_Count_CommaKeyword_3_0_q.equals(syntax))
+				emit_Count_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q.equals(syntax))
 				emit_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q.equals(syntax))
 				emit_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -128,6 +134,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Scenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SelectByPrimaryKeys_CommaKeyword_3_0_q.equals(syntax))
+				emit_SelectByPrimaryKeys_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ThenBlock_PersistenceKeyword_2_0_q.equals(syntax))
 				emit_ThenBlock_PersistenceKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ThenBlock_VerificationsKeyword_3_0_q.equals(syntax))
@@ -136,6 +144,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     attributeAndValues+=AttributeAndValue (ambiguity) ')' 'shouldBe' expected=INT
+	 */
+	protected void emit_Count_CommaKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     ('(' ')')?
@@ -472,6 +491,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID (ambiguity) 'WHEN' whenBlock=WhenBlock
 	 */
 	protected void emit_Scenario_GIVENKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     attributeAndValues+=AttributeAndValue (ambiguity) ')' 'shouldBe' expected=SelectByExpectation
+	 */
+	protected void emit_SelectByPrimaryKeys_CommaKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -19,7 +19,9 @@ package de.acegen.scoping
 
 import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
@@ -30,6 +32,8 @@ import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
+import de.acegen.aceGen.SelectByPrimaryKeys
+import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.java.ModelExtension
@@ -91,9 +95,42 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val scope = super.getScope(context, reference)
 			return new FilteringScope(scope, [!(getEObjectOrProxy as Model).equals(aceModel)])
 		}
-		if (context instanceof PersistenceVerification &&
-			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__ATTRIBUTE) {
-			val persistenceVerification = context as PersistenceVerification
+		if (context instanceof AttributeAndValue &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+			val persistenceVerification = context.eContainer.eContainer as PersistenceVerification
+			val model = persistenceVerification.model
+			val attrs = new ArrayList<Attribute>();
+			model.allAttributesRec(attrs);
+			val selectByUnique = context.eContainer instanceof SelectByUniqueAttribute
+			val selectByPrimary = context.eContainer instanceof SelectByPrimaryKeys
+			if (selectByUnique || selectByPrimary) {
+				val filtered = new ArrayList<Attribute>();
+				for (attribute : attrs) {
+					if (attribute.unique && selectByUnique || attribute.primaryKey && selectByPrimary) {
+						filtered.add(attribute)
+					}
+				}
+				return Scopes.scopeFor(filtered)
+			}
+			return Scopes.scopeFor(attrs)
+		}
+		if (context instanceof SelectByPrimaryKeys &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+			val persistenceVerification = context.eContainer as PersistenceVerification
+			val model = persistenceVerification.model
+			val attrs = new ArrayList<Attribute>();
+			model.allAttributesRec(attrs);
+			val filtered = new ArrayList<Attribute>();
+			for (attribute : attrs) {
+				if (attribute.primaryKey) {
+					filtered.add(attribute)
+				}
+			}
+			return Scopes.scopeFor(filtered)
+		}
+		if (context instanceof SelectByUniqueAttribute &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+			val persistenceVerification = context.eContainer as PersistenceVerification
 			val model = persistenceVerification.model
 			val attrs = new ArrayList<Attribute>();
 			model.allAttributesRec(attrs);
@@ -104,6 +141,14 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				}
 			}
 			return Scopes.scopeFor(filtered)
+		}
+		if (context instanceof Count &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+			val persistenceVerification = context.eContainer as PersistenceVerification
+			val model = persistenceVerification.model
+			val attrs = new ArrayList<Attribute>();
+			model.allAttributesRec(attrs);
+			return Scopes.scopeFor(attrs)
 		}
 		if (context instanceof PersistenceVerification &&
 			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL) {
