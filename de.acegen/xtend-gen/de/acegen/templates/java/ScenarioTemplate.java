@@ -80,15 +80,18 @@ public class ScenarioTemplate {
     {
       boolean _isRead = this._aceExtension.isRead(it.getWhenBlock().getAction());
       if (_isRead) {
+        _builder.append("import ");
         EObject _eContainer = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
         _builder.append(_responseDataNameWithPackage);
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
         _builder.append("import javax.ws.rs.core.Response;");
         _builder.newLine();
       }
     }
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ");
     String _name_1 = it.getName();
@@ -98,27 +101,6 @@ public class ScenarioTemplate {
     _builder.append(_name_2);
     _builder.append("Scenario {");
     _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected void verifications(");
-    {
-      boolean _isRead_1 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-      if (_isRead_1) {
-        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
-        _builder.append(_responseDataNameWithPackage_1, "\t");
-        _builder.append(" response ");
-      }
-    }
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.newLine();
     {
       EList<Verification> _verifications = it.getThenBlock().getVerifications();
@@ -131,11 +113,11 @@ public class ScenarioTemplate {
         _builder.append(verification, "\t");
         _builder.append("(");
         {
-          boolean _isRead_2 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-          if (_isRead_2) {
-            EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
-            String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
-            _builder.append(_responseDataNameWithPackage_2, "\t");
+          boolean _isRead_1 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+          if (_isRead_1) {
+            EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
+            String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
+            _builder.append(_responseDataNameWithPackage_1, "\t");
             _builder.append(" response");
           }
         }
@@ -753,16 +735,6 @@ public class ScenarioTemplate {
     }
     _builder.append("\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("verifications(");
-    {
-      boolean _isRead_4 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-      if (_isRead_4) {
-        _builder.append("actualResponse");
-      }
-    }
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
     {
       EList<Verification> _verifications = it.getThenBlock().getVerifications();
       for(final Verification verification : _verifications) {
@@ -771,8 +743,8 @@ public class ScenarioTemplate {
         _builder.append(_name_21, "\t\t\t");
         _builder.append("(");
         {
-          boolean _isRead_5 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-          if (_isRead_5) {
+          boolean _isRead_4 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+          if (_isRead_4) {
             _builder.append("actualResponse");
           }
         }
@@ -797,21 +769,6 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("protected abstract void verifications(");
-    {
-      boolean _isRead_6 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-      if (_isRead_6) {
-        EObject _eContainer_6 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_6));
-        _builder.append(_responseDataNameWithPackage_6, "\t");
-        _builder.append(" response");
-      }
-    }
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.newLine();
     {
       EList<Verification> _verifications_1 = it.getThenBlock().getVerifications();
       for(final Verification verification_1 : _verifications_1) {
@@ -821,11 +778,11 @@ public class ScenarioTemplate {
         _builder.append(_name_23, "\t");
         _builder.append("(");
         {
-          boolean _isRead_7 = this._aceExtension.isRead(it.getWhenBlock().getAction());
-          if (_isRead_7) {
-            EObject _eContainer_7 = it.getWhenBlock().getAction().eContainer();
-            String _responseDataNameWithPackage_7 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_7));
-            _builder.append(_responseDataNameWithPackage_7, "\t");
+          boolean _isRead_5 = this._aceExtension.isRead(it.getWhenBlock().getAction());
+          if (_isRead_5) {
+            EObject _eContainer_6 = it.getWhenBlock().getAction().eContainer();
+            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_6));
+            _builder.append(_responseDataNameWithPackage_6, "\t");
             _builder.append(" response");
           }
         }

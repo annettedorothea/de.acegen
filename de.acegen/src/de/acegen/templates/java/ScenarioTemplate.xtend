@@ -50,16 +50,14 @@ class ScenarioTemplate {
 		
 		package «java.getName».scenarios;
 		
-		«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»
+		«IF whenBlock.action.isRead»
+			import «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»;
 			import javax.ws.rs.core.Response;
 		«ENDIF»
 		
+		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
 		
-			@Override
-			protected void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response «ENDIF») {
-			}
-			
 			«FOR verification : thenBlock.verifications»
 				@Override
 				protected void «verification»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF») {
@@ -223,7 +221,6 @@ class ScenarioTemplate {
 						this.«persistenceVerification.name»();
 					«ENDFOR»
 				
-					verifications(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 					«FOR verification : thenBlock.verifications»
 						«verification.name»(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
 					«ENDFOR»
@@ -231,8 +228,6 @@ class ScenarioTemplate {
 					LOG.info("WHEN: prerequisite for «name» not met");
 				}
 			}
-			
-			protected abstract void verifications(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
 			
 			«FOR verification : thenBlock.verifications»
 				protected abstract void «verification.name»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
