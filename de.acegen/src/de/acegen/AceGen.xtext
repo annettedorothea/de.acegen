@@ -61,7 +61,10 @@ HttpClientTypeDefinition:
 ;
 
 HttpServer:
-	(type = ('Dropwizard'))?
+	language = ('Java' | 'C#')
+	type = ('Dropwizard' | 'ASP.NET5')?
+	persistenceLayer = 'JDBI3'?
+	migrations = 'Liquibase' ?
 	name = QualifiedName
 	('Authorization' authUser = AuthUser)?
 	('import' authUserRef = [AuthUser | QualifiedName])?

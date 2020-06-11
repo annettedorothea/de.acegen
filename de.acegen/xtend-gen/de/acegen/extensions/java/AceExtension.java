@@ -294,4 +294,14 @@ public class AceExtension {
     String _type = it.getType();
     return Objects.equal(_type, "Dropwizard");
   }
+  
+  public boolean isJDBI3(final HttpServer it) {
+    String _persistenceLayer = it.getPersistenceLayer();
+    return Objects.equal(_persistenceLayer, "JDBI3");
+  }
+  
+  public boolean isLiquibase(final HttpServer it) {
+    String _migrations = it.getMigrations();
+    return Objects.equal(_migrations, "Liquibase");
+  }
 }

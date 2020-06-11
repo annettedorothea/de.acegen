@@ -40,10 +40,10 @@ class ModelTemplate {
 	@Inject
 	extension CommonExtension
 	
-	def generateModel(Model it, HttpServer java) '''
+	def generateModel(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».models;
+		package «httpServer.getName».models;
 		
 		import java.util.List;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -65,10 +65,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateModelClass(Model it, HttpServer java) '''
+	def generateModelClass(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».models;
+		package «httpServer.getName».models;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -114,10 +114,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateDataInterface(Model it, HttpServer java) '''
+	def generateDataInterface(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».data;
+		package «httpServer.getName».data;
 		
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		
@@ -143,10 +143,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateAbstractData(Model it, HttpServer java) '''
+	def generateAbstractData(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».data;
+		package «httpServer.getName».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -217,10 +217,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateData(Model it, HttpServer java) '''
+	def generateData(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».data;
+		package «httpServer.getName».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		
@@ -319,10 +319,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateResponseData(HttpServerAce it, HttpServer java) '''
+	def generateResponseData(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».data;
+		package «httpServer.getName».data;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -363,10 +363,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateReponseDataInterface(HttpServerAce it, HttpServer java) '''
+	def generateReponseDataInterface(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».data;
+		package «httpServer.getName».data;
 		
 		public interface «responseDataInterfaceName» {
 			«FOR attribute : response»
@@ -381,10 +381,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateAbstractDao(Model it, HttpServer java) '''
+	def generateAbstractJdbiDao(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».models;
+		package «httpServer.getName».models;
 		
 		import de.acegen.PersistenceHandle;
 		import org.jdbi.v3.core.statement.Update;
@@ -476,10 +476,10 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateDao(Model it, HttpServer java) '''
+	def generateJdbiDao(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».models;
+		package «httpServer.getName».models;
 		
 		public class «modelDao» extends «abstractModelDao» {
 			
@@ -490,7 +490,101 @@ class ModelTemplate {
 		
 	'''
 	
-	def generateMigration(Model it, HttpServer java) '''
+	def generateAbstractDao(Model it, HttpServer httpServer) '''
+		«copyright»
+		
+		package «httpServer.getName».models;
+		
+		import de.acegen.PersistenceHandle;
+
+		import java.util.List;
+		import java.util.Map;
+		
+		public abstract class «abstractModelDao» {
+			
+			public abstract void insert(PersistenceHandle handle, «modelName» «modelParam»);
+			
+			«FOR attribute : allUniqueAttributes»
+				public abstract void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam»);
+
+				public abstract void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
+
+				public abstract «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
+			«ENDFOR»
+			
+			«IF allPrimaryKeyAttributes.length > 0»
+				public abstract «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR»);
+			«ENDIF»
+			
+			public abstract int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap);
+
+			public abstract List<«modelName»> selectAll(PersistenceHandle handle);
+
+			public abstract void truncate(PersistenceHandle handle);
+
+		}
+		
+		
+		«sdg»
+		
+	'''
+	
+	def generateDao(Model it, HttpServer httpServer) '''
+		«copyright»
+		
+		package «httpServer.getName».models;
+		
+		import de.acegen.PersistenceHandle;
+
+		import java.util.List;
+		import java.util.Map;
+
+		public class «modelDao» extends «abstractModelDao» {
+
+			public void insert(PersistenceHandle handle, «modelName» «modelParam») {
+				throw new RuntimeException("«modelDao».insert not implemented");
+			}
+			
+			«FOR attribute : allUniqueAttributes»
+				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam») {
+					throw new RuntimeException("«modelDao».updateBy«attribute.name.toFirstUpper» not implemented");
+				}
+
+				public void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+					throw new RuntimeException("«modelDao».deleteBy«attribute.name.toFirstUpper» not implemented");
+				}
+
+				public «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+					throw new RuntimeException("«modelDao».selectBy«attribute.name.toFirstUpper» not implemented");
+				}
+			«ENDFOR»
+			
+			«IF allPrimaryKeyAttributes.length > 0»
+				public «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
+					throw new RuntimeException("«modelDao».selectByPrimaryKey not implemented");
+				}
+			«ENDIF»
+			
+			public int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap) {
+				throw new RuntimeException("«modelDao».filterAndCountBy not implemented");
+			}
+
+			public List<«modelName»> selectAll(PersistenceHandle handle) {
+				throw new RuntimeException("«modelDao».selectAll not implemented");
+			}
+
+			public void truncate(PersistenceHandle handle) {
+				throw new RuntimeException("«modelDao».truncate not implemented");
+			}
+
+		}
+		
+		
+		«sdg»
+		
+	'''
+	
+	def generateMigration(Model it, HttpServer httpServer) '''
 		<createTable tableName="«name.toLowerCase»">
 			«FOR attribute : attributes»
 				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
@@ -500,10 +594,10 @@ class ModelTemplate {
 		</createTable>
 	'''
 	
-	def generateMapper(Model it, HttpServer java) '''
+	def generateMapper(Model it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».models;
+		package «httpServer.getName».models;
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;

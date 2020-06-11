@@ -136,7 +136,7 @@ public class ResourceTemplate {
     return _builder;
   }
   
-  public CharSequence generateResourceFile(final HttpServerAce it, final HttpServer java, final AuthUser authUser) {
+  public CharSequence generateResourceFile(final HttpServerAce it, final HttpServer httpServer, final AuthUser authUser) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
     String _copyright = this._commonExtension.copyright();
@@ -146,7 +146,7 @@ public class ResourceTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("package ");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name, "\t");
     _builder.append(".resources;");
     _builder.newLineIfNotEmpty();
@@ -587,7 +587,7 @@ public class ResourceTemplate {
       if (_greaterThan_3) {
         _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it, java);
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it, httpServer);
         _builder.append(_responseDataNameWithPackage, "\t\t\t");
         _builder.append("(action.getActionData())).build();");
         _builder.newLineIfNotEmpty();

@@ -17,7 +17,6 @@
 
 package de.acegen.templates.java
 
-import de.acegen.aceGen.AuthUser
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
@@ -48,10 +47,10 @@ class ActionTemplate {
 	@Inject
 	extension CommonExtension
 	
-	def dispatch generateAbstractActionFile(HttpServerAceWrite it, HttpServer java, AuthUser authUser) '''
+	def dispatch generateAbstractActionFile(HttpServerAceWrite it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».actions;
+		package «httpServer.getName».actions;
 		
 		import java.time.LocalDateTime;
 		
@@ -75,7 +74,7 @@ class ActionTemplate {
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		«IF outcomes.size > 0»
-			import «commandNameWithPackage(java)»;
+			import «commandNameWithPackage(httpServer)»;
 		«ENDIF»
 		
 		@SuppressWarnings("unused")
@@ -84,7 +83,7 @@ class ActionTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
+				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
 			}
 		
@@ -116,10 +115,10 @@ class ActionTemplate {
 		
 	'''
 
-	def dispatch generateAbstractActionFile(HttpServerAceRead it, HttpServer java, AuthUser authUser) '''
+	def dispatch generateAbstractActionFile(HttpServerAceRead it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».actions;
+		package «httpServer.getName».actions;
 		
 		import java.time.LocalDateTime;
 		
@@ -152,7 +151,7 @@ class ActionTemplate {
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(java)»", persistenceConnection, appConfiguration, daoProvider,
+				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
 			}
 		
@@ -227,10 +226,10 @@ class ActionTemplate {
 				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 	'''
 	
-	def generateInitialActionFile(HttpServerAce it, HttpServer java) '''
+	def generateInitialActionFile(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «java.getName».actions;
+		package «httpServer.getName».actions;
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ViewProvider;
@@ -582,15 +581,15 @@ class ActionTemplate {
 		
 	'''
 	
-	private def dispatch registerConsumer(HttpServerAceWrite it, HttpServer java) '''
+	private def dispatch registerConsumer(HttpServerAceWrite it, HttpServer httpServer) '''
 		«FOR outcome : outcomes»
 			«FOR listener : outcome.listeners»
-				«addConsumers(java, it, outcome, listener)»
+				«addConsumers(httpServer, it, outcome, listener)»
 			«ENDFOR»
 		«ENDFOR»
 	'''
 	
-	private def dispatch registerConsumer(HttpServerAceRead it, HttpServer java) ''''''
+	private def dispatch registerConsumer(HttpServerAceRead it, HttpServer httpServer) ''''''
 	
 	private def addConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
 		viewProvider.addConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
@@ -641,11 +640,11 @@ class ActionTemplate {
 		
 	'''
 	
-	private def dispatch createData(HttpServerAceWrite it, HttpServer java) '''
-		if (className.equals("«java.getName».actions.«actionName»") ||
-				className.equals("«java.getName».commands.«commandName»") «IF outcomes.length > 0»||«ENDIF»
+	private def dispatch createData(HttpServerAceWrite it, HttpServer httpServer) '''
+		if (className.equals("«httpServer.getName».actions.«actionName»") ||
+				className.equals("«httpServer.getName».commands.«commandName»") «IF outcomes.length > 0»||«ENDIF»
 				«FOR outcome: outcomes SEPARATOR '||'»
-					className.equals("«java.getName».events.«eventName(outcome)»")
+					className.equals("«httpServer.getName».events.«eventName(outcome)»")
 				«ENDFOR»
 		) {
 			«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
@@ -654,8 +653,8 @@ class ActionTemplate {
 		}
 	'''
 	
-	private def dispatch createData(HttpServerAceRead it, HttpServer java) '''
-		if (className.equals("«java.getName».actions.«actionName»")) {
+	private def dispatch createData(HttpServerAceRead it, HttpServer httpServer) '''
+		if (className.equals("«httpServer.getName».actions.«actionName»")) {
 			«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
 			data.migrateLegacyData(json);
 			return data;

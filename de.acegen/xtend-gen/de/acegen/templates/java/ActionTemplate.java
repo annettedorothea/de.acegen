@@ -16,7 +16,6 @@
 package de.acegen.templates.java;
 
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
@@ -58,14 +57,14 @@ public class ActionTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
-  protected CharSequence _generateAbstractActionFile(final HttpServerAceWrite it, final HttpServer java, final AuthUser authUser) {
+  protected CharSequence _generateAbstractActionFile(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
@@ -122,7 +121,7 @@ public class ActionTemplate {
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("import ");
-        String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it, java);
+        String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it, httpServer);
         _builder.append(_commandNameWithPackage);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -161,7 +160,7 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, java);
+    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, httpServer);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider,");
     _builder.newLineIfNotEmpty();
@@ -247,14 +246,14 @@ public class ActionTemplate {
     return _builder;
   }
   
-  protected CharSequence _generateAbstractActionFile(final HttpServerAceRead it, final HttpServer java, final AuthUser authUser) {
+  protected CharSequence _generateAbstractActionFile(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
@@ -331,7 +330,7 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, java);
+    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, httpServer);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider,");
     _builder.newLineIfNotEmpty();
@@ -550,14 +549,14 @@ public class ActionTemplate {
     return _builder;
   }
   
-  public CharSequence generateInitialActionFile(final HttpServerAce it, final HttpServer java) {
+  public CharSequence generateInitialActionFile(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions;");
     _builder.newLineIfNotEmpty();
@@ -1436,7 +1435,7 @@ public class ActionTemplate {
     return _builder;
   }
   
-  private CharSequence _registerConsumer(final HttpServerAceWrite it, final HttpServer java) {
+  private CharSequence _registerConsumer(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<HttpServerOutcome> _outcomes = it.getOutcomes();
@@ -1444,7 +1443,7 @@ public class ActionTemplate {
         {
           EList<HttpServerViewFunction> _listeners = outcome.getListeners();
           for(final HttpServerViewFunction listener : _listeners) {
-            CharSequence _addConsumers = this.addConsumers(java, it, outcome, listener);
+            CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
             _builder.append(_addConsumers);
             _builder.newLineIfNotEmpty();
           }
@@ -1454,7 +1453,7 @@ public class ActionTemplate {
     return _builder;
   }
   
-  private CharSequence _registerConsumer(final HttpServerAceRead it, final HttpServer java) {
+  private CharSequence _registerConsumer(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
@@ -1579,10 +1578,10 @@ public class ActionTemplate {
     return _builder;
   }
   
-  private CharSequence _createData(final HttpServerAceWrite it, final HttpServer java) {
+  private CharSequence _createData(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (className.equals(\"");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions.");
     String _actionName = this._aceExtension.actionName(it);
@@ -1591,7 +1590,7 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("className.equals(\"");
-    String _name_1 = java.getName();
+    String _name_1 = httpServer.getName();
     _builder.append(_name_1, "\t\t");
     _builder.append(".commands.");
     String _commandName = this._aceExtension.commandName(it);
@@ -1616,7 +1615,7 @@ public class ActionTemplate {
         }
         _builder.append("\t\t");
         _builder.append("className.equals(\"");
-        String _name_2 = java.getName();
+        String _name_2 = httpServer.getName();
         _builder.append(_name_2, "\t\t");
         _builder.append(".events.");
         String _eventName = this._aceExtension.eventName(it, outcome);
@@ -1646,10 +1645,10 @@ public class ActionTemplate {
     return _builder;
   }
   
-  private CharSequence _createData(final HttpServerAceRead it, final HttpServer java) {
+  private CharSequence _createData(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (className.equals(\"");
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions.");
     String _actionName = this._aceExtension.actionName(it);
@@ -1675,36 +1674,36 @@ public class ActionTemplate {
     return _builder;
   }
   
-  public CharSequence generateAbstractActionFile(final HttpServerAce it, final HttpServer java, final AuthUser authUser) {
+  public CharSequence generateAbstractActionFile(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
-      return _generateAbstractActionFile((HttpServerAceRead)it, java, authUser);
+      return _generateAbstractActionFile((HttpServerAceRead)it, httpServer);
     } else if (it instanceof HttpServerAceWrite) {
-      return _generateAbstractActionFile((HttpServerAceWrite)it, java, authUser);
+      return _generateAbstractActionFile((HttpServerAceWrite)it, httpServer);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, java, authUser).toString());
+        Arrays.<Object>asList(it, httpServer).toString());
     }
   }
   
-  private CharSequence registerConsumer(final HttpServerAce it, final HttpServer java) {
+  private CharSequence registerConsumer(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
-      return _registerConsumer((HttpServerAceRead)it, java);
+      return _registerConsumer((HttpServerAceRead)it, httpServer);
     } else if (it instanceof HttpServerAceWrite) {
-      return _registerConsumer((HttpServerAceWrite)it, java);
+      return _registerConsumer((HttpServerAceWrite)it, httpServer);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, java).toString());
+        Arrays.<Object>asList(it, httpServer).toString());
     }
   }
   
-  private CharSequence createData(final HttpServerAce it, final HttpServer java) {
+  private CharSequence createData(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
-      return _createData((HttpServerAceRead)it, java);
+      return _createData((HttpServerAceRead)it, httpServer);
     } else if (it instanceof HttpServerAceWrite) {
-      return _createData((HttpServerAceWrite)it, java);
+      return _createData((HttpServerAceWrite)it, httpServer);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, java).toString());
+        Arrays.<Object>asList(it, httpServer).toString());
     }
   }
 }

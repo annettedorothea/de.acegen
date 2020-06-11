@@ -16,7 +16,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpServer#getLanguage <em>Language</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpServer#getPersistenceLayer <em>Persistence Layer</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpServer#getMigrations <em>Migrations</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getAuthUser <em>Auth User</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServer#getAuthUserRef <em>Auth User Ref</em>}</li>
@@ -32,6 +35,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpServer extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Language</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Language</em>' attribute.
+   * @see #setLanguage(String)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServer_Language()
+   * @model
+   * @generated
+   */
+  String getLanguage();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpServer#getLanguage <em>Language</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Language</em>' attribute.
+   * @see #getLanguage()
+   * @generated
+   */
+  void setLanguage(String value);
+
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -53,6 +78,50 @@ public interface HttpServer extends EObject
    * @generated
    */
   void setType(String value);
+
+  /**
+   * Returns the value of the '<em><b>Persistence Layer</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Persistence Layer</em>' attribute.
+   * @see #setPersistenceLayer(String)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServer_PersistenceLayer()
+   * @model
+   * @generated
+   */
+  String getPersistenceLayer();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpServer#getPersistenceLayer <em>Persistence Layer</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Persistence Layer</em>' attribute.
+   * @see #getPersistenceLayer()
+   * @generated
+   */
+  void setPersistenceLayer(String value);
+
+  /**
+   * Returns the value of the '<em><b>Migrations</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Migrations</em>' attribute.
+   * @see #setMigrations(String)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServer_Migrations()
+   * @model
+   * @generated
+   */
+  String getMigrations();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpServer#getMigrations <em>Migrations</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Migrations</em>' attribute.
+   * @see #getMigrations()
+   * @generated
+   */
+  void setMigrations(String value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

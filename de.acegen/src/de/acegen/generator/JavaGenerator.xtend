@@ -67,83 +67,94 @@ class JavaGenerator {
 	@Inject
 	extension AceExtension
 
-	def void doGenerate(HttpServer java, IFileSystemAccess2 fsa) {
-		var authUser = java.getAuthUser
+	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
+		var authUser = httpServer.getAuthUser
 		if (authUser === null) {
-			authUser = java.getAuthUserRef
+			authUser = httpServer.getAuthUserRef
 		}
-		for (model : java.models) {
-			fsa.generateFile(java.packageFolder + '/models/' + model.modelName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateModel(model, java));
-			fsa.generateFile(java.packageFolder + '/models/' + model.modelClassName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateModelClass(model, java));
-			fsa.generateFile(java.packageFolder + '/models/' + model.modelMapper + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateMapper(model, java));
+		for (model : httpServer.models) {
+			fsa.generateFile(httpServer.packageFolder + '/models/' + model.modelName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateModel(model, httpServer));
+			fsa.generateFile(httpServer.packageFolder + '/models/' + model.modelClassName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateModelClass(model, httpServer));
+			if (httpServer.JDBI3) {
+				fsa.generateFile(httpServer.packageFolder + '/models/' + model.modelMapper + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateMapper(model, httpServer));
+			}
 			if (model.persistent) {
-				fsa.generateFile(java.packageFolder + '/models/' + model.abstractModelDao + '.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractDao(model, java));
-				fsa.generateFile(java.packageFolder + '/models/' + model.modelDao + '.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateDao(model, java));
-				fsa.generateFile(java.packageFolder + '/' + model.name + '_creation.xml',
-					ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
-					modelTemplate.generateMigration(model, java));
+				if (httpServer.JDBI3) {
+					fsa.generateFile(httpServer.packageFolder + '/models/' + model.abstractModelDao + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractJdbiDao(model, httpServer));
+					fsa.generateFile(httpServer.packageFolder + '/models/' + model.modelDao + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateJdbiDao(model, httpServer));
+				} else {
+					fsa.generateFile(httpServer.packageFolder + '/models/' + model.abstractModelDao + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractDao(model, httpServer));
+					fsa.generateFile(httpServer.packageFolder + '/models/' + model.modelDao + '.java',
+						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateDao(model, httpServer));
+				}
+				if (httpServer.liquibase) {
+					fsa.generateFile(httpServer.packageFolder + '/' + model.name + '_creation.xml',
+						ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
+						modelTemplate.generateMigration(model, httpServer));
+				}
 			}
-			fsa.generateFile(java.packageFolder + '/data/' + model.dataInterfaceName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDataInterface(model, java));
-			fsa.generateFile(java.packageFolder + '/data/' + model.abstractDataName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractData(model, java));
-			fsa.generateFile(java.packageFolder + '/data/' + model.dataName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, java));
+			fsa.generateFile(httpServer.packageFolder + '/data/' + model.dataInterfaceName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateDataInterface(model, httpServer));
+			fsa.generateFile(httpServer.packageFolder + '/data/' + model.abstractDataName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateAbstractData(model, httpServer));
+			fsa.generateFile(httpServer.packageFolder + '/data/' + model.dataName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, modelTemplate.generateData(model, httpServer));
 		}
-		for (ace : java.aceOperations) {
-			if (java.dropwizard) {
-				fsa.generateFile(java.packageFolder + '/resources/' + ace.resourceName + '.java',
+		for (ace : httpServer.aceOperations) {
+			if (httpServer.dropwizard) {
+				fsa.generateFile(httpServer.packageFolder + '/resources/' + ace.resourceName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					resourceTemplate.generateResourceFile(ace, java, authUser));
+					resourceTemplate.generateResourceFile(ace, httpServer, authUser));
 			}
-			fsa.generateFile(java.packageFolder + '/actions/' + ace.abstractActionName + '.java',
+			fsa.generateFile(httpServer.packageFolder + '/actions/' + ace.abstractActionName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-				actionTemplate.generateAbstractActionFile(ace, java, authUser));
-			fsa.generateFile(java.packageFolder + '/actions/' + ace.actionName + '.java',
+				actionTemplate.generateAbstractActionFile(ace, httpServer));
+			fsa.generateFile(httpServer.packageFolder + '/actions/' + ace.actionName + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-				actionTemplate.generateInitialActionFile(ace, java));
+				actionTemplate.generateInitialActionFile(ace, httpServer));
 			if (!'GET'.equals(ace.getType)) {
-				fsa.generateFile(java.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
+				fsa.generateFile(httpServer.packageFolder + '/commands/' + ace.abstractCommandName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					commandTemplate.generateAbstractCommandFile(ace as HttpServerAceWrite, java));
-				fsa.generateFile(java.packageFolder + '/commands/' + ace.commandName + '.java',
+					commandTemplate.generateAbstractCommandFile(ace as HttpServerAceWrite, httpServer));
+				fsa.generateFile(httpServer.packageFolder + '/commands/' + ace.commandName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-					commandTemplate.generateInitialCommandFile(ace as HttpServerAceWrite, java));
+					commandTemplate.generateInitialCommandFile(ace as HttpServerAceWrite, httpServer));
 				val aceWrite = ace as HttpServerAceWrite
 				for (outcome : aceWrite.outcomes) {
-					fsa.generateFile(java.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
+					fsa.generateFile(httpServer.packageFolder + '/events/' + ace.eventName(outcome) + '.java',
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						eventTemplate.generateAbstractEventFile(ace, outcome, java));
+						eventTemplate.generateAbstractEventFile(ace, outcome, httpServer));
 				}
 			}
 			if (ace.response.size > 0) {
-				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataName + '.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateResponseData(ace, java));
-				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataInterfaceName + '.java',
+				fsa.generateFile(httpServer.packageFolder + '/data/' + ace.responseDataName + '.java',
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateResponseData(ace, httpServer));
+				fsa.generateFile(httpServer.packageFolder + '/data/' + ace.responseDataInterfaceName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					modelTemplate.generateReponseDataInterface(ace, java));
+					modelTemplate.generateReponseDataInterface(ace, httpServer));
 			}
 		}
-		for (view : java.views) {
-			fsa.generateFile(java.packageFolder + '/views/' + view.viewName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateView(view, java));
-			fsa.generateFile(java.packageFolder + '/views/' + view.viewInterfaceName + '.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
+		for (view : httpServer.views) {
+			fsa.generateFile(httpServer.packageFolder + '/views/' + view.viewName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateView(view, httpServer));
+			fsa.generateFile(httpServer.packageFolder + '/views/' + view.viewInterfaceName + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, httpServer));
 		}
 
-		if (java.aceOperations.size > 0) {
-			fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
+		if (httpServer.aceOperations.size > 0) {
+			fsa.generateFile(httpServer.packageFolder + '/events/EventFactory.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(httpServer));
 		}
 
-		if (java.aceOperations.size > 0) {
-			fsa.generateFile(java.packageFolder + '/actions/AceDataFactory.java',
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAceDataFactory(java));
+		if (httpServer.aceOperations.size > 0) {
+			fsa.generateFile(httpServer.packageFolder + '/actions/AceDataFactory.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAceDataFactory(httpServer));
 		}
 
 		fsa.generateFile('de/acegen/EventFactory.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
@@ -157,7 +168,7 @@ class JavaGenerator {
 			aceTemplate.generateConfig());
 		fsa.generateFile("de/acegen" + '/AceOperation.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceTemplate.generateAceOperation());
-		if (java.dropwizard) {
+		if (httpServer.dropwizard) {
 			fsa.generateFile("de/acegen" + '/StartE2ESessionResource.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStartE2ESessionResource());
 			fsa.generateFile("de/acegen" + '/StopE2ESessionResource.java',
@@ -182,10 +193,10 @@ class JavaGenerator {
 			fsa.generateFile("de/acegen" + '/Resource.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 				resourceTemplate.generateDropwizardResource());
 		}
-		fsa.generateFile(java.packageFolder + '/AppRegistration.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAppRegistration(java));
+		fsa.generateFile(httpServer.packageFolder + '/AppRegistration.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAppRegistration(httpServer));
 		fsa.generateFile("de/acegen" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-			aceTemplate.generateAppRegistration(java));
+			aceTemplate.generateAppRegistration(httpServer));
 		fsa.generateFile("de/acegen" + '/NotReplayableDataProvider.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateNotReplayableDataProvider());
 
@@ -265,14 +276,14 @@ class JavaGenerator {
 		fsa.generateFile('de/acegen/BaseScenario.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE,
 			scenarioTemplate.generateBaseScenario());
 
-		for (scenario : java.scenarios) {
-			fsa.generateFile(java.packageFolder + '/scenarios/Abstract' + scenario.name + 'Scenario.java',
+		for (scenario : httpServer.scenarios) {
+			fsa.generateFile(httpServer.packageFolder + '/scenarios/Abstract' + scenario.name + 'Scenario.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT,
-				scenarioTemplate.generateAbstractScenario(scenario, java));
+				scenarioTemplate.generateAbstractScenario(scenario, httpServer));
 
-			fsa.generateFile(java.packageFolder + '/scenarios/' + scenario.name + 'Scenario.java',
+			fsa.generateFile(httpServer.packageFolder + '/scenarios/' + scenario.name + 'Scenario.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE,
-				scenarioTemplate.generateScenario(scenario, java));
+				scenarioTemplate.generateScenario(scenario, httpServer));
 		}
 
 	}

@@ -80,200 +80,224 @@ public class JavaGenerator {
   @Extension
   private AceExtension _aceExtension;
   
-  public void doGenerate(final HttpServer java, final IFileSystemAccess2 fsa) {
-    AuthUser authUser = java.getAuthUser();
+  public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
+    AuthUser authUser = httpServer.getAuthUser();
     if ((authUser == null)) {
-      authUser = java.getAuthUserRef();
+      authUser = httpServer.getAuthUserRef();
     }
-    EList<Model> _models = java.getModels();
+    EList<Model> _models = httpServer.getModels();
     for (final Model model : _models) {
       {
-        String _packageFolder = this._javaExtension.packageFolder(java);
+        String _packageFolder = this._javaExtension.packageFolder(httpServer);
         String _plus = (_packageFolder + "/models/");
         String _modelName = this._modelExtension.modelName(model);
         String _plus_1 = (_plus + _modelName);
         String _plus_2 = (_plus_1 + ".java");
         fsa.generateFile(_plus_2, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateModel(model, java));
-        String _packageFolder_1 = this._javaExtension.packageFolder(java);
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateModel(model, httpServer));
+        String _packageFolder_1 = this._javaExtension.packageFolder(httpServer);
         String _plus_3 = (_packageFolder_1 + "/models/");
         String _modelClassName = this._modelExtension.modelClassName(model);
         String _plus_4 = (_plus_3 + _modelClassName);
         String _plus_5 = (_plus_4 + ".java");
         fsa.generateFile(_plus_5, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateModelClass(model, java));
-        String _packageFolder_2 = this._javaExtension.packageFolder(java);
-        String _plus_6 = (_packageFolder_2 + "/models/");
-        String _modelMapper = this._modelExtension.modelMapper(model);
-        String _plus_7 = (_plus_6 + _modelMapper);
-        String _plus_8 = (_plus_7 + ".java");
-        fsa.generateFile(_plus_8, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateMapper(model, java));
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateModelClass(model, httpServer));
+        boolean _isJDBI3 = this._aceExtension.isJDBI3(httpServer);
+        if (_isJDBI3) {
+          String _packageFolder_2 = this._javaExtension.packageFolder(httpServer);
+          String _plus_6 = (_packageFolder_2 + "/models/");
+          String _modelMapper = this._modelExtension.modelMapper(model);
+          String _plus_7 = (_plus_6 + _modelMapper);
+          String _plus_8 = (_plus_7 + ".java");
+          fsa.generateFile(_plus_8, 
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateMapper(model, httpServer));
+        }
         boolean _isPersistent = model.isPersistent();
         if (_isPersistent) {
-          String _packageFolder_3 = this._javaExtension.packageFolder(java);
-          String _plus_9 = (_packageFolder_3 + "/models/");
-          String _abstractModelDao = this._modelExtension.abstractModelDao(model);
-          String _plus_10 = (_plus_9 + _abstractModelDao);
-          String _plus_11 = (_plus_10 + ".java");
-          fsa.generateFile(_plus_11, 
-            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateAbstractDao(model, java));
-          String _packageFolder_4 = this._javaExtension.packageFolder(java);
-          String _plus_12 = (_packageFolder_4 + "/models/");
-          String _modelDao = this._modelExtension.modelDao(model);
-          String _plus_13 = (_plus_12 + _modelDao);
-          String _plus_14 = (_plus_13 + ".java");
-          fsa.generateFile(_plus_14, 
-            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateDao(model, java));
-          String _packageFolder_5 = this._javaExtension.packageFolder(java);
-          String _plus_15 = (_packageFolder_5 + "/");
-          String _name = model.getName();
-          String _plus_16 = (_plus_15 + _name);
-          String _plus_17 = (_plus_16 + "_creation.xml");
-          fsa.generateFile(_plus_17, 
-            ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, 
-            this.modelTemplate.generateMigration(model, java));
+          boolean _isJDBI3_1 = this._aceExtension.isJDBI3(httpServer);
+          if (_isJDBI3_1) {
+            String _packageFolder_3 = this._javaExtension.packageFolder(httpServer);
+            String _plus_9 = (_packageFolder_3 + "/models/");
+            String _abstractModelDao = this._modelExtension.abstractModelDao(model);
+            String _plus_10 = (_plus_9 + _abstractModelDao);
+            String _plus_11 = (_plus_10 + ".java");
+            fsa.generateFile(_plus_11, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateAbstractJdbiDao(model, httpServer));
+            String _packageFolder_4 = this._javaExtension.packageFolder(httpServer);
+            String _plus_12 = (_packageFolder_4 + "/models/");
+            String _modelDao = this._modelExtension.modelDao(model);
+            String _plus_13 = (_plus_12 + _modelDao);
+            String _plus_14 = (_plus_13 + ".java");
+            fsa.generateFile(_plus_14, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateJdbiDao(model, httpServer));
+          } else {
+            String _packageFolder_5 = this._javaExtension.packageFolder(httpServer);
+            String _plus_15 = (_packageFolder_5 + "/models/");
+            String _abstractModelDao_1 = this._modelExtension.abstractModelDao(model);
+            String _plus_16 = (_plus_15 + _abstractModelDao_1);
+            String _plus_17 = (_plus_16 + ".java");
+            fsa.generateFile(_plus_17, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateAbstractDao(model, httpServer));
+            String _packageFolder_6 = this._javaExtension.packageFolder(httpServer);
+            String _plus_18 = (_packageFolder_6 + "/models/");
+            String _modelDao_1 = this._modelExtension.modelDao(model);
+            String _plus_19 = (_plus_18 + _modelDao_1);
+            String _plus_20 = (_plus_19 + ".java");
+            fsa.generateFile(_plus_20, 
+              ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateDao(model, httpServer));
+          }
+          boolean _isLiquibase = this._aceExtension.isLiquibase(httpServer);
+          if (_isLiquibase) {
+            String _packageFolder_7 = this._javaExtension.packageFolder(httpServer);
+            String _plus_21 = (_packageFolder_7 + "/");
+            String _name = model.getName();
+            String _plus_22 = (_plus_21 + _name);
+            String _plus_23 = (_plus_22 + "_creation.xml");
+            fsa.generateFile(_plus_23, 
+              ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, 
+              this.modelTemplate.generateMigration(model, httpServer));
+          }
         }
-        String _packageFolder_6 = this._javaExtension.packageFolder(java);
-        String _plus_18 = (_packageFolder_6 + "/data/");
-        String _dataInterfaceName = this._modelExtension.dataInterfaceName(model);
-        String _plus_19 = (_plus_18 + _dataInterfaceName);
-        String _plus_20 = (_plus_19 + ".java");
-        fsa.generateFile(_plus_20, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateDataInterface(model, java));
-        String _packageFolder_7 = this._javaExtension.packageFolder(java);
-        String _plus_21 = (_packageFolder_7 + "/data/");
-        String _abstractDataName = this._modelExtension.abstractDataName(model);
-        String _plus_22 = (_plus_21 + _abstractDataName);
-        String _plus_23 = (_plus_22 + ".java");
-        fsa.generateFile(_plus_23, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateAbstractData(model, java));
-        String _packageFolder_8 = this._javaExtension.packageFolder(java);
+        String _packageFolder_8 = this._javaExtension.packageFolder(httpServer);
         String _plus_24 = (_packageFolder_8 + "/data/");
-        String _dataName = this._modelExtension.dataName(model);
-        String _plus_25 = (_plus_24 + _dataName);
+        String _dataInterfaceName = this._modelExtension.dataInterfaceName(model);
+        String _plus_25 = (_plus_24 + _dataInterfaceName);
         String _plus_26 = (_plus_25 + ".java");
         fsa.generateFile(_plus_26, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateData(model, java));
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateDataInterface(model, httpServer));
+        String _packageFolder_9 = this._javaExtension.packageFolder(httpServer);
+        String _plus_27 = (_packageFolder_9 + "/data/");
+        String _abstractDataName = this._modelExtension.abstractDataName(model);
+        String _plus_28 = (_plus_27 + _abstractDataName);
+        String _plus_29 = (_plus_28 + ".java");
+        fsa.generateFile(_plus_29, 
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateAbstractData(model, httpServer));
+        String _packageFolder_10 = this._javaExtension.packageFolder(httpServer);
+        String _plus_30 = (_packageFolder_10 + "/data/");
+        String _dataName = this._modelExtension.dataName(model);
+        String _plus_31 = (_plus_30 + _dataName);
+        String _plus_32 = (_plus_31 + ".java");
+        fsa.generateFile(_plus_32, 
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.modelTemplate.generateData(model, httpServer));
       }
     }
-    EList<HttpServerAce> _aceOperations = java.getAceOperations();
+    EList<HttpServerAce> _aceOperations = httpServer.getAceOperations();
     for (final HttpServerAce ace : _aceOperations) {
       {
-        boolean _isDropwizard = this._aceExtension.isDropwizard(java);
+        boolean _isDropwizard = this._aceExtension.isDropwizard(httpServer);
         if (_isDropwizard) {
-          String _packageFolder = this._javaExtension.packageFolder(java);
+          String _packageFolder = this._javaExtension.packageFolder(httpServer);
           String _plus = (_packageFolder + "/resources/");
           String _resourceName = this._aceExtension.resourceName(ace);
           String _plus_1 = (_plus + _resourceName);
           String _plus_2 = (_plus_1 + ".java");
           fsa.generateFile(_plus_2, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-            this.resourceTemplate.generateResourceFile(ace, java, authUser));
+            this.resourceTemplate.generateResourceFile(ace, httpServer, authUser));
         }
-        String _packageFolder_1 = this._javaExtension.packageFolder(java);
+        String _packageFolder_1 = this._javaExtension.packageFolder(httpServer);
         String _plus_3 = (_packageFolder_1 + "/actions/");
         String _abstractActionName = this._aceExtension.abstractActionName(ace);
         String _plus_4 = (_plus_3 + _abstractActionName);
         String _plus_5 = (_plus_4 + ".java");
         fsa.generateFile(_plus_5, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-          this.actionTemplate.generateAbstractActionFile(ace, java, authUser));
-        String _packageFolder_2 = this._javaExtension.packageFolder(java);
+          this.actionTemplate.generateAbstractActionFile(ace, httpServer));
+        String _packageFolder_2 = this._javaExtension.packageFolder(httpServer);
         String _plus_6 = (_packageFolder_2 + "/actions/");
         String _actionName = this._aceExtension.actionName(ace);
         String _plus_7 = (_plus_6 + _actionName);
         String _plus_8 = (_plus_7 + ".java");
         fsa.generateFile(_plus_8, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-          this.actionTemplate.generateInitialActionFile(ace, java));
+          this.actionTemplate.generateInitialActionFile(ace, httpServer));
         boolean _equals = "GET".equals(ace.getType());
         boolean _not = (!_equals);
         if (_not) {
-          String _packageFolder_3 = this._javaExtension.packageFolder(java);
+          String _packageFolder_3 = this._javaExtension.packageFolder(httpServer);
           String _plus_9 = (_packageFolder_3 + "/commands/");
           String _abstractCommandName = this._aceExtension.abstractCommandName(ace);
           String _plus_10 = (_plus_9 + _abstractCommandName);
           String _plus_11 = (_plus_10 + ".java");
           fsa.generateFile(_plus_11, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-            this.commandTemplate.generateAbstractCommandFile(((HttpServerAceWrite) ace), java));
-          String _packageFolder_4 = this._javaExtension.packageFolder(java);
+            this.commandTemplate.generateAbstractCommandFile(((HttpServerAceWrite) ace), httpServer));
+          String _packageFolder_4 = this._javaExtension.packageFolder(httpServer);
           String _plus_12 = (_packageFolder_4 + "/commands/");
           String _commandName = this._aceExtension.commandName(ace);
           String _plus_13 = (_plus_12 + _commandName);
           String _plus_14 = (_plus_13 + ".java");
           fsa.generateFile(_plus_14, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-            this.commandTemplate.generateInitialCommandFile(((HttpServerAceWrite) ace), java));
+            this.commandTemplate.generateInitialCommandFile(((HttpServerAceWrite) ace), httpServer));
           final HttpServerAceWrite aceWrite = ((HttpServerAceWrite) ace);
           EList<HttpServerOutcome> _outcomes = aceWrite.getOutcomes();
           for (final HttpServerOutcome outcome : _outcomes) {
-            String _packageFolder_5 = this._javaExtension.packageFolder(java);
+            String _packageFolder_5 = this._javaExtension.packageFolder(httpServer);
             String _plus_15 = (_packageFolder_5 + "/events/");
             String _eventName = this._aceExtension.eventName(ace, outcome);
             String _plus_16 = (_plus_15 + _eventName);
             String _plus_17 = (_plus_16 + ".java");
             fsa.generateFile(_plus_17, 
               ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-              this.eventTemplate.generateAbstractEventFile(ace, outcome, java));
+              this.eventTemplate.generateAbstractEventFile(ace, outcome, httpServer));
           }
         }
         int _size = ace.getResponse().size();
         boolean _greaterThan = (_size > 0);
         if (_greaterThan) {
-          String _packageFolder_6 = this._javaExtension.packageFolder(java);
+          String _packageFolder_6 = this._javaExtension.packageFolder(httpServer);
           String _plus_18 = (_packageFolder_6 + "/data/");
           String _responseDataName = this._aceExtension.responseDataName(ace);
           String _plus_19 = (_plus_18 + _responseDataName);
           String _plus_20 = (_plus_19 + ".java");
           fsa.generateFile(_plus_20, 
-            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateResponseData(ace, java));
-          String _packageFolder_7 = this._javaExtension.packageFolder(java);
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateResponseData(ace, httpServer));
+          String _packageFolder_7 = this._javaExtension.packageFolder(httpServer);
           String _plus_21 = (_packageFolder_7 + "/data/");
           String _responseDataInterfaceName = this._aceExtension.responseDataInterfaceName(ace);
           String _plus_22 = (_plus_21 + _responseDataInterfaceName);
           String _plus_23 = (_plus_22 + ".java");
           fsa.generateFile(_plus_23, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-            this.modelTemplate.generateReponseDataInterface(ace, java));
+            this.modelTemplate.generateReponseDataInterface(ace, httpServer));
         }
       }
     }
-    EList<HttpServerView> _views = java.getViews();
+    EList<HttpServerView> _views = httpServer.getViews();
     for (final HttpServerView view : _views) {
       {
-        String _packageFolder = this._javaExtension.packageFolder(java);
+        String _packageFolder = this._javaExtension.packageFolder(httpServer);
         String _plus = (_packageFolder + "/views/");
         String _viewName = this._viewExtension.viewName(view);
         String _plus_1 = (_plus + _viewName);
         String _plus_2 = (_plus_1 + ".java");
         fsa.generateFile(_plus_2, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateView(view, java));
-        String _packageFolder_1 = this._javaExtension.packageFolder(java);
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateView(view, httpServer));
+        String _packageFolder_1 = this._javaExtension.packageFolder(httpServer);
         String _plus_3 = (_packageFolder_1 + "/views/");
         String _viewInterfaceName = this._viewExtension.viewInterfaceName(view);
         String _plus_4 = (_plus_3 + _viewInterfaceName);
         String _plus_5 = (_plus_4 + ".java");
         fsa.generateFile(_plus_5, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateViewInterface(view, java));
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateViewInterface(view, httpServer));
       }
     }
-    int _size = java.getAceOperations().size();
+    int _size = httpServer.getAceOperations().size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
-      String _packageFolder = this._javaExtension.packageFolder(java);
+      String _packageFolder = this._javaExtension.packageFolder(httpServer);
       String _plus = (_packageFolder + "/events/EventFactory.java");
       fsa.generateFile(_plus, 
-        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventFactory(java));
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateEventFactory(httpServer));
     }
-    int _size_1 = java.getAceOperations().size();
+    int _size_1 = httpServer.getAceOperations().size();
     boolean _greaterThan_1 = (_size_1 > 0);
     if (_greaterThan_1) {
-      String _packageFolder_1 = this._javaExtension.packageFolder(java);
+      String _packageFolder_1 = this._javaExtension.packageFolder(httpServer);
       String _plus_1 = (_packageFolder_1 + "/actions/AceDataFactory.java");
       fsa.generateFile(_plus_1, 
-        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(httpServer));
     }
     fsa.generateFile("de/acegen/EventFactory.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.eventTemplate.generateEventFactory());
@@ -285,7 +309,7 @@ public class JavaGenerator {
       this.aceTemplate.generateConfig());
     fsa.generateFile(("de/acegen" + "/AceOperation.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceTemplate.generateAceOperation());
-    boolean _isDropwizard = this._aceExtension.isDropwizard(java);
+    boolean _isDropwizard = this._aceExtension.isDropwizard(httpServer);
     if (_isDropwizard) {
       fsa.generateFile(("de/acegen" + "/StartE2ESessionResource.java"), 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStartE2ESessionResource());
@@ -311,12 +335,12 @@ public class JavaGenerator {
       fsa.generateFile(("de/acegen" + "/Resource.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
         this.resourceTemplate.generateDropwizardResource());
     }
-    String _packageFolder_2 = this._javaExtension.packageFolder(java);
+    String _packageFolder_2 = this._javaExtension.packageFolder(httpServer);
     String _plus_2 = (_packageFolder_2 + "/AppRegistration.java");
     fsa.generateFile(_plus_2, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAppRegistration(java));
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAppRegistration(httpServer));
     fsa.generateFile(("de/acegen" + "/AppRegistration.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-      this.aceTemplate.generateAppRegistration(java));
+      this.aceTemplate.generateAppRegistration(httpServer));
     fsa.generateFile(("de/acegen" + "/NotReplayableDataProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateNotReplayableDataProvider());
     fsa.generateFile(("de/acegen" + "/AceDao.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
@@ -388,25 +412,25 @@ public class JavaGenerator {
       this.scenarioTemplate.generateAbstractBaseScenario());
     fsa.generateFile("de/acegen/BaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.scenarioTemplate.generateBaseScenario());
-    EList<Scenario> _scenarios = java.getScenarios();
+    EList<Scenario> _scenarios = httpServer.getScenarios();
     for (final Scenario scenario : _scenarios) {
       {
-        String _packageFolder_3 = this._javaExtension.packageFolder(java);
+        String _packageFolder_3 = this._javaExtension.packageFolder(httpServer);
         String _plus_5 = (_packageFolder_3 + "/scenarios/Abstract");
         String _name = scenario.getName();
         String _plus_6 = (_plus_5 + _name);
         String _plus_7 = (_plus_6 + "Scenario.java");
         fsa.generateFile(_plus_7, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, 
-          this.scenarioTemplate.generateAbstractScenario(scenario, java));
-        String _packageFolder_4 = this._javaExtension.packageFolder(java);
+          this.scenarioTemplate.generateAbstractScenario(scenario, httpServer));
+        String _packageFolder_4 = this._javaExtension.packageFolder(httpServer);
         String _plus_8 = (_packageFolder_4 + "/scenarios/");
         String _name_1 = scenario.getName();
         String _plus_9 = (_plus_8 + _name_1);
         String _plus_10 = (_plus_9 + "Scenario.java");
         fsa.generateFile(_plus_10, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
-          this.scenarioTemplate.generateScenario(scenario, java));
+          this.scenarioTemplate.generateScenario(scenario, httpServer));
       }
     }
   }

@@ -101,6 +101,14 @@ class AceExtension {
 		return it.type == "Dropwizard"
 	}
 	
+	def boolean isJDBI3(HttpServer it) {
+		return it.persistenceLayer == "JDBI3"
+	}
+	
+	def boolean isLiquibase(HttpServer it) {
+		return it.migrations == "Liquibase"
+	}
+	
 }
 	
 	

@@ -408,13 +408,40 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER = 7;
 
   /**
+   * The feature id for the '<em><b>Language</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__LANGUAGE = 0;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__TYPE = 0;
+  int HTTP_SERVER__TYPE = 1;
+
+  /**
+   * The feature id for the '<em><b>Persistence Layer</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__PERSISTENCE_LAYER = 2;
+
+  /**
+   * The feature id for the '<em><b>Migrations</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__MIGRATIONS = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -423,7 +450,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__NAME = 1;
+  int HTTP_SERVER__NAME = 4;
 
   /**
    * The feature id for the '<em><b>Auth User</b></em>' containment reference.
@@ -432,7 +459,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER = 2;
+  int HTTP_SERVER__AUTH_USER = 5;
 
   /**
    * The feature id for the '<em><b>Auth User Ref</b></em>' reference.
@@ -441,7 +468,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER_REF = 3;
+  int HTTP_SERVER__AUTH_USER_REF = 6;
 
   /**
    * The feature id for the '<em><b>Ace Operations</b></em>' containment reference list.
@@ -450,7 +477,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__ACE_OPERATIONS = 4;
+  int HTTP_SERVER__ACE_OPERATIONS = 7;
 
   /**
    * The feature id for the '<em><b>Views</b></em>' containment reference list.
@@ -459,7 +486,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__VIEWS = 5;
+  int HTTP_SERVER__VIEWS = 8;
 
   /**
    * The feature id for the '<em><b>Models</b></em>' containment reference list.
@@ -468,7 +495,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__MODELS = 6;
+  int HTTP_SERVER__MODELS = 9;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -477,7 +504,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__SCENARIOS = 7;
+  int HTTP_SERVER__SCENARIOS = 10;
 
   /**
    * The number of structural features of the '<em>Http Server</em>' class.
@@ -486,7 +513,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_FEATURE_COUNT = 8;
+  int HTTP_SERVER_FEATURE_COUNT = 11;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceImpl <em>Http Server Ace</em>}' class.
@@ -2410,6 +2437,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServer();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getLanguage <em>Language</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Language</em>'.
+   * @see de.acegen.aceGen.HttpServer#getLanguage()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_Language();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2419,6 +2457,28 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getHttpServer_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getPersistenceLayer <em>Persistence Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Persistence Layer</em>'.
+   * @see de.acegen.aceGen.HttpServer#getPersistenceLayer()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_PersistenceLayer();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getMigrations <em>Migrations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Migrations</em>'.
+   * @see de.acegen.aceGen.HttpServer#getMigrations()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_Migrations();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getName <em>Name</em>}'.
@@ -3976,12 +4036,36 @@ public interface AceGenPackage extends EPackage
     EClass HTTP_SERVER = eINSTANCE.getHttpServer();
 
     /**
+     * The meta object literal for the '<em><b>Language</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__LANGUAGE = eINSTANCE.getHttpServer_Language();
+
+    /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute HTTP_SERVER__TYPE = eINSTANCE.getHttpServer_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Persistence Layer</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__PERSISTENCE_LAYER = eINSTANCE.getHttpServer_PersistenceLayer();
+
+    /**
+     * The meta object literal for the '<em><b>Migrations</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__MIGRATIONS = eINSTANCE.getHttpServer_Migrations();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

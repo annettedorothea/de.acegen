@@ -35,7 +35,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getLanguage <em>Language</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getPersistenceLayer <em>Persistence Layer</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getMigrations <em>Migrations</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUser <em>Auth User</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUserRef <em>Auth User Ref</em>}</li>
@@ -49,6 +52,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpServerImpl extends MinimalEObjectImpl.Container implements HttpServer
 {
+  /**
+   * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguage()
+   * @generated
+   * @ordered
+   */
+  protected static final String LANGUAGE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguage()
+   * @generated
+   * @ordered
+   */
+  protected String language = LANGUAGE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -68,6 +91,46 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @ordered
    */
   protected String type = TYPE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPersistenceLayer() <em>Persistence Layer</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPersistenceLayer()
+   * @generated
+   * @ordered
+   */
+  protected static final String PERSISTENCE_LAYER_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPersistenceLayer() <em>Persistence Layer</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPersistenceLayer()
+   * @generated
+   * @ordered
+   */
+  protected String persistenceLayer = PERSISTENCE_LAYER_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getMigrations() <em>Migrations</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMigrations()
+   * @generated
+   * @ordered
+   */
+  protected static final String MIGRATIONS_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getMigrations() <em>Migrations</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMigrations()
+   * @generated
+   * @ordered
+   */
+  protected String migrations = MIGRATIONS_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -176,6 +239,31 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
+  public String getLanguage()
+  {
+    return language;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setLanguage(String newLanguage)
+  {
+    String oldLanguage = language;
+    language = newLanguage;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__LANGUAGE, oldLanguage, language));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getType()
   {
     return type;
@@ -193,6 +281,56 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getPersistenceLayer()
+  {
+    return persistenceLayer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setPersistenceLayer(String newPersistenceLayer)
+  {
+    String oldPersistenceLayer = persistenceLayer;
+    persistenceLayer = newPersistenceLayer;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER, oldPersistenceLayer, persistenceLayer));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getMigrations()
+  {
+    return migrations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setMigrations(String newMigrations)
+  {
+    String oldMigrations = migrations;
+    migrations = newMigrations;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__MIGRATIONS, oldMigrations, migrations));
   }
 
   /**
@@ -409,8 +547,14 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__LANGUAGE:
+        return getLanguage();
       case AceGenPackage.HTTP_SERVER__TYPE:
         return getType();
+      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
+        return getPersistenceLayer();
+      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
+        return getMigrations();
       case AceGenPackage.HTTP_SERVER__NAME:
         return getName();
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -441,8 +585,17 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__LANGUAGE:
+        setLanguage((String)newValue);
+        return;
       case AceGenPackage.HTTP_SERVER__TYPE:
         setType((String)newValue);
+        return;
+      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
+        setPersistenceLayer((String)newValue);
+        return;
+      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
+        setMigrations((String)newValue);
         return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName((String)newValue);
@@ -483,8 +636,17 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__LANGUAGE:
+        setLanguage(LANGUAGE_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_SERVER__TYPE:
         setType(TYPE_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
+        setPersistenceLayer(PERSISTENCE_LAYER_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
+        setMigrations(MIGRATIONS_EDEFAULT);
         return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName(NAME_EDEFAULT);
@@ -521,8 +683,14 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER__LANGUAGE:
+        return LANGUAGE_EDEFAULT == null ? language != null : !LANGUAGE_EDEFAULT.equals(language);
       case AceGenPackage.HTTP_SERVER__TYPE:
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
+        return PERSISTENCE_LAYER_EDEFAULT == null ? persistenceLayer != null : !PERSISTENCE_LAYER_EDEFAULT.equals(persistenceLayer);
+      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
+        return MIGRATIONS_EDEFAULT == null ? migrations != null : !MIGRATIONS_EDEFAULT.equals(migrations);
       case AceGenPackage.HTTP_SERVER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -552,8 +720,14 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (type: ");
+    result.append(" (language: ");
+    result.append(language);
+    result.append(", type: ");
     result.append(type);
+    result.append(", persistenceLayer: ");
+    result.append(persistenceLayer);
+    result.append(", migrations: ");
+    result.append(migrations);
     result.append(", name: ");
     result.append(name);
     result.append(')');

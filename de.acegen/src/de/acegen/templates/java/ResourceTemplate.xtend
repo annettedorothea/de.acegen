@@ -65,10 +65,10 @@ class ResourceTemplate {
 		«sdg»
 	'''
 	
-	def generateResourceFile(HttpServerAce it, HttpServer java, AuthUser authUser) '''
+	def generateResourceFile(HttpServerAce it, HttpServer httpServer, AuthUser authUser) '''
 		«copyright»
 		
-		package «java.getName».resources;
+		package «httpServer.getName».resources;
 		
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.Path;
@@ -190,7 +190,7 @@ class ResourceTemplate {
 			try {
 				action.apply();
 				«IF response.size > 0»
-					return Response.ok(new «responseDataNameWithPackage(java)»(action.getActionData())).build();
+					return Response.ok(new «responseDataNameWithPackage(httpServer)»(action.getActionData())).build();
 				«ELSE»
 					return ok();
 				«ENDIF»
