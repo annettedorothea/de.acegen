@@ -77,7 +77,7 @@ class Action {
 
 			«IF proxy»
 				@Override
-				protected IScheduledCardsData createDataFrom(ITimelineItem timelineItem) {
+				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
 					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
 					return («getModel.dataParamType»)originalData;
 				}
@@ -111,7 +111,7 @@ class Action {
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
-		import de.acegen.ReadAction;
+		import de.acegen.«IF isProxy»Proxy«ENDIF»ReadAction;
 		import de.acegen.ITimelineItem;
 		import de.acegen.NotReplayableDataProvider;
 		
@@ -123,7 +123,7 @@ class Action {
 		«getModel.dataClassImport»
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»ReadAction<«getModel.dataParamType»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
@@ -137,6 +137,14 @@ class Action {
 			«initActionDataFrom»
 			
 			«initActionDataFromNotReplayableDataProvider»
+
+			«IF proxy»
+				@Override
+				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
+					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
+					return («getModel.dataParamType»)originalData;
+				}
+			«ENDIF»
 
 		}
 		
@@ -232,7 +240,7 @@ class Action {
 		
 	'''
 	
-	def generateReadAction() '''
+	def generateReadAction(boolean isProxy) '''
 		«copyright»
 		
 		package de.acegen;
@@ -241,7 +249,7 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
+		public abstract class «IF isProxy»Proxy«ENDIF»ReadAction<T extends IDataContainer> extends Action<T> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 			
@@ -250,7 +258,7 @@ class Action {
 			protected IDaoProvider daoProvider;
 			private E2E e2e;
 			
-			public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+			public «IF isProxy»Proxy«ENDIF»ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
 					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
 				super(actionName);
 				this.persistenceConnection = persistenceConnection;
@@ -264,6 +272,8 @@ class Action {
 			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
 
 			protected abstract void initActionDataFromNotReplayableDataProvider();
+
+			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
 
 			public void apply() {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
@@ -287,7 +297,17 @@ class Action {
 					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
 						initActionDataFromNotReplayableDataProvider();
 					}
-					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					«IF isProxy»
+						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
+							ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
+							T originalData = this.createDataFrom(timelineItem);
+							this.setActionData(originalData);
+						} else {
+							this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+						}
+					«ELSE»
+						this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					«ENDIF»
 					
 					«addActionToTimeline»
 					databaseHandle.commitTransaction();

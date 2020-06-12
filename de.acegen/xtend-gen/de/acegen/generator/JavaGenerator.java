@@ -338,7 +338,9 @@ public class JavaGenerator {
     fsa.generateFile("de/acegen/Action.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.action.generateAction());
     fsa.generateFile("de/acegen/ReadAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.action.generateReadAction());
+      this.action.generateReadAction(false));
+    fsa.generateFile("de/acegen/ProxyReadAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.action.generateReadAction(true));
     fsa.generateFile("de/acegen/WriteAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.action.generateWriteAction(false));
     fsa.generateFile("de/acegen/ProxyWriteAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 

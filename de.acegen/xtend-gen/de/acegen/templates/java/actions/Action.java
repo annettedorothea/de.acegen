@@ -186,8 +186,11 @@ public class Action {
         _builder.append("@Override");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("protected IScheduledCardsData createDataFrom(ITimelineItem timelineItem) {");
-        _builder.newLine();
+        _builder.append("protected ");
+        String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_1, "\t");
+        _builder.append(" createDataFrom(ITimelineItem timelineItem) {");
+        _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
@@ -195,8 +198,8 @@ public class Action {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("return (");
-        String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType_1, "\t\t");
+        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_2, "\t\t");
         _builder.append(")originalData;");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -259,8 +262,15 @@ public class Action {
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
-    _builder.append("import de.acegen.ReadAction;");
-    _builder.newLine();
+    _builder.append("import de.acegen.");
+    {
+      boolean _isProxy = it.isProxy();
+      if (_isProxy) {
+        _builder.append("Proxy");
+      }
+    }
+    _builder.append("ReadAction;");
+    _builder.newLineIfNotEmpty();
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
     _builder.append("import de.acegen.NotReplayableDataProvider;");
@@ -286,7 +296,14 @@ public class Action {
     _builder.append("public abstract class ");
     String _abstractActionName = this._aceExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
-    _builder.append(" extends ReadAction<");
+    _builder.append(" extends ");
+    {
+      boolean _isProxy_1 = it.isProxy();
+      if (_isProxy_1) {
+        _builder.append("Proxy");
+      }
+    }
+    _builder.append("ReadAction<");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
     _builder.append(_dataParamType);
     _builder.append("> {");
@@ -331,6 +348,35 @@ public class Action {
     CharSequence _initActionDataFromNotReplayableDataProvider = this.initActionDataFromNotReplayableDataProvider(it);
     _builder.append(_initActionDataFromNotReplayableDataProvider, "\t");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      boolean _isProxy_2 = it.isProxy();
+      if (_isProxy_2) {
+        _builder.append("\t");
+        _builder.append("@Override");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("protected ");
+        String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_1, "\t");
+        _builder.append(" createDataFrom(ITimelineItem timelineItem) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("return (");
+        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_2, "\t\t");
+        _builder.append(")originalData;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -550,7 +596,7 @@ public class Action {
     return _builder;
   }
   
-  public CharSequence generateReadAction() {
+  public CharSequence generateReadAction(final boolean isProxy) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -566,8 +612,14 @@ public class Action {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public abstract class ReadAction<T extends IDataContainer> extends Action<T> {");
-    _builder.newLine();
+    _builder.append("public abstract class ");
+    {
+      if (isProxy) {
+        _builder.append("Proxy");
+      }
+    }
+    _builder.append("ReadAction<T extends IDataContainer> extends Action<T> {");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);");
@@ -589,8 +641,14 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
-    _builder.newLine();
+    _builder.append("public ");
+    {
+      if (isProxy) {
+        _builder.append("Proxy");
+      }
+    }
+    _builder.append("ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
     _builder.newLine();
@@ -625,6 +683,14 @@ public class Action {
     _builder.append("\t");
     _builder.append("protected abstract void initActionDataFromNotReplayableDataProvider();");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    {
+      if (isProxy) {
+        _builder.append("protected abstract T createDataFrom(ITimelineItem timelineItem);");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void apply() {");
@@ -692,9 +758,39 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());");
-    _builder.newLine();
+    {
+      if (isProxy) {
+        _builder.append("\t\t\t");
+        _builder.append("if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t");
+        _builder.append("ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t");
+        _builder.append("T originalData = this.createDataFrom(timelineItem);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t");
+        _builder.append("this.setActionData(originalData);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("} else {");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t");
+        _builder.append("this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("}");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t");
+        _builder.append("this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
