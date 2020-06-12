@@ -466,21 +466,24 @@ public class AttributeExtension {
     return null;
   }
   
-  public String param(final Attribute it, final boolean jsonProperty) {
+  public String paramAsJsonProperty(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      if (jsonProperty) {
-        _builder.append("@JsonProperty(\"");
-        String _name = it.getName();
-        _builder.append(_name);
-        _builder.append("\") ");
-      }
-    }
+    _builder.append("@JsonProperty(\"");
+    String _name = it.getName();
+    _builder.append(_name);
+    _builder.append("\") ");
+    String _param = this.param(it);
+    _builder.append(_param);
+    return _builder.toString();
+  }
+  
+  public String param(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
     String _javaType = this.javaType(it);
     _builder.append(_javaType);
     _builder.append(" ");
-    String _name_1 = it.getName();
-    _builder.append(_name_1);
+    String _name = it.getName();
+    _builder.append(_name);
     return _builder.toString();
   }
   

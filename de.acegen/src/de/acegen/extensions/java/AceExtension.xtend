@@ -31,7 +31,6 @@ class AceExtension {
 	
 	@Inject
 	extension AttributeExtension
-
 	
 	def String abstractActionName(HttpServerAce it) '''Abstract«getName.toFirstUpper»Action'''
 	
@@ -59,11 +58,11 @@ class AceExtension {
 
 	def String eventNameWithPackage(HttpServerAce it, HttpServerOutcome outcome) '''«(eContainer as HttpServer).getName».events.«eventName(outcome)»'''
 
-	def String responseDataName(HttpServerAce  it) '''«getName.toFirstUpper»Response'''
+	def String responseDataName(HttpServerAce it) '''«getName.toFirstUpper»Response'''
 	
-	def String responseDataNameWithPackage(HttpServerAce  it, HttpServer java) '''«java.getName».data.«getName.toFirstUpper»Response'''
+	def String responseDataNameWithPackage(HttpServerAce it, HttpServer httpServer) '''«httpServer.name».data.«getName.toFirstUpper»Response'''
 	
-	def String responseDataInterfaceName(HttpServerAce it) '''I«getName.toFirstUpper»Response'''
+	def String responseDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Response'''
 
 	def boolean isRead(HttpServerAce it) {
 		return it instanceof HttpServerAceRead

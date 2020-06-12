@@ -174,9 +174,9 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String responseDataNameWithPackage(final HttpServerAce it, final HttpServer java) {
+  public String responseDataNameWithPackage(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = java.getName();
+    String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".data.");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());

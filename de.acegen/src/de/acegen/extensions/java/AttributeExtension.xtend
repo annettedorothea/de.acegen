@@ -155,8 +155,9 @@ class AttributeExtension {
 		}
 	}
 
-	def String param(Attribute it,
-		boolean jsonProperty) '''«IF jsonProperty»@JsonProperty("«name»") «ENDIF»«javaType» «name»'''
+	def String paramAsJsonProperty(Attribute it) '''@JsonProperty("«name»") «param»'''
+
+	def String param(Attribute it) '''«javaType» «name»'''
 
 	def String interfaceGetter(Attribute it) '''«javaType» get«name.toFirstUpper»();'''
 
