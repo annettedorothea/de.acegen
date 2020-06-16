@@ -29,7 +29,7 @@ import de.acegen.aceGen.HttpServerAce
 class AceGenValidator extends AbstractAceGenValidator {
 	
 	@Check
-    def void checkNameStartsWithCapital(HttpServerAce ace) {
+    def void getShouldHaveResponse(HttpServerAce ace) {
     	if ("GET".equals(ace.getType) && ace.response.size == 0) {
     		warning('GET request should have a response', 
 					AceGenPackage.Literals.HTTP_SERVER__NAME)

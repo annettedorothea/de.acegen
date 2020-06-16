@@ -24,7 +24,7 @@ public class CommonExtension {
     _builder.append("/* ");
     _builder.newLine();
     _builder.append(" ");
-    _builder.append("* Copyright (c) 2019, Annette Pohl, Koblenz, Germany");
+    _builder.append("* Copyright (c) 2020, Annette Pohl, Koblenz, Germany");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("*");

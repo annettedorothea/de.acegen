@@ -28,7 +28,7 @@ import org.eclipse.xtext.validation.Check;
 @SuppressWarnings("all")
 public class AceGenValidator extends AbstractAceGenValidator {
   @Check
-  public void checkNameStartsWithCapital(final HttpServerAce ace) {
+  public void getShouldHaveResponse(final HttpServerAce ace) {
     if (("GET".equals(ace.getType()) && (ace.getResponse().size() == 0))) {
       this.warning("GET request should have a response", 
         AceGenPackage.Literals.HTTP_SERVER__NAME);

@@ -21,7 +21,7 @@ class CommonExtension {
 
 	def String copyright() '''
 		/* 
-		 * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+		 * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
 		 *
 		 * Permission to use, copy, modify, and/or distribute this software for any
 		 * purpose with or without fee is hereby granted, provided that the above

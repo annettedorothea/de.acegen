@@ -1236,14 +1236,14 @@ public class Action {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t\t");
-            String _type = attribute.getType();
-            _builder.append(_type, "\t\t\t");
+            String _javaType = this._attributeExtension.javaType(attribute);
+            _builder.append(_javaType, "\t\t\t");
             _builder.append(" ");
             String _name_1 = attribute.getName();
             _builder.append(_name_1, "\t\t\t");
             _builder.append(" = (");
-            String _type_1 = attribute.getType();
-            _builder.append(_type_1, "\t\t\t");
+            String _javaType_1 = this._attributeExtension.javaType(attribute);
+            _builder.append(_javaType_1, "\t\t\t");
             _builder.append(")value;");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
