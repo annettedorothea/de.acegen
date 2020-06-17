@@ -232,7 +232,8 @@ class Data {
 		
 		using System;
 		
-		namespace Acegen {
+		namespace Acegen 
+		{
 		
 			public interface IDataContainer {
 			
@@ -255,54 +256,44 @@ class Data {
 	def generateAbstractData() '''
 		«copyright»
 		
-		package de.acegen;
+		using System;
 		
-		import java.time.LocalDateTime;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		
-		public abstract class AbstractData implements IDataContainer {
-		
-			private String uuid;
+		namespace Acegen 
+		{
 			
-			private String outcome;
+			public abstract class AbstractData : IDataContainer {
 			
-			private LocalDateTime systemTime;
+				protected string _uuid;
+				
+				protected string _outcome;
+				
+				protected DateTime _systemTime;
+				
+				public AbstractData( string uuid ) {
+					_uuid = uuid;
+				}
 			
-			public AbstractData( String uuid ) {
-				this.uuid = uuid;
+				public string Uuid
+			    {
+			      get => _uuid;
+			      set => _uuid = value;
+			    }
+			    
+				public string Outcome
+			    {
+			      get => _outcome;
+			      set => _outcome = value;
+			    }
+			    
+				public DateTime SystemTime
+			    {
+			      get => _systemTime;
+			      set => _systemTime = value;
+			    }
+			    
+			    public abstract void migrateLegacyData(string json);
+			    
 			}
-		
-			@JsonProperty
-			public String getUuid() {
-				return this.uuid;
-			}
-		
-			@JsonProperty
-			public void setUuid(String uuid) {
-				this.uuid = uuid;
-			}
-		
-			@JsonProperty
-			public LocalDateTime getSystemTime() {
-				return systemTime;
-			}
-		
-			@JsonProperty
-			public void setSystemTime(LocalDateTime systemTime) {
-				this.systemTime = systemTime;
-			}
-		
-			@JsonProperty
-			public String getOutcome() {
-				return outcome;
-			}
-		
-			@JsonProperty
-			public void setOutcome(String outcome) {
-				this.outcome = outcome;
-			}
-			
 		}
 		
 		

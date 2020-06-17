@@ -18,15 +18,16 @@
 package de.acegen.generator
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.cs.AceExtension
 import de.acegen.extensions.cs.CSExtension
+import de.acegen.templates.cs.Configuration
 import de.acegen.templates.cs.actions.Action
 import de.acegen.templates.cs.commands.Command
+import de.acegen.templates.cs.data.Data
 import de.acegen.templates.cs.events.Event
+import de.acegen.templates.cs.models.Dao
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.templates.cs.data.Data
 
 class CSGenerator {
 
@@ -43,13 +44,19 @@ class CSGenerator {
 	Data data;
 
 	@Inject
+	Dao dao;
+
+	@Inject
+	Configuration configuration;
+
+	@Inject
 	extension CSExtension
 
 	@Inject
 	extension AceExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
-		for (ace : httpServer.aceOperations) {
+		/*for (ace : httpServer.aceOperations) {
 			fsa.generateFile(httpServer.packageFolder + "/Actions/" + ace.abstractActionName + ".cs",
 				ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, action.generateAbstractActionFile(ace, httpServer));
 			fsa.generateFile(httpServer.packageFolder + "/Actions/" + ace.actionName + ".cs",
@@ -76,10 +83,10 @@ class CSGenerator {
 					ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 					data.generateReponseDataInterface(ace, httpServer));
 			}
-		}
+		}*/
 		fsa.generateFile("Acegen/Action.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			action.generateAction());
-		fsa.generateFile("Acegen/ReadAction.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+		/*fsa.generateFile("Acegen/ReadAction.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			action.generateReadAction(false));
 		fsa.generateFile("Acegen/ProxyReadAction.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			action.generateReadAction(true));
@@ -88,12 +95,26 @@ class CSGenerator {
 		fsa.generateFile("Acegen/ProxyWriteAction.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			action.generateWriteAction(true));
 		fsa.generateFile("Acegen/HttpMethod.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-			action.generateHttpMethod());
+			action.generateHttpMethod());*/
 		fsa.generateFile("Acegen/IAction.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			action.generateIAction());
 
 		fsa.generateFile("Acegen/IDataContainer.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
 			data.generateIDataContainer());
+		fsa.generateFile("Acegen/AbstractData.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+			data.generateAbstractData());
+			
+		/*fsa.generateFile("Acegen/AceDao.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
+			dao.generateAceDao());
+		fsa.generateFile("Acegen/IAceDao.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+			dao.generateAceDaoInterface());*/
+			
+		fsa.generateFile("Acegen/CustomAppConfiguration.cs",
+			ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE, configuration.generateCustomAppConfiguration());
+		fsa.generateFile("Acegen/AppConfiguration.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+			configuration.generateAppConfiguration());
+		fsa.generateFile("Acegen/Config.cs", ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+			configuration.generateConfig());
 	}
 
 }
