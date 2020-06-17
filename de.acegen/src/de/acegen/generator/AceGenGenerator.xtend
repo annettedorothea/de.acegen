@@ -37,6 +37,9 @@ class AceGenGenerator extends AbstractGenerator {
 	@Inject
 	JavaGenerator javaGenerator;
 
+	@Inject
+	CSGenerator csGenerator;
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {
 			val project = resource.contents.get(0) as Project
@@ -44,7 +47,11 @@ class AceGenGenerator extends AbstractGenerator {
 			if (project.httpClient !== null) {
 				es6Generator.doGenerate(project.httpClient, fsa);
 			} else if (project.httpServer !== null) {
-				javaGenerator.doGenerate(project.httpServer, fsa);
+				if (project.httpServer.language == "Java") {
+					javaGenerator.doGenerate(project.httpServer, fsa);
+				} else if (project.httpServer.language == "C#") {
+					csGenerator.doGenerate(project.httpServer, fsa);
+				}
 			}
 
 		}

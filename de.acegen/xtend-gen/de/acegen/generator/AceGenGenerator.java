@@ -15,9 +15,11 @@
  */
 package de.acegen.generator;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Project;
+import de.acegen.generator.CSGenerator;
 import de.acegen.generator.Es6Generator;
 import de.acegen.generator.JavaGenerator;
 import javax.inject.Inject;
@@ -40,6 +42,9 @@ public class AceGenGenerator extends AbstractGenerator {
   @Inject
   private JavaGenerator javaGenerator;
   
+  @Inject
+  private CSGenerator csGenerator;
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
@@ -53,7 +58,17 @@ public class AceGenGenerator extends AbstractGenerator {
         HttpServer _httpServer = project.getHttpServer();
         boolean _tripleNotEquals_1 = (_httpServer != null);
         if (_tripleNotEquals_1) {
-          this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
+          String _language = project.getHttpServer().getLanguage();
+          boolean _equals = Objects.equal(_language, "Java");
+          if (_equals) {
+            this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
+          } else {
+            String _language_1 = project.getHttpServer().getLanguage();
+            boolean _equals_1 = Objects.equal(_language_1, "C#");
+            if (_equals_1) {
+              this.csGenerator.doGenerate(project.getHttpServer(), fsa);
+            }
+          }
         }
       }
     }

@@ -27,12 +27,18 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 public class ACEOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 	public final static String DEFAULT_JAVASCRIPT_OUTPUT_ONCE = "DEFAULT_JAVASCRIPT_OUTPUT_ONCE";
+
 	public final static String DEFAULT_JAVA_OUTPUT = "DEFAULT_JAVA_OUTPUT";
 	public final static String DEFAULT_RESOURCE_OUTPUT = "DEFAULT_RESOURCE_OUTPUT";
 	public final static String DEFAULT_JAVA_OUTPUT_ONCE = "DEFAULT_JAVA_OUTPUT_ONCE";
 	public final static String DEFAULT_JAVA_TEST_OUTPUT_ONCE = "DEFAULT_JAVA_TEST_OUTPUT_ONCE";
 	public final static String DEFAULT_JAVA_TEST_OUTPUT = "DEFAULT_JAVA_TEST_OUTPUT";
 
+	public final static String DEFAULT_CS_OUTPUT = "DEFAULT_CS_OUTPUT";
+	public final static String DEFAULT_CS_OUTPUT_ONCE = "DEFAULT_CS_OUTPUT_ONCE";
+	public final static String DEFAULT_CS_TEST_OUTPUT_ONCE = "DEFAULT_CS_TEST_OUTPUT_ONCE";
+	public final static String DEFAULT_CS_TEST_OUTPUT = "DEFAULT_CS_TEST_OUTPUT";
+	
 	/**
 	 * @return a set of {@link OutputConfiguration} available for the generator
 	 */
@@ -86,13 +92,45 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceJavaTestOutput.setSetDerivedProperty(false);
 
 		OutputConfiguration javaTestOutput = new OutputConfiguration(DEFAULT_JAVA_TEST_OUTPUT);
-		javaTestOutput.setDescription("Java test sources");
+		javaTestOutput.setDescription("generated Java test sources");
 		javaTestOutput.setOutputDirectory("./src/test/gen/");
 		javaTestOutput.setOverrideExistingResources(true);
 		javaTestOutput.setCreateOutputDirectory(true);
 		javaTestOutput.setCleanUpDerivedResources(true);
 		javaTestOutput.setSetDerivedProperty(true);
 
+		OutputConfiguration defaultCsOutput = new OutputConfiguration(DEFAULT_CS_OUTPUT);
+		defaultCsOutput.setDescription("generated C# sources");
+		defaultCsOutput.setOutputDirectory("./gen/");
+		defaultCsOutput.setOverrideExistingResources(true);
+		defaultCsOutput.setCreateOutputDirectory(true);
+		defaultCsOutput.setCleanUpDerivedResources(true);
+		defaultCsOutput.setSetDerivedProperty(true);
+		
+		OutputConfiguration onceCsOutput = new OutputConfiguration(DEFAULT_CS_OUTPUT_ONCE);
+		onceCsOutput.setDescription("initial C# sources");
+		onceCsOutput.setOutputDirectory("./src/");
+		onceCsOutput.setOverrideExistingResources(false);
+		onceCsOutput.setCreateOutputDirectory(true);
+		onceCsOutput.setCleanUpDerivedResources(false);
+		onceCsOutput.setSetDerivedProperty(false);
+		
+		OutputConfiguration onceCsTestOutput = new OutputConfiguration(DEFAULT_CS_TEST_OUTPUT_ONCE);
+		onceCsTestOutput.setDescription("initial C# test sources");
+		onceCsTestOutput.setOutputDirectory("./test/");
+		onceCsTestOutput.setOverrideExistingResources(false);
+		onceCsTestOutput.setCreateOutputDirectory(true);
+		onceCsTestOutput.setCleanUpDerivedResources(false);
+		onceCsTestOutput.setSetDerivedProperty(false);
+		
+		OutputConfiguration csTestOutput = new OutputConfiguration(DEFAULT_CS_TEST_OUTPUT);
+		csTestOutput.setDescription("generated C# test sources");
+		csTestOutput.setOutputDirectory("./test-gen/");
+		csTestOutput.setOverrideExistingResources(true);
+		csTestOutput.setCreateOutputDirectory(true);
+		csTestOutput.setCleanUpDerivedResources(true);
+		csTestOutput.setSetDerivedProperty(true);
+		
 		return newHashSet(
 				defaultOutput, 
 				onceOutput, 
@@ -100,7 +138,11 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 				onceJavaOutput, 
 				defaultResourceOutput,
 				onceJavaTestOutput, 
-				javaTestOutput);
+				javaTestOutput,
+				defaultCsOutput,
+				onceCsOutput,
+				onceCsTestOutput,
+				csTestOutput);
 	}
 
 }
