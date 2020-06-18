@@ -206,7 +206,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     AttributeParamRef returns AttributeParamRef
 	 *
 	 * Constraint:
-	 *     (attribute=[Attribute|QualifiedName] optional?='optional'?)
+	 *     (notNull?='NotNull'? attribute=[Attribute|QualifiedName])
 	 */
 	protected void sequence_AttributeParamRef(ISerializationContext context, AttributeParamRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -432,7 +432,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         pathParams+=AttributeParamRef* 
 	 *         queryParams+=AttributeParamRef* 
 	 *         payload+=AttributeParamRef* 
-	 *         response+=[Attribute|QualifiedName]* 
 	 *         outcomes+=HttpServerOutcome*
 	 *     )
 	 */

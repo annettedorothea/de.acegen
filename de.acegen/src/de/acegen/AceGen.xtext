@@ -86,7 +86,6 @@ HttpServerAceWrite:
 	('pathParams' (pathParams += AttributeParamRef)*)?
 	('queryParams' (queryParams += AttributeParamRef)*)?
 	('payload' (payload += AttributeParamRef)*)?
-	('response' (response += [Attribute | QualifiedName])*)?
 	(outcomes += HttpServerOutcome)*
 ;
 
@@ -107,7 +106,7 @@ HttpServerAceRead:
 ;
 
 AttributeParamRef:
-	attribute = [Attribute | QualifiedName] optional ?= 'optional'? 
+	notNull ?= 'NotNull'? attribute = [Attribute | QualifiedName] 
 ;
 
 HttpServerView: 

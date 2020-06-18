@@ -8,6 +8,7 @@ import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerAceRead
 
 class Resource {
 
@@ -147,7 +148,7 @@ class Resource {
 			action.setActionData(actionData);
 			try {
 				action.apply();
-				«IF response.size > 0»
+				«IF it instanceof HttpServerAceRead && (it as HttpServerAceRead).response.size > 0»
 					return Response.ok(new «responseDataNameWithPackage(httpServer)»(action.getActionData())).build();
 				«ELSE»
 					return ok();

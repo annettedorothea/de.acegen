@@ -66,7 +66,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/pathParams"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/queryParams"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/payload"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/response"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceWrite">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceWrite/outcomes"/>
@@ -75,10 +74,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerOutcome/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerOutcome/listeners"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//HttpServerAceRead"/>
+    <genClasses ecoreClass="AceGen.ecore#//HttpServerAceRead">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceRead/response"/>
+    </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//AttributeParamRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//AttributeParamRef/notNull"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeParamRef/attribute"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//AttributeParamRef/optional"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerView">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerView/name"/>

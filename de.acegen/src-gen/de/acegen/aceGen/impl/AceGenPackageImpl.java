@@ -966,17 +966,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServerAce_Response()
-  {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(9);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getHttpServerAceWrite()
   {
     return httpServerAceWriteEClass;
@@ -1043,6 +1032,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EReference getHttpServerAceRead_Response()
+  {
+    return (EReference)httpServerAceReadEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getAttributeParamRef()
   {
     return attributeParamRefEClass;
@@ -1054,9 +1054,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getAttributeParamRef_Attribute()
+  public EAttribute getAttributeParamRef_NotNull()
   {
-    return (EReference)attributeParamRefEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)attributeParamRefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1065,9 +1065,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getAttributeParamRef_Optional()
+  public EReference getAttributeParamRef_Attribute()
   {
-    return (EAttribute)attributeParamRefEClass.getEStructuralFeatures().get(1);
+    return (EReference)attributeParamRefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2162,7 +2162,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__PATH_PARAMS);
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__QUERY_PARAMS);
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__PAYLOAD);
-    createEReference(httpServerAceEClass, HTTP_SERVER_ACE__RESPONSE);
 
     httpServerAceWriteEClass = createEClass(HTTP_SERVER_ACE_WRITE);
     createEReference(httpServerAceWriteEClass, HTTP_SERVER_ACE_WRITE__OUTCOMES);
@@ -2172,10 +2171,11 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerOutcomeEClass, HTTP_SERVER_OUTCOME__LISTENERS);
 
     httpServerAceReadEClass = createEClass(HTTP_SERVER_ACE_READ);
+    createEReference(httpServerAceReadEClass, HTTP_SERVER_ACE_READ__RESPONSE);
 
     attributeParamRefEClass = createEClass(ATTRIBUTE_PARAM_REF);
+    createEAttribute(attributeParamRefEClass, ATTRIBUTE_PARAM_REF__NOT_NULL);
     createEReference(attributeParamRefEClass, ATTRIBUTE_PARAM_REF__ATTRIBUTE);
-    createEAttribute(attributeParamRefEClass, ATTRIBUTE_PARAM_REF__OPTIONAL);
 
     httpServerViewEClass = createEClass(HTTP_SERVER_VIEW);
     createEAttribute(httpServerViewEClass, HTTP_SERVER_VIEW__NAME);
@@ -2393,7 +2393,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServerAce_PathParams(), this.getAttributeParamRef(), null, "pathParams", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAce_QueryParams(), this.getAttributeParamRef(), null, "queryParams", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAce_Payload(), this.getAttributeParamRef(), null, "payload", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHttpServerAce_Response(), this.getAttribute(), null, "response", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceWriteEClass, HttpServerAceWrite.class, "HttpServerAceWrite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getHttpServerAceWrite_Outcomes(), this.getHttpServerOutcome(), null, "outcomes", null, 0, -1, HttpServerAceWrite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2403,10 +2402,11 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServerOutcome_Listeners(), this.getHttpServerViewFunction(), null, "listeners", null, 0, -1, HttpServerOutcome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceReadEClass, HttpServerAceRead.class, "HttpServerAceRead", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHttpServerAceRead_Response(), this.getAttribute(), null, "response", null, 0, -1, HttpServerAceRead.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeParamRefEClass, AttributeParamRef.class, "AttributeParamRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAttributeParamRef_NotNull(), ecorePackage.getEBoolean(), "notNull", null, 0, 1, AttributeParamRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeParamRef_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeParamRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAttributeParamRef_Optional(), ecorePackage.getEBoolean(), "optional", null, 0, 1, AttributeParamRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerViewEClass, HttpServerView.class, "HttpServerView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHttpServerView_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServerView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

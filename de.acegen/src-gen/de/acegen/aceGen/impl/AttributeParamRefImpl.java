@@ -23,14 +23,34 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeParamRefImpl#isNotNull <em>Not Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeParamRefImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeParamRefImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implements AttributeParamRef
 {
+  /**
+   * The default value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNotNull()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NOT_NULL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNotNull()
+   * @generated
+   * @ordered
+   */
+  protected boolean notNull = NOT_NULL_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
    * <!-- begin-user-doc -->
@@ -40,26 +60,6 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected Attribute attribute;
-
-  /**
-   * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isOptional()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean OPTIONAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isOptional()
-   * @generated
-   * @ordered
-   */
-  protected boolean optional = OPTIONAL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -80,6 +80,31 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.ATTRIBUTE_PARAM_REF;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isNotNull()
+  {
+    return notNull;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNotNull(boolean newNotNull)
+  {
+    boolean oldNotNull = notNull;
+    notNull = newNotNull;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE_PARAM_REF__NOT_NULL, oldNotNull, notNull));
   }
 
   /**
@@ -133,40 +158,15 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public boolean isOptional()
-  {
-    return optional;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setOptional(boolean newOptional)
-  {
-    boolean oldOptional = optional;
-    optional = newOptional;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE_PARAM_REF__OPTIONAL, oldOptional, optional));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
+      case AceGenPackage.ATTRIBUTE_PARAM_REF__NOT_NULL:
+        return isNotNull();
       case AceGenPackage.ATTRIBUTE_PARAM_REF__ATTRIBUTE:
         if (resolve) return getAttribute();
         return basicGetAttribute();
-      case AceGenPackage.ATTRIBUTE_PARAM_REF__OPTIONAL:
-        return isOptional();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -181,11 +181,11 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
+      case AceGenPackage.ATTRIBUTE_PARAM_REF__NOT_NULL:
+        setNotNull((Boolean)newValue);
+        return;
       case AceGenPackage.ATTRIBUTE_PARAM_REF__ATTRIBUTE:
         setAttribute((Attribute)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE_PARAM_REF__OPTIONAL:
-        setOptional((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -201,11 +201,11 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
+      case AceGenPackage.ATTRIBUTE_PARAM_REF__NOT_NULL:
+        setNotNull(NOT_NULL_EDEFAULT);
+        return;
       case AceGenPackage.ATTRIBUTE_PARAM_REF__ATTRIBUTE:
         setAttribute((Attribute)null);
-        return;
-      case AceGenPackage.ATTRIBUTE_PARAM_REF__OPTIONAL:
-        setOptional(OPTIONAL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -221,10 +221,10 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
+      case AceGenPackage.ATTRIBUTE_PARAM_REF__NOT_NULL:
+        return notNull != NOT_NULL_EDEFAULT;
       case AceGenPackage.ATTRIBUTE_PARAM_REF__ATTRIBUTE:
         return attribute != null;
-      case AceGenPackage.ATTRIBUTE_PARAM_REF__OPTIONAL:
-        return optional != OPTIONAL_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -240,8 +240,8 @@ public class AttributeParamRefImpl extends MinimalEObjectImpl.Container implemen
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (optional: ");
-    result.append(optional);
+    result.append(" (notNull: ");
+    result.append(notNull);
     result.append(')');
     return result.toString();
   }

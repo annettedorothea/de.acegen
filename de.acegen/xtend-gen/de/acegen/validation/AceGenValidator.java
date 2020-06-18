@@ -16,7 +16,7 @@
 package de.acegen.validation;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.validation.AbstractAceGenValidator;
 import org.eclipse.xtext.validation.Check;
 
@@ -28,8 +28,10 @@ import org.eclipse.xtext.validation.Check;
 @SuppressWarnings("all")
 public class AceGenValidator extends AbstractAceGenValidator {
   @Check
-  public void getShouldHaveResponse(final HttpServerAce ace) {
-    if (("GET".equals(ace.getType()) && (ace.getResponse().size() == 0))) {
+  public void readShouldHaveResponse(final HttpServerAceRead ace) {
+    int _size = ace.getResponse().size();
+    boolean _equals = (_size == 0);
+    if (_equals) {
       this.warning("GET request should have a response", 
         AceGenPackage.Literals.HTTP_SERVER__NAME);
     }

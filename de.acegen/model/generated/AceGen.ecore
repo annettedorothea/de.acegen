@@ -79,8 +79,6 @@
         eType="#//AttributeParamRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="payload" upperBound="-1"
         eType="#//AttributeParamRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="response" unique="false"
-        upperBound="-1" eType="#//Attribute"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceWrite" eSuperTypes="#//HttpServerAce">
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
@@ -91,10 +89,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" unique="false"
         upperBound="-1" eType="#//HttpServerViewFunction"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceRead" eSuperTypes="#//HttpServerAce"/>
+  <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceRead" eSuperTypes="#//HttpServerAce">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="response" unique="false"
+        upperBound="-1" eType="#//Attribute"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeParamRef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerView">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

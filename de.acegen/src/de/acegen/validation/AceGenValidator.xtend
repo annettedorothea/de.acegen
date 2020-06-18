@@ -18,8 +18,8 @@
 package de.acegen.validation
 
 import de.acegen.aceGen.AceGenPackage
+import de.acegen.aceGen.HttpServerAceRead
 import org.eclipse.xtext.validation.Check
-import de.acegen.aceGen.HttpServerAce
 
 /**
  * This class contains custom validation rules. 
@@ -29,8 +29,8 @@ import de.acegen.aceGen.HttpServerAce
 class AceGenValidator extends AbstractAceGenValidator {
 	
 	@Check
-    def void getShouldHaveResponse(HttpServerAce ace) {
-    	if ("GET".equals(ace.getType) && ace.response.size == 0) {
+    def void readShouldHaveResponse(HttpServerAceRead ace) {
+    	if (ace.response.size == 0) {
     		warning('GET request should have a response', 
 					AceGenPackage.Literals.HTTP_SERVER__NAME)
     	}

@@ -48,7 +48,7 @@ class AttributeExtension {
 		AttributeParamRef it) '''
 		
 		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
-			«IF !optional»
+			«IF notNull»
 				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
 					return badRequest("«attribute.name» is mandatory");
 				}
@@ -61,7 +61,7 @@ class AttributeExtension {
 				}
 			}
 		«ELSE»
-			«IF !optional»
+			«IF notNull»
 				«IF "String".equals(attribute.type) && !attribute.list»
 					if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
 						return badRequest("«attribute.name» is mandatory");
@@ -79,7 +79,7 @@ class AttributeExtension {
 	def String initActionDataFromPayload(
 		AttributeParamRef it) '''
 		
-		«IF !optional»
+		«IF notNull»
 			«IF "String".equals(attribute.type) && !attribute.list»
 				if (StringUtils.isBlank(payload.«attribute.getterCall») || "null".equals(payload.«attribute.getterCall»)) {
 					return badRequest("«attribute.name» is mandatory");

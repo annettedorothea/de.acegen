@@ -4,7 +4,6 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Model;
@@ -23,7 +22,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -43,7 +41,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getPathParams <em>Path Params</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getQueryParams <em>Query Params</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getPayload <em>Payload</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getResponse <em>Response</em>}</li>
  * </ul>
  *
  * @generated
@@ -189,16 +186,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
    * @ordered
    */
   protected EList<AttributeParamRef> payload;
-
-  /**
-   * The cached value of the '{@link #getResponse() <em>Response</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getResponse()
-   * @generated
-   * @ordered
-   */
-  protected EList<Attribute> response;
 
   /**
    * <!-- begin-user-doc -->
@@ -442,21 +429,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<Attribute> getResponse()
-  {
-    if (response == null)
-    {
-      response = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE__RESPONSE);
-    }
-    return response;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -500,8 +472,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
         return getQueryParams();
       case AceGenPackage.HTTP_SERVER_ACE__PAYLOAD:
         return getPayload();
-      case AceGenPackage.HTTP_SERVER_ACE__RESPONSE:
-        return getResponse();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -547,10 +517,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
         getPayload().clear();
         getPayload().addAll((Collection<? extends AttributeParamRef>)newValue);
         return;
-      case AceGenPackage.HTTP_SERVER_ACE__RESPONSE:
-        getResponse().clear();
-        getResponse().addAll((Collection<? extends Attribute>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -592,9 +558,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_SERVER_ACE__PAYLOAD:
         getPayload().clear();
         return;
-      case AceGenPackage.HTTP_SERVER_ACE__RESPONSE:
-        getResponse().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -627,8 +590,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
         return queryParams != null && !queryParams.isEmpty();
       case AceGenPackage.HTTP_SERVER_ACE__PAYLOAD:
         return payload != null && !payload.isEmpty();
-      case AceGenPackage.HTTP_SERVER_ACE__RESPONSE:
-        return response != null && !response.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -92,9 +92,8 @@ public class AttributeExtension {
     {
       if ((((it.getAttribute().getType() != null) && it.getAttribute().getType().equals("DateTime")) && (!it.getAttribute().isList()))) {
         {
-          boolean _isOptional = it.isOptional();
-          boolean _not = (!_isOptional);
-          if (_not) {
+          boolean _isNotNull = it.isNotNull();
+          if (_isNotNull) {
             _builder.append("if (StringUtils.isBlank(");
             String _name = it.getAttribute().getName();
             _builder.append(_name);
@@ -146,9 +145,8 @@ public class AttributeExtension {
         _builder.newLine();
       } else {
         {
-          boolean _isOptional_1 = it.isOptional();
-          boolean _not_1 = (!_isOptional_1);
-          if (_not_1) {
+          boolean _isNotNull_1 = it.isNotNull();
+          if (_isNotNull_1) {
             {
               if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
                 _builder.append("if (StringUtils.isBlank(");
@@ -199,9 +197,8 @@ public class AttributeExtension {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
     {
-      boolean _isOptional = it.isOptional();
-      boolean _not = (!_isOptional);
-      if (_not) {
+      boolean _isNotNull = it.isNotNull();
+      if (_isNotNull) {
         {
           if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
             _builder.append("if (StringUtils.isBlank(payload.");

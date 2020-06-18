@@ -17,6 +17,7 @@ package de.acegen.generator;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
@@ -268,16 +269,14 @@ public class JavaGenerator {
               this.event.generateEventFile(ace, outcome, httpServer));
           }
         }
-        int _size = ace.getResponse().size();
-        boolean _greaterThan = (_size > 0);
-        if (_greaterThan) {
+        if (("GET".equals(ace.getType()) && (((HttpServerAceRead) ace).getResponse().size() > 0))) {
           String _packageFolder_5 = this._javaExtension.packageFolder(httpServer);
           String _plus_15 = (_packageFolder_5 + "/data/");
           String _responseDataName = this._aceExtension.responseDataName(ace);
           String _plus_16 = (_plus_15 + _responseDataName);
           String _plus_17 = (_plus_16 + ".java");
           fsa.generateFile(_plus_17, 
-            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateResponseData(ace, httpServer));
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateResponseData(((HttpServerAceRead) ace), httpServer));
           String _packageFolder_6 = this._javaExtension.packageFolder(httpServer);
           String _plus_18 = (_packageFolder_6 + "/data/");
           String _responseDataInterfaceName = this._aceExtension.responseDataInterfaceName(ace);
@@ -285,7 +284,7 @@ public class JavaGenerator {
           String _plus_20 = (_plus_19 + ".java");
           fsa.generateFile(_plus_20, 
             ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-            this.data.generateReponseDataInterface(ace, httpServer));
+            this.data.generateReponseDataInterface(((HttpServerAceRead) ace), httpServer));
         }
       }
     }

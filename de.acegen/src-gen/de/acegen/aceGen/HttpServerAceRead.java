@@ -3,12 +3,19 @@
  */
 package de.acegen.aceGen;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Http Server Ace Read</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpServerAceRead#getResponse <em>Response</em>}</li>
+ * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpServerAceRead()
  * @model
@@ -16,4 +23,16 @@ package de.acegen.aceGen;
  */
 public interface HttpServerAceRead extends HttpServerAce
 {
+  /**
+   * Returns the value of the '<em><b>Response</b></em>' reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Response</em>' reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServerAceRead_Response()
+   * @model
+   * @generated
+   */
+  EList<Attribute> getResponse();
+
 } // HttpServerAceRead

@@ -22,6 +22,7 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import java.util.List;
@@ -302,18 +303,24 @@ public class CommandTemplate {
         _builder.append(").then((data) => {");
         _builder.newLineIfNotEmpty();
         {
-          EList<Attribute> _response = it.getServerCall().getResponse();
-          for(final Attribute responseAttribute : _response) {
-            _builder.append("\t");
-            _builder.append("\t\t\t");
-            _builder.append("this.commandData.");
-            String _name_10 = responseAttribute.getName();
-            _builder.append(_name_10, "\t\t\t\t");
-            _builder.append(" = data.");
-            String _name_11 = responseAttribute.getName();
-            _builder.append(_name_11, "\t\t\t\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
+          HttpServerAce _serverCall_1 = it.getServerCall();
+          if ((_serverCall_1 instanceof HttpServerAceRead)) {
+            {
+              HttpServerAce _serverCall_2 = it.getServerCall();
+              EList<Attribute> _response = ((HttpServerAceRead) _serverCall_2).getResponse();
+              for(final Attribute attribute : _response) {
+                _builder.append("\t");
+                _builder.append("\t\t\t");
+                _builder.append("this.commandData.");
+                String _name_10 = attribute.getName();
+                _builder.append(_name_10, "\t\t\t\t");
+                _builder.append(" = data.");
+                String _name_11 = attribute.getName();
+                _builder.append(_name_11, "\t\t\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
         _builder.append("\t");
@@ -574,9 +581,8 @@ public class CommandTemplate {
           for(final AttributeParamRef param : _queryParams) {
             _builder.append("    \t");
             {
-              boolean _isOptional = param.isOptional();
-              boolean _not = (!_isOptional);
-              if (_not) {
+              boolean _isNotNull = param.isNotNull();
+              if (_isNotNull) {
                 _builder.append("//this.commandData.");
                 String _name_1 = param.getAttribute().getName();
                 _builder.append(_name_1, "    \t");
@@ -593,9 +599,8 @@ public class CommandTemplate {
           for(final AttributeParamRef param_1 : _pathParams) {
             _builder.append("    \t");
             {
-              boolean _isOptional_1 = param_1.isOptional();
-              boolean _not_1 = (!_isOptional_1);
-              if (_not_1) {
+              boolean _isNotNull_1 = param_1.isNotNull();
+              if (_isNotNull_1) {
                 _builder.append("//this.commandData.");
                 String _name_2 = param_1.getAttribute().getName();
                 _builder.append(_name_2, "    \t");
@@ -612,9 +617,8 @@ public class CommandTemplate {
           for(final AttributeParamRef param_2 : _payload) {
             _builder.append("    \t");
             {
-              boolean _isOptional_2 = param_2.isOptional();
-              boolean _not_2 = (!_isOptional_2);
-              if (_not_2) {
+              boolean _isNotNull_2 = param_2.isNotNull();
+              if (_isNotNull_2) {
                 _builder.append("//this.commandData.");
                 String _name_3 = param_2.getAttribute().getName();
                 _builder.append(_name_3, "    \t");

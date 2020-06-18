@@ -45,6 +45,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import de.acegen.aceGen.HttpServerAceRead
 
 /**
  * This class contains custom scoping description.
@@ -58,14 +59,8 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension ModelExtension
 
 	override getScope(EObject context, EReference reference) {
-		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE) {
-			val javaAce = context as HttpServerAce;
-			val attrs = new ArrayList<Attribute>();
-			javaAce.getModel.allAttributesRec(attrs);
-			return Scopes.scopeFor(attrs)
-		}
-		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
-			val javaAce = context as HttpServerAce;
+		if (context instanceof HttpServerAceRead && reference == AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE) {
+			val javaAce = context as HttpServerAceRead;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
 			return Scopes.scopeFor(attrs)
@@ -201,8 +196,12 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					}
 					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
 					return Scopes.scopeFor(attr);
-				} else if (isThen) {
-					return Scopes.scopeFor(scenario.whenBlock.action.response);
+				} else if (isThen && scenario.whenBlock.action instanceof HttpServerAceRead) {
+					var attr = new ArrayList<Attribute>();
+					for (attribute : (scenario.whenBlock.action as HttpServerAceRead).response) {
+						attr.add(attribute)
+					}
+					return Scopes.scopeFor(attr);
 				}
 			}
 			if (parent instanceof JsonMember) {

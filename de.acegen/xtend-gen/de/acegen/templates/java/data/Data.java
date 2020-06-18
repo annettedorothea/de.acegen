@@ -2,7 +2,7 @@ package de.acegen.templates.java.data;
 
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
-import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
@@ -443,7 +443,7 @@ public class Data {
     return _builder;
   }
   
-  public CharSequence generateResponseData(final HttpServerAce it, final HttpServer httpServer) {
+  public CharSequence generateResponseData(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -558,7 +558,7 @@ public class Data {
     return _builder;
   }
   
-  public CharSequence generateReponseDataInterface(final HttpServerAce it, final HttpServer httpServer) {
+  public CharSequence generateReponseDataInterface(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);

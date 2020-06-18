@@ -607,22 +607,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE__PAYLOAD = 8;
 
   /**
-   * The feature id for the '<em><b>Response</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_ACE__RESPONSE = 9;
-
-  /**
    * The number of structural features of the '<em>Http Server Ace</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_FEATURE_COUNT = 10;
+  int HTTP_SERVER_ACE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl <em>Http Server Ace Write</em>}' class.
@@ -714,15 +705,6 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int HTTP_SERVER_ACE_WRITE__PAYLOAD = HTTP_SERVER_ACE__PAYLOAD;
-
-  /**
-   * The feature id for the '<em><b>Response</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_ACE_WRITE__RESPONSE = HTTP_SERVER_ACE__RESPONSE;
 
   /**
    * The feature id for the '<em><b>Outcomes</b></em>' containment reference list.
@@ -877,7 +859,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_READ__RESPONSE = HTTP_SERVER_ACE__RESPONSE;
+  int HTTP_SERVER_ACE_READ__RESPONSE = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Http Server Ace Read</em>' class.
@@ -886,7 +868,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_READ_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
+  int HTTP_SERVER_ACE_READ_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
@@ -899,22 +881,22 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE_PARAM_REF = 12;
 
   /**
+   * The feature id for the '<em><b>Not Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_PARAM_REF__NOT_NULL = 0;
+
+  /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_PARAM_REF__ATTRIBUTE = 0;
-
-  /**
-   * The feature id for the '<em><b>Optional</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_PARAM_REF__OPTIONAL = 1;
+  int ATTRIBUTE_PARAM_REF__ATTRIBUTE = 1;
 
   /**
    * The number of structural features of the '<em>Attribute Param Ref</em>' class.
@@ -2667,17 +2649,6 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServerAce_Payload();
 
   /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAce#getResponse <em>Response</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Response</em>'.
-   * @see de.acegen.aceGen.HttpServerAce#getResponse()
-   * @see #getHttpServerAce()
-   * @generated
-   */
-  EReference getHttpServerAce_Response();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerAceWrite <em>Http Server Ace Write</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2741,6 +2712,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServerAceRead();
 
   /**
+   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAceRead#getResponse <em>Response</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Response</em>'.
+   * @see de.acegen.aceGen.HttpServerAceRead#getResponse()
+   * @see #getHttpServerAceRead()
+   * @generated
+   */
+  EReference getHttpServerAceRead_Response();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.AttributeParamRef <em>Attribute Param Ref</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2749,6 +2731,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EClass getAttributeParamRef();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.AttributeParamRef#isNotNull <em>Not Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Not Null</em>'.
+   * @see de.acegen.aceGen.AttributeParamRef#isNotNull()
+   * @see #getAttributeParamRef()
+   * @generated
+   */
+  EAttribute getAttributeParamRef_NotNull();
 
   /**
    * Returns the meta object for the reference '{@link de.acegen.aceGen.AttributeParamRef#getAttribute <em>Attribute</em>}'.
@@ -2760,17 +2753,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getAttributeParamRef_Attribute();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.AttributeParamRef#isOptional <em>Optional</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Optional</em>'.
-   * @see de.acegen.aceGen.AttributeParamRef#isOptional()
-   * @see #getAttributeParamRef()
-   * @generated
-   */
-  EAttribute getAttributeParamRef_Optional();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerView <em>Http Server View</em>}'.
@@ -4206,14 +4188,6 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER_ACE__PAYLOAD = eINSTANCE.getHttpServerAce_Payload();
 
     /**
-     * The meta object literal for the '<em><b>Response</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HTTP_SERVER_ACE__RESPONSE = eINSTANCE.getHttpServerAce_Response();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl <em>Http Server Ace Write</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4268,6 +4242,14 @@ public interface AceGenPackage extends EPackage
     EClass HTTP_SERVER_ACE_READ = eINSTANCE.getHttpServerAceRead();
 
     /**
+     * The meta object literal for the '<em><b>Response</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HTTP_SERVER_ACE_READ__RESPONSE = eINSTANCE.getHttpServerAceRead_Response();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4278,20 +4260,20 @@ public interface AceGenPackage extends EPackage
     EClass ATTRIBUTE_PARAM_REF = eINSTANCE.getAttributeParamRef();
 
     /**
+     * The meta object literal for the '<em><b>Not Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE_PARAM_REF__NOT_NULL = eINSTANCE.getAttributeParamRef_NotNull();
+
+    /**
      * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference ATTRIBUTE_PARAM_REF__ATTRIBUTE = eINSTANCE.getAttributeParamRef_Attribute();
-
-    /**
-     * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ATTRIBUTE_PARAM_REF__OPTIONAL = eINSTANCE.getAttributeParamRef_Optional();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerViewImpl <em>Http Server View</em>}' class.

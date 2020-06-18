@@ -709,27 +709,21 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPayloadKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
 		private final Assignment cPayloadAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
 		private final RuleCall cPayloadAttributeParamRefParserRuleCall_10_1_0 = (RuleCall)cPayloadAssignment_10_1.eContents().get(0);
-		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
-		private final Keyword cResponseKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Assignment cResponseAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
-		private final CrossReference cResponseAttributeCrossReference_11_1_0 = (CrossReference)cResponseAssignment_11_1.eContents().get(0);
-		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1 = (RuleCall)cResponseAttributeCrossReference_11_1_0.eContents().get(1);
-		private final Assignment cOutcomesAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_12_0 = (RuleCall)cOutcomesAssignment_12.eContents().get(0);
+		private final Assignment cOutcomesAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_11_0 = (RuleCall)cOutcomesAssignment_11.eContents().get(0);
 		
 		//HttpServerAceWrite:
 		//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
 		//	type=WriteFunctionType
 		//	url=STRING
 		//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
-		//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)? ('response'
-		//	response+=[Attribute|QualifiedName]*)?
+		//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)?
 		//	outcomes+=HttpServerOutcome*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>' type=WriteFunctionType url=STRING authorize?='authorize'?
 		//('pathParams' pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
-		//payload+=AttributeParamRef*)? ('response' response+=[Attribute|QualifiedName]*)? outcomes+=HttpServerOutcome*
+		//payload+=AttributeParamRef*)? outcomes+=HttpServerOutcome*
 		public Group getGroup() { return cGroup; }
 		
 		//proxy?='proxy'?
@@ -813,26 +807,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//AttributeParamRef
 		public RuleCall getPayloadAttributeParamRefParserRuleCall_10_1_0() { return cPayloadAttributeParamRefParserRuleCall_10_1_0; }
 		
-		//('response' response+=[Attribute|QualifiedName]*)?
-		public Group getGroup_11() { return cGroup_11; }
-		
-		//'response'
-		public Keyword getResponseKeyword_11_0() { return cResponseKeyword_11_0; }
-		
-		//response+=[Attribute|QualifiedName]*
-		public Assignment getResponseAssignment_11_1() { return cResponseAssignment_11_1; }
-		
-		//[Attribute|QualifiedName]
-		public CrossReference getResponseAttributeCrossReference_11_1_0() { return cResponseAttributeCrossReference_11_1_0; }
-		
-		//QualifiedName
-		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1; }
-		
 		//outcomes+=HttpServerOutcome*
-		public Assignment getOutcomesAssignment_12() { return cOutcomesAssignment_12; }
+		public Assignment getOutcomesAssignment_11() { return cOutcomesAssignment_11; }
 		
 		//HttpServerOutcome
-		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_12_0() { return cOutcomesHttpServerOutcomeParserRuleCall_12_0; }
+		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_11_0() { return cOutcomesHttpServerOutcomeParserRuleCall_11_0; }
 	}
 	public class HttpServerOutcomeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerOutcome");
@@ -1030,33 +1009,33 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	public class AttributeParamRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeParamRef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAttributeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cAttributeAttributeCrossReference_0_0 = (CrossReference)cAttributeAssignment_0.eContents().get(0);
-		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cAttributeAttributeCrossReference_0_0.eContents().get(1);
-		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cOptionalOptionalKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
+		private final Assignment cNotNullAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cNotNullNotNullKeyword_0_0 = (Keyword)cNotNullAssignment_0.eContents().get(0);
+		private final Assignment cAttributeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cAttributeAttributeCrossReference_1_0 = (CrossReference)cAttributeAssignment_1.eContents().get(0);
+		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cAttributeAttributeCrossReference_1_0.eContents().get(1);
 		
 		//AttributeParamRef:
-		//	attribute=[Attribute|QualifiedName] optional?='optional'?;
+		//	notNull?='NotNull'? attribute=[Attribute|QualifiedName];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//attribute=[Attribute|QualifiedName] optional?='optional'?
+		//notNull?='NotNull'? attribute=[Attribute|QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
+		//notNull?='NotNull'?
+		public Assignment getNotNullAssignment_0() { return cNotNullAssignment_0; }
+		
+		//'NotNull'
+		public Keyword getNotNullNotNullKeyword_0_0() { return cNotNullNotNullKeyword_0_0; }
+		
 		//attribute=[Attribute|QualifiedName]
-		public Assignment getAttributeAssignment_0() { return cAttributeAssignment_0; }
+		public Assignment getAttributeAssignment_1() { return cAttributeAssignment_1; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getAttributeAttributeCrossReference_0_0() { return cAttributeAttributeCrossReference_0_0; }
+		public CrossReference getAttributeAttributeCrossReference_1_0() { return cAttributeAttributeCrossReference_1_0; }
 		
 		//QualifiedName
-		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_0_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_0_0_1; }
-		
-		//optional?='optional'?
-		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
-		
-		//'optional'
-		public Keyword getOptionalOptionalKeyword_1_0() { return cOptionalOptionalKeyword_1_0; }
+		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_1_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_1_0_1; }
 	}
 	public class HttpServerViewElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerView");
@@ -2623,8 +2602,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	//	type=WriteFunctionType
 	//	url=STRING
 	//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
-	//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)? ('response'
-	//	response+=[Attribute|QualifiedName]*)?
+	//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)?
 	//	outcomes+=HttpServerOutcome*;
 	public HttpServerAceWriteElements getHttpServerAceWriteAccess() {
 		return pHttpServerAceWrite;
@@ -2660,7 +2638,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//AttributeParamRef:
-	//	attribute=[Attribute|QualifiedName] optional?='optional'?;
+	//	notNull?='NotNull'? attribute=[Attribute|QualifiedName];
 	public AttributeParamRefElements getAttributeParamRefAccess() {
 		return pAttributeParamRef;
 	}

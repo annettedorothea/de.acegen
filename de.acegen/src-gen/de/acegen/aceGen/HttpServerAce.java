@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getPathParams <em>Path Params</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getQueryParams <em>Query Params</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getPayload <em>Payload</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpServerAce#getResponse <em>Response</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce()
@@ -201,17 +200,5 @@ public interface HttpServerAce extends EObject
    * @generated
    */
   EList<AttributeParamRef> getPayload();
-
-  /**
-   * Returns the value of the '<em><b>Response</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Response</em>' reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce_Response()
-   * @model
-   * @generated
-   */
-  EList<Attribute> getResponse();
 
 } // HttpServerAce

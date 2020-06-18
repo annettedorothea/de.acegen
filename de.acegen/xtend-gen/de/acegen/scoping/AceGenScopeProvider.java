@@ -23,6 +23,7 @@ import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
@@ -64,26 +65,20 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
-    if (((context instanceof HttpServerAce) && Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE))) {
-      final HttpServerAce javaAce = ((HttpServerAce) context);
+    if (((context instanceof HttpServerAceRead) && Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE))) {
+      final HttpServerAceRead javaAce = ((HttpServerAceRead) context);
       final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(javaAce.getModel(), attrs);
       return Scopes.scopeFor(attrs);
-    }
-    if (((context instanceof HttpServerAce) && Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE))) {
-      final HttpServerAce javaAce_1 = ((HttpServerAce) context);
-      final ArrayList<Attribute> attrs_1 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce_1.getModel(), attrs_1);
-      return Scopes.scopeFor(attrs_1);
     }
     if (((context instanceof AttributeParamRef) && 
       Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE))) {
       final AttributeParamRef attributeParamRef = ((AttributeParamRef) context);
       EObject _eContainer = attributeParamRef.eContainer();
-      final HttpServerAce javaAce_2 = ((HttpServerAce) _eContainer);
-      final ArrayList<Attribute> attrs_2 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce_2.getModel(), attrs_2);
-      return Scopes.scopeFor(attrs_2);
+      final HttpServerAce javaAce_1 = ((HttpServerAce) _eContainer);
+      final ArrayList<Attribute> attrs_1 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(javaAce_1.getModel(), attrs_1);
+      return Scopes.scopeFor(attrs_1);
     }
     if ((context instanceof HttpServerOutcome)) {
       EObject _eContainer_1 = ((HttpServerOutcome)context).eContainer();
@@ -123,32 +118,32 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       EObject _eContainer_2 = context.eContainer().eContainer();
       final PersistenceVerification persistenceVerification = ((PersistenceVerification) _eContainer_2);
       final Model model = persistenceVerification.getModel();
-      final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model, attrs_3);
+      final ArrayList<Attribute> attrs_2 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model, attrs_2);
       EObject _eContainer_3 = context.eContainer();
       final boolean selectByUnique = (_eContainer_3 instanceof SelectByUniqueAttribute);
       EObject _eContainer_4 = context.eContainer();
       final boolean selectByPrimary = (_eContainer_4 instanceof SelectByPrimaryKeys);
       if ((selectByUnique || selectByPrimary)) {
         final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
-        for (final Attribute attribute : attrs_3) {
+        for (final Attribute attribute : attrs_2) {
           if (((attribute.isUnique() && selectByUnique) || (attribute.isPrimaryKey() && selectByPrimary))) {
             filtered.add(attribute);
           }
         }
         return Scopes.scopeFor(filtered);
       }
-      return Scopes.scopeFor(attrs_3);
+      return Scopes.scopeFor(attrs_2);
     }
     if (((context instanceof SelectByPrimaryKeys) && 
       Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
       EObject _eContainer_5 = context.eContainer();
       final PersistenceVerification persistenceVerification_1 = ((PersistenceVerification) _eContainer_5);
       final Model model_1 = persistenceVerification_1.getModel();
-      final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_1, attrs_4);
+      final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_1, attrs_3);
       final ArrayList<Attribute> filtered_1 = new ArrayList<Attribute>();
-      for (final Attribute attribute_1 : attrs_4) {
+      for (final Attribute attribute_1 : attrs_3) {
         boolean _isPrimaryKey = attribute_1.isPrimaryKey();
         if (_isPrimaryKey) {
           filtered_1.add(attribute_1);
@@ -161,10 +156,10 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       EObject _eContainer_6 = context.eContainer();
       final PersistenceVerification persistenceVerification_2 = ((PersistenceVerification) _eContainer_6);
       final Model model_2 = persistenceVerification_2.getModel();
-      final ArrayList<Attribute> attrs_5 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_2, attrs_5);
+      final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_2, attrs_4);
       final ArrayList<Attribute> filtered_2 = new ArrayList<Attribute>();
-      for (final Attribute attribute_2 : attrs_5) {
+      for (final Attribute attribute_2 : attrs_4) {
         boolean _isUnique = attribute_2.isUnique();
         if (_isUnique) {
           filtered_2.add(attribute_2);
@@ -177,9 +172,9 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       EObject _eContainer_7 = context.eContainer();
       final PersistenceVerification persistenceVerification_3 = ((PersistenceVerification) _eContainer_7);
       final Model model_3 = persistenceVerification_3.getModel();
-      final ArrayList<Attribute> attrs_6 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_3, attrs_6);
-      return Scopes.scopeFor(attrs_6);
+      final ArrayList<Attribute> attrs_5 = new ArrayList<Attribute>();
+      this._modelExtension.allAttributesRec(model_3, attrs_5);
+      return Scopes.scopeFor(attrs_5);
     }
     if (((context instanceof PersistenceVerification) && 
       Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL))) {
@@ -223,9 +218,9 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         final Scenario scenario = ((Scenario) parent);
         if (isVerification) {
           final Model model_4 = persistenceVerification_4.getModel();
-          final ArrayList<Attribute> attrs_7 = new ArrayList<Attribute>();
-          this._modelExtension.allAttributesRec(model_4, attrs_7);
-          return Scopes.scopeFor(attrs_7);
+          final ArrayList<Attribute> attrs_6 = new ArrayList<Attribute>();
+          this._modelExtension.allAttributesRec(model_4, attrs_6);
+          return Scopes.scopeFor(attrs_6);
         } else {
           if (isWhen) {
             ArrayList<Attribute> attr = new ArrayList<Attribute>();
@@ -244,8 +239,14 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
             attr.addAll(this._modelExtension.allNotReplayableAttributes(scenario.getWhenBlock().getAction().getModel()));
             return Scopes.scopeFor(attr);
           } else {
-            if (isThen) {
-              return Scopes.scopeFor(scenario.getWhenBlock().getAction().getResponse());
+            if ((isThen && (scenario.getWhenBlock().getAction() instanceof HttpServerAceRead))) {
+              ArrayList<Attribute> attr_1 = new ArrayList<Attribute>();
+              HttpServerAce _action = scenario.getWhenBlock().getAction();
+              EList<Attribute> _response = ((HttpServerAceRead) _action).getResponse();
+              for (final Attribute attribute_3 : _response) {
+                attr_1.add(attribute_3);
+              }
+              return Scopes.scopeFor(attr_1);
             }
           }
         }

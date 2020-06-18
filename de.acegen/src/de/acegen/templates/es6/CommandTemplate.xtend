@@ -22,6 +22,7 @@ import de.acegen.aceGen.HttpClientAce
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerAceRead
 
 class CommandTemplate {
 	@Inject
@@ -84,9 +85,11 @@ class CommandTemplate {
 				        «ENDIF»
 				
 						this.«httpCall»(`«httpUrl»?uuid=${this.commandData.uuid}«FOR queryParam : getServerCall.queryParams»&«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
-							«FOR responseAttribute : getServerCall.response»
-								this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
-							«ENDFOR»
+							«IF getServerCall instanceof HttpServerAceRead»
+								«FOR attribute : (getServerCall as HttpServerAceRead).response»
+									this.commandData.«attribute.name» = data.«attribute.name»;
+								«ENDFOR»
+							«ENDIF»
 							this.handleResponse(resolve, reject);
 						}, (error) => {
 							this.commandData.error = error;
@@ -161,13 +164,13 @@ class CommandTemplate {
 		    initCommandData() {
 		    	//add from appState to commandData
 		    	«FOR param : serverCall.queryParams»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	«FOR param : serverCall.pathParams»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	«FOR param : serverCall.payload»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	return true;
 		    }
