@@ -69,6 +69,10 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
+    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
+      final ClientWhenBlock clientWhenBlock = ((ClientWhenBlock) context);
+      return Scopes.scopeFor(clientWhenBlock.getAction().getInput());
+    }
     if (((context instanceof TriggeredAction) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
       final TriggeredAction triggeredAction = ((TriggeredAction) context);
       return Scopes.scopeFor(triggeredAction.getHttpClientAce().getInput());

@@ -62,6 +62,10 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension ModelExtension
 
 	override getScope(EObject context, EReference reference) {
+		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
+			val clientWhenBlock = context as ClientWhenBlock;
+			return Scopes.scopeFor(clientWhenBlock.action.input)
+		}
 		if (context instanceof TriggeredAction && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
 			val triggeredAction = context as TriggeredAction;
 			return Scopes.scopeFor(triggeredAction.httpClientAce.input)
