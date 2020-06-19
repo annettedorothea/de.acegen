@@ -8,6 +8,7 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.aceGen.HttpServerAce;
+import de.acegen.aceGen.Input;
 
 import java.util.Collection;
 
@@ -22,8 +23,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getInput <em>Input</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getStateElements <em>State Elements</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getLoadingFlag <em>Loading Flag</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getOutcomes <em>Outcomes</em>}</li>
@@ -87,14 +89,24 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getInput() <em>Input</em>}' attribute list.
+   * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getInput()
    * @generated
    * @ordered
    */
-  protected EList<String> input;
+  protected EList<Input> input;
+
+  /**
+   * The cached value of the '{@link #getStateElements() <em>State Elements</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStateElements()
+   * @generated
+   * @ordered
+   */
+  protected EList<HttpClientStateElement> stateElements;
 
   /**
    * The cached value of the '{@link #getServerCall() <em>Server Call</em>}' reference.
@@ -203,13 +215,28 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<String> getInput()
+  public EList<Input> getInput()
   {
     if (input == null)
     {
-      input = new EDataTypeEList<String>(String.class, this, AceGenPackage.HTTP_CLIENT_ACE__INPUT);
+      input = new EObjectContainmentEList<Input>(Input.class, this, AceGenPackage.HTTP_CLIENT_ACE__INPUT);
     }
     return input;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<HttpClientStateElement> getStateElements()
+  {
+    if (stateElements == null)
+    {
+      stateElements = new EObjectResolvingEList<HttpClientStateElement>(HttpClientStateElement.class, this, AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS);
+    }
+    return stateElements;
   }
 
   /**
@@ -327,6 +354,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
+        return ((InternalEList<?>)getInput()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         return ((InternalEList<?>)getOutcomes()).basicRemove(otherEnd, msgs);
     }
@@ -349,6 +378,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return getName();
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return getInput();
+      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
+        return getStateElements();
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         if (resolve) return getServerCall();
         return basicGetServerCall();
@@ -380,7 +411,11 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         getInput().clear();
-        getInput().addAll((Collection<? extends String>)newValue);
+        getInput().addAll((Collection<? extends Input>)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
+        getStateElements().clear();
+        getStateElements().addAll((Collection<? extends HttpClientStateElement>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         setServerCall((HttpServerAce)newValue);
@@ -415,6 +450,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         getInput().clear();
         return;
+      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
+        getStateElements().clear();
+        return;
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         setServerCall((HttpServerAce)null);
         return;
@@ -444,6 +482,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return input != null && !input.isEmpty();
+      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
+        return stateElements != null && !stateElements.isEmpty();
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         return serverCall != null;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:
@@ -469,8 +509,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
     result.append(async);
     result.append(", name: ");
     result.append(name);
-    result.append(", input: ");
-    result.append(input);
     result.append(')');
     return result.toString();
   }

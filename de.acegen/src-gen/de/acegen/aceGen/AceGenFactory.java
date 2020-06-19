@@ -51,6 +51,15 @@ public interface AceGenFactory extends EFactory
   HttpClientAce createHttpClientAce();
 
   /**
+   * Returns a new object of class '<em>Input</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input</em>'.
+   * @generated
+   */
+  Input createInput();
+
+  /**
    * Returns a new object of class '<em>Http Client Outcome</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -85,6 +94,60 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   HttpClientTypeDefinition createHttpClientTypeDefinition();
+
+  /**
+   * Returns a new object of class '<em>Client Scenario</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Scenario</em>'.
+   * @generated
+   */
+  ClientScenario createClientScenario();
+
+  /**
+   * Returns a new object of class '<em>Client When Block</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client When Block</em>'.
+   * @generated
+   */
+  ClientWhenBlock createClientWhenBlock();
+
+  /**
+   * Returns a new object of class '<em>Input Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input Value</em>'.
+   * @generated
+   */
+  InputValue createInputValue();
+
+  /**
+   * Returns a new object of class '<em>Client Then Block</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Then Block</em>'.
+   * @generated
+   */
+  ClientThenBlock createClientThenBlock();
+
+  /**
+   * Returns a new object of class '<em>Triggered Action</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Triggered Action</em>'.
+   * @generated
+   */
+  TriggeredAction createTriggeredAction();
+
+  /**
+   * Returns a new object of class '<em>State Verification</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Verification</em>'.
+   * @generated
+   */
+  StateVerification createStateVerification();
 
   /**
    * Returns a new object of class '<em>Http Server</em>'.

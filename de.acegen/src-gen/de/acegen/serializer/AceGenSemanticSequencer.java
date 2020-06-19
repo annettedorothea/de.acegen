@@ -10,6 +10,9 @@ import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
+import de.acegen.aceGen.ClientScenario;
+import de.acegen.aceGen.ClientThenBlock;
+import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.GivenRef;
@@ -25,6 +28,8 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.Input;
+import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
@@ -38,7 +43,9 @@ import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.SelectByExpectation;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
+import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.TriggeredAction;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.services.AceGenGrammarAccess;
@@ -81,6 +88,15 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.AUTHORIZATION:
 				sequence_Authorization(context, (Authorization) semanticObject); 
+				return; 
+			case AceGenPackage.CLIENT_SCENARIO:
+				sequence_ClientScenario(context, (ClientScenario) semanticObject); 
+				return; 
+			case AceGenPackage.CLIENT_THEN_BLOCK:
+				sequence_ClientThenBlock(context, (ClientThenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.CLIENT_WHEN_BLOCK:
+				sequence_ClientWhenBlock(context, (ClientWhenBlock) semanticObject); 
 				return; 
 			case AceGenPackage.COUNT:
 				sequence_Count(context, (Count) semanticObject); 
@@ -127,6 +143,12 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.HTTP_SERVER_VIEW_FUNCTION:
 				sequence_HttpServerViewFunction(context, (HttpServerViewFunction) semanticObject); 
 				return; 
+			case AceGenPackage.INPUT:
+				sequence_Input(context, (Input) semanticObject); 
+				return; 
+			case AceGenPackage.INPUT_VALUE:
+				sequence_InputValue(context, (InputValue) semanticObject); 
+				return; 
 			case AceGenPackage.JSON_ARRAY:
 				sequence_JsonArray(context, (JsonArray) semanticObject); 
 				return; 
@@ -166,8 +188,14 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.SELECT_BY_UNIQUE_ATTRIBUTE:
 				sequence_SelectByUniqueAttribute(context, (SelectByUniqueAttribute) semanticObject); 
 				return; 
+			case AceGenPackage.STATE_VERIFICATION:
+				sequence_StateVerification(context, (StateVerification) semanticObject); 
+				return; 
 			case AceGenPackage.THEN_BLOCK:
 				sequence_ThenBlock(context, (ThenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.TRIGGERED_ACTION:
+				sequence_TriggeredAction(context, (TriggeredAction) semanticObject); 
 				return; 
 			case AceGenPackage.VERIFICATION:
 				sequence_Verification(context, (Verification) semanticObject); 
@@ -269,6 +297,42 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ClientScenario returns ClientScenario
+	 *
+	 * Constraint:
+	 *     (name=ID givenRefs+=[Scenario|QualifiedName]* whenBlock=ClientWhenBlock thenBlock=ClientThenBlock)
+	 */
+	protected void sequence_ClientScenario(ISerializationContext context, ClientScenario semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ClientThenBlock returns ClientThenBlock
+	 *
+	 * Constraint:
+	 *     (stateVerifications+=StateVerification* triggeredAction+=TriggeredAction*)
+	 */
+	protected void sequence_ClientThenBlock(ISerializationContext context, ClientThenBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ClientWhenBlock returns ClientWhenBlock
+	 *
+	 * Constraint:
+	 *     (action=[HttpClientAce|QualifiedName] inputValues+=InputValue inputValues+=InputValue* (statusCode=INT response=JsonObject?)?)
+	 */
+	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     PersistenceVerificationExpression returns Count
 	 *     Count returns Count
 	 *
@@ -312,7 +376,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         async?='async'? 
 	 *         name=ID 
-	 *         (input+=ID input+=ID*)? 
+	 *         (input+=Input input+=Input*)? 
+	 *         (stateElements+=[HttpClientStateElement|QualifiedName] stateElements+=[HttpClientStateElement|QualifiedName]*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
 	 *         loadingFlag=[HttpClientStateElement|QualifiedName]? 
 	 *         outcomes+=HttpClientOutcome*
@@ -340,7 +405,16 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientStateElement returns HttpClientStateElement
 	 *
 	 * Constraint:
-	 *     (name=ID list?='list'? hash?='location.hash'? storage?='storage'? (types+=HttpClientTypeDefinition types+=HttpClientTypeDefinition*)?)
+	 *     (
+	 *         notNull?='NotNull'? 
+	 *         type=Type? 
+	 *         name=ID 
+	 *         model=[Model|QualifiedName]? 
+	 *         list?='List'? 
+	 *         hash?='location.hash'? 
+	 *         storage?='storage'? 
+	 *         (types+=HttpClientTypeDefinition types+=HttpClientTypeDefinition*)?
+	 *     )
 	 */
 	protected void sequence_HttpClientStateElement(ISerializationContext context, HttpClientStateElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -352,18 +426,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientStateFunction returns HttpClientStateFunction
 	 *
 	 * Constraint:
-	 *     (stateFunctionType=HttpClientStateFunctionType attribute=[HttpClientStateElement|QualifiedName])
+	 *     (stateFunctionType=HttpClientStateFunctionType stateElement=[HttpClientStateElement|QualifiedName])
 	 */
 	protected void sequence_HttpClientStateFunction(ISerializationContext context, HttpClientStateFunction semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_FUNCTION_TYPE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_FUNCTION_TYPE));
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__ATTRIBUTE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__ATTRIBUTE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateFunctionTypeHttpClientStateFunctionTypeParserRuleCall_0_0(), semanticObject.getStateFunctionType());
-		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getAttributeHttpClientStateElementQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__ATTRIBUTE, false));
+		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateElementHttpClientStateElementQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, false));
 		feeder.finish();
 	}
 	
@@ -373,7 +447,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientTypeDefinition returns HttpClientTypeDefinition
 	 *
 	 * Constraint:
-	 *     (name=ID elements+=HttpClientStateElement*)
+	 *     (elements+=HttpClientStateElement elements+=HttpClientStateElement*)
 	 */
 	protected void sequence_HttpClientTypeDefinition(ISerializationContext context, HttpClientTypeDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -385,7 +459,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* appState=HttpClientStateElement?)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* appState=HttpClientTypeDefinition? scenarios+=ClientScenario*)
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -491,8 +565,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (language='Java' | language='C#') 
-	 *         (type='Dropwizard' | type='ASP.NET5')? 
+	 *         language='Java' 
+	 *         type='Dropwizard'? 
 	 *         persistenceLayer='JDBI3'? 
 	 *         migrations='Liquibase'? 
 	 *         name=QualifiedName 
@@ -506,6 +580,45 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_HttpServer(ISerializationContext context, HttpServer semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InputValue returns InputValue
+	 *
+	 * Constraint:
+	 *     (input=[Input|QualifiedName] value=JsonValue)
+	 */
+	protected void sequence_InputValue(ISerializationContext context, InputValue semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.INPUT_VALUE__INPUT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.INPUT_VALUE__INPUT));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.INPUT_VALUE__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.INPUT_VALUE__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getInputValueAccess().getInputInputQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.INPUT_VALUE__INPUT, false));
+		feeder.accept(grammarAccess.getInputValueAccess().getValueJsonValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Input returns Input
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_Input(ISerializationContext context, Input semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.INPUT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.INPUT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getInputAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -711,12 +824,48 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     StateVerification returns StateVerification
+	 *
+	 * Constraint:
+	 *     (name=ID stateRef=[HttpClientStateElement|QualifiedName] value=JsonObject)
+	 */
+	protected void sequence_StateVerification(ISerializationContext context, StateVerification semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__NAME));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getStateVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefHttpClientStateElementQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
+		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ThenBlock returns ThenBlock
 	 *
 	 * Constraint:
 	 *     (statusCode=INT response=DataDefinition? persistenceVerifications+=PersistenceVerification* verifications+=Verification*)
 	 */
 	protected void sequence_ThenBlock(ISerializationContext context, ThenBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TriggeredAction returns TriggeredAction
+	 *
+	 * Constraint:
+	 *     (httpClientAce=[HttpClientAce|QualifiedName] inputValues+=InputValue inputValues+=InputValue*)
+	 */
+	protected void sequence_TriggeredAction(ISerializationContext context, TriggeredAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

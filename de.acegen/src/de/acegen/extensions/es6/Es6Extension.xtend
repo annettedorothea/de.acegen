@@ -27,15 +27,15 @@ class Es6Extension {
 
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
-	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»_«getAttribute.functionName("")»'''
+	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»'''
 	
 	def String functionName(HttpClientStateElement element) '''«element.functionName("")»'''
 	
 	def String functionName(HttpClientStateElement it, String suffix) {
 		val parent = eContainer;
 		if (parent instanceof HttpClientTypeDefinition) {
-			var typeDef = parent as HttpClientTypeDefinition;
-			return (typeDef.eContainer as HttpClientStateElement).functionName(typeDef.getName + "_" + getName) + '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
+			//var typeDef = parent as HttpClientTypeDefinition;
+			return /*(typeDef.eContainer as HttpClientStateElement).functionName("_" + getName) +*/ '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0»_«suffix»«ENDIF»''';
 		}
@@ -46,8 +46,8 @@ class Es6Extension {
 	def String elementPath(HttpClientStateElement it, String suffix) {
 		val parent = eContainer;
 		if (parent instanceof HttpClientTypeDefinition) {
-			var typeDef = parent as HttpClientTypeDefinition;
-			return (typeDef.eContainer as HttpClientStateElement).elementPath(getName) + '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
+			//var typeDef = parent as HttpClientTypeDefinition;
+			return /*(typeDef.eContainer as HttpClientStateElement).elementPath(getName) +*/ '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
 		}

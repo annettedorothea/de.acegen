@@ -44,9 +44,6 @@ public class Es6Extension {
     _builder.append("AppState.");
     String _stateFunctionType = it.getStateFunctionType();
     _builder.append(_stateFunctionType);
-    _builder.append("_");
-    String _functionName = this.functionName(it.getAttribute(), "");
-    _builder.append(_functionName);
     return _builder.toString();
   }
   
@@ -60,13 +57,6 @@ public class Es6Extension {
   public String functionName(final HttpClientStateElement it, final String suffix) {
     final EObject parent = it.eContainer();
     if ((parent instanceof HttpClientTypeDefinition)) {
-      HttpClientTypeDefinition typeDef = ((HttpClientTypeDefinition) parent);
-      EObject _eContainer = typeDef.eContainer();
-      String _name = typeDef.getName();
-      String _plus = (_name + "_");
-      String _name_1 = it.getName();
-      String _plus_1 = (_plus + _name_1);
-      String _functionName = this.functionName(((HttpClientStateElement) _eContainer), _plus_1);
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -76,9 +66,9 @@ public class Es6Extension {
           _builder.append(suffix);
         }
       }
-      return (_functionName + _builder);
+      return _builder.toString();
     } else {
-      String _name_2 = it.getName();
+      String _name = it.getName();
       StringConcatenation _builder_1 = new StringConcatenation();
       {
         int _length_1 = suffix.length();
@@ -88,7 +78,7 @@ public class Es6Extension {
           _builder_1.append(suffix);
         }
       }
-      return (_name_2 + _builder_1);
+      return (_name + _builder_1);
     }
   }
   
@@ -102,9 +92,6 @@ public class Es6Extension {
   public String elementPath(final HttpClientStateElement it, final String suffix) {
     final EObject parent = it.eContainer();
     if ((parent instanceof HttpClientTypeDefinition)) {
-      HttpClientTypeDefinition typeDef = ((HttpClientTypeDefinition) parent);
-      EObject _eContainer = typeDef.eContainer();
-      String _elementPath = this.elementPath(((HttpClientStateElement) _eContainer), it.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -114,7 +101,7 @@ public class Es6Extension {
           _builder.append(suffix);
         }
       }
-      return (_elementPath + _builder);
+      return _builder.toString();
     } else {
       String _name = it.getName();
       StringConcatenation _builder_1 = new StringConcatenation();

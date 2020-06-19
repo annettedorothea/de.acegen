@@ -18,6 +18,7 @@
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClientStateElement
+import de.acegen.aceGen.HttpClientTypeDefinition
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
@@ -897,24 +898,20 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateWriteAppState(HttpClientStateElement it, String prefix) '''
+	def String generateWriteAppState(HttpClientTypeDefinition it, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
 		
-		export let «getName»;
+		export let appState;
 		
-		export function setInitial«getName.toFirstUpper»(initial«getName.toFirstUpper») {
-			«getName» = AppUtils.deepCopy(initial«getName.toFirstUpper»);
+		export function setInitialAppState(initialAppState) {
+			appState = AppUtils.deepCopy(initialAppState);
 		}
 		
-		«IF types !== null»
-			«FOR type : types»
-				«FOR element : type.elements»
-					«element.generateWriteAppStateRec()»
-				«ENDFOR»
-			«ENDFOR»
-		«ENDIF»
+		«FOR element : elements»
+			«element.generateWriteAppStateRec()»
+		«ENDFOR»
 	'''
 	
 	def String generateWriteAppStateRec(HttpClientStateElement it) '''
@@ -1002,23 +999,19 @@ class AceTemplate {
 		«ENDIF»
 	'''
 	
-	def String generateReadAppState(HttpClientStateElement it, String prefix) '''
+	def String generateReadAppState(HttpClientTypeDefinition it, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
 		import { state } from "./WriteAppState";
 		
-		export function get«getName.toFirstUpper»() {
-			return AppUtils.deepCopy(«getName»);
+		export function getAppState() {
+			return AppUtils.deepCopy(appState);
 		}
 		
-		«IF types !== null»
-			«FOR type : types»
-				«FOR element : type.elements»
-					«element.generateReadAppStateRec()»
-				«ENDFOR»
-			«ENDFOR»
-		«ENDIF»
+		«FOR element : elements»
+			«element.generateReadAppStateRec()»
+		«ENDFOR»
 		
 		
 		«sdg»

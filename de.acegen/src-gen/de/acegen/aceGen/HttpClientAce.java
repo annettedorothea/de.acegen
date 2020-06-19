@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getInput <em>Input</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientAce#getStateElements <em>State Elements</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getLoadingFlag <em>Loading Flag</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getOutcomes <em>Outcomes</em>}</li>
@@ -75,16 +76,28 @@ public interface HttpClientAce extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Input</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Input</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Input}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Input</em>' attribute list.
+   * @return the value of the '<em>Input</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_Input()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getInput();
+  EList<Input> getInput();
+
+  /**
+   * Returns the value of the '<em><b>State Elements</b></em>' reference list.
+   * The list contents are of type {@link de.acegen.aceGen.HttpClientStateElement}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>State Elements</em>' reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_StateElements()
+   * @model
+   * @generated
+   */
+  EList<HttpClientStateElement> getStateElements();
 
   /**
    * Returns the value of the '<em><b>Server Call</b></em>' reference.

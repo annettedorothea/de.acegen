@@ -94,6 +94,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.INPUT:
+      {
+        Input input = (Input)theEObject;
+        T result = caseInput(input);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.HTTP_CLIENT_OUTCOME:
       {
         HttpClientOutcome httpClientOutcome = (HttpClientOutcome)theEObject;
@@ -119,6 +126,48 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         HttpClientTypeDefinition httpClientTypeDefinition = (HttpClientTypeDefinition)theEObject;
         T result = caseHttpClientTypeDefinition(httpClientTypeDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.CLIENT_SCENARIO:
+      {
+        ClientScenario clientScenario = (ClientScenario)theEObject;
+        T result = caseClientScenario(clientScenario);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.CLIENT_WHEN_BLOCK:
+      {
+        ClientWhenBlock clientWhenBlock = (ClientWhenBlock)theEObject;
+        T result = caseClientWhenBlock(clientWhenBlock);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.INPUT_VALUE:
+      {
+        InputValue inputValue = (InputValue)theEObject;
+        T result = caseInputValue(inputValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.CLIENT_THEN_BLOCK:
+      {
+        ClientThenBlock clientThenBlock = (ClientThenBlock)theEObject;
+        T result = caseClientThenBlock(clientThenBlock);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.TRIGGERED_ACTION:
+      {
+        TriggeredAction triggeredAction = (TriggeredAction)theEObject;
+        T result = caseTriggeredAction(triggeredAction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.STATE_VERIFICATION:
+      {
+        StateVerification stateVerification = (StateVerification)theEObject;
+        T result = caseStateVerification(stateVerification);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -400,6 +449,22 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Input</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Input</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInput(Input object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Http Client Outcome</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -459,6 +524,102 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpClientTypeDefinition(HttpClientTypeDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Scenario</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Scenario</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientScenario(ClientScenario object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client When Block</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client When Block</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientWhenBlock(ClientWhenBlock object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Input Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Input Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInputValue(InputValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Then Block</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Then Block</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientThenBlock(ClientThenBlock object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Triggered Action</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Triggered Action</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTriggeredAction(TriggeredAction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>State Verification</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>State Verification</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStateVerification(StateVerification object)
   {
     return null;
   }

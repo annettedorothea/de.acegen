@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpClient()
@@ -66,12 +67,12 @@ public interface HttpClient extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>App State</em>' containment reference.
-   * @see #setAppState(HttpClientStateElement)
+   * @see #setAppState(HttpClientTypeDefinition)
    * @see de.acegen.aceGen.AceGenPackage#getHttpClient_AppState()
    * @model containment="true"
    * @generated
    */
-  HttpClientStateElement getAppState();
+  HttpClientTypeDefinition getAppState();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}' containment reference.
@@ -81,6 +82,18 @@ public interface HttpClient extends EObject
    * @see #getAppState()
    * @generated
    */
-  void setAppState(HttpClientStateElement value);
+  void setAppState(HttpClientTypeDefinition value);
+
+  /**
+   * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.ClientScenario}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Scenarios</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Scenarios()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ClientScenario> getScenarios();
 
 } // HttpClient

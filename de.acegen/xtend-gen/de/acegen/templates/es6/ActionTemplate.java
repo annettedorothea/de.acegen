@@ -18,6 +18,7 @@ package de.acegen.templates.es6;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientStateElement;
+import de.acegen.aceGen.Input;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -92,9 +93,9 @@ public class ActionTemplate {
     _builder.append("    ");
     _builder.append("constructor(");
     {
-      EList<String> _input = it.getInput();
+      EList<Input> _input = it.getInput();
       boolean _hasElements = false;
-      for(final String inputParam : _input) {
+      for(final Input inputParam : _input) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
@@ -109,9 +110,9 @@ public class ActionTemplate {
     _builder.append("        ");
     _builder.append("super({");
     {
-      EList<String> _input_1 = it.getInput();
+      EList<Input> _input_1 = it.getInput();
       boolean _hasElements_1 = false;
-      for(final String inputParam_1 : _input_1) {
+      for(final Input inputParam_1 : _input_1) {
         if (!_hasElements_1) {
           _hasElements_1 = true;
         } else {
@@ -315,9 +316,9 @@ public class ActionTemplate {
         _builder.append(_actionName_3, "\t\t\t");
         _builder.append("(");
         {
-          EList<String> _input = aceOperation_1.getInput();
+          EList<Input> _input = aceOperation_1.getInput();
           boolean _hasElements = false;
-          for(final String attr : _input) {
+          for(final Input attr : _input) {
             if (!_hasElements) {
               _hasElements = true;
             } else {
@@ -377,9 +378,9 @@ public class ActionTemplate {
         _builder.append(_firstLower);
         _builder.append("(");
         {
-          EList<String> _input = aceOperation_1.getInput();
+          EList<Input> _input = aceOperation_1.getInput();
           boolean _hasElements = false;
-          for(final String attr : _input) {
+          for(final Input attr : _input) {
             if (!_hasElements) {
               _hasElements = true;
             } else {
@@ -396,9 +397,9 @@ public class ActionTemplate {
         _builder.append(_actionName_2, "    ");
         _builder.append("(");
         {
-          EList<String> _input_1 = aceOperation_1.getInput();
+          EList<Input> _input_1 = aceOperation_1.getInput();
           boolean _hasElements_1 = false;
-          for(final String attr_1 : _input_1) {
+          for(final Input attr_1 : _input_1) {
             if (!_hasElements_1) {
               _hasElements_1 = true;
             } else {

@@ -14,14 +14,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/aceOperations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/appState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/scenarios"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientAce">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/async"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/input"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/stateElements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/serverCall"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/loadingFlag"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/outcomes"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//Input">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Input/name"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientOutcome">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientOutcome/name"/>
@@ -30,18 +35,49 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientStateFunction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateFunction/stateFunctionType"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateFunction/attribute"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateFunction/stateElement"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientStateElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/notNull"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateElement/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/storage"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateElement/types"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientTypeDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientTypeDefinition/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientTypeDefinition/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//ClientScenario">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientScenario/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/givenRefs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/whenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/thenBlock"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//ClientWhenBlock">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/action"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/inputValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/statusCode"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/response"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//InputValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//InputValue/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//InputValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//ClientThenBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientThenBlock/stateVerifications"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientThenBlock/triggeredAction"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//TriggeredAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//TriggeredAction/httpClientAce"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//TriggeredAction/inputValues"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//StateVerification">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//StateVerification/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//StateVerification/stateRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//StateVerification/value"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServer">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/language"/>

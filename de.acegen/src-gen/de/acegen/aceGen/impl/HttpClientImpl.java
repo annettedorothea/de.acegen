@@ -4,9 +4,10 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.HttpClientStateElement;
+import de.acegen.aceGen.HttpClientTypeDefinition;
 
 import java.util.Collection;
 
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAppState <em>App State</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
  * @generated
@@ -79,7 +81,17 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    * @ordered
    */
-  protected HttpClientStateElement appState;
+  protected HttpClientTypeDefinition appState;
+
+  /**
+   * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getScenarios()
+   * @generated
+   * @ordered
+   */
+  protected EList<ClientScenario> scenarios;
 
   /**
    * <!-- begin-user-doc -->
@@ -148,7 +160,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public HttpClientStateElement getAppState()
+  public HttpClientTypeDefinition getAppState()
   {
     return appState;
   }
@@ -158,9 +170,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetAppState(HttpClientStateElement newAppState, NotificationChain msgs)
+  public NotificationChain basicSetAppState(HttpClientTypeDefinition newAppState, NotificationChain msgs)
   {
-    HttpClientStateElement oldAppState = appState;
+    HttpClientTypeDefinition oldAppState = appState;
     appState = newAppState;
     if (eNotificationRequired())
     {
@@ -176,7 +188,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setAppState(HttpClientStateElement newAppState)
+  public void setAppState(HttpClientTypeDefinition newAppState)
   {
     if (newAppState != appState)
     {
@@ -198,6 +210,21 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
+  public EList<ClientScenario> getScenarios()
+  {
+    if (scenarios == null)
+    {
+      scenarios = new EObjectContainmentEList<ClientScenario>(ClientScenario.class, this, AceGenPackage.HTTP_CLIENT__SCENARIOS);
+    }
+    return scenarios;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -206,6 +233,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return ((InternalEList<?>)getAceOperations()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         return basicSetAppState(null, msgs);
+      case AceGenPackage.HTTP_CLIENT__SCENARIOS:
+        return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -226,6 +255,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return getAceOperations();
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         return getAppState();
+      case AceGenPackage.HTTP_CLIENT__SCENARIOS:
+        return getScenarios();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -249,7 +280,11 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        setAppState((HttpClientStateElement)newValue);
+        setAppState((HttpClientTypeDefinition)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT__SCENARIOS:
+        getScenarios().clear();
+        getScenarios().addAll((Collection<? extends ClientScenario>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -272,7 +307,10 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().clear();
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        setAppState((HttpClientStateElement)null);
+        setAppState((HttpClientTypeDefinition)null);
+        return;
+      case AceGenPackage.HTTP_CLIENT__SCENARIOS:
+        getScenarios().clear();
         return;
     }
     super.eUnset(featureID);
@@ -294,6 +332,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return aceOperations != null && !aceOperations.isEmpty();
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         return appState != null;
+      case AceGenPackage.HTTP_CLIENT__SCENARIOS:
+        return scenarios != null && !scenarios.isEmpty();
     }
     return super.eIsSet(featureID);
   }

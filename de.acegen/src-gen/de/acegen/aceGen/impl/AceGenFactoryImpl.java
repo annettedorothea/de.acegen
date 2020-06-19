@@ -68,10 +68,17 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.PROJECT: return createProject();
       case AceGenPackage.HTTP_CLIENT: return createHttpClient();
       case AceGenPackage.HTTP_CLIENT_ACE: return createHttpClientAce();
+      case AceGenPackage.INPUT: return createInput();
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT: return createHttpClientStateElement();
       case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION: return createHttpClientTypeDefinition();
+      case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
+      case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
+      case AceGenPackage.INPUT_VALUE: return createInputValue();
+      case AceGenPackage.CLIENT_THEN_BLOCK: return createClientThenBlock();
+      case AceGenPackage.TRIGGERED_ACTION: return createTriggeredAction();
+      case AceGenPackage.STATE_VERIFICATION: return createStateVerification();
       case AceGenPackage.HTTP_SERVER: return createHttpServer();
       case AceGenPackage.HTTP_SERVER_ACE: return createHttpServerAce();
       case AceGenPackage.HTTP_SERVER_ACE_WRITE: return createHttpServerAceWrite();
@@ -150,6 +157,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public Input createInput()
+  {
+    InputImpl input = new InputImpl();
+    return input;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public HttpClientOutcome createHttpClientOutcome()
   {
     HttpClientOutcomeImpl httpClientOutcome = new HttpClientOutcomeImpl();
@@ -190,6 +209,78 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     HttpClientTypeDefinitionImpl httpClientTypeDefinition = new HttpClientTypeDefinitionImpl();
     return httpClientTypeDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientScenario createClientScenario()
+  {
+    ClientScenarioImpl clientScenario = new ClientScenarioImpl();
+    return clientScenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientWhenBlock createClientWhenBlock()
+  {
+    ClientWhenBlockImpl clientWhenBlock = new ClientWhenBlockImpl();
+    return clientWhenBlock;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public InputValue createInputValue()
+  {
+    InputValueImpl inputValue = new InputValueImpl();
+    return inputValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientThenBlock createClientThenBlock()
+  {
+    ClientThenBlockImpl clientThenBlock = new ClientThenBlockImpl();
+    return clientThenBlock;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public TriggeredAction createTriggeredAction()
+  {
+    TriggeredActionImpl triggeredAction = new TriggeredActionImpl();
+    return triggeredAction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public StateVerification createStateVerification()
+  {
+    StateVerificationImpl stateVerification = new StateVerificationImpl();
+    return stateVerification;
   }
 
   /**

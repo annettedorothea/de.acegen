@@ -26,14 +26,21 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('appState' appState = HttpClientStateElement )?
+	('appState' appState = HttpClientTypeDefinition )?
+	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
 HttpClientAce: 
-	(async ?= 'async')? name = ID  ('<' input += ID (',' input += ID)* '>')?  
+	(async ?= 'async')? name = ID  
+		('asParam' input += Input (',' input += Input)* )?  
+		('fromState' stateElements += [HttpClientStateElement | QualifiedName] (',' stateElements += [HttpClientStateElement | QualifiedName])* )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [HttpClientStateElement | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
+;
+
+Input:
+	name = ID
 ;
 
 HttpClientOutcome:
@@ -43,7 +50,7 @@ HttpClientOutcome:
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType attribute = [HttpClientStateElement | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [HttpClientStateElement | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
@@ -51,18 +58,58 @@ HttpClientStateFunctionType:
 ;
 
 HttpClientStateElement:
-	name = ID list ?= 'list' ? hash ?= 'location.hash'? storage ?= 'storage'? (types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
+	notNull ?= 'NotNull'? 
+	(type = Type)?
+	name = ID 
+	('extends' model = [Model | QualifiedName])?
+	list ?= 'List' ? 
+	hash ?= 'location.hash'? 
+	storage ?= 'storage'? 
+	(types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
 ;
 
 HttpClientTypeDefinition:
-	':' name = ID '{'
-		elements += HttpClientStateElement* 
+	'{'
+		elements += HttpClientStateElement 
+		(elements += HttpClientStateElement)* 
 	'}'
 ;
 
+ClientScenario:
+	name = ID
+	('GIVEN' (givenRefs += [Scenario | QualifiedName])* )? 
+	'WHEN' whenBlock = ClientWhenBlock
+	'THEN' thenBlock = ClientThenBlock
+;
+
+ClientWhenBlock: 
+	action = [HttpClientAce|QualifiedName] 
+	'(' inputValues += InputValue (',' inputValues += InputValue)* ')'
+	('with' 'response' 
+	statusCode = INT 
+	(response = JsonObject)?)?
+;
+
+InputValue:
+	input = [Input | QualifiedName] ':' value = JsonValue
+;
+
+ClientThenBlock:
+	{ClientThenBlock} ('expectedState' stateVerifications += StateVerification*)?
+	('triggeredActions' triggeredAction += TriggeredAction*)?
+;
+
+TriggeredAction:
+	httpClientAce = [HttpClientAce | QualifiedName ] '(' inputValues += InputValue (',' inputValues += InputValue)* ')'
+;
+
+StateVerification:
+	name = ID stateRef = [HttpClientStateElement | QualifiedName] 'shouldBe' value = JsonObject
+;
+
 HttpServer:
-	language = ('Java' | 'C#')
-	type = ('Dropwizard' | 'ASP.NET5')?
+	language = ('Java')
+	type = ('Dropwizard')?
 	persistenceLayer = 'JDBI3'?
 	migrations = 'Liquibase' ?
 	name = QualifiedName

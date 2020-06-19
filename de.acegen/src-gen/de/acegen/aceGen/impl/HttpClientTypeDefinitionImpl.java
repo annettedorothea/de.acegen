@@ -9,7 +9,6 @@ import de.acegen.aceGen.HttpClientTypeDefinition;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -17,7 +16,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -31,7 +29,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientTypeDefinitionImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientTypeDefinitionImpl#getElements <em>Elements</em>}</li>
  * </ul>
  *
@@ -39,26 +36,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container implements HttpClientTypeDefinition
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -88,31 +65,6 @@ public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container i
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_CLIENT_TYPE_DEFINITION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__NAME, oldName, name));
   }
 
   /**
@@ -156,8 +108,6 @@ public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container i
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__NAME:
-        return getName();
       case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__ELEMENTS:
         return getElements();
     }
@@ -175,9 +125,6 @@ public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container i
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__NAME:
-        setName((String)newValue);
-        return;
       case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__ELEMENTS:
         getElements().clear();
         getElements().addAll((Collection<? extends HttpClientStateElement>)newValue);
@@ -196,9 +143,6 @@ public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container i
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__ELEMENTS:
         getElements().clear();
         return;
@@ -216,29 +160,10 @@ public class HttpClientTypeDefinitionImpl extends MinimalEObjectImpl.Container i
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION__ELEMENTS:
         return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //HttpClientTypeDefinitionImpl

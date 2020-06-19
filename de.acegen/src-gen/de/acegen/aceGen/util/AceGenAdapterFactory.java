@@ -91,6 +91,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientAceAdapter();
       }
       @Override
+      public Adapter caseInput(Input object)
+      {
+        return createInputAdapter();
+      }
+      @Override
       public Adapter caseHttpClientOutcome(HttpClientOutcome object)
       {
         return createHttpClientOutcomeAdapter();
@@ -109,6 +114,36 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseHttpClientTypeDefinition(HttpClientTypeDefinition object)
       {
         return createHttpClientTypeDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseClientScenario(ClientScenario object)
+      {
+        return createClientScenarioAdapter();
+      }
+      @Override
+      public Adapter caseClientWhenBlock(ClientWhenBlock object)
+      {
+        return createClientWhenBlockAdapter();
+      }
+      @Override
+      public Adapter caseInputValue(InputValue object)
+      {
+        return createInputValueAdapter();
+      }
+      @Override
+      public Adapter caseClientThenBlock(ClientThenBlock object)
+      {
+        return createClientThenBlockAdapter();
+      }
+      @Override
+      public Adapter caseTriggeredAction(TriggeredAction object)
+      {
+        return createTriggeredActionAdapter();
+      }
+      @Override
+      public Adapter caseStateVerification(StateVerification object)
+      {
+        return createStateVerificationAdapter();
       }
       @Override
       public Adapter caseHttpServer(HttpServer object)
@@ -333,6 +368,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Input <em>Input</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Input
+   * @generated
+   */
+  public Adapter createInputAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.HttpClientOutcome <em>Http Client Outcome</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -388,6 +438,96 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHttpClientTypeDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientScenario <em>Client Scenario</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientScenario
+   * @generated
+   */
+  public Adapter createClientScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientWhenBlock <em>Client When Block</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientWhenBlock
+   * @generated
+   */
+  public Adapter createClientWhenBlockAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.InputValue <em>Input Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.InputValue
+   * @generated
+   */
+  public Adapter createInputValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientThenBlock <em>Client Then Block</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientThenBlock
+   * @generated
+   */
+  public Adapter createClientThenBlockAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.TriggeredAction <em>Triggered Action</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.TriggeredAction
+   * @generated
+   */
+  public Adapter createTriggeredActionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.StateVerification <em>State Verification</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.StateVerification
+   * @generated
+   */
+  public Adapter createStateVerificationAdapter()
   {
     return null;
   }

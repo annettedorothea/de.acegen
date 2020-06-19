@@ -6,6 +6,7 @@ package de.acegen.aceGen.impl;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.aceGen.HttpClientTypeDefinition;
+import de.acegen.aceGen.Model;
 
 import java.util.Collection;
 
@@ -31,7 +32,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#isNotNull <em>Not Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientStateElementImpl#isStorage <em>Storage</em>}</li>
@@ -42,6 +46,46 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container implements HttpClientStateElement
 {
+  /**
+   * The default value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNotNull()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NOT_NULL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNotNull() <em>Not Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNotNull()
+   * @generated
+   * @ordered
+   */
+  protected boolean notNull = NOT_NULL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -61,6 +105,16 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getModel() <em>Model</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getModel()
+   * @generated
+   * @ordered
+   */
+  protected Model model;
 
   /**
    * The default value of the '{@link #isList() <em>List</em>}' attribute.
@@ -159,6 +213,56 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
    * @generated
    */
   @Override
+  public boolean isNotNull()
+  {
+    return notNull;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNotNull(boolean newNotNull)
+  {
+    boolean oldNotNull = notNull;
+    notNull = newNotNull;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NOT_NULL, oldNotNull, notNull));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getName()
   {
     return name;
@@ -176,6 +280,51 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Model getModel()
+  {
+    if (model != null && model.eIsProxy())
+    {
+      InternalEObject oldModel = (InternalEObject)model;
+      model = (Model)eResolveProxy(oldModel);
+      if (model != oldModel)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL, oldModel, model));
+      }
+    }
+    return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Model basicGetModel()
+  {
+    return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setModel(Model newModel)
+  {
+    Model oldModel = model;
+    model = newModel;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL, oldModel, model));
   }
 
   /**
@@ -294,8 +443,15 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NOT_NULL:
+        return isNotNull();
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__TYPE:
+        return getType();
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NAME:
         return getName();
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL:
+        if (resolve) return getModel();
+        return basicGetModel();
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__LIST:
         return isList();
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__HASH:
@@ -319,8 +475,17 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NOT_NULL:
+        setNotNull((Boolean)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__TYPE:
+        setType((String)newValue);
+        return;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NAME:
         setName((String)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL:
+        setModel((Model)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__LIST:
         setList((Boolean)newValue);
@@ -349,8 +514,17 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NOT_NULL:
+        setNotNull(NOT_NULL_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__TYPE:
+        setType(TYPE_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NAME:
         setName(NAME_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL:
+        setModel((Model)null);
         return;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__LIST:
         setList(LIST_EDEFAULT);
@@ -378,8 +552,14 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NOT_NULL:
+        return notNull != NOT_NULL_EDEFAULT;
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__MODEL:
+        return model != null;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__LIST:
         return list != LIST_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT__HASH:
@@ -403,7 +583,11 @@ public class HttpClientStateElementImpl extends MinimalEObjectImpl.Container imp
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (notNull: ");
+    result.append(notNull);
+    result.append(", type: ");
+    result.append(type);
+    result.append(", name: ");
     result.append(name);
     result.append(", list: ");
     result.append(list);

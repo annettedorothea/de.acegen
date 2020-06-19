@@ -16,7 +16,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpClientStateElement#isNotNull <em>Not Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientStateElement#getType <em>Type</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientStateElement#getName <em>Name</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientStateElement#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientStateElement#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientStateElement#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientStateElement#isStorage <em>Storage</em>}</li>
@@ -29,6 +32,50 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpClientStateElement extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Not Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Not Null</em>' attribute.
+   * @see #setNotNull(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientStateElement_NotNull()
+   * @model
+   * @generated
+   */
+  boolean isNotNull();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClientStateElement#isNotNull <em>Not Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Not Null</em>' attribute.
+   * @see #isNotNull()
+   * @generated
+   */
+  void setNotNull(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Type</em>' attribute.
+   * @see #setType(String)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientStateElement_Type()
+   * @model
+   * @generated
+   */
+  String getType();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClientStateElement#getType <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Type</em>' attribute.
+   * @see #getType()
+   * @generated
+   */
+  void setType(String value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -50,6 +97,28 @@ public interface HttpClientStateElement extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Model</em>' reference.
+   * @see #setModel(Model)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientStateElement_Model()
+   * @model
+   * @generated
+   */
+  Model getModel();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClientStateElement#getModel <em>Model</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Model</em>' reference.
+   * @see #getModel()
+   * @generated
+   */
+  void setModel(Model value);
 
   /**
    * Returns the value of the '<em><b>List</b></em>' attribute.

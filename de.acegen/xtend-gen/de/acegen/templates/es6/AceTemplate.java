@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AceTemplate {
@@ -2283,7 +2282,7 @@ public class AceTemplate {
     return _builder;
   }
   
-  public String generateWriteAppState(final HttpClientStateElement it, final String prefix) {
+  public String generateWriteAppState(final HttpClientTypeDefinition it, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2292,48 +2291,23 @@ public class AceTemplate {
     _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export let ");
-    String _name = it.getName();
-    _builder.append(_name);
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
+    _builder.append("export let appState;");
     _builder.newLine();
-    _builder.append("export function setInitial");
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("(initial");
-    String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper_1);
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("export function setInitialAppState(initialAppState) {");
+    _builder.newLine();
     _builder.append("\t");
-    String _name_1 = it.getName();
-    _builder.append(_name_1, "\t");
-    _builder.append(" = AppUtils.deepCopy(initial");
-    String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper_2, "\t");
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
+    _builder.append("appState = AppUtils.deepCopy(initialAppState);");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     {
-      EList<HttpClientTypeDefinition> _types = it.getTypes();
-      boolean _tripleNotEquals = (_types != null);
-      if (_tripleNotEquals) {
-        {
-          EList<HttpClientTypeDefinition> _types_1 = it.getTypes();
-          for(final HttpClientTypeDefinition type : _types_1) {
-            {
-              EList<HttpClientStateElement> _elements = type.getElements();
-              for(final HttpClientStateElement element : _elements) {
-                String _generateWriteAppStateRec = this.generateWriteAppStateRec(element);
-                _builder.append(_generateWriteAppStateRec);
-                _builder.newLineIfNotEmpty();
-              }
-            }
-          }
-        }
+      EList<HttpClientStateElement> _elements = it.getElements();
+      for(final HttpClientStateElement element : _elements) {
+        String _generateWriteAppStateRec = this.generateWriteAppStateRec(element);
+        _builder.append(_generateWriteAppStateRec);
+        _builder.newLineIfNotEmpty();
       }
     }
     return _builder.toString();
@@ -2616,7 +2590,7 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateReadAppState(final HttpClientStateElement it, final String prefix) {
+  public String generateReadAppState(final HttpClientTypeDefinition it, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2627,37 +2601,20 @@ public class AceTemplate {
     _builder.append("import { state } from \"./WriteAppState\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export function get");
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("() {");
-    _builder.newLineIfNotEmpty();
+    _builder.append("export function getAppState() {");
+    _builder.newLine();
     _builder.append("\t");
-    _builder.append("return AppUtils.deepCopy(");
-    String _name = it.getName();
-    _builder.append(_name, "\t");
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
+    _builder.append("return AppUtils.deepCopy(appState);");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     {
-      EList<HttpClientTypeDefinition> _types = it.getTypes();
-      boolean _tripleNotEquals = (_types != null);
-      if (_tripleNotEquals) {
-        {
-          EList<HttpClientTypeDefinition> _types_1 = it.getTypes();
-          for(final HttpClientTypeDefinition type : _types_1) {
-            {
-              EList<HttpClientStateElement> _elements = type.getElements();
-              for(final HttpClientStateElement element : _elements) {
-                String _generateReadAppStateRec = this.generateReadAppStateRec(element);
-                _builder.append(_generateReadAppStateRec);
-                _builder.newLineIfNotEmpty();
-              }
-            }
-          }
-        }
+      EList<HttpClientStateElement> _elements = it.getElements();
+      for(final HttpClientStateElement element : _elements) {
+        String _generateReadAppStateRec = this.generateReadAppStateRec(element);
+        _builder.append(_generateReadAppStateRec);
+        _builder.newLineIfNotEmpty();
       }
     }
     _builder.newLine();

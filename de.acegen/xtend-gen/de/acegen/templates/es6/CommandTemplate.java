@@ -23,6 +23,7 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
+import de.acegen.aceGen.Input;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import java.util.List;
@@ -174,9 +175,9 @@ public class CommandTemplate {
             _builder.append(_actionName_2, "\t\t\t");
             _builder.append("(");
             {
-              EList<String> _input = aceOperation_1.getInput();
+              EList<Input> _input = aceOperation_1.getInput();
               boolean _hasElements = false;
-              for(final String inputParam : _input) {
+              for(final Input inputParam : _input) {
                 if (!_hasElements) {
                   _hasElements = true;
                 } else {
@@ -487,9 +488,9 @@ public class CommandTemplate {
             _builder.append(_actionName_2, "\t\t\t");
             _builder.append("(");
             {
-              EList<String> _input = aceOperation_1.getInput();
+              EList<Input> _input = aceOperation_1.getInput();
               boolean _hasElements = false;
-              for(final String inputParam : _input) {
+              for(final Input inputParam : _input) {
                 if (!_hasElements) {
                   _hasElements = true;
                 } else {
