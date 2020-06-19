@@ -21,12 +21,15 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
+import de.acegen.aceGen.Input;
+import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
@@ -36,6 +39,7 @@ import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.TriggeredAction;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.scoping.AbstractAceGenScopeProvider;
@@ -65,7 +69,24 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
-    if (((context instanceof HttpServerAceRead) && Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE))) {
+    if (((context instanceof TriggeredAction) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
+      final TriggeredAction triggeredAction = ((TriggeredAction) context);
+      return Scopes.scopeFor(triggeredAction.getHttpClientAce().getInput());
+    }
+    if (((context instanceof InputValue) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
+      final EObject parent = context.eContainer();
+      if ((parent instanceof TriggeredAction)) {
+        final TriggeredAction triggeredAction_1 = ((TriggeredAction) parent);
+        return Scopes.scopeFor(triggeredAction_1.getHttpClientAce().getInput());
+      } else {
+        if ((parent instanceof ClientWhenBlock)) {
+          final EList<Input> input = ((ClientWhenBlock) parent).getAction().getInput();
+          return Scopes.scopeFor(input);
+        }
+      }
+    }
+    if (((context instanceof HttpServerAceRead) && 
+      Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE))) {
       final HttpServerAceRead javaAce = ((HttpServerAceRead) context);
       final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(javaAce.getModel(), attrs);
@@ -167,8 +188,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       }
       return Scopes.scopeFor(filtered_2);
     }
-    if (((context instanceof Count) && 
-      Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
+    if (((context instanceof Count) && Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
       EObject _eContainer_7 = context.eContainer();
       final PersistenceVerification persistenceVerification_3 = ((PersistenceVerification) _eContainer_7);
       final Model model_3 = persistenceVerification_3.getModel();
@@ -194,28 +214,28 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       return Scopes.scopeFor(models);
     }
     if ((((context instanceof JsonObject) || (context instanceof JsonArray)) || (context instanceof JsonMember))) {
-      EObject parent = context.eContainer();
+      EObject parent_1 = context.eContainer();
       boolean isThen = false;
       boolean isWhen = false;
       boolean isVerification = false;
       PersistenceVerification persistenceVerification_4 = null;
-      while (((parent != null) && (!((parent instanceof Scenario) || (parent instanceof JsonMember))))) {
+      while (((parent_1 != null) && (!((parent_1 instanceof Scenario) || (parent_1 instanceof JsonMember))))) {
         {
-          if ((parent instanceof ThenBlock)) {
+          if ((parent_1 instanceof ThenBlock)) {
             isThen = true;
           }
-          if ((parent instanceof WhenBlock)) {
+          if ((parent_1 instanceof WhenBlock)) {
             isWhen = true;
           }
-          if ((parent instanceof PersistenceVerification)) {
+          if ((parent_1 instanceof PersistenceVerification)) {
             isVerification = true;
-            persistenceVerification_4 = ((PersistenceVerification) parent);
+            persistenceVerification_4 = ((PersistenceVerification) parent_1);
           }
-          parent = parent.eContainer();
+          parent_1 = parent_1.eContainer();
         }
       }
-      if ((parent instanceof Scenario)) {
-        final Scenario scenario = ((Scenario) parent);
+      if ((parent_1 instanceof Scenario)) {
+        final Scenario scenario = ((Scenario) parent_1);
         if (isVerification) {
           final Model model_4 = persistenceVerification_4.getModel();
           final ArrayList<Attribute> attrs_6 = new ArrayList<Attribute>();
@@ -251,8 +271,8 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           }
         }
       }
-      if ((parent instanceof JsonMember)) {
-        final JsonMember jsonMember = ((JsonMember) parent);
+      if ((parent_1 instanceof JsonMember)) {
+        final JsonMember jsonMember = ((JsonMember) parent_1);
         Model _model = jsonMember.getAttribute().getModel();
         boolean _tripleNotEquals = (_model != null);
         if (_tripleNotEquals) {

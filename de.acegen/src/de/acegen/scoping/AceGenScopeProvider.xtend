@@ -21,11 +21,14 @@ import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerViewFunction
+import de.acegen.aceGen.InputValue
 import de.acegen.aceGen.JsonArray
 import de.acegen.aceGen.JsonMember
 import de.acegen.aceGen.JsonObject
@@ -35,6 +38,7 @@ import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.ThenBlock
+import de.acegen.aceGen.TriggeredAction
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
@@ -45,7 +49,6 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.HttpServerAceRead
 
 /**
  * This class contains custom scoping description.
@@ -59,7 +62,22 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension ModelExtension
 
 	override getScope(EObject context, EReference reference) {
-		if (context instanceof HttpServerAceRead && reference == AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE) {
+		if (context instanceof TriggeredAction && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
+			val triggeredAction = context as TriggeredAction;
+			return Scopes.scopeFor(triggeredAction.httpClientAce.input)
+		}
+		if (context instanceof InputValue && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
+			val parent = context.eContainer
+			if (parent instanceof TriggeredAction) {
+				val triggeredAction = parent as TriggeredAction;
+				return Scopes.scopeFor(triggeredAction.httpClientAce.input)
+			} else if (parent instanceof ClientWhenBlock) {
+				val input = (parent as ClientWhenBlock).action.input
+				return Scopes.scopeFor(input)
+			}
+		}
+		if (context instanceof HttpServerAceRead &&
+			reference == AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE) {
 			val javaAce = context as HttpServerAceRead;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
@@ -137,8 +155,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			}
 			return Scopes.scopeFor(filtered)
 		}
-		if (context instanceof Count &&
-			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+		if (context instanceof Count && reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
 			val persistenceVerification = context.eContainer as PersistenceVerification
 			val model = persistenceVerification.model
 			val attrs = new ArrayList<Attribute>();
@@ -149,7 +166,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL) {
 			val scope = super.getScope(context, reference);
 			val models = new ArrayList<Model>();
-			for (element: scope.allElements) {
+			for (element : scope.allElements) {
 				val model = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Model
 				if (model.persistent) {
 					models.add(model)
