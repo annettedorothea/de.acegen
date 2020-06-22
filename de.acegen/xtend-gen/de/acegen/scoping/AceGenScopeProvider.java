@@ -21,6 +21,7 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.HttpServerAce;
@@ -223,12 +224,12 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       boolean isWhen = false;
       boolean isVerification = false;
       PersistenceVerification persistenceVerification_4 = null;
-      while (((parent_1 != null) && (!((parent_1 instanceof Scenario) || (parent_1 instanceof JsonMember))))) {
+      while (((parent_1 != null) && (!((parent_1 instanceof Scenario) || ((parent_1 instanceof JsonMember) || (parent_1 instanceof ClientScenario)))))) {
         {
           if ((parent_1 instanceof ThenBlock)) {
             isThen = true;
           }
-          if ((parent_1 instanceof WhenBlock)) {
+          if (((parent_1 instanceof WhenBlock) || (parent_1 instanceof ClientWhenBlock))) {
             isWhen = true;
           }
           if ((parent_1 instanceof PersistenceVerification)) {
@@ -273,6 +274,25 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
               return Scopes.scopeFor(attr_1);
             }
           }
+        }
+      }
+      if ((parent_1 instanceof ClientScenario)) {
+        final ClientScenario scenario_1 = ((ClientScenario) parent_1);
+        if (isWhen) {
+          ArrayList<Attribute> attr_2 = new ArrayList<Attribute>();
+          EList<AttributeParamRef> _payload_1 = scenario_1.getWhenBlock().getAction().getServerCall().getPayload();
+          for (final AttributeParamRef attributeRef_3 : _payload_1) {
+            attr_2.add(attributeRef_3.getAttribute());
+          }
+          EList<AttributeParamRef> _queryParams_1 = scenario_1.getWhenBlock().getAction().getServerCall().getQueryParams();
+          for (final AttributeParamRef attributeRef_4 : _queryParams_1) {
+            attr_2.add(attributeRef_4.getAttribute());
+          }
+          EList<AttributeParamRef> _pathParams_1 = scenario_1.getWhenBlock().getAction().getServerCall().getPathParams();
+          for (final AttributeParamRef attributeRef_5 : _pathParams_1) {
+            attr_2.add(attributeRef_5.getAttribute());
+          }
+          return Scopes.scopeFor(attr_2);
         }
       }
       if ((parent_1 instanceof JsonMember)) {

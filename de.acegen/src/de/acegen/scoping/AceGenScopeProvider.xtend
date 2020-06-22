@@ -49,6 +49,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import de.acegen.aceGen.ClientScenario
 
 /**
  * This class contains custom scoping description.
@@ -184,11 +185,11 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			var isWhen = false
 			var isVerification = false
 			var PersistenceVerification persistenceVerification = null
-			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember))) {
+			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember || parent instanceof ClientScenario))) {
 				if (parent instanceof ThenBlock) {
 					isThen = true
 				}
-				if (parent instanceof WhenBlock) {
+				if (parent instanceof WhenBlock || parent instanceof ClientWhenBlock) {
 					isWhen = true
 				}
 				if (parent instanceof PersistenceVerification) {
@@ -221,6 +222,22 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					var attr = new ArrayList<Attribute>();
 					for (attribute : (scenario.whenBlock.action as HttpServerAceRead).response) {
 						attr.add(attribute)
+					}
+					return Scopes.scopeFor(attr);
+				}
+			}
+			if (parent instanceof ClientScenario) {
+				val scenario = parent as ClientScenario;
+				if (isWhen) {
+					var attr = new ArrayList<Attribute>();
+					for (attributeRef : scenario.whenBlock.action.serverCall.payload) {
+						attr.add(attributeRef.attribute)
+					}
+					for (attributeRef : scenario.whenBlock.action.serverCall.queryParams) {
+						attr.add(attributeRef.attribute)
+					}
+					for (attributeRef : scenario.whenBlock.action.serverCall.pathParams) {
+						attr.add(attributeRef.attribute)
 					}
 					return Scopes.scopeFor(attr);
 				}
