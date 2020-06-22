@@ -78,24 +78,6 @@ public interface AceGenFactory extends EFactory
   HttpClientStateFunction createHttpClientStateFunction();
 
   /**
-   * Returns a new object of class '<em>Http Client State Element</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Http Client State Element</em>'.
-   * @generated
-   */
-  HttpClientStateElement createHttpClientStateElement();
-
-  /**
-   * Returns a new object of class '<em>Http Client Type Definition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Http Client Type Definition</em>'.
-   * @generated
-   */
-  HttpClientTypeDefinition createHttpClientTypeDefinition();
-
-  /**
    * Returns a new object of class '<em>Client Scenario</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

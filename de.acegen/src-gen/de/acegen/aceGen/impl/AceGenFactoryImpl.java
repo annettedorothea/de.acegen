@@ -71,8 +71,6 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.INPUT: return createInput();
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
-      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT: return createHttpClientStateElement();
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION: return createHttpClientTypeDefinition();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
@@ -185,30 +183,6 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     HttpClientStateFunctionImpl httpClientStateFunction = new HttpClientStateFunctionImpl();
     return httpClientStateFunction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public HttpClientStateElement createHttpClientStateElement()
-  {
-    HttpClientStateElementImpl httpClientStateElement = new HttpClientStateElementImpl();
-    return httpClientStateElement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public HttpClientTypeDefinition createHttpClientTypeDefinition()
-  {
-    HttpClientTypeDefinitionImpl httpClientTypeDefinition = new HttpClientTypeDefinitionImpl();
-    return httpClientTypeDefinition;
   }
 
   /**

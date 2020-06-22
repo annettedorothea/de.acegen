@@ -17,9 +17,9 @@
 
 package de.acegen.extensions.es6
 
-import de.acegen.aceGen.HttpClientStateElement
+import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpClientStateFunction
-import de.acegen.aceGen.HttpClientTypeDefinition
+import de.acegen.aceGen.Model
 import de.acegen.aceGen.HttpClient
 
 class Es6Extension {
@@ -29,25 +29,25 @@ class Es6Extension {
 
 	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»'''
 	
-	def String functionName(HttpClientStateElement element) '''«element.functionName("")»'''
+	def String functionName(Attribute element) '''«element.functionName("")»'''
 	
-	def String functionName(HttpClientStateElement it, String suffix) {
+	def String functionName(Attribute it, String suffix) {
 		val parent = eContainer;
-		if (parent instanceof HttpClientTypeDefinition) {
-			//var typeDef = parent as HttpClientTypeDefinition;
-			return /*(typeDef.eContainer as HttpClientStateElement).functionName("_" + getName) +*/ '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
+		if (parent instanceof Model) {
+			//var typeDef = parent as Model;
+			return /*(typeDef.eContainer as Attribute).functionName("_" + getName) +*/ '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0»_«suffix»«ENDIF»''';
 		}
 	}
 
-	def String elementPath(HttpClientStateElement element) '''«element.elementPath("")»'''
+	def String elementPath(Attribute element) '''«element.elementPath("")»'''
 	
-	def String elementPath(HttpClientStateElement it, String suffix) {
+	def String elementPath(Attribute it, String suffix) {
 		val parent = eContainer;
-		if (parent instanceof HttpClientTypeDefinition) {
-			//var typeDef = parent as HttpClientTypeDefinition;
-			return /*(typeDef.eContainer as HttpClientStateElement).elementPath(getName) +*/ '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
+		if (parent instanceof Model) {
+			//var typeDef = parent as Model;
+			return /*(typeDef.eContainer as Attribute).elementPath(getName) +*/ '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
 		}

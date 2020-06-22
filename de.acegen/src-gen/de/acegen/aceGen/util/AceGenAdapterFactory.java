@@ -106,16 +106,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientStateFunctionAdapter();
       }
       @Override
-      public Adapter caseHttpClientStateElement(HttpClientStateElement object)
-      {
-        return createHttpClientStateElementAdapter();
-      }
-      @Override
-      public Adapter caseHttpClientTypeDefinition(HttpClientTypeDefinition object)
-      {
-        return createHttpClientTypeDefinitionAdapter();
-      }
-      @Override
       public Adapter caseClientScenario(ClientScenario object)
       {
         return createClientScenarioAdapter();
@@ -408,36 +398,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHttpClientStateFunctionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.HttpClientStateElement <em>Http Client State Element</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.HttpClientStateElement
-   * @generated
-   */
-  public Adapter createHttpClientStateElementAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.HttpClientTypeDefinition <em>Http Client Type Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.HttpClientTypeDefinition
-   * @generated
-   */
-  public Adapter createHttpClientTypeDefinitionAdapter()
   {
     return null;
   }

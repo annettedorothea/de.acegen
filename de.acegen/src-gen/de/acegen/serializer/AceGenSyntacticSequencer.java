@@ -22,14 +22,17 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected AceGenGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_3__q;
 	protected AbstractElementAlias match_ClientScenario_GIVENKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_ExpectedStateKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_TriggeredActionsKeyword_2_0_q;
+	protected AbstractElementAlias match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_Count_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q;
 	protected AbstractElementAlias match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_HttpClient_ACEKeyword_1_0_q;
 	protected AbstractElementAlias match_HttpClient_ScenariosKeyword_3_0_q;
+	protected AbstractElementAlias match_HttpClient___AppStateKeyword_2_0___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q__q;
 	protected AbstractElementAlias match_HttpServerAceRead_PathParamsKeyword_8_0_q;
 	protected AbstractElementAlias match_HttpServerAceRead_PayloadKeyword_10_0_q;
 	protected AbstractElementAlias match_HttpServerAceRead_QueryParamsKeyword_9_0_q;
@@ -54,14 +57,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (AceGenGrammarAccess) access;
+		match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAttributeAccess().getLeftCurlyBracketKeyword_11_0()), new TokenAlias(false, false, grammarAccess.getAttributeAccess().getRightCurlyBracketKeyword_11_3()));
 		match_ClientScenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientScenarioAccess().getGIVENKeyword_1_0());
 		match_ClientThenBlock_ExpectedStateKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getExpectedStateKeyword_1_0());
 		match_ClientThenBlock_TriggeredActionsKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getTriggeredActionsKeyword_2_0());
+		match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getRightParenthesisKeyword_1_2()));
 		match_Count_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCountAccess().getCommaKeyword_3_0());
 		match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_HttpClient_ACEKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_1_0());
 		match_HttpClient_ScenariosKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getScenariosKeyword_3_0());
+		match_HttpClient___AppStateKeyword_2_0___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getAppStateKeyword_2_0()), new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_2_1_0()), new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getRightCurlyBracketKeyword_2_1_2())));
 		match_HttpServerAceRead_PathParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPathParamsKeyword_8_0());
 		match_HttpServerAceRead_PayloadKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPayloadKeyword_10_0());
 		match_HttpServerAceRead_QueryParamsKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getQueryParamsKeyword_9_0());
@@ -96,12 +102,16 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_ClientScenario_GIVENKeyword_1_0_q.equals(syntax))
+			if (match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_3__q.equals(syntax))
+				emit_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClientScenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_ClientScenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientThenBlock_ExpectedStateKeyword_1_0_q.equals(syntax))
 				emit_ClientThenBlock_ExpectedStateKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientThenBlock_TriggeredActionsKeyword_2_0_q.equals(syntax))
 				emit_ClientThenBlock_TriggeredActionsKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
+				emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Count_CommaKeyword_3_0_q.equals(syntax))
 				emit_Count_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q.equals(syntax))
@@ -112,6 +122,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpClient_ACEKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClient_ScenariosKeyword_3_0_q.equals(syntax))
 				emit_HttpClient_ScenariosKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpClient___AppStateKeyword_2_0___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q__q.equals(syntax))
+				emit_HttpClient___AppStateKeyword_2_0___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerAceRead_PathParamsKeyword_8_0_q.equals(syntax))
 				emit_HttpServerAceRead_PathParamsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerAceRead_PayloadKeyword_10_0_q.equals(syntax))
@@ -158,6 +170,21 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Ambiguous syntax:
+	 *     ('{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     foreignKey=[Attribute|QualifiedName] (ambiguity) (rule end)
+	 *     hash?='location.hash' (ambiguity) (rule end)
+	 *     name=ID (ambiguity) (rule end)
+	 *     notReplayable?='notReplayable' (ambiguity) (rule end)
+	 *     storage?='storage' (ambiguity) (rule end)
+	 */
+	protected void emit_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     'GIVEN'?
 	 *
 	 * This ambiguous syntax occurs at:
@@ -188,6 +215,18 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     stateVerifications+=StateVerification (ambiguity) (rule end)
 	 */
 	protected void emit_ClientThenBlock_TriggeredActionsKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'with' 'response' statusCode=INT
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) (rule end)
+	 */
+	protected void emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -231,9 +270,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'ACE'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=QualifiedName (ambiguity) 'appState' appState=HttpClientTypeDefinition
-	 *     name=QualifiedName (ambiguity) 'scenarios' scenarios+=ClientScenario
-	 *     name=QualifiedName (ambiguity) 'scenarios'? (rule end)
+	 *     name=QualifiedName (ambiguity) 'appState' '{' appState+=Attribute
+	 *     name=QualifiedName (ambiguity) ('appState' ('{' '}')?)? 'scenarios' scenarios+=ClientScenario
+	 *     name=QualifiedName (ambiguity) ('appState' ('{' '}')?)? 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpClient_ACEKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -244,11 +283,25 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'scenarios'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     aceOperations+=HttpClientAce (ambiguity) (rule end)
-	 *     appState=HttpClientTypeDefinition (ambiguity) (rule end)
-	 *     name=QualifiedName 'ACE'? (ambiguity) (rule end)
+	 *     aceOperations+=HttpClientAce ('appState' ('{' '}')?)? (ambiguity) (rule end)
+	 *     appState+=Attribute '}' (ambiguity) (rule end)
+	 *     name=QualifiedName 'ACE'? ('appState' ('{' '}')?)? (ambiguity) (rule end)
 	 */
 	protected void emit_HttpClient_ScenariosKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('appState' ('{' '}')?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     aceOperations+=HttpClientAce (ambiguity) 'scenarios' scenarios+=ClientScenario
+	 *     aceOperations+=HttpClientAce (ambiguity) 'scenarios'? (rule end)
+	 *     name=QualifiedName 'ACE'? (ambiguity) 'scenarios' scenarios+=ClientScenario
+	 *     name=QualifiedName 'ACE'? (ambiguity) 'scenarios'? (rule end)
+	 */
+	protected void emit_HttpClient___AppStateKeyword_2_0___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

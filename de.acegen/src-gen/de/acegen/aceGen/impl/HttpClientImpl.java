@@ -4,10 +4,10 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.HttpClientTypeDefinition;
 
 import java.util.Collection;
 
@@ -74,14 +74,14 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   protected EList<HttpClientAce> aceOperations;
 
   /**
-   * The cached value of the '{@link #getAppState() <em>App State</em>}' containment reference.
+   * The cached value of the '{@link #getAppState() <em>App State</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getAppState()
    * @generated
    * @ordered
    */
-  protected HttpClientTypeDefinition appState;
+  protected EList<Attribute> appState;
 
   /**
    * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
@@ -160,48 +160,13 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public HttpClientTypeDefinition getAppState()
+  public EList<Attribute> getAppState()
   {
+    if (appState == null)
+    {
+      appState = new EObjectContainmentEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_CLIENT__APP_STATE);
+    }
     return appState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetAppState(HttpClientTypeDefinition newAppState, NotificationChain msgs)
-  {
-    HttpClientTypeDefinition oldAppState = appState;
-    appState = newAppState;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__APP_STATE, oldAppState, newAppState);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setAppState(HttpClientTypeDefinition newAppState)
-  {
-    if (newAppState != appState)
-    {
-      NotificationChain msgs = null;
-      if (appState != null)
-        msgs = ((InternalEObject)appState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.HTTP_CLIENT__APP_STATE, null, msgs);
-      if (newAppState != null)
-        msgs = ((InternalEObject)newAppState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.HTTP_CLIENT__APP_STATE, null, msgs);
-      msgs = basicSetAppState(newAppState, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__APP_STATE, newAppState, newAppState));
   }
 
   /**
@@ -232,7 +197,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return ((InternalEList<?>)getAceOperations()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        return basicSetAppState(null, msgs);
+        return ((InternalEList<?>)getAppState()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
@@ -280,7 +245,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        setAppState((HttpClientTypeDefinition)newValue);
+        getAppState().clear();
+        getAppState().addAll((Collection<? extends Attribute>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -307,7 +273,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().clear();
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        setAppState((HttpClientTypeDefinition)null);
+        getAppState().clear();
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -331,7 +297,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return aceOperations != null && !aceOperations.isEmpty();
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        return appState != null;
+        return appState != null && !appState.isEmpty();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return scenarios != null && !scenarios.isEmpty();
     }

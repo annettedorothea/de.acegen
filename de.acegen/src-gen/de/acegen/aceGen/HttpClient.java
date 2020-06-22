@@ -63,26 +63,16 @@ public interface HttpClient extends EObject
   EList<HttpClientAce> getAceOperations();
 
   /**
-   * Returns the value of the '<em><b>App State</b></em>' containment reference.
+   * Returns the value of the '<em><b>App State</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>App State</em>' containment reference.
-   * @see #setAppState(HttpClientTypeDefinition)
+   * @return the value of the '<em>App State</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getHttpClient_AppState()
    * @model containment="true"
    * @generated
    */
-  HttpClientTypeDefinition getAppState();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>App State</em>' containment reference.
-   * @see #getAppState()
-   * @generated
-   */
-  void setAppState(HttpClientTypeDefinition value);
+  EList<Attribute> getAppState();
 
   /**
    * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.

@@ -19,9 +19,7 @@ import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
-import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.aceGen.HttpClientStateFunction;
-import de.acegen.aceGen.HttpClientTypeDefinition;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
@@ -116,14 +114,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.HTTP_CLIENT_OUTCOME:
 				sequence_HttpClientOutcome(context, (HttpClientOutcome) semanticObject); 
 				return; 
-			case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT:
-				sequence_HttpClientStateElement(context, (HttpClientStateElement) semanticObject); 
-				return; 
 			case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION:
 				sequence_HttpClientStateFunction(context, (HttpClientStateFunction) semanticObject); 
-				return; 
-			case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION:
-				sequence_HttpClientTypeDefinition(context, (HttpClientTypeDefinition) semanticObject); 
 				return; 
 			case AceGenPackage.HTTP_SERVER:
 				sequence_HttpServer(context, (HttpServer) semanticObject); 
@@ -251,10 +243,15 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         primaryKey?='PrimaryKey'? 
 	 *         notNull?='NotNull'? 
 	 *         list?='List'? 
-	 *         (type=Type | model=[Model|QualifiedName]) 
+	 *         type=Type? 
+	 *         model=[Model|QualifiedName]? 
 	 *         name=ID 
 	 *         foreignKey=[Attribute|QualifiedName]? 
-	 *         notReplayable?='notReplayable'?
+	 *         notReplayable?='notReplayable'? 
+	 *         hash?='location.hash'? 
+	 *         storage?='storage'? 
+	 *         (superModels+=[Model|QualifiedName] superModels+=[Model|QualifiedName]?)? 
+	 *         attributes+=Attribute*
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
@@ -324,7 +321,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientWhenBlock returns ClientWhenBlock
 	 *
 	 * Constraint:
-	 *     (action=[HttpClientAce|QualifiedName] inputValues+=InputValue inputValues+=InputValue* (statusCode=INT response=JsonObject?)?)
+	 *     (action=[HttpClientAce|QualifiedName] (inputValues+=InputValue inputValues+=InputValue*)? (statusCode=INT response=JsonObject?)?)
 	 */
 	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -377,9 +374,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         async?='async'? 
 	 *         name=ID 
 	 *         (input+=Input input+=Input*)? 
-	 *         (stateElements+=[HttpClientStateElement|QualifiedName] stateElements+=[HttpClientStateElement|QualifiedName]*)? 
+	 *         (stateElements+=[Attribute|QualifiedName] stateElements+=[Attribute|QualifiedName]*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
-	 *         loadingFlag=[HttpClientStateElement|QualifiedName]? 
+	 *         loadingFlag=[Attribute|QualifiedName]? 
 	 *         outcomes+=HttpClientOutcome*
 	 *     )
 	 */
@@ -402,31 +399,10 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     HttpClientStateElement returns HttpClientStateElement
-	 *
-	 * Constraint:
-	 *     (
-	 *         notNull?='NotNull'? 
-	 *         type=Type? 
-	 *         name=ID 
-	 *         model=[Model|QualifiedName]? 
-	 *         list?='List'? 
-	 *         hash?='location.hash'? 
-	 *         storage?='storage'? 
-	 *         (types+=HttpClientTypeDefinition types+=HttpClientTypeDefinition*)?
-	 *     )
-	 */
-	protected void sequence_HttpClientStateElement(ISerializationContext context, HttpClientStateElement semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     HttpClientStateFunction returns HttpClientStateFunction
 	 *
 	 * Constraint:
-	 *     (stateFunctionType=HttpClientStateFunctionType stateElement=[HttpClientStateElement|QualifiedName])
+	 *     (stateFunctionType=HttpClientStateFunctionType stateElement=[Attribute|QualifiedName])
 	 */
 	protected void sequence_HttpClientStateFunction(ISerializationContext context, HttpClientStateFunction semanticObject) {
 		if (errorAcceptor != null) {
@@ -437,20 +413,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateFunctionTypeHttpClientStateFunctionTypeParserRuleCall_0_0(), semanticObject.getStateFunctionType());
-		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateElementHttpClientStateElementQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, false));
+		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateElementAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, false));
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     HttpClientTypeDefinition returns HttpClientTypeDefinition
-	 *
-	 * Constraint:
-	 *     (elements+=HttpClientStateElement elements+=HttpClientStateElement*)
-	 */
-	protected void sequence_HttpClientTypeDefinition(ISerializationContext context, HttpClientTypeDefinition semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -459,7 +423,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* appState=HttpClientTypeDefinition? scenarios+=ClientScenario*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* appState+=Attribute* scenarios+=ClientScenario*)
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -827,7 +791,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     StateVerification returns StateVerification
 	 *
 	 * Constraint:
-	 *     (name=ID stateRef=[HttpClientStateElement|QualifiedName] value=JsonObject)
+	 *     (name=ID stateRef=[Attribute|QualifiedName] value=JsonObject)
 	 */
 	protected void sequence_StateVerification(ISerializationContext context, StateVerification semanticObject) {
 		if (errorAcceptor != null) {
@@ -840,7 +804,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getStateVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefHttpClientStateElementQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
+		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
 		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0(), semanticObject.getValue());
 		feeder.finish();
 	}

@@ -21,6 +21,8 @@ import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.ClientScenario
+import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
@@ -37,6 +39,7 @@ import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
+import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.TriggeredAction
 import de.acegen.aceGen.WhenBlock
@@ -46,10 +49,8 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.ClientScenario
 
 /**
  * This class contains custom scoping description.
@@ -184,9 +185,13 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			var isThen = false
 			var isWhen = false
 			var isVerification = false
+			var isStateVerification = false
 			var PersistenceVerification persistenceVerification = null
-			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember || parent instanceof ClientScenario))) {
-				if (parent instanceof ThenBlock) {
+			var StateVerification stateVerification = null
+			while (parent !== null && !(
+				parent instanceof Scenario || parent instanceof JsonMember || parent instanceof ClientScenario
+			)) {
+				if (parent instanceof ThenBlock || parent instanceof ClientThenBlock) {
 					isThen = true
 				}
 				if (parent instanceof WhenBlock || parent instanceof ClientWhenBlock) {
@@ -195,6 +200,10 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (parent instanceof PersistenceVerification) {
 					isVerification = true
 					persistenceVerification = parent as PersistenceVerification
+				}
+				if (parent instanceof StateVerification) {
+					isStateVerification = true
+					stateVerification = parent as StateVerification
 				}
 				parent = parent.eContainer
 			}
@@ -229,34 +238,36 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			if (parent instanceof ClientScenario) {
 				val scenario = parent as ClientScenario;
 				if (isWhen) {
-					var attr = new ArrayList<Attribute>();
-					for (attributeRef : scenario.whenBlock.action.serverCall.payload) {
-						attr.add(attributeRef.attribute)
+					if (scenario.whenBlock.action.serverCall instanceof HttpServerAceRead) {
+						val ace = scenario.whenBlock.action.serverCall as HttpServerAceRead
+					 	return Scopes.scopeFor(ace.response);
 					}
-					for (attributeRef : scenario.whenBlock.action.serverCall.queryParams) {
-						attr.add(attributeRef.attribute)
-					}
-					for (attributeRef : scenario.whenBlock.action.serverCall.pathParams) {
-						attr.add(attributeRef.attribute)
-					}
-					return Scopes.scopeFor(attr);
+				}
+				if (isThen && isStateVerification) {
+					return Scopes.scopeFor(stateVerification.stateRef.attributes);
 				}
 			}
 			if (parent instanceof JsonMember) {
+				var attr = new ArrayList<Attribute>();
 				val jsonMember = parent as JsonMember;
-				if (jsonMember.attribute.model !== null) {
+				if (jsonMember.attribute.getModel !== null) {
 					val model = jsonMember.attribute.model as Model
-					return getScopeFor(model);
+					model.allAttributesRec(attr)
 				}
+				if (jsonMember.attribute.superModels !== null) {
+					for(superModel: jsonMember.attribute.superModels) {
+						superModel.allAttributesRec(attr)
+					}
+				}
+				if (jsonMember.attribute.attributes !== null) {
+					for (attribute : jsonMember.attribute.attributes) {
+						attr.add(attribute)
+					}
+				}
+				return Scopes.scopeFor(attr);
 			}
 		}
 		return super.getScope(context, reference);
-	}
-
-	private def IScope getScopeFor(Model aceModel) {
-		val attrs = new ArrayList<Attribute>();
-		aceModel.allAttributesRec(attrs);
-		return Scopes.scopeFor(attrs)
 	}
 
 }

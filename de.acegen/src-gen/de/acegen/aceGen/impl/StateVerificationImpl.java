@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.HttpClientStateElement;
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.StateVerification;
 
@@ -62,7 +62,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    * @ordered
    */
-  protected HttpClientStateElement stateRef;
+  protected Attribute stateRef;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -126,12 +126,12 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public HttpClientStateElement getStateRef()
+  public Attribute getStateRef()
   {
     if (stateRef != null && stateRef.eIsProxy())
     {
       InternalEObject oldStateRef = (InternalEObject)stateRef;
-      stateRef = (HttpClientStateElement)eResolveProxy(oldStateRef);
+      stateRef = (Attribute)eResolveProxy(oldStateRef);
       if (stateRef != oldStateRef)
       {
         if (eNotificationRequired())
@@ -146,7 +146,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public HttpClientStateElement basicGetStateRef()
+  public Attribute basicGetStateRef()
   {
     return stateRef;
   }
@@ -157,9 +157,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public void setStateRef(HttpClientStateElement newStateRef)
+  public void setStateRef(Attribute newStateRef)
   {
-    HttpClientStateElement oldStateRef = stateRef;
+    Attribute oldStateRef = stateRef;
     stateRef = newStateRef;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.STATE_VERIFICATION__STATE_REF, oldStateRef, stateRef));
@@ -266,7 +266,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName((String)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((HttpClientStateElement)newValue);
+        setStateRef((Attribute)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         setValue((JsonObject)newValue);
@@ -289,7 +289,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName(NAME_EDEFAULT);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((HttpClientStateElement)null);
+        setStateRef((Attribute)null);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         setValue((JsonObject)null);

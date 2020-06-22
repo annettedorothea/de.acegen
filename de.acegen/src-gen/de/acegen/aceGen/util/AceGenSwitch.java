@@ -115,20 +115,6 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.HTTP_CLIENT_STATE_ELEMENT:
-      {
-        HttpClientStateElement httpClientStateElement = (HttpClientStateElement)theEObject;
-        T result = caseHttpClientStateElement(httpClientStateElement);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AceGenPackage.HTTP_CLIENT_TYPE_DEFINITION:
-      {
-        HttpClientTypeDefinition httpClientTypeDefinition = (HttpClientTypeDefinition)theEObject;
-        T result = caseHttpClientTypeDefinition(httpClientTypeDefinition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AceGenPackage.CLIENT_SCENARIO:
       {
         ClientScenario clientScenario = (ClientScenario)theEObject;
@@ -492,38 +478,6 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpClientStateFunction(HttpClientStateFunction object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Http Client State Element</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Http Client State Element</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseHttpClientStateElement(HttpClientStateElement object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Http Client Type Definition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Http Client Type Definition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseHttpClientTypeDefinition(HttpClientTypeDefinition object)
   {
     return null;
   }

@@ -15,9 +15,9 @@
  */
 package de.acegen.templates.es6;
 
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.aceGen.Input;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
@@ -76,7 +76,7 @@ public class ActionTemplate {
       }
     }
     {
-      HttpClientStateElement _loadingFlag = it.getLoadingFlag();
+      Attribute _loadingFlag = it.getLoadingFlag();
       boolean _tripleNotEquals = (_loadingFlag != null);
       if (_tripleNotEquals) {
         _builder.append("import * as AppState from \"../../ace/WriteAppState\";");
@@ -130,7 +130,7 @@ public class ActionTemplate {
     _builder.append("\');");
     _builder.newLineIfNotEmpty();
     {
-      HttpClientStateElement _loadingFlag_1 = it.getLoadingFlag();
+      Attribute _loadingFlag_1 = it.getLoadingFlag();
       boolean _tripleNotEquals_1 = (_loadingFlag_1 != null);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
@@ -164,7 +164,7 @@ public class ActionTemplate {
     }
     _builder.newLine();
     {
-      HttpClientStateElement _loadingFlag_2 = it.getLoadingFlag();
+      Attribute _loadingFlag_2 = it.getLoadingFlag();
       boolean _tripleNotEquals_2 = (_loadingFlag_2 != null);
       if (_tripleNotEquals_2) {
         _builder.append("\t");

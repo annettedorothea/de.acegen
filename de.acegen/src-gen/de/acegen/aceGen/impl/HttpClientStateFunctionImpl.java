@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.HttpClientStateElement;
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpClientStateFunction;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -59,7 +59,7 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
    * @generated
    * @ordered
    */
-  protected HttpClientStateElement stateElement;
+  protected Attribute stateElement;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,12 +113,12 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public HttpClientStateElement getStateElement()
+  public Attribute getStateElement()
   {
     if (stateElement != null && stateElement.eIsProxy())
     {
       InternalEObject oldStateElement = (InternalEObject)stateElement;
-      stateElement = (HttpClientStateElement)eResolveProxy(oldStateElement);
+      stateElement = (Attribute)eResolveProxy(oldStateElement);
       if (stateElement != oldStateElement)
       {
         if (eNotificationRequired())
@@ -133,7 +133,7 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
-  public HttpClientStateElement basicGetStateElement()
+  public Attribute basicGetStateElement()
   {
     return stateElement;
   }
@@ -144,9 +144,9 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
    * @generated
    */
   @Override
-  public void setStateElement(HttpClientStateElement newStateElement)
+  public void setStateElement(Attribute newStateElement)
   {
-    HttpClientStateElement oldStateElement = stateElement;
+    Attribute oldStateElement = stateElement;
     stateElement = newStateElement;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, oldStateElement, stateElement));
@@ -185,7 +185,7 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
         setStateFunctionType((String)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT:
-        setStateElement((HttpClientStateElement)newValue);
+        setStateElement((Attribute)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -205,7 +205,7 @@ public class HttpClientStateFunctionImpl extends MinimalEObjectImpl.Container im
         setStateFunctionType(STATE_FUNCTION_TYPE_EDEFAULT);
         return;
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT:
-        setStateElement((HttpClientStateElement)null);
+        setStateElement((Attribute)null);
         return;
     }
     super.eUnset(featureID);

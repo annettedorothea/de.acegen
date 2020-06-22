@@ -244,6 +244,6 @@ class AttributeExtension {
 		}
 		return getLong()
 	}
-
+	
 }
 /******* S.D.G. *******/

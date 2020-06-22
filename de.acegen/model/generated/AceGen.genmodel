@@ -37,19 +37,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateFunction/stateFunctionType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateFunction/stateElement"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//HttpClientStateElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/notNull"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateElement/model"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/list"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/hash"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateElement/storage"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateElement/types"/>
-    </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//HttpClientTypeDefinition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientTypeDefinition/elements"/>
-    </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ClientScenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientScenario/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/givenRefs"/>
@@ -207,6 +194,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notReplayable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/hash"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/storage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/superModels"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/attributes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonDateTime">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/dateTime"/>

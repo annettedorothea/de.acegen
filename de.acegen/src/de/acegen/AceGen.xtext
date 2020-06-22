@@ -26,16 +26,18 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('appState' appState = HttpClientTypeDefinition )?
+	('appState' ('{'
+		appState += Attribute*
+	'}')? )?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
 		('asParam' input += Input (',' input += Input)* )?  
-		('fromState' stateElements += [HttpClientStateElement | QualifiedName] (',' stateElements += [HttpClientStateElement | QualifiedName])* )?  
+		('fromState' stateElements += [Attribute | QualifiedName] (',' stateElements += [Attribute | QualifiedName])* )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [HttpClientStateElement | QualifiedName])? 
+	('loadingFlag' loadingFlag = [Attribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -50,29 +52,11 @@ HttpClientOutcome:
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType stateElement = [HttpClientStateElement | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [Attribute | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
 	'set' | 'merge' | 'reset' | 'init'
-;
-
-HttpClientStateElement:
-	notNull ?= 'NotNull'? 
-	(type = Type)?
-	name = ID 
-	('extends' model = [Model | QualifiedName])?
-	list ?= 'List' ? 
-	hash ?= 'location.hash'? 
-	storage ?= 'storage'? 
-	(types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
-;
-
-HttpClientTypeDefinition:
-	'{'
-		elements += HttpClientStateElement 
-		(elements += HttpClientStateElement)* 
-	'}'
 ;
 
 ClientScenario:
@@ -84,7 +68,7 @@ ClientScenario:
 
 ClientWhenBlock: 
 	action = [HttpClientAce|QualifiedName] 
-	'(' inputValues += InputValue (',' inputValues += InputValue)* ')'
+	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
 	('with' 'response' 
 	statusCode = INT 
 	(response = JsonObject)?)?
@@ -104,8 +88,9 @@ TriggeredAction:
 ;
 
 StateVerification:
-	name = ID stateRef = [HttpClientStateElement | QualifiedName] 'shouldBe' value = JsonObject
+	name = ID stateRef = [Attribute | QualifiedName] 'shouldBe' value = JsonObject
 ;
+
 
 HttpServer:
 	language = ('Java')
@@ -252,10 +237,17 @@ Attribute:
 	primaryKey ?= 'PrimaryKey'? 
 	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
-	(type = Type | model = [Model | QualifiedName]) 
+	(type = Type)?
+	('model' model = [Model | QualifiedName])?
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
 	notReplayable ?= 'notReplayable'?
+	hash ?= 'location.hash'? 
+	storage ?= 'storage'? 
+	('{'
+		('allAttributesOf' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])?)?
+		attributes += Attribute*
+	'}')?
 ;
 
 QualifiedName:

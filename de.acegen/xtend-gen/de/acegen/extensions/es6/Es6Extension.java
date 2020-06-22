@@ -15,10 +15,10 @@
  */
 package de.acegen.extensions.es6;
 
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpClient;
-import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.aceGen.HttpClientStateFunction;
-import de.acegen.aceGen.HttpClientTypeDefinition;
+import de.acegen.aceGen.Model;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -47,16 +47,16 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String functionName(final HttpClientStateElement element) {
+  public String functionName(final Attribute element) {
     StringConcatenation _builder = new StringConcatenation();
     String _functionName = this.functionName(element, "");
     _builder.append(_functionName);
     return _builder.toString();
   }
   
-  public String functionName(final HttpClientStateElement it, final String suffix) {
+  public String functionName(final Attribute it, final String suffix) {
     final EObject parent = it.eContainer();
-    if ((parent instanceof HttpClientTypeDefinition)) {
+    if ((parent instanceof Model)) {
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -82,16 +82,16 @@ public class Es6Extension {
     }
   }
   
-  public String elementPath(final HttpClientStateElement element) {
+  public String elementPath(final Attribute element) {
     StringConcatenation _builder = new StringConcatenation();
     String _elementPath = this.elementPath(element, "");
     _builder.append(_elementPath);
     return _builder.toString();
   }
   
-  public String elementPath(final HttpClientStateElement it, final String suffix) {
+  public String elementPath(final Attribute it, final String suffix) {
     final EObject parent = it.eContainer();
-    if ((parent instanceof HttpClientTypeDefinition)) {
+    if ((parent instanceof Model)) {
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();

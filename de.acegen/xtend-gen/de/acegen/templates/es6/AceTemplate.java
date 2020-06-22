@@ -15,10 +15,10 @@
  */
 package de.acegen.templates.es6;
 
-import de.acegen.aceGen.HttpClientStateElement;
-import de.acegen.aceGen.HttpClientTypeDefinition;
+import de.acegen.aceGen.Attribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -2282,7 +2282,7 @@ public class AceTemplate {
     return _builder;
   }
   
-  public String generateWriteAppState(final HttpClientTypeDefinition it, final String prefix) {
+  public String generateWriteAppState(final List<Attribute> attributes, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2303,8 +2303,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     {
-      EList<HttpClientStateElement> _elements = it.getElements();
-      for(final HttpClientStateElement element : _elements) {
+      for(final Attribute element : attributes) {
         String _generateWriteAppStateRec = this.generateWriteAppStateRec(element);
         _builder.append(_generateWriteAppStateRec);
         _builder.newLineIfNotEmpty();
@@ -2313,10 +2312,10 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateWriteAppStateRec(final HttpClientStateElement it) {
+  public String generateWriteAppStateRec(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((it.getTypes() == null) || (((Object[])Conversions.unwrapArray(it.getTypes(), Object.class)).length == 0))) {
+      if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
         _builder.append("export function set_");
         String _functionName = this._es6Extension.functionName(it);
         _builder.append(_functionName);
@@ -2471,11 +2470,11 @@ public class AceTemplate {
             _builder.append("(eventData) {");
             _builder.newLineIfNotEmpty();
             {
-              EList<HttpClientTypeDefinition> _types = it.getTypes();
-              for(final HttpClientTypeDefinition type : _types) {
+              EList<Attribute> _attributes = it.getAttributes();
+              for(final Attribute type : _attributes) {
                 {
-                  EList<HttpClientStateElement> _elements = type.getElements();
-                  for(final HttpClientStateElement element : _elements) {
+                  EList<Attribute> _attributes_1 = type.getAttributes();
+                  for(final Attribute element : _attributes_1) {
                     _builder.append("\t");
                     _builder.append("if (eventData.");
                     String _name_10 = element.getName();
@@ -2568,13 +2567,13 @@ public class AceTemplate {
         _builder.newLine();
         _builder.newLine();
         {
-          if (((((it.getTypes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
+          if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
             {
-              EList<HttpClientTypeDefinition> _types_1 = it.getTypes();
-              for(final HttpClientTypeDefinition type_1 : _types_1) {
+              EList<Attribute> _attributes_2 = it.getAttributes();
+              for(final Attribute type_1 : _attributes_2) {
                 {
-                  EList<HttpClientStateElement> _elements_1 = type_1.getElements();
-                  for(final HttpClientStateElement element_1 : _elements_1) {
+                  EList<Attribute> _attributes_3 = type_1.getAttributes();
+                  for(final Attribute element_1 : _attributes_3) {
                     String _generateWriteAppStateRec = this.generateWriteAppStateRec(element_1);
                     _builder.append(_generateWriteAppStateRec);
                     _builder.newLineIfNotEmpty();
@@ -2590,7 +2589,7 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateReadAppState(final HttpClientTypeDefinition it, final String prefix) {
+  public String generateReadAppState(final List<Attribute> attributes, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2610,8 +2609,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     {
-      EList<HttpClientStateElement> _elements = it.getElements();
-      for(final HttpClientStateElement element : _elements) {
+      for(final Attribute element : attributes) {
         String _generateReadAppStateRec = this.generateReadAppStateRec(element);
         _builder.append(_generateReadAppStateRec);
         _builder.newLineIfNotEmpty();
@@ -2627,14 +2625,14 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateReadAppStateRec(final HttpClientStateElement it) {
+  public String generateReadAppStateRec(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {
-      if (((it.getTypes() == null) || (((Object[])Conversions.unwrapArray(it.getTypes(), Object.class)).length == 0))) {
+      if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
         _builder.append("export function get_");
         String _functionName = this._es6Extension.functionName(it);
         _builder.append(_functionName);
@@ -2703,13 +2701,13 @@ public class AceTemplate {
         _builder.newLine();
         _builder.newLine();
         {
-          if (((((it.getTypes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
+          if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
             {
-              EList<HttpClientTypeDefinition> _types = it.getTypes();
-              for(final HttpClientTypeDefinition type : _types) {
+              EList<Attribute> _attributes = it.getAttributes();
+              for(final Attribute type : _attributes) {
                 {
-                  EList<HttpClientStateElement> _elements = type.getElements();
-                  for(final HttpClientStateElement element : _elements) {
+                  EList<Attribute> _attributes_1 = type.getAttributes();
+                  for(final Attribute element : _attributes_1) {
                     String _generateReadAppStateRec = this.generateReadAppStateRec(element);
                     _builder.append(_generateReadAppStateRec);
                     _builder.newLineIfNotEmpty();

@@ -17,10 +17,10 @@
 
 package de.acegen.templates.es6
 
-import de.acegen.aceGen.HttpClientStateElement
-import de.acegen.aceGen.HttpClientTypeDefinition
+import de.acegen.aceGen.Attribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
+import java.util.List
 import javax.inject.Inject
 
 class AceTemplate {
@@ -898,7 +898,7 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateWriteAppState(HttpClientTypeDefinition it, String prefix) '''
+	def String generateWriteAppState(List<Attribute> attributes, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
@@ -909,13 +909,13 @@ class AceTemplate {
 			appState = AppUtils.deepCopy(initialAppState);
 		}
 		
-		«FOR element : elements»
+		«FOR element : attributes»
 			«element.generateWriteAppStateRec()»
 		«ENDFOR»
 	'''
 	
-	def String generateWriteAppStateRec(HttpClientStateElement it) '''
-		«IF types === null || types.length == 0»
+	def String generateWriteAppStateRec(Attribute it) '''
+		«IF attributes === null || attributes.length == 0»
 			export function set_«functionName»(eventData) {
 				«IF isHash»
 					location.hash = eventData.«getName»;
@@ -958,8 +958,8 @@ class AceTemplate {
 			
 			«IF !isList && !isHash && !isStorage»
 				export function merge_«functionName»(eventData) {
-					«FOR type : types»
-						«FOR element : type.elements»
+					«FOR type : attributes»
+						«FOR element : type.attributes»
 							if (eventData.«element.getName» !== undefined) {
 								«element.elementPath» = eventData.«element.getName»;
 							}
@@ -988,9 +988,9 @@ class AceTemplate {
 				«ENDIF»
 			}
 			
-			«IF types !== null && !isList && !isHash && !isStorage»
-				«FOR type : types»
-					«FOR element : type.elements»
+			«IF attributes !== null && !isList && !isHash && !isStorage»
+				«FOR type : attributes»
+					«FOR element : type.attributes»
 						«element.generateWriteAppStateRec()»
 					«ENDFOR»
 				«ENDFOR»
@@ -999,7 +999,7 @@ class AceTemplate {
 		«ENDIF»
 	'''
 	
-	def String generateReadAppState(HttpClientTypeDefinition it, String prefix) '''
+	def String generateReadAppState(List<Attribute> attributes, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
@@ -1009,7 +1009,7 @@ class AceTemplate {
 			return AppUtils.deepCopy(appState);
 		}
 		
-		«FOR element : elements»
+		«FOR element : attributes»
 			«element.generateReadAppStateRec()»
 		«ENDFOR»
 		
@@ -1019,10 +1019,10 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateReadAppStateRec(HttpClientStateElement it) '''
+	def String generateReadAppStateRec(Attribute it) '''
 		«copyright»
 
-		«IF types === null || types.length == 0»
+		«IF attributes === null || attributes.length == 0»
 			export function get_«functionName»() {
 				«IF isHash»
 					return location.hash;
@@ -1044,9 +1044,9 @@ class AceTemplate {
 				«ENDIF»
 			}
 
-			«IF types !== null && !isList && !isHash && !isStorage»
-				«FOR type : types»
-					«FOR element : type.elements»
+			«IF attributes !== null && !isList && !isHash && !isStorage»
+				«FOR type : attributes»
+					«FOR element : type.attributes»
 						«element.generateReadAppStateRec()»
 					«ENDFOR»
 				«ENDFOR»
