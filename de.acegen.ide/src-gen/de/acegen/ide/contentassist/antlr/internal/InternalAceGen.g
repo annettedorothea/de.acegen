@@ -10575,9 +10575,9 @@ rule__StateVerification__ValueAssignment_3
 	}
 :
 	(
-		{ before(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0()); }
-		ruleJsonObject
-		{ after(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0()); }
+		{ before(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0()); }
+		ruleJsonValue
+		{ after(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0()); }
 	)
 ;
 finally {

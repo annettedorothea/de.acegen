@@ -4758,7 +4758,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
                 if ( (LA8_2==RULE_STRING) ) {
                     alt8=7;
                 }
-                else if ( (LA8_2==EOF||LA8_2==33||LA8_2==36||LA8_2==42||LA8_2==77) ) {
+                else if ( (LA8_2==EOF||LA8_2==RULE_ID||LA8_2==33||LA8_2==36||LA8_2==42||LA8_2==51||LA8_2==77) ) {
                     alt8=2;
                 }
                 else {
@@ -13101,7 +13101,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:4138:1: ( rule__StateVerification__Group__2__Impl rule__StateVerification__Group__3 )
             // InternalAceGen.g:4139:2: rule__StateVerification__Group__2__Impl rule__StateVerification__Group__3
             {
-            pushFollow(FOLLOW_9);
+            pushFollow(FOLLOW_29);
             rule__StateVerification__Group__2__Impl();
 
             state._fsp--;
@@ -33079,25 +33079,25 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StateVerification__ValueAssignment_3"
-    // InternalAceGen.g:10572:1: rule__StateVerification__ValueAssignment_3 : ( ruleJsonObject ) ;
+    // InternalAceGen.g:10572:1: rule__StateVerification__ValueAssignment_3 : ( ruleJsonValue ) ;
     public final void rule__StateVerification__ValueAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:10576:1: ( ( ruleJsonObject ) )
-            // InternalAceGen.g:10577:2: ( ruleJsonObject )
+            // InternalAceGen.g:10576:1: ( ( ruleJsonValue ) )
+            // InternalAceGen.g:10577:2: ( ruleJsonValue )
             {
-            // InternalAceGen.g:10577:2: ( ruleJsonObject )
-            // InternalAceGen.g:10578:3: ruleJsonObject
+            // InternalAceGen.g:10577:2: ( ruleJsonValue )
+            // InternalAceGen.g:10578:3: ruleJsonValue
             {
-             before(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0()); 
+             before(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
-            ruleJsonObject();
+            ruleJsonValue();
 
             state._fsp--;
 
-             after(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0()); 
+             after(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0()); 
 
             }
 

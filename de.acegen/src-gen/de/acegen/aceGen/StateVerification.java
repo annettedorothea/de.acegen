@@ -74,12 +74,12 @@ public interface StateVerification extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(JsonObject)
+   * @see #setValue(JsonValue)
    * @see de.acegen.aceGen.AceGenPackage#getStateVerification_Value()
    * @model containment="true"
    * @generated
    */
-  JsonObject getValue();
+  JsonValue getValue();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.StateVerification#getValue <em>Value</em>}' containment reference.
@@ -89,6 +89,6 @@ public interface StateVerification extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(JsonObject value);
+  void setValue(JsonValue value);
 
 } // StateVerification

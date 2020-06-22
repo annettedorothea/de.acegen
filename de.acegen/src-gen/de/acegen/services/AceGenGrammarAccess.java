@@ -766,13 +766,13 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStateRefAttributeQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cStateRefAttributeCrossReference_1_0.eContents().get(1);
 		private final Keyword cShouldBeKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cValueJsonObjectParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
+		private final RuleCall cValueJsonValueParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
 		
 		//StateVerification:
-		//	name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonObject;
+		//	name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonValue;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonObject
+		//name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonValue
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -793,11 +793,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//'shouldBe'
 		public Keyword getShouldBeKeyword_2() { return cShouldBeKeyword_2; }
 		
-		//value=JsonObject
+		//value=JsonValue
 		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
 		
-		//JsonObject
-		public RuleCall getValueJsonObjectParserRuleCall_3_0() { return cValueJsonObjectParserRuleCall_3_0; }
+		//JsonValue
+		public RuleCall getValueJsonValueParserRuleCall_3_0() { return cValueJsonValueParserRuleCall_3_0; }
 	}
 	public class HttpServerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServer");
@@ -3016,7 +3016,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//StateVerification:
-	//	name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonObject;
+	//	name=ID stateRef=[Attribute|QualifiedName] 'shouldBe' value=JsonValue;
 	public StateVerificationElements getStateVerificationAccess() {
 		return pStateVerification;
 	}

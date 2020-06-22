@@ -791,7 +791,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     StateVerification returns StateVerification
 	 *
 	 * Constraint:
-	 *     (name=ID stateRef=[Attribute|QualifiedName] value=JsonObject)
+	 *     (name=ID stateRef=[Attribute|QualifiedName] value=JsonValue)
 	 */
 	protected void sequence_StateVerification(ISerializationContext context, StateVerification semanticObject) {
 		if (errorAcceptor != null) {
@@ -805,7 +805,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getStateVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
-		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	

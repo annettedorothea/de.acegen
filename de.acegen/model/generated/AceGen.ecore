@@ -78,7 +78,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="StateVerification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateRef" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValue"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServer">

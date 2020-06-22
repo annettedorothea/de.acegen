@@ -1222,9 +1222,9 @@ ruleStateVerification returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getStateVerificationAccess().getValueJsonObjectParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getStateVerificationAccess().getValueJsonValueParserRuleCall_3_0());
 				}
-				lv_value_3_0=ruleJsonObject
+				lv_value_3_0=ruleJsonValue
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getStateVerificationRule());
@@ -1233,7 +1233,7 @@ ruleStateVerification returns [EObject current=null]
 						$current,
 						"value",
 						lv_value_3_0,
-						"de.acegen.AceGen.JsonObject");
+						"de.acegen.AceGen.JsonValue");
 					afterParserOrEnumRuleCall();
 				}
 			)

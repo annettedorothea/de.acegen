@@ -5,7 +5,7 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.StateVerification;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -72,7 +72,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    * @ordered
    */
-  protected JsonObject value;
+  protected JsonValue value;
 
   /**
    * <!-- begin-user-doc -->
@@ -171,7 +171,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public JsonObject getValue()
+  public JsonValue getValue()
   {
     return value;
   }
@@ -181,9 +181,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(JsonObject newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(JsonValue newValue, NotificationChain msgs)
   {
-    JsonObject oldValue = value;
+    JsonValue oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -199,7 +199,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public void setValue(JsonObject newValue)
+  public void setValue(JsonValue newValue)
   {
     if (newValue != value)
     {
@@ -269,7 +269,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setStateRef((Attribute)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
-        setValue((JsonObject)newValue);
+        setValue((JsonValue)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -292,7 +292,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setStateRef((Attribute)null);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
-        setValue((JsonObject)null);
+        setValue((JsonValue)null);
         return;
     }
     super.eUnset(featureID);
