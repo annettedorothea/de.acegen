@@ -16,11 +16,13 @@
 package de.acegen.templates.es6;
 
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -2282,7 +2284,7 @@ public class AceTemplate {
     return _builder;
   }
   
-  public String generateWriteAppState(final List<Attribute> attributes, final String prefix) {
+  public String generateAppState(final List<Attribute> attributes, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2301,340 +2303,22 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
-    _builder.newLine();
     {
-      for(final Attribute element : attributes) {
-        String _generateWriteAppStateRec = this.generateWriteAppStateRec(element);
-        _builder.append(_generateWriteAppStateRec);
+      for(final Attribute attribute : attributes) {
+        String _generateAppStateRec = this.generateAppStateRec(attribute, null);
+        _builder.append(_generateAppStateRec);
         _builder.newLineIfNotEmpty();
       }
     }
     return _builder.toString();
   }
   
-  public String generateWriteAppStateRec(final Attribute it) {
+  public String generateAppStateRec(final Attribute it, final EObject parent) {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
-        _builder.append("export function set_");
-        String _functionName = this._es6Extension.functionName(it);
-        _builder.append(_functionName);
-        _builder.append("(eventData) {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash = it.isHash();
-          if (_isHash) {
-            _builder.append("\t");
-            _builder.append("location.hash = eventData.");
-            String _name = it.getName();
-            _builder.append(_name, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            boolean _isStorage = it.isStorage();
-            if (_isStorage) {
-              _builder.append("\t");
-              _builder.append("localStorage.setItem(\"");
-              String _name_1 = it.getName();
-              _builder.append(_name_1, "\t");
-              _builder.append("\", eventData.");
-              String _name_2 = it.getName();
-              _builder.append(_name_2, "\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath, "\t");
-              _builder.append(" = eventData.");
-              String _name_3 = it.getName();
-              _builder.append(_name_3, "\t");
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function reset_");
-        String _functionName_1 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_1);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_1 = it.isHash();
-          if (_isHash_1) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_1 = it.isStorage();
-            if (_isStorage_1) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_4 = it.getName();
-              _builder.append(_name_4, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath_1 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_1, "\t");
-              _builder.append(" = null;");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function init_");
-        String _functionName_2 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_2);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_2 = it.isHash();
-          if (_isHash_2) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_2 = it.isStorage();
-            if (_isStorage_2) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_5 = it.getName();
-              _builder.append(_name_5, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath_2 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_2, "\t");
-              _builder.append(" = null;");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-      } else {
-        _builder.append("export function set_");
-        String _functionName_3 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_3);
-        _builder.append("(eventData) {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_3 = it.isHash();
-          if (_isHash_3) {
-            _builder.append("\t");
-            _builder.append("location.hash = eventData.");
-            String _name_6 = it.getName();
-            _builder.append(_name_6, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            boolean _isStorage_3 = it.isStorage();
-            if (_isStorage_3) {
-              _builder.append("\t");
-              _builder.append("localStorage.setItem(\"");
-              String _name_7 = it.getName();
-              _builder.append(_name_7, "\t");
-              _builder.append("\", eventData.");
-              String _name_8 = it.getName();
-              _builder.append(_name_8, "\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath_3 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_3, "\t");
-              _builder.append(" = eventData.");
-              String _name_9 = it.getName();
-              _builder.append(_name_9, "\t");
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        {
-          if ((((!it.isList()) && (!it.isHash())) && (!it.isStorage()))) {
-            _builder.append("export function merge_");
-            String _functionName_4 = this._es6Extension.functionName(it);
-            _builder.append(_functionName_4);
-            _builder.append("(eventData) {");
-            _builder.newLineIfNotEmpty();
-            {
-              EList<Attribute> _attributes = it.getAttributes();
-              for(final Attribute type : _attributes) {
-                {
-                  EList<Attribute> _attributes_1 = type.getAttributes();
-                  for(final Attribute element : _attributes_1) {
-                    _builder.append("\t");
-                    _builder.append("if (eventData.");
-                    String _name_10 = element.getName();
-                    _builder.append(_name_10, "\t");
-                    _builder.append(" !== undefined) {");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    String _elementPath_4 = this._es6Extension.elementPath(element);
-                    _builder.append(_elementPath_4, "\t\t");
-                    _builder.append(" = eventData.");
-                    String _name_11 = element.getName();
-                    _builder.append(_name_11, "\t\t");
-                    _builder.append(";");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("}");
-                    _builder.newLine();
-                  }
-                }
-              }
-            }
-            _builder.append("}");
-            _builder.newLine();
-          }
-        }
-        _builder.newLine();
-        _builder.append("export function reset_");
-        String _functionName_5 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_5);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_4 = it.isHash();
-          if (_isHash_4) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_4 = it.isStorage();
-            if (_isStorage_4) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_12 = it.getName();
-              _builder.append(_name_12, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath_5 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_5, "\t");
-              _builder.append(" = null;");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function init_");
-        String _functionName_6 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_6);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_5 = it.isHash();
-          if (_isHash_5) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_5 = it.isStorage();
-            if (_isStorage_5) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_13 = it.getName();
-              _builder.append(_name_13, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              _builder.append("\t");
-              String _elementPath_6 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_6, "\t");
-              _builder.append(" = {};");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        {
-          if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
-            {
-              EList<Attribute> _attributes_2 = it.getAttributes();
-              for(final Attribute type_1 : _attributes_2) {
-                {
-                  EList<Attribute> _attributes_3 = type_1.getAttributes();
-                  for(final Attribute element_1 : _attributes_3) {
-                    String _generateWriteAppStateRec = this.generateWriteAppStateRec(element_1);
-                    _builder.append(_generateWriteAppStateRec);
-                    _builder.newLineIfNotEmpty();
-                  }
-                }
-              }
-            }
-          }
-        }
-        _builder.newLine();
-      }
-    }
-    return _builder.toString();
-  }
-  
-  public String generateReadAppState(final List<Attribute> attributes, final String prefix) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
-    _builder.newLine();
-    _builder.append("import { state } from \"./WriteAppState\";");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("export function getAppState() {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return AppUtils.deepCopy(appState);");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      for(final Attribute element : attributes) {
-        String _generateReadAppStateRec = this.generateReadAppStateRec(element);
-        _builder.append(_generateReadAppStateRec);
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.newLine();
-    return _builder.toString();
-  }
-  
-  public String generateReadAppStateRec(final Attribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
     {
       if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
         _builder.append("export function get_");
-        String _functionName = this._es6Extension.functionName(it);
+        String _functionName = this._es6Extension.functionName(it, parent);
         _builder.append(_functionName);
         _builder.append("() {");
         _builder.newLineIfNotEmpty();
@@ -2656,7 +2340,7 @@ public class AceTemplate {
             } else {
               _builder.append("\t");
               _builder.append("return ");
-              String _elementPath = this._es6Extension.elementPath(it);
+              String _elementPath = this._es6Extension.elementPath(it, parent);
               _builder.append(_elementPath, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
@@ -2666,33 +2350,353 @@ public class AceTemplate {
         _builder.append("}");
         _builder.newLine();
         _builder.newLine();
-      } else {
-        _builder.append("export function get_");
-        String _functionName_1 = this._es6Extension.functionName(it);
+        _builder.append("export function set_");
+        String _functionName_1 = this._es6Extension.functionName(it, parent);
         _builder.append(_functionName_1);
-        _builder.append("() {");
+        _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
         {
           boolean _isHash_1 = it.isHash();
           if (_isHash_1) {
             _builder.append("\t");
-            _builder.append("return location.hash;");
-            _builder.newLine();
+            _builder.append("location.hash = eventData.");
+            String _name_1 = it.getName();
+            _builder.append(_name_1, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
           } else {
             boolean _isStorage_1 = it.isStorage();
             if (_isStorage_1) {
               _builder.append("\t");
+              _builder.append("localStorage.setItem(\"");
+              String _name_2 = it.getName();
+              _builder.append(_name_2, "\t");
+              _builder.append("\", eventData.");
+              String _name_3 = it.getName();
+              _builder.append(_name_3, "\t");
+              _builder.append(");");
+              _builder.newLineIfNotEmpty();
+            } else {
+              {
+                List<Attribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+                for(final Attribute attribute : _allParentAttributes) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_1 = this._es6Extension.elementPath(attribute, parent);
+                  _builder.append(_elementPath_1, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  String _elementPath_2 = this._es6Extension.elementPath(attribute, parent);
+                  _builder.append(_elementPath_2, "\t\t");
+                  _builder.append(" = {};");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
+              _builder.append("\t");
+              String _elementPath_3 = this._es6Extension.elementPath(it, parent);
+              _builder.append(_elementPath_3, "\t");
+              _builder.append(" = eventData.");
+              String _name_4 = it.getName();
+              _builder.append(_name_4, "\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("export function reset_");
+        String _functionName_2 = this._es6Extension.functionName(it, parent);
+        _builder.append(_functionName_2);
+        _builder.append("() {");
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _isHash_2 = it.isHash();
+          if (_isHash_2) {
+            _builder.append("\t");
+            _builder.append("location.hash = \"\";");
+            _builder.newLine();
+          } else {
+            boolean _isStorage_2 = it.isStorage();
+            if (_isStorage_2) {
+              _builder.append("\t");
+              _builder.append("localStorage.removeItem(\"");
+              String _name_5 = it.getName();
+              _builder.append(_name_5, "\t");
+              _builder.append("\");");
+              _builder.newLineIfNotEmpty();
+            } else {
+              {
+                List<Attribute> _allParentAttributes_1 = this._es6Extension.allParentAttributes(it);
+                for(final Attribute attribute_1 : _allParentAttributes_1) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_4 = this._es6Extension.elementPath(attribute_1, parent);
+                  _builder.append(_elementPath_4, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
+              _builder.append("\t");
+              String _elementPath_5 = this._es6Extension.elementPath(it, parent);
+              _builder.append(_elementPath_5, "\t");
+              _builder.append(" = undefined;");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+      } else {
+        _builder.append("export function get_");
+        String _functionName_3 = this._es6Extension.functionName(it, parent);
+        _builder.append(_functionName_3);
+        _builder.append("() {");
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _isHash_3 = it.isHash();
+          if (_isHash_3) {
+            _builder.append("\t");
+            _builder.append("return location.hash;");
+            _builder.newLine();
+          } else {
+            boolean _isStorage_3 = it.isStorage();
+            if (_isStorage_3) {
+              _builder.append("\t");
               _builder.append("localStorage.getItem(\"");
-              String _name_1 = it.getName();
-              _builder.append(_name_1, "\t");
+              String _name_6 = it.getName();
+              _builder.append(_name_6, "\t");
               _builder.append("\");");
               _builder.newLineIfNotEmpty();
             } else {
               _builder.append("\t");
               _builder.append("return AppUtils.deepCopy(");
-              String _elementPath_1 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_1, "\t");
+              String _elementPath_6 = this._es6Extension.elementPath(it, parent);
+              _builder.append(_elementPath_6, "\t");
               _builder.append(");");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("export function set_");
+        String _functionName_4 = this._es6Extension.functionName(it, parent);
+        _builder.append(_functionName_4);
+        _builder.append("(eventData) {");
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _isHash_4 = it.isHash();
+          if (_isHash_4) {
+            _builder.append("\t");
+            _builder.append("location.hash = eventData.");
+            String _name_7 = it.getName();
+            _builder.append(_name_7, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          } else {
+            boolean _isStorage_4 = it.isStorage();
+            if (_isStorage_4) {
+              _builder.append("\t");
+              _builder.append("localStorage.setItem(\"");
+              String _name_8 = it.getName();
+              _builder.append(_name_8, "\t");
+              _builder.append("\", eventData.");
+              String _name_9 = it.getName();
+              _builder.append(_name_9, "\t");
+              _builder.append(");");
+              _builder.newLineIfNotEmpty();
+            } else {
+              {
+                List<Attribute> _allParentAttributes_2 = this._es6Extension.allParentAttributes(it);
+                for(final Attribute attribute_2 : _allParentAttributes_2) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_7 = this._es6Extension.elementPath(attribute_2, parent);
+                  _builder.append(_elementPath_7, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  String _elementPath_8 = this._es6Extension.elementPath(attribute_2, parent);
+                  _builder.append(_elementPath_8, "\t\t");
+                  _builder.append(" = {};");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
+              _builder.append("\t");
+              String _elementPath_9 = this._es6Extension.elementPath(it, parent);
+              _builder.append(_elementPath_9, "\t");
+              _builder.append(" = eventData.");
+              String _name_10 = it.getName();
+              _builder.append(_name_10, "\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        {
+          if (((!it.isHash()) && (!it.isStorage()))) {
+            _builder.append("export function merge_");
+            String _functionName_5 = this._es6Extension.functionName(it, parent);
+            _builder.append(_functionName_5);
+            _builder.append("(eventData) {");
+            _builder.newLineIfNotEmpty();
+            {
+              List<Attribute> _allParentAttributes_3 = this._es6Extension.allParentAttributes(it);
+              for(final Attribute attr : _allParentAttributes_3) {
+                _builder.append("\t");
+                _builder.append("if (!");
+                String _elementPath_10 = this._es6Extension.elementPath(attr, attr.eContainer());
+                _builder.append(_elementPath_10, "\t");
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                String _elementPath_11 = this._es6Extension.elementPath(attr, attr.eContainer());
+                _builder.append(_elementPath_11, "\t\t");
+                _builder.append(" = {};");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+            _builder.append("\t");
+            _builder.append("if (!");
+            String _elementPath_12 = this._es6Extension.elementPath(it, it.eContainer());
+            _builder.append(_elementPath_12, "\t");
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            String _elementPath_13 = this._es6Extension.elementPath(it, it.eContainer());
+            _builder.append(_elementPath_13, "\t\t");
+            _builder.append(" = {};");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+            {
+              EList<Attribute> _attributes = it.getAttributes();
+              for(final Attribute attribute_3 : _attributes) {
+                _builder.append("\t");
+                _builder.append("if (eventData.");
+                String _name_11 = attribute_3.getName();
+                _builder.append(_name_11, "\t");
+                _builder.append(" !== undefined) {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                String _elementPath_14 = this._es6Extension.elementPath(attribute_3, it);
+                _builder.append(_elementPath_14, "\t\t");
+                _builder.append(" = eventData.");
+                String _name_12 = attribute_3.getName();
+                _builder.append(_name_12, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+            {
+              Model _model = it.getModel();
+              boolean _tripleNotEquals = (_model != null);
+              if (_tripleNotEquals) {
+                {
+                  EList<Attribute> _attributes_1 = it.getModel().getAttributes();
+                  for(final Attribute attribute_4 : _attributes_1) {
+                    _builder.append("\t");
+                    _builder.append("if (eventData.");
+                    String _name_13 = attribute_4.getName();
+                    _builder.append(_name_13, "\t");
+                    _builder.append(" !== undefined) {");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    _builder.append("\t");
+                    String _elementPath_15 = this._es6Extension.elementPath(attribute_4, parent);
+                    _builder.append(_elementPath_15, "\t\t");
+                    _builder.append(" = eventData.");
+                    String _name_14 = attribute_4.getName();
+                    _builder.append(_name_14, "\t\t");
+                    _builder.append(";");
+                    _builder.newLineIfNotEmpty();
+                    _builder.append("\t");
+                    _builder.append("}");
+                    _builder.newLine();
+                  }
+                }
+              }
+            }
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+        _builder.newLine();
+        _builder.append("export function reset_");
+        String _functionName_6 = this._es6Extension.functionName(it, parent);
+        _builder.append(_functionName_6);
+        _builder.append("() {");
+        _builder.newLineIfNotEmpty();
+        {
+          boolean _isHash_5 = it.isHash();
+          if (_isHash_5) {
+            _builder.append("\t");
+            _builder.append("location.hash = \"\";");
+            _builder.newLine();
+          } else {
+            boolean _isStorage_5 = it.isStorage();
+            if (_isStorage_5) {
+              _builder.append("\t");
+              _builder.append("localStorage.removeItem(\"");
+              String _name_15 = it.getName();
+              _builder.append(_name_15, "\t");
+              _builder.append("\");");
+              _builder.newLineIfNotEmpty();
+            } else {
+              {
+                List<Attribute> _allParentAttributes_4 = this._es6Extension.allParentAttributes(it);
+                for(final Attribute attribute_5 : _allParentAttributes_4) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_16 = this._es6Extension.elementPath(attribute_5, parent);
+                  _builder.append(_elementPath_16, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
+              _builder.append("\t");
+              String _elementPath_17 = this._es6Extension.elementPath(it, parent);
+              _builder.append(_elementPath_17, "\t");
+              _builder.append(" = undefined;");
               _builder.newLineIfNotEmpty();
             }
           }
@@ -2703,13 +2707,22 @@ public class AceTemplate {
         {
           if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
             {
-              EList<Attribute> _attributes = it.getAttributes();
-              for(final Attribute type : _attributes) {
+              EList<Attribute> _attributes_2 = it.getAttributes();
+              for(final Attribute attribute_6 : _attributes_2) {
+                String _generateAppStateRec = this.generateAppStateRec(attribute_6, it);
+                _builder.append(_generateAppStateRec);
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            {
+              Model _model_1 = it.getModel();
+              boolean _tripleNotEquals_1 = (_model_1 != null);
+              if (_tripleNotEquals_1) {
                 {
-                  EList<Attribute> _attributes_1 = type.getAttributes();
-                  for(final Attribute element : _attributes_1) {
-                    String _generateReadAppStateRec = this.generateReadAppStateRec(element);
-                    _builder.append(_generateReadAppStateRec);
+                  EList<Attribute> _attributes_3 = it.getModel().getAttributes();
+                  for(final Attribute attribute_7 : _attributes_3) {
+                    String _generateAppStateRec_1 = this.generateAppStateRec(attribute_7, it);
+                    _builder.append(_generateAppStateRec_1);
                     _builder.newLineIfNotEmpty();
                   }
                 }
@@ -2720,12 +2733,6 @@ public class AceTemplate {
         _builder.newLine();
       }
     }
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.newLine();
     return _builder.toString();
   }
 }

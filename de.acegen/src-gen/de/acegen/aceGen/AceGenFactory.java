@@ -114,6 +114,15 @@ public interface AceGenFactory extends EFactory
   ClientThenBlock createClientThenBlock();
 
   /**
+   * Returns a new object of class '<em>Server Call</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Server Call</em>'.
+   * @generated
+   */
+  ServerCall createServerCall();
+
+  /**
    * Returns a new object of class '<em>Triggered Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

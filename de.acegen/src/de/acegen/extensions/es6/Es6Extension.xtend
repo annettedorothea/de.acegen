@@ -18,9 +18,11 @@
 package de.acegen.extensions.es6
 
 import de.acegen.aceGen.Attribute
-import de.acegen.aceGen.HttpClientStateFunction
-import de.acegen.aceGen.Model
 import de.acegen.aceGen.HttpClient
+import de.acegen.aceGen.HttpClientStateFunction
+import java.util.ArrayList
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 class Es6Extension {
 	def String packageFolder(HttpClient it) '''«getName.replace('.', '/')»'''
@@ -29,28 +31,34 @@ class Es6Extension {
 
 	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»'''
 	
-	def String functionName(Attribute element) '''«element.functionName("")»'''
+	def String functionName(Attribute it, EObject parent) '''«functionNameRec(parent, "")»'''
 	
-	def String functionName(Attribute it, String suffix) {
-		val parent = eContainer;
-		if (parent instanceof Model) {
-			//var typeDef = parent as Model;
-			return /*(typeDef.eContainer as Attribute).functionName("_" + getName) +*/ '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
+	def String functionNameRec(Attribute it, EObject parent, String suffix) {
+		if (parent !== null && parent instanceof Attribute) {
+			return (parent as Attribute).functionNameRec(parent.eContainer, name) + '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0»_«suffix»«ENDIF»''';
 		}
 	}
 
-	def String elementPath(Attribute element) '''«element.elementPath("")»'''
+	def String elementPath(Attribute it, EObject parent) '''appState.«elementPathRec(parent, "")»'''
 	
-	def String elementPath(Attribute it, String suffix) {
-		val parent = eContainer;
-		if (parent instanceof Model) {
-			//var typeDef = parent as Model;
-			return /*(typeDef.eContainer as Attribute).elementPath(getName) +*/ '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
+	def String elementPathRec(Attribute it, EObject parent, String suffix) {
+		if (parent !== null && parent instanceof Attribute) {
+			return (parent as Attribute).elementPathRec(parent.eContainer, name) + '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
 		}
+	}
+
+	def List<Attribute> allParentAttributes(Attribute it) {
+		var attributes = new ArrayList<Attribute>();
+		var parent = eContainer;
+		while (parent instanceof Attribute) {
+			attributes.add(0, parent as Attribute)
+			parent = parent.eContainer;
+		}
+		return attributes
 	}
 
 }

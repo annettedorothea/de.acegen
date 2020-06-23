@@ -5,11 +5,13 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientThenBlock;
+import de.acegen.aceGen.ServerCall;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.TriggeredAction;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -17,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -30,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.ClientThenBlockImpl#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientThenBlockImpl#getStateVerifications <em>State Verifications</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientThenBlockImpl#getTriggeredAction <em>Triggered Action</em>}</li>
  * </ul>
@@ -38,6 +42,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements ClientThenBlock
 {
+  /**
+   * The cached value of the '{@link #getServerCall() <em>Server Call</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getServerCall()
+   * @generated
+   * @ordered
+   */
+  protected ServerCall serverCall;
+
   /**
    * The cached value of the '{@link #getStateVerifications() <em>State Verifications</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -85,6 +99,56 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public ServerCall getServerCall()
+  {
+    return serverCall;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetServerCall(ServerCall newServerCall, NotificationChain msgs)
+  {
+    ServerCall oldServerCall = serverCall;
+    serverCall = newServerCall;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL, oldServerCall, newServerCall);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setServerCall(ServerCall newServerCall)
+  {
+    if (newServerCall != serverCall)
+    {
+      NotificationChain msgs = null;
+      if (serverCall != null)
+        msgs = ((InternalEObject)serverCall).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL, null, msgs);
+      if (newServerCall != null)
+        msgs = ((InternalEObject)newServerCall).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL, null, msgs);
+      msgs = basicSetServerCall(newServerCall, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL, newServerCall, newServerCall));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<StateVerification> getStateVerifications()
   {
     if (stateVerifications == null)
@@ -119,6 +183,8 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL:
+        return basicSetServerCall(null, msgs);
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         return ((InternalEList<?>)getStateVerifications()).basicRemove(otherEnd, msgs);
       case AceGenPackage.CLIENT_THEN_BLOCK__TRIGGERED_ACTION:
@@ -137,6 +203,8 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL:
+        return getServerCall();
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         return getStateVerifications();
       case AceGenPackage.CLIENT_THEN_BLOCK__TRIGGERED_ACTION:
@@ -156,6 +224,9 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL:
+        setServerCall((ServerCall)newValue);
+        return;
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         getStateVerifications().clear();
         getStateVerifications().addAll((Collection<? extends StateVerification>)newValue);
@@ -178,6 +249,9 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL:
+        setServerCall((ServerCall)null);
+        return;
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         getStateVerifications().clear();
         return;
@@ -198,6 +272,8 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_THEN_BLOCK__SERVER_CALL:
+        return serverCall != null;
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         return stateVerifications != null && !stateVerifications.isEmpty();
       case AceGenPackage.CLIENT_THEN_BLOCK__TRIGGERED_ACTION:

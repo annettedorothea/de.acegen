@@ -7,7 +7,6 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
-import de.acegen.aceGen.Scenario;
 
 import java.util.Collection;
 
@@ -70,7 +69,7 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected EList<Scenario> givenRefs;
+  protected EList<ClientScenario> givenRefs;
 
   /**
    * The cached value of the '{@link #getWhenBlock() <em>When Block</em>}' containment reference.
@@ -144,11 +143,11 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public EList<Scenario> getGivenRefs()
+  public EList<ClientScenario> getGivenRefs()
   {
     if (givenRefs == null)
     {
-      givenRefs = new EObjectResolvingEList<Scenario>(Scenario.class, this, AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS);
+      givenRefs = new EObjectResolvingEList<ClientScenario>(ClientScenario.class, this, AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS);
     }
     return givenRefs;
   }
@@ -309,7 +308,7 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return;
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         getGivenRefs().clear();
-        getGivenRefs().addAll((Collection<? extends Scenario>)newValue);
+        getGivenRefs().addAll((Collection<? extends ClientScenario>)newValue);
         return;
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         setWhenBlock((ClientWhenBlock)newValue);

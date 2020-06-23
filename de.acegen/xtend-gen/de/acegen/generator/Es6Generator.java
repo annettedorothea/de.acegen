@@ -15,7 +15,6 @@
  */
 package de.acegen.generator;
 
-import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -152,13 +151,9 @@ public class Es6Generator {
     fsa.generateFile("ace/Scenario.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateScenario());
     fsa.generateFile("ace/Bug.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateBug());
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
-    EList<Attribute> _appState = httpClient.getAppState();
-    boolean _tripleNotEquals = (_appState != null);
-    if (_tripleNotEquals) {
-      fsa.generateFile("ace/WriteAppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.aceTemplate.generateWriteAppState(httpClient.getAppState(), ""));
-      fsa.generateFile("ace/ReadAppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.aceTemplate.generateReadAppState(httpClient.getAppState(), ""));
+    if (((httpClient.isAppStatePresent() && (httpClient.getAppState() != null)) && (httpClient.getAppState().size() > 0))) {
+      fsa.generateFile("ace/AppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
+        this.aceTemplate.generateAppState(httpClient.getAppState(), ""));
     }
   }
 }

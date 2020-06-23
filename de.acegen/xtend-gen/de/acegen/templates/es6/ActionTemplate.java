@@ -79,7 +79,7 @@ public class ActionTemplate {
       Attribute _loadingFlag = it.getLoadingFlag();
       boolean _tripleNotEquals = (_loadingFlag != null);
       if (_tripleNotEquals) {
-        _builder.append("import * as AppState from \"../../ace/WriteAppState\";");
+        _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
       }
     }
@@ -173,7 +173,7 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.set_");
-        String _functionName = this._es6Extension.functionName(it.getLoadingFlag());
+        String _functionName = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
         _builder.append(_functionName, "\t\t");
         _builder.append("({");
         String _name_2 = it.getLoadingFlag().getName();
@@ -191,7 +191,7 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.set_");
-        String _functionName_1 = this._es6Extension.functionName(it.getLoadingFlag());
+        String _functionName_1 = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
         _builder.append(_functionName_1, "\t\t");
         _builder.append("({");
         String _name_3 = it.getLoadingFlag().getName();

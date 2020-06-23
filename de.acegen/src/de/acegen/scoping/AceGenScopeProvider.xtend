@@ -39,6 +39,7 @@ import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
+import de.acegen.aceGen.ServerCall
 import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.TriggeredAction
@@ -185,6 +186,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			var isThen = false
 			var isWhen = false
 			var isVerification = false
+			var isServerCall = false
 			var isStateVerification = false
 			var PersistenceVerification persistenceVerification = null
 			var StateVerification stateVerification = null
@@ -204,6 +206,9 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (parent instanceof StateVerification) {
 					isStateVerification = true
 					stateVerification = parent as StateVerification
+				}
+				if (parent instanceof ServerCall) {
+					isServerCall = true
 				}
 				parent = parent.eContainer
 			}
@@ -244,7 +249,29 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					}
 				}
 				if (isThen && isStateVerification) {
-					return Scopes.scopeFor(stateVerification.stateRef.attributes);
+					var attr = new ArrayList<Attribute>();
+					attr.addAll(stateVerification.stateRef.attributes)
+					if (stateVerification.stateRef.model !== null) {
+						val model = stateVerification.stateRef.model as Model
+						model.allAttributesRec(attr)
+					}
+					return Scopes.scopeFor(attr);
+				}
+				if (isThen && isServerCall) {
+					var attr = new ArrayList<Attribute>();
+					if (scenario.whenBlock.action.serverCall !== null) {
+						val serverCall = scenario.whenBlock.action.serverCall
+						for (attributeRef : serverCall.payload) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : serverCall.queryParams) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : serverCall.pathParams) {
+							attr.add(attributeRef.attribute)
+						}
+					}
+					return Scopes.scopeFor(attr);
 				}
 			}
 			if (parent instanceof JsonMember) {
@@ -253,11 +280,6 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (jsonMember.attribute.getModel !== null) {
 					val model = jsonMember.attribute.model as Model
 					model.allAttributesRec(attr)
-				}
-				if (jsonMember.attribute.superModels !== null) {
-					for(superModel: jsonMember.attribute.superModels) {
-						superModel.allAttributesRec(attr)
-					}
 				}
 				if (jsonMember.attribute.attributes !== null) {
 					for (attribute : jsonMember.attribute.attributes) {

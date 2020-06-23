@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -43,7 +42,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getSuperModels <em>Super Models</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
@@ -250,16 +248,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @ordered
    */
   protected boolean storage = STORAGE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getSuperModels() <em>Super Models</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSuperModels()
-   * @generated
-   * @ordered
-   */
-  protected EList<Model> superModels;
 
   /**
    * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
@@ -613,21 +601,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public EList<Model> getSuperModels()
-  {
-    if (superModels == null)
-    {
-      superModels = new EObjectResolvingEList<Model>(Model.class, this, AceGenPackage.ATTRIBUTE__SUPER_MODELS);
-    }
-    return superModels;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<Attribute> getAttributes()
   {
     if (attributes == null)
@@ -687,8 +660,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return isHash();
       case AceGenPackage.ATTRIBUTE__STORAGE:
         return isStorage();
-      case AceGenPackage.ATTRIBUTE__SUPER_MODELS:
-        return getSuperModels();
       case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
         return getAttributes();
     }
@@ -738,10 +709,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AceGenPackage.ATTRIBUTE__STORAGE:
         setStorage((Boolean)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE__SUPER_MODELS:
-        getSuperModels().clear();
-        getSuperModels().addAll((Collection<? extends Model>)newValue);
         return;
       case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
@@ -794,9 +761,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__STORAGE:
         setStorage(STORAGE_EDEFAULT);
         return;
-      case AceGenPackage.ATTRIBUTE__SUPER_MODELS:
-        getSuperModels().clear();
-        return;
       case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
         return;
@@ -836,8 +800,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return hash != HASH_EDEFAULT;
       case AceGenPackage.ATTRIBUTE__STORAGE:
         return storage != STORAGE_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__SUPER_MODELS:
-        return superModels != null && !superModels.isEmpty();
       case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
     }

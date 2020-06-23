@@ -11,6 +11,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
         eType="#//HttpClientAce" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="appStatePresent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appState" upperBound="-1"
         eType="#//Attribute" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
@@ -45,7 +46,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ClientScenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" unique="false"
-        upperBound="-1" eType="#//Scenario"/>
+        upperBound="-1" eType="#//ClientScenario"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//ClientWhenBlock"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ClientThenBlock"
@@ -65,10 +66,16 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientThenBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//ServerCall"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateVerifications" upperBound="-1"
         eType="#//StateVerification" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="triggeredAction" upperBound="-1"
         eType="#//TriggeredAction" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServerCall">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jsonObject" eType="#//JsonObject"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TriggeredAction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="httpClientAce" eType="#//HttpClientAce"/>
@@ -243,8 +250,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="notReplayable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="storage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="superModels" unique="false"
-        upperBound="-1" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//Attribute" containment="true"/>
   </eClassifiers>

@@ -99,11 +99,9 @@ class Es6Generator {
 		fsa.generateFile('ace/Scenario.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateScenario());
 		fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateBug());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
-		if (httpClient.getAppState !== null) {
-			fsa.generateFile('ace/WriteAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateWriteAppState(httpClient.getAppState, ""));
-			fsa.generateFile('ace/ReadAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateReadAppState(httpClient.getAppState, ""));
+		if (httpClient.appStatePresent && httpClient.getAppState !== null && httpClient.getAppState.size > 0) {
+			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				aceTemplate.generateAppState(httpClient.getAppState, ""));
 		}
 		
 	}

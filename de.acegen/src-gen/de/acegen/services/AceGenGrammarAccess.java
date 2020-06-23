@@ -85,7 +85,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAceOperationsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cAceOperationsHttpClientAceParserRuleCall_1_1_0 = (RuleCall)cAceOperationsAssignment_1_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cAppStateKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cAppStatePresentAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final Keyword cAppStatePresentAppStateKeyword_2_0_0 = (Keyword)cAppStatePresentAssignment_2_0.eContents().get(0);
 		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
 		private final Assignment cAppStateAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
@@ -97,13 +98,13 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScenariosClientScenarioParserRuleCall_3_1_0 = (RuleCall)cScenariosAssignment_3_1.eContents().get(0);
 		
 		//HttpClient:
-		//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('appState' ('{'
+		//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (appStatePresent?='appState' ('{'
 		//	appState+=Attribute*
 		//	'}')?)? ('scenarios' scenarios+=ClientScenario*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('appState' ('{' appState+=Attribute* '}')?)? ('scenarios'
-		//scenarios+=ClientScenario*)?
+		//name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (appStatePresent?='appState' ('{' appState+=Attribute* '}')?)?
+		//('scenarios' scenarios+=ClientScenario*)?
 		public Group getGroup() { return cGroup; }
 		
 		//name=QualifiedName
@@ -124,11 +125,14 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//HttpClientAce
 		public RuleCall getAceOperationsHttpClientAceParserRuleCall_1_1_0() { return cAceOperationsHttpClientAceParserRuleCall_1_1_0; }
 		
-		//('appState' ('{' appState+=Attribute* '}')?)?
+		//(appStatePresent?='appState' ('{' appState+=Attribute* '}')?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//appStatePresent?='appState'
+		public Assignment getAppStatePresentAssignment_2_0() { return cAppStatePresentAssignment_2_0; }
+		
 		//'appState'
-		public Keyword getAppStateKeyword_2_0() { return cAppStateKeyword_2_0; }
+		public Keyword getAppStatePresentAppStateKeyword_2_0_0() { return cAppStatePresentAppStateKeyword_2_0_0; }
 		
 		//('{' appState+=Attribute* '}')?
 		public Group getGroup_2_1() { return cGroup_2_1; }
@@ -165,23 +169,26 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cAsParamKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cInputAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cInputInputParserRuleCall_2_1_0 = (RuleCall)cInputAssignment_2_1.eContents().get(0);
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cInputAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
 		private final RuleCall cInputInputParserRuleCall_2_2_1_0 = (RuleCall)cInputAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cFromStateKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cStateElementsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cStateElementsAttributeCrossReference_3_1_0 = (CrossReference)cStateElementsAssignment_3_1.eContents().get(0);
-		private final RuleCall cStateElementsAttributeQualifiedNameParserRuleCall_3_1_0_1 = (RuleCall)cStateElementsAttributeCrossReference_3_1_0.eContents().get(1);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final Assignment cStateElementsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
-		private final CrossReference cStateElementsAttributeCrossReference_3_2_1_0 = (CrossReference)cStateElementsAssignment_3_2_1.eContents().get(0);
-		private final RuleCall cStateElementsAttributeQualifiedNameParserRuleCall_3_2_1_0_1 = (RuleCall)cStateElementsAttributeCrossReference_3_2_1_0.eContents().get(1);
+		private final Keyword cAppStateKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cStateElementsAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final CrossReference cStateElementsAttributeCrossReference_3_2_0 = (CrossReference)cStateElementsAssignment_3_2.eContents().get(0);
+		private final RuleCall cStateElementsAttributeQualifiedNameParserRuleCall_3_2_0_1 = (RuleCall)cStateElementsAttributeCrossReference_3_2_0.eContents().get(1);
+		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
+		private final Keyword cCommaKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
+		private final Assignment cStateElementsAssignment_3_3_1 = (Assignment)cGroup_3_3.eContents().get(1);
+		private final CrossReference cStateElementsAttributeCrossReference_3_3_1_0 = (CrossReference)cStateElementsAssignment_3_3_1.eContents().get(0);
+		private final RuleCall cStateElementsAttributeQualifiedNameParserRuleCall_3_3_1_0_1 = (RuleCall)cStateElementsAttributeCrossReference_3_3_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cCallKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cServerCallAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -196,14 +203,14 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutcomesHttpClientOutcomeParserRuleCall_6_0 = (RuleCall)cOutcomesAssignment_6.eContents().get(0);
 		
 		//HttpClientAce:
-		//	async?='async'? name=ID ('asParam' input+=Input (',' input+=Input)*)? ('fromState'
-		//	stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])*)? ('call'
+		//	async?='async'? name=ID ('(' input+=Input (',' input+=Input)* ')')? ('appState' '('
+		//	stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])* ')')? ('call'
 		//	serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag' loadingFlag=[Attribute|QualifiedName])?
 		//	outcomes+=HttpClientOutcome*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//async?='async'? name=ID ('asParam' input+=Input (',' input+=Input)*)? ('fromState'
-		//stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])*)? ('call'
+		//async?='async'? name=ID ('(' input+=Input (',' input+=Input)* ')')? ('appState' '('
+		//stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])* ')')? ('call'
 		//serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag' loadingFlag=[Attribute|QualifiedName])?
 		//outcomes+=HttpClientOutcome*
 		public Group getGroup() { return cGroup; }
@@ -220,11 +227,11 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('asParam' input+=Input (',' input+=Input)*)?
+		//('(' input+=Input (',' input+=Input)* ')')?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'asParam'
-		public Keyword getAsParamKeyword_2_0() { return cAsParamKeyword_2_0; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 		
 		//input+=Input
 		public Assignment getInputAssignment_2_1() { return cInputAssignment_2_1; }
@@ -244,35 +251,44 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//Input
 		public RuleCall getInputInputParserRuleCall_2_2_1_0() { return cInputInputParserRuleCall_2_2_1_0; }
 		
-		//('fromState' stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])*)?
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+		
+		//('appState' '(' stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])* ')')?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'fromState'
-		public Keyword getFromStateKeyword_3_0() { return cFromStateKeyword_3_0; }
+		//'appState'
+		public Keyword getAppStateKeyword_3_0() { return cAppStateKeyword_3_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_1() { return cLeftParenthesisKeyword_3_1; }
 		
 		//stateElements+=[Attribute|QualifiedName]
-		public Assignment getStateElementsAssignment_3_1() { return cStateElementsAssignment_3_1; }
+		public Assignment getStateElementsAssignment_3_2() { return cStateElementsAssignment_3_2; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getStateElementsAttributeCrossReference_3_1_0() { return cStateElementsAttributeCrossReference_3_1_0; }
+		public CrossReference getStateElementsAttributeCrossReference_3_2_0() { return cStateElementsAttributeCrossReference_3_2_0; }
 		
 		//QualifiedName
-		public RuleCall getStateElementsAttributeQualifiedNameParserRuleCall_3_1_0_1() { return cStateElementsAttributeQualifiedNameParserRuleCall_3_1_0_1; }
+		public RuleCall getStateElementsAttributeQualifiedNameParserRuleCall_3_2_0_1() { return cStateElementsAttributeQualifiedNameParserRuleCall_3_2_0_1; }
 		
 		//(',' stateElements+=[Attribute|QualifiedName])*
-		public Group getGroup_3_2() { return cGroup_3_2; }
+		public Group getGroup_3_3() { return cGroup_3_3; }
 		
 		//','
-		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		public Keyword getCommaKeyword_3_3_0() { return cCommaKeyword_3_3_0; }
 		
 		//stateElements+=[Attribute|QualifiedName]
-		public Assignment getStateElementsAssignment_3_2_1() { return cStateElementsAssignment_3_2_1; }
+		public Assignment getStateElementsAssignment_3_3_1() { return cStateElementsAssignment_3_3_1; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getStateElementsAttributeCrossReference_3_2_1_0() { return cStateElementsAttributeCrossReference_3_2_1_0; }
+		public CrossReference getStateElementsAttributeCrossReference_3_3_1_0() { return cStateElementsAttributeCrossReference_3_3_1_0; }
 		
 		//QualifiedName
-		public RuleCall getStateElementsAttributeQualifiedNameParserRuleCall_3_2_1_0_1() { return cStateElementsAttributeQualifiedNameParserRuleCall_3_2_1_0_1; }
+		public RuleCall getStateElementsAttributeQualifiedNameParserRuleCall_3_3_1_0_1() { return cStateElementsAttributeQualifiedNameParserRuleCall_3_3_1_0_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_4() { return cRightParenthesisKeyword_3_4; }
 		
 		//('call' serverCall=[HttpServerAce|QualifiedName])?
 		public Group getGroup_4() { return cGroup_4; }
@@ -435,13 +451,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSetKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cMergeKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		private final Keyword cResetKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cInitKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 		
 		//HttpClientStateFunctionType:
-		//	'set' | 'merge' | 'reset' | 'init';
+		//	'set' | 'merge' | 'reset';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'set' | 'merge' | 'reset' | 'init'
+		//'set' | 'merge' | 'reset'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'set'
@@ -452,9 +467,6 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'reset'
 		public Keyword getResetKeyword_2() { return cResetKeyword_2; }
-		
-		//'init'
-		public Keyword getInitKeyword_3() { return cInitKeyword_3; }
 	}
 	public class ClientScenarioElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ClientScenario");
@@ -464,8 +476,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cGIVENKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cGivenRefsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final CrossReference cGivenRefsScenarioCrossReference_1_1_0 = (CrossReference)cGivenRefsAssignment_1_1.eContents().get(0);
-		private final RuleCall cGivenRefsScenarioQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cGivenRefsScenarioCrossReference_1_1_0.eContents().get(1);
+		private final CrossReference cGivenRefsClientScenarioCrossReference_1_1_0 = (CrossReference)cGivenRefsAssignment_1_1.eContents().get(0);
+		private final RuleCall cGivenRefsClientScenarioQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cGivenRefsClientScenarioCrossReference_1_1_0.eContents().get(1);
 		private final Keyword cWHENKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cWhenBlockAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cWhenBlockClientWhenBlockParserRuleCall_3_0 = (RuleCall)cWhenBlockAssignment_3.eContents().get(0);
@@ -474,12 +486,12 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cThenBlockClientThenBlockParserRuleCall_5_0 = (RuleCall)cThenBlockAssignment_5.eContents().get(0);
 		
 		//ClientScenario:
-		//	name=ID ('GIVEN' givenRefs+=[Scenario|QualifiedName]*)?
+		//	name=ID ('GIVEN' givenRefs+=[ClientScenario|QualifiedName]*)?
 		//	'WHEN' whenBlock=ClientWhenBlock
 		//	'THEN' thenBlock=ClientThenBlock;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('GIVEN' givenRefs+=[Scenario|QualifiedName]*)? 'WHEN' whenBlock=ClientWhenBlock 'THEN'
+		//name=ID ('GIVEN' givenRefs+=[ClientScenario|QualifiedName]*)? 'WHEN' whenBlock=ClientWhenBlock 'THEN'
 		//thenBlock=ClientThenBlock
 		public Group getGroup() { return cGroup; }
 		
@@ -489,20 +501,20 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('GIVEN' givenRefs+=[Scenario|QualifiedName]*)?
+		//('GIVEN' givenRefs+=[ClientScenario|QualifiedName]*)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'GIVEN'
 		public Keyword getGIVENKeyword_1_0() { return cGIVENKeyword_1_0; }
 		
-		//givenRefs+=[Scenario|QualifiedName]*
+		//givenRefs+=[ClientScenario|QualifiedName]*
 		public Assignment getGivenRefsAssignment_1_1() { return cGivenRefsAssignment_1_1; }
 		
-		//[Scenario|QualifiedName]
-		public CrossReference getGivenRefsScenarioCrossReference_1_1_0() { return cGivenRefsScenarioCrossReference_1_1_0; }
+		//[ClientScenario|QualifiedName]
+		public CrossReference getGivenRefsClientScenarioCrossReference_1_1_0() { return cGivenRefsClientScenarioCrossReference_1_1_0; }
 		
 		//QualifiedName
-		public RuleCall getGivenRefsScenarioQualifiedNameParserRuleCall_1_1_0_1() { return cGivenRefsScenarioQualifiedNameParserRuleCall_1_1_0_1; }
+		public RuleCall getGivenRefsClientScenarioQualifiedNameParserRuleCall_1_1_0_1() { return cGivenRefsClientScenarioQualifiedNameParserRuleCall_1_1_0_1; }
 		
 		//'WHEN'
 		public Keyword getWHENKeyword_2() { return cWHENKeyword_2; }
@@ -657,49 +669,80 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cClientThenBlockAction_0 = (Action)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cExpectedStateKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cStateVerificationsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cStateVerificationsStateVerificationParserRuleCall_1_1_0 = (RuleCall)cStateVerificationsAssignment_1_1.eContents().get(0);
+		private final Keyword cExpectedServerCallKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cServerCallAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cServerCallServerCallParserRuleCall_1_1_0 = (RuleCall)cServerCallAssignment_1_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cTriggeredActionsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cTriggeredActionAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cTriggeredActionTriggeredActionParserRuleCall_2_1_0 = (RuleCall)cTriggeredActionAssignment_2_1.eContents().get(0);
+		private final Keyword cExpectedStateKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cStateVerificationsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cStateVerificationsStateVerificationParserRuleCall_2_1_0 = (RuleCall)cStateVerificationsAssignment_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cTriggeredActionsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cTriggeredActionAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cTriggeredActionTriggeredActionParserRuleCall_3_1_0 = (RuleCall)cTriggeredActionAssignment_3_1.eContents().get(0);
 		
 		//ClientThenBlock:
-		//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('triggeredActions'
-		//	triggeredAction+=TriggeredAction*)?;
+		//	{ClientThenBlock} ('expectedServerCall' serverCall=ServerCall)? ('expectedState'
+		//	stateVerifications+=StateVerification*)? ('triggeredActions' triggeredAction+=TriggeredAction*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('triggeredActions'
-		//triggeredAction+=TriggeredAction*)?
+		//{ClientThenBlock} ('expectedServerCall' serverCall=ServerCall)? ('expectedState'
+		//stateVerifications+=StateVerification*)? ('triggeredActions' triggeredAction+=TriggeredAction*)?
 		public Group getGroup() { return cGroup; }
 		
 		//{ClientThenBlock}
 		public Action getClientThenBlockAction_0() { return cClientThenBlockAction_0; }
 		
-		//('expectedState' stateVerifications+=StateVerification*)?
+		//('expectedServerCall' serverCall=ServerCall)?
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//'expectedState'
-		public Keyword getExpectedStateKeyword_1_0() { return cExpectedStateKeyword_1_0; }
+		//'expectedServerCall'
+		public Keyword getExpectedServerCallKeyword_1_0() { return cExpectedServerCallKeyword_1_0; }
 		
-		//stateVerifications+=StateVerification*
-		public Assignment getStateVerificationsAssignment_1_1() { return cStateVerificationsAssignment_1_1; }
+		//serverCall=ServerCall
+		public Assignment getServerCallAssignment_1_1() { return cServerCallAssignment_1_1; }
 		
-		//StateVerification
-		public RuleCall getStateVerificationsStateVerificationParserRuleCall_1_1_0() { return cStateVerificationsStateVerificationParserRuleCall_1_1_0; }
+		//ServerCall
+		public RuleCall getServerCallServerCallParserRuleCall_1_1_0() { return cServerCallServerCallParserRuleCall_1_1_0; }
 		
-		//('triggeredActions' triggeredAction+=TriggeredAction*)?
+		//('expectedState' stateVerifications+=StateVerification*)?
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//'expectedState'
+		public Keyword getExpectedStateKeyword_2_0() { return cExpectedStateKeyword_2_0; }
+		
+		//stateVerifications+=StateVerification*
+		public Assignment getStateVerificationsAssignment_2_1() { return cStateVerificationsAssignment_2_1; }
+		
+		//StateVerification
+		public RuleCall getStateVerificationsStateVerificationParserRuleCall_2_1_0() { return cStateVerificationsStateVerificationParserRuleCall_2_1_0; }
+		
+		//('triggeredActions' triggeredAction+=TriggeredAction*)?
+		public Group getGroup_3() { return cGroup_3; }
+		
 		//'triggeredActions'
-		public Keyword getTriggeredActionsKeyword_2_0() { return cTriggeredActionsKeyword_2_0; }
+		public Keyword getTriggeredActionsKeyword_3_0() { return cTriggeredActionsKeyword_3_0; }
 		
 		//triggeredAction+=TriggeredAction*
-		public Assignment getTriggeredActionAssignment_2_1() { return cTriggeredActionAssignment_2_1; }
+		public Assignment getTriggeredActionAssignment_3_1() { return cTriggeredActionAssignment_3_1; }
 		
 		//TriggeredAction
-		public RuleCall getTriggeredActionTriggeredActionParserRuleCall_2_1_0() { return cTriggeredActionTriggeredActionParserRuleCall_2_1_0; }
+		public RuleCall getTriggeredActionTriggeredActionParserRuleCall_3_1_0() { return cTriggeredActionTriggeredActionParserRuleCall_3_1_0; }
+	}
+	public class ServerCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ServerCall");
+		private final Assignment cJsonObjectAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cJsonObjectJsonObjectParserRuleCall_0 = (RuleCall)cJsonObjectAssignment.eContents().get(0);
+		
+		//ServerCall:
+		//	jsonObject=JsonObject;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//jsonObject=JsonObject
+		public Assignment getJsonObjectAssignment() { return cJsonObjectAssignment; }
+		
+		//JsonObject
+		public RuleCall getJsonObjectJsonObjectParserRuleCall_0() { return cJsonObjectJsonObjectParserRuleCall_0; }
 	}
 	public class TriggeredActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.TriggeredAction");
@@ -2211,19 +2254,9 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cStorageStorageKeyword_10_0 = (Keyword)cStorageAssignment_10.eContents().get(0);
 		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
 		private final Keyword cLeftCurlyBracketKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Group cGroup_11_1 = (Group)cGroup_11.eContents().get(1);
-		private final Keyword cAllAttributesOfKeyword_11_1_0 = (Keyword)cGroup_11_1.eContents().get(0);
-		private final Assignment cSuperModelsAssignment_11_1_1 = (Assignment)cGroup_11_1.eContents().get(1);
-		private final CrossReference cSuperModelsModelCrossReference_11_1_1_0 = (CrossReference)cSuperModelsAssignment_11_1_1.eContents().get(0);
-		private final RuleCall cSuperModelsModelQualifiedNameParserRuleCall_11_1_1_0_1 = (RuleCall)cSuperModelsModelCrossReference_11_1_1_0.eContents().get(1);
-		private final Group cGroup_11_1_2 = (Group)cGroup_11_1.eContents().get(2);
-		private final Keyword cCommaKeyword_11_1_2_0 = (Keyword)cGroup_11_1_2.eContents().get(0);
-		private final Assignment cSuperModelsAssignment_11_1_2_1 = (Assignment)cGroup_11_1_2.eContents().get(1);
-		private final CrossReference cSuperModelsModelCrossReference_11_1_2_1_0 = (CrossReference)cSuperModelsAssignment_11_1_2_1.eContents().get(0);
-		private final RuleCall cSuperModelsModelQualifiedNameParserRuleCall_11_1_2_1_0_1 = (RuleCall)cSuperModelsModelCrossReference_11_1_2_1_0.eContents().get(1);
-		private final Assignment cAttributesAssignment_11_2 = (Assignment)cGroup_11.eContents().get(2);
-		private final RuleCall cAttributesAttributeParserRuleCall_11_2_0 = (RuleCall)cAttributesAssignment_11_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_11_3 = (Keyword)cGroup_11.eContents().get(3);
+		private final Assignment cAttributesAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final RuleCall cAttributesAttributeParserRuleCall_11_1_0 = (RuleCall)cAttributesAssignment_11_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_11_2 = (Keyword)cGroup_11.eContents().get(2);
 		
 		//Attribute:
 		//	unique?='Unique'?
@@ -2234,16 +2267,14 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//	name=ID ('references' foreignKey=[Attribute|QualifiedName])?
 		//	notReplayable?='notReplayable'?
 		//	hash?='location.hash'?
-		//	storage?='storage'? ('{' ('allAttributesOf' superModels+=[Model|QualifiedName] (','
-		//	superModels+=[Model|QualifiedName])?)?
+		//	storage?='storage'? ('{'
 		//	attributes+=Attribute*
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//unique?='Unique'? primaryKey?='PrimaryKey'? notNull?='NotNull'? list?='List'? type=Type? ('model'
 		//model=[Model|QualifiedName])? name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-		//notReplayable?='notReplayable'? hash?='location.hash'? storage?='storage'? ('{' ('allAttributesOf'
-		//superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])?)? attributes+=Attribute* '}')?
+		//notReplayable?='notReplayable'? hash?='location.hash'? storage?='storage'? ('{' attributes+=Attribute* '}')?
 		public Group getGroup() { return cGroup; }
 		
 		//unique?='Unique'?
@@ -2330,51 +2361,20 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		//'storage'
 		public Keyword getStorageStorageKeyword_10_0() { return cStorageStorageKeyword_10_0; }
 		
-		//('{' ('allAttributesOf' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])?)?
-		//attributes+=Attribute* '}')?
+		//('{' attributes+=Attribute* '}')?
 		public Group getGroup_11() { return cGroup_11; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_11_0() { return cLeftCurlyBracketKeyword_11_0; }
 		
-		//('allAttributesOf' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])?)?
-		public Group getGroup_11_1() { return cGroup_11_1; }
-		
-		//'allAttributesOf'
-		public Keyword getAllAttributesOfKeyword_11_1_0() { return cAllAttributesOfKeyword_11_1_0; }
-		
-		//superModels+=[Model|QualifiedName]
-		public Assignment getSuperModelsAssignment_11_1_1() { return cSuperModelsAssignment_11_1_1; }
-		
-		//[Model|QualifiedName]
-		public CrossReference getSuperModelsModelCrossReference_11_1_1_0() { return cSuperModelsModelCrossReference_11_1_1_0; }
-		
-		//QualifiedName
-		public RuleCall getSuperModelsModelQualifiedNameParserRuleCall_11_1_1_0_1() { return cSuperModelsModelQualifiedNameParserRuleCall_11_1_1_0_1; }
-		
-		//(',' superModels+=[Model|QualifiedName])?
-		public Group getGroup_11_1_2() { return cGroup_11_1_2; }
-		
-		//','
-		public Keyword getCommaKeyword_11_1_2_0() { return cCommaKeyword_11_1_2_0; }
-		
-		//superModels+=[Model|QualifiedName]
-		public Assignment getSuperModelsAssignment_11_1_2_1() { return cSuperModelsAssignment_11_1_2_1; }
-		
-		//[Model|QualifiedName]
-		public CrossReference getSuperModelsModelCrossReference_11_1_2_1_0() { return cSuperModelsModelCrossReference_11_1_2_1_0; }
-		
-		//QualifiedName
-		public RuleCall getSuperModelsModelQualifiedNameParserRuleCall_11_1_2_1_0_1() { return cSuperModelsModelQualifiedNameParserRuleCall_11_1_2_1_0_1; }
-		
 		//attributes+=Attribute*
-		public Assignment getAttributesAssignment_11_2() { return cAttributesAssignment_11_2; }
+		public Assignment getAttributesAssignment_11_1() { return cAttributesAssignment_11_1; }
 		
 		//Attribute
-		public RuleCall getAttributesAttributeParserRuleCall_11_2_0() { return cAttributesAttributeParserRuleCall_11_2_0; }
+		public RuleCall getAttributesAttributeParserRuleCall_11_1_0() { return cAttributesAttributeParserRuleCall_11_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_11_3() { return cRightCurlyBracketKeyword_11_3; }
+		public Keyword getRightCurlyBracketKeyword_11_2() { return cRightCurlyBracketKeyword_11_2; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.QualifiedName");
@@ -2755,6 +2755,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	private final ClientWhenBlockElements pClientWhenBlock;
 	private final InputValueElements pInputValue;
 	private final ClientThenBlockElements pClientThenBlock;
+	private final ServerCallElements pServerCall;
 	private final TriggeredActionElements pTriggeredAction;
 	private final StateVerificationElements pStateVerification;
 	private final HttpServerElements pHttpServer;
@@ -2815,6 +2816,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.pClientWhenBlock = new ClientWhenBlockElements();
 		this.pInputValue = new InputValueElements();
 		this.pClientThenBlock = new ClientThenBlockElements();
+		this.pServerCall = new ServerCallElements();
 		this.pTriggeredAction = new TriggeredActionElements();
 		this.pStateVerification = new StateVerificationElements();
 		this.pHttpServer = new HttpServerElements();
@@ -2894,7 +2896,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//HttpClient:
-	//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('appState' ('{'
+	//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (appStatePresent?='appState' ('{'
 	//	appState+=Attribute*
 	//	'}')?)? ('scenarios' scenarios+=ClientScenario*)?;
 	public HttpClientElements getHttpClientAccess() {
@@ -2906,8 +2908,8 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//HttpClientAce:
-	//	async?='async'? name=ID ('asParam' input+=Input (',' input+=Input)*)? ('fromState'
-	//	stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])*)? ('call'
+	//	async?='async'? name=ID ('(' input+=Input (',' input+=Input)* ')')? ('appState' '('
+	//	stateElements+=[Attribute|QualifiedName] (',' stateElements+=[Attribute|QualifiedName])* ')')? ('call'
 	//	serverCall=[HttpServerAce|QualifiedName])? ('loadingFlag' loadingFlag=[Attribute|QualifiedName])?
 	//	outcomes+=HttpClientOutcome*;
 	public HttpClientAceElements getHttpClientAceAccess() {
@@ -2950,7 +2952,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//HttpClientStateFunctionType:
-	//	'set' | 'merge' | 'reset' | 'init';
+	//	'set' | 'merge' | 'reset';
 	public HttpClientStateFunctionTypeElements getHttpClientStateFunctionTypeAccess() {
 		return pHttpClientStateFunctionType;
 	}
@@ -2960,7 +2962,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ClientScenario:
-	//	name=ID ('GIVEN' givenRefs+=[Scenario|QualifiedName]*)?
+	//	name=ID ('GIVEN' givenRefs+=[ClientScenario|QualifiedName]*)?
 	//	'WHEN' whenBlock=ClientWhenBlock
 	//	'THEN' thenBlock=ClientThenBlock;
 	public ClientScenarioElements getClientScenarioAccess() {
@@ -2995,14 +2997,24 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ClientThenBlock:
-	//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('triggeredActions'
-	//	triggeredAction+=TriggeredAction*)?;
+	//	{ClientThenBlock} ('expectedServerCall' serverCall=ServerCall)? ('expectedState'
+	//	stateVerifications+=StateVerification*)? ('triggeredActions' triggeredAction+=TriggeredAction*)?;
 	public ClientThenBlockElements getClientThenBlockAccess() {
 		return pClientThenBlock;
 	}
 	
 	public ParserRule getClientThenBlockRule() {
 		return getClientThenBlockAccess().getRule();
+	}
+	
+	//ServerCall:
+	//	jsonObject=JsonObject;
+	public ServerCallElements getServerCallAccess() {
+		return pServerCall;
+	}
+	
+	public ParserRule getServerCallRule() {
+		return getServerCallAccess().getRule();
 	}
 	
 	//TriggeredAction:
@@ -3303,8 +3315,7 @@ public class AceGenGrammarAccess extends AbstractGrammarElementFinder {
 	//	name=ID ('references' foreignKey=[Attribute|QualifiedName])?
 	//	notReplayable?='notReplayable'?
 	//	hash?='location.hash'?
-	//	storage?='storage'? ('{' ('allAttributesOf' superModels+=[Model|QualifiedName] (','
-	//	superModels+=[Model|QualifiedName])?)?
+	//	storage?='storage'? ('{'
 	//	attributes+=Attribute*
 	//	'}')?;
 	public AttributeElements getAttributeAccess() {

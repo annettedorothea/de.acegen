@@ -42,7 +42,7 @@ class ActionTemplate {
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»
 		«IF getLoadingFlag !== null»
-			import * as AppState from "../../ace/WriteAppState";
+			import * as AppState from "../../ace/AppState";
 		«ENDIF»
 		
 		export default class «abstractActionName» extends Action {
@@ -62,11 +62,11 @@ class ActionTemplate {
 		
 			«IF getLoadingFlag !== null»
 				preCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: true});
+					AppState.set_«getLoadingFlag.functionName(loadingFlag.eContainer)»({«getLoadingFlag.getName»: true});
 				}
 				
 				postCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: false});
+					AppState.set_«getLoadingFlag.functionName(loadingFlag.eContainer)»({«getLoadingFlag.getName»: false});
 				}
 			«ENDIF»
 		

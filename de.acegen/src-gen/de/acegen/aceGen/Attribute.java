@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#getSuperModels <em>Super Models</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
@@ -278,18 +277,6 @@ public interface Attribute extends EObject
    * @generated
    */
   void setStorage(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Super Models</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Model}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Super Models</em>' reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_SuperModels()
-   * @model
-   * @generated
-   */
-  EList<Model> getSuperModels();
 
   /**
    * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.

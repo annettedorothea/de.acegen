@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isAppStatePresent <em>App State Present</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAppState <em>App State</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
@@ -72,6 +73,26 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @ordered
    */
   protected EList<HttpClientAce> aceOperations;
+
+  /**
+   * The default value of the '{@link #isAppStatePresent() <em>App State Present</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAppStatePresent()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean APP_STATE_PRESENT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isAppStatePresent() <em>App State Present</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAppStatePresent()
+   * @generated
+   * @ordered
+   */
+  protected boolean appStatePresent = APP_STATE_PRESENT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAppState() <em>App State</em>}' containment reference list.
@@ -160,6 +181,31 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
+  public boolean isAppStatePresent()
+  {
+    return appStatePresent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAppStatePresent(boolean newAppStatePresent)
+  {
+    boolean oldAppStatePresent = appStatePresent;
+    appStatePresent = newAppStatePresent;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT, oldAppStatePresent, appStatePresent));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<Attribute> getAppState()
   {
     if (appState == null)
@@ -218,6 +264,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return getName();
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return getAceOperations();
+      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
+        return isAppStatePresent();
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         return getAppState();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
@@ -243,6 +291,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
+        setAppStatePresent((Boolean)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         getAppState().clear();
@@ -272,6 +323,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
         return;
+      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
+        setAppStatePresent(APP_STATE_PRESENT_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         getAppState().clear();
         return;
@@ -296,6 +350,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return aceOperations != null && !aceOperations.isEmpty();
+      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
+        return appStatePresent != APP_STATE_PRESENT_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         return appState != null && !appState.isEmpty();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
@@ -317,6 +373,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", appStatePresent: ");
+    result.append(appStatePresent);
     result.append(')');
     return result.toString();
   }

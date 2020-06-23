@@ -22,6 +22,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import java.util.List
 import javax.inject.Inject
+import org.eclipse.emf.ecore.EObject
 
 class AceTemplate {
 	
@@ -898,7 +899,7 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateWriteAppState(List<Attribute> attributes, String prefix) '''
+	def String generateAppState(List<Attribute> attributes, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
@@ -908,155 +909,131 @@ class AceTemplate {
 		export function setInitialAppState(initialAppState) {
 			appState = AppUtils.deepCopy(initialAppState);
 		}
-		
-		«FOR element : attributes»
-			«element.generateWriteAppStateRec()»
+		«FOR attribute : attributes»
+			«attribute.generateAppStateRec(null)»
 		«ENDFOR»
 	'''
 	
-	def String generateWriteAppStateRec(Attribute it) '''
+	def String generateAppStateRec(Attribute it, EObject parent) '''
 		«IF attributes === null || attributes.length == 0»
-			export function set_«functionName»(eventData) {
-				«IF isHash»
-					location.hash = eventData.«getName»;
-				«ELSEIF isStorage»
-					localStorage.setItem("«getName»", eventData.«getName»);
-				«ELSE»
-					«elementPath» = eventData.«getName»;
-				«ENDIF»
-			}
-			
-			export function reset_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«elementPath» = null;
-				«ENDIF»
-			}
-			
-			export function init_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«elementPath» = null;
-				«ENDIF»
-			}
-		«ELSE»
-			export function set_«functionName»(eventData) {
-				«IF isHash»
-					location.hash = eventData.«getName»;
-				«ELSEIF isStorage»
-					localStorage.setItem("«getName»", eventData.«getName»);
-				«ELSE»
-					«elementPath» = eventData.«getName»;
-				«ENDIF»
-			}
-			
-			«IF !isList && !isHash && !isStorage»
-				export function merge_«functionName»(eventData) {
-					«FOR type : attributes»
-						«FOR element : type.attributes»
-							if (eventData.«element.getName» !== undefined) {
-								«element.elementPath» = eventData.«element.getName»;
-							}
-						«ENDFOR»
-					«ENDFOR»
-				}
-			«ENDIF»
-			
-			export function reset_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«elementPath» = null;
-				«ENDIF»
-			}
-			
-			export function init_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«elementPath» = {};
-				«ENDIF»
-			}
-			
-			«IF attributes !== null && !isList && !isHash && !isStorage»
-				«FOR type : attributes»
-					«FOR element : type.attributes»
-						«element.generateWriteAppStateRec()»
-					«ENDFOR»
-				«ENDFOR»
-			«ENDIF»
-			
-		«ENDIF»
-	'''
-	
-	def String generateReadAppState(List<Attribute> attributes, String prefix) '''
-		«copyright»
-
-		import AppUtils from "../../src/app/AppUtils";
-		import { state } from "./WriteAppState";
-		
-		export function getAppState() {
-			return AppUtils.deepCopy(appState);
-		}
-		
-		«FOR element : attributes»
-			«element.generateReadAppStateRec()»
-		«ENDFOR»
-		
-		
-		«sdg»
-		
-		
-	'''
-	
-	def String generateReadAppStateRec(Attribute it) '''
-		«copyright»
-
-		«IF attributes === null || attributes.length == 0»
-			export function get_«functionName»() {
+			export function get_«functionName(parent)»() {
 				«IF isHash»
 					return location.hash;
 				«ELSEIF isStorage»
 					return localStorage.getItem("«getName»");
 				«ELSE»
-					return «elementPath»;
+					return «elementPath(parent)»;
+				«ENDIF»
+			}
+
+			export function set_«functionName(parent)»(eventData) {
+				«IF isHash»
+					location.hash = eventData.«getName»;
+				«ELSEIF isStorage»
+					localStorage.setItem("«getName»", eventData.«getName»);
+				«ELSE»
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath(parent)») {
+							«attribute.elementPath(parent)» = {};
+						}
+					«ENDFOR»
+					«elementPath(parent)» = eventData.«getName»;
+				«ENDIF»
+			}
+			
+			export function reset_«functionName(parent)»() {
+				«IF isHash»
+					location.hash = "";
+				«ELSEIF isStorage»
+					localStorage.removeItem("«getName»");
+				«ELSE»
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath(parent)») {
+							return;
+						}
+					«ENDFOR»
+					«elementPath(parent)» = undefined;
 				«ENDIF»
 			}
 			
 		«ELSE»
-			export function get_«functionName»() {
+			export function get_«functionName(parent)»() {
 				«IF isHash»
 					return location.hash;
 				«ELSEIF isStorage»
 					localStorage.getItem("«getName»");
 				«ELSE»
-					return AppUtils.deepCopy(«elementPath»);
+					return AppUtils.deepCopy(«elementPath(parent)»);
 				«ENDIF»
 			}
 
-			«IF attributes !== null && !isList && !isHash && !isStorage»
-				«FOR type : attributes»
-					«FOR element : type.attributes»
-						«element.generateReadAppStateRec()»
+			export function set_«functionName(parent)»(eventData) {
+				«IF isHash»
+					location.hash = eventData.«getName»;
+				«ELSEIF isStorage»
+					localStorage.setItem("«getName»", eventData.«getName»);
+				«ELSE»
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath(parent)») {
+							«attribute.elementPath(parent)» = {};
+						}
 					«ENDFOR»
+					«elementPath(parent)» = eventData.«getName»;
+				«ENDIF»
+			}
+			
+			«IF !isHash && !isStorage»
+				export function merge_«functionName(parent)»(eventData) {
+					«FOR attr : it.allParentAttributes»
+						if (!«attr.elementPath(attr.eContainer)») {
+							«attr.elementPath(attr.eContainer)» = {};
+						}
+					«ENDFOR»
+					if (!«elementPath(it.eContainer)») {
+						«it.elementPath(it.eContainer)» = {};
+					}
+					«FOR attribute : attributes»
+						if (eventData.«attribute.getName» !== undefined) {
+							«attribute.elementPath(it)» = eventData.«attribute.getName»;
+						}
+					«ENDFOR»
+					«IF model !== null»
+						«FOR attribute : model.attributes»
+							if (eventData.«attribute.getName» !== undefined) {
+								«attribute.elementPath(parent)» = eventData.«attribute.getName»;
+							}
+						«ENDFOR»
+					«ENDIF»
+				}
+			«ENDIF»
+			
+			export function reset_«functionName(parent)»() {
+				«IF isHash»
+					location.hash = "";
+				«ELSEIF isStorage»
+					localStorage.removeItem("«getName»");
+				«ELSE»
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath(parent)») {
+							return;
+						}
+					«ENDFOR»
+					«elementPath(parent)» = undefined;
+				«ENDIF»
+			}
+			
+			«IF attributes !== null && !isList && !isHash && !isStorage»
+				«FOR attribute : attributes»
+					«attribute.generateAppStateRec(it)»
 				«ENDFOR»
+				«IF model !== null»
+					«FOR attribute : model.attributes»
+						«attribute.generateAppStateRec(it)»
+					«ENDFOR»
+				«ENDIF»
 			«ENDIF»
 			
 		«ENDIF»
-		
-		«sdg»
-		
-		
 	'''
 	
 }	

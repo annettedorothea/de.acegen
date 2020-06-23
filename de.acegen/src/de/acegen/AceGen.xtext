@@ -26,7 +26,7 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('appState' ('{'
+	(appStatePresent ?= 'appState' ('{'
 		appState += Attribute*
 	'}')? )?
 	('scenarios' (scenarios += ClientScenario)*)?
@@ -34,8 +34,8 @@ HttpClient:
 
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
-		('asParam' input += Input (',' input += Input)* )?  
-		('fromState' stateElements += [Attribute | QualifiedName] (',' stateElements += [Attribute | QualifiedName])* )?  
+		('(' input += Input (',' input += Input)* ')' )?  
+		('appState' '(' stateElements += [Attribute | QualifiedName] (',' stateElements += [Attribute | QualifiedName])* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [Attribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
@@ -56,12 +56,12 @@ HttpClientStateFunction:
 ;
 
 HttpClientStateFunctionType:
-	'set' | 'merge' | 'reset' | 'init'
+	'set' | 'merge' | 'reset'
 ;
 
 ClientScenario:
 	name = ID
-	('GIVEN' (givenRefs += [Scenario | QualifiedName])* )? 
+	('GIVEN' (givenRefs += [ClientScenario | QualifiedName])* )? 
 	'WHEN' whenBlock = ClientWhenBlock
 	'THEN' thenBlock = ClientThenBlock
 ;
@@ -78,9 +78,14 @@ InputValue:
 	input = [Input | QualifiedName] ':' value = JsonValue
 ;
 
-ClientThenBlock:
-	{ClientThenBlock} ('expectedState' stateVerifications += StateVerification*)?
+ClientThenBlock: {ClientThenBlock} 
+	('expectedServerCall' serverCall = ServerCall)?
+	('expectedState' stateVerifications += StateVerification*)?
 	('triggeredActions' triggeredAction += TriggeredAction*)?
+;
+
+ServerCall:
+	jsonObject = JsonObject
 ;
 
 TriggeredAction:
@@ -245,7 +250,6 @@ Attribute:
 	hash ?= 'location.hash'? 
 	storage ?= 'storage'? 
 	('{'
-		('allAttributesOf' superModels+=[Model|QualifiedName] (',' superModels+=[Model|QualifiedName])?)?
 		attributes += Attribute*
 	'}')?
 ;

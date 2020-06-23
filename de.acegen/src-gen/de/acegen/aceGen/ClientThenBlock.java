@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.ClientThenBlock#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientThenBlock#getStateVerifications <em>State Verifications</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientThenBlock#getTriggeredAction <em>Triggered Action</em>}</li>
  * </ul>
@@ -26,6 +27,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ClientThenBlock extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Server Call</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Server Call</em>' containment reference.
+   * @see #setServerCall(ServerCall)
+   * @see de.acegen.aceGen.AceGenPackage#getClientThenBlock_ServerCall()
+   * @model containment="true"
+   * @generated
+   */
+  ServerCall getServerCall();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientThenBlock#getServerCall <em>Server Call</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Server Call</em>' containment reference.
+   * @see #getServerCall()
+   * @generated
+   */
+  void setServerCall(ServerCall value);
+
   /**
    * Returns the value of the '<em><b>State Verifications</b></em>' containment reference list.
    * The list contents are of type {@link de.acegen.aceGen.StateVerification}.

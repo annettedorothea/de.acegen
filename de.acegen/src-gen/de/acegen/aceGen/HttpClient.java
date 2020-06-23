@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#isAppStatePresent <em>App State Present</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
@@ -61,6 +62,28 @@ public interface HttpClient extends EObject
    * @generated
    */
   EList<HttpClientAce> getAceOperations();
+
+  /**
+   * Returns the value of the '<em><b>App State Present</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>App State Present</em>' attribute.
+   * @see #setAppStatePresent(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_AppStatePresent()
+   * @model
+   * @generated
+   */
+  boolean isAppStatePresent();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isAppStatePresent <em>App State Present</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>App State Present</em>' attribute.
+   * @see #isAppStatePresent()
+   * @generated
+   */
+  void setAppStatePresent(boolean value);
 
   /**
    * Returns the value of the '<em><b>App State</b></em>' containment reference list.

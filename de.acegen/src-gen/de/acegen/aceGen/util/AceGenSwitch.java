@@ -143,6 +143,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.SERVER_CALL:
+      {
+        ServerCall serverCall = (ServerCall)theEObject;
+        T result = caseServerCall(serverCall);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.TRIGGERED_ACTION:
       {
         TriggeredAction triggeredAction = (TriggeredAction)theEObject;
@@ -542,6 +549,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClientThenBlock(ClientThenBlock object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Server Call</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Server Call</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseServerCall(ServerCall object)
   {
     return null;
   }
