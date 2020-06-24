@@ -17,12 +17,11 @@
 
 package de.acegen.templates.es6
 
-import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.ClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import java.util.List
 import javax.inject.Inject
-import org.eclipse.emf.ecore.EObject
 
 class AceTemplate {
 	
@@ -899,7 +898,7 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateAppState(List<Attribute> attributes, String prefix) '''
+	def String generateAppState(List<ClientAttribute> attributes, String prefix) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
@@ -909,128 +908,127 @@ class AceTemplate {
 		export function setInitialAppState(initialAppState) {
 			appState = AppUtils.deepCopy(initialAppState);
 		}
+		
 		«FOR attribute : attributes»
-			«attribute.generateAppStateRec(null)»
+			«attribute.generateAppStateRec»
 		«ENDFOR»
 	'''
 	
-	def String generateAppStateRec(Attribute it, EObject parent) '''
+	def String generateAppStateRec(ClientAttribute it) '''
 		«IF attributes === null || attributes.length == 0»
-			export function get_«functionName(parent)»() {
+			export function get_«functionName»() {
 				«IF isHash»
 					return location.hash;
 				«ELSEIF isStorage»
 					return localStorage.getItem("«getName»");
 				«ELSE»
-					return «elementPath(parent)»;
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath») {
+							return undefined;
+						}
+					«ENDFOR»
+					return «elementPath»;
 				«ENDIF»
 			}
 
-			export function set_«functionName(parent)»(eventData) {
+			export function set_«functionName»(eventData) {
 				«IF isHash»
 					location.hash = eventData.«getName»;
 				«ELSEIF isStorage»
 					localStorage.setItem("«getName»", eventData.«getName»);
 				«ELSE»
 					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath(parent)») {
-							«attribute.elementPath(parent)» = {};
+						if (!«attribute.elementPath») {
+							«attribute.elementPath» = {};
 						}
 					«ENDFOR»
-					«elementPath(parent)» = eventData.«getName»;
+					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			}
 			
-			export function reset_«functionName(parent)»() {
+			export function reset_«functionName»() {
 				«IF isHash»
 					location.hash = "";
 				«ELSEIF isStorage»
 					localStorage.removeItem("«getName»");
 				«ELSE»
 					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath(parent)») {
+						if (!«attribute.elementPath») {
 							return;
 						}
 					«ENDFOR»
-					«elementPath(parent)» = undefined;
+					«elementPath» = undefined;
 				«ENDIF»
 			}
 			
 		«ELSE»
-			export function get_«functionName(parent)»() {
+			export function get_«functionName»() {
 				«IF isHash»
 					return location.hash;
 				«ELSEIF isStorage»
 					localStorage.getItem("«getName»");
 				«ELSE»
-					return AppUtils.deepCopy(«elementPath(parent)»);
+					«FOR attribute: allParentAttributes»
+						if (!«attribute.elementPath») {
+							return undefined;
+						}
+					«ENDFOR»
+					return AppUtils.deepCopy(«elementPath»);
 				«ENDIF»
 			}
 
-			export function set_«functionName(parent)»(eventData) {
+			export function set_«functionName»(eventData) {
 				«IF isHash»
 					location.hash = eventData.«getName»;
 				«ELSEIF isStorage»
 					localStorage.setItem("«getName»", eventData.«getName»);
 				«ELSE»
 					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath(parent)») {
-							«attribute.elementPath(parent)» = {};
+						if (!«attribute.elementPath») {
+							«attribute.elementPath» = {};
 						}
 					«ENDFOR»
-					«elementPath(parent)» = eventData.«getName»;
+					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			}
 			
 			«IF !isHash && !isStorage»
-				export function merge_«functionName(parent)»(eventData) {
+				export function merge_«functionName»(eventData) {
 					«FOR attr : it.allParentAttributes»
-						if (!«attr.elementPath(attr.eContainer)») {
-							«attr.elementPath(attr.eContainer)» = {};
+						if (!«attr.elementPath») {
+							«attr.elementPath» = {};
 						}
 					«ENDFOR»
-					if (!«elementPath(it.eContainer)») {
-						«it.elementPath(it.eContainer)» = {};
+					if (!«elementPath») {
+						«it.elementPath» = {};
 					}
 					«FOR attribute : attributes»
 						if (eventData.«attribute.getName» !== undefined) {
-							«attribute.elementPath(it)» = eventData.«attribute.getName»;
+							«attribute.elementPath» = eventData.«attribute.getName»;
 						}
 					«ENDFOR»
-					«IF model !== null»
-						«FOR attribute : model.attributes»
-							if (eventData.«attribute.getName» !== undefined) {
-								«attribute.elementPath(parent)» = eventData.«attribute.getName»;
-							}
-						«ENDFOR»
-					«ENDIF»
 				}
 			«ENDIF»
 			
-			export function reset_«functionName(parent)»() {
+			export function reset_«functionName»() {
 				«IF isHash»
 					location.hash = "";
 				«ELSEIF isStorage»
 					localStorage.removeItem("«getName»");
 				«ELSE»
 					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath(parent)») {
+						if (!«attribute.elementPath») {
 							return;
 						}
 					«ENDFOR»
-					«elementPath(parent)» = undefined;
+					«elementPath» = undefined;
 				«ENDIF»
 			}
 			
 			«IF attributes !== null && !isList && !isHash && !isStorage»
 				«FOR attribute : attributes»
-					«attribute.generateAppStateRec(it)»
+					«attribute.generateAppStateRec»
 				«ENDFOR»
-				«IF model !== null»
-					«FOR attribute : model.attributes»
-						«attribute.generateAppStateRec(it)»
-					«ENDFOR»
-				«ENDIF»
 			«ENDIF»
 			
 		«ENDIF»

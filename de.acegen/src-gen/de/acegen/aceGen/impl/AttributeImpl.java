@@ -7,21 +7,13 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.Model;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,9 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isHash <em>Hash</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @generated
@@ -208,56 +197,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @ordered
    */
   protected boolean notReplayable = NOT_REPLAYABLE_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #isHash() <em>Hash</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isHash()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean HASH_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isHash() <em>Hash</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isHash()
-   * @generated
-   * @ordered
-   */
-  protected boolean hash = HASH_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #isStorage() <em>Storage</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isStorage()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean STORAGE_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isStorage() <em>Storage</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isStorage()
-   * @generated
-   * @ordered
-   */
-  protected boolean storage = STORAGE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAttributes()
-   * @generated
-   * @ordered
-   */
-  protected EList<Attribute> attributes;
 
   /**
    * <!-- begin-user-doc -->
@@ -551,87 +490,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public boolean isHash()
-  {
-    return hash;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setHash(boolean newHash)
-  {
-    boolean oldHash = hash;
-    hash = newHash;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__HASH, oldHash, hash));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean isStorage()
-  {
-    return storage;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setStorage(boolean newStorage)
-  {
-    boolean oldStorage = storage;
-    storage = newStorage;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__STORAGE, oldStorage, storage));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EList<Attribute> getAttributes()
-  {
-    if (attributes == null)
-    {
-      attributes = new EObjectContainmentEList<Attribute>(Attribute.class, this, AceGenPackage.ATTRIBUTE__ATTRIBUTES);
-    }
-    return attributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
-        return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -656,12 +514,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return basicGetForeignKey();
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return isNotReplayable();
-      case AceGenPackage.ATTRIBUTE__HASH:
-        return isHash();
-      case AceGenPackage.ATTRIBUTE__STORAGE:
-        return isStorage();
-      case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
-        return getAttributes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -671,7 +523,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -703,16 +554,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable((Boolean)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE__HASH:
-        setHash((Boolean)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE__STORAGE:
-        setStorage((Boolean)newValue);
-        return;
-      case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
-        getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Attribute>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -755,15 +596,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         setNotReplayable(NOT_REPLAYABLE_EDEFAULT);
         return;
-      case AceGenPackage.ATTRIBUTE__HASH:
-        setHash(HASH_EDEFAULT);
-        return;
-      case AceGenPackage.ATTRIBUTE__STORAGE:
-        setStorage(STORAGE_EDEFAULT);
-        return;
-      case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
-        getAttributes().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -796,12 +628,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return foreignKey != null;
       case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
         return notReplayable != NOT_REPLAYABLE_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__HASH:
-        return hash != HASH_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__STORAGE:
-        return storage != STORAGE_EDEFAULT;
-      case AceGenPackage.ATTRIBUTE__ATTRIBUTES:
-        return attributes != null && !attributes.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -831,10 +657,6 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(name);
     result.append(", notReplayable: ");
     result.append(notReplayable);
-    result.append(", hash: ");
-    result.append(hash);
-    result.append(", storage: ");
-    result.append(storage);
     result.append(')');
     return result.toString();
   }

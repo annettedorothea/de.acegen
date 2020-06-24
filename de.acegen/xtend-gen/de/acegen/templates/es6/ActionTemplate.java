@@ -15,7 +15,7 @@
  */
 package de.acegen.templates.es6;
 
-import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.Input;
@@ -76,7 +76,7 @@ public class ActionTemplate {
       }
     }
     {
-      Attribute _loadingFlag = it.getLoadingFlag();
+      ClientAttribute _loadingFlag = it.getLoadingFlag();
       boolean _tripleNotEquals = (_loadingFlag != null);
       if (_tripleNotEquals) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
@@ -132,7 +132,7 @@ public class ActionTemplate {
     _builder.append("\');");
     _builder.newLineIfNotEmpty();
     {
-      Attribute _loadingFlag_1 = it.getLoadingFlag();
+      ClientAttribute _loadingFlag_1 = it.getLoadingFlag();
       boolean _tripleNotEquals_1 = (_loadingFlag_1 != null);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
@@ -166,7 +166,7 @@ public class ActionTemplate {
     }
     _builder.newLine();
     {
-      Attribute _loadingFlag_2 = it.getLoadingFlag();
+      ClientAttribute _loadingFlag_2 = it.getLoadingFlag();
       boolean _tripleNotEquals_2 = (_loadingFlag_2 != null);
       if (_tripleNotEquals_2) {
         _builder.append("\t");
@@ -175,7 +175,7 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.set_");
-        String _functionName = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
+        String _functionName = this._es6Extension.functionName(it.getLoadingFlag());
         _builder.append(_functionName, "\t\t");
         _builder.append("({");
         String _name_4 = it.getLoadingFlag().getName();
@@ -193,7 +193,7 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.set_");
-        String _functionName_1 = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
+        String _functionName_1 = this._es6Extension.functionName(it.getLoadingFlag());
         _builder.append(_functionName_1, "\t\t");
         _builder.append("({");
         String _name_5 = it.getLoadingFlag().getName();

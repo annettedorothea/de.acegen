@@ -19,10 +19,11 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
+import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
+import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerAceRead
 
 class CommandTemplate {
 	@Inject
@@ -31,6 +32,9 @@ class CommandTemplate {
 	@Inject
 	extension CommonExtension
 	
+	@Inject
+	extension Es6Extension
+	
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
@@ -38,6 +42,7 @@ class CommandTemplate {
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		import Utils from "../../ace/Utils";
 		import ACEController from "../../ace/ACEController";
+		import * as AppState from "../../ace/AppState";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
@@ -52,6 +57,9 @@ class CommandTemplate {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
 		        	this.«outcome.getName» = "«outcome.getName»";
+		        «ENDFOR»
+		        «FOR stateElement : stateElements»
+		        	this.«stateElement.name» = AppState.get_«stateElement.functionName»;
 		        «ENDFOR»
 		    }
 		
@@ -111,6 +119,7 @@ class CommandTemplate {
 
 		import Command from "../../../gen/ace/SynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
+		import * as AppState from "../../ace/AppState";
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
@@ -125,6 +134,9 @@ class CommandTemplate {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
 		        	this.«outcome.getName» = "«outcome.getName»";
+		        «ENDFOR»
+		        «FOR stateElement : stateElements»
+		        	this.«stateElement.name» = AppState.get_«stateElement.functionName»;
 		        «ENDFOR»
 		    }
 		
@@ -155,14 +167,11 @@ class CommandTemplate {
 		«copyright»
 
 		import «abstractCommandName» from "../../../gen/«es6.getName»/commands/«abstractCommandName»";
-		import * as AppState from "../../../gen/ace/ReadAppState";
-		//please do not import "../../../gen/ace/WriteAppState" for you should not write the state in a command
 		
 		export default class «commandName» extends «abstractCommandName» {
 
 		«IF serverCall !== null»
-		    initCommandData() {
-		    	//add from appState to commandData
+		    validateCommandData() {
 		    	«FOR param : serverCall.queryParams»
 		    		«IF param.isNotNull»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
@@ -199,8 +208,6 @@ class CommandTemplate {
 		«copyright»
 
 		import «abstractCommandName» from "../../../gen/«es6.getName»/commands/«abstractCommandName»";
-		import * as AppState from "../../../gen/ace/ReadAppState";
-		//please do not import "../../../gen/ace/WriteAppState" for you should not write the state in a command
 		
 		export default class «commandName» extends «abstractCommandName» {
 		    execute() {
@@ -251,7 +258,7 @@ class CommandTemplate {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
-						if (this.initCommandData()) {
+						if (this.validateCommandData()) {
 						    this.execute().then(() => {
 						        ACEController.addItemToTimeLine({command: this});
 						        this.publishEvents();
@@ -283,7 +290,7 @@ class CommandTemplate {
 		        });
 		    }
 		
-		    initCommandData() {
+		    validateCommandData() {
 		    	return true;
 		    }
 		

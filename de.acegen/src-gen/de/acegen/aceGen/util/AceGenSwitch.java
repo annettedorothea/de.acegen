@@ -115,6 +115,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.CLIENT_ATTRIBUTE:
+      {
+        ClientAttribute clientAttribute = (ClientAttribute)theEObject;
+        T result = caseClientAttribute(clientAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.CLIENT_SCENARIO:
       {
         ClientScenario clientScenario = (ClientScenario)theEObject;
@@ -161,6 +168,36 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         StateVerification stateVerification = (StateVerification)theEObject;
         T result = caseStateVerification(stateVerification);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_OBJECT_CLIENT:
+      {
+        JsonObjectClient jsonObjectClient = (JsonObjectClient)theEObject;
+        T result = caseJsonObjectClient(jsonObjectClient);
+        if (result == null) result = caseJsonValueClient(jsonObjectClient);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_MEMBER_CLIENT:
+      {
+        JsonMemberClient jsonMemberClient = (JsonMemberClient)theEObject;
+        T result = caseJsonMemberClient(jsonMemberClient);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_VALUE_CLIENT:
+      {
+        JsonValueClient jsonValueClient = (JsonValueClient)theEObject;
+        T result = caseJsonValueClient(jsonValueClient);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_ARRAY_CLIENT:
+      {
+        JsonArrayClient jsonArrayClient = (JsonArrayClient)theEObject;
+        T result = caseJsonArrayClient(jsonArrayClient);
+        if (result == null) result = caseJsonValueClient(jsonArrayClient);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -348,6 +385,7 @@ public class AceGenSwitch<T> extends Switch<T>
       {
         JsonDateTime jsonDateTime = (JsonDateTime)theEObject;
         T result = caseJsonDateTime(jsonDateTime);
+        if (result == null) result = caseJsonValueClient(jsonDateTime);
         if (result == null) result = caseJsonValue(jsonDateTime);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -379,6 +417,42 @@ public class AceGenSwitch<T> extends Switch<T>
         JsonArray jsonArray = (JsonArray)theEObject;
         T result = caseJsonArray(jsonArray);
         if (result == null) result = caseJsonValue(jsonArray);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.STRING_TYPE:
+      {
+        StringType stringType = (StringType)theEObject;
+        T result = caseStringType(stringType);
+        if (result == null) result = caseJsonValueClient(stringType);
+        if (result == null) result = caseJsonValue(stringType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.BOOLEAN_TYPE:
+      {
+        BooleanType booleanType = (BooleanType)theEObject;
+        T result = caseBooleanType(booleanType);
+        if (result == null) result = caseJsonValueClient(booleanType);
+        if (result == null) result = caseJsonValue(booleanType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.NULL_TYPE:
+      {
+        NullType nullType = (NullType)theEObject;
+        T result = caseNullType(nullType);
+        if (result == null) result = caseJsonValueClient(nullType);
+        if (result == null) result = caseJsonValue(nullType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.LONG_TYPE:
+      {
+        LongType longType = (LongType)theEObject;
+        T result = caseLongType(longType);
+        if (result == null) result = caseJsonValueClient(longType);
+        if (result == null) result = caseJsonValue(longType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -485,6 +559,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpClientStateFunction(HttpClientStateFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientAttribute(ClientAttribute object)
   {
     return null;
   }
@@ -597,6 +687,70 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseStateVerification(StateVerification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Object Client</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Object Client</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonObjectClient(JsonObjectClient object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Member Client</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Member Client</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonMemberClient(JsonMemberClient object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Value Client</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Value Client</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonValueClient(JsonValueClient object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Array Client</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Array Client</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonArrayClient(JsonArrayClient object)
   {
     return null;
   }
@@ -1077,6 +1231,70 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJsonArray(JsonArray object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringType(StringType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Boolean Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Boolean Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBooleanType(BooleanType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Null Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Null Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNullType(NullType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Long Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Long Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLongType(LongType object)
   {
     return null;
   }

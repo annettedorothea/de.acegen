@@ -10,15 +10,6 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Json Value</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link de.acegen.aceGen.JsonValue#getString <em>String</em>}</li>
- *   <li>{@link de.acegen.aceGen.JsonValue#getBoolean <em>Boolean</em>}</li>
- *   <li>{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}</li>
- *   <li>{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}</li>
- * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getJsonValue()
  * @model
@@ -26,92 +17,4 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface JsonValue extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>String</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>String</em>' attribute.
-   * @see #setString(String)
-   * @see de.acegen.aceGen.AceGenPackage#getJsonValue_String()
-   * @model
-   * @generated
-   */
-  String getString();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.JsonValue#getString <em>String</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>String</em>' attribute.
-   * @see #getString()
-   * @generated
-   */
-  void setString(String value);
-
-  /**
-   * Returns the value of the '<em><b>Boolean</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Boolean</em>' attribute.
-   * @see #setBoolean(String)
-   * @see de.acegen.aceGen.AceGenPackage#getJsonValue_Boolean()
-   * @model
-   * @generated
-   */
-  String getBoolean();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.JsonValue#getBoolean <em>Boolean</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Boolean</em>' attribute.
-   * @see #getBoolean()
-   * @generated
-   */
-  void setBoolean(String value);
-
-  /**
-   * Returns the value of the '<em><b>Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Null</em>' attribute.
-   * @see #setNull(String)
-   * @see de.acegen.aceGen.AceGenPackage#getJsonValue_Null()
-   * @model
-   * @generated
-   */
-  String getNull();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Null</em>' attribute.
-   * @see #getNull()
-   * @generated
-   */
-  void setNull(String value);
-
-  /**
-   * Returns the value of the '<em><b>Long</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Long</em>' attribute.
-   * @see #setLong(int)
-   * @see de.acegen.aceGen.AceGenPackage#getJsonValue_Long()
-   * @model
-   * @generated
-   */
-  int getLong();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Long</em>' attribute.
-   * @see #getLong()
-   * @generated
-   */
-  void setLong(int value);
-
 } // JsonValue

@@ -21,7 +21,7 @@ package de.acegen.aceGen;
  * @model
  * @generated
  */
-public interface JsonDateTime extends JsonValue
+public interface JsonDateTime extends JsonValueClient, JsonValue
 {
   /**
    * Returns the value of the '<em><b>Date Time</b></em>' attribute.

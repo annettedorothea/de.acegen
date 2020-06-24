@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
@@ -102,7 +102,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    * @ordered
    */
-  protected EList<Attribute> appState;
+  protected EList<ClientAttribute> appState;
 
   /**
    * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
@@ -206,11 +206,11 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public EList<Attribute> getAppState()
+  public EList<ClientAttribute> getAppState()
   {
     if (appState == null)
     {
-      appState = new EObjectContainmentEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_CLIENT__APP_STATE);
+      appState = new EObjectContainmentEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.HTTP_CLIENT__APP_STATE);
     }
     return appState;
   }
@@ -297,7 +297,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return;
       case AceGenPackage.HTTP_CLIENT__APP_STATE:
         getAppState().clear();
-        getAppState().addAll((Collection<? extends Attribute>)newValue);
+        getAppState().addAll((Collection<? extends ClientAttribute>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();

@@ -52,12 +52,12 @@ public interface StateVerification extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>State Ref</em>' reference.
-   * @see #setStateRef(Attribute)
+   * @see #setStateRef(ClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getStateVerification_StateRef()
    * @model
    * @generated
    */
-  Attribute getStateRef();
+  ClientAttribute getStateRef();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.StateVerification#getStateRef <em>State Ref</em>}' reference.
@@ -67,19 +67,19 @@ public interface StateVerification extends EObject
    * @see #getStateRef()
    * @generated
    */
-  void setStateRef(Attribute value);
+  void setStateRef(ClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(JsonValue)
+   * @see #setValue(JsonValueClient)
    * @see de.acegen.aceGen.AceGenPackage#getStateVerification_Value()
    * @model containment="true"
    * @generated
    */
-  JsonValue getValue();
+  JsonValueClient getValue();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.StateVerification#getValue <em>Value</em>}' containment reference.
@@ -89,6 +89,6 @@ public interface StateVerification extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(JsonValue value);
+  void setValue(JsonValueClient value);
 
 } // StateVerification

@@ -27,7 +27,7 @@ HttpClient:
 	name = QualifiedName
 	('ACE' (aceOperations += HttpClientAce)*)?
 	(appStatePresent ?= 'appState' ('{'
-		appState += Attribute*
+		appState += ClientAttribute*
 	'}')? )?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
@@ -35,9 +35,9 @@ HttpClient:
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
 		('(' input += Input (',' input += Input)* ')' )?  
-		('appState' '(' stateElements += [Attribute | QualifiedName] (',' stateElements += [Attribute | QualifiedName])* ')' )?  
+		('appState' '(' stateElements += [ClientAttribute | QualifiedName] (',' stateElements += [ClientAttribute | QualifiedName])* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [Attribute | QualifiedName])? 
+	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -52,11 +52,24 @@ HttpClientOutcome:
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType stateElement = [Attribute | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
 	'set' | 'merge' | 'reset'
+;
+
+ClientAttribute:
+	notNull ?= 'NotNull'? 
+	list ?= 'List'? 
+	(type = Type)?
+	name = ID 
+	('serverModel' model = [Model | QualifiedName])? 
+	hash ?= 'location.hash'? 
+	storage ?= 'storage'? 
+	('{'
+		attributes += ClientAttribute*
+	'}')?
 ;
 
 ClientScenario:
@@ -75,7 +88,7 @@ ClientWhenBlock:
 ;
 
 InputValue:
-	input = [Input | QualifiedName] ':' value = JsonValue
+	input = [Input | QualifiedName] ':' value = PrimitiveValue
 ;
 
 ClientThenBlock: {ClientThenBlock} 
@@ -93,8 +106,28 @@ TriggeredAction:
 ;
 
 StateVerification:
-	name = ID stateRef = [Attribute | QualifiedName] 'shouldBe' value = JsonValue
+	name = ID stateRef = [ClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
 ;
+
+JsonObjectClient:
+	{JsonObjectClient} '{' 
+		(members+=JsonMemberClient)?
+		(',' members+=JsonMemberClient)* 
+	
+	'}';
+
+JsonMemberClient:
+	attribute=[ClientAttribute | QualifiedName] ':' value=JsonValueClient;
+	
+JsonValueClient:
+	JsonObjectClient | StringType | JsonArrayClient | BooleanType | NullType | LongType | JsonDateTime;
+
+JsonArrayClient:
+	{JsonArrayClient} '[' (values+=JsonValueClient)? (',' values+=JsonValueClient)* ']';
+
+
+
+
 
 
 HttpServer:
@@ -242,16 +275,10 @@ Attribute:
 	primaryKey ?= 'PrimaryKey'? 
 	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
-	(type = Type)?
-	('model' model = [Model | QualifiedName])?
+	(type = Type | model = [Model | QualifiedName])
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
 	notReplayable ?= 'notReplayable'?
-	hash ?= 'location.hash'? 
-	storage ?= 'storage'? 
-	('{'
-		attributes += Attribute*
-	'}')?
 ;
 
 QualifiedName:
@@ -285,10 +312,26 @@ JsonMember:
 	attribute=[Attribute | QualifiedName] ':' value=JsonValue;
 	
 JsonValue:
-	JsonObject | string = STRING | JsonArray | boolean = JsonBoolean | null = JsonNull | long = INT | JsonDateTime;
+	JsonObject | StringType | JsonArray | BooleanType | NullType | LongType | JsonDateTime;
 
 JsonArray:
 	{JsonArray} '[' (values+=JsonValue)? (',' values+=JsonValue)* ']';
+	
+StringType:
+	string = STRING
+;
+
+BooleanType:
+	boolean = JsonBoolean
+;
+
+NullType:
+	null = JsonNull
+;
+
+LongType:
+	long = INT
+;
 
 JsonBoolean:
   'true' | 'false';

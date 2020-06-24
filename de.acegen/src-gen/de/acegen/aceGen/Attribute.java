@@ -3,8 +3,6 @@
  */
 package de.acegen.aceGen;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -25,9 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#isHash <em>Hash</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -233,61 +228,5 @@ public interface Attribute extends EObject
    * @generated
    */
   void setNotReplayable(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Hash</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Hash</em>' attribute.
-   * @see #setHash(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Hash()
-   * @model
-   * @generated
-   */
-  boolean isHash();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isHash <em>Hash</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Hash</em>' attribute.
-   * @see #isHash()
-   * @generated
-   */
-  void setHash(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Storage</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Storage</em>' attribute.
-   * @see #setStorage(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Storage()
-   * @model
-   * @generated
-   */
-  boolean isStorage();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isStorage <em>Storage</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Storage</em>' attribute.
-   * @see #isStorage()
-   * @generated
-   */
-  void setStorage(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Attributes</em>' containment reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_Attributes()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Attribute> getAttributes();
 
 } // Attribute

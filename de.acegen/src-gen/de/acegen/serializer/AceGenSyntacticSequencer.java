@@ -22,7 +22,7 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected AceGenGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_2__q;
+	protected AbstractElementAlias match_ClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q;
 	protected AbstractElementAlias match_ClientScenario_GIVENKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_ExpectedStateKeyword_2_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_TriggeredActionsKeyword_3_0_q;
@@ -57,7 +57,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (AceGenGrammarAccess) access;
-		match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAttributeAccess().getLeftCurlyBracketKeyword_11_0()), new TokenAlias(false, false, grammarAccess.getAttributeAccess().getRightCurlyBracketKeyword_11_2()));
+		match_ClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_7_2()));
 		match_ClientScenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientScenarioAccess().getGIVENKeyword_1_0());
 		match_ClientThenBlock_ExpectedStateKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getExpectedStateKeyword_2_0());
 		match_ClientThenBlock_TriggeredActionsKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getTriggeredActionsKeyword_3_0());
@@ -102,8 +102,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_2__q.equals(syntax))
-				emit_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_ClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q.equals(syntax))
+				emit_ClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientScenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_ClientScenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientThenBlock_ExpectedStateKeyword_2_0_q.equals(syntax))
@@ -173,13 +173,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     foreignKey=[Attribute|QualifiedName] (ambiguity) (rule end)
 	 *     hash?='location.hash' (ambiguity) (rule end)
+	 *     model=[Model|QualifiedName] (ambiguity) (rule end)
 	 *     name=ID (ambiguity) (rule end)
-	 *     notReplayable?='notReplayable' (ambiguity) (rule end)
 	 *     storage?='storage' (ambiguity) (rule end)
 	 */
-	protected void emit_Attribute___LeftCurlyBracketKeyword_11_0_RightCurlyBracketKeyword_11_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -287,7 +286,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     aceOperations+=HttpClientAce (ambiguity) (rule end)
-	 *     appState+=Attribute '}' (ambiguity) (rule end)
+	 *     appState+=ClientAttribute '}' (ambiguity) (rule end)
 	 *     appStatePresent?='appState' ('{' '}')? (ambiguity) (rule end)
 	 *     name=QualifiedName 'ACE'? (ambiguity) (rule end)
 	 */

@@ -106,6 +106,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientStateFunctionAdapter();
       }
       @Override
+      public Adapter caseClientAttribute(ClientAttribute object)
+      {
+        return createClientAttributeAdapter();
+      }
+      @Override
       public Adapter caseClientScenario(ClientScenario object)
       {
         return createClientScenarioAdapter();
@@ -139,6 +144,26 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseStateVerification(StateVerification object)
       {
         return createStateVerificationAdapter();
+      }
+      @Override
+      public Adapter caseJsonObjectClient(JsonObjectClient object)
+      {
+        return createJsonObjectClientAdapter();
+      }
+      @Override
+      public Adapter caseJsonMemberClient(JsonMemberClient object)
+      {
+        return createJsonMemberClientAdapter();
+      }
+      @Override
+      public Adapter caseJsonValueClient(JsonValueClient object)
+      {
+        return createJsonValueClientAdapter();
+      }
+      @Override
+      public Adapter caseJsonArrayClient(JsonArrayClient object)
+      {
+        return createJsonArrayClientAdapter();
       }
       @Override
       public Adapter caseHttpServer(HttpServer object)
@@ -291,6 +316,26 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createJsonArrayAdapter();
       }
       @Override
+      public Adapter caseStringType(StringType object)
+      {
+        return createStringTypeAdapter();
+      }
+      @Override
+      public Adapter caseBooleanType(BooleanType object)
+      {
+        return createBooleanTypeAdapter();
+      }
+      @Override
+      public Adapter caseNullType(NullType object)
+      {
+        return createNullTypeAdapter();
+      }
+      @Override
+      public Adapter caseLongType(LongType object)
+      {
+        return createLongTypeAdapter();
+      }
+      @Override
       public Adapter casePrimitiveValue(PrimitiveValue object)
       {
         return createPrimitiveValueAdapter();
@@ -408,6 +453,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientAttribute <em>Client Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientAttribute
+   * @generated
+   */
+  public Adapter createClientAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientScenario <em>Client Scenario</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -508,6 +568,66 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStateVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonObjectClient <em>Json Object Client</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonObjectClient
+   * @generated
+   */
+  public Adapter createJsonObjectClientAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonMemberClient <em>Json Member Client</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonMemberClient
+   * @generated
+   */
+  public Adapter createJsonMemberClientAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonValueClient <em>Json Value Client</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonValueClient
+   * @generated
+   */
+  public Adapter createJsonValueClientAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonArrayClient <em>Json Array Client</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonArrayClient
+   * @generated
+   */
+  public Adapter createJsonArrayClientAdapter()
   {
     return null;
   }
@@ -958,6 +1078,66 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJsonArrayAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.StringType <em>String Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.StringType
+   * @generated
+   */
+  public Adapter createStringTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.BooleanType <em>Boolean Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.BooleanType
+   * @generated
+   */
+  public Adapter createBooleanTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.NullType <em>Null Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.NullType
+   * @generated
+   */
+  public Adapter createNullTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.LongType <em>Long Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.LongType
+   * @generated
+   */
+  public Adapter createLongTypeAdapter()
   {
     return null;
   }

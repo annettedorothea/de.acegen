@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.JsonValue;
+import de.acegen.aceGen.JsonValueClient;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -12,19 +12,19 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Json Value</b></em>'.
+ * An implementation of the model object '<em><b>Json Value Client</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonValue
+public class JsonValueClientImpl extends MinimalEObjectImpl.Container implements JsonValueClient
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected JsonValueImpl()
+  protected JsonValueClientImpl()
   {
     super();
   }
@@ -37,7 +37,7 @@ public class JsonValueImpl extends MinimalEObjectImpl.Container implements JsonV
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.JSON_VALUE;
+    return AceGenPackage.Literals.JSON_VALUE_CLIENT;
   }
 
-} //JsonValueImpl
+} //JsonValueClientImpl

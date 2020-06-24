@@ -51,12 +51,12 @@ public interface InputValue extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(JsonValue)
+   * @see #setValue(PrimitiveValue)
    * @see de.acegen.aceGen.AceGenPackage#getInputValue_Value()
    * @model containment="true"
    * @generated
    */
-  JsonValue getValue();
+  PrimitiveValue getValue();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.InputValue#getValue <em>Value</em>}' containment reference.
@@ -66,6 +66,6 @@ public interface InputValue extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(JsonValue value);
+  void setValue(PrimitiveValue value);
 
 } // InputValue

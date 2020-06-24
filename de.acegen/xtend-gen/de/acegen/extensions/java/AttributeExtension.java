@@ -17,13 +17,17 @@ package de.acegen.extensions.java;
 
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonValue;
+import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.StringType;
 import de.acegen.extensions.java.ModelExtension;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -675,33 +679,30 @@ public class AttributeExtension {
   }
   
   protected CharSequence _valueFrom(final JsonValue it) {
-    String _string = it.getString();
-    boolean _tripleNotEquals = (_string != null);
-    if (_tripleNotEquals) {
+    if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("\\\"");
-      CharSequence _valueFromString = this.valueFromString(it.getString());
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
       _builder.append(_valueFromString);
       _builder.append("\\\"");
       return _builder;
     } else {
-      String _boolean = it.getBoolean();
-      boolean _tripleNotEquals_1 = (_boolean != null);
-      if (_tripleNotEquals_1) {
-        return it.getBoolean();
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
       } else {
-        String _null = it.getNull();
-        boolean _tripleNotEquals_2 = (_null != null);
-        if (_tripleNotEquals_2) {
+        if ((it instanceof NullType)) {
           return "null";
         } else {
-          StringConcatenation _builder_1 = new StringConcatenation();
-          int _long = it.getLong();
-          _builder_1.append(_long);
-          return _builder_1;
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
         }
       }
     }
+    return null;
   }
   
   public CharSequence valueFromString(final String it) {

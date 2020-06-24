@@ -4,9 +4,9 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Input;
-import de.acegen.aceGen.InputValue;
-import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.JsonMemberClient;
+import de.acegen.aceGen.JsonValueClient;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,29 +19,29 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Input Value</b></em>'.
+ * An implementation of the model object '<em><b>Json Member Client</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.InputValueImpl#getInput <em>Input</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.InputValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonMemberClientImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.JsonMemberClientImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class InputValueImpl extends MinimalEObjectImpl.Container implements InputValue
+public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implements JsonMemberClient
 {
   /**
-   * The cached value of the '{@link #getInput() <em>Input</em>}' reference.
+   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInput()
+   * @see #getAttribute()
    * @generated
    * @ordered
    */
-  protected Input input;
+  protected ClientAttribute attribute;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -51,14 +51,14 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * @generated
    * @ordered
    */
-  protected PrimitiveValue value;
+  protected JsonValueClient value;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected InputValueImpl()
+  protected JsonMemberClientImpl()
   {
     super();
   }
@@ -71,7 +71,7 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.INPUT_VALUE;
+    return AceGenPackage.Literals.JSON_MEMBER_CLIENT;
   }
 
   /**
@@ -80,19 +80,19 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * @generated
    */
   @Override
-  public Input getInput()
+  public ClientAttribute getAttribute()
   {
-    if (input != null && input.eIsProxy())
+    if (attribute != null && attribute.eIsProxy())
     {
-      InternalEObject oldInput = (InternalEObject)input;
-      input = (Input)eResolveProxy(oldInput);
-      if (input != oldInput)
+      InternalEObject oldAttribute = (InternalEObject)attribute;
+      attribute = (ClientAttribute)eResolveProxy(oldAttribute);
+      if (attribute != oldAttribute)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.INPUT_VALUE__INPUT, oldInput, input));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE, oldAttribute, attribute));
       }
     }
-    return input;
+    return attribute;
   }
 
   /**
@@ -100,9 +100,9 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * <!-- end-user-doc -->
    * @generated
    */
-  public Input basicGetInput()
+  public ClientAttribute basicGetAttribute()
   {
-    return input;
+    return attribute;
   }
 
   /**
@@ -111,12 +111,12 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * @generated
    */
   @Override
-  public void setInput(Input newInput)
+  public void setAttribute(ClientAttribute newAttribute)
   {
-    Input oldInput = input;
-    input = newInput;
+    ClientAttribute oldAttribute = attribute;
+    attribute = newAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.INPUT_VALUE__INPUT, oldInput, input));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE, oldAttribute, attribute));
   }
 
   /**
@@ -125,7 +125,7 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * @generated
    */
   @Override
-  public PrimitiveValue getValue()
+  public JsonValueClient getValue()
   {
     return value;
   }
@@ -135,13 +135,13 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(PrimitiveValue newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(JsonValueClient newValue, NotificationChain msgs)
   {
-    PrimitiveValue oldValue = value;
+    JsonValueClient oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.INPUT_VALUE__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER_CLIENT__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -153,20 +153,20 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
    * @generated
    */
   @Override
-  public void setValue(PrimitiveValue newValue)
+  public void setValue(JsonValueClient newValue)
   {
     if (newValue != value)
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.INPUT_VALUE__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.JSON_MEMBER_CLIENT__VALUE, null, msgs);
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.INPUT_VALUE__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.JSON_MEMBER_CLIENT__VALUE, null, msgs);
       msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.INPUT_VALUE__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER_CLIENT__VALUE, newValue, newValue));
   }
 
   /**
@@ -179,7 +179,7 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   {
     switch (featureID)
     {
-      case AceGenPackage.INPUT_VALUE__VALUE:
+      case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
         return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -195,10 +195,10 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   {
     switch (featureID)
     {
-      case AceGenPackage.INPUT_VALUE__INPUT:
-        if (resolve) return getInput();
-        return basicGetInput();
-      case AceGenPackage.INPUT_VALUE__VALUE:
+      case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
+        if (resolve) return getAttribute();
+        return basicGetAttribute();
+      case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
         return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -214,11 +214,11 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   {
     switch (featureID)
     {
-      case AceGenPackage.INPUT_VALUE__INPUT:
-        setInput((Input)newValue);
+      case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
+        setAttribute((ClientAttribute)newValue);
         return;
-      case AceGenPackage.INPUT_VALUE__VALUE:
-        setValue((PrimitiveValue)newValue);
+      case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
+        setValue((JsonValueClient)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -234,11 +234,11 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   {
     switch (featureID)
     {
-      case AceGenPackage.INPUT_VALUE__INPUT:
-        setInput((Input)null);
+      case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
+        setAttribute((ClientAttribute)null);
         return;
-      case AceGenPackage.INPUT_VALUE__VALUE:
-        setValue((PrimitiveValue)null);
+      case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
+        setValue((JsonValueClient)null);
         return;
     }
     super.eUnset(featureID);
@@ -254,12 +254,12 @@ public class InputValueImpl extends MinimalEObjectImpl.Container implements Inpu
   {
     switch (featureID)
     {
-      case AceGenPackage.INPUT_VALUE__INPUT:
-        return input != null;
-      case AceGenPackage.INPUT_VALUE__VALUE:
+      case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
+        return attribute != null;
+      case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
         return value != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //InputValueImpl
+} //JsonMemberClientImpl

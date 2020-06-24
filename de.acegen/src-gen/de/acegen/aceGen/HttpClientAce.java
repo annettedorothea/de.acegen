@@ -89,7 +89,7 @@ public interface HttpClientAce extends EObject
 
   /**
    * Returns the value of the '<em><b>State Elements</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>State Elements</em>' reference list.
@@ -97,7 +97,7 @@ public interface HttpClientAce extends EObject
    * @model
    * @generated
    */
-  EList<Attribute> getStateElements();
+  EList<ClientAttribute> getStateElements();
 
   /**
    * Returns the value of the '<em><b>Server Call</b></em>' reference.
@@ -126,12 +126,12 @@ public interface HttpClientAce extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Loading Flag</em>' reference.
-   * @see #setLoadingFlag(Attribute)
+   * @see #setLoadingFlag(ClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_LoadingFlag()
    * @model
    * @generated
    */
-  Attribute getLoadingFlag();
+  ClientAttribute getLoadingFlag();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.HttpClientAce#getLoadingFlag <em>Loading Flag</em>}' reference.
@@ -141,7 +141,7 @@ public interface HttpClientAce extends EObject
    * @see #getLoadingFlag()
    * @generated
    */
-  void setLoadingFlag(Attribute value);
+  void setLoadingFlag(ClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Outcomes</b></em>' containment reference list.

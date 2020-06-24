@@ -15,14 +15,12 @@
  */
 package de.acegen.templates.es6;
 
-import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.Model;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -2284,7 +2282,7 @@ public class AceTemplate {
     return _builder;
   }
   
-  public String generateAppState(final List<Attribute> attributes, final String prefix) {
+  public String generateAppState(final List<ClientAttribute> attributes, final String prefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -2303,9 +2301,10 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
     {
-      for(final Attribute attribute : attributes) {
-        String _generateAppStateRec = this.generateAppStateRec(attribute, null);
+      for(final ClientAttribute attribute : attributes) {
+        String _generateAppStateRec = this.generateAppStateRec(attribute);
         _builder.append(_generateAppStateRec);
         _builder.newLineIfNotEmpty();
       }
@@ -2313,12 +2312,12 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateAppStateRec(final Attribute it, final EObject parent) {
+  public String generateAppStateRec(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
         _builder.append("export function get_");
-        String _functionName = this._es6Extension.functionName(it, parent);
+        String _functionName = this._es6Extension.functionName(it);
         _builder.append(_functionName);
         _builder.append("() {");
         _builder.newLineIfNotEmpty();
@@ -2338,10 +2337,28 @@ public class AceTemplate {
               _builder.append("\");");
               _builder.newLineIfNotEmpty();
             } else {
+              {
+                List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute : _allParentAttributes) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return undefined;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
               _builder.append("\t");
               _builder.append("return ");
-              String _elementPath = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath, "\t");
+              String _elementPath_1 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_1, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
             }
@@ -2351,7 +2368,7 @@ public class AceTemplate {
         _builder.newLine();
         _builder.newLine();
         _builder.append("export function set_");
-        String _functionName_1 = this._es6Extension.functionName(it, parent);
+        String _functionName_1 = this._es6Extension.functionName(it);
         _builder.append(_functionName_1);
         _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
@@ -2378,18 +2395,18 @@ public class AceTemplate {
               _builder.newLineIfNotEmpty();
             } else {
               {
-                List<Attribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-                for(final Attribute attribute : _allParentAttributes) {
+                List<ClientAttribute> _allParentAttributes_1 = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute_1 : _allParentAttributes_1) {
                   _builder.append("\t");
                   _builder.append("if (!");
-                  String _elementPath_1 = this._es6Extension.elementPath(attribute, parent);
-                  _builder.append(_elementPath_1, "\t");
+                  String _elementPath_2 = this._es6Extension.elementPath(attribute_1);
+                  _builder.append(_elementPath_2, "\t");
                   _builder.append(") {");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
                   _builder.append("\t");
-                  String _elementPath_2 = this._es6Extension.elementPath(attribute, parent);
-                  _builder.append(_elementPath_2, "\t\t");
+                  String _elementPath_3 = this._es6Extension.elementPath(attribute_1);
+                  _builder.append(_elementPath_3, "\t\t");
                   _builder.append(" = {};");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
@@ -2398,8 +2415,8 @@ public class AceTemplate {
                 }
               }
               _builder.append("\t");
-              String _elementPath_3 = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath_3, "\t");
+              String _elementPath_4 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_4, "\t");
               _builder.append(" = eventData.");
               String _name_4 = it.getName();
               _builder.append(_name_4, "\t");
@@ -2412,7 +2429,7 @@ public class AceTemplate {
         _builder.newLine();
         _builder.newLine();
         _builder.append("export function reset_");
-        String _functionName_2 = this._es6Extension.functionName(it, parent);
+        String _functionName_2 = this._es6Extension.functionName(it);
         _builder.append(_functionName_2);
         _builder.append("() {");
         _builder.newLineIfNotEmpty();
@@ -2433,12 +2450,12 @@ public class AceTemplate {
               _builder.newLineIfNotEmpty();
             } else {
               {
-                List<Attribute> _allParentAttributes_1 = this._es6Extension.allParentAttributes(it);
-                for(final Attribute attribute_1 : _allParentAttributes_1) {
+                List<ClientAttribute> _allParentAttributes_2 = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute_2 : _allParentAttributes_2) {
                   _builder.append("\t");
                   _builder.append("if (!");
-                  String _elementPath_4 = this._es6Extension.elementPath(attribute_1, parent);
-                  _builder.append(_elementPath_4, "\t");
+                  String _elementPath_5 = this._es6Extension.elementPath(attribute_2);
+                  _builder.append(_elementPath_5, "\t");
                   _builder.append(") {");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
@@ -2451,8 +2468,8 @@ public class AceTemplate {
                 }
               }
               _builder.append("\t");
-              String _elementPath_5 = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath_5, "\t");
+              String _elementPath_6 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_6, "\t");
               _builder.append(" = undefined;");
               _builder.newLineIfNotEmpty();
             }
@@ -2463,7 +2480,7 @@ public class AceTemplate {
         _builder.newLine();
       } else {
         _builder.append("export function get_");
-        String _functionName_3 = this._es6Extension.functionName(it, parent);
+        String _functionName_3 = this._es6Extension.functionName(it);
         _builder.append(_functionName_3);
         _builder.append("() {");
         _builder.newLineIfNotEmpty();
@@ -2483,10 +2500,28 @@ public class AceTemplate {
               _builder.append("\");");
               _builder.newLineIfNotEmpty();
             } else {
+              {
+                List<ClientAttribute> _allParentAttributes_3 = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute_3 : _allParentAttributes_3) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_7 = this._es6Extension.elementPath(attribute_3);
+                  _builder.append(_elementPath_7, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return undefined;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
               _builder.append("\t");
               _builder.append("return AppUtils.deepCopy(");
-              String _elementPath_6 = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath_6, "\t");
+              String _elementPath_8 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_8, "\t");
               _builder.append(");");
               _builder.newLineIfNotEmpty();
             }
@@ -2496,7 +2531,7 @@ public class AceTemplate {
         _builder.newLine();
         _builder.newLine();
         _builder.append("export function set_");
-        String _functionName_4 = this._es6Extension.functionName(it, parent);
+        String _functionName_4 = this._es6Extension.functionName(it);
         _builder.append(_functionName_4);
         _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
@@ -2523,18 +2558,18 @@ public class AceTemplate {
               _builder.newLineIfNotEmpty();
             } else {
               {
-                List<Attribute> _allParentAttributes_2 = this._es6Extension.allParentAttributes(it);
-                for(final Attribute attribute_2 : _allParentAttributes_2) {
+                List<ClientAttribute> _allParentAttributes_4 = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute_4 : _allParentAttributes_4) {
                   _builder.append("\t");
                   _builder.append("if (!");
-                  String _elementPath_7 = this._es6Extension.elementPath(attribute_2, parent);
-                  _builder.append(_elementPath_7, "\t");
+                  String _elementPath_9 = this._es6Extension.elementPath(attribute_4);
+                  _builder.append(_elementPath_9, "\t");
                   _builder.append(") {");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
                   _builder.append("\t");
-                  String _elementPath_8 = this._es6Extension.elementPath(attribute_2, parent);
-                  _builder.append(_elementPath_8, "\t\t");
+                  String _elementPath_10 = this._es6Extension.elementPath(attribute_4);
+                  _builder.append(_elementPath_10, "\t\t");
                   _builder.append(" = {};");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
@@ -2543,8 +2578,8 @@ public class AceTemplate {
                 }
               }
               _builder.append("\t");
-              String _elementPath_9 = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath_9, "\t");
+              String _elementPath_11 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_11, "\t");
               _builder.append(" = eventData.");
               String _name_10 = it.getName();
               _builder.append(_name_10, "\t");
@@ -2559,23 +2594,23 @@ public class AceTemplate {
         {
           if (((!it.isHash()) && (!it.isStorage()))) {
             _builder.append("export function merge_");
-            String _functionName_5 = this._es6Extension.functionName(it, parent);
+            String _functionName_5 = this._es6Extension.functionName(it);
             _builder.append(_functionName_5);
             _builder.append("(eventData) {");
             _builder.newLineIfNotEmpty();
             {
-              List<Attribute> _allParentAttributes_3 = this._es6Extension.allParentAttributes(it);
-              for(final Attribute attr : _allParentAttributes_3) {
+              List<ClientAttribute> _allParentAttributes_5 = this._es6Extension.allParentAttributes(it);
+              for(final ClientAttribute attr : _allParentAttributes_5) {
                 _builder.append("\t");
                 _builder.append("if (!");
-                String _elementPath_10 = this._es6Extension.elementPath(attr, attr.eContainer());
-                _builder.append(_elementPath_10, "\t");
+                String _elementPath_12 = this._es6Extension.elementPath(attr);
+                _builder.append(_elementPath_12, "\t");
                 _builder.append(") {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
-                String _elementPath_11 = this._es6Extension.elementPath(attr, attr.eContainer());
-                _builder.append(_elementPath_11, "\t\t");
+                String _elementPath_13 = this._es6Extension.elementPath(attr);
+                _builder.append(_elementPath_13, "\t\t");
                 _builder.append(" = {};");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
@@ -2585,33 +2620,33 @@ public class AceTemplate {
             }
             _builder.append("\t");
             _builder.append("if (!");
-            String _elementPath_12 = this._es6Extension.elementPath(it, it.eContainer());
-            _builder.append(_elementPath_12, "\t");
+            String _elementPath_14 = this._es6Extension.elementPath(it);
+            _builder.append(_elementPath_14, "\t");
             _builder.append(") {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            String _elementPath_13 = this._es6Extension.elementPath(it, it.eContainer());
-            _builder.append(_elementPath_13, "\t\t");
+            String _elementPath_15 = this._es6Extension.elementPath(it);
+            _builder.append(_elementPath_15, "\t\t");
             _builder.append(" = {};");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("}");
             _builder.newLine();
             {
-              EList<Attribute> _attributes = it.getAttributes();
-              for(final Attribute attribute_3 : _attributes) {
+              EList<ClientAttribute> _attributes = it.getAttributes();
+              for(final ClientAttribute attribute_5 : _attributes) {
                 _builder.append("\t");
                 _builder.append("if (eventData.");
-                String _name_11 = attribute_3.getName();
+                String _name_11 = attribute_5.getName();
                 _builder.append(_name_11, "\t");
                 _builder.append(" !== undefined) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
-                String _elementPath_14 = this._es6Extension.elementPath(attribute_3, it);
-                _builder.append(_elementPath_14, "\t\t");
+                String _elementPath_16 = this._es6Extension.elementPath(attribute_5);
+                _builder.append(_elementPath_16, "\t\t");
                 _builder.append(" = eventData.");
-                String _name_12 = attribute_3.getName();
+                String _name_12 = attribute_5.getName();
                 _builder.append(_name_12, "\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
@@ -2620,42 +2655,13 @@ public class AceTemplate {
                 _builder.newLine();
               }
             }
-            {
-              Model _model = it.getModel();
-              boolean _tripleNotEquals = (_model != null);
-              if (_tripleNotEquals) {
-                {
-                  EList<Attribute> _attributes_1 = it.getModel().getAttributes();
-                  for(final Attribute attribute_4 : _attributes_1) {
-                    _builder.append("\t");
-                    _builder.append("if (eventData.");
-                    String _name_13 = attribute_4.getName();
-                    _builder.append(_name_13, "\t");
-                    _builder.append(" !== undefined) {");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("\t");
-                    String _elementPath_15 = this._es6Extension.elementPath(attribute_4, parent);
-                    _builder.append(_elementPath_15, "\t\t");
-                    _builder.append(" = eventData.");
-                    String _name_14 = attribute_4.getName();
-                    _builder.append(_name_14, "\t\t");
-                    _builder.append(";");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("}");
-                    _builder.newLine();
-                  }
-                }
-              }
-            }
             _builder.append("}");
             _builder.newLine();
           }
         }
         _builder.newLine();
         _builder.append("export function reset_");
-        String _functionName_6 = this._es6Extension.functionName(it, parent);
+        String _functionName_6 = this._es6Extension.functionName(it);
         _builder.append(_functionName_6);
         _builder.append("() {");
         _builder.newLineIfNotEmpty();
@@ -2670,18 +2676,18 @@ public class AceTemplate {
             if (_isStorage_5) {
               _builder.append("\t");
               _builder.append("localStorage.removeItem(\"");
-              String _name_15 = it.getName();
-              _builder.append(_name_15, "\t");
+              String _name_13 = it.getName();
+              _builder.append(_name_13, "\t");
               _builder.append("\");");
               _builder.newLineIfNotEmpty();
             } else {
               {
-                List<Attribute> _allParentAttributes_4 = this._es6Extension.allParentAttributes(it);
-                for(final Attribute attribute_5 : _allParentAttributes_4) {
+                List<ClientAttribute> _allParentAttributes_6 = this._es6Extension.allParentAttributes(it);
+                for(final ClientAttribute attribute_6 : _allParentAttributes_6) {
                   _builder.append("\t");
                   _builder.append("if (!");
-                  String _elementPath_16 = this._es6Extension.elementPath(attribute_5, parent);
-                  _builder.append(_elementPath_16, "\t");
+                  String _elementPath_17 = this._es6Extension.elementPath(attribute_6);
+                  _builder.append(_elementPath_17, "\t");
                   _builder.append(") {");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
@@ -2694,8 +2700,8 @@ public class AceTemplate {
                 }
               }
               _builder.append("\t");
-              String _elementPath_17 = this._es6Extension.elementPath(it, parent);
-              _builder.append(_elementPath_17, "\t");
+              String _elementPath_18 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_18, "\t");
               _builder.append(" = undefined;");
               _builder.newLineIfNotEmpty();
             }
@@ -2707,25 +2713,11 @@ public class AceTemplate {
         {
           if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
             {
-              EList<Attribute> _attributes_2 = it.getAttributes();
-              for(final Attribute attribute_6 : _attributes_2) {
-                String _generateAppStateRec = this.generateAppStateRec(attribute_6, it);
+              EList<ClientAttribute> _attributes_1 = it.getAttributes();
+              for(final ClientAttribute attribute_7 : _attributes_1) {
+                String _generateAppStateRec = this.generateAppStateRec(attribute_7);
                 _builder.append(_generateAppStateRec);
                 _builder.newLineIfNotEmpty();
-              }
-            }
-            {
-              Model _model_1 = it.getModel();
-              boolean _tripleNotEquals_1 = (_model_1 != null);
-              if (_tripleNotEquals_1) {
-                {
-                  EList<Attribute> _attributes_3 = it.getModel().getAttributes();
-                  for(final Attribute attribute_7 : _attributes_3) {
-                    String _generateAppStateRec_1 = this.generateAppStateRec(attribute_7, it);
-                    _builder.append(_generateAppStateRec_1);
-                    _builder.newLineIfNotEmpty();
-                  }
-                }
               }
             }
           }

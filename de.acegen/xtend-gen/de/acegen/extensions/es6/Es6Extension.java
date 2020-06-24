@@ -15,7 +15,7 @@
  */
 package de.acegen.extensions.es6;
 
-import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
 import java.util.ArrayList;
@@ -46,21 +46,22 @@ public class Es6Extension {
     String _stateFunctionType = it.getStateFunctionType();
     _builder.append(_stateFunctionType);
     _builder.append("_");
-    String _functionName = this.functionName(it.getStateElement(), it.getStateElement().eContainer());
+    String _functionName = this.functionName(it.getStateElement());
     _builder.append(_functionName);
     return _builder.toString();
   }
   
-  public String functionName(final Attribute it, final EObject parent) {
+  public String functionName(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _functionNameRec = this.functionNameRec(it, parent, "");
+    String _functionNameRec = this.functionNameRec(it, "");
     _builder.append(_functionNameRec);
     return _builder.toString();
   }
   
-  public String functionNameRec(final Attribute it, final EObject parent, final String suffix) {
-    if (((parent != null) && (parent instanceof Attribute))) {
-      String _functionNameRec = this.functionNameRec(((Attribute) parent), parent.eContainer(), it.getName());
+  public String functionNameRec(final ClientAttribute it, final String suffix) {
+    if (((it.eContainer() != null) && (it.eContainer() instanceof ClientAttribute))) {
+      EObject _eContainer = it.eContainer();
+      String _functionNameRec = this.functionNameRec(((ClientAttribute) _eContainer), it.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -86,17 +87,18 @@ public class Es6Extension {
     }
   }
   
-  public String elementPath(final Attribute it, final EObject parent) {
+  public String elementPath(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("appState.");
-    String _elementPathRec = this.elementPathRec(it, parent, "");
+    String _elementPathRec = this.elementPathRec(it, "");
     _builder.append(_elementPathRec);
     return _builder.toString();
   }
   
-  public String elementPathRec(final Attribute it, final EObject parent, final String suffix) {
-    if (((parent != null) && (parent instanceof Attribute))) {
-      String _elementPathRec = this.elementPathRec(((Attribute) parent), parent.eContainer(), it.getName());
+  public String elementPathRec(final ClientAttribute it, final String suffix) {
+    if (((it.eContainer() != null) && (it.eContainer() instanceof ClientAttribute))) {
+      EObject _eContainer = it.eContainer();
+      String _elementPathRec = this.elementPathRec(((ClientAttribute) _eContainer), it.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -122,13 +124,13 @@ public class Es6Extension {
     }
   }
   
-  public List<Attribute> allParentAttributes(final Attribute it) {
-    ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+  public List<ClientAttribute> allParentAttributes(final ClientAttribute it) {
+    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
     EObject parent = it.eContainer();
-    while ((parent instanceof Attribute)) {
+    while ((parent instanceof ClientAttribute)) {
       {
-        attributes.add(0, ((Attribute) parent));
-        parent = ((Attribute)parent).eContainer();
+        attributes.add(0, ((ClientAttribute) parent));
+        parent = ((ClientAttribute)parent).eContainer();
       }
     }
     return attributes;

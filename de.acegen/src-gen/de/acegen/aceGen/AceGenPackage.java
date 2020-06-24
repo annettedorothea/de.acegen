@@ -352,6 +352,97 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_STATE_FUNCTION_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ClientAttributeImpl <em>Client Attribute</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ClientAttributeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientAttribute()
+   * @generated
+   */
+  int CLIENT_ATTRIBUTE = 6;
+
+  /**
+   * The feature id for the '<em><b>Not Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__NOT_NULL = 0;
+
+  /**
+   * The feature id for the '<em><b>List</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__LIST = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__TYPE = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__NAME = 3;
+
+  /**
+   * The feature id for the '<em><b>Model</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__MODEL = 4;
+
+  /**
+   * The feature id for the '<em><b>Hash</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__HASH = 5;
+
+  /**
+   * The feature id for the '<em><b>Storage</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__STORAGE = 6;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__ATTRIBUTES = 7;
+
+  /**
+   * The number of structural features of the '<em>Client Attribute</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 8;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ClientScenarioImpl <em>Client Scenario</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -359,7 +450,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientScenario()
    * @generated
    */
-  int CLIENT_SCENARIO = 6;
+  int CLIENT_SCENARIO = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -414,7 +505,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientWhenBlock()
    * @generated
    */
-  int CLIENT_WHEN_BLOCK = 7;
+  int CLIENT_WHEN_BLOCK = 8;
 
   /**
    * The feature id for the '<em><b>Action</b></em>' reference.
@@ -469,7 +560,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getInputValue()
    * @generated
    */
-  int INPUT_VALUE = 8;
+  int INPUT_VALUE = 9;
 
   /**
    * The feature id for the '<em><b>Input</b></em>' reference.
@@ -506,7 +597,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientThenBlock()
    * @generated
    */
-  int CLIENT_THEN_BLOCK = 9;
+  int CLIENT_THEN_BLOCK = 10;
 
   /**
    * The feature id for the '<em><b>Server Call</b></em>' containment reference.
@@ -552,7 +643,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getServerCall()
    * @generated
    */
-  int SERVER_CALL = 10;
+  int SERVER_CALL = 11;
 
   /**
    * The feature id for the '<em><b>Json Object</b></em>' containment reference.
@@ -580,7 +671,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getTriggeredAction()
    * @generated
    */
-  int TRIGGERED_ACTION = 11;
+  int TRIGGERED_ACTION = 12;
 
   /**
    * The feature id for the '<em><b>Http Client Ace</b></em>' reference.
@@ -617,7 +708,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStateVerification()
    * @generated
    */
-  int STATE_VERIFICATION = 12;
+  int STATE_VERIFICATION = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -656,6 +747,118 @@ public interface AceGenPackage extends EPackage
   int STATE_VERIFICATION_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueClientImpl <em>Json Value Client</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonValueClientImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValueClient()
+   * @generated
+   */
+  int JSON_VALUE_CLIENT = 16;
+
+  /**
+   * The number of structural features of the '<em>Json Value Client</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_VALUE_CLIENT_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonObjectClientImpl <em>Json Object Client</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonObjectClientImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectClient()
+   * @generated
+   */
+  int JSON_OBJECT_CLIENT = 14;
+
+  /**
+   * The feature id for the '<em><b>Members</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_OBJECT_CLIENT__MEMBERS = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Json Object Client</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_OBJECT_CLIENT_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonMemberClientImpl <em>Json Member Client</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonMemberClientImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMemberClient()
+   * @generated
+   */
+  int JSON_MEMBER_CLIENT = 15;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER_CLIENT__ATTRIBUTE = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER_CLIENT__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Json Member Client</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_MEMBER_CLIENT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonArrayClientImpl <em>Json Array Client</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonArrayClientImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArrayClient()
+   * @generated
+   */
+  int JSON_ARRAY_CLIENT = 17;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY_CLIENT__VALUES = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Json Array Client</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_ARRAY_CLIENT_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerImpl <em>Http Server</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -663,7 +866,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServer()
    * @generated
    */
-  int HTTP_SERVER = 13;
+  int HTTP_SERVER = 18;
 
   /**
    * The feature id for the '<em><b>Language</b></em>' attribute.
@@ -781,7 +984,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAce()
    * @generated
    */
-  int HTTP_SERVER_ACE = 14;
+  int HTTP_SERVER_ACE = 19;
 
   /**
    * The feature id for the '<em><b>Proxy</b></em>' attribute.
@@ -881,7 +1084,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAceWrite()
    * @generated
    */
-  int HTTP_SERVER_ACE_WRITE = 15;
+  int HTTP_SERVER_ACE_WRITE = 20;
 
   /**
    * The feature id for the '<em><b>Proxy</b></em>' attribute.
@@ -990,7 +1193,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerOutcome()
    * @generated
    */
-  int HTTP_SERVER_OUTCOME = 16;
+  int HTTP_SERVER_OUTCOME = 21;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1027,7 +1230,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAceRead()
    * @generated
    */
-  int HTTP_SERVER_ACE_READ = 17;
+  int HTTP_SERVER_ACE_READ = 22;
 
   /**
    * The feature id for the '<em><b>Proxy</b></em>' attribute.
@@ -1136,7 +1339,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeParamRef()
    * @generated
    */
-  int ATTRIBUTE_PARAM_REF = 18;
+  int ATTRIBUTE_PARAM_REF = 23;
 
   /**
    * The feature id for the '<em><b>Not Null</b></em>' attribute.
@@ -1173,7 +1376,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerView()
    * @generated
    */
-  int HTTP_SERVER_VIEW = 19;
+  int HTTP_SERVER_VIEW = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1210,7 +1413,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerViewFunction()
    * @generated
    */
-  int HTTP_SERVER_VIEW_FUNCTION = 20;
+  int HTTP_SERVER_VIEW_FUNCTION = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1247,7 +1450,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthUser()
    * @generated
    */
-  int AUTH_USER = 21;
+  int AUTH_USER = 26;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1284,7 +1487,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 22;
+  int MODEL = 27;
 
   /**
    * The feature id for the '<em><b>Persistent</b></em>' attribute.
@@ -1339,7 +1542,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenario()
    * @generated
    */
-  int SCENARIO = 23;
+  int SCENARIO = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1394,7 +1597,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGivenRef()
    * @generated
    */
-  int GIVEN_REF = 24;
+  int GIVEN_REF = 29;
 
   /**
    * The feature id for the '<em><b>Scenario</b></em>' reference.
@@ -1440,7 +1643,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getWhenBlock()
    * @generated
    */
-  int WHEN_BLOCK = 25;
+  int WHEN_BLOCK = 30;
 
   /**
    * The feature id for the '<em><b>Action</b></em>' reference.
@@ -1486,7 +1689,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getThenBlock()
    * @generated
    */
-  int THEN_BLOCK = 26;
+  int THEN_BLOCK = 31;
 
   /**
    * The feature id for the '<em><b>Status Code</b></em>' attribute.
@@ -1541,7 +1744,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerification()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION = 27;
+  int PERSISTENCE_VERIFICATION = 32;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1587,7 +1790,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerificationExpression()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION_EXPRESSION = 28;
+  int PERSISTENCE_VERIFICATION_EXPRESSION = 33;
 
   /**
    * The number of structural features of the '<em>Persistence Verification Expression</em>' class.
@@ -1606,7 +1809,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByPrimaryKeys()
    * @generated
    */
-  int SELECT_BY_PRIMARY_KEYS = 29;
+  int SELECT_BY_PRIMARY_KEYS = 34;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -1643,7 +1846,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByUniqueAttribute()
    * @generated
    */
-  int SELECT_BY_UNIQUE_ATTRIBUTE = 30;
+  int SELECT_BY_UNIQUE_ATTRIBUTE = 35;
 
   /**
    * The feature id for the '<em><b>Attribute And Value</b></em>' containment reference.
@@ -1680,7 +1883,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCount()
    * @generated
    */
-  int COUNT = 31;
+  int COUNT = 36;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -1717,7 +1920,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeAndValue()
    * @generated
    */
-  int ATTRIBUTE_AND_VALUE = 32;
+  int ATTRIBUTE_AND_VALUE = 37;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -1754,7 +1957,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
    * @generated
    */
-  int VERIFICATION = 33;
+  int VERIFICATION = 38;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1782,7 +1985,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
    * @generated
    */
-  int SELECT_BY_EXPECTATION = 34;
+  int SELECT_BY_EXPECTATION = 39;
 
   /**
    * The feature id for the '<em><b>Object</b></em>' containment reference.
@@ -1828,7 +2031,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 35;
+  int DATA_DEFINITION = 40;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -1883,7 +2086,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 36;
+  int AUTHORIZATION = 41;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -1920,7 +2123,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 37;
+  int ATTRIBUTE = 42;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -2004,95 +2207,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__NOT_REPLAYABLE = 8;
 
   /**
-   * The feature id for the '<em><b>Hash</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE__HASH = 9;
-
-  /**
-   * The feature id for the '<em><b>Storage</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE__STORAGE = 10;
-
-  /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE__ATTRIBUTES = 11;
-
-  /**
    * The number of structural features of the '<em>Attribute</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_FEATURE_COUNT = 12;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.JsonValueImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
-   * @generated
-   */
-  int JSON_VALUE = 41;
-
-  /**
-   * The feature id for the '<em><b>String</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_VALUE__STRING = 0;
-
-  /**
-   * The feature id for the '<em><b>Boolean</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_VALUE__BOOLEAN = 1;
-
-  /**
-   * The feature id for the '<em><b>Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_VALUE__NULL = 2;
-
-  /**
-   * The feature id for the '<em><b>Long</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_VALUE__LONG = 3;
-
-  /**
-   * The number of structural features of the '<em>Json Value</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_VALUE_FEATURE_COUNT = 4;
+  int ATTRIBUTE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
@@ -2102,43 +2223,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 38;
-
-  /**
-   * The feature id for the '<em><b>String</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__STRING = JSON_VALUE__STRING;
-
-  /**
-   * The feature id for the '<em><b>Boolean</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__BOOLEAN = JSON_VALUE__BOOLEAN;
-
-  /**
-   * The feature id for the '<em><b>Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__NULL = JSON_VALUE__NULL;
-
-  /**
-   * The feature id for the '<em><b>Long</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__LONG = JSON_VALUE__LONG;
+  int JSON_DATE_TIME = 43;
 
   /**
    * The feature id for the '<em><b>Date Time</b></em>' attribute.
@@ -2147,7 +2232,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JSON_DATE_TIME__DATE_TIME = JSON_VALUE_FEATURE_COUNT + 0;
+  int JSON_DATE_TIME__DATE_TIME = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' attribute.
@@ -2156,7 +2241,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JSON_DATE_TIME__PATTERN = JSON_VALUE_FEATURE_COUNT + 1;
+  int JSON_DATE_TIME__PATTERN = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Json Date Time</em>' class.
@@ -2165,7 +2250,26 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JSON_DATE_TIME_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 2;
+  int JSON_DATE_TIME_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
+   * @generated
+   */
+  int JSON_VALUE = 46;
+
+  /**
+   * The number of structural features of the '<em>Json Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_VALUE_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.
@@ -2175,43 +2279,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 39;
-
-  /**
-   * The feature id for the '<em><b>String</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_OBJECT__STRING = JSON_VALUE__STRING;
-
-  /**
-   * The feature id for the '<em><b>Boolean</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_OBJECT__BOOLEAN = JSON_VALUE__BOOLEAN;
-
-  /**
-   * The feature id for the '<em><b>Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_OBJECT__NULL = JSON_VALUE__NULL;
-
-  /**
-   * The feature id for the '<em><b>Long</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_OBJECT__LONG = JSON_VALUE__LONG;
+  int JSON_OBJECT = 44;
 
   /**
    * The feature id for the '<em><b>Members</b></em>' containment reference list.
@@ -2239,7 +2307,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 40;
+  int JSON_MEMBER = 45;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2276,43 +2344,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 42;
-
-  /**
-   * The feature id for the '<em><b>String</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_ARRAY__STRING = JSON_VALUE__STRING;
-
-  /**
-   * The feature id for the '<em><b>Boolean</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_ARRAY__BOOLEAN = JSON_VALUE__BOOLEAN;
-
-  /**
-   * The feature id for the '<em><b>Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_ARRAY__NULL = JSON_VALUE__NULL;
-
-  /**
-   * The feature id for the '<em><b>Long</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_ARRAY__LONG = JSON_VALUE__LONG;
+  int JSON_ARRAY = 47;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -2333,6 +2365,118 @@ public interface AceGenPackage extends EPackage
   int JSON_ARRAY_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.StringTypeImpl <em>String Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.StringTypeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
+   * @generated
+   */
+  int STRING_TYPE = 48;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_TYPE__STRING = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>String Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.BooleanTypeImpl <em>Boolean Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.BooleanTypeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
+   * @generated
+   */
+  int BOOLEAN_TYPE = 49;
+
+  /**
+   * The feature id for the '<em><b>Boolean</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_TYPE__BOOLEAN = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Boolean Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.NullTypeImpl <em>Null Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.NullTypeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
+   * @generated
+   */
+  int NULL_TYPE = 50;
+
+  /**
+   * The feature id for the '<em><b>Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NULL_TYPE__NULL = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Null Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NULL_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.LongTypeImpl <em>Long Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.LongTypeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
+   * @generated
+   */
+  int LONG_TYPE = 51;
+
+  /**
+   * The feature id for the '<em><b>Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LONG_TYPE__LONG = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Long Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LONG_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2340,7 +2484,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 43;
+  int PRIMITIVE_VALUE = 52;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2651,6 +2795,104 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClientStateFunction_StateElement();
 
   /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.ClientAttribute <em>Client Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Client Attribute</em>'.
+   * @see de.acegen.aceGen.ClientAttribute
+   * @generated
+   */
+  EClass getClientAttribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isNotNull <em>Not Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Not Null</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isNotNull()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_NotNull();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>List</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isList()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_List();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getType()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getName()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.ClientAttribute#getModel <em>Model</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Model</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getModel()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EReference getClientAttribute_Model();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isHash <em>Hash</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Hash</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isHash()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Hash();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Storage</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isStorage()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Storage();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Attributes</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getAttributes()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EReference getClientAttribute_Attributes();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.ClientScenario <em>Client Scenario</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2928,6 +3170,90 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getStateVerification_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonObjectClient <em>Json Object Client</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Object Client</em>'.
+   * @see de.acegen.aceGen.JsonObjectClient
+   * @generated
+   */
+  EClass getJsonObjectClient();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonObjectClient#getMembers <em>Members</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Members</em>'.
+   * @see de.acegen.aceGen.JsonObjectClient#getMembers()
+   * @see #getJsonObjectClient()
+   * @generated
+   */
+  EReference getJsonObjectClient_Members();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonMemberClient <em>Json Member Client</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Member Client</em>'.
+   * @see de.acegen.aceGen.JsonMemberClient
+   * @generated
+   */
+  EClass getJsonMemberClient();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.JsonMemberClient#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Attribute</em>'.
+   * @see de.acegen.aceGen.JsonMemberClient#getAttribute()
+   * @see #getJsonMemberClient()
+   * @generated
+   */
+  EReference getJsonMemberClient_Attribute();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.JsonMemberClient#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.acegen.aceGen.JsonMemberClient#getValue()
+   * @see #getJsonMemberClient()
+   * @generated
+   */
+  EReference getJsonMemberClient_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonValueClient <em>Json Value Client</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Value Client</em>'.
+   * @see de.acegen.aceGen.JsonValueClient
+   * @generated
+   */
+  EClass getJsonValueClient();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonArrayClient <em>Json Array Client</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Array Client</em>'.
+   * @see de.acegen.aceGen.JsonArrayClient
+   * @generated
+   */
+  EClass getJsonArrayClient();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonArrayClient#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Values</em>'.
+   * @see de.acegen.aceGen.JsonArrayClient#getValues()
+   * @see #getJsonArrayClient()
+   * @generated
+   */
+  EReference getJsonArrayClient_Values();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServer <em>Http Server</em>}'.
@@ -4060,39 +4386,6 @@ public interface AceGenPackage extends EPackage
   EAttribute getAttribute_NotReplayable();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isHash <em>Hash</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Hash</em>'.
-   * @see de.acegen.aceGen.Attribute#isHash()
-   * @see #getAttribute()
-   * @generated
-   */
-  EAttribute getAttribute_Hash();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isStorage <em>Storage</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Storage</em>'.
-   * @see de.acegen.aceGen.Attribute#isStorage()
-   * @see #getAttribute()
-   * @generated
-   */
-  EAttribute getAttribute_Storage();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Attribute#getAttributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attributes</em>'.
-   * @see de.acegen.aceGen.Attribute#getAttributes()
-   * @see #getAttribute()
-   * @generated
-   */
-  EReference getAttribute_Attributes();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4188,50 +4481,6 @@ public interface AceGenPackage extends EPackage
   EClass getJsonValue();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getString <em>String</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>String</em>'.
-   * @see de.acegen.aceGen.JsonValue#getString()
-   * @see #getJsonValue()
-   * @generated
-   */
-  EAttribute getJsonValue_String();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getBoolean <em>Boolean</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Boolean</em>'.
-   * @see de.acegen.aceGen.JsonValue#getBoolean()
-   * @see #getJsonValue()
-   * @generated
-   */
-  EAttribute getJsonValue_Boolean();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getNull <em>Null</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Null</em>'.
-   * @see de.acegen.aceGen.JsonValue#getNull()
-   * @see #getJsonValue()
-   * @generated
-   */
-  EAttribute getJsonValue_Null();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonValue#getLong <em>Long</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Long</em>'.
-   * @see de.acegen.aceGen.JsonValue#getLong()
-   * @see #getJsonValue()
-   * @generated
-   */
-  EAttribute getJsonValue_Long();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonArray <em>Json Array</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4251,6 +4500,90 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getJsonArray_Values();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.StringType <em>String Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>String Type</em>'.
+   * @see de.acegen.aceGen.StringType
+   * @generated
+   */
+  EClass getStringType();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.StringType#getString <em>String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String</em>'.
+   * @see de.acegen.aceGen.StringType#getString()
+   * @see #getStringType()
+   * @generated
+   */
+  EAttribute getStringType_String();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.BooleanType <em>Boolean Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Boolean Type</em>'.
+   * @see de.acegen.aceGen.BooleanType
+   * @generated
+   */
+  EClass getBooleanType();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.BooleanType#getBoolean <em>Boolean</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Boolean</em>'.
+   * @see de.acegen.aceGen.BooleanType#getBoolean()
+   * @see #getBooleanType()
+   * @generated
+   */
+  EAttribute getBooleanType_Boolean();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.NullType <em>Null Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Null Type</em>'.
+   * @see de.acegen.aceGen.NullType
+   * @generated
+   */
+  EClass getNullType();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NullType#getNull <em>Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Null</em>'.
+   * @see de.acegen.aceGen.NullType#getNull()
+   * @see #getNullType()
+   * @generated
+   */
+  EAttribute getNullType_Null();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.LongType <em>Long Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Long Type</em>'.
+   * @see de.acegen.aceGen.LongType
+   * @generated
+   */
+  EClass getLongType();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.LongType#getLong <em>Long</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Long</em>'.
+   * @see de.acegen.aceGen.LongType#getLong()
+   * @see #getLongType()
+   * @generated
+   */
+  EAttribute getLongType_Long();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.PrimitiveValue <em>Primitive Value</em>}'.
@@ -4528,6 +4861,80 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT = eINSTANCE.getHttpClientStateFunction_StateElement();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ClientAttributeImpl <em>Client Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ClientAttributeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientAttribute()
+     * @generated
+     */
+    EClass CLIENT_ATTRIBUTE = eINSTANCE.getClientAttribute();
+
+    /**
+     * The meta object literal for the '<em><b>Not Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__NOT_NULL = eINSTANCE.getClientAttribute_NotNull();
+
+    /**
+     * The meta object literal for the '<em><b>List</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__LIST = eINSTANCE.getClientAttribute_List();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__TYPE = eINSTANCE.getClientAttribute_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__NAME = eINSTANCE.getClientAttribute_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Model</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLIENT_ATTRIBUTE__MODEL = eINSTANCE.getClientAttribute_Model();
+
+    /**
+     * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__HASH = eINSTANCE.getClientAttribute_Hash();
+
+    /**
+     * The meta object literal for the '<em><b>Storage</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__STORAGE = eINSTANCE.getClientAttribute_Storage();
+
+    /**
+     * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLIENT_ATTRIBUTE__ATTRIBUTES = eINSTANCE.getClientAttribute_Attributes();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.ClientScenarioImpl <em>Client Scenario</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4748,6 +5155,78 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference STATE_VERIFICATION__VALUE = eINSTANCE.getStateVerification_Value();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectClientImpl <em>Json Object Client</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonObjectClientImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectClient()
+     * @generated
+     */
+    EClass JSON_OBJECT_CLIENT = eINSTANCE.getJsonObjectClient();
+
+    /**
+     * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JSON_OBJECT_CLIENT__MEMBERS = eINSTANCE.getJsonObjectClient_Members();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonMemberClientImpl <em>Json Member Client</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonMemberClientImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMemberClient()
+     * @generated
+     */
+    EClass JSON_MEMBER_CLIENT = eINSTANCE.getJsonMemberClient();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JSON_MEMBER_CLIENT__ATTRIBUTE = eINSTANCE.getJsonMemberClient_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JSON_MEMBER_CLIENT__VALUE = eINSTANCE.getJsonMemberClient_Value();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonValueClientImpl <em>Json Value Client</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonValueClientImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValueClient()
+     * @generated
+     */
+    EClass JSON_VALUE_CLIENT = eINSTANCE.getJsonValueClient();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonArrayClientImpl <em>Json Array Client</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonArrayClientImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArrayClient()
+     * @generated
+     */
+    EClass JSON_ARRAY_CLIENT = eINSTANCE.getJsonArrayClient();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JSON_ARRAY_CLIENT__VALUES = eINSTANCE.getJsonArrayClient_Values();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerImpl <em>Http Server</em>}' class.
@@ -5640,30 +6119,6 @@ public interface AceGenPackage extends EPackage
     EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
 
     /**
-     * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ATTRIBUTE__HASH = eINSTANCE.getAttribute_Hash();
-
-    /**
-     * The meta object literal for the '<em><b>Storage</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ATTRIBUTE__STORAGE = eINSTANCE.getAttribute_Storage();
-
-    /**
-     * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ATTRIBUTE__ATTRIBUTES = eINSTANCE.getAttribute_Attributes();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5744,38 +6199,6 @@ public interface AceGenPackage extends EPackage
     EClass JSON_VALUE = eINSTANCE.getJsonValue();
 
     /**
-     * The meta object literal for the '<em><b>String</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_VALUE__STRING = eINSTANCE.getJsonValue_String();
-
-    /**
-     * The meta object literal for the '<em><b>Boolean</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_VALUE__BOOLEAN = eINSTANCE.getJsonValue_Boolean();
-
-    /**
-     * The meta object literal for the '<em><b>Null</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_VALUE__NULL = eINSTANCE.getJsonValue_Null();
-
-    /**
-     * The meta object literal for the '<em><b>Long</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_VALUE__LONG = eINSTANCE.getJsonValue_Long();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonArrayImpl <em>Json Array</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5792,6 +6215,78 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference JSON_ARRAY__VALUES = eINSTANCE.getJsonArray_Values();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.StringTypeImpl <em>String Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.StringTypeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
+     * @generated
+     */
+    EClass STRING_TYPE = eINSTANCE.getStringType();
+
+    /**
+     * The meta object literal for the '<em><b>String</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STRING_TYPE__STRING = eINSTANCE.getStringType_String();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.BooleanTypeImpl <em>Boolean Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.BooleanTypeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
+     * @generated
+     */
+    EClass BOOLEAN_TYPE = eINSTANCE.getBooleanType();
+
+    /**
+     * The meta object literal for the '<em><b>Boolean</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOLEAN_TYPE__BOOLEAN = eINSTANCE.getBooleanType_Boolean();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.NullTypeImpl <em>Null Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.NullTypeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
+     * @generated
+     */
+    EClass NULL_TYPE = eINSTANCE.getNullType();
+
+    /**
+     * The meta object literal for the '<em><b>Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute NULL_TYPE__NULL = eINSTANCE.getNullType_Null();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.LongTypeImpl <em>Long Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.LongTypeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
+     * @generated
+     */
+    EClass LONG_TYPE = eINSTANCE.getLongType();
+
+    /**
+     * The meta object literal for the '<em><b>Long</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LONG_TYPE__LONG = eINSTANCE.getLongType_Long();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.

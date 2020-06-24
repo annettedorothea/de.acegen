@@ -62,11 +62,11 @@ class ActionTemplate {
 		
 			«IF getLoadingFlag !== null»
 				preCall() {
-					AppState.set_«getLoadingFlag.functionName(loadingFlag.eContainer)»({«getLoadingFlag.getName»: true});
+					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: true});
 				}
 				
 				postCall() {
-					AppState.set_«getLoadingFlag.functionName(loadingFlag.eContainer)»({«getLoadingFlag.getName»: false});
+					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: false});
 				}
 			«ENDIF»
 		

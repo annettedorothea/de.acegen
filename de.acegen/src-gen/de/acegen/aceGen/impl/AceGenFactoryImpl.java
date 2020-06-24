@@ -71,6 +71,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.INPUT: return createInput();
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
+      case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
@@ -78,6 +79,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.SERVER_CALL: return createServerCall();
       case AceGenPackage.TRIGGERED_ACTION: return createTriggeredAction();
       case AceGenPackage.STATE_VERIFICATION: return createStateVerification();
+      case AceGenPackage.JSON_OBJECT_CLIENT: return createJsonObjectClient();
+      case AceGenPackage.JSON_MEMBER_CLIENT: return createJsonMemberClient();
+      case AceGenPackage.JSON_VALUE_CLIENT: return createJsonValueClient();
+      case AceGenPackage.JSON_ARRAY_CLIENT: return createJsonArrayClient();
       case AceGenPackage.HTTP_SERVER: return createHttpServer();
       case AceGenPackage.HTTP_SERVER_ACE: return createHttpServerAce();
       case AceGenPackage.HTTP_SERVER_ACE_WRITE: return createHttpServerAceWrite();
@@ -108,6 +113,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.JSON_MEMBER: return createJsonMember();
       case AceGenPackage.JSON_VALUE: return createJsonValue();
       case AceGenPackage.JSON_ARRAY: return createJsonArray();
+      case AceGenPackage.STRING_TYPE: return createStringType();
+      case AceGenPackage.BOOLEAN_TYPE: return createBooleanType();
+      case AceGenPackage.NULL_TYPE: return createNullType();
+      case AceGenPackage.LONG_TYPE: return createLongType();
       case AceGenPackage.PRIMITIVE_VALUE: return createPrimitiveValue();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -192,6 +201,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public ClientAttribute createClientAttribute()
+  {
+    ClientAttributeImpl clientAttribute = new ClientAttributeImpl();
+    return clientAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public ClientScenario createClientScenario()
   {
     ClientScenarioImpl clientScenario = new ClientScenarioImpl();
@@ -268,6 +289,54 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     StateVerificationImpl stateVerification = new StateVerificationImpl();
     return stateVerification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonObjectClient createJsonObjectClient()
+  {
+    JsonObjectClientImpl jsonObjectClient = new JsonObjectClientImpl();
+    return jsonObjectClient;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonMemberClient createJsonMemberClient()
+  {
+    JsonMemberClientImpl jsonMemberClient = new JsonMemberClientImpl();
+    return jsonMemberClient;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonValueClient createJsonValueClient()
+  {
+    JsonValueClientImpl jsonValueClient = new JsonValueClientImpl();
+    return jsonValueClient;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonArrayClient createJsonArrayClient()
+  {
+    JsonArrayClientImpl jsonArrayClient = new JsonArrayClientImpl();
+    return jsonArrayClient;
   }
 
   /**
@@ -628,6 +697,54 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     JsonArrayImpl jsonArray = new JsonArrayImpl();
     return jsonArray;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public StringType createStringType()
+  {
+    StringTypeImpl stringType = new StringTypeImpl();
+    return stringType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BooleanType createBooleanType()
+  {
+    BooleanTypeImpl booleanType = new BooleanTypeImpl();
+    return booleanType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NullType createNullType()
+  {
+    NullTypeImpl nullType = new NullTypeImpl();
+    return nullType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public LongType createLongType()
+  {
+    LongTypeImpl longType = new LongTypeImpl();
+    return longType;
   }
 
   /**

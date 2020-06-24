@@ -33,8 +33,11 @@ import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.aceGen.Input;
 import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.JsonArray;
+import de.acegen.aceGen.JsonArrayClient;
 import de.acegen.aceGen.JsonMember;
+import de.acegen.aceGen.JsonMemberClient;
 import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectClient;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.Scenario;
@@ -227,9 +230,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       boolean isWhen = false;
       boolean isVerification = false;
       boolean isServerCall = false;
-      boolean isStateVerification = false;
       PersistenceVerification persistenceVerification_4 = null;
-      StateVerification stateVerification = null;
       while (((parent_1 != null) && (!(((parent_1 instanceof Scenario) || (parent_1 instanceof JsonMember)) || (parent_1 instanceof ClientScenario))))) {
         {
           if (((parent_1 instanceof ThenBlock) || (parent_1 instanceof ClientThenBlock))) {
@@ -241,10 +242,6 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           if ((parent_1 instanceof PersistenceVerification)) {
             isVerification = true;
             persistenceVerification_4 = ((PersistenceVerification) parent_1);
-          }
-          if ((parent_1 instanceof StateVerification)) {
-            isStateVerification = true;
-            stateVerification = ((StateVerification) parent_1);
           }
           if ((parent_1 instanceof ServerCall)) {
             isServerCall = true;
@@ -299,59 +296,56 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
             return Scopes.scopeFor(ace.getResponse());
           }
         }
-        if ((isThen && isStateVerification)) {
-          ArrayList<Attribute> attr_2 = new ArrayList<Attribute>();
-          attr_2.addAll(stateVerification.getStateRef().getAttributes());
-          Model _model = stateVerification.getStateRef().getModel();
-          boolean _tripleNotEquals = (_model != null);
-          if (_tripleNotEquals) {
-            Model _model_1 = stateVerification.getStateRef().getModel();
-            final Model model_5 = ((Model) _model_1);
-            this._modelExtension.allAttributesRec(model_5, attr_2);
-          }
-          return Scopes.scopeFor(attr_2);
-        }
         if ((isThen && isServerCall)) {
-          ArrayList<Attribute> attr_3 = new ArrayList<Attribute>();
+          ArrayList<Attribute> attr_2 = new ArrayList<Attribute>();
           HttpServerAce _serverCall_2 = scenario_1.getWhenBlock().getAction().getServerCall();
-          boolean _tripleNotEquals_1 = (_serverCall_2 != null);
-          if (_tripleNotEquals_1) {
+          boolean _tripleNotEquals = (_serverCall_2 != null);
+          if (_tripleNotEquals) {
             final HttpServerAce serverCall = scenario_1.getWhenBlock().getAction().getServerCall();
             EList<AttributeParamRef> _payload_1 = serverCall.getPayload();
             for (final AttributeParamRef attributeRef_3 : _payload_1) {
-              attr_3.add(attributeRef_3.getAttribute());
+              attr_2.add(attributeRef_3.getAttribute());
             }
             EList<AttributeParamRef> _queryParams_1 = serverCall.getQueryParams();
             for (final AttributeParamRef attributeRef_4 : _queryParams_1) {
-              attr_3.add(attributeRef_4.getAttribute());
+              attr_2.add(attributeRef_4.getAttribute());
             }
             EList<AttributeParamRef> _pathParams_1 = serverCall.getPathParams();
             for (final AttributeParamRef attributeRef_5 : _pathParams_1) {
-              attr_3.add(attributeRef_5.getAttribute());
+              attr_2.add(attributeRef_5.getAttribute());
             }
           }
-          return Scopes.scopeFor(attr_3);
+          return Scopes.scopeFor(attr_2);
         }
       }
       if ((parent_1 instanceof JsonMember)) {
-        ArrayList<Attribute> attr_4 = new ArrayList<Attribute>();
+        ArrayList<Attribute> attr_3 = new ArrayList<Attribute>();
         final JsonMember jsonMember = ((JsonMember) parent_1);
-        Model _model_2 = jsonMember.getAttribute().getModel();
-        boolean _tripleNotEquals_2 = (_model_2 != null);
-        if (_tripleNotEquals_2) {
-          Model _model_3 = jsonMember.getAttribute().getModel();
-          final Model model_6 = ((Model) _model_3);
-          this._modelExtension.allAttributesRec(model_6, attr_4);
+        Model _model = jsonMember.getAttribute().getModel();
+        boolean _tripleNotEquals_1 = (_model != null);
+        if (_tripleNotEquals_1) {
+          Model _model_1 = jsonMember.getAttribute().getModel();
+          final Model model_5 = ((Model) _model_1);
+          this._modelExtension.allAttributesRec(model_5, attr_3);
         }
-        EList<Attribute> _attributes = jsonMember.getAttribute().getAttributes();
-        boolean _tripleNotEquals_3 = (_attributes != null);
-        if (_tripleNotEquals_3) {
-          EList<Attribute> _attributes_1 = jsonMember.getAttribute().getAttributes();
-          for (final Attribute attribute_4 : _attributes_1) {
-            attr_4.add(attribute_4);
-          }
+        return Scopes.scopeFor(attr_3);
+      }
+    }
+    if ((((context instanceof JsonObjectClient) || (context instanceof JsonArrayClient)) || 
+      (context instanceof JsonMemberClient))) {
+      EObject parent_2 = context.eContainer();
+      while (((parent_2 != null) && (!((parent_2 instanceof StateVerification) || (parent_2 instanceof JsonMemberClient))))) {
+        parent_2 = parent_2.eContainer();
+      }
+      if ((parent_2 != null)) {
+        if ((parent_2 instanceof StateVerification)) {
+          final StateVerification stateVerification = ((StateVerification) parent_2);
+          return Scopes.scopeFor(stateVerification.getStateRef().getAttributes());
         }
-        return Scopes.scopeFor(attr_4);
+        if ((parent_2 instanceof JsonMemberClient)) {
+          final JsonMemberClient jsonMemberClient = ((JsonMemberClient) parent_2);
+          return Scopes.scopeFor(jsonMemberClient.getAttribute().getAttributes());
+        }
       }
     }
     return super.getScope(context, reference);

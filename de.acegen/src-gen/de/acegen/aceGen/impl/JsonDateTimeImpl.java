@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class JsonDateTimeImpl extends JsonValueImpl implements JsonDateTime
+public class JsonDateTimeImpl extends JsonValueClientImpl implements JsonDateTime
 {
   /**
    * The default value of the '{@link #getDateTime() <em>Date Time</em>}' attribute.

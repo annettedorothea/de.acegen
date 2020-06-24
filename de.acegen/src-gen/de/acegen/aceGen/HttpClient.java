@@ -87,7 +87,7 @@ public interface HttpClient extends EObject
 
   /**
    * Returns the value of the '<em><b>App State</b></em>' containment reference list.
-   * The list contents are of type {@link de.acegen.aceGen.Attribute}.
+   * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>App State</em>' containment reference list.
@@ -95,7 +95,7 @@ public interface HttpClient extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Attribute> getAppState();
+  EList<ClientAttribute> getAppState();
 
   /**
    * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.

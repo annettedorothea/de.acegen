@@ -19,12 +19,16 @@ package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.JsonArray
 import de.acegen.aceGen.JsonDateTime
 import de.acegen.aceGen.JsonObject
 import de.acegen.aceGen.JsonValue
+import de.acegen.aceGen.LongType
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.NullType
 import de.acegen.aceGen.PrimitiveValue
+import de.acegen.aceGen.StringType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
@@ -207,13 +211,13 @@ class AttributeExtension {
 		JsonObject it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
 
 	def dispatch CharSequence valueFrom(JsonValue it) {
-		if (string !== null) {
+		if (it instanceof StringType) {
 			return '''\"«string.valueFromString»\"''';
-		} else if (boolean !== null) {
+		} else if (it instanceof BooleanType) {
 			return boolean;
-		} else if (it.^null !== null) {
+		} else if (it instanceof NullType) {
 			return "null";
-		} else {
+		} else if (it instanceof LongType) {
 			return '''«long»''';
 		}
 	}

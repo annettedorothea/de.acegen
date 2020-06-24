@@ -78,6 +78,15 @@ public interface AceGenFactory extends EFactory
   HttpClientStateFunction createHttpClientStateFunction();
 
   /**
+   * Returns a new object of class '<em>Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Attribute</em>'.
+   * @generated
+   */
+  ClientAttribute createClientAttribute();
+
+  /**
    * Returns a new object of class '<em>Client Scenario</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -139,6 +148,42 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   StateVerification createStateVerification();
+
+  /**
+   * Returns a new object of class '<em>Json Object Client</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Object Client</em>'.
+   * @generated
+   */
+  JsonObjectClient createJsonObjectClient();
+
+  /**
+   * Returns a new object of class '<em>Json Member Client</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Member Client</em>'.
+   * @generated
+   */
+  JsonMemberClient createJsonMemberClient();
+
+  /**
+   * Returns a new object of class '<em>Json Value Client</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Value Client</em>'.
+   * @generated
+   */
+  JsonValueClient createJsonValueClient();
+
+  /**
+   * Returns a new object of class '<em>Json Array Client</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Array Client</em>'.
+   * @generated
+   */
+  JsonArrayClient createJsonArrayClient();
 
   /**
    * Returns a new object of class '<em>Http Server</em>'.
@@ -409,6 +454,42 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   JsonArray createJsonArray();
+
+  /**
+   * Returns a new object of class '<em>String Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>String Type</em>'.
+   * @generated
+   */
+  StringType createStringType();
+
+  /**
+   * Returns a new object of class '<em>Boolean Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Boolean Type</em>'.
+   * @generated
+   */
+  BooleanType createBooleanType();
+
+  /**
+   * Returns a new object of class '<em>Null Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Null Type</em>'.
+   * @generated
+   */
+  NullType createNullType();
+
+  /**
+   * Returns a new object of class '<em>Long Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Long Type</em>'.
+   * @generated
+   */
+  LongType createLongType();
 
   /**
    * Returns a new object of class '<em>Primitive Value</em>'.

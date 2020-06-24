@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.JsonValue;
+import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.JsonValueClient;
 import de.acegen.aceGen.StateVerification;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -62,7 +62,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    * @ordered
    */
-  protected Attribute stateRef;
+  protected ClientAttribute stateRef;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -72,7 +72,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    * @ordered
    */
-  protected JsonValue value;
+  protected JsonValueClient value;
 
   /**
    * <!-- begin-user-doc -->
@@ -126,12 +126,12 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public Attribute getStateRef()
+  public ClientAttribute getStateRef()
   {
     if (stateRef != null && stateRef.eIsProxy())
     {
       InternalEObject oldStateRef = (InternalEObject)stateRef;
-      stateRef = (Attribute)eResolveProxy(oldStateRef);
+      stateRef = (ClientAttribute)eResolveProxy(oldStateRef);
       if (stateRef != oldStateRef)
       {
         if (eNotificationRequired())
@@ -146,7 +146,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public Attribute basicGetStateRef()
+  public ClientAttribute basicGetStateRef()
   {
     return stateRef;
   }
@@ -157,9 +157,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public void setStateRef(Attribute newStateRef)
+  public void setStateRef(ClientAttribute newStateRef)
   {
-    Attribute oldStateRef = stateRef;
+    ClientAttribute oldStateRef = stateRef;
     stateRef = newStateRef;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.STATE_VERIFICATION__STATE_REF, oldStateRef, stateRef));
@@ -171,7 +171,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public JsonValue getValue()
+  public JsonValueClient getValue()
   {
     return value;
   }
@@ -181,9 +181,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(JsonValue newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(JsonValueClient newValue, NotificationChain msgs)
   {
-    JsonValue oldValue = value;
+    JsonValueClient oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -199,7 +199,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public void setValue(JsonValue newValue)
+  public void setValue(JsonValueClient newValue)
   {
     if (newValue != value)
     {
@@ -266,10 +266,10 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName((String)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((Attribute)newValue);
+        setStateRef((ClientAttribute)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
-        setValue((JsonValue)newValue);
+        setValue((JsonValueClient)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -289,10 +289,10 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName(NAME_EDEFAULT);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((Attribute)null);
+        setStateRef((ClientAttribute)null);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
-        setValue((JsonValue)null);
+        setValue((JsonValueClient)null);
         return;
     }
     super.eUnset(featureID);
