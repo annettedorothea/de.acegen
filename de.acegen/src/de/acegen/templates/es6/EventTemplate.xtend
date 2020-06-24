@@ -55,7 +55,7 @@ class EventTemplate {
 		«copyright»
 
 		import ACEController from "../ace/ACEController";
-		import * as AppState from "../ace/WriteAppState";
+		import * as AppState from "../ace/AppState";
 		
 		export default class EventListenerRegistration«projectName» {
 		

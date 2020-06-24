@@ -184,7 +184,8 @@ public class CommandTemplate {
                   _builder.appendImmediate(", ", "\t\t\t");
                 }
                 _builder.append("this.commandData.");
-                _builder.append(inputParam, "\t\t\t");
+                String _name_6 = inputParam.getName();
+                _builder.append(_name_6, "\t\t\t");
               }
             }
             _builder.append(")).publish());");
@@ -250,11 +251,11 @@ public class CommandTemplate {
                 } else {
                   _builder.appendImmediate(",\n", "\t    \t\t");
                 }
-                String _name_6 = payload.getAttribute().getName();
-                _builder.append(_name_6, "\t    \t\t");
-                _builder.append(" : this.commandData.");
                 String _name_7 = payload.getAttribute().getName();
                 _builder.append(_name_7, "\t    \t\t");
+                _builder.append(" : this.commandData.");
+                String _name_8 = payload.getAttribute().getName();
+                _builder.append(_name_8, "\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
@@ -279,11 +280,11 @@ public class CommandTemplate {
           EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
           for(final AttributeParamRef queryParam : _queryParams) {
             _builder.append("&");
-            String _name_8 = queryParam.getAttribute().getName();
-            _builder.append(_name_8, "\t\t\t");
-            _builder.append("=${this.commandData.");
             String _name_9 = queryParam.getAttribute().getName();
             _builder.append(_name_9, "\t\t\t");
+            _builder.append("=${this.commandData.");
+            String _name_10 = queryParam.getAttribute().getName();
+            _builder.append(_name_10, "\t\t\t");
             _builder.append("}");
           }
         }
@@ -313,11 +314,11 @@ public class CommandTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t\t");
                 _builder.append("this.commandData.");
-                String _name_10 = attribute.getName();
-                _builder.append(_name_10, "\t\t\t\t");
-                _builder.append(" = data.");
                 String _name_11 = attribute.getName();
                 _builder.append(_name_11, "\t\t\t\t");
+                _builder.append(" = data.");
+                String _name_12 = attribute.getName();
+                _builder.append(_name_12, "\t\t\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
               }

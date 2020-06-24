@@ -45,6 +45,9 @@ public class Es6Extension {
     _builder.append("AppState.");
     String _stateFunctionType = it.getStateFunctionType();
     _builder.append(_stateFunctionType);
+    _builder.append("_");
+    String _functionName = this.functionName(it.getStateElement(), it.getStateElement().eContainer());
+    _builder.append(_functionName);
     return _builder.toString();
   }
   

@@ -47,8 +47,8 @@ class ActionTemplate {
 		
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam»«ENDFOR») {
-		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam»«ENDFOR»}, '«es6.getName».«actionName»');
+		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam.name»«ENDFOR») {
+		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam.name»«ENDFOR»}, '«es6.getName».«actionName»');
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
@@ -108,7 +108,7 @@ class ActionTemplate {
 			static init() {
 				«FOR aceOperation : aceOperations»
 					ACEController.registerFactory('«getName».«aceOperation.actionName»', 
-						(actionData) => new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»actionData.«attr»«ENDFOR»));
+						(actionData) => new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»actionData.«attr.name»«ENDFOR»));
 				«ENDFOR»
 			}
 		
@@ -126,8 +126,8 @@ class ActionTemplate {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR») {
-			    new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR»).apply();
+			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR») {
+			    new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR»).apply();
 			}
 			
 		«ENDFOR»

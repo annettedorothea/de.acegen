@@ -102,7 +102,8 @@ public class ActionTemplate {
           _builder.appendImmediate(",", "    ");
         }
         _builder.append(" ");
-        _builder.append(inputParam, "    ");
+        String _name_1 = inputParam.getName();
+        _builder.append(_name_1, "    ");
       }
     }
     _builder.append(") {");
@@ -118,12 +119,13 @@ public class ActionTemplate {
         } else {
           _builder.appendImmediate(", ", "        ");
         }
-        _builder.append(inputParam_1, "        ");
+        String _name_2 = inputParam_1.getName();
+        _builder.append(_name_2, "        ");
       }
     }
     _builder.append("}, \'");
-    String _name_1 = es6.getName();
-    _builder.append(_name_1, "        ");
+    String _name_3 = es6.getName();
+    _builder.append(_name_3, "        ");
     _builder.append(".");
     String _actionName = this._aceExtension.actionName(it);
     _builder.append(_actionName, "        ");
@@ -176,8 +178,8 @@ public class ActionTemplate {
         String _functionName = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
         _builder.append(_functionName, "\t\t");
         _builder.append("({");
-        String _name_2 = it.getLoadingFlag().getName();
-        _builder.append(_name_2, "\t\t");
+        String _name_4 = it.getLoadingFlag().getName();
+        _builder.append(_name_4, "\t\t");
         _builder.append(": true});");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -194,8 +196,8 @@ public class ActionTemplate {
         String _functionName_1 = this._es6Extension.functionName(it.getLoadingFlag(), it.getLoadingFlag().eContainer());
         _builder.append(_functionName_1, "\t\t");
         _builder.append("({");
-        String _name_3 = it.getLoadingFlag().getName();
-        _builder.append(_name_3, "\t\t");
+        String _name_5 = it.getLoadingFlag().getName();
+        _builder.append(_name_5, "\t\t");
         _builder.append(": false});");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -325,7 +327,8 @@ public class ActionTemplate {
               _builder.appendImmediate(", ", "\t\t\t");
             }
             _builder.append("actionData.");
-            _builder.append(attr, "\t\t\t");
+            String _name_2 = attr.getName();
+            _builder.append(_name_2, "\t\t\t");
           }
         }
         _builder.append("));");
@@ -386,7 +389,8 @@ public class ActionTemplate {
             } else {
               _builder.appendImmediate(", ", "");
             }
-            _builder.append(attr);
+            String _name_1 = attr.getName();
+            _builder.append(_name_1);
           }
         }
         _builder.append(") {");
@@ -405,7 +409,8 @@ public class ActionTemplate {
             } else {
               _builder.appendImmediate(", ", "    ");
             }
-            _builder.append(attr_1, "    ");
+            String _name_2 = attr_1.getName();
+            _builder.append(_name_2, "    ");
           }
         }
         _builder.append(").apply();");

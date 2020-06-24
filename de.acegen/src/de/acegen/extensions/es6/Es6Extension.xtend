@@ -29,7 +29,7 @@ class Es6Extension {
 
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
-	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»'''
+	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»_«stateElement.functionName(stateElement.eContainer)»'''
 	
 	def String functionName(Attribute it, EObject parent) '''«functionNameRec(parent, "")»'''
 	
