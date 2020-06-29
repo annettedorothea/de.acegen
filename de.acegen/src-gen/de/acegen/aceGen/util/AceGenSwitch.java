@@ -122,6 +122,22 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE:
+      {
+        SingleClientAttribute singleClientAttribute = (SingleClientAttribute)theEObject;
+        T result = caseSingleClientAttribute(singleClientAttribute);
+        if (result == null) result = caseClientAttribute(singleClientAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.GROUPED_CLIENT_ATTRIBUTE:
+      {
+        GroupedClientAttribute groupedClientAttribute = (GroupedClientAttribute)theEObject;
+        T result = caseGroupedClientAttribute(groupedClientAttribute);
+        if (result == null) result = caseClientAttribute(groupedClientAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.CLIENT_SCENARIO:
       {
         ClientScenario clientScenario = (ClientScenario)theEObject;
@@ -447,6 +463,14 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.UNDEFINED_TYPE:
+      {
+        UndefinedType undefinedType = (UndefinedType)theEObject;
+        T result = caseUndefinedType(undefinedType);
+        if (result == null) result = caseJsonValueClient(undefinedType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.LONG_TYPE:
       {
         LongType longType = (LongType)theEObject;
@@ -575,6 +599,38 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClientAttribute(ClientAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Single Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Single Client Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSingleClientAttribute(SingleClientAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Grouped Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Grouped Client Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGroupedClientAttribute(GroupedClientAttribute object)
   {
     return null;
   }
@@ -1279,6 +1335,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseNullType(NullType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Undefined Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Undefined Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUndefinedType(UndefinedType object)
   {
     return null;
   }

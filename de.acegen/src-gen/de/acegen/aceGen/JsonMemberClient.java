@@ -29,12 +29,12 @@ public interface JsonMemberClient extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute</em>' reference.
-   * @see #setAttribute(ClientAttribute)
+   * @see #setAttribute(SingleClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getJsonMemberClient_Attribute()
    * @model
    * @generated
    */
-  ClientAttribute getAttribute();
+  SingleClientAttribute getAttribute();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.JsonMemberClient#getAttribute <em>Attribute</em>}' reference.
@@ -44,7 +44,7 @@ public interface JsonMemberClient extends EObject
    * @see #getAttribute()
    * @generated
    */
-  void setAttribute(ClientAttribute value);
+  void setAttribute(SingleClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.

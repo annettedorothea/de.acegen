@@ -87,6 +87,24 @@ public interface AceGenFactory extends EFactory
   ClientAttribute createClientAttribute();
 
   /**
+   * Returns a new object of class '<em>Single Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Single Client Attribute</em>'.
+   * @generated
+   */
+  SingleClientAttribute createSingleClientAttribute();
+
+  /**
+   * Returns a new object of class '<em>Grouped Client Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Grouped Client Attribute</em>'.
+   * @generated
+   */
+  GroupedClientAttribute createGroupedClientAttribute();
+
+  /**
    * Returns a new object of class '<em>Client Scenario</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -481,6 +499,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   NullType createNullType();
+
+  /**
+   * Returns a new object of class '<em>Undefined Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Undefined Type</em>'.
+   * @generated
+   */
+  UndefinedType createUndefinedType();
 
   /**
    * Returns a new object of class '<em>Long Type</em>'.

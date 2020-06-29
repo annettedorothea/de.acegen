@@ -51,12 +51,12 @@ public interface HttpClientStateFunction extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>State Element</em>' reference.
-   * @see #setStateElement(ClientAttribute)
+   * @see #setStateElement(SingleClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getHttpClientStateFunction_StateElement()
    * @model
    * @generated
    */
-  ClientAttribute getStateElement();
+  SingleClientAttribute getStateElement();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.HttpClientStateFunction#getStateElement <em>State Element</em>}' reference.
@@ -66,6 +66,6 @@ public interface HttpClientStateFunction extends EObject
    * @see #getStateElement()
    * @generated
    */
-  void setStateElement(ClientAttribute value);
+  void setStateElement(SingleClientAttribute value);
 
 } // HttpClientStateFunction

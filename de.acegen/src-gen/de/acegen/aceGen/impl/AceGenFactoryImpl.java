@@ -72,6 +72,8 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
       case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE: return createSingleClientAttribute();
+      case AceGenPackage.GROUPED_CLIENT_ATTRIBUTE: return createGroupedClientAttribute();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
@@ -116,6 +118,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.STRING_TYPE: return createStringType();
       case AceGenPackage.BOOLEAN_TYPE: return createBooleanType();
       case AceGenPackage.NULL_TYPE: return createNullType();
+      case AceGenPackage.UNDEFINED_TYPE: return createUndefinedType();
       case AceGenPackage.LONG_TYPE: return createLongType();
       case AceGenPackage.PRIMITIVE_VALUE: return createPrimitiveValue();
       default:
@@ -205,6 +208,30 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientAttributeImpl clientAttribute = new ClientAttributeImpl();
     return clientAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SingleClientAttribute createSingleClientAttribute()
+  {
+    SingleClientAttributeImpl singleClientAttribute = new SingleClientAttributeImpl();
+    return singleClientAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public GroupedClientAttribute createGroupedClientAttribute()
+  {
+    GroupedClientAttributeImpl groupedClientAttribute = new GroupedClientAttributeImpl();
+    return groupedClientAttribute;
   }
 
   /**
@@ -733,6 +760,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     NullTypeImpl nullType = new NullTypeImpl();
     return nullType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public UndefinedType createUndefinedType()
+  {
+    UndefinedTypeImpl undefinedType = new UndefinedTypeImpl();
+    return undefinedType;
   }
 
   /**

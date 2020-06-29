@@ -11,13 +11,13 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.BooleanType;
-import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.GivenRef;
+import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -48,10 +48,12 @@ import de.acegen.aceGen.SelectByExpectation;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.ServerCall;
+import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.TriggeredAction;
+import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.services.AceGenGrammarAccess;
@@ -98,9 +100,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.BOOLEAN_TYPE:
 				sequence_BooleanType(context, (BooleanType) semanticObject); 
 				return; 
-			case AceGenPackage.CLIENT_ATTRIBUTE:
-				sequence_ClientAttribute(context, (ClientAttribute) semanticObject); 
-				return; 
 			case AceGenPackage.CLIENT_SCENARIO:
 				sequence_ClientScenario(context, (ClientScenario) semanticObject); 
 				return; 
@@ -118,6 +117,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.GIVEN_REF:
 				sequence_GivenRef(context, (GivenRef) semanticObject); 
+				return; 
+			case AceGenPackage.GROUPED_CLIENT_ATTRIBUTE:
+				sequence_GroupedClientAttribute(context, (GroupedClientAttribute) semanticObject); 
 				return; 
 			case AceGenPackage.HTTP_CLIENT:
 				sequence_HttpClient(context, (HttpClient) semanticObject); 
@@ -209,6 +211,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.SERVER_CALL:
 				sequence_ServerCall(context, (ServerCall) semanticObject); 
 				return; 
+			case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE:
+				sequence_SingleClientAttribute(context, (SingleClientAttribute) semanticObject); 
+				return; 
 			case AceGenPackage.STATE_VERIFICATION:
 				sequence_StateVerification(context, (StateVerification) semanticObject); 
 				return; 
@@ -220,6 +225,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.TRIGGERED_ACTION:
 				sequence_TriggeredAction(context, (TriggeredAction) semanticObject); 
+				return; 
+			case AceGenPackage.UNDEFINED_TYPE:
+				sequence_UndefinedType(context, (UndefinedType) semanticObject); 
 				return; 
 			case AceGenPackage.VERIFICATION:
 				sequence_Verification(context, (Verification) semanticObject); 
@@ -341,27 +349,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     ClientAttribute returns ClientAttribute
-	 *
-	 * Constraint:
-	 *     (
-	 *         notNull?='NotNull'? 
-	 *         list?='List'? 
-	 *         type=Type? 
-	 *         name=ID 
-	 *         model=[Model|QualifiedName]? 
-	 *         hash?='location.hash'? 
-	 *         storage?='storage'? 
-	 *         attributes+=ClientAttribute*
-	 *     )
-	 */
-	protected void sequence_ClientAttribute(ISerializationContext context, ClientAttribute semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ClientScenario returns ClientScenario
 	 *
 	 * Constraint:
@@ -435,6 +422,19 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ClientAttribute returns GroupedClientAttribute
+	 *     GroupedClientAttribute returns GroupedClientAttribute
+	 *
+	 * Constraint:
+	 *     (attributeGroup+=ClientAttribute attributeGroup+=ClientAttribute*)
+	 */
+	protected void sequence_GroupedClientAttribute(ISerializationContext context, GroupedClientAttribute semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     HttpClientAce returns HttpClientAce
 	 *
 	 * Constraint:
@@ -442,9 +442,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         async?='async'? 
 	 *         name=ID 
 	 *         (input+=Input input+=Input*)? 
-	 *         (stateElements+=[ClientAttribute|QualifiedName] stateElements+=[ClientAttribute|QualifiedName]*)? 
+	 *         (stateElements+=[SingleClientAttribute|QualifiedName] stateElements+=[SingleClientAttribute|QualifiedName]*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
-	 *         loadingFlag=[ClientAttribute|QualifiedName]? 
+	 *         loadingFlag=[SingleClientAttribute|QualifiedName]? 
 	 *         outcomes+=HttpClientOutcome*
 	 *     )
 	 */
@@ -470,7 +470,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientStateFunction returns HttpClientStateFunction
 	 *
 	 * Constraint:
-	 *     (stateFunctionType=HttpClientStateFunctionType stateElement=[ClientAttribute|QualifiedName])
+	 *     (stateFunctionType=HttpClientStateFunctionType stateElement=[SingleClientAttribute|QualifiedName])
 	 */
 	protected void sequence_HttpClientStateFunction(ISerializationContext context, HttpClientStateFunction semanticObject) {
 		if (errorAcceptor != null) {
@@ -481,7 +481,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateFunctionTypeHttpClientStateFunctionTypeParserRuleCall_0_0(), semanticObject.getStateFunctionType());
-		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateElementClientAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, false));
+		feeder.accept(grammarAccess.getHttpClientStateFunctionAccess().getStateElementSingleClientAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT, false));
 		feeder.finish();
 	}
 	
@@ -708,7 +708,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     JsonMemberClient returns JsonMemberClient
 	 *
 	 * Constraint:
-	 *     (attribute=[ClientAttribute|QualifiedName] value=JsonValueClient)
+	 *     (attribute=[SingleClientAttribute|QualifiedName] value=JsonValueClient)
 	 */
 	protected void sequence_JsonMemberClient(ISerializationContext context, JsonMemberClient semanticObject) {
 		if (errorAcceptor != null) {
@@ -718,7 +718,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.JSON_MEMBER_CLIENT__VALUE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getJsonMemberClientAccess().getAttributeClientAttributeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.JSON_MEMBER_CLIENT__ATTRIBUTE, false));
+		feeder.accept(grammarAccess.getJsonMemberClientAccess().getAttributeSingleClientAttributeQualifiedNameParserRuleCall_0_0_1(), semanticObject.eGet(AceGenPackage.Literals.JSON_MEMBER_CLIENT__ATTRIBUTE, false));
 		feeder.accept(grammarAccess.getJsonMemberClientAccess().getValueJsonValueClientParserRuleCall_2_0(), semanticObject.getValue());
 		feeder.finish();
 	}
@@ -810,7 +810,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     NullType returns NullType
 	 *
 	 * Constraint:
-	 *     null=JsonNull
+	 *     null?='null'
 	 */
 	protected void sequence_NullType(ISerializationContext context, NullType semanticObject) {
 		if (errorAcceptor != null) {
@@ -818,7 +818,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.NULL_TYPE__NULL));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getNullTypeAccess().getNullJsonNullParserRuleCall_0(), semanticObject.getNull());
+		feeder.accept(grammarAccess.getNullTypeAccess().getNullNullKeyword_0(), semanticObject.isNull());
 		feeder.finish();
 	}
 	
@@ -950,10 +950,32 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ClientAttribute returns SingleClientAttribute
+	 *     SingleClientAttribute returns SingleClientAttribute
+	 *
+	 * Constraint:
+	 *     (
+	 *         notNull?='NotNull'? 
+	 *         list?='List'? 
+	 *         type=Type? 
+	 *         name=ID 
+	 *         model=[Model|QualifiedName]? 
+	 *         hash?='location.hash'? 
+	 *         storage?='storage'? 
+	 *         attributes+=ClientAttribute*
+	 *     )
+	 */
+	protected void sequence_SingleClientAttribute(ISerializationContext context, SingleClientAttribute semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     StateVerification returns StateVerification
 	 *
 	 * Constraint:
-	 *     (name=ID stateRef=[ClientAttribute|QualifiedName] value=JsonValueClient)
+	 *     (name=ID stateRef=[SingleClientAttribute|QualifiedName] value=JsonValueClient)
 	 */
 	protected void sequence_StateVerification(ISerializationContext context, StateVerification semanticObject) {
 		if (errorAcceptor != null) {
@@ -966,7 +988,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getStateVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefClientAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
+		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefSingleClientAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
 		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0(), semanticObject.getValue());
 		feeder.finish();
 	}
@@ -1009,10 +1031,29 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     TriggeredAction returns TriggeredAction
 	 *
 	 * Constraint:
-	 *     (httpClientAce=[HttpClientAce|QualifiedName] inputValues+=InputValue inputValues+=InputValue*)
+	 *     (httpClientAce=[HttpClientAce|QualifiedName] (inputValues+=InputValue inputValues+=InputValue*)?)
 	 */
 	protected void sequence_TriggeredAction(ISerializationContext context, TriggeredAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JsonValueClient returns UndefinedType
+	 *     UndefinedType returns UndefinedType
+	 *
+	 * Constraint:
+	 *     undefined?='undefined'
+	 */
+	protected void sequence_UndefinedType(ISerializationContext context, UndefinedType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UNDEFINED_TYPE__UNDEFINED) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UNDEFINED_TYPE__UNDEFINED));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getUndefinedTypeAccess().getUndefinedUndefinedKeyword_0(), semanticObject.isUndefined());
+		feeder.finish();
 	}
 	
 	

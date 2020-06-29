@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.NullType;
+import de.acegen.aceGen.UndefinedType;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -14,45 +14,45 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Null Type</b></em>'.
+ * An implementation of the model object '<em><b>Undefined Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.NullTypeImpl#isNull <em>Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.UndefinedTypeImpl#isUndefined <em>Undefined</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class NullTypeImpl extends JsonValueClientImpl implements NullType
+public class UndefinedTypeImpl extends JsonValueClientImpl implements UndefinedType
 {
   /**
-   * The default value of the '{@link #isNull() <em>Null</em>}' attribute.
+   * The default value of the '{@link #isUndefined() <em>Undefined</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNull()
+   * @see #isUndefined()
    * @generated
    * @ordered
    */
-  protected static final boolean NULL_EDEFAULT = false;
+  protected static final boolean UNDEFINED_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isNull() <em>Null</em>}' attribute.
+   * The cached value of the '{@link #isUndefined() <em>Undefined</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNull()
+   * @see #isUndefined()
    * @generated
    * @ordered
    */
-  protected boolean null_ = NULL_EDEFAULT;
+  protected boolean undefined = UNDEFINED_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected NullTypeImpl()
+  protected UndefinedTypeImpl()
   {
     super();
   }
@@ -65,7 +65,7 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.NULL_TYPE;
+    return AceGenPackage.Literals.UNDEFINED_TYPE;
   }
 
   /**
@@ -74,9 +74,9 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
    * @generated
    */
   @Override
-  public boolean isNull()
+  public boolean isUndefined()
   {
-    return null_;
+    return undefined;
   }
 
   /**
@@ -85,12 +85,12 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
    * @generated
    */
   @Override
-  public void setNull(boolean newNull)
+  public void setUndefined(boolean newUndefined)
   {
-    boolean oldNull = null_;
-    null_ = newNull;
+    boolean oldUndefined = undefined;
+    undefined = newUndefined;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NULL_TYPE__NULL, oldNull, null_));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.UNDEFINED_TYPE__UNDEFINED, oldUndefined, undefined));
   }
 
   /**
@@ -103,8 +103,8 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
   {
     switch (featureID)
     {
-      case AceGenPackage.NULL_TYPE__NULL:
-        return isNull();
+      case AceGenPackage.UNDEFINED_TYPE__UNDEFINED:
+        return isUndefined();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,8 +119,8 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
   {
     switch (featureID)
     {
-      case AceGenPackage.NULL_TYPE__NULL:
-        setNull((Boolean)newValue);
+      case AceGenPackage.UNDEFINED_TYPE__UNDEFINED:
+        setUndefined((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,8 +136,8 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
   {
     switch (featureID)
     {
-      case AceGenPackage.NULL_TYPE__NULL:
-        setNull(NULL_EDEFAULT);
+      case AceGenPackage.UNDEFINED_TYPE__UNDEFINED:
+        setUndefined(UNDEFINED_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -153,8 +153,8 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
   {
     switch (featureID)
     {
-      case AceGenPackage.NULL_TYPE__NULL:
-        return null_ != NULL_EDEFAULT;
+      case AceGenPackage.UNDEFINED_TYPE__UNDEFINED:
+        return undefined != UNDEFINED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -170,10 +170,10 @@ public class NullTypeImpl extends JsonValueClientImpl implements NullType
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (null: ");
-    result.append(null_);
+    result.append(" (undefined: ");
+    result.append(undefined);
     result.append(')');
     return result.toString();
   }
 
-} //NullTypeImpl
+} //UndefinedTypeImpl

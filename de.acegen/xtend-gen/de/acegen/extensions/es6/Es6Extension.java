@@ -18,6 +18,7 @@ package de.acegen.extensions.es6;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
+import de.acegen.aceGen.SingleClientAttribute;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.ecore.EObject;
@@ -51,17 +52,17 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String functionName(final ClientAttribute it) {
+  public String functionName(final SingleClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     String _functionNameRec = this.functionNameRec(it, "");
     _builder.append(_functionNameRec);
     return _builder.toString();
   }
   
-  public String functionNameRec(final ClientAttribute it, final String suffix) {
-    if (((it.eContainer() != null) && (it.eContainer() instanceof ClientAttribute))) {
-      EObject _eContainer = it.eContainer();
-      String _functionNameRec = this.functionNameRec(((ClientAttribute) _eContainer), it.getName());
+  public String functionNameRec(final SingleClientAttribute it, final String suffix) {
+    final SingleClientAttribute parent = this.findNextSingleClientAttributeParent(it);
+    if ((parent != null)) {
+      String _functionNameRec = this.functionNameRec(parent, it.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -87,7 +88,7 @@ public class Es6Extension {
     }
   }
   
-  public String elementPath(final ClientAttribute it) {
+  public String elementPath(final SingleClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("appState.");
     String _elementPathRec = this.elementPathRec(it, "");
@@ -95,10 +96,10 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String elementPathRec(final ClientAttribute it, final String suffix) {
-    if (((it.eContainer() != null) && (it.eContainer() instanceof ClientAttribute))) {
-      EObject _eContainer = it.eContainer();
-      String _elementPathRec = this.elementPathRec(((ClientAttribute) _eContainer), it.getName());
+  public String elementPathRec(final SingleClientAttribute it, final String suffix) {
+    final SingleClientAttribute parent = this.findNextSingleClientAttributeParent(it);
+    if ((parent != null)) {
+      String _elementPathRec = this.elementPathRec(parent, it.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -124,13 +125,28 @@ public class Es6Extension {
     }
   }
   
-  public List<ClientAttribute> allParentAttributes(final ClientAttribute it) {
-    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
+  private SingleClientAttribute findNextSingleClientAttributeParent(final ClientAttribute it) {
     EObject parent = it.eContainer();
-    while ((parent instanceof ClientAttribute)) {
+    while ((parent != null)) {
       {
-        attributes.add(0, ((ClientAttribute) parent));
-        parent = ((ClientAttribute)parent).eContainer();
+        if ((parent instanceof SingleClientAttribute)) {
+          return ((SingleClientAttribute)parent);
+        }
+        parent = parent.eContainer();
+      }
+    }
+    return null;
+  }
+  
+  public List<SingleClientAttribute> allParentAttributes(final ClientAttribute it) {
+    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
+    EObject parent = it.eContainer();
+    while ((parent != null)) {
+      {
+        if ((parent instanceof SingleClientAttribute)) {
+          attributes.add(0, ((SingleClientAttribute) parent));
+        }
+        parent = parent.eContainer();
       }
     }
     return attributes;

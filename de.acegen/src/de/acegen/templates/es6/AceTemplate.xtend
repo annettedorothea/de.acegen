@@ -18,6 +18,8 @@
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientAttribute
+import de.acegen.aceGen.GroupedClientAttribute
+import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import java.util.List
@@ -35,12 +37,16 @@ class AceTemplate {
 		«copyright»
 		
 		import CryptoJS from "crypto-js";
-		import * as ReadAppState from "../../gen/ace/ReadAppState";
-		import * as WriteAppState from "../../gen/ace/WriteAppState";
+		import * as AppState from "../../gen/ace/AppState";
 		import * as App from "./App";
 		import Utils from "../../gen/ace/Utils";
 		
 		export default class AppUtils {
+		
+			static initEventListenersAndActionFactories() {
+				// add EventListenerRegistration.init() of all modules
+				// add ActionFactoryRegistrationTodo.init() of all modules
+			}
 		
 		    static start() {
 		        Utils.loadSettings().then((settings) => {
@@ -52,11 +58,11 @@ class AceTemplate {
 		    static createInitialAppState() {
 		        const initialAppState = {
 		        };
-		        WriteAppState.setInitialState(initialAppState);
+		        AppState.setInitialAppState(initialAppState);
 		    }
 		
 		    static renderNewState() {
-		        App.render(ReadAppState.getState());
+		        App.render(AppState.getAppState());
 		    }
 		
 		    static httpGet(url, authorize) {
@@ -252,15 +258,11 @@ class AceTemplate {
 		    container.setState(newAppState);
 		}*/
 		
-		export function render(newAppState) {
-		    container.setState(newAppState);
-		}
-		
 		window.onhashchange = () => {
 		};
 		
-		// add EventListenerRegistration.init() of all modules
-		// add ActionFactoryRegistrationTodo.init() of all modules
+		
+		AppUtils.initEventListenersAndActionFactories();
 		
 		AppUtils.start();
 		
@@ -311,8 +313,7 @@ class AceTemplate {
 
 		import AppUtils from "../../src/app/AppUtils";
 		import Utils from "./Utils";
-		import * as ReadAppState from "./ReadAppState";
-		import * as WriteAppState from "./WriteAppState";
+		import * as AppState from "./AppState";
 		
 		export default class ACEController {
 		
@@ -383,7 +384,7 @@ class AceTemplate {
 		    }
 		
 		    static applyNextActions() {
-		    	ACEController.addItemToTimeLine({appState: ReadAppState.getState()});
+		    	ACEController.addItemToTimeLine({appState: AppState.getAppState()});
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
 					if (action.asynchronous) {
@@ -447,7 +448,7 @@ class AceTemplate {
 		                actions.push(action);
 		            }
 					if (item.appState && !appStateWasSet) {
-					    WriteAppState.setInitialState(item.appState);
+					    AppState.setInitialAppState(item.appState);
 					    appStateWasSet = true;
 					}
 		            
@@ -905,6 +906,10 @@ class AceTemplate {
 		
 		export let appState;
 		
+		export function getAppState() {
+			return AppUtils.deepCopy(state);
+		}
+		
 		export function setInitialAppState(initialAppState) {
 			appState = AppUtils.deepCopy(initialAppState);
 		}
@@ -914,123 +919,167 @@ class AceTemplate {
 		«ENDFOR»
 	'''
 	
-	def String generateAppStateRec(ClientAttribute it) '''
-		«IF attributes === null || attributes.length == 0»
-			export function get_«functionName»() {
-				«IF isHash»
-					return location.hash;
-				«ELSEIF isStorage»
-					return localStorage.getItem("«getName»");
-				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							return undefined;
-						}
-					«ENDFOR»
+	private def getStateFunction(SingleClientAttribute it) '''
+		export function get_«functionName»() {
+			«IF isHash»
+				return location.hash;
+			«ELSEIF isStorage»
+				localStorage.getItem("«getName»");
+			«ELSE»
+				«FOR attribute: allParentAttributes»
+					if (!«attribute.elementPath») {
+						return undefined;
+					}
+				«ENDFOR»
+				«IF attributes === null || attributes.length == 0»
 					return «elementPath»;
-				«ENDIF»
-			}
-
-			export function set_«functionName»(eventData) {
-				«IF isHash»
-					location.hash = eventData.«getName»;
-				«ELSEIF isStorage»
-					localStorage.setItem("«getName»", eventData.«getName»);
 				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							«attribute.elementPath» = {};
-						}
-					«ENDFOR»
-					«elementPath» = eventData.«getName»;
-				«ENDIF»
-			}
-			
-			export function reset_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							return;
-						}
-					«ENDFOR»
-					«elementPath» = undefined;
-				«ENDIF»
-			}
-			
-		«ELSE»
-			export function get_«functionName»() {
-				«IF isHash»
-					return location.hash;
-				«ELSEIF isStorage»
-					localStorage.getItem("«getName»");
-				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							return undefined;
-						}
-					«ENDFOR»
 					return AppUtils.deepCopy(«elementPath»);
 				«ENDIF»
-			}
-
-			export function set_«functionName»(eventData) {
-				«IF isHash»
-					location.hash = eventData.«getName»;
-				«ELSEIF isStorage»
-					localStorage.setItem("«getName»", eventData.«getName»);
-				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							«attribute.elementPath» = {};
-						}
-					«ENDFOR»
-					«elementPath» = eventData.«getName»;
-				«ENDIF»
-			}
-			
-			«IF !isHash && !isStorage»
-				export function merge_«functionName»(eventData) {
-					«FOR attr : it.allParentAttributes»
-						if (!«attr.elementPath») {
-							«attr.elementPath» = {};
-						}
-					«ENDFOR»
-					if (!«elementPath») {
-						«it.elementPath» = {};
+			«ENDIF»
+		}
+		
+	'''
+	
+	private def setStateFunction(SingleClientAttribute it) '''
+		export function set_«functionName»(eventData) {
+			«IF isHash»
+				location.hash = eventData.«getName»;
+			«ELSEIF isStorage»
+				localStorage.setItem("«getName»", eventData.«getName»);
+			«ELSE»
+				«FOR attribute: allParentAttributes»
+					if (!«attribute.elementPath») {
+						«attribute.elementPath» = {};
 					}
-					«FOR attribute : attributes»
-						if (eventData.«attribute.getName» !== undefined) {
+				«ENDFOR»
+				«elementPath» = eventData.«getName»;
+			«ENDIF»
+		}
+		
+	'''
+	
+	private def setStateFunctionForGroup(SingleClientAttribute it, List<ClientAttribute> attributeGroup) '''
+		export function set_«functionName»(eventData) {
+			«IF isHash»
+				location.hash = eventData.«getName»;
+			«ELSEIF isStorage»
+				localStorage.setItem("«getName»", eventData.«getName»);
+			«ELSE»
+				«FOR attribute: allParentAttributes»
+					if (!«attribute.elementPath») {
+						«attribute.elementPath» = {};
+					}
+				«ENDFOR»
+				«elementPath» = eventData.«getName»;
+			«ENDIF»
+			«FOR attribute : attributeGroup»
+				«IF attribute != it && attribute instanceof SingleClientAttribute»
+					reset_«(attribute as SingleClientAttribute).functionName»();
+				«ENDIF»
+			«ENDFOR»
+		}
+		
+	'''
+	
+	private def resetStateFunction(SingleClientAttribute it) '''
+		export function reset_«functionName»() {
+			«IF isHash»
+				location.hash = "";
+			«ELSEIF isStorage»
+				localStorage.removeItem("«getName»");
+			«ELSE»
+				«FOR attribute: allParentAttributes»
+					if (!«attribute.elementPath») {
+						return;
+					}
+				«ENDFOR»
+				«elementPath» = undefined;
+			«ENDIF»
+		}
+		
+	'''
+	
+	private def mergeStateFunction(SingleClientAttribute it) '''
+		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage» 
+			export function merge_«functionName»(eventData) {
+				«FOR attr : allParentAttributes»
+					if (!«attr.elementPath») {
+						«attr.elementPath» = {};
+					}
+				«ENDFOR»
+				if (!«elementPath») {
+					«it.elementPath» = {};
+				}
+				«FOR attribute : attributes»
+					«IF attribute instanceof SingleClientAttribute»
+						if (eventData.«attribute.name» !== undefined) {
 							«attribute.elementPath» = eventData.«attribute.getName»;
 						}
-					«ENDFOR»
-				}
-			«ENDIF»
-			
-			export function reset_«functionName»() {
-				«IF isHash»
-					location.hash = "";
-				«ELSEIF isStorage»
-					localStorage.removeItem("«getName»");
-				«ELSE»
-					«FOR attribute: allParentAttributes»
-						if (!«attribute.elementPath») {
-							return;
-						}
-					«ENDFOR»
-					«elementPath» = undefined;
-				«ENDIF»
+					«ENDIF»
+				«ENDFOR»
 			}
 			
-			«IF attributes !== null && !isList && !isHash && !isStorage»
-				«FOR attribute : attributes»
-					«attribute.generateAppStateRec»
+		«ENDIF»
+	'''
+	
+	private def mergeStateFunctionForGroup(SingleClientAttribute it, List<ClientAttribute> attributeGroup) '''
+		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage» 
+			export function merge_«functionName»(eventData) {
+				«FOR attr : allParentAttributes»
+					if (!«attr.elementPath») {
+						«attr.elementPath» = {};
+					}
 				«ENDFOR»
-			«ENDIF»
+				if (!«elementPath») {
+					«it.elementPath» = {};
+				}
+				«FOR attribute : attributes»
+					«IF attribute instanceof SingleClientAttribute»
+						if (eventData.«attribute.name» !== undefined) {
+							«attribute.elementPath» = eventData.«attribute.getName»;
+						}
+					«ENDIF»
+				«ENDFOR»
+				«FOR attribute : attributeGroup»
+					«IF attribute != it && attribute instanceof SingleClientAttribute»
+						reset_«(attribute as SingleClientAttribute).functionName»();
+					«ENDIF»
+				«ENDFOR»
+			}
 			
+		«ENDIF»
+	'''
+	
+	private def childAttributes(SingleClientAttribute it) '''
+		«IF attributes !== null && !isList && !isHash && !isStorage»
+			«FOR attribute : attributes»
+				«attribute.generateAppStateRec»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	def dispatch String generateAppStateRec(SingleClientAttribute it) '''
+		«getStateFunction»
+		«setStateFunction»
+		«resetStateFunction»
+		«mergeStateFunction»
+		«childAttributes»
+	'''
+	
+	def dispatch String generateAppStateRec(GroupedClientAttribute it) '''
+		«IF attributeGroup === null || attributeGroup.length > 0»
+			«FOR attribute : attributeGroup»
+				«IF attribute instanceof SingleClientAttribute»
+					«attribute.getStateFunction»
+					«attribute.setStateFunctionForGroup(attributeGroup)»
+					«attribute.resetStateFunction»
+					«attribute.mergeStateFunctionForGroup(attributeGroup)»
+					«attribute.childAttributes»
+				«ELSE»
+					«attribute.generateAppStateRec»
+				«ENDIF»
+			«ENDFOR»
 		«ENDIF»
 	'''
 	

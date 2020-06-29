@@ -18,13 +18,13 @@ package de.acegen.templates.es6;
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
-import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.Input;
+import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -137,8 +137,8 @@ public class CommandTemplate {
       }
     }
     {
-      EList<ClientAttribute> _stateElements = it.getStateElements();
-      for(final ClientAttribute stateElement : _stateElements) {
+      EList<SingleClientAttribute> _stateElements = it.getStateElements();
+      for(final SingleClientAttribute stateElement : _stateElements) {
         _builder.append("        ");
         _builder.append("this.");
         String _name_5 = stateElement.getName();
@@ -472,8 +472,8 @@ public class CommandTemplate {
       }
     }
     {
-      EList<ClientAttribute> _stateElements = it.getStateElements();
-      for(final ClientAttribute stateElement : _stateElements) {
+      EList<SingleClientAttribute> _stateElements = it.getStateElements();
+      for(final SingleClientAttribute stateElement : _stateElements) {
         _builder.append("        ");
         _builder.append("this.");
         String _name_5 = stateElement.getName();
@@ -536,7 +536,8 @@ public class CommandTemplate {
                   _builder.appendImmediate(", ", "\t\t\t");
                 }
                 _builder.append("this.commandData.");
-                _builder.append(inputParam, "\t\t\t");
+                String _name_7 = inputParam.getName();
+                _builder.append(_name_7, "\t\t\t");
               }
             }
             _builder.append(")).publish();");

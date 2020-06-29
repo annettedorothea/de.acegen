@@ -4,11 +4,11 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Input;
+import de.acegen.aceGen.SingleClientAttribute;
 
 import java.util.Collection;
 
@@ -106,7 +106,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    * @ordered
    */
-  protected EList<ClientAttribute> stateElements;
+  protected EList<SingleClientAttribute> stateElements;
 
   /**
    * The cached value of the '{@link #getServerCall() <em>Server Call</em>}' reference.
@@ -126,7 +126,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    * @ordered
    */
-  protected ClientAttribute loadingFlag;
+  protected SingleClientAttribute loadingFlag;
 
   /**
    * The cached value of the '{@link #getOutcomes() <em>Outcomes</em>}' containment reference list.
@@ -230,11 +230,11 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<ClientAttribute> getStateElements()
+  public EList<SingleClientAttribute> getStateElements()
   {
     if (stateElements == null)
     {
-      stateElements = new EObjectResolvingEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS);
+      stateElements = new EObjectResolvingEList<SingleClientAttribute>(SingleClientAttribute.class, this, AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS);
     }
     return stateElements;
   }
@@ -290,12 +290,12 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public ClientAttribute getLoadingFlag()
+  public SingleClientAttribute getLoadingFlag()
   {
     if (loadingFlag != null && loadingFlag.eIsProxy())
     {
       InternalEObject oldLoadingFlag = (InternalEObject)loadingFlag;
-      loadingFlag = (ClientAttribute)eResolveProxy(oldLoadingFlag);
+      loadingFlag = (SingleClientAttribute)eResolveProxy(oldLoadingFlag);
       if (loadingFlag != oldLoadingFlag)
       {
         if (eNotificationRequired())
@@ -310,7 +310,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * <!-- end-user-doc -->
    * @generated
    */
-  public ClientAttribute basicGetLoadingFlag()
+  public SingleClientAttribute basicGetLoadingFlag()
   {
     return loadingFlag;
   }
@@ -321,9 +321,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public void setLoadingFlag(ClientAttribute newLoadingFlag)
+  public void setLoadingFlag(SingleClientAttribute newLoadingFlag)
   {
-    ClientAttribute oldLoadingFlag = loadingFlag;
+    SingleClientAttribute oldLoadingFlag = loadingFlag;
     loadingFlag = newLoadingFlag;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG, oldLoadingFlag, loadingFlag));
@@ -415,13 +415,13 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
         getStateElements().clear();
-        getStateElements().addAll((Collection<? extends ClientAttribute>)newValue);
+        getStateElements().addAll((Collection<? extends SingleClientAttribute>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         setServerCall((HttpServerAce)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:
-        setLoadingFlag((ClientAttribute)newValue);
+        setLoadingFlag((SingleClientAttribute)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();
@@ -457,7 +457,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         setServerCall((HttpServerAce)null);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:
-        setLoadingFlag((ClientAttribute)null);
+        setLoadingFlag((SingleClientAttribute)null);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();

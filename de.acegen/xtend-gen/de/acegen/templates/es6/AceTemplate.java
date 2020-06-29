@@ -15,9 +15,13 @@
  */
 package de.acegen.templates.es6;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.GroupedClientAttribute;
+import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -43,9 +47,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import CryptoJS from \"crypto-js\";");
     _builder.newLine();
-    _builder.append("import * as ReadAppState from \"../../gen/ace/ReadAppState\";");
-    _builder.newLine();
-    _builder.append("import * as WriteAppState from \"../../gen/ace/WriteAppState\";");
+    _builder.append("import * as AppState from \"../../gen/ace/AppState\";");
     _builder.newLine();
     _builder.append("import * as App from \"./App\";");
     _builder.newLine();
@@ -53,6 +55,19 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class AppUtils {");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("static initEventListenersAndActionFactories() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// add EventListenerRegistration.init() of all modules");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// add ActionFactoryRegistrationTodo.init() of all modules");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
@@ -84,7 +99,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("WriteAppState.setInitialState(initialAppState);");
+    _builder.append("AppState.setInitialAppState(initialAppState);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -94,7 +109,7 @@ public class AceTemplate {
     _builder.append("static renderNewState() {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("App.render(ReadAppState.getState());");
+    _builder.append("App.render(AppState.getAppState());");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -602,22 +617,13 @@ public class AceTemplate {
     _builder.append("}*/");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export function render(newAppState) {");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("container.setState(newAppState);");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("window.onhashchange = () => {");
     _builder.newLine();
     _builder.append("};");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("// add EventListenerRegistration.init() of all modules");
     _builder.newLine();
-    _builder.append("// add ActionFactoryRegistrationTodo.init() of all modules");
+    _builder.append("AppUtils.initEventListenersAndActionFactories();");
     _builder.newLine();
     _builder.newLine();
     _builder.append("AppUtils.start();");
@@ -725,9 +731,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import Utils from \"./Utils\";");
     _builder.newLine();
-    _builder.append("import * as ReadAppState from \"./ReadAppState\";");
-    _builder.newLine();
-    _builder.append("import * as WriteAppState from \"./WriteAppState\";");
+    _builder.append("import * as AppState from \"./AppState\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ACEController {");
@@ -925,7 +929,7 @@ public class AceTemplate {
     _builder.append("static applyNextActions() {");
     _builder.newLine();
     _builder.append("    \t");
-    _builder.append("ACEController.addItemToTimeLine({appState: ReadAppState.getState()});");
+    _builder.append("ACEController.addItemToTimeLine({appState: AppState.getAppState()});");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("let action = ACEController.actionQueue.shift();");
@@ -1109,7 +1113,7 @@ public class AceTemplate {
     _builder.append("if (item.appState && !appStateWasSet) {");
     _builder.newLine();
     _builder.append("\t\t\t    ");
-    _builder.append("WriteAppState.setInitialState(item.appState);");
+    _builder.append("AppState.setInitialAppState(item.appState);");
     _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("appStateWasSet = true;");
@@ -2294,6 +2298,14 @@ public class AceTemplate {
     _builder.append("export let appState;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("export function getAppState() {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("return AppUtils.deepCopy(state);");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export function setInitialAppState(initialAppState) {");
     _builder.newLine();
     _builder.append("\t");
@@ -2312,342 +2324,335 @@ public class AceTemplate {
     return _builder.toString();
   }
   
-  public String generateAppStateRec(final ClientAttribute it) {
+  private CharSequence getStateFunction(final SingleClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.append("export function get_");
+    String _functionName = this._es6Extension.functionName(it);
+    _builder.append(_functionName);
+    _builder.append("() {");
+    _builder.newLineIfNotEmpty();
     {
-      if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
-        _builder.append("export function get_");
-        String _functionName = this._es6Extension.functionName(it);
-        _builder.append(_functionName);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash = it.isHash();
-          if (_isHash) {
-            _builder.append("\t");
-            _builder.append("return location.hash;");
-            _builder.newLine();
-          } else {
-            boolean _isStorage = it.isStorage();
-            if (_isStorage) {
+      boolean _isHash = it.isHash();
+      if (_isHash) {
+        _builder.append("\t");
+        _builder.append("return location.hash;");
+        _builder.newLine();
+      } else {
+        boolean _isStorage = it.isStorage();
+        if (_isStorage) {
+          _builder.append("\t");
+          _builder.append("localStorage.getItem(\"");
+          String _name = it.getName();
+          _builder.append(_name, "\t");
+          _builder.append("\");");
+          _builder.newLineIfNotEmpty();
+        } else {
+          {
+            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final SingleClientAttribute attribute : _allParentAttributes) {
               _builder.append("\t");
-              _builder.append("return localStorage.getItem(\"");
-              String _name = it.getName();
-              _builder.append(_name, "\t");
-              _builder.append("\");");
+              _builder.append("if (!");
+              String _elementPath = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath, "\t");
+              _builder.append(") {");
               _builder.newLineIfNotEmpty();
-            } else {
-              {
-                List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute : _allParentAttributes) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath = this._es6Extension.elementPath(attribute);
-                  _builder.append(_elementPath, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  _builder.append("return undefined;");
-                  _builder.newLine();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
-              }
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("return undefined;");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+          {
+            if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
               _builder.append("\t");
               _builder.append("return ");
               String _elementPath_1 = this._es6Extension.elementPath(it);
               _builder.append(_elementPath_1, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function set_");
-        String _functionName_1 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_1);
-        _builder.append("(eventData) {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_1 = it.isHash();
-          if (_isHash_1) {
-            _builder.append("\t");
-            _builder.append("location.hash = eventData.");
-            String _name_1 = it.getName();
-            _builder.append(_name_1, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            boolean _isStorage_1 = it.isStorage();
-            if (_isStorage_1) {
-              _builder.append("\t");
-              _builder.append("localStorage.setItem(\"");
-              String _name_2 = it.getName();
-              _builder.append(_name_2, "\t");
-              _builder.append("\", eventData.");
-              String _name_3 = it.getName();
-              _builder.append(_name_3, "\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
             } else {
-              {
-                List<ClientAttribute> _allParentAttributes_1 = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute_1 : _allParentAttributes_1) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath_2 = this._es6Extension.elementPath(attribute_1);
-                  _builder.append(_elementPath_2, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  String _elementPath_3 = this._es6Extension.elementPath(attribute_1);
-                  _builder.append(_elementPath_3, "\t\t");
-                  _builder.append(" = {};");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
-              }
-              _builder.append("\t");
-              String _elementPath_4 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_4, "\t");
-              _builder.append(" = eventData.");
-              String _name_4 = it.getName();
-              _builder.append(_name_4, "\t");
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function reset_");
-        String _functionName_2 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_2);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_2 = it.isHash();
-          if (_isHash_2) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_2 = it.isStorage();
-            if (_isStorage_2) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_5 = it.getName();
-              _builder.append(_name_5, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              {
-                List<ClientAttribute> _allParentAttributes_2 = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute_2 : _allParentAttributes_2) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath_5 = this._es6Extension.elementPath(attribute_2);
-                  _builder.append(_elementPath_5, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  _builder.append("return;");
-                  _builder.newLine();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
-              }
-              _builder.append("\t");
-              String _elementPath_6 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_6, "\t");
-              _builder.append(" = undefined;");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-      } else {
-        _builder.append("export function get_");
-        String _functionName_3 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_3);
-        _builder.append("() {");
-        _builder.newLineIfNotEmpty();
-        {
-          boolean _isHash_3 = it.isHash();
-          if (_isHash_3) {
-            _builder.append("\t");
-            _builder.append("return location.hash;");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_3 = it.isStorage();
-            if (_isStorage_3) {
-              _builder.append("\t");
-              _builder.append("localStorage.getItem(\"");
-              String _name_6 = it.getName();
-              _builder.append(_name_6, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              {
-                List<ClientAttribute> _allParentAttributes_3 = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute_3 : _allParentAttributes_3) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath_7 = this._es6Extension.elementPath(attribute_3);
-                  _builder.append(_elementPath_7, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  _builder.append("return undefined;");
-                  _builder.newLine();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
-              }
               _builder.append("\t");
               _builder.append("return AppUtils.deepCopy(");
-              String _elementPath_8 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_8, "\t");
+              String _elementPath_2 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_2, "\t");
               _builder.append(");");
               _builder.newLineIfNotEmpty();
             }
           }
         }
-        _builder.append("}");
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence setStateFunction(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("export function set_");
+    String _functionName = this._es6Extension.functionName(it);
+    _builder.append(_functionName);
+    _builder.append("(eventData) {");
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _isHash = it.isHash();
+      if (_isHash) {
+        _builder.append("\t");
+        _builder.append("location.hash = eventData.");
+        String _name = it.getName();
+        _builder.append(_name, "\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      } else {
+        boolean _isStorage = it.isStorage();
+        if (_isStorage) {
+          _builder.append("\t");
+          _builder.append("localStorage.setItem(\"");
+          String _name_1 = it.getName();
+          _builder.append(_name_1, "\t");
+          _builder.append("\", eventData.");
+          String _name_2 = it.getName();
+          _builder.append(_name_2, "\t");
+          _builder.append(");");
+          _builder.newLineIfNotEmpty();
+        } else {
+          {
+            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final SingleClientAttribute attribute : _allParentAttributes) {
+              _builder.append("\t");
+              _builder.append("if (!");
+              String _elementPath = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              String _elementPath_1 = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath_1, "\t\t");
+              _builder.append(" = {};");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+          _builder.append("\t");
+          String _elementPath_2 = this._es6Extension.elementPath(it);
+          _builder.append(_elementPath_2, "\t");
+          _builder.append(" = eventData.");
+          String _name_3 = it.getName();
+          _builder.append(_name_3, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence setStateFunctionForGroup(final SingleClientAttribute it, final List<ClientAttribute> attributeGroup) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("export function set_");
+    String _functionName = this._es6Extension.functionName(it);
+    _builder.append(_functionName);
+    _builder.append("(eventData) {");
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _isHash = it.isHash();
+      if (_isHash) {
+        _builder.append("\t");
+        _builder.append("location.hash = eventData.");
+        String _name = it.getName();
+        _builder.append(_name, "\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      } else {
+        boolean _isStorage = it.isStorage();
+        if (_isStorage) {
+          _builder.append("\t");
+          _builder.append("localStorage.setItem(\"");
+          String _name_1 = it.getName();
+          _builder.append(_name_1, "\t");
+          _builder.append("\", eventData.");
+          String _name_2 = it.getName();
+          _builder.append(_name_2, "\t");
+          _builder.append(");");
+          _builder.newLineIfNotEmpty();
+        } else {
+          {
+            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final SingleClientAttribute attribute : _allParentAttributes) {
+              _builder.append("\t");
+              _builder.append("if (!");
+              String _elementPath = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              String _elementPath_1 = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath_1, "\t\t");
+              _builder.append(" = {};");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+          _builder.append("\t");
+          String _elementPath_2 = this._es6Extension.elementPath(it);
+          _builder.append(_elementPath_2, "\t");
+          _builder.append(" = eventData.");
+          String _name_3 = it.getName();
+          _builder.append(_name_3, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    {
+      for(final ClientAttribute attribute_1 : attributeGroup) {
+        {
+          if (((!Objects.equal(attribute_1, it)) && (attribute_1 instanceof SingleClientAttribute))) {
+            _builder.append("\t");
+            _builder.append("reset_");
+            String _functionName_1 = this._es6Extension.functionName(((SingleClientAttribute) attribute_1));
+            _builder.append(_functionName_1, "\t");
+            _builder.append("();");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence resetStateFunction(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("export function reset_");
+    String _functionName = this._es6Extension.functionName(it);
+    _builder.append(_functionName);
+    _builder.append("() {");
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _isHash = it.isHash();
+      if (_isHash) {
+        _builder.append("\t");
+        _builder.append("location.hash = \"\";");
         _builder.newLine();
-        _builder.newLine();
-        _builder.append("export function set_");
-        String _functionName_4 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_4);
+      } else {
+        boolean _isStorage = it.isStorage();
+        if (_isStorage) {
+          _builder.append("\t");
+          _builder.append("localStorage.removeItem(\"");
+          String _name = it.getName();
+          _builder.append(_name, "\t");
+          _builder.append("\");");
+          _builder.newLineIfNotEmpty();
+        } else {
+          {
+            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final SingleClientAttribute attribute : _allParentAttributes) {
+              _builder.append("\t");
+              _builder.append("if (!");
+              String _elementPath = this._es6Extension.elementPath(attribute);
+              _builder.append(_elementPath, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("return;");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+          _builder.append("\t");
+          String _elementPath_1 = this._es6Extension.elementPath(it);
+          _builder.append(_elementPath_1, "\t");
+          _builder.append(" = undefined;");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence mergeStateFunction(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage()))) {
+        _builder.append("export function merge_");
+        String _functionName = this._es6Extension.functionName(it);
+        _builder.append(_functionName);
         _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
         {
-          boolean _isHash_4 = it.isHash();
-          if (_isHash_4) {
-            _builder.append("\t");
-            _builder.append("location.hash = eventData.");
-            String _name_7 = it.getName();
-            _builder.append(_name_7, "\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          } else {
-            boolean _isStorage_4 = it.isStorage();
-            if (_isStorage_4) {
-              _builder.append("\t");
-              _builder.append("localStorage.setItem(\"");
-              String _name_8 = it.getName();
-              _builder.append(_name_8, "\t");
-              _builder.append("\", eventData.");
-              String _name_9 = it.getName();
-              _builder.append(_name_9, "\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              {
-                List<ClientAttribute> _allParentAttributes_4 = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute_4 : _allParentAttributes_4) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath_9 = this._es6Extension.elementPath(attribute_4);
-                  _builder.append(_elementPath_9, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  String _elementPath_10 = this._es6Extension.elementPath(attribute_4);
-                  _builder.append(_elementPath_10, "\t\t");
-                  _builder.append(" = {};");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
-              }
-              _builder.append("\t");
-              String _elementPath_11 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_11, "\t");
-              _builder.append(" = eventData.");
-              String _name_10 = it.getName();
-              _builder.append(_name_10, "\t");
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-        {
-          if (((!it.isHash()) && (!it.isStorage()))) {
-            _builder.append("export function merge_");
-            String _functionName_5 = this._es6Extension.functionName(it);
-            _builder.append(_functionName_5);
-            _builder.append("(eventData) {");
-            _builder.newLineIfNotEmpty();
-            {
-              List<ClientAttribute> _allParentAttributes_5 = this._es6Extension.allParentAttributes(it);
-              for(final ClientAttribute attr : _allParentAttributes_5) {
-                _builder.append("\t");
-                _builder.append("if (!");
-                String _elementPath_12 = this._es6Extension.elementPath(attr);
-                _builder.append(_elementPath_12, "\t");
-                _builder.append(") {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("\t");
-                String _elementPath_13 = this._es6Extension.elementPath(attr);
-                _builder.append(_elementPath_13, "\t\t");
-                _builder.append(" = {};");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("}");
-                _builder.newLine();
-              }
-            }
+          List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+          for(final SingleClientAttribute attr : _allParentAttributes) {
             _builder.append("\t");
             _builder.append("if (!");
-            String _elementPath_14 = this._es6Extension.elementPath(it);
-            _builder.append(_elementPath_14, "\t");
+            String _elementPath = this._es6Extension.elementPath(attr);
+            _builder.append(_elementPath, "\t");
             _builder.append(") {");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            String _elementPath_15 = this._es6Extension.elementPath(it);
-            _builder.append(_elementPath_15, "\t\t");
+            _builder.append("\t");
+            _builder.append("\t");
+            String _elementPath_1 = this._es6Extension.elementPath(attr);
+            _builder.append(_elementPath_1, "\t\t");
             _builder.append(" = {};");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("}");
             _builder.newLine();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("if (!");
+        String _elementPath_2 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_2, "\t");
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        String _elementPath_3 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_3, "\t\t");
+        _builder.append(" = {};");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+        {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          for(final ClientAttribute attribute : _attributes) {
             {
-              EList<ClientAttribute> _attributes = it.getAttributes();
-              for(final ClientAttribute attribute_5 : _attributes) {
+              if ((attribute instanceof SingleClientAttribute)) {
                 _builder.append("\t");
                 _builder.append("if (eventData.");
-                String _name_11 = attribute_5.getName();
-                _builder.append(_name_11, "\t");
+                String _name = ((SingleClientAttribute)attribute).getName();
+                _builder.append(_name, "\t");
                 _builder.append(" !== undefined) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
-                String _elementPath_16 = this._es6Extension.elementPath(attribute_5);
-                _builder.append(_elementPath_16, "\t\t");
+                String _elementPath_4 = this._es6Extension.elementPath(((SingleClientAttribute)attribute));
+                _builder.append(_elementPath_4, "\t\t");
                 _builder.append(" = eventData.");
-                String _name_12 = attribute_5.getName();
-                _builder.append(_name_12, "\t\t");
+                String _name_1 = ((SingleClientAttribute)attribute).getName();
+                _builder.append(_name_1, "\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
@@ -2655,76 +2660,190 @@ public class AceTemplate {
                 _builder.newLine();
               }
             }
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence mergeStateFunctionForGroup(final SingleClientAttribute it, final List<ClientAttribute> attributeGroup) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage()))) {
+        _builder.append("export function merge_");
+        String _functionName = this._es6Extension.functionName(it);
+        _builder.append(_functionName);
+        _builder.append("(eventData) {");
+        _builder.newLineIfNotEmpty();
+        {
+          List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+          for(final SingleClientAttribute attr : _allParentAttributes) {
+            _builder.append("\t");
+            _builder.append("if (!");
+            String _elementPath = this._es6Extension.elementPath(attr);
+            _builder.append(_elementPath, "\t");
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            String _elementPath_1 = this._es6Extension.elementPath(attr);
+            _builder.append(_elementPath_1, "\t\t");
+            _builder.append(" = {};");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
             _builder.append("}");
             _builder.newLine();
           }
         }
-        _builder.newLine();
-        _builder.append("export function reset_");
-        String _functionName_6 = this._es6Extension.functionName(it);
-        _builder.append(_functionName_6);
-        _builder.append("() {");
+        _builder.append("\t");
+        _builder.append("if (!");
+        String _elementPath_2 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_2, "\t");
+        _builder.append(") {");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        String _elementPath_3 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_3, "\t\t");
+        _builder.append(" = {};");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
         {
-          boolean _isHash_5 = it.isHash();
-          if (_isHash_5) {
-            _builder.append("\t");
-            _builder.append("location.hash = \"\";");
-            _builder.newLine();
-          } else {
-            boolean _isStorage_5 = it.isStorage();
-            if (_isStorage_5) {
-              _builder.append("\t");
-              _builder.append("localStorage.removeItem(\"");
-              String _name_13 = it.getName();
-              _builder.append(_name_13, "\t");
-              _builder.append("\");");
-              _builder.newLineIfNotEmpty();
-            } else {
-              {
-                List<ClientAttribute> _allParentAttributes_6 = this._es6Extension.allParentAttributes(it);
-                for(final ClientAttribute attribute_6 : _allParentAttributes_6) {
-                  _builder.append("\t");
-                  _builder.append("if (!");
-                  String _elementPath_17 = this._es6Extension.elementPath(attribute_6);
-                  _builder.append(_elementPath_17, "\t");
-                  _builder.append(") {");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("\t");
-                  _builder.append("return;");
-                  _builder.newLine();
-                  _builder.append("\t");
-                  _builder.append("}");
-                  _builder.newLine();
-                }
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          for(final ClientAttribute attribute : _attributes) {
+            {
+              if ((attribute instanceof SingleClientAttribute)) {
+                _builder.append("\t");
+                _builder.append("if (eventData.");
+                String _name = ((SingleClientAttribute)attribute).getName();
+                _builder.append(_name, "\t");
+                _builder.append(" !== undefined) {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                String _elementPath_4 = this._es6Extension.elementPath(((SingleClientAttribute)attribute));
+                _builder.append(_elementPath_4, "\t\t");
+                _builder.append(" = eventData.");
+                String _name_1 = ((SingleClientAttribute)attribute).getName();
+                _builder.append(_name_1, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("}");
+                _builder.newLine();
               }
-              _builder.append("\t");
-              String _elementPath_18 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_18, "\t");
-              _builder.append(" = undefined;");
-              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+        {
+          for(final ClientAttribute attribute_1 : attributeGroup) {
+            {
+              if (((!Objects.equal(attribute_1, it)) && (attribute_1 instanceof SingleClientAttribute))) {
+                _builder.append("\t");
+                _builder.append("reset_");
+                String _functionName_1 = this._es6Extension.functionName(((SingleClientAttribute) attribute_1));
+                _builder.append(_functionName_1, "\t");
+                _builder.append("();");
+                _builder.newLineIfNotEmpty();
+              }
             }
           }
         }
         _builder.append("}");
         _builder.newLine();
         _builder.newLine();
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence childAttributes(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
         {
-          if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          for(final ClientAttribute attribute : _attributes) {
+            String _generateAppStateRec = this.generateAppStateRec(attribute);
+            _builder.append(_generateAppStateRec);
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  protected String _generateAppStateRec(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    CharSequence _stateFunction = this.getStateFunction(it);
+    _builder.append(_stateFunction);
+    _builder.newLineIfNotEmpty();
+    CharSequence _setStateFunction = this.setStateFunction(it);
+    _builder.append(_setStateFunction);
+    _builder.newLineIfNotEmpty();
+    CharSequence _resetStateFunction = this.resetStateFunction(it);
+    _builder.append(_resetStateFunction);
+    _builder.newLineIfNotEmpty();
+    CharSequence _mergeStateFunction = this.mergeStateFunction(it);
+    _builder.append(_mergeStateFunction);
+    _builder.newLineIfNotEmpty();
+    CharSequence _childAttributes = this.childAttributes(it);
+    _builder.append(_childAttributes);
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+  
+  protected String _generateAppStateRec(final GroupedClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((it.getAttributeGroup() == null) || (((Object[])Conversions.unwrapArray(it.getAttributeGroup(), Object.class)).length > 0))) {
+        {
+          EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
+          for(final ClientAttribute attribute : _attributeGroup) {
             {
-              EList<ClientAttribute> _attributes_1 = it.getAttributes();
-              for(final ClientAttribute attribute_7 : _attributes_1) {
-                String _generateAppStateRec = this.generateAppStateRec(attribute_7);
+              if ((attribute instanceof SingleClientAttribute)) {
+                CharSequence _stateFunction = this.getStateFunction(((SingleClientAttribute)attribute));
+                _builder.append(_stateFunction);
+                _builder.newLineIfNotEmpty();
+                CharSequence _setStateFunctionForGroup = this.setStateFunctionForGroup(((SingleClientAttribute)attribute), it.getAttributeGroup());
+                _builder.append(_setStateFunctionForGroup);
+                _builder.newLineIfNotEmpty();
+                CharSequence _resetStateFunction = this.resetStateFunction(((SingleClientAttribute)attribute));
+                _builder.append(_resetStateFunction);
+                _builder.newLineIfNotEmpty();
+                CharSequence _mergeStateFunctionForGroup = this.mergeStateFunctionForGroup(((SingleClientAttribute)attribute), it.getAttributeGroup());
+                _builder.append(_mergeStateFunctionForGroup);
+                _builder.newLineIfNotEmpty();
+                CharSequence _childAttributes = this.childAttributes(((SingleClientAttribute)attribute));
+                _builder.append(_childAttributes);
+                _builder.newLineIfNotEmpty();
+              } else {
+                String _generateAppStateRec = this.generateAppStateRec(attribute);
                 _builder.append(_generateAppStateRec);
                 _builder.newLineIfNotEmpty();
               }
             }
           }
         }
-        _builder.newLine();
       }
     }
     return _builder.toString();
+  }
+  
+  public String generateAppStateRec(final ClientAttribute it) {
+    if (it instanceof GroupedClientAttribute) {
+      return _generateAppStateRec((GroupedClientAttribute)it);
+    } else if (it instanceof SingleClientAttribute) {
+      return _generateAppStateRec((SingleClientAttribute)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
   }
 }

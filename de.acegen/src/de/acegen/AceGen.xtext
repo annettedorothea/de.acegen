@@ -35,9 +35,9 @@ HttpClient:
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
 		('(' input += Input (',' input += Input)* ')' )?  
-		('appState' '(' stateElements += [ClientAttribute | QualifiedName] (',' stateElements += [ClientAttribute | QualifiedName])* ')' )?  
+		('appState' '(' stateElements += [SingleClientAttribute | QualifiedName] (',' stateElements += [SingleClientAttribute | QualifiedName])* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
+	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -52,7 +52,7 @@ HttpClientOutcome:
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [SingleClientAttribute | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
@@ -60,6 +60,10 @@ HttpClientStateFunctionType:
 ;
 
 ClientAttribute:
+	SingleClientAttribute | 'group' GroupedClientAttribute
+;
+
+SingleClientAttribute:
 	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
 	(type = Type)?
@@ -70,6 +74,10 @@ ClientAttribute:
 	('{'
 		attributes += ClientAttribute*
 	'}')?
+;
+
+GroupedClientAttribute:
+	'{' attributeGroup += ClientAttribute ( attributeGroup += ClientAttribute* ) '}' 
 ;
 
 ClientScenario:
@@ -102,11 +110,11 @@ ServerCall:
 ;
 
 TriggeredAction:
-	httpClientAce = [HttpClientAce | QualifiedName ] '(' inputValues += InputValue (',' inputValues += InputValue)* ')'
+	httpClientAce = [HttpClientAce | QualifiedName ] ('(' inputValues += InputValue (',' inputValues += InputValue)* ')')?
 ;
 
 StateVerification:
-	name = ID stateRef = [ClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
+	name = ID stateRef = [SingleClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
 ;
 
 JsonObjectClient:
@@ -117,10 +125,10 @@ JsonObjectClient:
 	'}';
 
 JsonMemberClient:
-	attribute=[ClientAttribute | QualifiedName] ':' value=JsonValueClient;
+	attribute=[SingleClientAttribute | QualifiedName] ':' value=JsonValueClient;
 	
 JsonValueClient:
-	JsonObjectClient | StringType | JsonArrayClient | BooleanType | NullType | LongType | JsonDateTime;
+	JsonObjectClient | StringType | JsonArrayClient | BooleanType | NullType | LongType | JsonDateTime | UndefinedType;
 
 JsonArrayClient:
 	{JsonArrayClient} '[' (values+=JsonValueClient)? (',' values+=JsonValueClient)* ']';
@@ -326,7 +334,11 @@ BooleanType:
 ;
 
 NullType:
-	null = JsonNull
+	null ?= 'null'
+;
+
+UndefinedType:
+	undefined ?= 'undefined'
 ;
 
 LongType:
@@ -336,9 +348,6 @@ LongType:
 JsonBoolean:
   'true' | 'false';
 
-JsonNull:
-  'null';
-  
 PrimitiveValue:
 	string = STRING | long = INT
 ;

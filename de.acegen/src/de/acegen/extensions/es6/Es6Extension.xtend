@@ -20,6 +20,7 @@ package de.acegen.extensions.es6
 import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
+import de.acegen.aceGen.SingleClientAttribute
 import java.util.ArrayList
 import java.util.List
 
@@ -30,31 +31,46 @@ class Es6Extension {
 
 	def String appStateFunction(HttpClientStateFunction it) '''AppState.«getStateFunctionType»_«stateElement.functionName»'''
 	
-	def String functionName(ClientAttribute it) '''«functionNameRec("")»'''
+	def String functionName(SingleClientAttribute it) '''«functionNameRec("")»'''
 	
-	def String functionNameRec(ClientAttribute it, String suffix) {
-		if (eContainer !== null && eContainer instanceof ClientAttribute) {
-			return (eContainer as ClientAttribute).functionNameRec(name) + '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
+	def String functionNameRec(SingleClientAttribute it, String suffix) {
+		val parent = findNextSingleClientAttributeParent
+		if (parent !== null) {
+			return parent.functionNameRec(name) + '''«IF suffix.length > 0»_«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0»_«suffix»«ENDIF»''';
 		}
 	}
 
-	def String elementPath(ClientAttribute it) '''appState.«elementPathRec("")»'''
+	def String elementPath(SingleClientAttribute it) '''appState.«elementPathRec("")»'''
 	
-	def String elementPathRec(ClientAttribute it, String suffix) {
-		if (eContainer !== null && eContainer instanceof ClientAttribute) {
-			return (eContainer as ClientAttribute).elementPathRec( name) + '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
+	def String elementPathRec(SingleClientAttribute it, String suffix) {
+		val parent = findNextSingleClientAttributeParent
+		if (parent !== null) {
+			return parent.elementPathRec( name) + '''«IF suffix.length > 0».«suffix»«ENDIF»''' 		
 		} else {
 			return getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
 		}
 	}
-
-	def List<ClientAttribute> allParentAttributes(ClientAttribute it) {
-		var attributes = new ArrayList<ClientAttribute>();
+	
+	private def findNextSingleClientAttributeParent(ClientAttribute it) {
 		var parent = eContainer;
-		while (parent instanceof ClientAttribute) {
-			attributes.add(0, parent as ClientAttribute)
+		while (parent !== null) {
+			if (parent instanceof SingleClientAttribute){
+				return parent
+			}
+			parent = parent.eContainer;
+		}
+		return null;
+	}
+
+	def List<SingleClientAttribute> allParentAttributes(ClientAttribute it) {
+		var attributes = new ArrayList<SingleClientAttribute>();
+		var parent = eContainer;
+		while (parent !== null) {
+			if (parent instanceof SingleClientAttribute) {
+				attributes.add(0, parent as SingleClientAttribute)
+			}
 			parent = parent.eContainer;
 		}
 		return attributes

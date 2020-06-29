@@ -111,6 +111,16 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientAttributeAdapter();
       }
       @Override
+      public Adapter caseSingleClientAttribute(SingleClientAttribute object)
+      {
+        return createSingleClientAttributeAdapter();
+      }
+      @Override
+      public Adapter caseGroupedClientAttribute(GroupedClientAttribute object)
+      {
+        return createGroupedClientAttributeAdapter();
+      }
+      @Override
       public Adapter caseClientScenario(ClientScenario object)
       {
         return createClientScenarioAdapter();
@@ -331,6 +341,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createNullTypeAdapter();
       }
       @Override
+      public Adapter caseUndefinedType(UndefinedType object)
+      {
+        return createUndefinedTypeAdapter();
+      }
+      @Override
       public Adapter caseLongType(LongType object)
       {
         return createLongTypeAdapter();
@@ -463,6 +478,36 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.SingleClientAttribute <em>Single Client Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.SingleClientAttribute
+   * @generated
+   */
+  public Adapter createSingleClientAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.GroupedClientAttribute <em>Grouped Client Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.GroupedClientAttribute
+   * @generated
+   */
+  public Adapter createGroupedClientAttributeAdapter()
   {
     return null;
   }
@@ -1123,6 +1168,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNullTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.UndefinedType <em>Undefined Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.UndefinedType
+   * @generated
+   */
+  public Adapter createUndefinedTypeAdapter()
   {
     return null;
   }

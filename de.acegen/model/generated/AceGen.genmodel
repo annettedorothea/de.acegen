@@ -38,15 +38,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateFunction/stateFunctionType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientStateFunction/stateElement"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//ClientAttribute">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/notNull"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/list"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientAttribute/model"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/hash"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/storage"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientAttribute/attributes"/>
+    <genClasses ecoreClass="AceGen.ecore#//ClientAttribute"/>
+    <genClasses ecoreClass="AceGen.ecore#//SingleClientAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/notNull"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/model"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/hash"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/storage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//GroupedClientAttribute">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//GroupedClientAttribute/attributeGroup"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ClientScenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientScenario/name"/>
@@ -244,6 +248,9 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//NullType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NullType/null"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//UndefinedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//UndefinedType/undefined"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//LongType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//LongType/long"/>

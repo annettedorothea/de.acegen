@@ -13,7 +13,7 @@ package de.acegen.aceGen;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.NullType#getNull <em>Null</em>}</li>
+ *   <li>{@link de.acegen.aceGen.NullType#isNull <em>Null</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getNullType()
@@ -27,21 +27,21 @@ public interface NullType extends JsonValueClient, JsonValue
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Null</em>' attribute.
-   * @see #setNull(String)
+   * @see #setNull(boolean)
    * @see de.acegen.aceGen.AceGenPackage#getNullType_Null()
    * @model
    * @generated
    */
-  String getNull();
+  boolean isNull();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NullType#getNull <em>Null</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.NullType#isNull <em>Null</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Null</em>' attribute.
-   * @see #getNull()
+   * @see #isNull()
    * @generated
    */
-  void setNull(String value);
+  void setNull(boolean value);
 
 } // NullType

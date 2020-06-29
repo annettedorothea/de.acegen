@@ -148,7 +148,7 @@ class CommandTemplate {
 							new «eventName(outcome)»(this.commandData).publish();
 						«ENDIF»
 						«FOR aceOperation : outcome.aceOperations»
-							new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam»«ENDFOR»)).publish();
+							new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish();
 						«ENDFOR»
 						break;
 				«ENDFOR»
