@@ -140,7 +140,7 @@ public class CommandTemplate {
       EList<SingleClientAttribute> _stateElements = it.getStateElements();
       for(final SingleClientAttribute stateElement : _stateElements) {
         _builder.append("        ");
-        _builder.append("this.");
+        _builder.append("this.commandData.");
         String _name_5 = stateElement.getName();
         _builder.append(_name_5, "        ");
         _builder.append(" = AppState.get_");
@@ -475,7 +475,7 @@ public class CommandTemplate {
       EList<SingleClientAttribute> _stateElements = it.getStateElements();
       for(final SingleClientAttribute stateElement : _stateElements) {
         _builder.append("        ");
-        _builder.append("this.");
+        _builder.append("this.commandData.");
         String _name_5 = stateElement.getName();
         _builder.append(_name_5, "        ");
         _builder.append(" = AppState.get_");

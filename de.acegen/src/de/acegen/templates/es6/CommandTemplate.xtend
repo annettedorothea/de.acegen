@@ -59,7 +59,7 @@ class CommandTemplate {
 		        	this.«outcome.getName» = "«outcome.getName»";
 		        «ENDFOR»
 		        «FOR stateElement : stateElements»
-		        	this.«stateElement.name» = AppState.get_«stateElement.functionName»;
+		        	this.commandData.«stateElement.name» = AppState.get_«stateElement.functionName»;
 		        «ENDFOR»
 		    }
 		
@@ -136,7 +136,7 @@ class CommandTemplate {
 		        	this.«outcome.getName» = "«outcome.getName»";
 		        «ENDFOR»
 		        «FOR stateElement : stateElements»
-		        	this.«stateElement.name» = AppState.get_«stateElement.functionName»;
+		        	this.commandData.«stateElement.name» = AppState.get_«stateElement.functionName»;
 		        «ENDFOR»
 		    }
 		
