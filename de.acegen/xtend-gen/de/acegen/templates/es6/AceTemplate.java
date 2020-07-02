@@ -2301,7 +2301,7 @@ public class AceTemplate {
     _builder.append("export function getAppState() {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("return AppUtils.deepCopy(state);");
+    _builder.append("return AppUtils.deepCopy(appState);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -2341,7 +2341,7 @@ public class AceTemplate {
         boolean _isStorage = it.isStorage();
         if (_isStorage) {
           _builder.append("\t");
-          _builder.append("localStorage.getItem(\"");
+          _builder.append("return localStorage.getItem(\"");
           String _name = it.getName();
           _builder.append(_name, "\t");
           _builder.append("\");");

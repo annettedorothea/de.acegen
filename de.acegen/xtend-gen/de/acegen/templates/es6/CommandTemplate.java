@@ -153,7 +153,7 @@ public class CommandTemplate {
         _builder.append(" = AppState.get_");
         String _functionName = this._es6Extension.functionName(ref.getStateElement());
         _builder.append(_functionName, "        ");
-        _builder.append(";");
+        _builder.append("();");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -495,7 +495,7 @@ public class CommandTemplate {
         _builder.append(" = AppState.get_");
         String _functionName = this._es6Extension.functionName(ref.getStateElement());
         _builder.append(_functionName, "        ");
-        _builder.append(";");
+        _builder.append("();");
         _builder.newLineIfNotEmpty();
       }
     }

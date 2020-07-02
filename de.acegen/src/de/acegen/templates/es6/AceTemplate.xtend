@@ -907,7 +907,7 @@ class AceTemplate {
 		export let appState;
 		
 		export function getAppState() {
-			return AppUtils.deepCopy(state);
+			return AppUtils.deepCopy(appState);
 		}
 		
 		export function setInitialAppState(initialAppState) {
@@ -924,7 +924,7 @@ class AceTemplate {
 			«IF isHash»
 				return location.hash;
 			«ELSEIF isStorage»
-				localStorage.getItem("«getName»");
+				return localStorage.getItem("«getName»");
 			«ELSE»
 				«FOR attribute: allParentAttributes»
 					if (!«attribute.elementPath») {

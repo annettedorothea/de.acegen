@@ -59,7 +59,7 @@ class CommandTemplate {
 		        	this.«outcome.getName» = "«outcome.getName»";
 		        «ENDFOR»
 		        «FOR ref : refs»
-		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»;
+		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
 		        «ENDFOR»
 		    }
 		
@@ -136,7 +136,7 @@ class CommandTemplate {
 		        	this.«outcome.getName» = "«outcome.getName»";
 		        «ENDFOR»
 		        «FOR ref : refs»
-		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»;
+		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
 		        «ENDFOR»
 		    }
 		
