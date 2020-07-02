@@ -994,7 +994,7 @@ class AceTemplate {
 						return;
 					}
 				«ENDFOR»
-				«elementPath» = undefined;
+				«elementPath» = null;
 			«ENDIF»
 		}
 		

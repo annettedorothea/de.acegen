@@ -2581,7 +2581,7 @@ public class AceTemplate {
           _builder.append("\t");
           String _elementPath_1 = this._es6Extension.elementPath(it);
           _builder.append(_elementPath_1, "\t");
-          _builder.append(" = undefined;");
+          _builder.append(" = null;");
           _builder.newLineIfNotEmpty();
         }
       }
