@@ -375,9 +375,9 @@ ruleHttpClientAce returns [EObject current=null]
 			}
 		)?
 		(
-			otherlv_7='appState'
+			otherlv_7='fromAppState'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getHttpClientAceAccess().getAppStateKeyword_3_0());
+				newLeafNode(otherlv_7, grammarAccess.getHttpClientAceAccess().getFromAppStateKeyword_3_0());
 			}
 			otherlv_8='('
 			{
@@ -386,15 +386,18 @@ ruleHttpClientAce returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getHttpClientAceAccess().getRefsFromAppStateRefParserRuleCall_3_2_0());
+					}
+					lv_refs_9_0=ruleFromAppStateRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpClientAceRule());
+							$current = createModelElementForParent(grammarAccess.getHttpClientAceRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getHttpClientAceAccess().getStateElementsSingleClientAttributeCrossReference_3_2_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"refs",
+							lv_refs_9_0,
+							"de.acegen.AceGen.FromAppStateRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -407,15 +410,18 @@ ruleHttpClientAce returns [EObject current=null]
 				(
 					(
 						{
+							newCompositeNode(grammarAccess.getHttpClientAceAccess().getRefsFromAppStateRefParserRuleCall_3_3_1_0());
+						}
+						lv_refs_11_0=ruleFromAppStateRef
+						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getHttpClientAceRule());
+								$current = createModelElementForParent(grammarAccess.getHttpClientAceRule());
 							}
-						}
-						{
-							newCompositeNode(grammarAccess.getHttpClientAceAccess().getStateElementsSingleClientAttributeCrossReference_3_3_1_0());
-						}
-						ruleQualifiedName
-						{
+							add(
+								$current,
+								"refs",
+								lv_refs_11_0,
+								"de.acegen.AceGen.FromAppStateRef");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -489,6 +495,65 @@ ruleHttpClientAce returns [EObject current=null]
 				}
 			)
 		)*
+	)
+;
+
+// Entry rule entryRuleFromAppStateRef
+entryRuleFromAppStateRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFromAppStateRefRule()); }
+	iv_ruleFromAppStateRef=ruleFromAppStateRef
+	{ $current=$iv_ruleFromAppStateRef.current; }
+	EOF;
+
+// Rule FromAppStateRef
+ruleFromAppStateRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFromAppStateRefRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getFromAppStateRefAccess().getStateElementSingleClientAttributeCrossReference_0_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_1='as'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getFromAppStateRefAccess().getAsKeyword_1_0());
+			}
+			(
+				(
+					lv_varName_2_0=RULE_ID
+					{
+						newLeafNode(lv_varName_2_0, grammarAccess.getFromAppStateRefAccess().getVarNameIDTerminalRuleCall_1_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getFromAppStateRefRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"varName",
+							lv_varName_2_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
+			)
+		)?
 	)
 ;
 

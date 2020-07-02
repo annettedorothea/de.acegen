@@ -51,6 +51,15 @@ public interface AceGenFactory extends EFactory
   HttpClientAce createHttpClientAce();
 
   /**
+   * Returns a new object of class '<em>From App State Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>From App State Ref</em>'.
+   * @generated
+   */
+  FromAppStateRef createFromAppStateRef();
+
+  /**
    * Returns a new object of class '<em>Input</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

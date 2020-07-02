@@ -21,10 +21,14 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/async"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/input"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/stateElements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/refs"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/serverCall"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/loadingFlag"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/outcomes"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//FromAppStateRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//FromAppStateRef/stateElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//FromAppStateRef/varName"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Input">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Input/name"/>

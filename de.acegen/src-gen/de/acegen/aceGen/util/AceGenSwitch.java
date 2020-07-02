@@ -94,6 +94,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.FROM_APP_STATE_REF:
+      {
+        FromAppStateRef fromAppStateRef = (FromAppStateRef)theEObject;
+        T result = caseFromAppStateRef(fromAppStateRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.INPUT:
       {
         Input input = (Input)theEObject;
@@ -535,6 +542,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpClientAce(HttpClientAce object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>From App State Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>From App State Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFromAppStateRef(FromAppStateRef object)
   {
     return null;
   }

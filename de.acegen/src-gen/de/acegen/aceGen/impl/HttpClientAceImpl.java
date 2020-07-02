@@ -4,6 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getInput <em>Input</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getStateElements <em>State Elements</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getRefs <em>Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getLoadingFlag <em>Loading Flag</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getOutcomes <em>Outcomes</em>}</li>
@@ -99,14 +99,14 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
   protected EList<Input> input;
 
   /**
-   * The cached value of the '{@link #getStateElements() <em>State Elements</em>}' reference list.
+   * The cached value of the '{@link #getRefs() <em>Refs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStateElements()
+   * @see #getRefs()
    * @generated
    * @ordered
    */
-  protected EList<SingleClientAttribute> stateElements;
+  protected EList<FromAppStateRef> refs;
 
   /**
    * The cached value of the '{@link #getServerCall() <em>Server Call</em>}' reference.
@@ -230,13 +230,13 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public EList<SingleClientAttribute> getStateElements()
+  public EList<FromAppStateRef> getRefs()
   {
-    if (stateElements == null)
+    if (refs == null)
     {
-      stateElements = new EObjectResolvingEList<SingleClientAttribute>(SingleClientAttribute.class, this, AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS);
+      refs = new EObjectContainmentEList<FromAppStateRef>(FromAppStateRef.class, this, AceGenPackage.HTTP_CLIENT_ACE__REFS);
     }
-    return stateElements;
+    return refs;
   }
 
   /**
@@ -356,6 +356,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
     {
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return ((InternalEList<?>)getInput()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_CLIENT_ACE__REFS:
+        return ((InternalEList<?>)getRefs()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         return ((InternalEList<?>)getOutcomes()).basicRemove(otherEnd, msgs);
     }
@@ -378,8 +380,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return getName();
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return getInput();
-      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
-        return getStateElements();
+      case AceGenPackage.HTTP_CLIENT_ACE__REFS:
+        return getRefs();
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         if (resolve) return getServerCall();
         return basicGetServerCall();
@@ -413,9 +415,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         getInput().clear();
         getInput().addAll((Collection<? extends Input>)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
-        getStateElements().clear();
-        getStateElements().addAll((Collection<? extends SingleClientAttribute>)newValue);
+      case AceGenPackage.HTTP_CLIENT_ACE__REFS:
+        getRefs().clear();
+        getRefs().addAll((Collection<? extends FromAppStateRef>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         setServerCall((HttpServerAce)newValue);
@@ -450,8 +452,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         getInput().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
-        getStateElements().clear();
+      case AceGenPackage.HTTP_CLIENT_ACE__REFS:
+        getRefs().clear();
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         setServerCall((HttpServerAce)null);
@@ -482,8 +484,8 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_ACE__INPUT:
         return input != null && !input.isEmpty();
-      case AceGenPackage.HTTP_CLIENT_ACE__STATE_ELEMENTS:
-        return stateElements != null && !stateElements.isEmpty();
+      case AceGenPackage.HTTP_CLIENT_ACE__REFS:
+        return refs != null && !refs.isEmpty();
       case AceGenPackage.HTTP_CLIENT_ACE__SERVER_CALL:
         return serverCall != null;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:

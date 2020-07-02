@@ -91,6 +91,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientAceAdapter();
       }
       @Override
+      public Adapter caseFromAppStateRef(FromAppStateRef object)
+      {
+        return createFromAppStateRefAdapter();
+      }
+      @Override
       public Adapter caseInput(Input object)
       {
         return createInputAdapter();
@@ -418,6 +423,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHttpClientAceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.FromAppStateRef <em>From App State Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.FromAppStateRef
+   * @generated
+   */
+  public Adapter createFromAppStateRefAdapter()
   {
     return null;
   }

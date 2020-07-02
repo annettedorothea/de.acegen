@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClientAce#isAsync <em>Async</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getInput <em>Input</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClientAce#getStateElements <em>State Elements</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientAce#getRefs <em>Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getLoadingFlag <em>Loading Flag</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getOutcomes <em>Outcomes</em>}</li>
@@ -88,16 +88,16 @@ public interface HttpClientAce extends EObject
   EList<Input> getInput();
 
   /**
-   * Returns the value of the '<em><b>State Elements</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.SingleClientAttribute}.
+   * Returns the value of the '<em><b>Refs</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.FromAppStateRef}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State Elements</em>' reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_StateElements()
-   * @model
+   * @return the value of the '<em>Refs</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_Refs()
+   * @model containment="true"
    * @generated
    */
-  EList<SingleClientAttribute> getStateElements();
+  EList<FromAppStateRef> getRefs();
 
   /**
    * Returns the value of the '<em><b>Server Call</b></em>' reference.

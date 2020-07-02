@@ -16,6 +16,7 @@ import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
@@ -114,6 +115,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.DATA_DEFINITION:
 				sequence_DataDefinition(context, (DataDefinition) semanticObject); 
+				return; 
+			case AceGenPackage.FROM_APP_STATE_REF:
+				sequence_FromAppStateRef(context, (FromAppStateRef) semanticObject); 
 				return; 
 			case AceGenPackage.GIVEN_REF:
 				sequence_GivenRef(context, (GivenRef) semanticObject); 
@@ -410,6 +414,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     FromAppStateRef returns FromAppStateRef
+	 *
+	 * Constraint:
+	 *     (stateElement=[SingleClientAttribute|QualifiedName] varName=ID?)
+	 */
+	protected void sequence_FromAppStateRef(ISerializationContext context, FromAppStateRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     GivenRef returns GivenRef
 	 *
 	 * Constraint:
@@ -442,7 +458,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         async?='async'? 
 	 *         name=ID 
 	 *         (input+=Input input+=Input*)? 
-	 *         (stateElements+=[SingleClientAttribute|QualifiedName] stateElements+=[SingleClientAttribute|QualifiedName]*)? 
+	 *         (refs+=FromAppStateRef refs+=FromAppStateRef*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
 	 *         loadingFlag=[SingleClientAttribute|QualifiedName]? 
 	 *         outcomes+=HttpClientOutcome*

@@ -35,10 +35,14 @@ HttpClient:
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
 		('(' input += Input (',' input += Input)* ')' )?  
-		('appState' '(' stateElements += [SingleClientAttribute | QualifiedName] (',' stateElements += [SingleClientAttribute | QualifiedName])* ')' )?  
+		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
+;
+
+FromAppStateRef:
+	stateElement = [SingleClientAttribute | QualifiedName] ('as' varName = ID)?
 ;
 
 Input:

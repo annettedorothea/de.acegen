@@ -18,13 +18,13 @@ package de.acegen.templates.es6;
 import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.Input;
-import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -137,14 +137,21 @@ public class CommandTemplate {
       }
     }
     {
-      EList<SingleClientAttribute> _stateElements = it.getStateElements();
-      for(final SingleClientAttribute stateElement : _stateElements) {
+      EList<FromAppStateRef> _refs = it.getRefs();
+      for(final FromAppStateRef ref : _refs) {
         _builder.append("        ");
         _builder.append("this.commandData.");
-        String _name_5 = stateElement.getName();
-        _builder.append(_name_5, "        ");
+        String _xifexpression = null;
+        String _varName = ref.getVarName();
+        boolean _tripleNotEquals = (_varName != null);
+        if (_tripleNotEquals) {
+          _xifexpression = ref.getVarName();
+        } else {
+          _xifexpression = ref.getStateElement().getName();
+        }
+        _builder.append(_xifexpression, "        ");
         _builder.append(" = AppState.get_");
-        String _functionName = this._es6Extension.functionName(stateElement);
+        String _functionName = this._es6Extension.functionName(ref.getStateElement());
         _builder.append(_functionName, "        ");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -170,8 +177,8 @@ public class CommandTemplate {
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
         _builder.append("\t\t");
         _builder.append("case this.");
-        String _name_6 = outcome_2.getName();
-        _builder.append(_name_6, "\t\t");
+        String _name_5 = outcome_2.getName();
+        _builder.append(_name_5, "\t\t");
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
@@ -206,8 +213,8 @@ public class CommandTemplate {
                   _builder.appendImmediate(", ", "\t\t\t");
                 }
                 _builder.append("this.commandData.");
-                String _name_7 = inputParam.getName();
-                _builder.append(_name_7, "\t\t\t");
+                String _name_6 = inputParam.getName();
+                _builder.append(_name_6, "\t\t\t");
               }
             }
             _builder.append(")).publish());");
@@ -242,8 +249,8 @@ public class CommandTemplate {
     _builder.newLine();
     {
       HttpServerAce _serverCall = it.getServerCall();
-      boolean _tripleNotEquals = (_serverCall != null);
-      if (_tripleNotEquals) {
+      boolean _tripleNotEquals_1 = (_serverCall != null);
+      if (_tripleNotEquals_1) {
         _builder.append("\t");
         _builder.append("execute() {");
         _builder.newLine();
@@ -273,11 +280,11 @@ public class CommandTemplate {
                 } else {
                   _builder.appendImmediate(",\n", "\t    \t\t");
                 }
+                String _name_7 = payload.getAttribute().getName();
+                _builder.append(_name_7, "\t    \t\t");
+                _builder.append(" : this.commandData.");
                 String _name_8 = payload.getAttribute().getName();
                 _builder.append(_name_8, "\t    \t\t");
-                _builder.append(" : this.commandData.");
-                String _name_9 = payload.getAttribute().getName();
-                _builder.append(_name_9, "\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
@@ -302,11 +309,11 @@ public class CommandTemplate {
           EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
           for(final AttributeParamRef queryParam : _queryParams) {
             _builder.append("&");
+            String _name_9 = queryParam.getAttribute().getName();
+            _builder.append(_name_9, "\t\t\t");
+            _builder.append("=${this.commandData.");
             String _name_10 = queryParam.getAttribute().getName();
             _builder.append(_name_10, "\t\t\t");
-            _builder.append("=${this.commandData.");
-            String _name_11 = queryParam.getAttribute().getName();
-            _builder.append(_name_11, "\t\t\t");
             _builder.append("}");
           }
         }
@@ -336,11 +343,11 @@ public class CommandTemplate {
                 _builder.append("\t");
                 _builder.append("\t\t\t");
                 _builder.append("this.commandData.");
+                String _name_11 = attribute.getName();
+                _builder.append(_name_11, "\t\t\t\t");
+                _builder.append(" = data.");
                 String _name_12 = attribute.getName();
                 _builder.append(_name_12, "\t\t\t\t");
-                _builder.append(" = data.");
-                String _name_13 = attribute.getName();
-                _builder.append(_name_13, "\t\t\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
               }
@@ -472,14 +479,21 @@ public class CommandTemplate {
       }
     }
     {
-      EList<SingleClientAttribute> _stateElements = it.getStateElements();
-      for(final SingleClientAttribute stateElement : _stateElements) {
+      EList<FromAppStateRef> _refs = it.getRefs();
+      for(final FromAppStateRef ref : _refs) {
         _builder.append("        ");
         _builder.append("this.commandData.");
-        String _name_5 = stateElement.getName();
-        _builder.append(_name_5, "        ");
+        String _xifexpression = null;
+        String _varName = ref.getVarName();
+        boolean _tripleNotEquals = (_varName != null);
+        if (_tripleNotEquals) {
+          _xifexpression = ref.getVarName();
+        } else {
+          _xifexpression = ref.getStateElement().getName();
+        }
+        _builder.append(_xifexpression, "        ");
         _builder.append(" = AppState.get_");
-        String _functionName = this._es6Extension.functionName(stateElement);
+        String _functionName = this._es6Extension.functionName(ref.getStateElement());
         _builder.append(_functionName, "        ");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -500,8 +514,8 @@ public class CommandTemplate {
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
         _builder.append("\t\t");
         _builder.append("case this.");
-        String _name_6 = outcome_2.getName();
-        _builder.append(_name_6, "\t\t");
+        String _name_5 = outcome_2.getName();
+        _builder.append(_name_5, "\t\t");
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
@@ -536,8 +550,8 @@ public class CommandTemplate {
                   _builder.appendImmediate(", ", "\t\t\t");
                 }
                 _builder.append("this.commandData.");
-                String _name_7 = inputParam.getName();
-                _builder.append(_name_7, "\t\t\t");
+                String _name_6 = inputParam.getName();
+                _builder.append(_name_6, "\t\t\t");
               }
             }
             _builder.append(")).publish();");

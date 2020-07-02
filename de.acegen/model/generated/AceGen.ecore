@@ -22,12 +22,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="input" upperBound="-1"
         eType="#//Input" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElements" unique="false"
-        upperBound="-1" eType="#//SingleClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refs" upperBound="-1" eType="#//FromAppStateRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//HttpServerAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//SingleClientAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FromAppStateRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//SingleClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Input">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
