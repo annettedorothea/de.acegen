@@ -666,6 +666,10 @@ public class Data {
     _builder.newLine();
     _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
     _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractData implements IDataContainer {");
     _builder.newLine();
@@ -723,6 +727,12 @@ public class Data {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("@JsonProperty");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@JsonSerialize(converter = DateTimeToStringConverter.class)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@JsonDeserialize(converter = StringToDateTimeConverter.class)");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public LocalDateTime getSystemTime() {");

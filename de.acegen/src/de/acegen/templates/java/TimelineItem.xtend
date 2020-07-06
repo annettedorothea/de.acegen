@@ -110,30 +110,28 @@ class TimelineItem {
 
 	def generateTimelineItemMapper() '''
 		«copyright»
-		
+
 		package de.acegen;
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
 		
-		import java.time.LocalDateTime;
-		import java.time.format.DateTimeFormatter;
 		import org.jdbi.v3.core.mapper.RowMapper;
 		import org.jdbi.v3.core.statement.StatementContext;
 		
 		public class TimelineItemMapper implements RowMapper<ITimelineItem> {
 			
 			public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {
-				LocalDateTime time = LocalDateTime.parse(r.getString("time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
 				return new TimelineItem(
 					r.getString("type"),
 					r.getString("name"),
-					time,
+					r.getTimestamp("time") != null ? r.getTimestamp("time").toLocalDateTime() : null,
 					r.getString("data"),
 					r.getString("uuid")
 				);
 			}
 		}
+		
 		
 		«sdg»
 		

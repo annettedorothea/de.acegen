@@ -384,9 +384,9 @@ class AceTemplate {
 		    }
 		
 		    static applyNextActions() {
-		    	ACEController.addItemToTimeLine({appState: AppState.getAppState()});
 		        let action = ACEController.actionQueue.shift();
 		        if (action) {
+			    	ACEController.addItemToTimeLine({appState: AppState.getAppState()});
 					if (action.asynchronous) {
 					    action.applyAction().then(() => {
 					    	ACEController.callApplyNextActions();
@@ -788,7 +788,7 @@ class AceTemplate {
 		    static replayE2E(pauseInMillis, serverTimeline) {
 		        ReplayUtils.prepareReplay();
 		        AppUtils.createInitialAppState();
-		        AppUtils.httpPut('replay/e2e/start', false, [], JSON.parse(serverTimeline)).then(() => {
+		        AppUtils.httpPut('replay/e2e/start', false, JSON.parse(serverTimeline)).then(() => {
 		            ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		        });
 		    }

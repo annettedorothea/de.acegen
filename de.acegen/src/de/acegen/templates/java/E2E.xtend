@@ -81,7 +81,7 @@ class E2E {
 					}
 				}
 				this.sessionIsRunning = true;
-				this.sessionStartedAt = LocalDateTime.ofEpochSecond(System.currentTimeMillis(), 0, null);
+				this.sessionStartedAt = LocalDateTime.now();
 				this.index = 0;
 			}
 		

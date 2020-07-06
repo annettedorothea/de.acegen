@@ -191,7 +191,7 @@ public class E2E {
     _builder.append("this.sessionIsRunning = true;");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.sessionStartedAt = LocalDateTime.ofEpochSecond(System.currentTimeMillis(), 0, null);");
+    _builder.append("this.sessionStartedAt = LocalDateTime.now();");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.index = 0;");

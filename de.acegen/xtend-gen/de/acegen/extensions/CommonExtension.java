@@ -61,6 +61,15 @@ public class CommonExtension {
     _builder.append("* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.");
     _builder.newLine();
     _builder.append(" ");
+    _builder.append("*");
+    _builder.newLine();
+    _builder.append(" ");
+    _builder.append("* generated with de.acegen 0.9.2");
+    _builder.newLine();
+    _builder.append(" ");
+    _builder.append("*");
+    _builder.newLine();
+    _builder.append(" ");
     _builder.append("*/");
     _builder.newLine();
     _builder.newLine();

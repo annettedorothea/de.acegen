@@ -256,10 +256,6 @@ public class TimelineItem {
     _builder.append("import java.sql.SQLException;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import java.time.LocalDateTime;");
-    _builder.newLine();
-    _builder.append("import java.time.format.DateTimeFormatter;");
-    _builder.newLine();
     _builder.append("import org.jdbi.v3.core.mapper.RowMapper;");
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.statement.StatementContext;");
@@ -273,9 +269,6 @@ public class TimelineItem {
     _builder.append("public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("LocalDateTime time = LocalDateTime.parse(r.getString(\"time\"), DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss.SSSSSS\"));");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("return new TimelineItem(");
     _builder.newLine();
     _builder.append("\t\t\t");
@@ -285,7 +278,7 @@ public class TimelineItem {
     _builder.append("r.getString(\"name\"),");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("time,");
+    _builder.append("r.getTimestamp(\"time\") != null ? r.getTimestamp(\"time\").toLocalDateTime() : null,");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("r.getString(\"data\"),");
@@ -300,6 +293,7 @@ public class TimelineItem {
     _builder.append("}");
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();

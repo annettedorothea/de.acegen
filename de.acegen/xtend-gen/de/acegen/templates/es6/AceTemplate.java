@@ -928,14 +928,14 @@ public class AceTemplate {
     _builder.append("    ");
     _builder.append("static applyNextActions() {");
     _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("ACEController.addItemToTimeLine({appState: AppState.getAppState()});");
-    _builder.newLine();
     _builder.append("        ");
     _builder.append("let action = ACEController.actionQueue.shift();");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("if (action) {");
+    _builder.newLine();
+    _builder.append("\t    \t");
+    _builder.append("ACEController.addItemToTimeLine({appState: AppState.getAppState()});");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("if (action.asynchronous) {");
@@ -1978,7 +1978,7 @@ public class AceTemplate {
     _builder.append("AppUtils.createInitialAppState();");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("AppUtils.httpPut(\'replay/e2e/start\', false, [], JSON.parse(serverTimeline)).then(() => {");
+    _builder.append("AppUtils.httpPut(\'replay/e2e/start\', false, JSON.parse(serverTimeline)).then(() => {");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("ACEController.startReplay(ACEController.E2E, pauseInMillis)");
