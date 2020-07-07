@@ -889,8 +889,9 @@ class AceTemplate {
 		        if (item.event) {
 		            return item.event.eventName;
 		        }
+				return "AppState";
 		    }
-			return "AppState";
+		    
 		}
 		
 		
