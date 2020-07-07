@@ -890,7 +890,7 @@ class AceTemplate {
 		            return item.event.eventName;
 		        }
 		    }
-		
+			return "AppState";
 		}
 		
 		

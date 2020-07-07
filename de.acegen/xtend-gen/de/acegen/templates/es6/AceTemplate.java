@@ -2275,6 +2275,8 @@ public class AceTemplate {
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("return \"AppState\";");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
