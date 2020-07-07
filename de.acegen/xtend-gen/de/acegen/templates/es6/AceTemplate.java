@@ -1851,7 +1851,7 @@ public class AceTemplate {
     _builder.append("static loadNextScenario(lastId) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);");
+    _builder.append("return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?lastId=${lastId}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -2098,6 +2098,9 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("static finishReplay() {");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("console.log(\"replay finished\");");
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("ReplayUtils.tearDownReplay();");

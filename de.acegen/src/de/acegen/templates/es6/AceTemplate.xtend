@@ -743,7 +743,7 @@ class AceTemplate {
 		    }
 		
 		    static loadNextScenario(lastId) {
-		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?lastId=${lastId}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
 		    }
 		
 		    static getBrowserInfo() {
@@ -830,6 +830,7 @@ class AceTemplate {
 		    }
 		
 		    static finishReplay() {
+		        console.log("replay finished");
 		    	ReplayUtils.tearDownReplay();
 		    	AppUtils.createInitialAppState();
 		        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
