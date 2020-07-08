@@ -15,7 +15,6 @@
  */
 package de.acegen.templates.es6;
 
-import com.google.common.base.Objects;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.SingleClientAttribute;
@@ -25,9 +24,11 @@ import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AceTemplate {
@@ -2355,8 +2356,8 @@ public class AceTemplate {
           _builder.newLineIfNotEmpty();
         } else {
           {
-            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-            for(final SingleClientAttribute attribute : _allParentAttributes) {
+            List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final ClientAttribute attribute : _allParentAttributes) {
               _builder.append("\t");
               _builder.append("if (!");
               String _elementPath = this._es6Extension.elementPath(attribute);
@@ -2370,23 +2371,88 @@ public class AceTemplate {
               _builder.append("\t");
               _builder.append("}");
               _builder.newLine();
+              {
+                EObject _eContainer = attribute.eContainer();
+                if ((_eContainer instanceof GroupedClientAttribute)) {
+                  _builder.append("\t");
+                  _builder.append("if (");
+                  String _elementPath_1 = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath_1, "\t");
+                  _builder.append(".is");
+                  String _firstUpper = StringExtensions.toFirstUpper(attribute.getName());
+                  _builder.append(_firstUpper, "\t");
+                  _builder.append(" !== true) {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return undefined;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
             }
           }
           {
             if (((it.getAttributes() == null) || (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length == 0))) {
               _builder.append("\t");
               _builder.append("return ");
-              String _elementPath_1 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_1, "\t");
+              String _elementPath_2 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_2, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
             } else {
-              _builder.append("\t");
-              _builder.append("return AppUtils.deepCopy(");
-              String _elementPath_2 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_2, "\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
+              {
+                EObject _eContainer_1 = it.eContainer();
+                if ((_eContainer_1 instanceof GroupedClientAttribute)) {
+                  _builder.append("\t");
+                  _builder.append("if (");
+                  String _elementPath_3 = this._es6Extension.elementPath(it);
+                  _builder.append(_elementPath_3, "\t");
+                  _builder.append(" && ");
+                  String _elementPath_4 = this._es6Extension.elementPath(it);
+                  _builder.append(_elementPath_4, "\t");
+                  _builder.append(".is");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
+                  _builder.append(_firstUpper_1, "\t");
+                  _builder.append(" === true) {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return AppUtils.deepCopy(");
+                  String _elementPath_5 = this._es6Extension.elementPath(it);
+                  _builder.append(_elementPath_5, "\t\t");
+                  _builder.append(");");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("return undefined;");
+                  _builder.newLine();
+                } else {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_6 = this._es6Extension.elementPath(it);
+                  _builder.append(_elementPath_6, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("return undefined;");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("return AppUtils.deepCopy(");
+                  String _elementPath_7 = this._es6Extension.elementPath(it);
+                  _builder.append(_elementPath_7, "\t");
+                  _builder.append(");");
+                  _builder.newLineIfNotEmpty();
+                }
+              }
             }
           }
         }
@@ -2428,112 +2494,83 @@ public class AceTemplate {
           _builder.newLineIfNotEmpty();
         } else {
           {
-            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-            for(final SingleClientAttribute attribute : _allParentAttributes) {
-              _builder.append("\t");
-              _builder.append("if (!");
-              String _elementPath = this._es6Extension.elementPath(attribute);
-              _builder.append(_elementPath, "\t");
-              _builder.append(") {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("\t");
-              String _elementPath_1 = this._es6Extension.elementPath(attribute);
-              _builder.append(_elementPath_1, "\t\t");
-              _builder.append(" = {};");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("}");
-              _builder.newLine();
+            List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final ClientAttribute attribute : _allParentAttributes) {
+              {
+                EObject _eContainer = attribute.eContainer();
+                if ((_eContainer instanceof GroupedClientAttribute)) {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath, "\t");
+                  _builder.append(" || ");
+                  String _elementPath_1 = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath_1, "\t");
+                  _builder.append(".is");
+                  String _firstUpper = StringExtensions.toFirstUpper(attribute.getName());
+                  _builder.append(_firstUpper, "\t");
+                  _builder.append(" !== true) {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  String _elementPath_2 = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath_2, "\t\t");
+                  _builder.append(" = {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t\t");
+                  _builder.append("is");
+                  String _firstUpper_1 = StringExtensions.toFirstUpper(attribute.getName());
+                  _builder.append(_firstUpper_1, "\t\t\t");
+                  _builder.append(" : true");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  _builder.append("};");
+                  _builder.newLine();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                } else {
+                  _builder.append("\t");
+                  _builder.append("if (!");
+                  String _elementPath_3 = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath_3, "\t");
+                  _builder.append(") {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  String _elementPath_4 = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath_4, "\t\t");
+                  _builder.append(" = {};");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
+              }
             }
           }
           _builder.append("\t");
-          String _elementPath_2 = this._es6Extension.elementPath(it);
-          _builder.append(_elementPath_2, "\t");
+          String _elementPath_5 = this._es6Extension.elementPath(it);
+          _builder.append(_elementPath_5, "\t");
           _builder.append(" = eventData.");
           String _name_3 = it.getName();
           _builder.append(_name_3, "\t");
           _builder.append(";");
           _builder.newLineIfNotEmpty();
-        }
-      }
-    }
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  private CharSequence setStateFunctionForGroup(final SingleClientAttribute it, final List<ClientAttribute> attributeGroup) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("export function set_");
-    String _functionName = this._es6Extension.functionName(it);
-    _builder.append(_functionName);
-    _builder.append("(eventData) {");
-    _builder.newLineIfNotEmpty();
-    {
-      boolean _isHash = it.isHash();
-      if (_isHash) {
-        _builder.append("\t");
-        _builder.append("location.hash = eventData.");
-        String _name = it.getName();
-        _builder.append(_name, "\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      } else {
-        boolean _isStorage = it.isStorage();
-        if (_isStorage) {
-          _builder.append("\t");
-          _builder.append("localStorage.setItem(\"");
-          String _name_1 = it.getName();
-          _builder.append(_name_1, "\t");
-          _builder.append("\", eventData.");
-          String _name_2 = it.getName();
-          _builder.append(_name_2, "\t");
-          _builder.append(");");
-          _builder.newLineIfNotEmpty();
-        } else {
           {
-            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-            for(final SingleClientAttribute attribute : _allParentAttributes) {
+            EObject _eContainer_1 = it.eContainer();
+            if ((_eContainer_1 instanceof GroupedClientAttribute)) {
               _builder.append("\t");
-              _builder.append("if (!");
-              String _elementPath = this._es6Extension.elementPath(attribute);
-              _builder.append(_elementPath, "\t");
-              _builder.append(") {");
+              String _elementPath_6 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_6, "\t");
+              _builder.append(".is");
+              String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
+              _builder.append(_firstUpper_2, "\t");
+              _builder.append(" = true;");
               _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("\t");
-              String _elementPath_1 = this._es6Extension.elementPath(attribute);
-              _builder.append(_elementPath_1, "\t\t");
-              _builder.append(" = {};");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("}");
-              _builder.newLine();
             }
-          }
-          _builder.append("\t");
-          String _elementPath_2 = this._es6Extension.elementPath(it);
-          _builder.append(_elementPath_2, "\t");
-          _builder.append(" = eventData.");
-          String _name_3 = it.getName();
-          _builder.append(_name_3, "\t");
-          _builder.append(";");
-          _builder.newLineIfNotEmpty();
-        }
-      }
-    }
-    {
-      for(final ClientAttribute attribute_1 : attributeGroup) {
-        {
-          if (((!Objects.equal(attribute_1, it)) && (attribute_1 instanceof SingleClientAttribute))) {
-            _builder.append("\t");
-            _builder.append("reset_");
-            String _functionName_1 = this._es6Extension.functionName(((SingleClientAttribute) attribute_1));
-            _builder.append(_functionName_1, "\t");
-            _builder.append("();");
-            _builder.newLineIfNotEmpty();
           }
         }
       }
@@ -2568,8 +2605,8 @@ public class AceTemplate {
           _builder.newLineIfNotEmpty();
         } else {
           {
-            List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-            for(final SingleClientAttribute attribute : _allParentAttributes) {
+            List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final ClientAttribute attribute : _allParentAttributes) {
               _builder.append("\t");
               _builder.append("if (!");
               String _elementPath = this._es6Extension.elementPath(attribute);
@@ -2588,7 +2625,7 @@ public class AceTemplate {
           _builder.append("\t");
           String _elementPath_1 = this._es6Extension.elementPath(it);
           _builder.append(_elementPath_1, "\t");
-          _builder.append(" = null;");
+          _builder.append(" = undefined;");
           _builder.newLineIfNotEmpty();
         }
       }
@@ -2609,8 +2646,8 @@ public class AceTemplate {
         _builder.append("(eventData) {");
         _builder.newLineIfNotEmpty();
         {
-          List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-          for(final SingleClientAttribute attr : _allParentAttributes) {
+          List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+          for(final ClientAttribute attr : _allParentAttributes) {
             _builder.append("\t");
             _builder.append("if (!");
             String _elementPath = this._es6Extension.elementPath(attr);
@@ -2634,89 +2671,32 @@ public class AceTemplate {
         _builder.append(_elementPath_2, "\t");
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        String _elementPath_3 = this._es6Extension.elementPath(it);
-        _builder.append(_elementPath_3, "\t\t");
-        _builder.append(" = {};");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
         {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          for(final ClientAttribute attribute : _attributes) {
-            {
-              if ((attribute instanceof SingleClientAttribute)) {
-                _builder.append("\t");
-                _builder.append("if (eventData.");
-                String _name = ((SingleClientAttribute)attribute).getName();
-                _builder.append(_name, "\t");
-                _builder.append(" !== undefined) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("\t");
-                String _elementPath_4 = this._es6Extension.elementPath(((SingleClientAttribute)attribute));
-                _builder.append(_elementPath_4, "\t\t");
-                _builder.append(" = eventData.");
-                String _name_1 = ((SingleClientAttribute)attribute).getName();
-                _builder.append(_name_1, "\t\t");
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("}");
-                _builder.newLine();
-              }
-            }
-          }
-        }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence mergeStateFunctionForGroup(final SingleClientAttribute it, final List<ClientAttribute> attributeGroup) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage()))) {
-        _builder.append("export function merge_");
-        String _functionName = this._es6Extension.functionName(it);
-        _builder.append(_functionName);
-        _builder.append("(eventData) {");
-        _builder.newLineIfNotEmpty();
-        {
-          List<SingleClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-          for(final SingleClientAttribute attr : _allParentAttributes) {
-            _builder.append("\t");
-            _builder.append("if (!");
-            String _elementPath = this._es6Extension.elementPath(attr);
-            _builder.append(_elementPath, "\t");
-            _builder.append(") {");
+          EObject _eContainer = it.eContainer();
+          if ((_eContainer instanceof GroupedClientAttribute)) {
+            _builder.append("\t\t");
+            String _elementPath_3 = this._es6Extension.elementPath(it);
+            _builder.append(_elementPath_3, "\t\t");
+            _builder.append(" = {");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("\t");
-            String _elementPath_1 = this._es6Extension.elementPath(attr);
-            _builder.append(_elementPath_1, "\t\t");
+            _builder.append("is");
+            String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+            _builder.append(_firstUpper, "\t\t\t");
+            _builder.append(" : true");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("};");
+            _builder.newLine();
+          } else {
+            _builder.append("\t\t");
+            String _elementPath_4 = this._es6Extension.elementPath(it);
+            _builder.append(_elementPath_4, "\t\t");
             _builder.append(" = {};");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("}");
-            _builder.newLine();
           }
         }
-        _builder.append("\t");
-        _builder.append("if (!");
-        String _elementPath_2 = this._es6Extension.elementPath(it);
-        _builder.append(_elementPath_2, "\t");
-        _builder.append(") {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        String _elementPath_3 = this._es6Extension.elementPath(it);
-        _builder.append(_elementPath_3, "\t\t");
-        _builder.append(" = {};");
-        _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
@@ -2733,8 +2713,8 @@ public class AceTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
-                String _elementPath_4 = this._es6Extension.elementPath(((SingleClientAttribute)attribute));
-                _builder.append(_elementPath_4, "\t\t");
+                String _elementPath_5 = this._es6Extension.elementPath(attribute);
+                _builder.append(_elementPath_5, "\t\t");
                 _builder.append(" = eventData.");
                 String _name_1 = ((SingleClientAttribute)attribute).getName();
                 _builder.append(_name_1, "\t\t");
@@ -2743,20 +2723,6 @@ public class AceTemplate {
                 _builder.append("\t");
                 _builder.append("}");
                 _builder.newLine();
-              }
-            }
-          }
-        }
-        {
-          for(final ClientAttribute attribute_1 : attributeGroup) {
-            {
-              if (((!Objects.equal(attribute_1, it)) && (attribute_1 instanceof SingleClientAttribute))) {
-                _builder.append("\t");
-                _builder.append("reset_");
-                String _functionName_1 = this._es6Extension.functionName(((SingleClientAttribute) attribute_1));
-                _builder.append(_functionName_1, "\t");
-                _builder.append("();");
-                _builder.newLineIfNotEmpty();
               }
             }
           }
@@ -2818,14 +2784,14 @@ public class AceTemplate {
                 CharSequence _stateFunction = this.getStateFunction(((SingleClientAttribute)attribute));
                 _builder.append(_stateFunction);
                 _builder.newLineIfNotEmpty();
-                CharSequence _setStateFunctionForGroup = this.setStateFunctionForGroup(((SingleClientAttribute)attribute), it.getAttributeGroup());
-                _builder.append(_setStateFunctionForGroup);
+                CharSequence _setStateFunction = this.setStateFunction(((SingleClientAttribute)attribute));
+                _builder.append(_setStateFunction);
                 _builder.newLineIfNotEmpty();
                 CharSequence _resetStateFunction = this.resetStateFunction(((SingleClientAttribute)attribute));
                 _builder.append(_resetStateFunction);
                 _builder.newLineIfNotEmpty();
-                CharSequence _mergeStateFunctionForGroup = this.mergeStateFunctionForGroup(((SingleClientAttribute)attribute), it.getAttributeGroup());
-                _builder.append(_mergeStateFunctionForGroup);
+                CharSequence _mergeStateFunction = this.mergeStateFunction(((SingleClientAttribute)attribute));
+                _builder.append(_mergeStateFunction);
                 _builder.newLineIfNotEmpty();
                 CharSequence _childAttributes = this.childAttributes(((SingleClientAttribute)attribute));
                 _builder.append(_childAttributes);

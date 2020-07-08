@@ -932,11 +932,26 @@ class AceTemplate {
 					if (!«attribute.elementPath») {
 						return undefined;
 					}
+					«IF attribute.eContainer instanceof GroupedClientAttribute»
+						if («attribute.elementPath».is«attribute.name.toFirstUpper» !== true) {
+							return undefined;
+						}
+					«ENDIF»
 				«ENDFOR»
 				«IF attributes === null || attributes.length == 0»
 					return «elementPath»;
 				«ELSE»
-					return AppUtils.deepCopy(«elementPath»);
+					«IF eContainer instanceof GroupedClientAttribute»
+						if («elementPath» && «elementPath».is«name.toFirstUpper» === true) {
+							return AppUtils.deepCopy(«elementPath»);
+						}
+						return undefined;
+					«ELSE»
+						if (!«elementPath») {
+							return undefined;
+						}
+						return AppUtils.deepCopy(«elementPath»);
+					«ENDIF»
 				«ENDIF»
 			«ENDIF»
 		}
@@ -951,35 +966,23 @@ class AceTemplate {
 				localStorage.setItem("«getName»", eventData.«getName»);
 			«ELSE»
 				«FOR attribute: allParentAttributes»
-					if (!«attribute.elementPath») {
-						«attribute.elementPath» = {};
-					}
+					«IF attribute.eContainer instanceof GroupedClientAttribute»
+						if (!«attribute.elementPath» || «attribute.elementPath».is«attribute.name.toFirstUpper» !== true) {
+							«attribute.elementPath» = {
+								is«attribute.name.toFirstUpper» : true
+							};
+						}
+					«ELSE»
+						if (!«attribute.elementPath») {
+							«attribute.elementPath» = {};
+						}
+					«ENDIF»
 				«ENDFOR»
 				«elementPath» = eventData.«getName»;
-			«ENDIF»
-		}
-		
-	'''
-	
-	private def setStateFunctionForGroup(SingleClientAttribute it, List<ClientAttribute> attributeGroup) '''
-		export function set_«functionName»(eventData) {
-			«IF isHash»
-				location.hash = eventData.«getName»;
-			«ELSEIF isStorage»
-				localStorage.setItem("«getName»", eventData.«getName»);
-			«ELSE»
-				«FOR attribute: allParentAttributes»
-					if (!«attribute.elementPath») {
-						«attribute.elementPath» = {};
-					}
-				«ENDFOR»
-				«elementPath» = eventData.«getName»;
-			«ENDIF»
-			«FOR attribute : attributeGroup»
-				«IF attribute != it && attribute instanceof SingleClientAttribute»
-					reset_«(attribute as SingleClientAttribute).functionName»();
+				«IF eContainer instanceof GroupedClientAttribute»
+					«elementPath».is«name.toFirstUpper» = true;
 				«ENDIF»
-			«ENDFOR»
+			«ENDIF»
 		}
 		
 	'''
@@ -996,7 +999,7 @@ class AceTemplate {
 						return;
 					}
 				«ENDFOR»
-				«elementPath» = null;
+				«elementPath» = undefined;
 			«ENDIF»
 		}
 		
@@ -1011,41 +1014,19 @@ class AceTemplate {
 					}
 				«ENDFOR»
 				if (!«elementPath») {
-					«it.elementPath» = {};
+					«IF eContainer instanceof GroupedClientAttribute»
+						«elementPath» = {
+							is«name.toFirstUpper» : true
+						};
+					«ELSE»
+						«elementPath» = {};
+					«ENDIF»
 				}
 				«FOR attribute : attributes»
 					«IF attribute instanceof SingleClientAttribute»
 						if (eventData.«attribute.name» !== undefined) {
 							«attribute.elementPath» = eventData.«attribute.getName»;
 						}
-					«ENDIF»
-				«ENDFOR»
-			}
-			
-		«ENDIF»
-	'''
-	
-	private def mergeStateFunctionForGroup(SingleClientAttribute it, List<ClientAttribute> attributeGroup) '''
-		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage» 
-			export function merge_«functionName»(eventData) {
-				«FOR attr : allParentAttributes»
-					if (!«attr.elementPath») {
-						«attr.elementPath» = {};
-					}
-				«ENDFOR»
-				if (!«elementPath») {
-					«it.elementPath» = {};
-				}
-				«FOR attribute : attributes»
-					«IF attribute instanceof SingleClientAttribute»
-						if (eventData.«attribute.name» !== undefined) {
-							«attribute.elementPath» = eventData.«attribute.getName»;
-						}
-					«ENDIF»
-				«ENDFOR»
-				«FOR attribute : attributeGroup»
-					«IF attribute != it && attribute instanceof SingleClientAttribute»
-						reset_«(attribute as SingleClientAttribute).functionName»();
 					«ENDIF»
 				«ENDFOR»
 			}
@@ -1074,9 +1055,9 @@ class AceTemplate {
 			«FOR attribute : attributeGroup»
 				«IF attribute instanceof SingleClientAttribute»
 					«attribute.getStateFunction»
-					«attribute.setStateFunctionForGroup(attributeGroup)»
+					«attribute.setStateFunction»
 					«attribute.resetStateFunction»
-					«attribute.mergeStateFunctionForGroup(attributeGroup)»
+					«attribute.mergeStateFunction»
 					«attribute.childAttributes»
 				«ELSE»
 					«attribute.generateAppStateRec»

@@ -16,6 +16,7 @@
 package de.acegen.extensions.es6;
 
 import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.SingleClientAttribute;
@@ -59,7 +60,7 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String functionNameRec(final SingleClientAttribute it, final String suffix) {
+  public String functionNameRec(final ClientAttribute it, final String suffix) {
     final SingleClientAttribute parent = this.findNextSingleClientAttributeParent(it);
     if ((parent != null)) {
       String _functionNameRec = this.functionNameRec(parent, it.getName());
@@ -88,7 +89,7 @@ public class Es6Extension {
     }
   }
   
-  public String elementPath(final SingleClientAttribute it) {
+  public String elementPath(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("appState.");
     String _elementPathRec = this.elementPathRec(it, "");
@@ -96,10 +97,16 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String elementPathRec(final SingleClientAttribute it, final String suffix) {
-    final SingleClientAttribute parent = this.findNextSingleClientAttributeParent(it);
+  public String elementPathRec(final ClientAttribute attr, final String suffix) {
+    ClientAttribute clientAttribute = attr;
+    EObject _eContainer = clientAttribute.eContainer();
+    if ((_eContainer instanceof GroupedClientAttribute)) {
+      EObject _eContainer_1 = attr.eContainer();
+      clientAttribute = ((ClientAttribute) _eContainer_1);
+    }
+    final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
     if ((parent != null)) {
-      String _elementPathRec = this.elementPathRec(parent, it.getName());
+      String _elementPathRec = this.elementPathRec(parent, clientAttribute.getName());
       StringConcatenation _builder = new StringConcatenation();
       {
         int _length = suffix.length();
@@ -111,7 +118,7 @@ public class Es6Extension {
       }
       return (_elementPathRec + _builder);
     } else {
-      String _name = it.getName();
+      String _name = clientAttribute.getName();
       StringConcatenation _builder_1 = new StringConcatenation();
       {
         int _length_1 = suffix.length();
@@ -130,7 +137,7 @@ public class Es6Extension {
     while ((parent != null)) {
       {
         if ((parent instanceof SingleClientAttribute)) {
-          return ((SingleClientAttribute)parent);
+          return ((SingleClientAttribute) parent);
         }
         parent = parent.eContainer();
       }
@@ -138,15 +145,34 @@ public class Es6Extension {
     return null;
   }
   
-  public List<SingleClientAttribute> allParentAttributes(final ClientAttribute it) {
-    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
+  private ClientAttribute findNextClientAttributeParent(final ClientAttribute it) {
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
+        final EObject grandParent = parent.eContainer();
+        if (((grandParent != null) && (grandParent instanceof GroupedClientAttribute))) {
+          return ((GroupedClientAttribute) grandParent);
+        } else {
+          if ((parent instanceof SingleClientAttribute)) {
+            return ((SingleClientAttribute) parent);
+          }
+        }
+        parent = grandParent;
+      }
+    }
+    return null;
+  }
+  
+  public List<ClientAttribute> allParentAttributes(final ClientAttribute it) {
+    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
+    EObject parent = it.eContainer();
+    while ((parent != null)) {
+      {
+        final EObject grandParent = parent.eContainer();
         if ((parent instanceof SingleClientAttribute)) {
           attributes.add(0, ((SingleClientAttribute) parent));
         }
-        parent = parent.eContainer();
+        parent = grandParent;
       }
     }
     return attributes;

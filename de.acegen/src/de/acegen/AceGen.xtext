@@ -81,7 +81,7 @@ SingleClientAttribute:
 ;
 
 GroupedClientAttribute:
-	'{' attributeGroup += ClientAttribute ( attributeGroup += ClientAttribute* ) '}' 
+	name = ID '{' attributeGroup += ClientAttribute ( attributeGroup += ClientAttribute* ) '}' 
 ;
 
 ClientScenario:
