@@ -39,6 +39,19 @@ public class DropwizardApp {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import de.acegen.resources.GetServerInfoResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.GetServerTimelineResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.NotReplayableDataProviderResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.PrepareE2EResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.StartE2ESessionResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.StopE2ESessionResource;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import com.codahale.metrics.servlets.AdminServlet;");
     _builder.newLine();
     _builder.newLine();
@@ -162,7 +175,7 @@ public class DropwizardApp {
     _builder.append("DaoProvider daoProvider = new DaoProvider();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("ViewProvider viewProvider = new ViewProvider(daoProvider, configuration);");
+    _builder.append("ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");

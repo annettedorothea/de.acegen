@@ -24,6 +24,13 @@ class DropwizardApp {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		import de.acegen.resources.GetServerInfoResource;
+		import de.acegen.resources.GetServerTimelineResource;
+		import de.acegen.resources.NotReplayableDataProviderResource;
+		import de.acegen.resources.PrepareE2EResource;
+		import de.acegen.resources.StartE2ESessionResource;
+		import de.acegen.resources.StopE2ESessionResource;
+
 		import com.codahale.metrics.servlets.AdminServlet;
 		
 		import io.dropwizard.Application;
@@ -77,7 +84,7 @@ class DropwizardApp {
 				LOG.info("running version {}", getVersion());
 		
 				DaoProvider daoProvider = new DaoProvider();
-				ViewProvider viewProvider = new ViewProvider(daoProvider, configuration);
+				ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);
 		
 				final JdbiFactory factory = new JdbiFactory();
 		

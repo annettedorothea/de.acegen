@@ -52,6 +52,7 @@ import de.acegen.templates.java.models.DaoProvider;
 import de.acegen.templates.java.models.Model;
 import de.acegen.templates.java.scenario.BaseScenario;
 import de.acegen.templates.java.scenario.Scenario;
+import de.acegen.templates.java.scenario.YamlConfiguration;
 import de.acegen.templates.java.views.View;
 import de.acegen.templates.java.views.ViewProvider;
 import javax.inject.Inject;
@@ -127,6 +128,9 @@ public class JavaGenerator {
   
   @Inject
   private BaseScenario baseScenario;
+  
+  @Inject
+  private YamlConfiguration yamlConfiguration;
   
   @Inject
   private NotReplayableDataProvider notReplayableDataProvider;
@@ -403,6 +407,14 @@ public class JavaGenerator {
       this.baseScenario.generateAbstractBaseScenario());
     fsa.generateFile("de/acegen/BaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.baseScenario.generateBaseScenario());
+    fsa.generateFile("de/acegen/YamlConfiguration.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
+      this.yamlConfiguration.generateYamlConfiguration());
+    fsa.generateFile("de/acegen/Database.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
+      this.yamlConfiguration.generateDatabase());
+    fsa.generateFile("de/acegen/Server.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
+      this.yamlConfiguration.generateServer());
+    fsa.generateFile("de/acegen/Connectors.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
+      this.yamlConfiguration.generateConnectors());
     EList<de.acegen.aceGen.Scenario> _scenarios = httpServer.getScenarios();
     for (final de.acegen.aceGen.Scenario scenarioAce : _scenarios) {
       {
