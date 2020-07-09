@@ -1096,6 +1096,18 @@ public class Scenario {
   
   private CharSequence objectMapperCall(final DataDefinition it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
+    {
+      EList<JsonMember> _members = it.getData().getMembers();
+      for(final JsonMember member : _members) {
+        _builder.append("// ");
+        String _name = member.getAttribute().getName();
+        _builder.append(_name);
+        _builder.append(" - ");
+        CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+        _builder.append(_valueFrom);
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.append("objectMapper.readValue(\"");
     {
       if (((it.getData() != null) && (it.getData().getMembers() != null))) {
@@ -1110,7 +1122,7 @@ public class Scenario {
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
           boolean _hasElements = false;
-          for(final JsonMember member : _filter) {
+          for(final JsonMember member_1 : _filter) {
             if (!_hasElements) {
               _hasElements = true;
               _builder.append(this._attributeExtension.stringLineBreak, "\t");
@@ -1118,11 +1130,11 @@ public class Scenario {
               _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
             }
             _builder.append("\\\"");
-            String _name = member.getAttribute().getName();
-            _builder.append(_name, "\t");
+            String _name_1 = member_1.getAttribute().getName();
+            _builder.append(_name_1, "\t");
             _builder.append("\\\" : ");
-            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
-            _builder.append(_valueFrom, "\t");
+            CharSequence _valueFrom_1 = this._attributeExtension.valueFrom(member_1.getValue());
+            _builder.append(_valueFrom_1, "\t");
           }
         }
         _builder.append("} ");

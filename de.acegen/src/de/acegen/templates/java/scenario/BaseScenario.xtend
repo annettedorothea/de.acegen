@@ -179,6 +179,16 @@ class BaseScenario {
 			}
 		
 			@Override
+			protected void assertTrue(boolean b) {
+				org.junit.jupiter.api.Assertions.assertTrue(b);
+			}
+		
+			@Override
+			protected void assertFalse(boolean b) {
+				org.junit.jupiter.api.Assertions.assertFalse(b);
+			}
+
+			@Override
 			protected boolean prerequisite(String scenarioName) {
 				return true;
 			}
@@ -270,6 +280,10 @@ class BaseScenario {
 			protected abstract void assertIsNotNull(Object actual);
 		
 			protected abstract void assertFail(String message);
+			
+			protected abstract void assertTrue(boolean b);
+
+			protected abstract void assertFalse(boolean b);
 		
 			protected abstract String scenarioName();
 			

@@ -978,9 +978,17 @@ class AceTemplate {
 						}
 					«ENDIF»
 				«ENDFOR»
-				«elementPath» = eventData.«getName»;
 				«IF eContainer instanceof GroupedClientAttribute»
-					«elementPath».is«name.toFirstUpper» = true;
+					if (!!eventData.«getName») {
+						«elementPath» = eventData.«getName»;
+						«elementPath».is«name.toFirstUpper» = true;
+					} else {
+						«elementPath» = {
+							is«name.toFirstUpper» : true
+						};
+					}
+				«ELSE»
+					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			«ENDIF»
 		}

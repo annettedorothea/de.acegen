@@ -2551,24 +2551,64 @@ public class AceTemplate {
               }
             }
           }
-          _builder.append("\t");
-          String _elementPath_5 = this._es6Extension.elementPath(it);
-          _builder.append(_elementPath_5, "\t");
-          _builder.append(" = eventData.");
-          String _name_3 = it.getName();
-          _builder.append(_name_3, "\t");
-          _builder.append(";");
-          _builder.newLineIfNotEmpty();
           {
             EObject _eContainer_1 = it.eContainer();
             if ((_eContainer_1 instanceof GroupedClientAttribute)) {
               _builder.append("\t");
+              _builder.append("if (!!eventData.");
+              String _name_3 = it.getName();
+              _builder.append(_name_3, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              String _elementPath_5 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_5, "\t\t");
+              _builder.append(" = eventData.");
+              String _name_4 = it.getName();
+              _builder.append(_name_4, "\t\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
               String _elementPath_6 = this._es6Extension.elementPath(it);
-              _builder.append(_elementPath_6, "\t");
+              _builder.append(_elementPath_6, "\t\t");
               _builder.append(".is");
               String _firstUpper_2 = StringExtensions.toFirstUpper(it.getName());
-              _builder.append(_firstUpper_2, "\t");
+              _builder.append(_firstUpper_2, "\t\t");
               _builder.append(" = true;");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("} else {");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("\t");
+              String _elementPath_7 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_7, "\t\t");
+              _builder.append(" = {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t");
+              _builder.append("is");
+              String _firstUpper_3 = StringExtensions.toFirstUpper(it.getName());
+              _builder.append(_firstUpper_3, "\t\t\t");
+              _builder.append(" : true");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t");
+              _builder.append("};");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+            } else {
+              _builder.append("\t");
+              String _elementPath_8 = this._es6Extension.elementPath(it);
+              _builder.append(_elementPath_8, "\t");
+              _builder.append(" = eventData.");
+              String _name_5 = it.getName();
+              _builder.append(_name_5, "\t");
+              _builder.append(";");
               _builder.newLineIfNotEmpty();
             }
           }
