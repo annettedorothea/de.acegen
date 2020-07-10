@@ -64,7 +64,7 @@ public class CommonExtension {
     _builder.append("*");
     _builder.newLine();
     _builder.append(" ");
-    _builder.append("* generated with de.acegen 0.9.5");
+    _builder.append("* generated with de.acegen 0.9.6");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("*");
