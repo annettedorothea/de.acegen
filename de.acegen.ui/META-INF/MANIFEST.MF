@@ -3,7 +3,7 @@ Automatic-Module-Name: de.acegen.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen.ui
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 0.9.6
+Bundle-Version: 0.9.7
 Bundle-SymbolicName: de.acegen.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.acegen,
