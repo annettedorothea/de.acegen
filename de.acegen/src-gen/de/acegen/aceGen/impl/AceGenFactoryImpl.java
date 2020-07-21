@@ -107,6 +107,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.COUNT: return createCount();
       case AceGenPackage.ATTRIBUTE_AND_VALUE: return createAttributeAndValue();
       case AceGenPackage.VERIFICATION: return createVerification();
+      case AceGenPackage.EXTRACTION: return createExtraction();
       case AceGenPackage.SELECT_BY_EXPECTATION: return createSelectByExpectation();
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
@@ -629,6 +630,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     VerificationImpl verification = new VerificationImpl();
     return verification;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Extraction createExtraction()
+  {
+    ExtractionImpl extraction = new ExtractionImpl();
+    return extraction;
   }
 
   /**

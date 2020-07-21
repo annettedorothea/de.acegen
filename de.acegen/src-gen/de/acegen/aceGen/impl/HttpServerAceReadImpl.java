@@ -4,42 +4,19 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServerAceRead;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Http Server Ace Read</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerAceReadImpl#getResponse <em>Response</em>}</li>
- * </ul>
  *
  * @generated
  */
 public class HttpServerAceReadImpl extends HttpServerAceImpl implements HttpServerAceRead
 {
-  /**
-   * The cached value of the '{@link #getResponse() <em>Response</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getResponse()
-   * @generated
-   * @ordered
-   */
-  protected EList<Attribute> response;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -59,89 +36,6 @@ public class HttpServerAceReadImpl extends HttpServerAceImpl implements HttpServ
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_SERVER_ACE_READ;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EList<Attribute> getResponse()
-  {
-    if (response == null)
-    {
-      response = new EObjectResolvingEList<Attribute>(Attribute.class, this, AceGenPackage.HTTP_SERVER_ACE_READ__RESPONSE);
-    }
-    return response;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.HTTP_SERVER_ACE_READ__RESPONSE:
-        return getResponse();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.HTTP_SERVER_ACE_READ__RESPONSE:
-        getResponse().clear();
-        getResponse().addAll((Collection<? extends Attribute>)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.HTTP_SERVER_ACE_READ__RESPONSE:
-        getResponse().clear();
-        return;
-    }
-    super.eUnset(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case AceGenPackage.HTTP_SERVER_ACE_READ__RESPONSE:
-        return response != null && !response.isEmpty();
-    }
-    return super.eIsSet(featureID);
   }
 
 } //HttpServerAceReadImpl

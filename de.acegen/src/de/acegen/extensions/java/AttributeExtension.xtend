@@ -230,13 +230,29 @@ class AttributeExtension {
 		if (it.contains("${testId}")) {
 			returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
 		}
+		if (it.contains("${")) {
+			val beginIndex = it.indexOf("${")
+			val endIndex = it.indexOf("}")
+			val templateString = it.substring(beginIndex, endIndex+1)
+			val templateStringName = it.substring(beginIndex+2, endIndex)
+			
+			returnString = returnString.replace(templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
+		}
 		return '''«returnString»''';
 	}
 
 	def dispatch CharSequence valueFrom(
 		JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
 
-	def dispatch CharSequence valueFrom(JsonDateTime it) '''\"«dateTimeParse(dateTime, pattern)»\"'''
+	def dispatch CharSequence valueFrom(JsonDateTime it) {
+		if (dateTime.contains("${")) {
+			val beginIndex = dateTime.indexOf("${")
+			val endIndex = dateTime.indexOf("}")
+			val templateStringName = dateTime.substring(beginIndex+2, endIndex)
+			return '''\"" + LocalDateTime.parse(this.extractedValues.get("«templateStringName»").toString(), DateTimeFormatter.ofPattern("«pattern»"))  + "\"''';
+		}
+		return '''\"«dateTimeParse(dateTime, pattern)»\"'''
+	}
 	
 	def primitiveValueFrom(PrimitiveValue it) {
 		if (string !== null) {

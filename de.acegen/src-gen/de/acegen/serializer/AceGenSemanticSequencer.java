@@ -16,6 +16,7 @@ import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.Extraction;
 import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.GroupedClientAttribute;
@@ -115,6 +116,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.DATA_DEFINITION:
 				sequence_DataDefinition(context, (DataDefinition) semanticObject); 
+				return; 
+			case AceGenPackage.EXTRACTION:
+				sequence_Extraction(context, (Extraction) semanticObject); 
 				return; 
 			case AceGenPackage.FROM_APP_STATE_REF:
 				sequence_FromAppStateRef(context, (FromAppStateRef) semanticObject); 
@@ -414,6 +418,24 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Extraction returns Extraction
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_Extraction(ISerializationContext context, Extraction semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.EXTRACTION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.EXTRACTION__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExtractionAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     FromAppStateRef returns FromAppStateRef
 	 *
 	 * Constraint:
@@ -554,6 +576,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         pathParams+=AttributeParamRef* 
 	 *         queryParams+=AttributeParamRef* 
 	 *         payload+=AttributeParamRef* 
+	 *         response+=[Attribute|QualifiedName]* 
 	 *         outcomes+=HttpServerOutcome*
 	 *     )
 	 */
@@ -1096,7 +1119,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     WhenBlock returns WhenBlock
 	 *
 	 * Constraint:
-	 *     (action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition authorization=Authorization?)
+	 *     (action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? extractions+=Extraction*)
 	 */
 	protected void sequence_WhenBlock(ISerializationContext context, WhenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -1,7 +1,7 @@
 package de.acegen.templates.java.data
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceRead
+import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
@@ -167,7 +167,7 @@ class Data {
 		
 	'''
 	
-	def generateResponseData(HttpServerAceRead it, HttpServer httpServer) '''
+	def generateResponseData(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
 		package «httpServer.getName».data;
@@ -210,7 +210,7 @@ class Data {
 		
 	'''
 	
-	def generateReponseDataInterface(HttpServerAceRead it, HttpServer httpServer) '''
+	def generateReponseDataInterface(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
 		package «httpServer.getName».data;

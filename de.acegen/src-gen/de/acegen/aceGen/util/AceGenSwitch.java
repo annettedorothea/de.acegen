@@ -376,6 +376,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.EXTRACTION:
+      {
+        Extraction extraction = (Extraction)theEObject;
+        T result = caseExtraction(extraction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.SELECT_BY_EXPECTATION:
       {
         SelectByExpectation selectByExpectation = (SelectByExpectation)theEObject;
@@ -1166,6 +1173,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVerification(Verification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Extraction</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Extraction</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExtraction(Extraction object)
   {
     return null;
   }

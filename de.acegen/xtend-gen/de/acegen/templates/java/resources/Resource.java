@@ -5,7 +5,6 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
@@ -481,7 +480,9 @@ public class Resource {
     _builder.append("action.apply();");
     _builder.newLine();
     {
-      if (((it instanceof HttpServerAceRead) && (((HttpServerAceRead) it).getResponse().size() > 0))) {
+      int _size_3 = it.getResponse().size();
+      boolean _greaterThan_3 = (_size_3 > 0);
+      if (_greaterThan_3) {
         _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it, httpServer);

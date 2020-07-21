@@ -1434,21 +1434,27 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPayloadKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
 		private final Assignment cPayloadAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
 		private final RuleCall cPayloadAttributeParamRefParserRuleCall_10_1_0 = (RuleCall)cPayloadAssignment_10_1.eContents().get(0);
-		private final Assignment cOutcomesAssignment_11 = (Assignment)cGroup.eContents().get(11);
-		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_11_0 = (RuleCall)cOutcomesAssignment_11.eContents().get(0);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Keyword cResponseKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cResponseAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final CrossReference cResponseAttributeCrossReference_11_1_0 = (CrossReference)cResponseAssignment_11_1.eContents().get(0);
+		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1 = (RuleCall)cResponseAttributeCrossReference_11_1_0.eContents().get(1);
+		private final Assignment cOutcomesAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_12_0 = (RuleCall)cOutcomesAssignment_12.eContents().get(0);
 		
 		//HttpServerAceWrite:
 		//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
 		//	type=WriteFunctionType
 		//	url=STRING
 		//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
-		//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)?
+		//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)? ('response'
+		//	response+=[Attribute|QualifiedName]*)?
 		//	outcomes+=HttpServerOutcome*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>' type=WriteFunctionType url=STRING authorize?='authorize'?
 		//('pathParams' pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
-		//payload+=AttributeParamRef*)? outcomes+=HttpServerOutcome*
+		//payload+=AttributeParamRef*)? ('response' response+=[Attribute|QualifiedName]*)? outcomes+=HttpServerOutcome*
 		public Group getGroup() { return cGroup; }
 		
 		//proxy?='proxy'?
@@ -1532,11 +1538,26 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//AttributeParamRef
 		public RuleCall getPayloadAttributeParamRefParserRuleCall_10_1_0() { return cPayloadAttributeParamRefParserRuleCall_10_1_0; }
 		
+		//('response' response+=[Attribute|QualifiedName]*)?
+		public Group getGroup_11() { return cGroup_11; }
+		
+		//'response'
+		public Keyword getResponseKeyword_11_0() { return cResponseKeyword_11_0; }
+		
+		//response+=[Attribute|QualifiedName]*
+		public Assignment getResponseAssignment_11_1() { return cResponseAssignment_11_1; }
+		
+		//[Attribute|QualifiedName]
+		public CrossReference getResponseAttributeCrossReference_11_1_0() { return cResponseAttributeCrossReference_11_1_0; }
+		
+		//QualifiedName
+		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1; }
+		
 		//outcomes+=HttpServerOutcome*
-		public Assignment getOutcomesAssignment_11() { return cOutcomesAssignment_11; }
+		public Assignment getOutcomesAssignment_12() { return cOutcomesAssignment_12; }
 		
 		//HttpServerOutcome
-		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_11_0() { return cOutcomesHttpServerOutcomeParserRuleCall_11_0; }
+		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_12_0() { return cOutcomesHttpServerOutcomeParserRuleCall_12_0; }
 	}
 	public class HttpServerOutcomeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerOutcome");
@@ -2092,13 +2113,16 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cDataDefinitionDataDefinitionParserRuleCall_1_0 = (RuleCall)cDataDefinitionAssignment_1.eContents().get(0);
 		private final Assignment cAuthorizationAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cAuthorizationAuthorizationParserRuleCall_2_0 = (RuleCall)cAuthorizationAssignment_2.eContents().get(0);
+		private final Assignment cExtractionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExtractionsExtractionParserRuleCall_3_0 = (RuleCall)cExtractionsAssignment_3.eContents().get(0);
 		
 		//WhenBlock:
 		//	action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition
-		//	authorization=Authorization?;
+		//	authorization=Authorization?
+		//	extractions+=Extraction*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition authorization=Authorization?
+		//action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition authorization=Authorization? extractions+=Extraction*
 		public Group getGroup() { return cGroup; }
 		
 		//action=[HttpServerAce|QualifiedName]
@@ -2121,6 +2145,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//Authorization
 		public RuleCall getAuthorizationAuthorizationParserRuleCall_2_0() { return cAuthorizationAuthorizationParserRuleCall_2_0; }
+		
+		//extractions+=Extraction*
+		public Assignment getExtractionsAssignment_3() { return cExtractionsAssignment_3; }
+		
+		//Extraction
+		public RuleCall getExtractionsExtractionParserRuleCall_3_0() { return cExtractionsExtractionParserRuleCall_3_0; }
 	}
 	public class ThenBlockElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ThenBlock");
@@ -2471,6 +2501,29 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+	}
+	public class ExtractionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Extraction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cExtractKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//Extraction:
+		//	'extract' name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'extract' name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//'extract'
+		public Keyword getExtractKeyword_0() { return cExtractKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 	public class SelectByExpectationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.SelectByExpectation");
@@ -3173,6 +3226,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final CountElements pCount;
 	private final AttributeAndValueElements pAttributeAndValue;
 	private final VerificationElements pVerification;
+	private final ExtractionElements pExtraction;
 	private final SelectByExpectationElements pSelectByExpectation;
 	private final DataDefinitionElements pDataDefinition;
 	private final AuthorizationElements pAuthorization;
@@ -3246,6 +3300,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pCount = new CountElements();
 		this.pAttributeAndValue = new AttributeAndValueElements();
 		this.pVerification = new VerificationElements();
+		this.pExtraction = new ExtractionElements();
 		this.pSelectByExpectation = new SelectByExpectationElements();
 		this.pDataDefinition = new DataDefinitionElements();
 		this.pAuthorization = new AuthorizationElements();
@@ -3566,7 +3621,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	type=WriteFunctionType
 	//	url=STRING
 	//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
-	//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)?
+	//	queryParams+=AttributeParamRef*)? ('payload' payload+=AttributeParamRef*)? ('response'
+	//	response+=[Attribute|QualifiedName]*)?
 	//	outcomes+=HttpServerOutcome*;
 	public HttpServerAceWriteElements getHttpServerAceWriteAccess() {
 		return pHttpServerAceWrite;
@@ -3682,7 +3738,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//WhenBlock:
 	//	action=[HttpServerAce|QualifiedName] dataDefinition=DataDefinition
-	//	authorization=Authorization?;
+	//	authorization=Authorization?
+	//	extractions+=Extraction*;
 	public WhenBlockElements getWhenBlockAccess() {
 		return pWhenBlock;
 	}
@@ -3772,6 +3829,16 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getVerificationRule() {
 		return getVerificationAccess().getRule();
+	}
+	
+	//Extraction:
+	//	'extract' name=ID;
+	public ExtractionElements getExtractionAccess() {
+		return pExtraction;
+	}
+	
+	public ParserRule getExtractionRule() {
+		return getExtractionAccess().getRule();
 	}
 	
 	//SelectByExpectation:

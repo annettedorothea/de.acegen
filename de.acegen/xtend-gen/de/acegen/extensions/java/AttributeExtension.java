@@ -719,9 +719,21 @@ public class AttributeExtension {
       _builder_1.append("\" + this.getTestId() + \"");
       returnString = returnString.replace("${testId}", _builder_1);
     }
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append(returnString);
-    return _builder_2;
+    boolean _contains_2 = it.contains("${");
+    if (_contains_2) {
+      final int beginIndex = it.indexOf("${");
+      final int endIndex = it.indexOf("}");
+      final String templateString = it.substring(beginIndex, (endIndex + 1));
+      final String templateStringName = it.substring((beginIndex + 2), endIndex);
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\" + this.extractedValues.get(\"");
+      _builder_2.append(templateStringName);
+      _builder_2.append("\").toString() + \"");
+      returnString = returnString.replace(templateString, _builder_2);
+    }
+    StringConcatenation _builder_3 = new StringConcatenation();
+    _builder_3.append(returnString);
+    return _builder_3;
   }
   
   protected CharSequence _valueFrom(final JsonArray it) {
@@ -751,12 +763,26 @@ public class AttributeExtension {
   }
   
   protected CharSequence _valueFrom(final JsonDateTime it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("\\\"");
+    boolean _contains = it.getDateTime().contains("${");
+    if (_contains) {
+      final int beginIndex = it.getDateTime().indexOf("${");
+      final int endIndex = it.getDateTime().indexOf("}");
+      final String templateStringName = it.getDateTime().substring((beginIndex + 2), endIndex);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"\" + LocalDateTime.parse(this.extractedValues.get(\"");
+      _builder.append(templateStringName);
+      _builder.append("\").toString(), DateTimeFormatter.ofPattern(\"");
+      String _pattern = it.getPattern();
+      _builder.append(_pattern);
+      _builder.append("\"))  + \"\\\"");
+      return _builder;
+    }
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("\\\"");
     LocalDateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
-    _builder.append(_dateTimeParse);
-    _builder.append("\\\"");
-    return _builder;
+    _builder_1.append(_dateTimeParse);
+    _builder_1.append("\\\"");
+    return _builder_1;
   }
   
   public Object primitiveValueFrom(final PrimitiveValue it) {

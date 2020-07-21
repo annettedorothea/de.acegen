@@ -1170,13 +1170,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE__PAYLOAD = 8;
 
   /**
+   * The feature id for the '<em><b>Response</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER_ACE__RESPONSE = 9;
+
+  /**
    * The number of structural features of the '<em>Http Server Ace</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_FEATURE_COUNT = 9;
+  int HTTP_SERVER_ACE_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl <em>Http Server Ace Write</em>}' class.
@@ -1268,6 +1277,15 @@ public interface AceGenPackage extends EPackage
    * @ordered
    */
   int HTTP_SERVER_ACE_WRITE__PAYLOAD = HTTP_SERVER_ACE__PAYLOAD;
+
+  /**
+   * The feature id for the '<em><b>Response</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER_ACE_WRITE__RESPONSE = HTTP_SERVER_ACE__RESPONSE;
 
   /**
    * The feature id for the '<em><b>Outcomes</b></em>' containment reference list.
@@ -1422,7 +1440,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_READ__RESPONSE = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
+  int HTTP_SERVER_ACE_READ__RESPONSE = HTTP_SERVER_ACE__RESPONSE;
 
   /**
    * The number of structural features of the '<em>Http Server Ace Read</em>' class.
@@ -1431,7 +1449,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_READ_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 1;
+  int HTTP_SERVER_ACE_READ_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
@@ -1775,13 +1793,22 @@ public interface AceGenPackage extends EPackage
   int WHEN_BLOCK__AUTHORIZATION = 2;
 
   /**
+   * The feature id for the '<em><b>Extractions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WHEN_BLOCK__EXTRACTIONS = 3;
+
+  /**
    * The number of structural features of the '<em>When Block</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WHEN_BLOCK_FEATURE_COUNT = 3;
+  int WHEN_BLOCK_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ThenBlockImpl <em>Then Block</em>}' class.
@@ -2080,6 +2107,34 @@ public interface AceGenPackage extends EPackage
   int VERIFICATION_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.ExtractionImpl <em>Extraction</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.ExtractionImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExtraction()
+   * @generated
+   */
+  int EXTRACTION = 42;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTRACTION__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Extraction</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTRACTION_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.SelectByExpectationImpl <em>Select By Expectation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2087,7 +2142,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
    * @generated
    */
-  int SELECT_BY_EXPECTATION = 42;
+  int SELECT_BY_EXPECTATION = 43;
 
   /**
    * The feature id for the '<em><b>Object</b></em>' containment reference.
@@ -2133,7 +2188,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 43;
+  int DATA_DEFINITION = 44;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -2188,7 +2243,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 44;
+  int AUTHORIZATION = 45;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -2225,7 +2280,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 45;
+  int ATTRIBUTE = 46;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -2325,7 +2380,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 46;
+  int JSON_DATE_TIME = 47;
 
   /**
    * The feature id for the '<em><b>Date Time</b></em>' attribute.
@@ -2362,7 +2417,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 49;
+  int JSON_VALUE = 50;
 
   /**
    * The number of structural features of the '<em>Json Value</em>' class.
@@ -2381,7 +2436,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 47;
+  int JSON_OBJECT = 48;
 
   /**
    * The feature id for the '<em><b>Members</b></em>' containment reference list.
@@ -2409,7 +2464,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 48;
+  int JSON_MEMBER = 49;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2446,7 +2501,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 50;
+  int JSON_ARRAY = 51;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -2474,7 +2529,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
    * @generated
    */
-  int STRING_TYPE = 51;
+  int STRING_TYPE = 52;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2502,7 +2557,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 52;
+  int BOOLEAN_TYPE = 53;
 
   /**
    * The feature id for the '<em><b>Boolean</b></em>' attribute.
@@ -2530,7 +2585,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
    * @generated
    */
-  int NULL_TYPE = 53;
+  int NULL_TYPE = 54;
 
   /**
    * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -2558,7 +2613,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getUndefinedType()
    * @generated
    */
-  int UNDEFINED_TYPE = 54;
+  int UNDEFINED_TYPE = 55;
 
   /**
    * The feature id for the '<em><b>Undefined</b></em>' attribute.
@@ -2586,7 +2641,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
    * @generated
    */
-  int LONG_TYPE = 55;
+  int LONG_TYPE = 56;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -2614,7 +2669,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 56;
+  int PRIMITIVE_VALUE = 57;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -3689,6 +3744,17 @@ public interface AceGenPackage extends EPackage
   EReference getHttpServerAce_Payload();
 
   /**
+   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAce#getResponse <em>Response</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Response</em>'.
+   * @see de.acegen.aceGen.HttpServerAce#getResponse()
+   * @see #getHttpServerAce()
+   * @generated
+   */
+  EReference getHttpServerAce_Response();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.HttpServerAceWrite <em>Http Server Ace Write</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3750,17 +3816,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EClass getHttpServerAceRead();
-
-  /**
-   * Returns the meta object for the reference list '{@link de.acegen.aceGen.HttpServerAceRead#getResponse <em>Response</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Response</em>'.
-   * @see de.acegen.aceGen.HttpServerAceRead#getResponse()
-   * @see #getHttpServerAceRead()
-   * @generated
-   */
-  EReference getHttpServerAceRead_Response();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.AttributeParamRef <em>Attribute Param Ref</em>}'.
@@ -4085,6 +4140,17 @@ public interface AceGenPackage extends EPackage
   EReference getWhenBlock_Authorization();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.WhenBlock#getExtractions <em>Extractions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Extractions</em>'.
+   * @see de.acegen.aceGen.WhenBlock#getExtractions()
+   * @see #getWhenBlock()
+   * @generated
+   */
+  EReference getWhenBlock_Extractions();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.ThenBlock <em>Then Block</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4339,6 +4405,27 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getVerification_Name();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Extraction <em>Extraction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Extraction</em>'.
+   * @see de.acegen.aceGen.Extraction
+   * @generated
+   */
+  EClass getExtraction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Extraction#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.Extraction#getName()
+   * @see #getExtraction()
+   * @generated
+   */
+  EAttribute getExtraction_Name();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.SelectByExpectation <em>Select By Expectation</em>}'.
@@ -5677,6 +5764,14 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_SERVER_ACE__PAYLOAD = eINSTANCE.getHttpServerAce_Payload();
 
     /**
+     * The meta object literal for the '<em><b>Response</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HTTP_SERVER_ACE__RESPONSE = eINSTANCE.getHttpServerAce_Response();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl <em>Http Server Ace Write</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5729,14 +5824,6 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_SERVER_ACE_READ = eINSTANCE.getHttpServerAceRead();
-
-    /**
-     * The meta object literal for the '<em><b>Response</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HTTP_SERVER_ACE_READ__RESPONSE = eINSTANCE.getHttpServerAceRead_Response();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.AttributeParamRefImpl <em>Attribute Param Ref</em>}' class.
@@ -5995,6 +6082,14 @@ public interface AceGenPackage extends EPackage
     EReference WHEN_BLOCK__AUTHORIZATION = eINSTANCE.getWhenBlock_Authorization();
 
     /**
+     * The meta object literal for the '<em><b>Extractions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference WHEN_BLOCK__EXTRACTIONS = eINSTANCE.getWhenBlock_Extractions();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.ThenBlockImpl <em>Then Block</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6201,6 +6296,24 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute VERIFICATION__NAME = eINSTANCE.getVerification_Name();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.ExtractionImpl <em>Extraction</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.ExtractionImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExtraction()
+     * @generated
+     */
+    EClass EXTRACTION = eINSTANCE.getExtraction();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXTRACTION__NAME = eINSTANCE.getExtraction_Name();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.SelectByExpectationImpl <em>Select By Expectation</em>}' class.

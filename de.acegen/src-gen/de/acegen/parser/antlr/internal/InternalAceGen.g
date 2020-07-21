@@ -2453,11 +2453,33 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			)*
 		)?
 		(
+			otherlv_14='response'
+			{
+				newLeafNode(otherlv_14, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_11_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getHttpServerAceWriteRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeCrossReference_11_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+		)?
+		(
 			(
 				{
-					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_12_0());
 				}
-				lv_outcomes_14_0=ruleHttpServerOutcome
+				lv_outcomes_16_0=ruleHttpServerOutcome
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
@@ -2465,7 +2487,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 					add(
 						$current,
 						"outcomes",
-						lv_outcomes_14_0,
+						lv_outcomes_16_0,
 						"de.acegen.AceGen.HttpServerOutcome");
 					afterParserOrEnumRuleCall();
 				}
@@ -3381,6 +3403,25 @@ ruleWhenBlock returns [EObject current=null]
 				}
 			)
 		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getWhenBlockAccess().getExtractionsExtractionParserRuleCall_3_0());
+				}
+				lv_extractions_3_0=ruleExtraction
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getWhenBlockRule());
+					}
+					add(
+						$current,
+						"extractions",
+						lv_extractions_3_0,
+						"de.acegen.AceGen.Extraction");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
 	)
 ;
 
@@ -3974,6 +4015,47 @@ ruleVerification returns [EObject current=null]
 					lv_name_0_0,
 					"org.eclipse.xtext.common.Terminals.ID");
 			}
+		)
+	)
+;
+
+// Entry rule entryRuleExtraction
+entryRuleExtraction returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getExtractionRule()); }
+	iv_ruleExtraction=ruleExtraction
+	{ $current=$iv_ruleExtraction.current; }
+	EOF;
+
+// Rule Extraction
+ruleExtraction returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='extract'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getExtractionAccess().getExtractKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getExtractionAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getExtractionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
 		)
 	)
 ;

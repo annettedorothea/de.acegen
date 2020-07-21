@@ -49,17 +49,15 @@ class Scenario {
 		
 		package «java.getName».scenarios;
 		
-		«IF whenBlock.action.isRead»
-			import «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»;
-			import javax.ws.rs.core.Response;
-		«ENDIF»
+		import «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»;
+		import javax.ws.rs.core.Response;
 		
 		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
 		
 			«FOR verification : thenBlock.verifications»
 				@Override
-				protected void «verification»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF») {
+				protected void «verification»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response) {
 					assertFail("«verification» not implemented");
 					LOG.info("THEN: «verification» passed");
 				}
@@ -101,6 +99,8 @@ class Scenario {
 		
 			static final Logger LOG = LoggerFactory.getLogger(Abstract«name»Scenario.class);
 			
+			private Map<String, Object> extractedValues = new HashMap<String, Object>();
+			
 			private void given() throws Exception {
 				Response response;
 				String uuid;
@@ -110,47 +110,13 @@ class Scenario {
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						for (int i=0; i<«givenRef.times»; i++) {
-							if (prerequisite("«givenRef.scenario.name»")) {
-								uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
-								«givenRef.scenario.whenBlock.generatePrepare»
-								«givenRef.scenario.whenBlock.generateDataCreation()»
-								timeBeforeRequest = System.currentTimeMillis();
-								response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
-								timeAfterRequest = System.currentTimeMillis();
-								if (response.getStatus() >= 400) {
-									String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
-									LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
-									addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
-									assertFail(message);
-								}
-								LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
-								addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
-							} else {
-								LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
-							}
+							«givenRef.givenBlock(java)»
 						}
 						«incIndex»
 							
 					«ELSE»
 						«incIndex»
-						if (prerequisite("«givenRef.scenario.name»")) {
-							uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
-							«givenRef.scenario.whenBlock.generatePrepare»
-							«givenRef.scenario.whenBlock.generateDataCreation()»
-							timeBeforeRequest = System.currentTimeMillis();
-							response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
-							timeAfterRequest = System.currentTimeMillis();
-							if (response.getStatus() >= 400) {
-								String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
-								LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
-								addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
-								assertFail(message);
-							}
-							LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
-							addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
-						} else {
-							LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
-						}
+						«givenRef.givenBlock(java)»
 						
 					«ENDIF»
 
@@ -170,7 +136,7 @@ class Scenario {
 				return response;
 			}
 			
-			private «IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
+			private «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» then(Response response) throws Exception {
 				if (response.getStatus() == 500) {
 					String message = response.readEntity(String.class);
 					assertFail(message);
@@ -184,13 +150,11 @@ class Scenario {
 					}
 				«ENDIF»
 				
-				«IF whenBlock.action.isRead»
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
-					try {
-						actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
-					} catch (Exception x) {
-					}
-				«ENDIF»
+				«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
+				try {
+					actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+				} catch (Exception x) {
+				}
 				«IF thenBlock.response !== null»
 					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
 					
@@ -202,9 +166,7 @@ class Scenario {
 					LOG.info("THEN: response passed");
 				«ENDIF»
 				
-				«IF whenBlock.action.isRead»
-					return actual;
-				«ENDIF»
+				return actual;
 			}
 					
 			@Override
@@ -214,14 +176,14 @@ class Scenario {
 				if (prerequisite("«name»")) {
 					Response response = when();
 
-					«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = then(response);
 					
 					«FOR persistenceVerification : thenBlock.persistenceVerifications»
 						this.«persistenceVerification.name»();
 					«ENDFOR»
 				
 					«FOR verification : thenBlock.verifications»
-						«verification.name»(«IF whenBlock.action.isRead»actualResponse«ENDIF»);
+						«verification.name»(actualResponse);
 					«ENDFOR»
 				} else {
 					LOG.info("WHEN: prerequisite for «name» not met");
@@ -229,7 +191,7 @@ class Scenario {
 			}
 			
 			«FOR verification : thenBlock.verifications»
-				protected abstract void «verification.name»(«IF whenBlock.action.isRead»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF»);
+				protected abstract void «verification.name»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response);
 			«ENDFOR»
 			
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»
@@ -249,6 +211,41 @@ class Scenario {
 		
 		«sdg»
 					
+	'''
+	
+	private def givenBlock(GivenRef givenRef, HttpServer java) '''
+		if (prerequisite("«givenRef.scenario.name»")) {
+			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+			«givenRef.scenario.whenBlock.generatePrepare»
+			«givenRef.scenario.whenBlock.generateDataCreation()»
+			timeBeforeRequest = System.currentTimeMillis();
+			response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
+			timeAfterRequest = System.currentTimeMillis();
+			if (response.getStatus() >= 400) {
+				String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+				LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
+				addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+				assertFail(message);
+			}
+			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
+			addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+			«IF givenRef.scenario.whenBlock.extractions.size > 0»
+				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)» responseEntity_«index» = null;
+				try {
+					responseEntity_«index» = response.readEntity(«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)».class);
+					«FOR extraction: givenRef.scenario.whenBlock.extractions»
+						
+						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(responseEntity_«index»);
+						extractedValues.put("«extraction.name»", «extraction.name»);
+						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
+					«ENDFOR»
+				} catch (Exception x) {
+					LOG.info("GIVEN: failed to extract values from response ", x);
+				}
+			«ENDIF»
+		} else {
+			LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
+		}
 	'''
 	
 	private dispatch def persistenceVerification(SelectByUniqueAttribute it, Model model) '''

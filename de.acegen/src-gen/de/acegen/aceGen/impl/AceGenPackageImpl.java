@@ -17,6 +17,7 @@ import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.DataDefinition;
+import de.acegen.aceGen.Extraction;
 import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.GroupedClientAttribute;
@@ -371,6 +372,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass verificationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass extractionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1613,6 +1621,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EReference getHttpServerAce_Response()
+  {
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getHttpServerAceWrite()
   {
     return httpServerAceWriteEClass;
@@ -1671,17 +1690,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EClass getHttpServerAceRead()
   {
     return httpServerAceReadEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHttpServerAceRead_Response()
-  {
-    return (EReference)httpServerAceReadEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2020,6 +2028,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EReference getWhenBlock_Extractions()
+  {
+    return (EReference)whenBlockEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getThenBlock()
   {
     return thenBlockEClass;
@@ -2276,6 +2295,28 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EAttribute getVerification_Name()
   {
     return (EAttribute)verificationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getExtraction()
+  {
+    return extractionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getExtraction_Name()
+  {
+    return (EAttribute)extractionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2934,6 +2975,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__PATH_PARAMS);
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__QUERY_PARAMS);
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__PAYLOAD);
+    createEReference(httpServerAceEClass, HTTP_SERVER_ACE__RESPONSE);
 
     httpServerAceWriteEClass = createEClass(HTTP_SERVER_ACE_WRITE);
     createEReference(httpServerAceWriteEClass, HTTP_SERVER_ACE_WRITE__OUTCOMES);
@@ -2943,7 +2985,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerOutcomeEClass, HTTP_SERVER_OUTCOME__LISTENERS);
 
     httpServerAceReadEClass = createEClass(HTTP_SERVER_ACE_READ);
-    createEReference(httpServerAceReadEClass, HTTP_SERVER_ACE_READ__RESPONSE);
 
     attributeParamRefEClass = createEClass(ATTRIBUTE_PARAM_REF);
     createEAttribute(attributeParamRefEClass, ATTRIBUTE_PARAM_REF__NOT_NULL);
@@ -2982,6 +3023,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(whenBlockEClass, WHEN_BLOCK__ACTION);
     createEReference(whenBlockEClass, WHEN_BLOCK__DATA_DEFINITION);
     createEReference(whenBlockEClass, WHEN_BLOCK__AUTHORIZATION);
+    createEReference(whenBlockEClass, WHEN_BLOCK__EXTRACTIONS);
 
     thenBlockEClass = createEClass(THEN_BLOCK);
     createEAttribute(thenBlockEClass, THEN_BLOCK__STATUS_CODE);
@@ -3014,6 +3056,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     verificationEClass = createEClass(VERIFICATION);
     createEAttribute(verificationEClass, VERIFICATION__NAME);
+
+    extractionEClass = createEClass(EXTRACTION);
+    createEAttribute(extractionEClass, EXTRACTION__NAME);
 
     selectByExpectationEClass = createEClass(SELECT_BY_EXPECTATION);
     createEReference(selectByExpectationEClass, SELECT_BY_EXPECTATION__OBJECT);
@@ -3249,6 +3294,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServerAce_PathParams(), this.getAttributeParamRef(), null, "pathParams", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAce_QueryParams(), this.getAttributeParamRef(), null, "queryParams", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAce_Payload(), this.getAttributeParamRef(), null, "payload", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHttpServerAce_Response(), this.getAttribute(), null, "response", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceWriteEClass, HttpServerAceWrite.class, "HttpServerAceWrite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getHttpServerAceWrite_Outcomes(), this.getHttpServerOutcome(), null, "outcomes", null, 0, -1, HttpServerAceWrite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3258,7 +3304,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServerOutcome_Listeners(), this.getHttpServerViewFunction(), null, "listeners", null, 0, -1, HttpServerOutcome.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceReadEClass, HttpServerAceRead.class, "HttpServerAceRead", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getHttpServerAceRead_Response(), this.getAttribute(), null, "response", null, 0, -1, HttpServerAceRead.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeParamRefEClass, AttributeParamRef.class, "AttributeParamRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttributeParamRef_NotNull(), ecorePackage.getEBoolean(), "notNull", null, 0, 1, AttributeParamRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3297,6 +3342,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getWhenBlock_Action(), this.getHttpServerAce(), null, "action", null, 0, 1, WhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWhenBlock_DataDefinition(), this.getDataDefinition(), null, "dataDefinition", null, 0, 1, WhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWhenBlock_Authorization(), this.getAuthorization(), null, "authorization", null, 0, 1, WhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWhenBlock_Extractions(), this.getExtraction(), null, "extractions", null, 0, -1, WhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(thenBlockEClass, ThenBlock.class, "ThenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getThenBlock_StatusCode(), ecorePackage.getEInt(), "statusCode", null, 0, 1, ThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3329,6 +3375,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(verificationEClass, Verification.class, "Verification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, Verification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(extractionEClass, Extraction.class, "Extraction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExtraction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Extraction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(selectByExpectationEClass, SelectByExpectation.class, "SelectByExpectation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSelectByExpectation_Object(), this.getJsonObject(), null, "object", null, 0, 1, SelectByExpectation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

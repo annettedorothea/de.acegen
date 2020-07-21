@@ -102,6 +102,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getGroup_8(), "rule__HttpServerAceWrite__Group_8__0");
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getGroup_9(), "rule__HttpServerAceWrite__Group_9__0");
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getGroup_10(), "rule__HttpServerAceWrite__Group_10__0");
+			builder.put(grammarAccess.getHttpServerAceWriteAccess().getGroup_11(), "rule__HttpServerAceWrite__Group_11__0");
 			builder.put(grammarAccess.getHttpServerOutcomeAccess().getGroup(), "rule__HttpServerOutcome__Group__0");
 			builder.put(grammarAccess.getHttpServerOutcomeAccess().getGroup_2(), "rule__HttpServerOutcome__Group_2__0");
 			builder.put(grammarAccess.getHttpServerAceReadAccess().getGroup(), "rule__HttpServerAceRead__Group__0");
@@ -135,6 +136,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCountAccess().getGroup(), "rule__Count__Group__0");
 			builder.put(grammarAccess.getCountAccess().getGroup_3(), "rule__Count__Group_3__0");
 			builder.put(grammarAccess.getAttributeAndValueAccess().getGroup(), "rule__AttributeAndValue__Group__0");
+			builder.put(grammarAccess.getExtractionAccess().getGroup(), "rule__Extraction__Group__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup(), "rule__DataDefinition__Group__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_1(), "rule__DataDefinition__Group_1__0");
 			builder.put(grammarAccess.getDataDefinitionAccess().getGroup_2(), "rule__DataDefinition__Group_2__0");
@@ -231,7 +233,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAssignment_8_1(), "rule__HttpServerAceWrite__PathParamsAssignment_8_1");
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAssignment_9_1(), "rule__HttpServerAceWrite__QueryParamsAssignment_9_1");
 			builder.put(grammarAccess.getHttpServerAceWriteAccess().getPayloadAssignment_10_1(), "rule__HttpServerAceWrite__PayloadAssignment_10_1");
-			builder.put(grammarAccess.getHttpServerAceWriteAccess().getOutcomesAssignment_11(), "rule__HttpServerAceWrite__OutcomesAssignment_11");
+			builder.put(grammarAccess.getHttpServerAceWriteAccess().getResponseAssignment_11_1(), "rule__HttpServerAceWrite__ResponseAssignment_11_1");
+			builder.put(grammarAccess.getHttpServerAceWriteAccess().getOutcomesAssignment_12(), "rule__HttpServerAceWrite__OutcomesAssignment_12");
 			builder.put(grammarAccess.getHttpServerOutcomeAccess().getNameAssignment_1(), "rule__HttpServerOutcome__NameAssignment_1");
 			builder.put(grammarAccess.getHttpServerOutcomeAccess().getListenersAssignment_2_1(), "rule__HttpServerOutcome__ListenersAssignment_2_1");
 			builder.put(grammarAccess.getHttpServerAceReadAccess().getProxyAssignment_0(), "rule__HttpServerAceRead__ProxyAssignment_0");
@@ -267,6 +270,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWhenBlockAccess().getActionAssignment_0(), "rule__WhenBlock__ActionAssignment_0");
 			builder.put(grammarAccess.getWhenBlockAccess().getDataDefinitionAssignment_1(), "rule__WhenBlock__DataDefinitionAssignment_1");
 			builder.put(grammarAccess.getWhenBlockAccess().getAuthorizationAssignment_2(), "rule__WhenBlock__AuthorizationAssignment_2");
+			builder.put(grammarAccess.getWhenBlockAccess().getExtractionsAssignment_3(), "rule__WhenBlock__ExtractionsAssignment_3");
 			builder.put(grammarAccess.getThenBlockAccess().getStatusCodeAssignment_0(), "rule__ThenBlock__StatusCodeAssignment_0");
 			builder.put(grammarAccess.getThenBlockAccess().getResponseAssignment_1_2(), "rule__ThenBlock__ResponseAssignment_1_2");
 			builder.put(grammarAccess.getThenBlockAccess().getPersistenceVerificationsAssignment_2_1(), "rule__ThenBlock__PersistenceVerificationsAssignment_2_1");
@@ -285,6 +289,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAttributeAndValueAccess().getAttributeAssignment_0(), "rule__AttributeAndValue__AttributeAssignment_0");
 			builder.put(grammarAccess.getAttributeAndValueAccess().getValueAssignment_2(), "rule__AttributeAndValue__ValueAssignment_2");
 			builder.put(grammarAccess.getVerificationAccess().getNameAssignment(), "rule__Verification__NameAssignment");
+			builder.put(grammarAccess.getExtractionAccess().getNameAssignment_1(), "rule__Extraction__NameAssignment_1");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getObjectAssignment_0(), "rule__SelectByExpectation__ObjectAssignment_0");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getIsNotNullAssignment_1(), "rule__SelectByExpectation__IsNotNullAssignment_1");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getIsNullAssignment_2(), "rule__SelectByExpectation__IsNullAssignment_2");

@@ -26,7 +26,6 @@ import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerViewFunction
@@ -55,6 +54,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import de.acegen.aceGen.HttpServerAceRead
 
 /**
  * This class contains custom scoping description.
@@ -86,9 +86,16 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				return Scopes.scopeFor(input)
 			}
 		}
-		if (context instanceof HttpServerAceRead &&
-			reference == AceGenPackage.Literals.HTTP_SERVER_ACE_READ__RESPONSE) {
-			val javaAce = context as HttpServerAceRead;
+		if ((context instanceof HttpServerAceRead || context instanceof HttpServerAceWrite) &&
+			reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE) {
+			val javaAce = context as HttpServerAce;
+			val attrs = new ArrayList<Attribute>();
+			javaAce.getModel.allAttributesRec(attrs);
+			return Scopes.scopeFor(attrs)
+		}
+		if ((context instanceof HttpServerAceRead || context instanceof HttpServerAceWrite) &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
+			val javaAce = context as HttpServerAce;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
 			return Scopes.scopeFor(attrs)
@@ -229,9 +236,9 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					}
 					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
 					return Scopes.scopeFor(attr);
-				} else if (isThen && scenario.whenBlock.action instanceof HttpServerAceRead) {
+				} else if (isThen) {
 					var attr = new ArrayList<Attribute>();
-					for (attribute : (scenario.whenBlock.action as HttpServerAceRead).response) {
+					for (attribute : scenario.whenBlock.action.response) {
 						attr.add(attribute)
 					}
 					return Scopes.scopeFor(attr);
@@ -240,10 +247,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			if (parent instanceof ClientScenario) {
 				val scenario = parent as ClientScenario;
 				if (isWhen) {
-					if (scenario.whenBlock.action.serverCall instanceof HttpServerAceRead) {
-						val ace = scenario.whenBlock.action.serverCall as HttpServerAceRead
-						return Scopes.scopeFor(ace.response);
-					}
+					return Scopes.scopeFor(scenario.whenBlock.action.serverCall.response);
 				}
 				if (isThen && isServerCall) {
 					var attr = new ArrayList<Attribute>();

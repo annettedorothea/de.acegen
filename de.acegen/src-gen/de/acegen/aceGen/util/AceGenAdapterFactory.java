@@ -286,6 +286,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createVerificationAdapter();
       }
       @Override
+      public Adapter caseExtraction(Extraction object)
+      {
+        return createExtractionAdapter();
+      }
+      @Override
       public Adapter caseSelectByExpectation(SelectByExpectation object)
       {
         return createSelectByExpectationAdapter();
@@ -1008,6 +1013,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVerificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Extraction <em>Extraction</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Extraction
+   * @generated
+   */
+  public Adapter createExtractionAdapter()
   {
     return null;
   }

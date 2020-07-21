@@ -402,6 +402,15 @@ public interface AceGenFactory extends EFactory
   Verification createVerification();
 
   /**
+   * Returns a new object of class '<em>Extraction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Extraction</em>'.
+   * @generated
+   */
+  Extraction createExtraction();
+
+  /**
    * Returns a new object of class '<em>Select By Expectation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

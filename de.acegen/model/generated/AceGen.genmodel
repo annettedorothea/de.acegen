@@ -124,6 +124,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/pathParams"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/queryParams"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/payload"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/response"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceWrite">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceWrite/outcomes"/>
@@ -132,9 +133,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerOutcome/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerOutcome/listeners"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//HttpServerAceRead">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceRead/response"/>
-    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//HttpServerAceRead"/>
     <genClasses ecoreClass="AceGen.ecore#//AttributeParamRef">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//AttributeParamRef/notNull"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeParamRef/attribute"/>
@@ -172,6 +171,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenBlock/action"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenBlock/dataDefinition"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenBlock/authorization"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenBlock/extractions"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ThenBlock">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ThenBlock/statusCode"/>
@@ -203,6 +203,9 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Verification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Verification/name"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//Extraction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Extraction/name"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//SelectByExpectation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SelectByExpectation/object"/>

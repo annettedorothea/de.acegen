@@ -18,7 +18,6 @@
 package de.acegen.generator
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.JavaExtension
@@ -203,13 +202,11 @@ class JavaGenerator {
 						event.generateEventFile(ace, outcome, httpServer));
 				}
 			}
-			if ("GET".equals(ace.getType) && (ace as HttpServerAceRead).response.size > 0) {
-				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + ".java",
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace as HttpServerAceRead, httpServer));
-				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataInterfaceName + ".java",
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					data.generateReponseDataInterface(ace as HttpServerAceRead, httpServer));
-			}
+			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + ".java",
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));
+			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataInterfaceName + ".java",
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+				data.generateReponseDataInterface(ace, httpServer));
 		}
 		for (viewAce : httpServer.views) {
 			fsa.generateFile(httpServer.packageFolder + "/views/" + viewAce.viewName + ".java",
