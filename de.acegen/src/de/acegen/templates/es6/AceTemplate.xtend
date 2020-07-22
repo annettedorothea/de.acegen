@@ -154,7 +154,7 @@ class AceTemplate {
 		                    };
 		                    reject(error);
 		                } else {
-		                    resolve(data);
+		                    resolve(JSON.parse(data));
 		                }
 		            }).catch(function (error) {
 		                const status = {
@@ -526,8 +526,8 @@ class AceTemplate {
 		    if (Utils.isDevelopment() === false) {
 		        console.error("saveScenario is only available during development");
 		    } else {
-		        Utils.saveScenario(description, creator).then((id) => {
-		            console.log(`saved scenario with id ${id}`);
+		        Utils.saveScenario(description, creator).then((data) => {
+		            console.log(`saved scenario with id ${data.id}`);
 		            ACEController.timeline = [];
 		            AppUtils.start();
 		        });
@@ -557,8 +557,8 @@ class AceTemplate {
 		}
 		
 		export function saveBug(description, creator) {
-		    return Utils.saveBug(description, creator).then((id) => {
-		        console.log(`saved bug with id ${id}`);
+		    Utils.saveBug(description, creator).then((data) => {
+		        console.log(`saved bug with id ${data.id}`);
 		    });
 		}
 		

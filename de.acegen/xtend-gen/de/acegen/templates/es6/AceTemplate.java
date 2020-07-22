@@ -370,7 +370,7 @@ public class AceTemplate {
     _builder.append("} else {");
     _builder.newLine();
     _builder.append("                    ");
-    _builder.append("resolve(data);");
+    _builder.append("resolve(JSON.parse(data));");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("}");
@@ -1306,10 +1306,10 @@ public class AceTemplate {
     _builder.append("} else {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("Utils.saveScenario(description, creator).then((id) => {");
+    _builder.append("Utils.saveScenario(description, creator).then((data) => {");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("console.log(`saved scenario with id ${id}`);");
+    _builder.append("console.log(`saved scenario with id ${data.id}`);");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("ACEController.timeline = [];");
@@ -1372,10 +1372,10 @@ public class AceTemplate {
     _builder.append("export function saveBug(description, creator) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return Utils.saveBug(description, creator).then((id) => {");
+    _builder.append("Utils.saveBug(description, creator).then((data) => {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("console.log(`saved bug with id ${id}`);");
+    _builder.append("console.log(`saved bug with id ${data.id}`);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("});");
