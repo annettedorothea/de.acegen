@@ -35,7 +35,7 @@ class CommonExtension {
 		 * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 		 * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 		 *
-		 * generated with de.acegen 0.9.8
+		 * generated with de.acegen 0.9.9
 		 *
 		 */
 
