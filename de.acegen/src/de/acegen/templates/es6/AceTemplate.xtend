@@ -526,8 +526,8 @@ class AceTemplate {
 		    if (Utils.isDevelopment() === false) {
 		        console.error("saveScenario is only available during development");
 		    } else {
-		        Utils.saveScenario(description, creator).then((data) => {
-		            console.log(`saved scenario with id ${data.id}`);
+		        Utils.saveScenario(description, creator).then((id) => {
+		            console.log(`saved scenario with id ${id}`);
 		            ACEController.timeline = [];
 		            AppUtils.start();
 		        });
@@ -557,8 +557,8 @@ class AceTemplate {
 		}
 		
 		export function saveBug(description, creator) {
-		    Utils.saveBug(description, creator).then((data) => {
-		        console.log(`saved bug with id ${data.id}`);
+		    Utils.saveBug(description, creator).then((id) => {
+		        console.log(`saved bug with id ${id}`);
 		    });
 		}
 		
@@ -681,7 +681,11 @@ class AceTemplate {
 		                apiKey: Utils.getAceScenariosApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data);
+		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data).then(() => {
+		                return new Promise((resolve) => {
+		                    resolve(uuid);
+		                });
+		            });
 		        });
 		    }
 		
@@ -705,7 +709,11 @@ class AceTemplate {
 		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data).then(() => {
+		                    return new Promise((resolve) => {
+		                        resolve(uuid);
+		                    });
+		                });
 		            });
 		        });
 		    }
