@@ -4,25 +4,26 @@ _King Solomon, Book of Ecclesiastes 10,10_
 
 # de.acegen
 
-DSL (Domain Specific Language) and code generator implemented with Xtext based on [the ACE-architecture](#The-ACE-Architecture).
+_DSL (Domain Specific Language) and code generator implemented with Xtext based on [the ACE-architecture](#The-ACE-Architecture)_
 
-This tool helps you to write web-APIs and web-clients and can be plugged into Eclipse, Theia and VS Code.
-You will benefit from (first link leeds to server sample, second to client):
+This tool helps you to write web APIs and web clients and can be plugged into Eclipse, Theia and VS Code.
+You will benefit from:
+
+_(first link leeds to server sample, second to client)_
 
 - [expressive](https://github.com/annettedorothea/TodoMVC---Server/blob/master/todo-server.ace) 
 [DSL](https://github.com/annettedorothea/TodoMVC---Client/blob/master/todo-client.ace) 
 that makes documentation obsolete
-- a code generator will write [boilerplate](https://github.com/annettedorothea/TodoMVC---Server/tree/master/src/gen/java/com/anfelisa/todo) [code](https://github.com/annettedorothea/TodoMVC---Client/tree/master/es6/gen/todo)  
-so you can focus on the business logic
+- a code generator writes [boilerplate](https://github.com/annettedorothea/TodoMVC---Server/tree/master/src/gen/java/com/anfelisa/todo) [code](https://github.com/annettedorothea/TodoMVC---Client/tree/master/es6/gen/todo) so you can focus on the business logic
 - a simple but effective [software architecture](#The-ACE-Architecture)
-- your precious business logic as the heart of your application is located in 
+- the business logic is located in 
 [simple](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/main/java/com/anfelisa/todo/commands/CreateTodoCommand.java) 
-[classes](https://github.com/annettedorothea/TodoMVC---Client/blob/master/es6/src/todo/commands/CreateTodoCommand.js) 
-and is free of any dependency to a framework
-- you will get a [replayable timeline](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios) 
+[classes](https://github.com/annettedorothea/TodoMVC---Client/blob/master/es6/src/todo/commands/CreateTodoCommand.js)
+and is free of any framework dependency
+- you get a [replayable timeline](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios) 
 that might save your day when finding or reproducing a bug
 - [scenarios](https://github.com/annettedorothea/TodoMVC---Server/tree/master/src/test/java/com/anfelisa/todo/scenarios) 
-that result in executable integration tests and can even serve you as load tests (only for the web-API, for the UI we are still working on it)
+that result in integration tests and can even serve as load tests
 
 See [https://todo.acegen.de](https://todo.acegen.de) for a simple todoMVC example.
 
@@ -41,8 +42,8 @@ ACE is an architecture that allows you to write an executable timeline during th
 of your application. ACE stands for Action - Command - Event:
 
 - The action captures the user input.
-- The command contains your business logic and fires events.
-- Your views listen to these events and update themselves accordingly.
+- The command contains the business logic and fires events.
+- The views listen to these events and update themselves accordingly.
 
 ### Web API
 
