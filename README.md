@@ -48,10 +48,10 @@ of your application. ACE stands for Action - Command - Event:
 
 In the context of an Web API the action is your API endpoint. In case of a GET request 
 the action selects the data for the answer from your persistence layer and returns it. If your 
-endpoints is a change request (POST, PUT, DELETE) a command is executed.
+endpoint is a change request (POST, PUT, DELETE) a command is executed.
 
 The command can read from your persistence layer, validates data and decides which event to fire 
-or returns an exception.
+or returns an error.
 
 The event is then transferred to your listeners which perform the data change in your persistence layer.
 
