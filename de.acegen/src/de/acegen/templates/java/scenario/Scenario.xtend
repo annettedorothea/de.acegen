@@ -57,9 +57,9 @@ class Scenario {
 		
 			«FOR verification : thenBlock.verifications»
 				@Override
-				protected void «verification»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response) {
-					assertFail("«verification» not implemented");
-					LOG.info("THEN: «verification» passed");
+				protected void «verification.name»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response) {
+					assertFail("«verification.name» not implemented");
+					LOG.info("THEN: «verification.name» passed");
 				}
 			«ENDFOR»
 			
@@ -110,13 +110,13 @@ class Scenario {
 				«FOR givenRef : allGivenRefs»
 					«IF givenRef.times > 0»
 						for (int i=0; i<«givenRef.times»; i++) {
-							«givenRef.givenBlock(java)»
+							«givenRef.givenBlock(java, true)»
 						}
 						«incIndex»
 							
 					«ELSE»
 						«incIndex»
-						«givenRef.givenBlock(java)»
+						«givenRef.givenBlock(java, false)»
 						
 					«ENDIF»
 
@@ -153,6 +153,19 @@ class Scenario {
 				«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
 				try {
 					actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+					
+					«IF whenBlock.extractions.size > 0»
+						try {
+							«FOR extraction: whenBlock.extractions»
+								
+								Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(actual);
+								extractedValues.put("«extraction.name»", «extraction.name»);
+								LOG.info("THEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
+							«ENDFOR»
+						} catch (Exception x) {
+							LOG.info("THEN: failed to extract values from response ", x);
+						}
+					«ENDIF»
 				} catch (Exception x) {
 				}
 				«IF thenBlock.response !== null»
@@ -213,7 +226,7 @@ class Scenario {
 					
 	'''
 	
-	private def givenBlock(GivenRef givenRef, HttpServer java) '''
+	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''
 		if (prerequisite("«givenRef.scenario.name»")) {
 			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 			«givenRef.scenario.whenBlock.generatePrepare»
@@ -236,8 +249,8 @@ class Scenario {
 					«FOR extraction: givenRef.scenario.whenBlock.extractions»
 						
 						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(responseEntity_«index»);
-						extractedValues.put("«extraction.name»", «extraction.name»);
-						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
+						extractedValues.put("«extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF», «extraction.name»);
+						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF»);
 					«ENDFOR»
 				} catch (Exception x) {
 					LOG.info("GIVEN: failed to extract values from response ", x);

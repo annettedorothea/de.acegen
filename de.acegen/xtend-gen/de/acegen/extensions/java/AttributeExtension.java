@@ -795,12 +795,25 @@ public class AttributeExtension {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("\" + this.getTestId() + \"");
         returnString = returnString.replace("${testId}", _builder);
+      } else {
+        boolean _contains_1 = it.getString().contains("${");
+        if (_contains_1) {
+          final int beginIndex = it.getString().indexOf("${");
+          final int endIndex = it.getString().indexOf("}");
+          final String templateString = it.getString().substring(beginIndex, (endIndex + 1));
+          final String templateStringName = it.getString().substring((beginIndex + 2), endIndex);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("\" + this.extractedValues.get(\"");
+          _builder_1.append(templateStringName);
+          _builder_1.append("\").toString() + \"");
+          returnString = returnString.replace(templateString, _builder_1);
+        }
       }
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("\"");
-      _builder_1.append(returnString);
-      _builder_1.append("\"");
-      return _builder_1.toString();
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\"");
+      _builder_2.append(returnString);
+      _builder_2.append("\"");
+      return _builder_2.toString();
     }
     return Integer.valueOf(it.getLong());
   }

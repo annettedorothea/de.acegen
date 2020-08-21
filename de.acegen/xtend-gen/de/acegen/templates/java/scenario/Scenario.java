@@ -105,7 +105,8 @@ public class Scenario {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("protected void ");
-        _builder.append(verification, "\t");
+        String _name_3 = verification.getName();
+        _builder.append(_name_3, "\t");
         _builder.append("(");
         EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
@@ -115,13 +116,15 @@ public class Scenario {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("assertFail(\"");
-        _builder.append(verification, "\t\t");
+        String _name_4 = verification.getName();
+        _builder.append(_name_4, "\t\t");
         _builder.append(" not implemented\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("LOG.info(\"THEN: ");
-        _builder.append(verification, "\t\t");
+        String _name_5 = verification.getName();
+        _builder.append(_name_5, "\t\t");
         _builder.append(" passed\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -240,7 +243,7 @@ public class Scenario {
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
-            CharSequence _givenBlock = this.givenBlock(givenRef, java);
+            CharSequence _givenBlock = this.givenBlock(givenRef, java, true);
             _builder.append(_givenBlock, "\t\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
@@ -257,7 +260,7 @@ public class Scenario {
             this.incIndex();
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            CharSequence _givenBlock_1 = this.givenBlock(givenRef, java);
+            CharSequence _givenBlock_1 = this.givenBlock(givenRef, java, false);
             _builder.append(_givenBlock_1, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
@@ -403,6 +406,65 @@ public class Scenario {
     _builder.append(_responseDataNameWithPackage_2, "\t\t\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
+    _builder.newLine();
+    {
+      int _size = it.getWhenBlock().getExtractions().size();
+      boolean _greaterThan_1 = (_size > 0);
+      if (_greaterThan_1) {
+        _builder.append("\t\t\t");
+        _builder.append("try {");
+        _builder.newLine();
+        {
+          EList<Extraction> _extractions = it.getWhenBlock().getExtractions();
+          for(final Extraction extraction : _extractions) {
+            _builder.append("\t\t\t");
+            _builder.append("\t");
+            _builder.newLine();
+            _builder.append("\t\t\t");
+            _builder.append("\t");
+            _builder.append("Object ");
+            String _name_5 = extraction.getName();
+            _builder.append(_name_5, "\t\t\t\t");
+            _builder.append(" = this.extract");
+            String _firstUpper = StringExtensions.toFirstUpper(extraction.getName());
+            _builder.append(_firstUpper, "\t\t\t\t");
+            _builder.append("(actual);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t");
+            _builder.append("\t");
+            _builder.append("extractedValues.put(\"");
+            String _name_6 = extraction.getName();
+            _builder.append(_name_6, "\t\t\t\t");
+            _builder.append("\", ");
+            String _name_7 = extraction.getName();
+            _builder.append(_name_7, "\t\t\t\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t");
+            _builder.append("\t");
+            _builder.append("LOG.info(\"THEN: extracted \" + ");
+            String _name_8 = extraction.getName();
+            _builder.append(_name_8, "\t\t\t\t");
+            _builder.append(".toString()  + \" as ");
+            String _name_9 = extraction.getName();
+            _builder.append(_name_9, "\t\t\t\t");
+            _builder.append("\");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t\t\t");
+        _builder.append("} catch (Exception x) {");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("\t");
+        _builder.append("LOG.info(\"THEN: failed to extract values from response \", x);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("} catch (Exception x) {");
     _builder.newLine();
@@ -468,8 +530,8 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("if (prerequisite(\"");
-    String _name_5 = it.getName();
-    _builder.append(_name_5, "\t\t");
+    String _name_10 = it.getName();
+    _builder.append(_name_10, "\t\t");
     _builder.append("\")) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
@@ -489,8 +551,8 @@ public class Scenario {
       for(final PersistenceVerification persistenceVerification : _persistenceVerifications) {
         _builder.append("\t\t\t");
         _builder.append("this.");
-        String _name_6 = persistenceVerification.getName();
-        _builder.append(_name_6, "\t\t\t");
+        String _name_11 = persistenceVerification.getName();
+        _builder.append(_name_11, "\t\t\t");
         _builder.append("();");
         _builder.newLineIfNotEmpty();
       }
@@ -501,8 +563,8 @@ public class Scenario {
       EList<Verification> _verifications = it.getThenBlock().getVerifications();
       for(final Verification verification : _verifications) {
         _builder.append("\t\t\t");
-        String _name_7 = verification.getName();
-        _builder.append(_name_7, "\t\t\t");
+        String _name_12 = verification.getName();
+        _builder.append(_name_12, "\t\t\t");
         _builder.append("(actualResponse);");
         _builder.newLineIfNotEmpty();
       }
@@ -512,8 +574,8 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("LOG.info(\"WHEN: prerequisite for ");
-    String _name_8 = it.getName();
-    _builder.append(_name_8, "\t\t\t");
+    String _name_13 = it.getName();
+    _builder.append(_name_13, "\t\t\t");
     _builder.append(" not met\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -529,8 +591,8 @@ public class Scenario {
       for(final Verification verification_1 : _verifications_1) {
         _builder.append("\t");
         _builder.append("protected abstract void ");
-        String _name_9 = verification_1.getName();
-        _builder.append(_name_9, "\t");
+        String _name_14 = verification_1.getName();
+        _builder.append(_name_14, "\t");
         _builder.append("(");
         EObject _eContainer_6 = it.getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_6));
@@ -546,8 +608,8 @@ public class Scenario {
       for(final PersistenceVerification persistenceVerification_1 : _persistenceVerifications_1) {
         _builder.append("\t");
         _builder.append("private void ");
-        String _name_10 = persistenceVerification_1.getName();
-        _builder.append(_name_10, "\t");
+        String _name_15 = persistenceVerification_1.getName();
+        _builder.append(_name_15, "\t");
         _builder.append("() throws Exception {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -559,8 +621,8 @@ public class Scenario {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("LOG.info(\"THEN: ");
-        String _name_11 = persistenceVerification_1.getName();
-        _builder.append(_name_11, "\t\t");
+        String _name_16 = persistenceVerification_1.getName();
+        _builder.append(_name_16, "\t\t");
         _builder.append(" passed\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -578,8 +640,8 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return \"");
-    String _name_12 = it.getName();
-    _builder.append(_name_12, "\t\t");
+    String _name_17 = it.getName();
+    _builder.append(_name_17, "\t\t");
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -597,7 +659,7 @@ public class Scenario {
     return _builder;
   }
   
-  private CharSequence givenBlock(final GivenRef givenRef, final HttpServer java) {
+  private CharSequence givenBlock(final GivenRef givenRef, final HttpServer java, final boolean forLoop) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (prerequisite(\"");
     String _name = givenRef.getScenario().getName();
@@ -726,7 +788,14 @@ public class Scenario {
             _builder.append("extractedValues.put(\"");
             String _name_7 = extraction.getName();
             _builder.append(_name_7, "\t\t");
-            _builder.append("\", ");
+            {
+              if (forLoop) {
+                _builder.append("_\" + i");
+              } else {
+                _builder.append("\"");
+              }
+            }
+            _builder.append(", ");
             String _name_8 = extraction.getName();
             _builder.append(_name_8, "\t\t");
             _builder.append(");");
@@ -739,7 +808,14 @@ public class Scenario {
             _builder.append(".toString()  + \" as ");
             String _name_10 = extraction.getName();
             _builder.append(_name_10, "\t\t");
-            _builder.append("\");");
+            {
+              if (forLoop) {
+                _builder.append("_\" + i");
+              } else {
+                _builder.append("\"");
+              }
+            }
+            _builder.append(");");
             _builder.newLineIfNotEmpty();
           }
         }

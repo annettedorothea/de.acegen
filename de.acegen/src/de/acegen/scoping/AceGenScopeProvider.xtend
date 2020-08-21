@@ -269,7 +269,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			if (parent instanceof JsonMember) {
 				var attr = new ArrayList<Attribute>();
 				val jsonMember = parent as JsonMember;
-				if (jsonMember.attribute.getModel !== null) {
+				if (jsonMember.attribute !== null && jsonMember.attribute.getModel !== null) {
 					val model = jsonMember.attribute.model as Model
 					model.allAttributesRec(attr)
 				}

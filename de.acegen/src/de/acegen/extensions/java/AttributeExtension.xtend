@@ -259,6 +259,12 @@ class AttributeExtension {
 			var returnString = string;
 			if (string.contains("${testId}")) {
 				returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+			} else if (string.contains("${")) {
+				val beginIndex = string.indexOf("${")
+				val endIndex = string.indexOf("}")
+				val templateString = string.substring(beginIndex, endIndex+1)
+				val templateStringName = string.substring(beginIndex+2, endIndex)
+				returnString = returnString.replace(templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
 			}
 			return '''"«returnString»"''';
 		}

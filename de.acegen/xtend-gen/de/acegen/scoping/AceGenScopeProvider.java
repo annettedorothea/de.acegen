@@ -322,11 +322,9 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       if ((parent_1 instanceof JsonMember)) {
         ArrayList<Attribute> attr_3 = new ArrayList<Attribute>();
         final JsonMember jsonMember = ((JsonMember) parent_1);
-        Model _model = jsonMember.getAttribute().getModel();
-        boolean _tripleNotEquals_1 = (_model != null);
-        if (_tripleNotEquals_1) {
-          Model _model_1 = jsonMember.getAttribute().getModel();
-          final Model model_5 = ((Model) _model_1);
+        if (((jsonMember.getAttribute() != null) && (jsonMember.getAttribute().getModel() != null))) {
+          Model _model = jsonMember.getAttribute().getModel();
+          final Model model_5 = ((Model) _model);
           this._modelExtension.allAttributesRec(model_5, attr_3);
         }
         return Scopes.scopeFor(attr_3);
