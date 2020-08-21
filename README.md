@@ -1,8 +1,8 @@
-# de.acegen
+#### If the iron is blunt, and one does not sharpen the edge, he must use more strength, but wisdom helps one to succeed.
 
-Ecclesiates 10,10
-When the iron...
-King Salomo, ???? a.D.
+_King Solomon, Book of Ecclesiastes 10,10_
+
+# de.acegen
 
 DSL (Domain Specific Language) and code generator implemented with Xtext based on the ACE-architecture.
 
@@ -27,47 +27,4 @@ You can get the latest Eclipse plugin from [http://acegen.de](http://acegen.de).
 
 Please take a look at [TodoMVC server sample](https://github.com/annettedorothea/TodoMVC---Server) 
 and [TodoMVC client sample](https://github.com/annettedorothea/TodoMVC---Client).
-
-### Web API
-
-First you need to create an .ace file and open it in latest Eclipse where you have previously installed the [plugin](http://acegen.de).
-
-Then add this to the .ace file:
-
-```
-HttpServer Java Dropwizard JDBI3 Liquibase
-com.anfelisa.todo 
-```
-
-This will result in a Web API in Java based in Dropwizard as http framework using JDBI3 as ??? and Liquibase for the database migrations.
-
-The next line is the package for your code.
-
-Then you can add your endpoints:
-
-```
-ACE
-	GetAllTodos<TodoList> 
-		GET "/todos/all"
-		response todoList
-	
-	GetTodo<Todo> 
-		GET "/todos/{id}"
-			pathParams id
-		response 
-			id
-			description
-			createdDateTime
-			done
-			updatedDateTime
-	
-	CreateTodo<Todo>
-		POST "/todos/create"
-		payload description
-		response 
-			id
-			createdDateTime
-			description
-		on success (Todo.create) 
-```
 
