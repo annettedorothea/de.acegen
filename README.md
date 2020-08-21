@@ -6,7 +6,9 @@ _King Solomon, Book of Ecclesiastes 10,10_
 
 _DSL (Domain Specific Language) and code generator implemented with Xtext based on [the ACE-architecture](#The-ACE-Architecture)_
 
-This tool helps you to write web APIs and web clients and can be plugged into Eclipse, Theia and VS Code.
+This tool helps you to write web APIs and web clients and can be plugged into Eclipse, support 
+for [Theia](https://theia-ide.org) and [VS Code](https://code.visualstudio.com) is to come soon.
+
 You will benefit from:
 
 _(first link leeds to server sample, second to client)_
@@ -22,8 +24,8 @@ that makes documentation obsolete
 and is free of any framework dependency
 - you get a [replayable timeline](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios) 
 that might save your day when finding or reproducing a bug
-- [scenarios](https://github.com/annettedorothea/TodoMVC---Server/tree/master/src/test/java/com/anfelisa/todo/scenarios) 
-that result in integration tests and can even serve as load tests
+- write [scenarios](https://github.com/annettedorothea/TodoMVC---Server/tree/master/src/test/java/com/anfelisa/todo/scenarios) 
+as part of your specification that result in integration tests and can even serve as load tests
 
 See [https://todo.acegen.de](https://todo.acegen.de) for a simple todoMVC example.
 
