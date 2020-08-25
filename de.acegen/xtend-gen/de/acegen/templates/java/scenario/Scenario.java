@@ -4,8 +4,10 @@ import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeAndValue;
 import de.acegen.aceGen.Count;
+import de.acegen.aceGen.CustomCall;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.Extraction;
+import de.acegen.aceGen.Given;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
@@ -14,6 +16,7 @@ import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PersistenceVerificationExpression;
+import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.Verification;
@@ -226,47 +229,17 @@ public class Scenario {
     _builder.append("long timeAfterRequest;");
     _builder.newLine();
     _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t\t");
     this.resetIndex();
     _builder.newLineIfNotEmpty();
     {
-      ArrayList<GivenRef> _allGivenRefs = this.allGivenRefs(it);
-      for(final GivenRef givenRef : _allGivenRefs) {
-        {
-          int _times = givenRef.getTimes();
-          boolean _greaterThan = (_times > 0);
-          if (_greaterThan) {
-            _builder.append("\t\t");
-            _builder.append("for (int i=0; i<");
-            int _times_1 = givenRef.getTimes();
-            _builder.append(_times_1, "\t\t");
-            _builder.append("; i++) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            CharSequence _givenBlock = this.givenBlock(givenRef, java, true);
-            _builder.append(_givenBlock, "\t\t\t");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("}");
-            _builder.newLine();
-            _builder.append("\t\t");
-            this.incIndex();
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.newLine();
-          } else {
-            _builder.append("\t\t");
-            this.incIndex();
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            CharSequence _givenBlock_1 = this.givenBlock(givenRef, java, false);
-            _builder.append(_givenBlock_1, "\t\t");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.newLine();
-          }
-        }
+      ArrayList<Given> _allGivenItems = this.allGivenItems(it);
+      for(final Given given : _allGivenItems) {
+        _builder.append("\t\t");
+        CharSequence _givenItem = this.givenItem(given, java);
+        _builder.append(_givenItem, "\t\t");
+        _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
     }
@@ -410,8 +383,8 @@ public class Scenario {
     _builder.newLine();
     {
       int _size = it.getWhenBlock().getExtractions().size();
-      boolean _greaterThan_1 = (_size > 0);
-      if (_greaterThan_1) {
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
         _builder.append("\t\t\t");
         _builder.append("try {");
         _builder.newLine();
@@ -467,6 +440,12 @@ public class Scenario {
     }
     _builder.append("\t\t");
     _builder.append("} catch (Exception x) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("LOG.error(\"THEN: failed to read response\", x);");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("assertFail(x.getMessage());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -557,7 +536,7 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.newLine();
     {
       EList<Verification> _verifications = it.getThenBlock().getVerifications();
@@ -617,6 +596,7 @@ public class Scenario {
         CharSequence _persistenceVerification = this.persistenceVerification(persistenceVerification_1.getExpression(), persistenceVerification_1.getModel());
         _builder.append(_persistenceVerification, "\t\t");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t");
@@ -630,7 +610,7 @@ public class Scenario {
         _builder.newLine();
       }
     }
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("@Override");
@@ -647,6 +627,7 @@ public class Scenario {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -654,8 +635,61 @@ public class Scenario {
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
     _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence _givenItem(final GivenRef it, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      int _times = it.getTimes();
+      boolean _greaterThan = (_times > 0);
+      if (_greaterThan) {
+        _builder.append("for (int i=0; i<");
+        int _times_1 = it.getTimes();
+        _builder.append(_times_1);
+        _builder.append("; i++) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        CharSequence _givenBlock = this.givenBlock(it, java, true);
+        _builder.append(_givenBlock, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("}");
+        _builder.newLine();
+        this.incIndex();
+        _builder.newLineIfNotEmpty();
+      } else {
+        CharSequence _givenBlock_1 = this.givenBlock(it, java, false);
+        _builder.append(_givenBlock_1);
+        _builder.newLineIfNotEmpty();
+        this.incIndex();
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence _givenItem(final CustomCall it, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("this.");
+    String _customCallName = it.getCustomCallName();
+    _builder.append(_customCallName);
+    _builder.append("(");
+    {
+      EList<PrimitiveValue> _values = it.getValues();
+      boolean _hasElements = false;
+      for(final PrimitiveValue value : _values) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(value);
+        _builder.append(_primitiveValueFrom);
+      }
+    }
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
   
@@ -987,27 +1021,35 @@ public class Scenario {
     return null;
   }
   
-  private ArrayList<GivenRef> allGivenRefs(final de.acegen.aceGen.Scenario it) {
-    ArrayList<GivenRef> allWhenBlocks = new ArrayList<GivenRef>();
-    EList<GivenRef> _givenRefs = it.getGivenRefs();
-    for (final GivenRef givenRef : _givenRefs) {
-      boolean _isExcludeGiven = givenRef.isExcludeGiven();
-      if (_isExcludeGiven) {
-        allWhenBlocks.add(givenRef);
+  private ArrayList<Given> allGivenItems(final de.acegen.aceGen.Scenario it) {
+    ArrayList<Given> allWhenBlocks = new ArrayList<Given>();
+    EList<Given> _givenItems = it.getGivenItems();
+    for (final Given given : _givenItems) {
+      if ((given instanceof GivenRef)) {
+        boolean _isExcludeGiven = ((GivenRef)given).isExcludeGiven();
+        if (_isExcludeGiven) {
+          allWhenBlocks.add(given);
+        } else {
+          this.allGivenItemsRec(given, allWhenBlocks);
+        }
       } else {
-        this.allGivenRefsRec(givenRef, allWhenBlocks);
+        if ((given instanceof CustomCall)) {
+          allWhenBlocks.add(given);
+        }
       }
     }
     return allWhenBlocks;
   }
   
-  private void allGivenRefsRec(final GivenRef it, final List<GivenRef> allWhenBlocks) {
-    boolean _isExcludeGiven = it.isExcludeGiven();
-    boolean _not = (!_isExcludeGiven);
-    if (_not) {
-      EList<GivenRef> _givenRefs = it.getScenario().getGivenRefs();
-      for (final GivenRef scenario : _givenRefs) {
-        this.allGivenRefsRec(scenario, allWhenBlocks);
+  private void allGivenItemsRec(final Given it, final List<Given> allWhenBlocks) {
+    if ((it instanceof GivenRef)) {
+      boolean _isExcludeGiven = ((GivenRef)it).isExcludeGiven();
+      boolean _not = (!_isExcludeGiven);
+      if (_not) {
+        EList<Given> _givenItems = ((GivenRef)it).getScenario().getGivenItems();
+        for (final Given given : _givenItems) {
+          this.allGivenItemsRec(given, allWhenBlocks);
+        }
       }
     }
     allWhenBlocks.add(it);
@@ -1369,6 +1411,17 @@ public class Scenario {
     }
     _builder.newLine();
     return _builder;
+  }
+  
+  private CharSequence givenItem(final Given it, final HttpServer java) {
+    if (it instanceof CustomCall) {
+      return _givenItem((CustomCall)it, java);
+    } else if (it instanceof GivenRef) {
+      return _givenItem((GivenRef)it, java);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, java).toString());
+    }
   }
   
   private CharSequence persistenceVerification(final PersistenceVerificationExpression it, final Model model) {

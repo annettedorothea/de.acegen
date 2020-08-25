@@ -36,6 +36,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientAttributeAccess().getAlternatives(), "rule__ClientAttribute__Alternatives");
 			builder.put(grammarAccess.getJsonValueClientAccess().getAlternatives(), "rule__JsonValueClient__Alternatives");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
+			builder.put(grammarAccess.getGivenAccess().getAlternatives(), "rule__Given__Alternatives");
 			builder.put(grammarAccess.getPersistenceVerificationExpressionAccess().getAlternatives(), "rule__PersistenceVerificationExpression__Alternatives");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getAlternatives(), "rule__SelectByExpectation__Alternatives");
 			builder.put(grammarAccess.getAttributeAccess().getAlternatives_4(), "rule__Attribute__Alternatives_4");
@@ -122,6 +123,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getGroup_3(), "rule__Model__Group_3__0");
 			builder.put(grammarAccess.getScenarioAccess().getGroup(), "rule__Scenario__Group__0");
 			builder.put(grammarAccess.getScenarioAccess().getGroup_1(), "rule__Scenario__Group_1__0");
+			builder.put(grammarAccess.getCustomCallAccess().getGroup(), "rule__CustomCall__Group__0");
+			builder.put(grammarAccess.getCustomCallAccess().getGroup_3(), "rule__CustomCall__Group_3__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup(), "rule__GivenRef__Group__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup_1(), "rule__GivenRef__Group_1__0");
 			builder.put(grammarAccess.getWhenBlockAccess().getGroup(), "rule__WhenBlock__Group__0");
@@ -261,9 +264,12 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getSuperModelsAssignment_2_2_1(), "rule__Model__SuperModelsAssignment_2_2_1");
 			builder.put(grammarAccess.getModelAccess().getAttributesAssignment_3_1(), "rule__Model__AttributesAssignment_3_1");
 			builder.put(grammarAccess.getScenarioAccess().getNameAssignment_0(), "rule__Scenario__NameAssignment_0");
-			builder.put(grammarAccess.getScenarioAccess().getGivenRefsAssignment_1_1(), "rule__Scenario__GivenRefsAssignment_1_1");
+			builder.put(grammarAccess.getScenarioAccess().getGivenItemsAssignment_1_1(), "rule__Scenario__GivenItemsAssignment_1_1");
 			builder.put(grammarAccess.getScenarioAccess().getWhenBlockAssignment_3(), "rule__Scenario__WhenBlockAssignment_3");
 			builder.put(grammarAccess.getScenarioAccess().getThenBlockAssignment_5(), "rule__Scenario__ThenBlockAssignment_5");
+			builder.put(grammarAccess.getCustomCallAccess().getCustomCallNameAssignment_0(), "rule__CustomCall__CustomCallNameAssignment_0");
+			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2(), "rule__CustomCall__ValuesAssignment_2");
+			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_3_1(), "rule__CustomCall__ValuesAssignment_3_1");
 			builder.put(grammarAccess.getGivenRefAccess().getScenarioAssignment_0(), "rule__GivenRef__ScenarioAssignment_0");
 			builder.put(grammarAccess.getGivenRefAccess().getTimesAssignment_1_0(), "rule__GivenRef__TimesAssignment_1_0");
 			builder.put(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2(), "rule__GivenRef__ExcludeGivenAssignment_2");

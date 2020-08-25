@@ -16,9 +16,11 @@ import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
+import de.acegen.aceGen.CustomCall;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.Extraction;
 import de.acegen.aceGen.FromAppStateRef;
+import de.acegen.aceGen.Given;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
@@ -302,6 +304,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass scenarioEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass givenEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass customCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1907,7 +1923,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getScenario_GivenRefs()
+  public EReference getScenario_GivenItems()
   {
     return (EReference)scenarioEClass.getEStructuralFeatures().get(1);
   }
@@ -1932,6 +1948,50 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getScenario_ThenBlock()
   {
     return (EReference)scenarioEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getGiven()
+  {
+    return givenEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getCustomCall()
+  {
+    return customCallEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getCustomCall_CustomCallName()
+  {
+    return (EAttribute)customCallEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCustomCall_Values()
+  {
+    return (EReference)customCallEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3010,9 +3070,15 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     scenarioEClass = createEClass(SCENARIO);
     createEAttribute(scenarioEClass, SCENARIO__NAME);
-    createEReference(scenarioEClass, SCENARIO__GIVEN_REFS);
+    createEReference(scenarioEClass, SCENARIO__GIVEN_ITEMS);
     createEReference(scenarioEClass, SCENARIO__WHEN_BLOCK);
     createEReference(scenarioEClass, SCENARIO__THEN_BLOCK);
+
+    givenEClass = createEClass(GIVEN);
+
+    customCallEClass = createEClass(CUSTOM_CALL);
+    createEAttribute(customCallEClass, CUSTOM_CALL__CUSTOM_CALL_NAME);
+    createEReference(customCallEClass, CUSTOM_CALL__VALUES);
 
     givenRefEClass = createEClass(GIVEN_REF);
     createEReference(givenRefEClass, GIVEN_REF__SCENARIO);
@@ -3157,6 +3223,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     jsonArrayClientEClass.getESuperTypes().add(this.getJsonValueClient());
     httpServerAceWriteEClass.getESuperTypes().add(this.getHttpServerAce());
     httpServerAceReadEClass.getESuperTypes().add(this.getHttpServerAce());
+    customCallEClass.getESuperTypes().add(this.getGiven());
+    givenRefEClass.getESuperTypes().add(this.getGiven());
     selectByPrimaryKeysEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
     selectByUniqueAttributeEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
     countEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
@@ -3329,9 +3397,15 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(scenarioEClass, Scenario.class, "Scenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScenario_Name(), ecorePackage.getEString(), "name", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScenario_GivenRefs(), this.getGivenRef(), null, "givenRefs", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_GivenItems(), this.getGiven(), null, "givenItems", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScenario_WhenBlock(), this.getWhenBlock(), null, "whenBlock", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScenario_ThenBlock(), this.getThenBlock(), null, "thenBlock", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(givenEClass, Given.class, "Given", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(customCallEClass, CustomCall.class, "CustomCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCustomCall_CustomCallName(), ecorePackage.getEString(), "customCallName", null, 0, 1, CustomCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCustomCall_Values(), this.getPrimitiveValue(), null, "values", null, 0, -1, CustomCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(givenRefEClass, GivenRef.class, "GivenRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGivenRef_Scenario(), this.getScenario(), null, "scenario", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

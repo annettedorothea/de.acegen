@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.Scenario#getName <em>Name</em>}</li>
- *   <li>{@link de.acegen.aceGen.Scenario#getGivenRefs <em>Given Refs</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Scenario#getGivenItems <em>Given Items</em>}</li>
  *   <li>{@link de.acegen.aceGen.Scenario#getWhenBlock <em>When Block</em>}</li>
  *   <li>{@link de.acegen.aceGen.Scenario#getThenBlock <em>Then Block</em>}</li>
  * </ul>
@@ -51,16 +51,16 @@ public interface Scenario extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Given Refs</b></em>' containment reference list.
-   * The list contents are of type {@link de.acegen.aceGen.GivenRef}.
+   * Returns the value of the '<em><b>Given Items</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Given}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Given Refs</em>' containment reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getScenario_GivenRefs()
+   * @return the value of the '<em>Given Items</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getScenario_GivenItems()
    * @model containment="true"
    * @generated
    */
-  EList<GivenRef> getGivenRefs();
+  EList<Given> getGivenItems();
 
   /**
    * Returns the value of the '<em><b>When Block</b></em>' containment reference.

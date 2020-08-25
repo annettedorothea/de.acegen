@@ -312,6 +312,24 @@ public interface AceGenFactory extends EFactory
   Scenario createScenario();
 
   /**
+   * Returns a new object of class '<em>Given</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Given</em>'.
+   * @generated
+   */
+  Given createGiven();
+
+  /**
+   * Returns a new object of class '<em>Custom Call</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Custom Call</em>'.
+   * @generated
+   */
+  CustomCall createCustomCall();
+
+  /**
    * Returns a new object of class '<em>Given Ref</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

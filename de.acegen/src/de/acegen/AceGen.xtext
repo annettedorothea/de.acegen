@@ -218,9 +218,17 @@ Model:
 
 Scenario:
 	name = ID
-	('GIVEN' (givenRefs += GivenRef)* )? 
+	('GIVEN' (givenItems += Given)* )? 
 	'WHEN' whenBlock = WhenBlock
 	'THEN' thenBlock = ThenBlock
+;
+
+Given:
+	GivenRef | CustomCall
+;
+
+CustomCall:
+	customCallName = ID '(' values += PrimitiveValue (',' values += PrimitiveValue*)? ')'
 ;
 
 GivenRef:

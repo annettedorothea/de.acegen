@@ -3,7 +3,9 @@ package de.acegen.templates.java.scenario
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.Count
+import de.acegen.aceGen.CustomCall
 import de.acegen.aceGen.DataDefinition
+import de.acegen.aceGen.Given
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.JsonObject
@@ -32,9 +34,9 @@ class Scenario {
 
 	@Inject
 	extension CommonExtension
-	
+
 	int index;
-	
+
 	private def void resetIndex() {
 		index = 0;
 	}
@@ -106,21 +108,12 @@ class Scenario {
 				String uuid;
 				long timeBeforeRequest;
 				long timeAfterRequest;
+				
 				«resetIndex»
-				«FOR givenRef : allGivenRefs»
-					«IF givenRef.times > 0»
-						for (int i=0; i<«givenRef.times»; i++) {
-							«givenRef.givenBlock(java, true)»
-						}
-						«incIndex»
-							
-					«ELSE»
-						«incIndex»
-						«givenRef.givenBlock(java, false)»
-						
-					«ENDIF»
+				«FOR given : allGivenItems»
+					«given.givenItem(java)»
 
-			«ENDFOR»
+				«ENDFOR»
 			}
 			
 			private Response when() throws Exception {
@@ -167,6 +160,8 @@ class Scenario {
 						}
 					«ENDIF»
 				} catch (Exception x) {
+					LOG.error("THEN: failed to read response", x);
+					assertFail(x.getMessage());
 				}
 				«IF thenBlock.response !== null»
 					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
@@ -188,13 +183,13 @@ class Scenario {
 					
 				if (prerequisite("«name»")) {
 					Response response = when();
-
+		
 					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = then(response);
 					
 					«FOR persistenceVerification : thenBlock.persistenceVerifications»
 						this.«persistenceVerification.name»();
 					«ENDFOR»
-				
+			
 					«FOR verification : thenBlock.verifications»
 						«verification.name»(actualResponse);
 					«ENDFOR»
@@ -210,22 +205,38 @@ class Scenario {
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»
 				private void «persistenceVerification.name»() throws Exception {
 					«persistenceVerification.expression.persistenceVerification(persistenceVerification.model)»
-
+				
 					LOG.info("THEN: «persistenceVerification.name» passed");
 				}
 			«ENDFOR»
-			
+				
 			@Override
 			protected String scenarioName() {
 				return "«name»";
 			}
-		
+			
 		}
 		
 		«sdg»
-					
+
 	'''
 	
+	private def dispatch givenItem(GivenRef it, HttpServer java) '''
+		«IF times > 0»
+			for (int i=0; i<«times»; i++) {
+				«givenBlock(java, true)»
+			}
+			«incIndex»
+		«ELSE»
+			«givenBlock(java, false)»
+			«incIndex»
+		«ENDIF»
+	'''
+
+	private def dispatch givenItem(CustomCall it, HttpServer java) '''
+		this.«customCallName»(«FOR value : values SEPARATOR ', '»«value.primitiveValueFrom»«ENDFOR»);
+	'''
+
 	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''
 		if (prerequisite("«givenRef.scenario.name»")) {
 			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
@@ -260,7 +271,7 @@ class Scenario {
 			LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
 		}
 	'''
-	
+
 	private dispatch def persistenceVerification(SelectByUniqueAttribute it, Model model) '''
 		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectBy«attributeAndValue.attribute.name.toFirstUpper»(handle, «attributeAndValue.value.primitiveValueFrom»);
 		
@@ -273,9 +284,9 @@ class Scenario {
 			assertIsNotNull(actual);
 		«ENDIF»
 	'''
-	
+
 	private dispatch def persistenceVerification(SelectByPrimaryKeys it, Model model) '''
-		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute: model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
+		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute : model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
 		
 		«IF expected.object !== null»
 			«model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(expected.object, model)»;
@@ -286,47 +297,53 @@ class Scenario {
 			assertIsNotNull(actual);
 		«ENDIF»
 	'''
-	
+
 	private dispatch def persistenceVerification(Count it, Model model) '''
 		Map<String, String> filterMap = new HashMap<String, String>();
-		«FOR attributeValue: attributeAndValues»
+		«FOR attributeValue : attributeAndValues»
 			filterMap.put("«attributeValue.attribute.name»", «attributeValue.value.primitiveValueFrom»);
 		«ENDFOR»
 		int actual = daoProvider.get«model.modelDao»().filterAndCountBy(handle, filterMap);
 		
 		assertThat(actual, «expected»);
 	'''
-	
+
 	private def AttributeAndValue findForPrimaryKey(Attribute it, List<AttributeAndValue> list) {
-		for(attributeAndValue: list) {
+		for (attributeAndValue : list) {
 			if (attributeAndValue.attribute.name == name) {
 				return attributeAndValue
 			}
 		}
 		return null;
 	}
-	
-	private def allGivenRefs(de.acegen.aceGen.Scenario it) {
-		var allWhenBlocks = new ArrayList<GivenRef>();
-		for (givenRef : givenRefs) {
-			if (givenRef.excludeGiven) {
-				allWhenBlocks.add(givenRef)
-			} else {
-				allGivenRefsRec(givenRef, allWhenBlocks)
+
+	private def allGivenItems(de.acegen.aceGen.Scenario it) {
+		var allWhenBlocks = new ArrayList<Given>();
+		for (given : givenItems) {
+			if (given instanceof GivenRef) {
+				if (given.excludeGiven) {
+					allWhenBlocks.add(given)
+				} else {
+					allGivenItemsRec(given, allWhenBlocks)
+				}
+			} else if (given instanceof CustomCall) {
+				allWhenBlocks.add(given)
 			}
 		}
 		return allWhenBlocks
 	}
 
-	private def void allGivenRefsRec(GivenRef it, List<GivenRef> allWhenBlocks) {
-		if (!excludeGiven) {
-			for (scenario : scenario.givenRefs) {
-				allGivenRefsRec(scenario, allWhenBlocks)
+	private def void allGivenItemsRec(Given it, List<Given> allWhenBlocks) {
+		if (it instanceof GivenRef) {
+			if (!excludeGiven) {
+				for (given : scenario.givenItems) {
+					allGivenItemsRec(given, allWhenBlocks)
+				}
 			}
 		}
 		allWhenBlocks.add(it)
 	}
-	
+
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
 			this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
@@ -388,5 +405,4 @@ class Scenario {
 		
 	'''
 
-	
 }

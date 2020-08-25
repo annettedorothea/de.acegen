@@ -303,10 +303,26 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.GIVEN:
+      {
+        Given given = (Given)theEObject;
+        T result = caseGiven(given);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.CUSTOM_CALL:
+      {
+        CustomCall customCall = (CustomCall)theEObject;
+        T result = caseCustomCall(customCall);
+        if (result == null) result = caseGiven(customCall);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.GIVEN_REF:
       {
         GivenRef givenRef = (GivenRef)theEObject;
         T result = caseGivenRef(givenRef);
+        if (result == null) result = caseGiven(givenRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1013,6 +1029,38 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScenario(Scenario object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Given</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Given</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGiven(Given object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Custom Call</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Custom Call</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCustomCall(CustomCall object)
   {
     return null;
   }

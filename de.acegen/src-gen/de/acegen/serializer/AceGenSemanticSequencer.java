@@ -15,6 +15,7 @@ import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.Count;
+import de.acegen.aceGen.CustomCall;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.Extraction;
 import de.acegen.aceGen.FromAppStateRef;
@@ -113,6 +114,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.COUNT:
 				sequence_Count(context, (Count) semanticObject); 
+				return; 
+			case AceGenPackage.CUSTOM_CALL:
+				sequence_CustomCall(context, (CustomCall) semanticObject); 
 				return; 
 			case AceGenPackage.DATA_DEFINITION:
 				sequence_DataDefinition(context, (DataDefinition) semanticObject); 
@@ -406,6 +410,19 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Given returns CustomCall
+	 *     CustomCall returns CustomCall
+	 *
+	 * Constraint:
+	 *     (customCallName=ID values+=PrimitiveValue values+=PrimitiveValue*)
+	 */
+	protected void sequence_CustomCall(ISerializationContext context, CustomCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     DataDefinition returns DataDefinition
 	 *
 	 * Constraint:
@@ -448,6 +465,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Given returns GivenRef
 	 *     GivenRef returns GivenRef
 	 *
 	 * Constraint:
@@ -915,7 +933,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Scenario returns Scenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenRefs+=GivenRef* whenBlock=WhenBlock thenBlock=ThenBlock)
+	 *     (name=ID givenItems+=Given* whenBlock=WhenBlock thenBlock=ThenBlock)
 	 */
 	protected void sequence_Scenario(ISerializationContext context, Scenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

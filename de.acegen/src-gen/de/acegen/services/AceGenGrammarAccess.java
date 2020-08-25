@@ -2002,8 +2002,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cGIVENKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cGivenRefsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cGivenRefsGivenRefParserRuleCall_1_1_0 = (RuleCall)cGivenRefsAssignment_1_1.eContents().get(0);
+		private final Assignment cGivenItemsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cGivenItemsGivenParserRuleCall_1_1_0 = (RuleCall)cGivenItemsAssignment_1_1.eContents().get(0);
 		private final Keyword cWHENKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cWhenBlockAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cWhenBlockWhenBlockParserRuleCall_3_0 = (RuleCall)cWhenBlockAssignment_3.eContents().get(0);
@@ -2012,12 +2012,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cThenBlockThenBlockParserRuleCall_5_0 = (RuleCall)cThenBlockAssignment_5.eContents().get(0);
 		
 		//Scenario:
-		//	name=ID ('GIVEN' givenRefs+=GivenRef*)?
+		//	name=ID ('GIVEN' givenItems+=Given*)?
 		//	'WHEN' whenBlock=WhenBlock
 		//	'THEN' thenBlock=ThenBlock;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('GIVEN' givenRefs+=GivenRef*)? 'WHEN' whenBlock=WhenBlock 'THEN' thenBlock=ThenBlock
+		//name=ID ('GIVEN' givenItems+=Given*)? 'WHEN' whenBlock=WhenBlock 'THEN' thenBlock=ThenBlock
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -2026,17 +2026,17 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('GIVEN' givenRefs+=GivenRef*)?
+		//('GIVEN' givenItems+=Given*)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'GIVEN'
 		public Keyword getGIVENKeyword_1_0() { return cGIVENKeyword_1_0; }
 		
-		//givenRefs+=GivenRef*
-		public Assignment getGivenRefsAssignment_1_1() { return cGivenRefsAssignment_1_1; }
+		//givenItems+=Given*
+		public Assignment getGivenItemsAssignment_1_1() { return cGivenItemsAssignment_1_1; }
 		
-		//GivenRef
-		public RuleCall getGivenRefsGivenRefParserRuleCall_1_1_0() { return cGivenRefsGivenRefParserRuleCall_1_1_0; }
+		//Given
+		public RuleCall getGivenItemsGivenParserRuleCall_1_1_0() { return cGivenItemsGivenParserRuleCall_1_1_0; }
 		
 		//'WHEN'
 		public Keyword getWHENKeyword_2() { return cWHENKeyword_2; }
@@ -2055,6 +2055,76 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//ThenBlock
 		public RuleCall getThenBlockThenBlockParserRuleCall_5_0() { return cThenBlockThenBlockParserRuleCall_5_0; }
+	}
+	public class GivenElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Given");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cGivenRefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCustomCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Given:
+		//	GivenRef | CustomCall;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//GivenRef | CustomCall
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//GivenRef
+		public RuleCall getGivenRefParserRuleCall_0() { return cGivenRefParserRuleCall_0; }
+		
+		//CustomCall
+		public RuleCall getCustomCallParserRuleCall_1() { return cCustomCallParserRuleCall_1; }
+	}
+	public class CustomCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.CustomCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cCustomCallNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCustomCallNameIDTerminalRuleCall_0_0 = (RuleCall)cCustomCallNameAssignment_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesPrimitiveValueParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValuesPrimitiveValueParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//CustomCall:
+		//	customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')'
+		public Group getGroup() { return cGroup; }
+		
+		//customCallName=ID
+		public Assignment getCustomCallNameAssignment_0() { return cCustomCallNameAssignment_0; }
+		
+		//ID
+		public RuleCall getCustomCallNameIDTerminalRuleCall_0_0() { return cCustomCallNameIDTerminalRuleCall_0_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//values+=PrimitiveValue
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+		
+		//PrimitiveValue
+		public RuleCall getValuesPrimitiveValueParserRuleCall_2_0() { return cValuesPrimitiveValueParserRuleCall_2_0; }
+		
+		//(',' values+=PrimitiveValue*)?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		
+		//values+=PrimitiveValue*
+		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
+		
+		//PrimitiveValue
+		public RuleCall getValuesPrimitiveValueParserRuleCall_3_1_0() { return cValuesPrimitiveValueParserRuleCall_3_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	public class GivenRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.GivenRef");
@@ -3216,6 +3286,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final AuthUserElements pAuthUser;
 	private final ModelElements pModel;
 	private final ScenarioElements pScenario;
+	private final GivenElements pGiven;
+	private final CustomCallElements pCustomCall;
 	private final GivenRefElements pGivenRef;
 	private final WhenBlockElements pWhenBlock;
 	private final ThenBlockElements pThenBlock;
@@ -3290,6 +3362,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pAuthUser = new AuthUserElements();
 		this.pModel = new ModelElements();
 		this.pScenario = new ScenarioElements();
+		this.pGiven = new GivenElements();
+		this.pCustomCall = new CustomCallElements();
 		this.pGivenRef = new GivenRefElements();
 		this.pWhenBlock = new WhenBlockElements();
 		this.pThenBlock = new ThenBlockElements();
@@ -3715,7 +3789,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//Scenario:
-	//	name=ID ('GIVEN' givenRefs+=GivenRef*)?
+	//	name=ID ('GIVEN' givenItems+=Given*)?
 	//	'WHEN' whenBlock=WhenBlock
 	//	'THEN' thenBlock=ThenBlock;
 	public ScenarioElements getScenarioAccess() {
@@ -3724,6 +3798,26 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getScenarioRule() {
 		return getScenarioAccess().getRule();
+	}
+	
+	//Given:
+	//	GivenRef | CustomCall;
+	public GivenElements getGivenAccess() {
+		return pGiven;
+	}
+	
+	public ParserRule getGivenRule() {
+		return getGivenAccess().getRule();
+	}
+	
+	//CustomCall:
+	//	customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')';
+	public CustomCallElements getCustomCallAccess() {
+		return pCustomCall;
+	}
+	
+	public ParserRule getCustomCallRule() {
+		return getCustomCallAccess().getRule();
 	}
 	
 	//GivenRef:

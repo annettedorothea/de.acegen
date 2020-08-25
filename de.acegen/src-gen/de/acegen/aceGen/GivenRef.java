@@ -3,7 +3,6 @@
  */
 package de.acegen.aceGen;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface GivenRef extends EObject
+public interface GivenRef extends Given
 {
   /**
    * Returns the value of the '<em><b>Scenario</b></em>' reference.

@@ -3194,18 +3194,18 @@ ruleScenario returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getScenarioAccess().getGivenRefsGivenRefParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getScenarioAccess().getGivenItemsGivenParserRuleCall_1_1_0());
 					}
-					lv_givenRefs_2_0=ruleGivenRef
+					lv_givenItems_2_0=ruleGiven
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getScenarioRule());
 						}
 						add(
 							$current,
-							"givenRefs",
-							lv_givenRefs_2_0,
-							"de.acegen.AceGen.GivenRef");
+							"givenItems",
+							lv_givenItems_2_0,
+							"de.acegen.AceGen.Given");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -3257,6 +3257,131 @@ ruleScenario returns [EObject current=null]
 				}
 			)
 		)
+	)
+;
+
+// Entry rule entryRuleGiven
+entryRuleGiven returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGivenRule()); }
+	iv_ruleGiven=ruleGiven
+	{ $current=$iv_ruleGiven.current; }
+	EOF;
+
+// Rule Given
+ruleGiven returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getGivenAccess().getGivenRefParserRuleCall_0());
+		}
+		this_GivenRef_0=ruleGivenRef
+		{
+			$current = $this_GivenRef_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getGivenAccess().getCustomCallParserRuleCall_1());
+		}
+		this_CustomCall_1=ruleCustomCall
+		{
+			$current = $this_CustomCall_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleCustomCall
+entryRuleCustomCall returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCustomCallRule()); }
+	iv_ruleCustomCall=ruleCustomCall
+	{ $current=$iv_ruleCustomCall.current; }
+	EOF;
+
+// Rule CustomCall
+ruleCustomCall returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_customCallName_0_0=RULE_ID
+				{
+					newLeafNode(lv_customCallName_0_0, grammarAccess.getCustomCallAccess().getCustomCallNameIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getCustomCallRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"customCallName",
+						lv_customCallName_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getCustomCallAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_0());
+				}
+				lv_values_2_0=rulePrimitiveValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCustomCallRule());
+					}
+					add(
+						$current,
+						"values",
+						lv_values_2_0,
+						"de.acegen.AceGen.PrimitiveValue");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_3=','
+			{
+				newLeafNode(otherlv_3, grammarAccess.getCustomCallAccess().getCommaKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_3_1_0());
+					}
+					lv_values_4_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getCustomCallRule());
+						}
+						add(
+							$current,
+							"values",
+							lv_values_4_0,
+							"de.acegen.AceGen.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+		)?
+		otherlv_5=')'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getCustomCallAccess().getRightParenthesisKeyword_4());
+		}
 	)
 ;
 

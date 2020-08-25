@@ -4,7 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.GivenRef;
+import de.acegen.aceGen.Given;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ScenarioImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ScenarioImpl#getGivenRefs <em>Given Refs</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ScenarioImpl#getGivenItems <em>Given Items</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ScenarioImpl#getWhenBlock <em>When Block</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ScenarioImpl#getThenBlock <em>Then Block</em>}</li>
  * </ul>
@@ -64,14 +64,14 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getGivenRefs() <em>Given Refs</em>}' containment reference list.
+   * The cached value of the '{@link #getGivenItems() <em>Given Items</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGivenRefs()
+   * @see #getGivenItems()
    * @generated
    * @ordered
    */
-  protected EList<GivenRef> givenRefs;
+  protected EList<Given> givenItems;
 
   /**
    * The cached value of the '{@link #getWhenBlock() <em>When Block</em>}' containment reference.
@@ -145,13 +145,13 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
    * @generated
    */
   @Override
-  public EList<GivenRef> getGivenRefs()
+  public EList<Given> getGivenItems()
   {
-    if (givenRefs == null)
+    if (givenItems == null)
     {
-      givenRefs = new EObjectContainmentEList<GivenRef>(GivenRef.class, this, AceGenPackage.SCENARIO__GIVEN_REFS);
+      givenItems = new EObjectContainmentEList<Given>(Given.class, this, AceGenPackage.SCENARIO__GIVEN_ITEMS);
     }
-    return givenRefs;
+    return givenItems;
   }
 
   /**
@@ -264,8 +264,8 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
   {
     switch (featureID)
     {
-      case AceGenPackage.SCENARIO__GIVEN_REFS:
-        return ((InternalEList<?>)getGivenRefs()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.SCENARIO__GIVEN_ITEMS:
+        return ((InternalEList<?>)getGivenItems()).basicRemove(otherEnd, msgs);
       case AceGenPackage.SCENARIO__WHEN_BLOCK:
         return basicSetWhenBlock(null, msgs);
       case AceGenPackage.SCENARIO__THEN_BLOCK:
@@ -286,8 +286,8 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
     {
       case AceGenPackage.SCENARIO__NAME:
         return getName();
-      case AceGenPackage.SCENARIO__GIVEN_REFS:
-        return getGivenRefs();
+      case AceGenPackage.SCENARIO__GIVEN_ITEMS:
+        return getGivenItems();
       case AceGenPackage.SCENARIO__WHEN_BLOCK:
         return getWhenBlock();
       case AceGenPackage.SCENARIO__THEN_BLOCK:
@@ -310,9 +310,9 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
       case AceGenPackage.SCENARIO__NAME:
         setName((String)newValue);
         return;
-      case AceGenPackage.SCENARIO__GIVEN_REFS:
-        getGivenRefs().clear();
-        getGivenRefs().addAll((Collection<? extends GivenRef>)newValue);
+      case AceGenPackage.SCENARIO__GIVEN_ITEMS:
+        getGivenItems().clear();
+        getGivenItems().addAll((Collection<? extends Given>)newValue);
         return;
       case AceGenPackage.SCENARIO__WHEN_BLOCK:
         setWhenBlock((WhenBlock)newValue);
@@ -337,8 +337,8 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
       case AceGenPackage.SCENARIO__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case AceGenPackage.SCENARIO__GIVEN_REFS:
-        getGivenRefs().clear();
+      case AceGenPackage.SCENARIO__GIVEN_ITEMS:
+        getGivenItems().clear();
         return;
       case AceGenPackage.SCENARIO__WHEN_BLOCK:
         setWhenBlock((WhenBlock)null);
@@ -362,8 +362,8 @@ public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenar
     {
       case AceGenPackage.SCENARIO__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AceGenPackage.SCENARIO__GIVEN_REFS:
-        return givenRefs != null && !givenRefs.isEmpty();
+      case AceGenPackage.SCENARIO__GIVEN_ITEMS:
+        return givenItems != null && !givenItems.isEmpty();
       case AceGenPackage.SCENARIO__WHEN_BLOCK:
         return whenBlock != null;
       case AceGenPackage.SCENARIO__THEN_BLOCK:

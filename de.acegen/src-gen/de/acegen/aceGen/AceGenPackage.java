@@ -1674,13 +1674,13 @@ public interface AceGenPackage extends EPackage
   int SCENARIO__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Given Refs</b></em>' containment reference list.
+   * The feature id for the '<em><b>Given Items</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCENARIO__GIVEN_REFS = 1;
+  int SCENARIO__GIVEN_ITEMS = 1;
 
   /**
    * The feature id for the '<em><b>When Block</b></em>' containment reference.
@@ -1710,6 +1710,62 @@ public interface AceGenPackage extends EPackage
   int SCENARIO_FEATURE_COUNT = 4;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.GivenImpl <em>Given</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.GivenImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGiven()
+   * @generated
+   */
+  int GIVEN = 32;
+
+  /**
+   * The number of structural features of the '<em>Given</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIVEN_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.CustomCallImpl <em>Custom Call</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.CustomCallImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCustomCall()
+   * @generated
+   */
+  int CUSTOM_CALL = 33;
+
+  /**
+   * The feature id for the '<em><b>Custom Call Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_CALL__CUSTOM_CALL_NAME = GIVEN_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_CALL__VALUES = GIVEN_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Custom Call</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_CALL_FEATURE_COUNT = GIVEN_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.GivenRefImpl <em>Given Ref</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1717,7 +1773,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGivenRef()
    * @generated
    */
-  int GIVEN_REF = 32;
+  int GIVEN_REF = 34;
 
   /**
    * The feature id for the '<em><b>Scenario</b></em>' reference.
@@ -1726,7 +1782,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIVEN_REF__SCENARIO = 0;
+  int GIVEN_REF__SCENARIO = GIVEN_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Times</b></em>' attribute.
@@ -1735,7 +1791,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIVEN_REF__TIMES = 1;
+  int GIVEN_REF__TIMES = GIVEN_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Exclude Given</b></em>' attribute.
@@ -1744,7 +1800,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIVEN_REF__EXCLUDE_GIVEN = 2;
+  int GIVEN_REF__EXCLUDE_GIVEN = GIVEN_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Given Ref</em>' class.
@@ -1753,7 +1809,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIVEN_REF_FEATURE_COUNT = 3;
+  int GIVEN_REF_FEATURE_COUNT = GIVEN_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.WhenBlockImpl <em>When Block</em>}' class.
@@ -1763,7 +1819,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getWhenBlock()
    * @generated
    */
-  int WHEN_BLOCK = 33;
+  int WHEN_BLOCK = 35;
 
   /**
    * The feature id for the '<em><b>Action</b></em>' reference.
@@ -1818,7 +1874,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getThenBlock()
    * @generated
    */
-  int THEN_BLOCK = 34;
+  int THEN_BLOCK = 36;
 
   /**
    * The feature id for the '<em><b>Status Code</b></em>' attribute.
@@ -1873,7 +1929,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerification()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION = 35;
+  int PERSISTENCE_VERIFICATION = 37;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1919,7 +1975,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerificationExpression()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION_EXPRESSION = 36;
+  int PERSISTENCE_VERIFICATION_EXPRESSION = 38;
 
   /**
    * The number of structural features of the '<em>Persistence Verification Expression</em>' class.
@@ -1938,7 +1994,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByPrimaryKeys()
    * @generated
    */
-  int SELECT_BY_PRIMARY_KEYS = 37;
+  int SELECT_BY_PRIMARY_KEYS = 39;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -1975,7 +2031,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByUniqueAttribute()
    * @generated
    */
-  int SELECT_BY_UNIQUE_ATTRIBUTE = 38;
+  int SELECT_BY_UNIQUE_ATTRIBUTE = 40;
 
   /**
    * The feature id for the '<em><b>Attribute And Value</b></em>' containment reference.
@@ -2012,7 +2068,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCount()
    * @generated
    */
-  int COUNT = 39;
+  int COUNT = 41;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -2049,7 +2105,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeAndValue()
    * @generated
    */
-  int ATTRIBUTE_AND_VALUE = 40;
+  int ATTRIBUTE_AND_VALUE = 42;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2086,7 +2142,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
    * @generated
    */
-  int VERIFICATION = 41;
+  int VERIFICATION = 43;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2114,7 +2170,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExtraction()
    * @generated
    */
-  int EXTRACTION = 42;
+  int EXTRACTION = 44;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2142,7 +2198,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
    * @generated
    */
-  int SELECT_BY_EXPECTATION = 43;
+  int SELECT_BY_EXPECTATION = 45;
 
   /**
    * The feature id for the '<em><b>Object</b></em>' containment reference.
@@ -2188,7 +2244,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 44;
+  int DATA_DEFINITION = 46;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -2243,7 +2299,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 45;
+  int AUTHORIZATION = 47;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -2280,7 +2336,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 46;
+  int ATTRIBUTE = 48;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -2380,7 +2436,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 47;
+  int JSON_DATE_TIME = 49;
 
   /**
    * The feature id for the '<em><b>Date Time</b></em>' attribute.
@@ -2417,7 +2473,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 50;
+  int JSON_VALUE = 52;
 
   /**
    * The number of structural features of the '<em>Json Value</em>' class.
@@ -2436,7 +2492,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 48;
+  int JSON_OBJECT = 50;
 
   /**
    * The feature id for the '<em><b>Members</b></em>' containment reference list.
@@ -2464,7 +2520,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 49;
+  int JSON_MEMBER = 51;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2501,7 +2557,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 51;
+  int JSON_ARRAY = 53;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -2529,7 +2585,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
    * @generated
    */
-  int STRING_TYPE = 52;
+  int STRING_TYPE = 54;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2557,7 +2613,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 53;
+  int BOOLEAN_TYPE = 55;
 
   /**
    * The feature id for the '<em><b>Boolean</b></em>' attribute.
@@ -2585,7 +2641,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
    * @generated
    */
-  int NULL_TYPE = 54;
+  int NULL_TYPE = 56;
 
   /**
    * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -2613,7 +2669,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getUndefinedType()
    * @generated
    */
-  int UNDEFINED_TYPE = 55;
+  int UNDEFINED_TYPE = 57;
 
   /**
    * The feature id for the '<em><b>Undefined</b></em>' attribute.
@@ -2641,7 +2697,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
    * @generated
    */
-  int LONG_TYPE = 56;
+  int LONG_TYPE = 58;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -2669,7 +2725,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 57;
+  int PRIMITIVE_VALUE = 59;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -4021,15 +4077,15 @@ public interface AceGenPackage extends EPackage
   EAttribute getScenario_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Scenario#getGivenRefs <em>Given Refs</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.Scenario#getGivenItems <em>Given Items</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Given Refs</em>'.
-   * @see de.acegen.aceGen.Scenario#getGivenRefs()
+   * @return the meta object for the containment reference list '<em>Given Items</em>'.
+   * @see de.acegen.aceGen.Scenario#getGivenItems()
    * @see #getScenario()
    * @generated
    */
-  EReference getScenario_GivenRefs();
+  EReference getScenario_GivenItems();
 
   /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.Scenario#getWhenBlock <em>When Block</em>}'.
@@ -4052,6 +4108,48 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getScenario_ThenBlock();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Given <em>Given</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Given</em>'.
+   * @see de.acegen.aceGen.Given
+   * @generated
+   */
+  EClass getGiven();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.CustomCall <em>Custom Call</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Custom Call</em>'.
+   * @see de.acegen.aceGen.CustomCall
+   * @generated
+   */
+  EClass getCustomCall();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.CustomCall#getCustomCallName <em>Custom Call Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Custom Call Name</em>'.
+   * @see de.acegen.aceGen.CustomCall#getCustomCallName()
+   * @see #getCustomCall()
+   * @generated
+   */
+  EAttribute getCustomCall_CustomCallName();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.CustomCall#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Values</em>'.
+   * @see de.acegen.aceGen.CustomCall#getValues()
+   * @see #getCustomCall()
+   * @generated
+   */
+  EReference getCustomCall_Values();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.GivenRef <em>Given Ref</em>}'.
@@ -5990,12 +6088,12 @@ public interface AceGenPackage extends EPackage
     EAttribute SCENARIO__NAME = eINSTANCE.getScenario_Name();
 
     /**
-     * The meta object literal for the '<em><b>Given Refs</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Given Items</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SCENARIO__GIVEN_REFS = eINSTANCE.getScenario_GivenRefs();
+    EReference SCENARIO__GIVEN_ITEMS = eINSTANCE.getScenario_GivenItems();
 
     /**
      * The meta object literal for the '<em><b>When Block</b></em>' containment reference feature.
@@ -6012,6 +6110,42 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference SCENARIO__THEN_BLOCK = eINSTANCE.getScenario_ThenBlock();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.GivenImpl <em>Given</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.GivenImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGiven()
+     * @generated
+     */
+    EClass GIVEN = eINSTANCE.getGiven();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.CustomCallImpl <em>Custom Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.CustomCallImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCustomCall()
+     * @generated
+     */
+    EClass CUSTOM_CALL = eINSTANCE.getCustomCall();
+
+    /**
+     * The meta object literal for the '<em><b>Custom Call Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CUSTOM_CALL__CUSTOM_CALL_NAME = eINSTANCE.getCustomCall_CustomCallName();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CUSTOM_CALL__VALUES = eINSTANCE.getCustomCall_Values();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.GivenRefImpl <em>Given Ref</em>}' class.

@@ -158,9 +158,14 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Scenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Scenario/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/givenRefs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/givenItems"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenBlock"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/thenBlock"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//Given"/>
+    <genClasses ecoreClass="AceGen.ecore#//CustomCall">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//CustomCall/customCallName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//CustomCall/values"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//GivenRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//GivenRef/scenario"/>

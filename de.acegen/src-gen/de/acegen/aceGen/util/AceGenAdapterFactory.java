@@ -236,6 +236,16 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createScenarioAdapter();
       }
       @Override
+      public Adapter caseGiven(Given object)
+      {
+        return createGivenAdapter();
+      }
+      @Override
+      public Adapter caseCustomCall(CustomCall object)
+      {
+        return createCustomCallAdapter();
+      }
+      @Override
       public Adapter caseGivenRef(GivenRef object)
       {
         return createGivenRefAdapter();
@@ -863,6 +873,36 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Given <em>Given</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.Given
+   * @generated
+   */
+  public Adapter createGivenAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.CustomCall <em>Custom Call</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.CustomCall
+   * @generated
+   */
+  public Adapter createCustomCallAdapter()
   {
     return null;
   }

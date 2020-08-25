@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class GivenRefImpl extends MinimalEObjectImpl.Container implements GivenRef
+public class GivenRefImpl extends GivenImpl implements GivenRef
 {
   /**
    * The cached value of the '{@link #getScenario() <em>Scenario</em>}' reference.
