@@ -182,6 +182,10 @@ class Action {
 			«IF getType.equals("GET")»
 				@Override
 				protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {
+					«getModel.interfaceWithPackage» testData = «getModel.dataNameWithPackage».generateTestData();
+					«FOR attribute: it.model.attributes»
+						this.actionData.«attribute.setterCall('''testData.«attribute.getterCall»''')»;
+					«ENDFOR»
 				}
 			«ENDIF»
 			

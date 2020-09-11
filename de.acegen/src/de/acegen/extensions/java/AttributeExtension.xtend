@@ -38,8 +38,8 @@ import javax.inject.Inject
 class AttributeExtension {
 
 	@Inject
-	extension ModelExtension
-
+	extension ModelExtension;
+	
 	public String stringLineBreak = '''," + 
 	"'''
 
@@ -136,6 +136,19 @@ class AttributeExtension {
 				case 'Float': "numeric"
 				case 'Boolean': "boolean"
 				case 'DateTime': "timestamp with time zone"
+			}
+		}
+	}
+
+	def String randomValue(Attribute it) {
+		if (type !== null) {
+			switch type {
+				case 'Integer': "random.nextInt(50)"
+				case 'Long': "random.nextLong()"
+				case 'String': "randomString(random)"
+				case 'Float': "random.nextFloat()"
+				case 'Boolean': "random.nextBoolean()"
+				case 'DateTime': "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) "
 			}
 		}
 	}

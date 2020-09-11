@@ -43,10 +43,8 @@ import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
-import de.acegen.aceGen.ServerCall;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.ThenBlock;
-import de.acegen.aceGen.TriggeredAction;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.scoping.AbstractAceGenScopeProvider;
@@ -80,20 +78,11 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final ClientWhenBlock clientWhenBlock = ((ClientWhenBlock) context);
       return Scopes.scopeFor(clientWhenBlock.getAction().getInput());
     }
-    if (((context instanceof TriggeredAction) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
-      final TriggeredAction triggeredAction = ((TriggeredAction) context);
-      return Scopes.scopeFor(triggeredAction.getHttpClientAce().getInput());
-    }
     if (((context instanceof InputValue) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
       final EObject parent = context.eContainer();
-      if ((parent instanceof TriggeredAction)) {
-        final TriggeredAction triggeredAction_1 = ((TriggeredAction) parent);
-        return Scopes.scopeFor(triggeredAction_1.getHttpClientAce().getInput());
-      } else {
-        if ((parent instanceof ClientWhenBlock)) {
-          final EList<Input> input = ((ClientWhenBlock) parent).getAction().getInput();
-          return Scopes.scopeFor(input);
-        }
+      if ((parent instanceof ClientWhenBlock)) {
+        final EList<Input> input = ((ClientWhenBlock) parent).getAction().getInput();
+        return Scopes.scopeFor(input);
       }
     }
     if ((((context instanceof HttpServerAceRead) || (context instanceof HttpServerAceWrite)) && 
@@ -236,7 +225,6 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       boolean isThen = false;
       boolean isWhen = false;
       boolean isVerification = false;
-      boolean isServerCall = false;
       PersistenceVerification persistenceVerification_4 = null;
       while (((parent_1 != null) && (!(((parent_1 instanceof Scenario) || (parent_1 instanceof JsonMember)) || (parent_1 instanceof ClientScenario))))) {
         {
@@ -249,9 +237,6 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
           if ((parent_1 instanceof PersistenceVerification)) {
             isVerification = true;
             persistenceVerification_4 = ((PersistenceVerification) parent_1);
-          }
-          if ((parent_1 instanceof ServerCall)) {
-            isServerCall = true;
           }
           parent_1 = parent_1.eContainer();
         }
@@ -297,7 +282,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         if (isWhen) {
           return Scopes.scopeFor(scenario_1.getWhenBlock().getAction().getServerCall().getResponse());
         }
-        if ((isThen && isServerCall)) {
+        if (isThen) {
           ArrayList<Attribute> attr_2 = new ArrayList<Attribute>();
           HttpServerAce _serverCall = scenario_1.getWhenBlock().getAction().getServerCall();
           boolean _tripleNotEquals = (_serverCall != null);

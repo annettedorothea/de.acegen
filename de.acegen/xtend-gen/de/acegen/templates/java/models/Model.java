@@ -224,6 +224,7 @@ public class Model {
         _builder.newLine();
       }
     }
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

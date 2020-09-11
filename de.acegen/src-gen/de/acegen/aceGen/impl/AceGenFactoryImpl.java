@@ -79,8 +79,6 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
       case AceGenPackage.CLIENT_THEN_BLOCK: return createClientThenBlock();
-      case AceGenPackage.SERVER_CALL: return createServerCall();
-      case AceGenPackage.TRIGGERED_ACTION: return createTriggeredAction();
       case AceGenPackage.STATE_VERIFICATION: return createStateVerification();
       case AceGenPackage.JSON_OBJECT_CLIENT: return createJsonObjectClient();
       case AceGenPackage.JSON_MEMBER_CLIENT: return createJsonMemberClient();
@@ -296,30 +294,6 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientThenBlockImpl clientThenBlock = new ClientThenBlockImpl();
     return clientThenBlock;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ServerCall createServerCall()
-  {
-    ServerCallImpl serverCall = new ServerCallImpl();
-    return serverCall;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public TriggeredAction createTriggeredAction()
-  {
-    TriggeredActionImpl triggeredAction = new TriggeredActionImpl();
-    return triggeredAction;
   }
 
   /**

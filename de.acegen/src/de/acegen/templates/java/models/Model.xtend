@@ -85,6 +85,7 @@ class Model {
 				«attribute.setter»
 				
 			«ENDFOR»
+
 		}
 		
 		«sdg»

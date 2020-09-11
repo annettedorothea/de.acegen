@@ -38,6 +38,7 @@ HttpClientAce:
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
+	('UIEvent' uiEvent = STRING)? ('ID' id = STRING)?
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -94,9 +95,6 @@ ClientScenario:
 ClientWhenBlock: 
 	action = [HttpClientAce|QualifiedName] 
 	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
-	('with' 'response' 
-	statusCode = INT 
-	(response = JsonObject)?)?
 ;
 
 InputValue:
@@ -104,17 +102,7 @@ InputValue:
 ;
 
 ClientThenBlock: {ClientThenBlock} 
-	('expectedServerCall' serverCall = ServerCall)?
 	('expectedState' stateVerifications += StateVerification*)?
-	('triggeredActions' triggeredAction += TriggeredAction*)?
-;
-
-ServerCall:
-	jsonObject = JsonObject
-;
-
-TriggeredAction:
-	httpClientAce = [HttpClientAce | QualifiedName ] ('(' inputValues += InputValue (',' inputValues += InputValue)* ')')?
 ;
 
 StateVerification:

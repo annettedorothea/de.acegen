@@ -26,6 +26,7 @@ import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerViewFunction
@@ -41,10 +42,8 @@ import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
-import de.acegen.aceGen.ServerCall
 import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
-import de.acegen.aceGen.TriggeredAction
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
@@ -54,7 +53,6 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.HttpServerAceRead
 
 /**
  * This class contains custom scoping description.
@@ -72,16 +70,9 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			val clientWhenBlock = context as ClientWhenBlock;
 			return Scopes.scopeFor(clientWhenBlock.action.input)
 		}
-		if (context instanceof TriggeredAction && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
-			val triggeredAction = context as TriggeredAction;
-			return Scopes.scopeFor(triggeredAction.httpClientAce.input)
-		}
 		if (context instanceof InputValue && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
 			val parent = context.eContainer
-			if (parent instanceof TriggeredAction) {
-				val triggeredAction = parent as TriggeredAction;
-				return Scopes.scopeFor(triggeredAction.httpClientAce.input)
-			} else if (parent instanceof ClientWhenBlock) {
+			if (parent instanceof ClientWhenBlock) {
 				val input = (parent as ClientWhenBlock).action.input
 				return Scopes.scopeFor(input)
 			}
@@ -196,7 +187,6 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			var isThen = false
 			var isWhen = false
 			var isVerification = false
-			var isServerCall = false
 			var PersistenceVerification persistenceVerification = null
 			while (parent !== null && !(
 				parent instanceof Scenario || parent instanceof JsonMember || parent instanceof ClientScenario
@@ -210,9 +200,6 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (parent instanceof PersistenceVerification) {
 					isVerification = true
 					persistenceVerification = parent as PersistenceVerification
-				}
-				if (parent instanceof ServerCall) {
-					isServerCall = true
 				}
 				parent = parent.eContainer
 			}
@@ -249,7 +236,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				if (isWhen) {
 					return Scopes.scopeFor(scenario.whenBlock.action.serverCall.response);
 				}
-				if (isThen && isServerCall) {
+				if (isThen) {
 					var attr = new ArrayList<Attribute>();
 					if (scenario.whenBlock.action.serverCall !== null) {
 						val serverCall = scenario.whenBlock.action.serverCall

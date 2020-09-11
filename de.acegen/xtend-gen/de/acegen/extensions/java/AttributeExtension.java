@@ -415,6 +415,40 @@ public class AttributeExtension {
     return _xifexpression;
   }
   
+  public String randomValue(final Attribute it) {
+    String _xifexpression = null;
+    String _type = it.getType();
+    boolean _tripleNotEquals = (_type != null);
+    if (_tripleNotEquals) {
+      String _switchResult = null;
+      String _type_1 = it.getType();
+      if (_type_1 != null) {
+        switch (_type_1) {
+          case "Integer":
+            _switchResult = "random.nextInt(50)";
+            break;
+          case "Long":
+            _switchResult = "random.nextLong()";
+            break;
+          case "String":
+            _switchResult = "randomString(random)";
+            break;
+          case "Float":
+            _switchResult = "random.nextFloat()";
+            break;
+          case "Boolean":
+            _switchResult = "random.nextBoolean()";
+            break;
+          case "DateTime":
+            _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
+            break;
+        }
+      }
+      _xifexpression = _switchResult;
+    }
+    return _xifexpression;
+  }
+  
   public String tableName(final Attribute it) {
     String _xifexpression = null;
     String _type = it.getType();

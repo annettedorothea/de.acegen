@@ -161,6 +161,41 @@ class Data {
 			public void migrateLegacyData(String json) {
 			}
 		
+			public static «interfaceWithPackage» generateTestData() {
+				java.util.Random random = new java.util.Random();
+				int n;
+				«interfaceWithPackage» testData = new «modelClassNameWithPackage»();
+				«FOR attribute : allAttributes»
+					«IF attribute.model !== null»
+						«IF attribute.list»
+							java.util.List<«attribute.model.interfaceWithPackage»> «attribute.name.toFirstLower»List = new java.util.ArrayList<«attribute.model.interfaceWithPackage»>();
+							n = random.nextInt(20) + 1;
+							for ( int i = 0; i < n; i++ ) {
+								«attribute.name.toFirstLower»List.add(«attribute.model.dataNameWithPackage».generateTestData());
+							}
+							testData.«attribute.setterCall('''«attribute.name.toFirstLower»List''')»;
+						«ELSE»
+							testData.«attribute.setterCall('''«attribute.model.dataNameWithPackage».generateTestData()''')»;
+						«ENDIF»
+					«ELSE»
+						testData.«attribute.setterCall('''«attribute.randomValue»''')»;
+					«ENDIF»
+				«ENDFOR»
+				return testData;
+			}
+			
+			private static String randomString(java.util.Random random) {
+				String chars = "aaaaaaabcdeeeeeeeffffghiiiiiiijkllllllmmmmnnnnnnnooooooooopqrstttuuuuuuuvxyz";
+				int n = random.nextInt(20) + 5;
+				StringBuilder sb = new StringBuilder(n);
+				for (int i = 0; i < n; i++) {
+					int index = random.nextInt(chars.length());
+					sb.append(chars.charAt(index));
+				}
+				String string  = sb.toString(); 
+				return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();
+			}
+			
 		}
 		
 		«sdg»

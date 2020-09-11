@@ -433,6 +433,146 @@ public class Data {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public static ");
+    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage, "\t");
+    _builder.append(" generateTestData() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("java.util.Random random = new java.util.Random();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("int n;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it);
+    _builder.append(_interfaceWithPackage_1, "\t\t");
+    _builder.append(" testData = new ");
+    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage, "\t\t");
+    _builder.append("();");
+    _builder.newLineIfNotEmpty();
+    {
+      List<Attribute> _allAttributes_2 = this._modelExtension.allAttributes(it);
+      for(final Attribute attribute_2 : _allAttributes_2) {
+        {
+          Model _model = attribute_2.getModel();
+          boolean _tripleNotEquals = (_model != null);
+          if (_tripleNotEquals) {
+            {
+              boolean _isList = attribute_2.isList();
+              if (_isList) {
+                _builder.append("\t\t");
+                _builder.append("java.util.List<");
+                String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(attribute_2.getModel());
+                _builder.append(_interfaceWithPackage_2, "\t\t");
+                _builder.append("> ");
+                String _firstLower = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder.append(_firstLower, "\t\t");
+                _builder.append("List = new java.util.ArrayList<");
+                String _interfaceWithPackage_3 = this._modelExtension.interfaceWithPackage(attribute_2.getModel());
+                _builder.append(_interfaceWithPackage_3, "\t\t");
+                _builder.append(">();");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("n = random.nextInt(20) + 1;");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("for ( int i = 0; i < n; i++ ) {");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                String _firstLower_1 = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder.append(_firstLower_1, "\t\t\t");
+                _builder.append("List.add(");
+                String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(attribute_2.getModel());
+                _builder.append(_dataNameWithPackage, "\t\t\t");
+                _builder.append(".generateTestData());");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("}");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("testData.");
+                StringConcatenation _builder_1 = new StringConcatenation();
+                String _firstLower_2 = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder_1.append(_firstLower_2);
+                _builder_1.append("List");
+                String _setterCall = this._attributeExtension.setterCall(attribute_2, _builder_1.toString());
+                _builder.append(_setterCall, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              } else {
+                _builder.append("\t\t");
+                _builder.append("testData.");
+                StringConcatenation _builder_2 = new StringConcatenation();
+                String _dataNameWithPackage_1 = this._modelExtension.dataNameWithPackage(attribute_2.getModel());
+                _builder_2.append(_dataNameWithPackage_1);
+                _builder_2.append(".generateTestData()");
+                String _setterCall_1 = this._attributeExtension.setterCall(attribute_2, _builder_2.toString());
+                _builder.append(_setterCall_1, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          } else {
+            _builder.append("\t\t");
+            _builder.append("testData.");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            String _randomValue = this._attributeExtension.randomValue(attribute_2);
+            _builder_3.append(_randomValue);
+            String _setterCall_2 = this._attributeExtension.setterCall(attribute_2, _builder_3.toString());
+            _builder.append(_setterCall_2, "\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("return testData;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private static String randomString(java.util.Random random) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String chars = \"aaaaaaabcdeeeeeeeffffghiiiiiiijkllllllmmmmnnnnnnnooooooooopqrstttuuuuuuuvxyz\";");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("int n = random.nextInt(20) + 5;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("StringBuilder sb = new StringBuilder(n);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("for (int i = 0; i < n; i++) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("int index = random.nextInt(chars.length());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("sb.append(chars.charAt(index));");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String string  = sb.toString(); ");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

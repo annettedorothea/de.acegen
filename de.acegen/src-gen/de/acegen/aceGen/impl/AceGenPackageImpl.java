@@ -56,12 +56,10 @@ import de.acegen.aceGen.Scenario;
 import de.acegen.aceGen.SelectByExpectation;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
-import de.acegen.aceGen.ServerCall;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
-import de.acegen.aceGen.TriggeredAction;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
@@ -178,20 +176,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass clientThenBlockEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass serverCallEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass triggeredActionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -746,9 +730,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getHttpClientAce_UiEvent()
+  {
+    return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHttpClientAce_Id()
+  {
+    return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getHttpClientAce_Outcomes()
   {
-    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(6);
+    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -1109,28 +1115,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientWhenBlock_StatusCode()
-  {
-    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getClientWhenBlock_Response()
-  {
-    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getInputValue()
   {
     return inputValueEClass;
@@ -1175,86 +1159,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientThenBlock_ServerCall()
-  {
-    return (EReference)clientThenBlockEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getClientThenBlock_StateVerifications()
   {
-    return (EReference)clientThenBlockEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getClientThenBlock_TriggeredAction()
-  {
-    return (EReference)clientThenBlockEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getServerCall()
-  {
-    return serverCallEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getServerCall_JsonObject()
-  {
-    return (EReference)serverCallEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getTriggeredAction()
-  {
-    return triggeredActionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTriggeredAction_HttpClientAce()
-  {
-    return (EReference)triggeredActionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTriggeredAction_InputValues()
-  {
-    return (EReference)triggeredActionEClass.getEStructuralFeatures().get(1);
+    return (EReference)clientThenBlockEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2934,6 +2841,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__REFS);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__SERVER_CALL);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__LOADING_FLAG);
+    createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__UI_EVENT);
+    createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__ID);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__OUTCOMES);
 
     fromAppStateRefEClass = createEClass(FROM_APP_STATE_REF);
@@ -2976,24 +2885,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     clientWhenBlockEClass = createEClass(CLIENT_WHEN_BLOCK);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ACTION);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__INPUT_VALUES);
-    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__STATUS_CODE);
-    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__RESPONSE);
 
     inputValueEClass = createEClass(INPUT_VALUE);
     createEReference(inputValueEClass, INPUT_VALUE__INPUT);
     createEReference(inputValueEClass, INPUT_VALUE__VALUE);
 
     clientThenBlockEClass = createEClass(CLIENT_THEN_BLOCK);
-    createEReference(clientThenBlockEClass, CLIENT_THEN_BLOCK__SERVER_CALL);
     createEReference(clientThenBlockEClass, CLIENT_THEN_BLOCK__STATE_VERIFICATIONS);
-    createEReference(clientThenBlockEClass, CLIENT_THEN_BLOCK__TRIGGERED_ACTION);
-
-    serverCallEClass = createEClass(SERVER_CALL);
-    createEReference(serverCallEClass, SERVER_CALL__JSON_OBJECT);
-
-    triggeredActionEClass = createEClass(TRIGGERED_ACTION);
-    createEReference(triggeredActionEClass, TRIGGERED_ACTION__HTTP_CLIENT_ACE);
-    createEReference(triggeredActionEClass, TRIGGERED_ACTION__INPUT_VALUES);
 
     stateVerificationEClass = createEClass(STATE_VERIFICATION);
     createEAttribute(stateVerificationEClass, STATE_VERIFICATION__NAME);
@@ -3261,6 +3159,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpClientAce_Refs(), this.getFromAppStateRef(), null, "refs", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_ServerCall(), this.getHttpServerAce(), null, "serverCall", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_LoadingFlag(), this.getSingleClientAttribute(), null, "loadingFlag", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpClientAce_UiEvent(), ecorePackage.getEString(), "uiEvent", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpClientAce_Id(), ecorePackage.getEString(), "id", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_Outcomes(), this.getHttpClientOutcome(), null, "outcomes", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fromAppStateRefEClass, FromAppStateRef.class, "FromAppStateRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3303,24 +3203,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(clientWhenBlockEClass, ClientWhenBlock.class, "ClientWhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClientWhenBlock_Action(), this.getHttpClientAce(), null, "action", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientWhenBlock_StatusCode(), ecorePackage.getEInt(), "statusCode", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientWhenBlock_Response(), this.getJsonObject(), null, "response", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputValueEClass, InputValue.class, "InputValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInputValue_Input(), this.getInput(), null, "input", null, 0, 1, InputValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInputValue_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, InputValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(clientThenBlockEClass, ClientThenBlock.class, "ClientThenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getClientThenBlock_ServerCall(), this.getServerCall(), null, "serverCall", null, 0, 1, ClientThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientThenBlock_StateVerifications(), this.getStateVerification(), null, "stateVerifications", null, 0, -1, ClientThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientThenBlock_TriggeredAction(), this.getTriggeredAction(), null, "triggeredAction", null, 0, -1, ClientThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(serverCallEClass, ServerCall.class, "ServerCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getServerCall_JsonObject(), this.getJsonObject(), null, "jsonObject", null, 0, 1, ServerCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(triggeredActionEClass, TriggeredAction.class, "TriggeredAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTriggeredAction_HttpClientAce(), this.getHttpClientAce(), null, "httpClientAce", null, 0, 1, TriggeredAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTriggeredAction_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, TriggeredAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateVerificationEClass, StateVerification.class, "StateVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStateVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

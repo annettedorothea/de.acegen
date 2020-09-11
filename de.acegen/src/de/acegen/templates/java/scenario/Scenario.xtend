@@ -59,7 +59,7 @@ class Scenario {
 		
 			«FOR verification : thenBlock.verifications»
 				@Override
-				protected void «verification.name»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response) {
+				protected void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF») {
 					assertFail("«verification.name» not implemented");
 					LOG.info("THEN: «verification.name» passed");
 				}
@@ -129,7 +129,7 @@ class Scenario {
 				return response;
 			}
 			
-			private «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» then(Response response) throws Exception {
+			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
 				if (response.getStatus() == 500) {
 					String message = response.readEntity(String.class);
 					assertFail(message);
@@ -143,38 +143,42 @@ class Scenario {
 					}
 				«ENDIF»
 				
-				«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
-				try {
-					actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
-					
-					«IF whenBlock.extractions.size > 0»
+				«IF whenBlock.action.response.size > 0»
+					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
+					if (response.getStatus() < 400) {
 						try {
-							«FOR extraction: whenBlock.extractions»
-								
-								Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(actual);
-								extractedValues.put("«extraction.name»", «extraction.name»);
-								LOG.info("THEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
-							«ENDFOR»
+							actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+							
+							«IF whenBlock.extractions.size > 0»
+								try {
+									«FOR extraction: whenBlock.extractions»
+										
+										Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(actual);
+										extractedValues.put("«extraction.name»", «extraction.name»);
+										LOG.info("THEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
+									«ENDFOR»
+								} catch (Exception x) {
+									LOG.info("THEN: failed to extract values from response ", x);
+								}
+							«ENDIF»
 						} catch (Exception x) {
-							LOG.info("THEN: failed to extract values from response ", x);
+							LOG.error("THEN: failed to read response", x);
+							assertFail(x.getMessage());
 						}
-					«ENDIF»
-				} catch (Exception x) {
-					LOG.error("THEN: failed to read response", x);
-					assertFail(x.getMessage());
-				}
-				«IF thenBlock.response !== null»
-					«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
-					
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
+	
+						«IF thenBlock.response !== null»
+							«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
+							
+							«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
+							
+							assertThat(actual, expected);
+							
+							LOG.info("THEN: response passed");
+						«ENDIF»
+					}
 
-
-					assertThat(actual, expected);
-					
-					LOG.info("THEN: response passed");
+					return actual;
 				«ENDIF»
-				
-				return actual;
 			}
 					
 			@Override
@@ -184,7 +188,7 @@ class Scenario {
 				if (prerequisite("«name»")) {
 					Response response = when();
 		
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = then(response);
+					«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
 					
 					«FOR persistenceVerification : thenBlock.persistenceVerifications»
 						this.«persistenceVerification.name»();
@@ -253,7 +257,7 @@ class Scenario {
 			}
 			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
 			addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
-			«IF givenRef.scenario.whenBlock.extractions.size > 0»
+			«IF givenRef.scenario.whenBlock.extractions.size > 0 && givenRef.scenario.whenBlock.action.response.size > 0»
 				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)» responseEntity_«index» = null;
 				try {
 					responseEntity_«index» = response.readEntity(«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)».class);

@@ -111,10 +111,17 @@ public class Scenario {
         String _name_3 = verification.getName();
         _builder.append(_name_3, "\t");
         _builder.append("(");
-        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
-        _builder.append(_responseDataNameWithPackage_1, "\t");
-        _builder.append(" response) {");
+        {
+          int _size = it.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan = (_size > 0);
+          if (_greaterThan) {
+            EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
+            String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
+            _builder.append(_responseDataNameWithPackage_1, "\t");
+            _builder.append(" response");
+          }
+        }
+        _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
@@ -311,9 +318,17 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private ");
-    EObject _eContainer = it.getWhenBlock().getAction().eContainer();
-    String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
-    _builder.append(_responseDataNameWithPackage, "\t");
+    {
+      int _size = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        EObject _eContainer = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer));
+        _builder.append(_responseDataNameWithPackage, "\t");
+      } else {
+        _builder.append("void");
+      }
+    }
     _builder.append(" then(Response response) throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -363,134 +378,146 @@ public class Scenario {
     }
     _builder.append("\t\t");
     _builder.newLine();
-    _builder.append("\t\t");
-    EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
-    String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
-    _builder.append(_responseDataNameWithPackage_1, "\t\t");
-    _builder.append(" actual = null;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("actual = response.readEntity(");
-    EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
-    String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
-    _builder.append(_responseDataNameWithPackage_2, "\t\t\t");
-    _builder.append(".class);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.newLine();
     {
-      int _size = it.getWhenBlock().getExtractions().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("\t\t\t");
+      int _size_1 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        _builder.append("\t\t\t\t");
+        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_1));
+        _builder.append(_responseDataNameWithPackage_1, "\t\t\t\t");
+        _builder.append(" actual = null;");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t");
+        _builder.append("if (response.getStatus() < 400) {");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t");
         _builder.append("try {");
         _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("actual = response.readEntity(");
+        EObject _eContainer_2 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_2));
+        _builder.append(_responseDataNameWithPackage_2, "\t\t\t\t\t\t");
+        _builder.append(".class);");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.newLine();
         {
-          EList<Extraction> _extractions = it.getWhenBlock().getExtractions();
-          for(final Extraction extraction : _extractions) {
-            _builder.append("\t\t\t");
-            _builder.append("\t");
+          int _size_2 = it.getWhenBlock().getExtractions().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
+            _builder.append("\t\t\t\t\t\t");
+            _builder.append("try {");
             _builder.newLine();
-            _builder.append("\t\t\t");
+            {
+              EList<Extraction> _extractions = it.getWhenBlock().getExtractions();
+              for(final Extraction extraction : _extractions) {
+                _builder.append("\t\t\t\t\t\t");
+                _builder.append("\t");
+                _builder.newLine();
+                _builder.append("\t\t\t\t\t\t");
+                _builder.append("\t");
+                _builder.append("Object ");
+                String _name_5 = extraction.getName();
+                _builder.append(_name_5, "\t\t\t\t\t\t\t");
+                _builder.append(" = this.extract");
+                String _firstUpper = StringExtensions.toFirstUpper(extraction.getName());
+                _builder.append(_firstUpper, "\t\t\t\t\t\t\t");
+                _builder.append("(actual);");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t\t\t\t");
+                _builder.append("\t");
+                _builder.append("extractedValues.put(\"");
+                String _name_6 = extraction.getName();
+                _builder.append(_name_6, "\t\t\t\t\t\t\t");
+                _builder.append("\", ");
+                String _name_7 = extraction.getName();
+                _builder.append(_name_7, "\t\t\t\t\t\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t\t\t\t\t");
+                _builder.append("\t");
+                _builder.append("LOG.info(\"THEN: extracted \" + ");
+                String _name_8 = extraction.getName();
+                _builder.append(_name_8, "\t\t\t\t\t\t\t");
+                _builder.append(".toString()  + \" as ");
+                String _name_9 = extraction.getName();
+                _builder.append(_name_9, "\t\t\t\t\t\t\t");
+                _builder.append("\");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t\t\t\t\t");
+            _builder.append("} catch (Exception x) {");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t\t");
             _builder.append("\t");
-            _builder.append("Object ");
-            String _name_5 = extraction.getName();
-            _builder.append(_name_5, "\t\t\t\t");
-            _builder.append(" = this.extract");
-            String _firstUpper = StringExtensions.toFirstUpper(extraction.getName());
-            _builder.append(_firstUpper, "\t\t\t\t");
-            _builder.append("(actual);");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t");
-            _builder.append("\t");
-            _builder.append("extractedValues.put(\"");
-            String _name_6 = extraction.getName();
-            _builder.append(_name_6, "\t\t\t\t");
-            _builder.append("\", ");
-            String _name_7 = extraction.getName();
-            _builder.append(_name_7, "\t\t\t\t");
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t");
-            _builder.append("\t");
-            _builder.append("LOG.info(\"THEN: extracted \" + ");
-            String _name_8 = extraction.getName();
-            _builder.append(_name_8, "\t\t\t\t");
-            _builder.append(".toString()  + \" as ");
-            String _name_9 = extraction.getName();
-            _builder.append(_name_9, "\t\t\t\t");
-            _builder.append("\");");
-            _builder.newLineIfNotEmpty();
+            _builder.append("LOG.info(\"THEN: failed to extract values from response \", x);");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t\t");
+            _builder.append("}");
+            _builder.newLine();
           }
         }
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("} catch (Exception x) {");
         _builder.newLine();
-        _builder.append("\t\t\t");
-        _builder.append("\t");
-        _builder.append("LOG.info(\"THEN: failed to extract values from response \", x);");
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("LOG.error(\"THEN: failed to read response\", x);");
         _builder.newLine();
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("assertFail(x.getMessage());");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t");
         _builder.append("}");
         _builder.newLine();
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append("} catch (Exception x) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.error(\"THEN: failed to read response\", x);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("assertFail(x.getMessage());");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    {
-      DataDefinition _response = it.getThenBlock().getResponse();
-      boolean _tripleNotEquals_2 = (_response != null);
-      if (_tripleNotEquals_2) {
-        _builder.append("\t\t");
-        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
-        _builder.append(_dataNameWithPackage, "\t\t");
-        _builder.append(" expectedData = ");
-        CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
-        _builder.append(_objectMapperCallExpectedData, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
         _builder.newLine();
-        _builder.append("\t\t");
-        EObject _eContainer_3 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_3));
-        _builder.append(_responseDataNameWithPackage_3, "\t\t");
-        _builder.append(" expected = new ");
-        EObject _eContainer_4 = it.getWhenBlock().getAction().eContainer();
-        String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_4));
-        _builder.append(_responseDataNameWithPackage_4, "\t\t");
-        _builder.append("(expectedData);");
-        _builder.newLineIfNotEmpty();
+        {
+          DataDefinition _response = it.getThenBlock().getResponse();
+          boolean _tripleNotEquals_2 = (_response != null);
+          if (_tripleNotEquals_2) {
+            _builder.append("\t\t\t\t\t");
+            String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
+            _builder.append(_dataNameWithPackage, "\t\t\t\t\t");
+            _builder.append(" expectedData = ");
+            CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
+            _builder.append(_objectMapperCallExpectedData, "\t\t\t\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t\t\t");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t");
+            EObject _eContainer_3 = it.getWhenBlock().getAction().eContainer();
+            String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_3));
+            _builder.append(_responseDataNameWithPackage_3, "\t\t\t\t\t");
+            _builder.append(" expected = new ");
+            EObject _eContainer_4 = it.getWhenBlock().getAction().eContainer();
+            String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_4));
+            _builder.append(_responseDataNameWithPackage_4, "\t\t\t\t\t");
+            _builder.append("(expectedData);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t\t\t");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t");
+            _builder.append("assertThat(actual, expected);");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t");
+            _builder.append("LOG.info(\"THEN: response passed\");");
+            _builder.newLine();
+          }
+        }
+        _builder.append("\t\t\t\t");
+        _builder.append("}");
         _builder.newLine();
         _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("assertThat(actual, expected);");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("LOG.info(\"THEN: response passed\");");
+        _builder.append("\t\t\t\t");
+        _builder.append("return actual;");
         _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return actual;");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -518,10 +545,17 @@ public class Scenario {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t\t");
-    EObject _eContainer_5 = it.getWhenBlock().getAction().eContainer();
-    String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_5));
-    _builder.append(_responseDataNameWithPackage_5, "\t\t\t");
-    _builder.append(" actualResponse = then(response);");
+    {
+      int _size_3 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_3 = (_size_3 > 0);
+      if (_greaterThan_3) {
+        EObject _eContainer_5 = it.getWhenBlock().getAction().eContainer();
+        String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction(), ((HttpServer) _eContainer_5));
+        _builder.append(_responseDataNameWithPackage_5, "\t\t\t");
+        _builder.append(" actualResponse = ");
+      }
+    }
+    _builder.append("then(response);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.newLine();
@@ -775,9 +809,7 @@ public class Scenario {
     _builder.append("\", (timeAfterRequest-timeBeforeRequest));");
     _builder.newLineIfNotEmpty();
     {
-      int _size = givenRef.getScenario().getWhenBlock().getExtractions().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((givenRef.getScenario().getWhenBlock().getExtractions().size() > 0) && (givenRef.getScenario().getWhenBlock().getAction().getResponse().size() > 0))) {
         _builder.append("\t");
         EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(givenRef.getScenario().getWhenBlock().getAction(), ((HttpServer) _eContainer));

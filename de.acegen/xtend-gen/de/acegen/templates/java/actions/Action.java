@@ -12,6 +12,7 @@ import de.acegen.extensions.java.ModelExtension;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
@@ -466,6 +467,31 @@ public class Action {
         _builder.append("protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {");
         _builder.newLine();
         _builder.append("\t");
+        _builder.append("\t");
+        String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+        _builder.append(_interfaceWithPackage, "\t\t");
+        _builder.append(" testData = ");
+        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getModel());
+        _builder.append(_dataNameWithPackage, "\t\t");
+        _builder.append(".generateTestData();");
+        _builder.newLineIfNotEmpty();
+        {
+          EList<Attribute> _attributes = it.getModel().getAttributes();
+          for(final Attribute attribute : _attributes) {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("this.actionData.");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("testData.");
+            String _terCall = this._attributeExtension.getterCall(attribute);
+            _builder_1.append(_terCall);
+            String _setterCall = this._attributeExtension.setterCall(attribute, _builder_1.toString());
+            _builder.append(_setterCall, "\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
       }
@@ -480,10 +506,10 @@ public class Action {
     _builder.newLine();
     {
       List<Attribute> _allNotReplayableAttributes = this._modelExtension.allNotReplayableAttributes(it.getModel());
-      for(final Attribute attribute : _allNotReplayableAttributes) {
+      for(final Attribute attribute_1 : _allNotReplayableAttributes) {
         _builder.append("\t\t");
         _builder.append("// ");
-        String _name_1 = attribute.getName();
+        String _name_1 = attribute_1.getName();
         _builder.append(_name_1, "\t\t");
         _builder.newLineIfNotEmpty();
       }

@@ -146,16 +146,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientThenBlockAdapter();
       }
       @Override
-      public Adapter caseServerCall(ServerCall object)
-      {
-        return createServerCallAdapter();
-      }
-      @Override
-      public Adapter caseTriggeredAction(TriggeredAction object)
-      {
-        return createTriggeredActionAdapter();
-      }
-      @Override
       public Adapter caseStateVerification(StateVerification object)
       {
         return createStateVerificationAdapter();
@@ -603,36 +593,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientThenBlockAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ServerCall <em>Server Call</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.ServerCall
-   * @generated
-   */
-  public Adapter createServerCallAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.TriggeredAction <em>Triggered Action</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.TriggeredAction
-   * @generated
-   */
-  public Adapter createTriggeredActionAdapter()
   {
     return null;
   }

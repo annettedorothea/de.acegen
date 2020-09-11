@@ -7,7 +7,6 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.InputValue;
-import de.acegen.aceGen.JsonObject;
 
 import java.util.Collection;
 
@@ -35,8 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getInputValues <em>Input Values</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getStatusCode <em>Status Code</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getResponse <em>Response</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,36 +59,6 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<InputValue> inputValues;
-
-  /**
-   * The default value of the '{@link #getStatusCode() <em>Status Code</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatusCode()
-   * @generated
-   * @ordered
-   */
-  protected static final int STATUS_CODE_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getStatusCode() <em>Status Code</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatusCode()
-   * @generated
-   * @ordered
-   */
-  protected int statusCode = STATUS_CODE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getResponse() <em>Response</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getResponse()
-   * @generated
-   * @ordered
-   */
-  protected JsonObject response;
 
   /**
    * <!-- begin-user-doc -->
@@ -180,89 +147,12 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public int getStatusCode()
-  {
-    return statusCode;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setStatusCode(int newStatusCode)
-  {
-    int oldStatusCode = statusCode;
-    statusCode = newStatusCode;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__STATUS_CODE, oldStatusCode, statusCode));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public JsonObject getResponse()
-  {
-    return response;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetResponse(JsonObject newResponse, NotificationChain msgs)
-  {
-    JsonObject oldResponse = response;
-    response = newResponse;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE, oldResponse, newResponse);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setResponse(JsonObject newResponse)
-  {
-    if (newResponse != response)
-    {
-      NotificationChain msgs = null;
-      if (response != null)
-        msgs = ((InternalEObject)response).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE, null, msgs);
-      if (newResponse != null)
-        msgs = ((InternalEObject)newResponse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE, null, msgs);
-      msgs = basicSetResponse(newResponse, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE, newResponse, newResponse));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return ((InternalEList<?>)getInputValues()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE:
-        return basicSetResponse(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -282,10 +172,6 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return basicGetAction();
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return getInputValues();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__STATUS_CODE:
-        return getStatusCode();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE:
-        return getResponse();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -308,12 +194,6 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         getInputValues().clear();
         getInputValues().addAll((Collection<? extends InputValue>)newValue);
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__STATUS_CODE:
-        setStatusCode((Integer)newValue);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE:
-        setResponse((JsonObject)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -334,12 +214,6 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         getInputValues().clear();
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__STATUS_CODE:
-        setStatusCode(STATUS_CODE_EDEFAULT);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE:
-        setResponse((JsonObject)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -358,29 +232,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return action != null;
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return inputValues != null && !inputValues.isEmpty();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__STATUS_CODE:
-        return statusCode != STATUS_CODE_EDEFAULT;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__RESPONSE:
-        return response != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (statusCode: ");
-    result.append(statusCode);
-    result.append(')');
-    return result.toString();
   }
 
 } //ClientWhenBlockImpl
