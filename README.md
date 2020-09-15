@@ -6,8 +6,7 @@ _King Solomon, Book of Ecclesiastes 10,10_
 
 _DSL (Domain Specific Language) and code generator implemented with Xtext based on [the ACE-architecture](#The-ACE-Architecture)_
 
-This tool helps you to write web APIs and web clients and can be plugged into Eclipse, support 
-for [Theia](https://theia-ide.org) and [VS Code](https://code.visualstudio.com) is to come soon.
+This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
 
 You will benefit from:
 
