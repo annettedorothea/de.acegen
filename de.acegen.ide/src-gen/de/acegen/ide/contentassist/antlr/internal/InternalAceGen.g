@@ -10175,9 +10175,9 @@ rule__DataDefinition__Group_1__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0()); }
-	'uuid'
-	{ after(grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0()); }
+	{ before(grammarAccess.getDataDefinitionAccess().getRequestIdKeyword_1_0()); }
+	'requestId'
+	{ after(grammarAccess.getDataDefinitionAccess().getRequestIdKeyword_1_0()); }
 )
 ;
 finally {
@@ -10201,9 +10201,9 @@ rule__DataDefinition__Group_1__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1()); }
-	(rule__DataDefinition__UuidAssignment_1_1)
-	{ after(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1()); }
+	{ before(grammarAccess.getDataDefinitionAccess().getRequestIdAssignment_1_1()); }
+	(rule__DataDefinition__RequestIdAssignment_1_1)
+	{ after(grammarAccess.getDataDefinitionAccess().getRequestIdAssignment_1_1()); }
 )
 ;
 finally {
@@ -13552,15 +13552,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DataDefinition__UuidAssignment_1_1
+rule__DataDefinition__RequestIdAssignment_1_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0()); }
+		{ before(grammarAccess.getDataDefinitionAccess().getRequestIdSTRINGTerminalRuleCall_1_1_0()); }
 		RULE_STRING
-		{ after(grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0()); }
+		{ after(grammarAccess.getDataDefinitionAccess().getRequestIdSTRINGTerminalRuleCall_1_1_0()); }
 	)
 ;
 finally {

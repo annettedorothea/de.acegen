@@ -2164,13 +2164,13 @@ public interface AceGenPackage extends EPackage
   int DATA_DEFINITION = 44;
 
   /**
-   * The feature id for the '<em><b>Uuid</b></em>' attribute.
+   * The feature id for the '<em><b>Request Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DATA_DEFINITION__UUID = 0;
+  int DATA_DEFINITION__REQUEST_ID = 0;
 
   /**
    * The feature id for the '<em><b>Systemtime</b></em>' attribute.
@@ -4421,15 +4421,15 @@ public interface AceGenPackage extends EPackage
   EClass getDataDefinition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getUuid <em>Uuid</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getRequestId <em>Request Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Uuid</em>'.
-   * @see de.acegen.aceGen.DataDefinition#getUuid()
+   * @return the meta object for the attribute '<em>Request Id</em>'.
+   * @see de.acegen.aceGen.DataDefinition#getRequestId()
    * @see #getDataDefinition()
    * @generated
    */
-  EAttribute getDataDefinition_Uuid();
+  EAttribute getDataDefinition_RequestId();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.DataDefinition#getSystemtime <em>Systemtime</em>}'.
@@ -6276,12 +6276,12 @@ public interface AceGenPackage extends EPackage
     EClass DATA_DEFINITION = eINSTANCE.getDataDefinition();
 
     /**
-     * The meta object literal for the '<em><b>Uuid</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Request Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute DATA_DEFINITION__UUID = eINSTANCE.getDataDefinition_Uuid();
+    EAttribute DATA_DEFINITION__REQUEST_ID = eINSTANCE.getDataDefinition_RequestId();
 
     /**
      * The meta object literal for the '<em><b>Systemtime</b></em>' attribute feature.

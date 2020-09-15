@@ -289,7 +289,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSelectByExpectationAccess().getObjectAssignment_0(), "rule__SelectByExpectation__ObjectAssignment_0");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getIsNotNullAssignment_1(), "rule__SelectByExpectation__IsNotNullAssignment_1");
 			builder.put(grammarAccess.getSelectByExpectationAccess().getIsNullAssignment_2(), "rule__SelectByExpectation__IsNullAssignment_2");
-			builder.put(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1(), "rule__DataDefinition__UuidAssignment_1_1");
+			builder.put(grammarAccess.getDataDefinitionAccess().getRequestIdAssignment_1_1(), "rule__DataDefinition__RequestIdAssignment_1_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getSystemtimeAssignment_2_1(), "rule__DataDefinition__SystemtimeAssignment_2_1");
 			builder.put(grammarAccess.getDataDefinitionAccess().getPatternAssignment_2_2(), "rule__DataDefinition__PatternAssignment_2_2");
 			builder.put(grammarAccess.getDataDefinitionAccess().getDataAssignment_3(), "rule__DataDefinition__DataAssignment_3");

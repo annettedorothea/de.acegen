@@ -4103,15 +4103,15 @@ ruleDataDefinition returns [EObject current=null]
 			}
 		)
 		(
-			otherlv_1='uuid'
+			otherlv_1='requestId'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0());
+				newLeafNode(otherlv_1, grammarAccess.getDataDefinitionAccess().getRequestIdKeyword_1_0());
 			}
 			(
 				(
-					lv_uuid_2_0=RULE_STRING
+					lv_requestId_2_0=RULE_STRING
 					{
-						newLeafNode(lv_uuid_2_0, grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0());
+						newLeafNode(lv_requestId_2_0, grammarAccess.getDataDefinitionAccess().getRequestIdSTRINGTerminalRuleCall_1_1_0());
 					}
 					{
 						if ($current==null) {
@@ -4119,8 +4119,8 @@ ruleDataDefinition returns [EObject current=null]
 						}
 						setWithLastConsumed(
 							$current,
-							"uuid",
-							lv_uuid_2_0,
+							"requestId",
+							lv_requestId_2_0,
 							"org.eclipse.xtext.common.Terminals.STRING");
 					}
 				)

@@ -279,11 +279,11 @@ public class Scenario {
     _builder.append("\t\t");
     _builder.append("String uuid = ");
     {
-      String _uuid = it.getWhenBlock().getDataDefinition().getUuid();
-      boolean _tripleNotEquals = (_uuid != null);
+      String _requestId = it.getWhenBlock().getDataDefinition().getRequestId();
+      boolean _tripleNotEquals = (_requestId != null);
       if (_tripleNotEquals) {
         _builder.append("\"");
-        CharSequence _valueFromString = this._attributeExtension.valueFromString(it.getWhenBlock().getDataDefinition().getUuid());
+        CharSequence _valueFromString = this._attributeExtension.valueFromString(it.getWhenBlock().getDataDefinition().getRequestId());
         _builder.append(_valueFromString, "\t\t");
         _builder.append("\"");
       } else {
@@ -752,11 +752,11 @@ public class Scenario {
     _builder.append("\t");
     _builder.append("uuid = ");
     {
-      String _uuid = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
-      boolean _tripleNotEquals = (_uuid != null);
+      String _requestId = givenRef.getScenario().getWhenBlock().getDataDefinition().getRequestId();
+      boolean _tripleNotEquals = (_requestId != null);
       if (_tripleNotEquals) {
         _builder.append("\"");
-        CharSequence _valueFromString = this._attributeExtension.valueFromString(givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid());
+        CharSequence _valueFromString = this._attributeExtension.valueFromString(givenRef.getScenario().getWhenBlock().getDataDefinition().getRequestId());
         _builder.append(_valueFromString, "\t");
         _builder.append("\"");
       } else {
@@ -1233,8 +1233,8 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\"\\\"uuid\\\" : \\\"");
-        String _uuid = it.getUuid();
-        _builder.append(_uuid, "\t");
+        String _requestId = it.getRequestId();
+        _builder.append(_requestId, "\t");
         _builder.append("\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {

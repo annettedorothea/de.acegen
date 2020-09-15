@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getUuid <em>Uuid</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getRequestId <em>Request Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getSystemtime <em>Systemtime</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.DataDefinitionImpl#getData <em>Data</em>}</li>
@@ -35,24 +35,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements DataDefinition
 {
   /**
-   * The default value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+   * The default value of the '{@link #getRequestId() <em>Request Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUuid()
+   * @see #getRequestId()
    * @generated
    * @ordered
    */
-  protected static final String UUID_EDEFAULT = null;
+  protected static final String REQUEST_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+   * The cached value of the '{@link #getRequestId() <em>Request Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUuid()
+   * @see #getRequestId()
    * @generated
    * @ordered
    */
-  protected String uuid = UUID_EDEFAULT;
+  protected String requestId = REQUEST_ID_EDEFAULT;
 
   /**
    * The default value of the '{@link #getSystemtime() <em>Systemtime</em>}' attribute.
@@ -131,9 +131,9 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public String getUuid()
+  public String getRequestId()
   {
-    return uuid;
+    return requestId;
   }
 
   /**
@@ -142,12 +142,12 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public void setUuid(String newUuid)
+  public void setRequestId(String newRequestId)
   {
-    String oldUuid = uuid;
-    uuid = newUuid;
+    String oldRequestId = requestId;
+    requestId = newRequestId;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.DATA_DEFINITION__UUID, oldUuid, uuid));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.DATA_DEFINITION__REQUEST_ID, oldRequestId, requestId));
   }
 
   /**
@@ -276,8 +276,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.DATA_DEFINITION__UUID:
-        return getUuid();
+      case AceGenPackage.DATA_DEFINITION__REQUEST_ID:
+        return getRequestId();
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         return getSystemtime();
       case AceGenPackage.DATA_DEFINITION__PATTERN:
@@ -298,8 +298,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.DATA_DEFINITION__UUID:
-        setUuid((String)newValue);
+      case AceGenPackage.DATA_DEFINITION__REQUEST_ID:
+        setRequestId((String)newValue);
         return;
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         setSystemtime((String)newValue);
@@ -324,8 +324,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.DATA_DEFINITION__UUID:
-        setUuid(UUID_EDEFAULT);
+      case AceGenPackage.DATA_DEFINITION__REQUEST_ID:
+        setRequestId(REQUEST_ID_EDEFAULT);
         return;
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         setSystemtime(SYSTEMTIME_EDEFAULT);
@@ -350,8 +350,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-      case AceGenPackage.DATA_DEFINITION__UUID:
-        return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
+      case AceGenPackage.DATA_DEFINITION__REQUEST_ID:
+        return REQUEST_ID_EDEFAULT == null ? requestId != null : !REQUEST_ID_EDEFAULT.equals(requestId);
       case AceGenPackage.DATA_DEFINITION__SYSTEMTIME:
         return SYSTEMTIME_EDEFAULT == null ? systemtime != null : !SYSTEMTIME_EDEFAULT.equals(systemtime);
       case AceGenPackage.DATA_DEFINITION__PATTERN:
@@ -373,8 +373,8 @@ public class DataDefinitionImpl extends MinimalEObjectImpl.Container implements 
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (uuid: ");
-    result.append(uuid);
+    result.append(" (requestId: ");
+    result.append(requestId);
     result.append(", systemtime: ");
     result.append(systemtime);
     result.append(", pattern: ");

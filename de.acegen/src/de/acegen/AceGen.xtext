@@ -275,7 +275,7 @@ SelectByExpectation:
 
 DataDefinition: 
 	{DataDefinition} 
-	('uuid' uuid = STRING)? 
+	('requestId' requestId = STRING)? 
 	('systemTime' systemtime = STRING pattern = STRING)? 
 	(data = JsonObject)?
 ;

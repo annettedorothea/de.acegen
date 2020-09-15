@@ -2347,7 +2347,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getDataDefinition_Uuid()
+  public EAttribute getDataDefinition_RequestId()
   {
     return (EAttribute)dataDefinitionEClass.getEStructuralFeatures().get(0);
   }
@@ -3030,7 +3030,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(selectByExpectationEClass, SELECT_BY_EXPECTATION__IS_NULL);
 
     dataDefinitionEClass = createEClass(DATA_DEFINITION);
-    createEAttribute(dataDefinitionEClass, DATA_DEFINITION__UUID);
+    createEAttribute(dataDefinitionEClass, DATA_DEFINITION__REQUEST_ID);
     createEAttribute(dataDefinitionEClass, DATA_DEFINITION__SYSTEMTIME);
     createEAttribute(dataDefinitionEClass, DATA_DEFINITION__PATTERN);
     createEReference(dataDefinitionEClass, DATA_DEFINITION__DATA);
@@ -3348,7 +3348,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getSelectByExpectation_IsNull(), ecorePackage.getEBoolean(), "isNull", null, 0, 1, SelectByExpectation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dataDefinitionEClass, DataDefinition.class, "DataDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDataDefinition_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDataDefinition_RequestId(), ecorePackage.getEString(), "requestId", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDataDefinition_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDataDefinition_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDataDefinition_Data(), this.getJsonObject(), null, "data", null, 0, 1, DataDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

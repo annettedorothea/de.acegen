@@ -135,7 +135,7 @@ class Scenario {
 			
 			private Response when() throws Exception {
 				«resetIndex»
-				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+				String uuid = «IF whenBlock.dataDefinition.requestId !== null»"«whenBlock.dataDefinition.requestId.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateDataCreation()»
 				long timeBeforeRequest = System.currentTimeMillis();
@@ -260,7 +260,7 @@ class Scenario {
 
 	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''
 		if (prerequisite("«givenRef.scenario.name»")) {
-			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.requestId !== null»"«givenRef.scenario.whenBlock.dataDefinition.requestId.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 			«givenRef.scenario.whenBlock.generatePrepare»
 			«givenRef.scenario.whenBlock.generateDataCreation()»
 			timeBeforeRequest = System.currentTimeMillis();
@@ -390,7 +390,7 @@ class Scenario {
 	
 	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«requestId»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 	
 	private def objectMapperCallExpectedPersistenceData(JsonObject it, Model model) '''

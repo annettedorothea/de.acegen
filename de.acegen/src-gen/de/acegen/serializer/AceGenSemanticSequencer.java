@@ -418,7 +418,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DataDefinition returns DataDefinition
 	 *
 	 * Constraint:
-	 *     (uuid=STRING? (systemtime=STRING pattern=STRING)? data=JsonObject?)
+	 *     (requestId=STRING? (systemtime=STRING pattern=STRING)? data=JsonObject?)
 	 */
 	protected void sequence_DataDefinition(ISerializationContext context, DataDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'reset'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'{'", "'}'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'UIEvent'", "'ID'", "'as'", "'on'", "'triggers'", "'group'", "'serverModel'", "'WHEN'", "'THEN'", "'GIVEN'", "':'", "'expectedState'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'verifications'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'uuid'", "'systemTime'", "'authorization'", "'references'", "'.'", "'appState'", "'async'", "'NotNull'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'proxy'", "'authorize'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'notReplayable'", "'undefined'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'reset'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'{'", "'}'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'UIEvent'", "'ID'", "'as'", "'on'", "'triggers'", "'group'", "'serverModel'", "'WHEN'", "'THEN'", "'GIVEN'", "':'", "'expectedState'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'verifications'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'requestId'", "'systemTime'", "'authorization'", "'references'", "'.'", "'appState'", "'async'", "'NotNull'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'proxy'", "'authorize'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'notReplayable'", "'undefined'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -32188,21 +32188,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataDefinition__Group_1__0__Impl"
-    // InternalAceGen.g:10172:1: rule__DataDefinition__Group_1__0__Impl : ( 'uuid' ) ;
+    // InternalAceGen.g:10172:1: rule__DataDefinition__Group_1__0__Impl : ( 'requestId' ) ;
     public final void rule__DataDefinition__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:10176:1: ( ( 'uuid' ) )
-            // InternalAceGen.g:10177:1: ( 'uuid' )
+            // InternalAceGen.g:10176:1: ( ( 'requestId' ) )
+            // InternalAceGen.g:10177:1: ( 'requestId' )
             {
-            // InternalAceGen.g:10177:1: ( 'uuid' )
-            // InternalAceGen.g:10178:2: 'uuid'
+            // InternalAceGen.g:10177:1: ( 'requestId' )
+            // InternalAceGen.g:10178:2: 'requestId'
             {
-             before(grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0()); 
+             before(grammarAccess.getDataDefinitionAccess().getRequestIdKeyword_1_0()); 
             match(input,71,FOLLOW_2); 
-             after(grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0()); 
+             after(grammarAccess.getDataDefinitionAccess().getRequestIdKeyword_1_0()); 
 
             }
 
@@ -32258,31 +32258,31 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataDefinition__Group_1__1__Impl"
-    // InternalAceGen.g:10198:1: rule__DataDefinition__Group_1__1__Impl : ( ( rule__DataDefinition__UuidAssignment_1_1 ) ) ;
+    // InternalAceGen.g:10198:1: rule__DataDefinition__Group_1__1__Impl : ( ( rule__DataDefinition__RequestIdAssignment_1_1 ) ) ;
     public final void rule__DataDefinition__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:10202:1: ( ( ( rule__DataDefinition__UuidAssignment_1_1 ) ) )
-            // InternalAceGen.g:10203:1: ( ( rule__DataDefinition__UuidAssignment_1_1 ) )
+            // InternalAceGen.g:10202:1: ( ( ( rule__DataDefinition__RequestIdAssignment_1_1 ) ) )
+            // InternalAceGen.g:10203:1: ( ( rule__DataDefinition__RequestIdAssignment_1_1 ) )
             {
-            // InternalAceGen.g:10203:1: ( ( rule__DataDefinition__UuidAssignment_1_1 ) )
-            // InternalAceGen.g:10204:2: ( rule__DataDefinition__UuidAssignment_1_1 )
+            // InternalAceGen.g:10203:1: ( ( rule__DataDefinition__RequestIdAssignment_1_1 ) )
+            // InternalAceGen.g:10204:2: ( rule__DataDefinition__RequestIdAssignment_1_1 )
             {
-             before(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1()); 
-            // InternalAceGen.g:10205:2: ( rule__DataDefinition__UuidAssignment_1_1 )
-            // InternalAceGen.g:10205:3: rule__DataDefinition__UuidAssignment_1_1
+             before(grammarAccess.getDataDefinitionAccess().getRequestIdAssignment_1_1()); 
+            // InternalAceGen.g:10205:2: ( rule__DataDefinition__RequestIdAssignment_1_1 )
+            // InternalAceGen.g:10205:3: rule__DataDefinition__RequestIdAssignment_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__DataDefinition__UuidAssignment_1_1();
+            rule__DataDefinition__RequestIdAssignment_1_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getDataDefinitionAccess().getUuidAssignment_1_1()); 
+             after(grammarAccess.getDataDefinitionAccess().getRequestIdAssignment_1_1()); 
 
             }
 
@@ -41493,9 +41493,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__SelectByExpectation__IsNullAssignment_2"
 
 
-    // $ANTLR start "rule__DataDefinition__UuidAssignment_1_1"
-    // InternalAceGen.g:13555:1: rule__DataDefinition__UuidAssignment_1_1 : ( RULE_STRING ) ;
-    public final void rule__DataDefinition__UuidAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__DataDefinition__RequestIdAssignment_1_1"
+    // InternalAceGen.g:13555:1: rule__DataDefinition__RequestIdAssignment_1_1 : ( RULE_STRING ) ;
+    public final void rule__DataDefinition__RequestIdAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -41506,9 +41506,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:13560:2: ( RULE_STRING )
             // InternalAceGen.g:13561:3: RULE_STRING
             {
-             before(grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0()); 
+             before(grammarAccess.getDataDefinitionAccess().getRequestIdSTRINGTerminalRuleCall_1_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0()); 
+             after(grammarAccess.getDataDefinitionAccess().getRequestIdSTRINGTerminalRuleCall_1_1_0()); 
 
             }
 
@@ -41527,7 +41527,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__DataDefinition__UuidAssignment_1_1"
+    // $ANTLR end "rule__DataDefinition__RequestIdAssignment_1_1"
 
 
     // $ANTLR start "rule__DataDefinition__SystemtimeAssignment_2_1"
