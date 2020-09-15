@@ -1,17 +1,17 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.generator;
 
@@ -285,8 +285,7 @@ public class JavaGenerator {
         String _plus_19 = (_plus_18 + _responseDataInterfaceName);
         String _plus_20 = (_plus_19 + ".java");
         fsa.generateFile(_plus_20, 
-          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-          this.data.generateReponseDataInterface(ace, httpServer));
+          ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateReponseDataInterface(ace, httpServer));
       }
     }
     EList<HttpServerView> _views = httpServer.getViews();
@@ -331,8 +330,8 @@ public class JavaGenerator {
       this.aceOperation.generate());
     fsa.generateFile("de/acegen/ServerInfo.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.serverInfo.generate());
-    fsa.generateFile("de/acegen/NotReplayableDataProvider.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.notReplayableDataProvider.generateNotReplayableDataProvider());
+    fsa.generateFile("de/acegen/NotReplayableDataProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.notReplayableDataProvider.generateNotReplayableDataProvider());
     fsa.generateFile("de/acegen/AceDao.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.dao.generateAceDao());
     fsa.generateFile("de/acegen/Action.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
@@ -381,12 +380,12 @@ public class JavaGenerator {
       this.viewProvider.generateAbstractViewProvider());
     fsa.generateFile("de/acegen/EventConsumer.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.eventConsumer.generateEventconsumer());
-    fsa.generateFile("de/acegen/DateTimeToStringConverter.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.converter.generateDateTimeToStringConverter());
-    fsa.generateFile("de/acegen/StringToDateTimeConverter.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.converter.generateStringToDateTimeConverter());
-    fsa.generateFile("de/acegen/PersistenceConnection.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.persistence.generatePersistenceConnection());
+    fsa.generateFile("de/acegen/DateTimeToStringConverter.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.converter.generateDateTimeToStringConverter());
+    fsa.generateFile("de/acegen/StringToDateTimeConverter.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.converter.generateStringToDateTimeConverter());
+    fsa.generateFile("de/acegen/PersistenceConnection.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.persistence.generatePersistenceConnection());
     fsa.generateFile("de/acegen/PersistenceHandle.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.persistence.generatePersistenceHandle());
     de.acegen.aceGen.AuthUser authUserAce = httpServer.getAuthUser();
@@ -404,7 +403,8 @@ public class JavaGenerator {
       this.baseScenario.generateAbstractBaseScenario());
     fsa.generateFile("de/acegen/BaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.baseScenario.generateBaseScenario());
-    fsa.generateFile("de/acegen/YamlConfiguration.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
+    fsa.generateFile("de/acegen/YamlConfiguration.java", 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.yamlConfiguration.generateYamlConfiguration());
     fsa.generateFile("de/acegen/Database.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.yamlConfiguration.generateDatabase());
