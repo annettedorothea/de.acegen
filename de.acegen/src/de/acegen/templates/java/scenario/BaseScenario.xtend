@@ -115,12 +115,17 @@ class BaseScenario {
 				this.runTest();
 			}
 		
-			private String buildUrl(String path) {
+			private String buildUrl(String path, String uuid) {
+				if (path.contains("?")) {
+					path += "&uuid=" + uuid;
+				} else {
+					path += "?uuid=" + uuid;
+				}
 				return String.format("%s://%s:%d%s%s", protocol, host, port, rootPath, path);
 			}
 		
 			protected Response httpGet(String path, String authorization, String uuid) {
-				Builder builder = client.target(buildUrl(path)).request();
+				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
 				}
@@ -128,7 +133,7 @@ class BaseScenario {
 			}
 		
 			protected Response httpPost(String path, Object payload, String authorization, String uuid) {
-				Builder builder = client.target(buildUrl(path)).request();
+				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
 				}
@@ -136,7 +141,7 @@ class BaseScenario {
 			}
 		
 			protected Response httpPut(String path, Object payload, String authorization, String uuid) {
-				Builder builder = client.target(buildUrl(path)).request();
+				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
 				}
@@ -144,7 +149,7 @@ class BaseScenario {
 			}
 		
 			protected Response httpDelete(String path, String authorization, String uuid) {
-				Builder builder = client.target(buildUrl(path)).request();
+				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
 				}
