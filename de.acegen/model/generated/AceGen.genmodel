@@ -209,7 +209,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SelectByExpectation/isNull"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//DataDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/requestId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/uuid"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/systemtime"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//DataDefinition/pattern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//DataDefinition/data"/>

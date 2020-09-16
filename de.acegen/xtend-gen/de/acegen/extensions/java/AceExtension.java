@@ -194,6 +194,34 @@ public class AceExtension {
     return _builder.toString();
   }
   
+  public String payloadDataName(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("Payload");
+    return _builder.toString();
+  }
+  
+  public String payloadDataNameWithPackage(final HttpServerAce it, final HttpServer httpServer) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = httpServer.getName();
+    _builder.append(_name);
+    _builder.append(".data.");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("Payload");
+    return _builder.toString();
+  }
+  
+  public String payloadDataInterfaceName(final HttpServerAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("I");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("Payload");
+    return _builder.toString();
+  }
+  
   public boolean isRead(final HttpServerAce it) {
     return (it instanceof HttpServerAceRead);
   }
@@ -215,13 +243,16 @@ public class AceExtension {
       StringConcatenation _builder = new StringConcatenation();
       {
         if (generateQueryParams) {
-          _builder.append("?uuid=\" + ");
-          _builder.append(dataVarName);
-          _builder.append(".getUuid() + \"");
           {
             EList<AttributeParamRef> _queryParams = it.getQueryParams();
+            boolean _hasElements = false;
             for(final AttributeParamRef queryParam : _queryParams) {
-              _builder.append("&");
+              if (!_hasElements) {
+                _hasElements = true;
+                _builder.append("?");
+              } else {
+                _builder.appendImmediate("&", "");
+              }
               String _name = queryParam.getAttribute().getName();
               _builder.append(_name);
               _builder.append("=\" + ");
@@ -267,13 +298,16 @@ public class AceExtension {
     StringConcatenation _builder_1 = new StringConcatenation();
     {
       if (generateQueryParams) {
-        _builder_1.append("?uuid=\" + ");
-        _builder_1.append(dataVarName);
-        _builder_1.append(".getUuid() + \"");
         {
           EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
+          boolean _hasElements_1 = false;
           for(final AttributeParamRef queryParam_1 : _queryParams_1) {
-            _builder_1.append("&");
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
+              _builder_1.append("?");
+            } else {
+              _builder_1.appendImmediate("&", "");
+            }
             String _name_1 = queryParam_1.getAttribute().getName();
             _builder_1.append(_name_1);
             _builder_1.append("=\" + ");

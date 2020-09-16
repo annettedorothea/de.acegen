@@ -66,6 +66,11 @@ public class Resource {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("import java.util.UUID;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("import javax.ws.rs.Consumes;");
     _builder.newLine();
     _builder.append("\t");
@@ -359,20 +364,20 @@ public class Resource {
       }
     }
     _builder.append("\t\t\t");
+    _builder.append("@QueryParam(\"uuid\") String uuid");
     {
       int _size = it.getPayload().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType, "\t\t\t");
-        _builder.append(" payload)");
+        _builder.append(", ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t");
-      } else {
-        _builder.append("@QueryParam(\"uuid\") String uuid)");
+        String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType, "\t\t\t");
+        _builder.append(" payload");
       }
     }
-    _builder.append(" ");
+    _builder.append(") ");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("throws JsonProcessingException {");
@@ -391,36 +396,24 @@ public class Resource {
         _builder.append("\t\t");
         _builder.append("}");
         _builder.newLine();
-      } else {
-        _builder.append("\t\t");
-        _builder.append("if (StringUtils.isBlank(uuid)) {");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("return badRequest(\"uuid must not be blank or null\");");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("}");
-        _builder.newLine();
       }
     }
+    _builder.append("\t\t");
+    _builder.append("if (StringUtils.isBlank(uuid)) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("uuid = UUID.randomUUID().toString();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t\t");
     String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
     _builder.append(_dataInterfaceNameWithPackage, "\t\t");
     _builder.append(" actionData = new ");
     String _dataName = this._modelExtension.dataName(it.getModel());
     _builder.append(_dataName, "\t\t");
-    _builder.append("(");
-    {
-      int _size_2 = it.getPayload().size();
-      boolean _greaterThan_2 = (_size_2 > 0);
-      if (_greaterThan_2) {
-        _builder.append("payload.getUuid()");
-      } else {
-        _builder.append("uuid");
-      }
-    }
-    _builder.append(");");
+    _builder.append("(uuid);");
     _builder.newLineIfNotEmpty();
     {
       EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
@@ -495,9 +488,9 @@ public class Resource {
     _builder.append("action.apply();");
     _builder.newLine();
     {
-      int _size_3 = it.getResponse().size();
-      boolean _greaterThan_3 = (_size_3 > 0);
-      if (_greaterThan_3) {
+      int _size_2 = it.getResponse().size();
+      boolean _greaterThan_2 = (_size_2 > 0);
+      if (_greaterThan_2) {
         _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it, httpServer);

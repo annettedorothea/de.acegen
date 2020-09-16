@@ -40,7 +40,7 @@ class CommandTemplate {
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/AsynchronousCommand";
+		import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		import Utils from "../../ace/Utils";
 		import ACEController from "../../ace/ACEController";
@@ -54,7 +54,7 @@ class CommandTemplate {
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		export default class «abstractCommandName» extends Command {
+		export default class «abstractCommandName» extends AbstractAsynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
@@ -90,11 +90,11 @@ class CommandTemplate {
 				    return new Promise((resolve, reject) => {
 				    	«IF serverCall.type != 'GET'»
 				    		let payload = {
-				    			uuid : this.commandData.uuid«FOR payload : getServerCall.payload BEFORE ",\n" SEPARATOR ",\n"»«payload.attribute.name» : this.commandData.«payload.attribute.name»«ENDFOR»
+				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : this.commandData.«payload.attribute.name»«ENDFOR»
 				    		};
 				        «ENDIF»
 				
-						this.«httpCall»(`«httpUrl»?uuid=${this.commandData.uuid}«FOR queryParam : getServerCall.queryParams»&«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
+						this.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
 							«IF getServerCall instanceof HttpServerAceRead»
 								«FOR attribute : (getServerCall as HttpServerAceRead).response»
 									this.commandData.«attribute.name» = data.«attribute.name»;
@@ -119,7 +119,7 @@ class CommandTemplate {
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/SynchronousCommand";
+		import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		import * as AppState from "../../ace/AppState";
 		«FOR outcome : outcomes»
@@ -131,7 +131,7 @@ class CommandTemplate {
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		export default class «abstractCommandName» extends Command {
+		export default class «abstractCommandName» extends AbstractSynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
@@ -248,15 +248,15 @@ class CommandTemplate {
 		
 	'''
 	
-	def generateAsynchronousCommand() '''
+	def generateAbstractAsynchronousCommand() '''
 		«copyright»
 
 		import ACEController from "./ACEController";
-		import Command from "./Command";
+		import AsynchronousCommand from "../../src/ace/AsynchronousCommand";
 		import AppUtils from "../../src/app/AppUtils";
 		import Utils from "./Utils";
 		
-		export default class AsynchronousCommand extends Command {
+		export default class AbstractAsynchronousCommand extends AsynchronousCommand {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
@@ -296,33 +296,33 @@ class CommandTemplate {
 		    	return true;
 		    }
 		
-		    httpGet(url, authorize) {
+		    doHttpGet(url, authorize) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpGet(url, authorize);
+		            return this.httpGet(url, authorize);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpPost(url, authorize, data) {
+		    doHttpPost(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPost(url, authorize, data);
+		            return this.httpPost(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpPut(url, authorize, data) {
+		    doHttpPut(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPut(url, authorize, data);
+		            return this.httpPut(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
 		    }
 		
-		    httpDelete(url, authorize, data) {
+		    doHttpDelete(url, authorize, data) {
 		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpDelete(url, authorize, data);
+		            return this.httpDelete(url, authorize, data);
 		        }, (error) => {
 		            throw error;
 		        });
@@ -337,13 +337,163 @@ class CommandTemplate {
 		
 	'''
 	
-	def generateSynchronousCommand() '''
+	def generateAsynchronousCommand() '''
+		«copyright»
+
+		import Command from "../../gen/ace/Command";
+		
+		export default class AsynchronousCommand extends Command {
+		    
+		    httpGet(url, authorize) {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		            if (authorize === true) {
+		                let authorization = this.basicAuth();
+		                if (authorization !== undefined) {
+		                    headers.append("Authorization", authorization);
+		                }
+		            }
+		
+		            if (url.indexOf("?") < 0) {
+		            	url += "?uuid=" + this.commandData.uuid;
+		            } else {
+		            	url += "&uuid=" + this.commandData.uuid;
+		            }
+		
+		            const options = {
+		                method: 'GET',
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache'
+		            };
+		            
+		            const request = new Request(url, options);
+		
+		            let status;
+		            let statusText;
+		            fetch(request).then(function (response) {
+		                status = response.status;
+		                statusText = response.statusText;
+		                if (status >= 300) {
+		                    return response.text();
+		                } else {
+		                    return response.json();
+		                }
+		            }).then(function (data) {
+		                if (status >= 300) {
+		                    const error = {
+		                        code: status,
+		                        text: statusText,
+		                        errorKey: data
+		                    };
+		                    reject(error);
+		                } else {
+		                    resolve(data);
+		                }
+		            }).catch(function (error) {
+		                const status = {
+		                    code: error.name,
+		                    text: error.message
+		                };
+		                reject(status);
+		            });
+		        });
+		    }
+		
+		    httpChange(methodType, url, authorize, data) {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		            if (authorize === true) {
+		                let authorization = this.basicAuth();
+		                if (authorization !== undefined) {
+		                    headers.append("Authorization", authorization);
+		                }
+		            }
+		
+				    if (url.indexOf("?") < 0) {
+				        url += "?uuid=" + this.commandData.uuid;
+				    } else {
+				        url += "&uuid=" + this.commandData.uuid;
+				    }
+
+		            const options = {
+		                method: methodType,
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache',
+		                body: JSON.stringify(data)
+		            };
+		
+		            const request = new Request(url, options);
+
+		            let status;
+		            let statusText;
+		            fetch(request).then(function (response) {
+		                status = response.status;
+		                statusText = response.statusText;
+		                return response.text();
+		            }).then(function (data) {
+		                if (status >= 300) {
+		                    const error = {
+		                        code: status,
+		                        text: statusText,
+		                        errorKey: data
+		                    };
+		                    reject(error);
+		                } else {
+			                if (data) {
+			                    resolve(JSON.parse(data));
+			                } else {
+			                    resolve();
+			                }
+		                }
+		            }).catch(function (error) {
+		                const status = {
+		                    code: error.name,
+		                    text: error.message
+		                };
+		                reject(status);
+		            });
+		        });
+		    }
+		
+		    httpPost(url, authorize, data) {
+		        return this.httpChange("POST", url, authorize, data);
+		    }
+		
+		    httpPut(url, authorize, data) {
+		        return this.httpChange("PUT", url, authorize, data);
+		    }
+		
+		    httpDelete(url, authorize, data) {
+		        return this.httpChange("DELETE", url, authorize, data);
+		    }
+		    
+		    static basicAuth() {
+		        return "<your authorization>";
+		    }
+		    
+			
+		}
+		
+		
+		«sdg»
+		
+		
+		
+	'''
+	
+	def generateAbstractSynchronousCommand() '''
 		«copyright»
 
 		import ACEController from "./ACEController";
 		import Command from "./Command";
 		
-		export default class SynchronousCommand extends Command {
+		export default class AbstractSynchronousCommand extends Command {
 		    executeCommand() {
 				if (ACEController.execution !== ACEController.REPLAY) {
 				    this.execute();

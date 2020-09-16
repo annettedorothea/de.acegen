@@ -66,6 +66,12 @@ class AceExtension {
 	
 	def String responseDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Response'''
 
+	def String payloadDataName(HttpServerAce it) '''«getName.toFirstUpper»Payload'''
+	
+	def String payloadDataNameWithPackage(HttpServerAce it, HttpServer httpServer) '''«httpServer.name».data.«getName.toFirstUpper»Payload'''
+	
+	def String payloadDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Payload'''
+
 	def boolean isRead(HttpServerAce it) {
 		return it instanceof HttpServerAceRead
 	}
@@ -77,7 +83,7 @@ class AceExtension {
 	
 	def String urlWithPathParams(HttpServerAce  it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
-			var retUrl = url + '''«IF generateQueryParams»?uuid=" + «dataVarName».getUuid() + "«FOR queryParam : queryParams»&«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
 			return retUrl
 		}
 		val split1 = getUrl.split('\\{')
@@ -94,7 +100,7 @@ class AceExtension {
 				urlWithPathParam += '''" + «dataVarName».get«urlElements.get(i).toFirstUpper»() + "'''
 			}
 		}
-		urlWithPathParam += '''«IF generateQueryParams»?uuid=" + «dataVarName».getUuid() + "«FOR queryParam : queryParams»&«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+		urlWithPathParam += '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
 		return urlWithPathParam ;
 	}
 	

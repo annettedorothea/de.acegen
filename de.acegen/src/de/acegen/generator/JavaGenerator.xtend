@@ -208,6 +208,12 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));
 			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataInterfaceName + ".java",
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateReponseDataInterface(ace, httpServer));
+			if (ace.payload.size > 0) {
+				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.payloadDataName + ".java",
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generatePayloadData(ace, httpServer));
+				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.payloadDataInterfaceName + ".java",
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generatePayloadDataInterface(ace, httpServer));
+			}
 		}
 		for (viewAce : httpServer.views) {
 			fsa.generateFile(httpServer.packageFolder + "/views/" + viewAce.viewName + ".java",

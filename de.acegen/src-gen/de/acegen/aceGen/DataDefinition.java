@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.DataDefinition#getRequestId <em>Request Id</em>}</li>
+ *   <li>{@link de.acegen.aceGen.DataDefinition#getUuid <em>Uuid</em>}</li>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getSystemtime <em>Systemtime</em>}</li>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getPattern <em>Pattern</em>}</li>
  *   <li>{@link de.acegen.aceGen.DataDefinition#getData <em>Data</em>}</li>
@@ -27,26 +27,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface DataDefinition extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Request Id</b></em>' attribute.
+   * Returns the value of the '<em><b>Uuid</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Request Id</em>' attribute.
-   * @see #setRequestId(String)
-   * @see de.acegen.aceGen.AceGenPackage#getDataDefinition_RequestId()
+   * @return the value of the '<em>Uuid</em>' attribute.
+   * @see #setUuid(String)
+   * @see de.acegen.aceGen.AceGenPackage#getDataDefinition_Uuid()
    * @model
    * @generated
    */
-  String getRequestId();
+  String getUuid();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.DataDefinition#getRequestId <em>Request Id</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.DataDefinition#getUuid <em>Uuid</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Request Id</em>' attribute.
-   * @see #getRequestId()
+   * @param value the new value of the '<em>Uuid</em>' attribute.
+   * @see #getUuid()
    * @generated
    */
-  void setRequestId(String value);
+  void setUuid(String value);
 
   /**
    * Returns the value of the '<em><b>Systemtime</b></em>' attribute.

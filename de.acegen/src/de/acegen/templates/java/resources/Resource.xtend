@@ -45,6 +45,8 @@ class Resource {
 		
 		package «httpServer.name».resources;
 		
+		import java.util.UUID;
+		
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.Path;
 		import javax.ws.rs.Produces;
@@ -130,19 +132,18 @@ class Resource {
 				«FOR param : pathParams»
 					@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
 				«ENDFOR»
-				«IF payload.size > 0»«getModel.dataParamType» payload)
-				«ELSE»@QueryParam("uuid") String uuid)«ENDIF» 
+				@QueryParam("uuid") String uuid«IF payload.size > 0», 
+				«getModel.dataParamType» payload«ENDIF») 
 				throws JsonProcessingException {
 			«IF payload.size > 0»
 				if (payload == null) {
 					return badRequest("payload must not be null");
 				}
-			«ELSE»
-				if (StringUtils.isBlank(uuid)) {
-					return badRequest("uuid must not be blank or null");
-				}
 			«ENDIF»
-			«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(«IF payload.size > 0»payload.getUuid()«ELSE»uuid«ENDIF»);
+			if (StringUtils.isBlank(uuid)) {
+				uuid = UUID.randomUUID().toString();
+			}
+			«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
 			«FOR paramRef : queryParams»
 				«paramRef.initActionData»
 			«ENDFOR»

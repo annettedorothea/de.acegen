@@ -279,11 +279,11 @@ public class Scenario {
     _builder.append("\t\t");
     _builder.append("String uuid = ");
     {
-      String _requestId = it.getWhenBlock().getDataDefinition().getRequestId();
-      boolean _tripleNotEquals = (_requestId != null);
+      String _uuid = it.getWhenBlock().getDataDefinition().getUuid();
+      boolean _tripleNotEquals = (_uuid != null);
       if (_tripleNotEquals) {
         _builder.append("\"");
-        CharSequence _valueFromString = this._attributeExtension.valueFromString(it.getWhenBlock().getDataDefinition().getRequestId());
+        CharSequence _valueFromString = this._attributeExtension.valueFromString(it.getWhenBlock().getDataDefinition().getUuid());
         _builder.append(_valueFromString, "\t\t");
         _builder.append("\"");
       } else {
@@ -297,7 +297,7 @@ public class Scenario {
     _builder.append(_generatePrepare, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    CharSequence _generateDataCreation = this.generateDataCreation(it.getWhenBlock());
+    CharSequence _generateDataCreation = this.generateDataCreation(it.getWhenBlock(), java);
     _builder.append(_generateDataCreation, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -752,11 +752,11 @@ public class Scenario {
     _builder.append("\t");
     _builder.append("uuid = ");
     {
-      String _requestId = givenRef.getScenario().getWhenBlock().getDataDefinition().getRequestId();
-      boolean _tripleNotEquals = (_requestId != null);
+      String _uuid = givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid();
+      boolean _tripleNotEquals = (_uuid != null);
       if (_tripleNotEquals) {
         _builder.append("\"");
-        CharSequence _valueFromString = this._attributeExtension.valueFromString(givenRef.getScenario().getWhenBlock().getDataDefinition().getRequestId());
+        CharSequence _valueFromString = this._attributeExtension.valueFromString(givenRef.getScenario().getWhenBlock().getDataDefinition().getUuid());
         _builder.append(_valueFromString, "\t");
         _builder.append("\"");
       } else {
@@ -770,7 +770,7 @@ public class Scenario {
     _builder.append(_generatePrepare, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    CharSequence _generateDataCreation = this.generateDataCreation(givenRef.getScenario().getWhenBlock());
+    CharSequence _generateDataCreation = this.generateDataCreation(givenRef.getScenario().getWhenBlock(), java);
     _builder.append(_generateDataCreation, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -1166,8 +1166,23 @@ public class Scenario {
     return _builder;
   }
   
-  private CharSequence generateDataCreation(final WhenBlock it) {
+  private CharSequence generateDataCreation(final WhenBlock it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
+    {
+      int _size = it.getAction().getPayload().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(it.getAction(), java);
+        _builder.append(_payloadDataNameWithPackage);
+        _builder.append(" payload_");
+        _builder.append(this.index);
+        _builder.append(" = ");
+        CharSequence _objectMapperCallPayload = this.objectMapperCallPayload(it.getDataDefinition(), it.getAction(), java);
+        _builder.append(_objectMapperCallPayload);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getAction().getModel());
     _builder.append(_dataNameWithPackage);
     _builder.append(" data_");
@@ -1187,7 +1202,6 @@ public class Scenario {
       if (((it.getData() != null) && (it.getData().getMembers() != null))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
         _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
@@ -1199,11 +1213,54 @@ public class Scenario {
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
               _hasElements = true;
-              _builder.append(this._attributeExtension.stringLineBreak, "\t");
+              _builder.append(this._attributeExtension.stringLineBreak);
+            } else {
+              _builder.appendImmediate(this._attributeExtension.stringLineBreak, "");
+            }
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name);
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this._attributeExtension.valueFrom(member.getValue());
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("} ");
+      } else {
+        _builder.append("{ \\\"uuid\\\" : \\\"\" + uuid + \"\\\"}");
+      }
+    }
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
+    _builder.append(_dataNameWithPackage, "\t\t");
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence objectMapperCallPayload(final DataDefinition it, final HttpServerAce action, final HttpServer java) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    {
+      if (((it.getData() != null) && (it.getData().getMembers() != null))) {
+        _builder.append("{\" +");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        {
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
+            return Boolean.valueOf((!_isNotReplayable));
+          };
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
+          boolean _hasElements = false;
+          for(final JsonMember member : _filter) {
+            if (!_hasElements) {
+              _hasElements = true;
             } else {
               _builder.appendImmediate(this._attributeExtension.stringLineBreak, "\t");
             }
-            _builder.append("\\\"");
+            _builder.append("\"\\\"");
             String _name = member.getAttribute().getName();
             _builder.append(_name, "\t");
             _builder.append("\\\" : ");
@@ -1218,8 +1275,8 @@ public class Scenario {
     }
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
-    _builder.append(_dataNameWithPackage);
+    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action, java);
+    _builder.append(_payloadDataNameWithPackage);
     _builder.append(".class)");
     return _builder;
   }
@@ -1233,8 +1290,8 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\"\\\"uuid\\\" : \\\"");
-        String _requestId = it.getRequestId();
-        _builder.append(_requestId, "\t");
+        String _uuid = it.getUuid();
+        _builder.append(_uuid, "\t");
         _builder.append("\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
@@ -1329,9 +1386,17 @@ public class Scenario {
         _builder.append(_urlWithPathParams, "\t");
         _builder.append("\", ");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("data_");
-        _builder.append(this.index, "\t");
+        _builder.append(" \t");
+        {
+          int _size = it.getAction().getPayload().size();
+          boolean _greaterThan = (_size > 0);
+          if (_greaterThan) {
+            _builder.append("payload_");
+            _builder.append(this.index, " \t");
+          } else {
+            _builder.append("null");
+          }
+        }
         _builder.append(",");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1348,7 +1413,11 @@ public class Scenario {
             _builder.append("null");
           }
         }
+        _builder.append(",");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("uuid");
+        _builder.newLine();
         _builder.append(");");
         _builder.newLine();
       } else {
@@ -1367,9 +1436,17 @@ public class Scenario {
           _builder.append(_urlWithPathParams_1, "\t");
           _builder.append("\", ");
           _builder.newLineIfNotEmpty();
-          _builder.append("\t");
-          _builder.append("data_");
-          _builder.append(this.index, "\t");
+          _builder.append(" \t");
+          {
+            int _size_1 = it.getAction().getPayload().size();
+            boolean _greaterThan_1 = (_size_1 > 0);
+            if (_greaterThan_1) {
+              _builder.append("payload_");
+              _builder.append(this.index, " \t");
+            } else {
+              _builder.append("null");
+            }
+          }
           _builder.append(",");
           _builder.newLineIfNotEmpty();
           _builder.append("\t");
@@ -1386,7 +1463,11 @@ public class Scenario {
               _builder.append("null");
             }
           }
+          _builder.append(",");
           _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("uuid");
+          _builder.newLine();
           _builder.append(");");
           _builder.newLine();
         } else {
@@ -1419,7 +1500,11 @@ public class Scenario {
                 _builder.append("null");
               }
             }
+            _builder.append(",");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("uuid");
+            _builder.newLine();
             _builder.append(");");
             _builder.newLine();
           } else {
@@ -1449,7 +1534,11 @@ public class Scenario {
                 _builder.append("null");
               }
             }
+            _builder.append(",");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("uuid");
+            _builder.newLine();
             _builder.append(");");
             _builder.newLine();
           }

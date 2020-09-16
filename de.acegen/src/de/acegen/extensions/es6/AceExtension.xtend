@@ -60,7 +60,7 @@ class AceExtension {
 	def String eventNameWithPackage(HttpClientAce it,
 		HttpClientOutcome outcome) '''«(eContainer as HttpClient).getName».events.«eventName(outcome)»'''
 
-	def String httpCall(HttpClientAce it) '''«IF getServerCall.getType == "DELETE"»httpDelete«ELSEIF getServerCall.getType == "POST"»httpPost«ELSEIF getServerCall.getType == "PUT"»httpPut«ELSE»httpGet«ENDIF»'''
+	def String httpCall(HttpClientAce it) '''«IF getServerCall.getType == "DELETE"»doHttpDelete«ELSEIF getServerCall.getType == "POST"»doHttpPost«ELSEIF getServerCall.getType == "PUT"»doHttpPut«ELSE»doHttpGet«ENDIF»'''
 
 	def String httpUrl(HttpClientAce it) {
 		var url = getServerCall.getUrl;

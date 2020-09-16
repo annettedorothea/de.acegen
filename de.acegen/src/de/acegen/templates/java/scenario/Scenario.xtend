@@ -37,6 +37,7 @@ import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerAce
 
 class Scenario {
 
@@ -135,9 +136,9 @@ class Scenario {
 			
 			private Response when() throws Exception {
 				«resetIndex»
-				String uuid = «IF whenBlock.dataDefinition.requestId !== null»"«whenBlock.dataDefinition.requestId.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
-				«whenBlock.generateDataCreation()»
+				«whenBlock.generateDataCreation(java)»
 				long timeBeforeRequest = System.currentTimeMillis();
 				Response response = «whenBlock.generateActionCalls(java)»
 				long timeAfterRequest = System.currentTimeMillis();
@@ -260,9 +261,9 @@ class Scenario {
 
 	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''
 		if (prerequisite("«givenRef.scenario.name»")) {
-			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.requestId !== null»"«givenRef.scenario.whenBlock.dataDefinition.requestId.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 			«givenRef.scenario.whenBlock.generatePrepare»
-			«givenRef.scenario.whenBlock.generateDataCreation()»
+			«givenRef.scenario.whenBlock.generateDataCreation(java)»
 			timeBeforeRequest = System.currentTimeMillis();
 			response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
 			timeAfterRequest = System.currentTimeMillis();
@@ -379,18 +380,26 @@ class Scenario {
 		«ENDIF»
 	'''
 
-	private def generateDataCreation(WhenBlock it) '''
+	private def generateDataCreation(WhenBlock it, HttpServer java) '''
+		«IF action.payload.size > 0»
+			«action.payloadDataNameWithPackage(java)» payload_«index» = «dataDefinition.objectMapperCallPayload(action, java)»;
+		«ENDIF»
 		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.objectMapperCall(action.model)»;
 	'''
 
 	private def objectMapperCall(DataDefinition it, Model model) '''
-		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+ 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
+ 		"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
+
+	private def objectMapperCallPayload(DataDefinition it, HttpServerAce action, HttpServer java) '''
+		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
+			«FOR member : data.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»"\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+		«action.payloadDataNameWithPackage(java)».class)'''
 	
 	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«requestId»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 	
 	private def objectMapperCallExpectedPersistenceData(JsonObject it, Model model) '''
@@ -403,24 +412,28 @@ class Scenario {
 		«IF action.getType == "POST"»
 			this.httpPost(
 				"«action.urlWithPathParams('''data_«index»''', false)»", 
-				data_«index»,
-				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
+				uuid
 			);
 		«ELSEIF action.getType == "PUT"»
 			this.httpPut(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
-				data_«index»,
-				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
+				uuid
 			);
 		«ELSEIF action.getType == "DELETE"»
 			this.httpDelete(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
-				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
+				uuid
 			);
 		«ELSE»
 			this.httpGet(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
-				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»
+				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
+				uuid
 			);
 		«ENDIF»
 		

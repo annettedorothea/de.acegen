@@ -16,6 +16,7 @@
 package de.acegen.templates.java.data;
 
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Model;
@@ -735,6 +736,160 @@ public class Data {
       for(final Attribute attribute : _response) {
         _builder.append("\t");
         String _interfaceGetter = this._attributeExtension.interfaceGetter(attribute);
+        _builder.append(_interfaceGetter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generatePayloadData(final HttpServerAce it, final HttpServer httpServer) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package ");
+    String _name = httpServer.getName();
+    _builder.append(_name);
+    _builder.append(".data;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.annotation.JsonProperty;");
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.annotation.JsonIgnore;");
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonSerialize;");
+    _builder.newLine();
+    _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import java.time.LocalDateTime;");
+    _builder.newLine();
+    _builder.append("import java.util.List;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import de.acegen.IDataContainer;");
+    _builder.newLine();
+    _builder.append("import de.acegen.DateTimeToStringConverter;");
+    _builder.newLine();
+    _builder.append("import de.acegen.StringToDateTimeConverter;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
+    _builder.newLine();
+    _builder.append("public class ");
+    String _payloadDataName = this._aceExtension.payloadDataName(it);
+    _builder.append(_payloadDataName);
+    _builder.append(" implements ");
+    String _payloadDataInterfaceName = this._aceExtension.payloadDataInterfaceName(it);
+    _builder.append(_payloadDataInterfaceName);
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      EList<AttributeParamRef> _payload = it.getPayload();
+      for(final AttributeParamRef attributeRef : _payload) {
+        _builder.append("\t");
+        String _declaration = this._attributeExtension.declaration(attributeRef.getAttribute());
+        _builder.append(_declaration, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("public ");
+    String _payloadDataName_1 = this._aceExtension.payloadDataName(it);
+    _builder.append(_payloadDataName_1, "\t");
+    _builder.append("() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _payloadDataName_2 = this._aceExtension.payloadDataName(it);
+    _builder.append(_payloadDataName_2, "\t");
+    _builder.append("(");
+    String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+    _builder.append(_interfaceWithPackage, "\t");
+    _builder.append(" data) {");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<AttributeParamRef> _payload_1 = it.getPayload();
+      for(final AttributeParamRef attributeRef_1 : _payload_1) {
+        _builder.append("\t\t");
+        String _name_1 = attributeRef_1.getAttribute().getName();
+        _builder.append(_name_1, "\t\t");
+        _builder.append(" = data.");
+        String _terCall = this._attributeExtension.getterCall(attributeRef_1.getAttribute());
+        _builder.append(_terCall, "\t\t");
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      EList<AttributeParamRef> _payload_2 = it.getPayload();
+      for(final AttributeParamRef attributeRef_2 : _payload_2) {
+        _builder.append("\t");
+        String _ter = this._attributeExtension.getter(attributeRef_2.getAttribute(), true);
+        _builder.append(_ter, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence generatePayloadDataInterface(final HttpServerAce it, final HttpServer httpServer) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package ");
+    String _name = httpServer.getName();
+    _builder.append(_name);
+    _builder.append(".data;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("public interface ");
+    String _payloadDataInterfaceName = this._aceExtension.payloadDataInterfaceName(it);
+    _builder.append(_payloadDataInterfaceName);
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    {
+      EList<AttributeParamRef> _payload = it.getPayload();
+      for(final AttributeParamRef attributeRef : _payload) {
+        _builder.append("\t");
+        String _interfaceGetter = this._attributeExtension.interfaceGetter(attributeRef.getAttribute());
         _builder.append(_interfaceGetter, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");

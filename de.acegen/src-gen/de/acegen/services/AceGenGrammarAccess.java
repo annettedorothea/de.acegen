@@ -2528,9 +2528,9 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cDataDefinitionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cRequestIdKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cRequestIdAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cRequestIdSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cRequestIdAssignment_1_1.eContents().get(0);
+		private final Keyword cUuidKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cUuidAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cUuidSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cUuidAssignment_1_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cSystemTimeKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cSystemtimeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -2541,27 +2541,27 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cDataJsonObjectParserRuleCall_3_0 = (RuleCall)cDataAssignment_3.eContents().get(0);
 		
 		//DataDefinition:
-		//	{DataDefinition} ('requestId' requestId=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
+		//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
 		//	data=JsonObject?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{DataDefinition} ('requestId' requestId=STRING)? ('systemTime' systemtime=STRING pattern=STRING)? data=JsonObject?
+		//{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)? data=JsonObject?
 		public Group getGroup() { return cGroup; }
 		
 		//{DataDefinition}
 		public Action getDataDefinitionAction_0() { return cDataDefinitionAction_0; }
 		
-		//('requestId' requestId=STRING)?
+		//('uuid' uuid=STRING)?
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//'requestId'
-		public Keyword getRequestIdKeyword_1_0() { return cRequestIdKeyword_1_0; }
+		//'uuid'
+		public Keyword getUuidKeyword_1_0() { return cUuidKeyword_1_0; }
 		
-		//requestId=STRING
-		public Assignment getRequestIdAssignment_1_1() { return cRequestIdAssignment_1_1; }
+		//uuid=STRING
+		public Assignment getUuidAssignment_1_1() { return cUuidAssignment_1_1; }
 		
 		//STRING
-		public RuleCall getRequestIdSTRINGTerminalRuleCall_1_1_0() { return cRequestIdSTRINGTerminalRuleCall_1_1_0; }
+		public RuleCall getUuidSTRINGTerminalRuleCall_1_1_0() { return cUuidSTRINGTerminalRuleCall_1_1_0; }
 		
 		//('systemTime' systemtime=STRING pattern=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
@@ -3811,7 +3811,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//DataDefinition:
-	//	{DataDefinition} ('requestId' requestId=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
+	//	{DataDefinition} ('uuid' uuid=STRING)? ('systemTime' systemtime=STRING pattern=STRING)?
 	//	data=JsonObject?;
 	public DataDefinitionElements getDataDefinitionAccess() {
 		return pDataDefinition;

@@ -286,6 +286,24 @@ public class JavaGenerator {
         String _plus_20 = (_plus_19 + ".java");
         fsa.generateFile(_plus_20, 
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generateReponseDataInterface(ace, httpServer));
+        int _size = ace.getPayload().size();
+        boolean _greaterThan = (_size > 0);
+        if (_greaterThan) {
+          String _packageFolder_7 = this._javaExtension.packageFolder(httpServer);
+          String _plus_21 = (_packageFolder_7 + "/data/");
+          String _payloadDataName = this._aceExtension.payloadDataName(ace);
+          String _plus_22 = (_plus_21 + _payloadDataName);
+          String _plus_23 = (_plus_22 + ".java");
+          fsa.generateFile(_plus_23, 
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generatePayloadData(ace, httpServer));
+          String _packageFolder_8 = this._javaExtension.packageFolder(httpServer);
+          String _plus_24 = (_packageFolder_8 + "/data/");
+          String _payloadDataInterfaceName = this._aceExtension.payloadDataInterfaceName(ace);
+          String _plus_25 = (_plus_24 + _payloadDataInterfaceName);
+          String _plus_26 = (_plus_25 + ".java");
+          fsa.generateFile(_plus_26, 
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.data.generatePayloadDataInterface(ace, httpServer));
+        }
       }
     }
     EList<HttpServerView> _views = httpServer.getViews();
