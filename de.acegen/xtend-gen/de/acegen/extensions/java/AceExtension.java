@@ -59,9 +59,10 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String actionNameWithPackage(final HttpServerAce it, final HttpServer java) {
+  public String actionNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = java.getName();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
     _builder.append(".actions.");
     String _actionName = this.actionName(it);
@@ -89,17 +90,6 @@ public class AceExtension {
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     _builder.append("Resource");
-    return _builder.toString();
-  }
-  
-  public String actionNameWithPackage(final HttpServerAce it) {
-    StringConcatenation _builder = new StringConcatenation();
-    EObject _eContainer = it.eContainer();
-    String _name = ((HttpServer) _eContainer).getName();
-    _builder.append(_name);
-    _builder.append(".actions.");
-    String _actionName = this.actionName(it);
-    _builder.append(_actionName);
     return _builder.toString();
   }
   
@@ -135,9 +125,10 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String commandNameWithPackage(final HttpServerAce it, final HttpServer java) {
+  public String commandNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = java.getName();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
     _builder.append(".commands.");
     String _commandName = this.commandName(it);
@@ -174,9 +165,10 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String responseDataNameWithPackage(final HttpServerAce it, final HttpServer httpServer) {
+  public String responseDataNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = httpServer.getName();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
     _builder.append(".data.");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -202,9 +194,10 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public String payloadDataNameWithPackage(final HttpServerAce it, final HttpServer httpServer) {
+  public String payloadDataNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = httpServer.getName();
+    EObject _eContainer = it.eContainer();
+    String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
     _builder.append(".data.");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());

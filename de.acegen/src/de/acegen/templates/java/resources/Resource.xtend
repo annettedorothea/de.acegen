@@ -166,7 +166,7 @@ class Resource {
 			try {
 				action.apply();
 				«IF response.size > 0»
-					return Response.ok(new «responseDataNameWithPackage(httpServer)»(action.getActionData())).build();
+					return Response.ok(new «responseDataNameWithPackage»(action.getActionData())).build();
 				«ELSE»
 					return ok();
 				«ENDIF»

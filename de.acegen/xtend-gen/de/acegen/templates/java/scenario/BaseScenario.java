@@ -312,7 +312,7 @@ public class BaseScenario {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return builder.put(Entity.json(payload));");
+    _builder.append("return builder.put(payload != null ? Entity.json(payload) : Entity.json(\"\"));");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

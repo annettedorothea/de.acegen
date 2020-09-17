@@ -493,7 +493,7 @@ public class Resource {
       if (_greaterThan_2) {
         _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it, httpServer);
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it);
         _builder.append(_responseDataNameWithPackage, "\t\t\t");
         _builder.append("(action.getActionData())).build();");
         _builder.newLineIfNotEmpty();

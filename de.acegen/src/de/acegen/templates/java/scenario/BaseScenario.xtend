@@ -145,7 +145,7 @@ class BaseScenario {
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
 				}
-				return builder.put(Entity.json(payload));
+				return builder.put(payload != null ? Entity.json(payload) : Entity.json(""));
 			}
 		
 			protected Response httpDelete(String path, String authorization, String uuid) {

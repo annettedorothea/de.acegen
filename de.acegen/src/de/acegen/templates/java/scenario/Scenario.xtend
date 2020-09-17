@@ -69,7 +69,7 @@ class Scenario {
 		
 		package «java.getName».scenarios;
 		
-		import «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»;
+		import «whenBlock.action.responseDataNameWithPackage»;
 		import javax.ws.rs.core.Response;
 		
 		@SuppressWarnings("unused")
@@ -77,7 +77,7 @@ class Scenario {
 		
 			«FOR verification : thenBlock.verifications»
 				@Override
-				protected void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response«ENDIF») {
+				protected void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» response«ENDIF») {
 					assertFail("«verification.name» not implemented");
 					LOG.info("THEN: «verification.name» passed");
 				}
@@ -138,7 +138,7 @@ class Scenario {
 				«resetIndex»
 				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
-				«whenBlock.generateDataCreation(java)»
+				«whenBlock.generateDataCreation»
 				long timeBeforeRequest = System.currentTimeMillis();
 				Response response = «whenBlock.generateActionCalls(java)»
 				long timeAfterRequest = System.currentTimeMillis();
@@ -147,7 +147,7 @@ class Scenario {
 				return response;
 			}
 			
-			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»«ELSE»void«ENDIF» then(Response response) throws Exception {
+			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(Response response) throws Exception {
 				if (response.getStatus() == 500) {
 					String message = response.readEntity(String.class);
 					assertFail(message);
@@ -162,10 +162,10 @@ class Scenario {
 				«ENDIF»
 				
 				«IF whenBlock.action.response.size > 0»
-					«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actual = null;
+					«whenBlock.action.responseDataNameWithPackage» actual = null;
 					if (response.getStatus() < 400) {
 						try {
-							actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)».class);
+							actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage».class);
 							
 							«IF whenBlock.extractions.size > 0»
 								try {
@@ -187,7 +187,7 @@ class Scenario {
 						«IF thenBlock.response !== null»
 							«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
 							
-							«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» expected = new «whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)»(expectedData);
+							«whenBlock.action.responseDataNameWithPackage» expected = new «whenBlock.action.responseDataNameWithPackage»(expectedData);
 							
 							assertThat(actual, expected);
 							
@@ -206,7 +206,7 @@ class Scenario {
 				if (prerequisite("«name»")) {
 					Response response = when();
 		
-					«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» actualResponse = «ENDIF»then(response);
+					«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» actualResponse = «ENDIF»then(response);
 					
 					«FOR persistenceVerification : thenBlock.persistenceVerifications»
 						this.«persistenceVerification.name»();
@@ -221,7 +221,7 @@ class Scenario {
 			}
 			
 			«FOR verification : thenBlock.verifications»
-				protected abstract void «verification.name»(«whenBlock.action.responseDataNameWithPackage(whenBlock.action.eContainer as HttpServer)» response);
+				protected abstract void «verification.name»(«whenBlock.action.responseDataNameWithPackage» response);
 			«ENDFOR»
 			
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»
@@ -263,7 +263,7 @@ class Scenario {
 		if (prerequisite("«givenRef.scenario.name»")) {
 			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 			«givenRef.scenario.whenBlock.generatePrepare»
-			«givenRef.scenario.whenBlock.generateDataCreation(java)»
+			«givenRef.scenario.whenBlock.generateDataCreation»
 			timeBeforeRequest = System.currentTimeMillis();
 			response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
 			timeAfterRequest = System.currentTimeMillis();
@@ -276,9 +276,9 @@ class Scenario {
 			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
 			addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 			«IF givenRef.scenario.whenBlock.extractions.size > 0 && givenRef.scenario.whenBlock.action.response.size > 0»
-				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)» responseEntity_«index» = null;
+				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage» responseEntity_«index» = null;
 				try {
-					responseEntity_«index» = response.readEntity(«givenRef.scenario.whenBlock.action.responseDataNameWithPackage(givenRef.scenario.whenBlock.action.eContainer as HttpServer)».class);
+					responseEntity_«index» = response.readEntity(«givenRef.scenario.whenBlock.action.responseDataNameWithPackage».class);
 					«FOR extraction: givenRef.scenario.whenBlock.extractions»
 						
 						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(responseEntity_«index»);
@@ -380,9 +380,9 @@ class Scenario {
 		«ENDIF»
 	'''
 
-	private def generateDataCreation(WhenBlock it, HttpServer java) '''
+	private def generateDataCreation(WhenBlock it) '''
 		«IF action.payload.size > 0»
-			«action.payloadDataNameWithPackage(java)» payload_«index» = «dataDefinition.objectMapperCallPayload(action, java)»;
+			«action.payloadDataNameWithPackage» payload_«index» = «dataDefinition.objectMapperCallPayload(action)»;
 		«ENDIF»
 		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.objectMapperCall(action.model)»;
 	'''
@@ -392,10 +392,10 @@ class Scenario {
  		"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 
-	private def objectMapperCallPayload(DataDefinition it, HttpServerAce action, HttpServer java) '''
-		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			«FOR member : data.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»"\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
-		«action.payloadDataNameWithPackage(java)».class)'''
+	private def objectMapperCallPayload(DataDefinition it, HttpServerAce action) '''
+ 		objectMapper.readValue("«IF data !== null && data.members !== null && data.members.filter[!attribute.notReplayable].size > 0»{" +
+ 			"«FOR member : data.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+		«action.payloadDataNameWithPackage».class)'''
 	
 	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +

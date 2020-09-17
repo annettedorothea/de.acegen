@@ -55,7 +55,6 @@ public class AttributeExtension {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(",\" + ");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("\"");
       return _builder.toString();
     }

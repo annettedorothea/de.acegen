@@ -38,7 +38,7 @@ class AceExtension {
 	
 	def String actionName(HttpServerAce it) '''«getName.toFirstUpper»Action'''
 
-	def String actionNameWithPackage(HttpServerAce it, HttpServer java) '''«java.getName».actions.«actionName»'''
+	def String actionNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).name».actions.«actionName»'''
 	
 	def String abstractName(HttpServerAce it) '''Abstract«getName.toFirstUpper»'''
 	
@@ -46,15 +46,13 @@ class AceExtension {
 	
 	def String resourceName(HttpServerAce it) '''«getName.toFirstUpper»Resource'''
 
-	def String actionNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).getName».actions.«actionName»'''
-	
 	def String newAction(HttpServerAce it) '''final «actionNameWithPackage» action = new «actionNameWithPackage»(«getModel.newFromCommandData», DatabaseService.getDatabaseHandle());'''
 	
 	def String abstractCommandName(HttpServerAce it) '''Abstract«getName.toFirstUpper»Command'''
 
 	def String commandName(HttpServerAce it) '''«getName.toFirstUpper»Command'''
 
-	def String commandNameWithPackage(HttpServerAce it, HttpServer java) '''«java.getName».commands.«commandName»'''
+	def String commandNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).name».commands.«commandName»'''
 
 	def String eventName(HttpServerAce it, HttpServerOutcome outcome) '''«getName.toFirstUpper»«outcome.getName.toFirstUpper»Event'''
 
@@ -62,13 +60,13 @@ class AceExtension {
 
 	def String responseDataName(HttpServerAce it) '''«getName.toFirstUpper»Response'''
 	
-	def String responseDataNameWithPackage(HttpServerAce it, HttpServer httpServer) '''«httpServer.name».data.«getName.toFirstUpper»Response'''
+	def String responseDataNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).name».data.«getName.toFirstUpper»Response'''
 	
 	def String responseDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Response'''
 
 	def String payloadDataName(HttpServerAce it) '''«getName.toFirstUpper»Payload'''
 	
-	def String payloadDataNameWithPackage(HttpServerAce it, HttpServer httpServer) '''«httpServer.name».data.«getName.toFirstUpper»Payload'''
+	def String payloadDataNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).name».data.«getName.toFirstUpper»Payload'''
 	
 	def String payloadDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Payload'''
 

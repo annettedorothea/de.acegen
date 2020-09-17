@@ -113,7 +113,7 @@ public class Action {
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("import ");
-        String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it, httpServer);
+        String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it);
         _builder.append(_commandNameWithPackage);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -152,7 +152,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, httpServer);
+    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider,");
     _builder.newLineIfNotEmpty();
@@ -339,7 +339,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it, httpServer);
+    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider,");
     _builder.newLineIfNotEmpty();

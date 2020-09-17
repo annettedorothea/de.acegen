@@ -43,7 +43,7 @@ class AttributeExtension {
 	extension ModelExtension;
 	
 	public String stringLineBreak = '''," + 
-	"'''
+"'''
 
 	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 

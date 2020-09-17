@@ -68,7 +68,7 @@ class Action {
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		«IF outcomes.size > 0»
-			import «commandNameWithPackage(httpServer)»;
+			import «commandNameWithPackage»;
 		«ENDIF»
 		
 		@SuppressWarnings("unused")
@@ -77,7 +77,7 @@ class Action {
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
 			}
 		
@@ -145,7 +145,7 @@ class Action {
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
 								viewProvider, e2e);
 			}
 		
