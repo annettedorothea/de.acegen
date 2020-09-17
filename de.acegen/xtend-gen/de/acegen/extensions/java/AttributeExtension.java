@@ -21,7 +21,7 @@ import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
-import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
@@ -681,7 +681,7 @@ public class AttributeExtension {
     }
   }
   
-  protected CharSequence _valueFrom(final JsonObject it) {
+  protected CharSequence _valueFrom(final JsonObjectAce it) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
@@ -709,6 +709,10 @@ public class AttributeExtension {
       }
     }
     return _builder;
+  }
+  
+  protected CharSequence _valueFrom(final String it) {
+    return this.valueFromString(it);
   }
   
   protected CharSequence _valueFrom(final JsonValue it) {
@@ -752,21 +756,22 @@ public class AttributeExtension {
       _builder_1.append("\" + this.getTestId() + \"");
       returnString = returnString.replace("${testId}", _builder_1);
     }
-    boolean _contains_2 = it.contains("${");
-    if (_contains_2) {
-      final int beginIndex = it.indexOf("${");
-      final int endIndex = it.indexOf("}");
-      final String templateString = it.substring(beginIndex, (endIndex + 1));
-      final String templateStringName = it.substring((beginIndex + 2), endIndex);
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("\" + this.extractedValues.get(\"");
-      _builder_2.append(templateStringName);
-      _builder_2.append("\").toString() + \"");
-      returnString = returnString.replace(templateString, _builder_2);
+    while (returnString.contains("${")) {
+      {
+        final int beginIndex = returnString.indexOf("${");
+        final int endIndex = returnString.indexOf("}");
+        final String templateString = returnString.substring(beginIndex, (endIndex + 1));
+        final String templateStringName = returnString.substring((beginIndex + 2), endIndex);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("\" + this.extractedValues.get(\"");
+        _builder_2.append(templateStringName);
+        _builder_2.append("\").toString() + \"");
+        returnString = returnString.replace(templateString, _builder_2);
+      }
     }
-    StringConcatenation _builder_3 = new StringConcatenation();
-    _builder_3.append(returnString);
-    return _builder_3;
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append(returnString);
+    return _builder_2;
   }
   
   protected CharSequence _valueFrom(final JsonArray it) {
@@ -851,15 +856,17 @@ public class AttributeExtension {
     return Integer.valueOf(it.getLong());
   }
   
-  public CharSequence valueFrom(final JsonValue it) {
-    if (it instanceof JsonArray) {
+  public CharSequence valueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _valueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonArray) {
       return _valueFrom((JsonArray)it);
     } else if (it instanceof JsonDateTime) {
       return _valueFrom((JsonDateTime)it);
-    } else if (it instanceof JsonObject) {
-      return _valueFrom((JsonObject)it);
-    } else if (it != null) {
-      return _valueFrom(it);
+    } else if (it instanceof JsonValue) {
+      return _valueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _valueFrom((String)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

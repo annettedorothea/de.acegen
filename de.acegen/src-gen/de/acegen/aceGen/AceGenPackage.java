@@ -2346,43 +2346,6 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE_FEATURE_COUNT = 9;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.JsonDateTimeImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
-   * @generated
-   */
-  int JSON_DATE_TIME = 47;
-
-  /**
-   * The feature id for the '<em><b>Date Time</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__DATE_TIME = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Pattern</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME__PATTERN = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Json Date Time</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_DATE_TIME_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 2;
-
-  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueImpl <em>Json Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2409,16 +2372,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 48;
-
-  /**
-   * The feature id for the '<em><b>Members</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JSON_OBJECT__MEMBERS = JSON_VALUE_FEATURE_COUNT + 0;
+  int JSON_OBJECT = 47;
 
   /**
    * The number of structural features of the '<em>Json Object</em>' class.
@@ -2427,7 +2381,35 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JSON_OBJECT_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
+  int JSON_OBJECT_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonObjectAceImpl <em>Json Object Ace</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonObjectAceImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectAce()
+   * @generated
+   */
+  int JSON_OBJECT_ACE = 48;
+
+  /**
+   * The feature id for the '<em><b>Members</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_OBJECT_ACE__MEMBERS = JSON_OBJECT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Json Object Ace</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_OBJECT_ACE_FEATURE_COUNT = JSON_OBJECT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonMemberImpl <em>Json Member</em>}' class.
@@ -2495,6 +2477,43 @@ public interface AceGenPackage extends EPackage
   int JSON_ARRAY_FEATURE_COUNT = JSON_VALUE_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.JsonDateTimeImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
+   * @generated
+   */
+  int JSON_DATE_TIME = 52;
+
+  /**
+   * The feature id for the '<em><b>Date Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__DATE_TIME = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME__PATTERN = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Json Date Time</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JSON_DATE_TIME_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.StringTypeImpl <em>String Type</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2502,7 +2521,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
    * @generated
    */
-  int STRING_TYPE = 52;
+  int STRING_TYPE = 53;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2530,7 +2549,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 53;
+  int BOOLEAN_TYPE = 54;
 
   /**
    * The feature id for the '<em><b>Boolean</b></em>' attribute.
@@ -2558,7 +2577,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
    * @generated
    */
-  int NULL_TYPE = 54;
+  int NULL_TYPE = 55;
 
   /**
    * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -2586,7 +2605,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getUndefinedType()
    * @generated
    */
-  int UNDEFINED_TYPE = 55;
+  int UNDEFINED_TYPE = 56;
 
   /**
    * The feature id for the '<em><b>Undefined</b></em>' attribute.
@@ -2614,7 +2633,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
    * @generated
    */
-  int LONG_TYPE = 56;
+  int LONG_TYPE = 57;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -2642,7 +2661,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 57;
+  int PRIMITIVE_VALUE = 58;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -4606,38 +4625,6 @@ public interface AceGenPackage extends EPackage
   EAttribute getAttribute_NotReplayable();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Json Date Time</em>'.
-   * @see de.acegen.aceGen.JsonDateTime
-   * @generated
-   */
-  EClass getJsonDateTime();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getDateTime <em>Date Time</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Date Time</em>'.
-   * @see de.acegen.aceGen.JsonDateTime#getDateTime()
-   * @see #getJsonDateTime()
-   * @generated
-   */
-  EAttribute getJsonDateTime_DateTime();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getPattern <em>Pattern</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Pattern</em>'.
-   * @see de.acegen.aceGen.JsonDateTime#getPattern()
-   * @see #getJsonDateTime()
-   * @generated
-   */
-  EAttribute getJsonDateTime_Pattern();
-
-  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4648,15 +4635,25 @@ public interface AceGenPackage extends EPackage
   EClass getJsonObject();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonObject#getMembers <em>Members</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonObjectAce <em>Json Object Ace</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Object Ace</em>'.
+   * @see de.acegen.aceGen.JsonObjectAce
+   * @generated
+   */
+  EClass getJsonObjectAce();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.JsonObjectAce#getMembers <em>Members</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Members</em>'.
-   * @see de.acegen.aceGen.JsonObject#getMembers()
-   * @see #getJsonObject()
+   * @see de.acegen.aceGen.JsonObjectAce#getMembers()
+   * @see #getJsonObjectAce()
    * @generated
    */
-  EReference getJsonObject_Members();
+  EReference getJsonObjectAce_Members();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonMember <em>Json Member</em>}'.
@@ -4720,6 +4717,38 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getJsonArray_Values();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Json Date Time</em>'.
+   * @see de.acegen.aceGen.JsonDateTime
+   * @generated
+   */
+  EClass getJsonDateTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getDateTime <em>Date Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Date Time</em>'.
+   * @see de.acegen.aceGen.JsonDateTime#getDateTime()
+   * @see #getJsonDateTime()
+   * @generated
+   */
+  EAttribute getJsonDateTime_DateTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.JsonDateTime#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see de.acegen.aceGen.JsonDateTime#getPattern()
+   * @see #getJsonDateTime()
+   * @generated
+   */
+  EAttribute getJsonDateTime_Pattern();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.StringType <em>String Type</em>}'.
@@ -6416,32 +6445,6 @@ public interface AceGenPackage extends EPackage
     EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.JsonDateTimeImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
-     * @generated
-     */
-    EClass JSON_DATE_TIME = eINSTANCE.getJsonDateTime();
-
-    /**
-     * The meta object literal for the '<em><b>Date Time</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_DATE_TIME__DATE_TIME = eINSTANCE.getJsonDateTime_DateTime();
-
-    /**
-     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JSON_DATE_TIME__PATTERN = eINSTANCE.getJsonDateTime_Pattern();
-
-    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6452,12 +6455,22 @@ public interface AceGenPackage extends EPackage
     EClass JSON_OBJECT = eINSTANCE.getJsonObject();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectAceImpl <em>Json Object Ace</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonObjectAceImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectAce()
+     * @generated
+     */
+    EClass JSON_OBJECT_ACE = eINSTANCE.getJsonObjectAce();
+
+    /**
      * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference JSON_OBJECT__MEMBERS = eINSTANCE.getJsonObject_Members();
+    EReference JSON_OBJECT_ACE__MEMBERS = eINSTANCE.getJsonObjectAce_Members();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonMemberImpl <em>Json Member</em>}' class.
@@ -6512,6 +6525,32 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference JSON_ARRAY__VALUES = eINSTANCE.getJsonArray_Values();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonDateTimeImpl <em>Json Date Time</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.JsonDateTimeImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
+     * @generated
+     */
+    EClass JSON_DATE_TIME = eINSTANCE.getJsonDateTime();
+
+    /**
+     * The meta object literal for the '<em><b>Date Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JSON_DATE_TIME__DATE_TIME = eINSTANCE.getJsonDateTime_DateTime();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JSON_DATE_TIME__PATTERN = eINSTANCE.getJsonDateTime_Pattern();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.StringTypeImpl <em>String Type</em>}' class.

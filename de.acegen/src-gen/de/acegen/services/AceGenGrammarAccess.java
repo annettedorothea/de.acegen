@@ -2826,37 +2826,37 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'Long'
 		public Keyword getLongKeyword_5() { return cLongKeyword_5; }
 	}
-	public class JsonDateTimeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonDateTime");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cDateTimeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cDateTimeSTRINGTerminalRuleCall_0_0 = (RuleCall)cDateTimeAssignment_0.eContents().get(0);
-		private final Assignment cPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cPatternAssignment_1.eContents().get(0);
-		
-		//JsonDateTime:
-		//	dateTime=STRING pattern=STRING;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//dateTime=STRING pattern=STRING
-		public Group getGroup() { return cGroup; }
-		
-		//dateTime=STRING
-		public Assignment getDateTimeAssignment_0() { return cDateTimeAssignment_0; }
-		
-		//STRING
-		public RuleCall getDateTimeSTRINGTerminalRuleCall_0_0() { return cDateTimeSTRINGTerminalRuleCall_0_0; }
-		
-		//pattern=STRING
-		public Assignment getPatternAssignment_1() { return cPatternAssignment_1; }
-		
-		//STRING
-		public RuleCall getPatternSTRINGTerminalRuleCall_1_0() { return cPatternSTRINGTerminalRuleCall_1_0; }
-	}
 	public class JsonObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonObject");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cJsonObjectAceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cJsonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cStringTypeParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//JsonObject:
+		//	JsonObjectAce | 'json' StringType;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//JsonObjectAce | 'json' StringType
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//JsonObjectAce
+		public RuleCall getJsonObjectAceParserRuleCall_0() { return cJsonObjectAceParserRuleCall_0; }
+		
+		//'json' StringType
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'json'
+		public Keyword getJsonKeyword_1_0() { return cJsonKeyword_1_0; }
+		
+		//StringType
+		public RuleCall getStringTypeParserRuleCall_1_1() { return cStringTypeParserRuleCall_1_1; }
+	}
+	public class JsonObjectAceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonObjectAce");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cJsonObjectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cJsonObjectAceAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cMembersAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cMembersJsonMemberParserRuleCall_2_0 = (RuleCall)cMembersAssignment_2.eContents().get(0);
@@ -2866,17 +2866,17 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cMembersJsonMemberParserRuleCall_3_1_0 = (RuleCall)cMembersAssignment_3_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//JsonObject:
-		//	{JsonObject} '{'
+		//JsonObjectAce:
+		//	{JsonObjectAce} '{'
 		//	members+=JsonMember? (',' members+=JsonMember)*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{JsonObject} '{' members+=JsonMember? (',' members+=JsonMember)* '}'
+		//{JsonObjectAce} '{' members+=JsonMember? (',' members+=JsonMember)* '}'
 		public Group getGroup() { return cGroup; }
 		
-		//{JsonObject}
-		public Action getJsonObjectAction_0() { return cJsonObjectAction_0; }
+		//{JsonObjectAce}
+		public Action getJsonObjectAceAction_0() { return cJsonObjectAceAction_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
@@ -3022,6 +3022,33 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+	}
+	public class JsonDateTimeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonDateTime");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cDateTimeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cDateTimeSTRINGTerminalRuleCall_0_0 = (RuleCall)cDateTimeAssignment_0.eContents().get(0);
+		private final Assignment cPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cPatternAssignment_1.eContents().get(0);
+		
+		//JsonDateTime:
+		//	dateTime=STRING pattern=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//dateTime=STRING pattern=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//dateTime=STRING
+		public Assignment getDateTimeAssignment_0() { return cDateTimeAssignment_0; }
+		
+		//STRING
+		public RuleCall getDateTimeSTRINGTerminalRuleCall_0_0() { return cDateTimeSTRINGTerminalRuleCall_0_0; }
+		
+		//pattern=STRING
+		public Assignment getPatternAssignment_1() { return cPatternAssignment_1; }
+		
+		//STRING
+		public RuleCall getPatternSTRINGTerminalRuleCall_1_0() { return cPatternSTRINGTerminalRuleCall_1_0; }
 	}
 	public class StringTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.StringType");
@@ -3198,11 +3225,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final WriteFunctionTypeElements pWriteFunctionType;
 	private final ReadFunctionTypeElements pReadFunctionType;
 	private final TypeElements pType;
-	private final JsonDateTimeElements pJsonDateTime;
 	private final JsonObjectElements pJsonObject;
+	private final JsonObjectAceElements pJsonObjectAce;
 	private final JsonMemberElements pJsonMember;
 	private final JsonValueElements pJsonValue;
 	private final JsonArrayElements pJsonArray;
+	private final JsonDateTimeElements pJsonDateTime;
 	private final StringTypeElements pStringType;
 	private final BooleanTypeElements pBooleanType;
 	private final NullTypeElements pNullType;
@@ -3272,11 +3300,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pWriteFunctionType = new WriteFunctionTypeElements();
 		this.pReadFunctionType = new ReadFunctionTypeElements();
 		this.pType = new TypeElements();
-		this.pJsonDateTime = new JsonDateTimeElements();
 		this.pJsonObject = new JsonObjectElements();
+		this.pJsonObjectAce = new JsonObjectAceElements();
 		this.pJsonMember = new JsonMemberElements();
 		this.pJsonValue = new JsonValueElements();
 		this.pJsonArray = new JsonArrayElements();
+		this.pJsonDateTime = new JsonDateTimeElements();
 		this.pStringType = new StringTypeElements();
 		this.pBooleanType = new BooleanTypeElements();
 		this.pNullType = new NullTypeElements();
@@ -3885,26 +3914,26 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		return getTypeAccess().getRule();
 	}
 	
-	//JsonDateTime:
-	//	dateTime=STRING pattern=STRING;
-	public JsonDateTimeElements getJsonDateTimeAccess() {
-		return pJsonDateTime;
-	}
-	
-	public ParserRule getJsonDateTimeRule() {
-		return getJsonDateTimeAccess().getRule();
-	}
-	
 	//JsonObject:
-	//	{JsonObject} '{'
-	//	members+=JsonMember? (',' members+=JsonMember)*
-	//	'}';
+	//	JsonObjectAce | 'json' StringType;
 	public JsonObjectElements getJsonObjectAccess() {
 		return pJsonObject;
 	}
 	
 	public ParserRule getJsonObjectRule() {
 		return getJsonObjectAccess().getRule();
+	}
+	
+	//JsonObjectAce:
+	//	{JsonObjectAce} '{'
+	//	members+=JsonMember? (',' members+=JsonMember)*
+	//	'}';
+	public JsonObjectAceElements getJsonObjectAceAccess() {
+		return pJsonObjectAce;
+	}
+	
+	public ParserRule getJsonObjectAceRule() {
+		return getJsonObjectAceAccess().getRule();
 	}
 	
 	//JsonMember:
@@ -3935,6 +3964,16 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getJsonArrayRule() {
 		return getJsonArrayAccess().getRule();
+	}
+	
+	//JsonDateTime:
+	//	dateTime=STRING pattern=STRING;
+	public JsonDateTimeElements getJsonDateTimeAccess() {
+		return pJsonDateTime;
+	}
+	
+	public ParserRule getJsonDateTimeRule() {
+		return getJsonDateTimeAccess().getRule();
 	}
 	
 	//StringType:

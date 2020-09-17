@@ -311,12 +311,10 @@ Type:
 	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
 ;
 
-JsonDateTime:
-	dateTime = STRING pattern = STRING
-;
-
-JsonObject:
-	{JsonObject} '{' 
+JsonObject: JsonObjectAce | 'json' StringType;
+	
+JsonObjectAce: 
+	{JsonObjectAce} '{' 
 		(members+=JsonMember)?
 		(',' members+=JsonMember)* 
 	
@@ -331,6 +329,10 @@ JsonValue:
 JsonArray:
 	{JsonArray} '[' (values+=JsonValue)? (',' values+=JsonValue)* ']';
 	
+JsonDateTime:
+	dateTime = STRING pattern = STRING
+;
+
 StringType:
 	string = STRING
 ;

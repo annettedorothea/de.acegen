@@ -4572,61 +4572,6 @@ ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 	)
 ;
 
-// Entry rule entryRuleJsonDateTime
-entryRuleJsonDateTime returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getJsonDateTimeRule()); }
-	iv_ruleJsonDateTime=ruleJsonDateTime
-	{ $current=$iv_ruleJsonDateTime.current; }
-	EOF;
-
-// Rule JsonDateTime
-ruleJsonDateTime returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				lv_dateTime_0_0=RULE_STRING
-				{
-					newLeafNode(lv_dateTime_0_0, grammarAccess.getJsonDateTimeAccess().getDateTimeSTRINGTerminalRuleCall_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getJsonDateTimeRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"dateTime",
-						lv_dateTime_0_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-		(
-			(
-				lv_pattern_1_0=RULE_STRING
-				{
-					newLeafNode(lv_pattern_1_0, grammarAccess.getJsonDateTimeAccess().getPatternSTRINGTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getJsonDateTimeRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"pattern",
-						lv_pattern_1_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-	)
-;
-
 // Entry rule entryRuleJsonObject
 entryRuleJsonObject returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getJsonObjectRule()); }
@@ -4643,26 +4588,68 @@ ruleJsonObject returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			newCompositeNode(grammarAccess.getJsonObjectAccess().getJsonObjectAceParserRuleCall_0());
+		}
+		this_JsonObjectAce_0=ruleJsonObjectAce
+		{
+			$current = $this_JsonObjectAce_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		(
+			otherlv_1='json'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getJsonObjectAccess().getJsonKeyword_1_0());
+			}
+			{
+				newCompositeNode(grammarAccess.getJsonObjectAccess().getStringTypeParserRuleCall_1_1());
+			}
+			this_StringType_2=ruleStringType
+			{
+				$current = $this_StringType_2.current;
+				afterParserOrEnumRuleCall();
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleJsonObjectAce
+entryRuleJsonObjectAce returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonObjectAceRule()); }
+	iv_ruleJsonObjectAce=ruleJsonObjectAce
+	{ $current=$iv_ruleJsonObjectAce.current; }
+	EOF;
+
+// Rule JsonObjectAce
+ruleJsonObjectAce returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
 		(
 			{
 				$current = forceCreateModelElement(
-					grammarAccess.getJsonObjectAccess().getJsonObjectAction_0(),
+					grammarAccess.getJsonObjectAceAccess().getJsonObjectAceAction_0(),
 					$current);
 			}
 		)
 		otherlv_1='{'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getJsonObjectAccess().getLeftCurlyBracketKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getJsonObjectAceAccess().getLeftCurlyBracketKeyword_1());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getJsonObjectAccess().getMembersJsonMemberParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getJsonObjectAceAccess().getMembersJsonMemberParserRuleCall_2_0());
 				}
 				lv_members_2_0=ruleJsonMember
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getJsonObjectRule());
+						$current = createModelElementForParent(grammarAccess.getJsonObjectAceRule());
 					}
 					add(
 						$current,
@@ -4676,17 +4663,17 @@ ruleJsonObject returns [EObject current=null]
 		(
 			otherlv_3=','
 			{
-				newLeafNode(otherlv_3, grammarAccess.getJsonObjectAccess().getCommaKeyword_3_0());
+				newLeafNode(otherlv_3, grammarAccess.getJsonObjectAceAccess().getCommaKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getJsonObjectAccess().getMembersJsonMemberParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getJsonObjectAceAccess().getMembersJsonMemberParserRuleCall_3_1_0());
 					}
 					lv_members_4_0=ruleJsonMember
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getJsonObjectRule());
+							$current = createModelElementForParent(grammarAccess.getJsonObjectAceRule());
 						}
 						add(
 							$current,
@@ -4700,7 +4687,7 @@ ruleJsonObject returns [EObject current=null]
 		)*
 		otherlv_5='}'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getJsonObjectAccess().getRightCurlyBracketKeyword_4());
+			newLeafNode(otherlv_5, grammarAccess.getJsonObjectAceAccess().getRightCurlyBracketKeyword_4());
 		}
 	)
 ;
@@ -4919,6 +4906,61 @@ ruleJsonArray returns [EObject current=null]
 		{
 			newLeafNode(otherlv_5, grammarAccess.getJsonArrayAccess().getRightSquareBracketKeyword_4());
 		}
+	)
+;
+
+// Entry rule entryRuleJsonDateTime
+entryRuleJsonDateTime returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getJsonDateTimeRule()); }
+	iv_ruleJsonDateTime=ruleJsonDateTime
+	{ $current=$iv_ruleJsonDateTime.current; }
+	EOF;
+
+// Rule JsonDateTime
+ruleJsonDateTime returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_dateTime_0_0=RULE_STRING
+				{
+					newLeafNode(lv_dateTime_0_0, grammarAccess.getJsonDateTimeAccess().getDateTimeSTRINGTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getJsonDateTimeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"dateTime",
+						lv_dateTime_0_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		(
+			(
+				lv_pattern_1_0=RULE_STRING
+				{
+					newLeafNode(lv_pattern_1_0, grammarAccess.getJsonDateTimeAccess().getPatternSTRINGTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getJsonDateTimeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"pattern",
+						lv_pattern_1_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
 	)
 ;
 

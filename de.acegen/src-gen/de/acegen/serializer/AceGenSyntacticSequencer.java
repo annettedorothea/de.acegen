@@ -47,6 +47,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServer_ModelsKeyword_9_0_q;
 	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_10_0_q;
 	protected AbstractElementAlias match_HttpServer_ViewsKeyword_8_0_q;
+	protected AbstractElementAlias match_JsonObject_JsonKeyword_1_0_q;
 	protected AbstractElementAlias match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q;
 	protected AbstractElementAlias match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
@@ -83,6 +84,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServer_ModelsKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getModelsKeyword_9_0());
 		match_HttpServer_ScenariosKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_10_0());
 		match_HttpServer_ViewsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getViewsKeyword_8_0());
+		match_JsonObject_JsonKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getJsonObjectAccess().getJsonKeyword_1_0());
 		match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_3_2()));
 		match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
@@ -154,6 +156,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpServer_ScenariosKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ViewsKeyword_8_0_q.equals(syntax))
 				emit_HttpServer_ViewsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_JsonObject_JsonKeyword_1_0_q.equals(syntax))
+				emit_JsonObject_JsonKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q.equals(syntax))
 				emit_Model___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q.equals(syntax))
@@ -556,6 +560,17 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName 'ACE'? (ambiguity) 'models'? 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpServer_ViewsKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'json'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) string=STRING
+	 */
+	protected void emit_JsonObject_JsonKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

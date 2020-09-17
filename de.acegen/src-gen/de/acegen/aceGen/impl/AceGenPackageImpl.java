@@ -42,6 +42,7 @@ import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonMemberClient;
 import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonObjectClient;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.JsonValueClient;
@@ -413,14 +414,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass jsonDateTimeEClass = null;
+  private EClass jsonObjectEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass jsonObjectEClass = null;
+  private EClass jsonObjectAceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -442,6 +443,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass jsonArrayEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass jsonDateTimeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2534,39 +2542,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EClass getJsonDateTime()
-  {
-    return jsonDateTimeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getJsonDateTime_DateTime()
-  {
-    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getJsonDateTime_Pattern()
-  {
-    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getJsonObject()
   {
     return jsonObjectEClass;
@@ -2578,9 +2553,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getJsonObject_Members()
+  public EClass getJsonObjectAce()
   {
-    return (EReference)jsonObjectEClass.getEStructuralFeatures().get(0);
+    return jsonObjectAceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getJsonObjectAce_Members()
+  {
+    return (EReference)jsonObjectAceEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2647,6 +2633,39 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getJsonArray_Values()
   {
     return (EReference)jsonArrayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getJsonDateTime()
+  {
+    return jsonDateTimeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getJsonDateTime_DateTime()
+  {
+    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getJsonDateTime_Pattern()
+  {
+    return (EAttribute)jsonDateTimeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3050,12 +3069,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
     createEAttribute(attributeEClass, ATTRIBUTE__NOT_REPLAYABLE);
 
-    jsonDateTimeEClass = createEClass(JSON_DATE_TIME);
-    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__DATE_TIME);
-    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__PATTERN);
-
     jsonObjectEClass = createEClass(JSON_OBJECT);
-    createEReference(jsonObjectEClass, JSON_OBJECT__MEMBERS);
+
+    jsonObjectAceEClass = createEClass(JSON_OBJECT_ACE);
+    createEReference(jsonObjectAceEClass, JSON_OBJECT_ACE__MEMBERS);
 
     jsonMemberEClass = createEClass(JSON_MEMBER);
     createEReference(jsonMemberEClass, JSON_MEMBER__ATTRIBUTE);
@@ -3065,6 +3082,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     jsonArrayEClass = createEClass(JSON_ARRAY);
     createEReference(jsonArrayEClass, JSON_ARRAY__VALUES);
+
+    jsonDateTimeEClass = createEClass(JSON_DATE_TIME);
+    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__DATE_TIME);
+    createEAttribute(jsonDateTimeEClass, JSON_DATE_TIME__PATTERN);
 
     stringTypeEClass = createEClass(STRING_TYPE);
     createEAttribute(stringTypeEClass, STRING_TYPE__STRING);
@@ -3126,12 +3147,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     selectByPrimaryKeysEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
     selectByUniqueAttributeEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
     countEClass.getESuperTypes().add(this.getPersistenceVerificationExpression());
+    jsonObjectEClass.getESuperTypes().add(this.getJsonValue());
+    jsonObjectAceEClass.getESuperTypes().add(this.getJsonObject());
+    jsonArrayEClass.getESuperTypes().add(this.getJsonValue());
     jsonDateTimeEClass.getESuperTypes().add(this.getJsonValueClient());
     jsonDateTimeEClass.getESuperTypes().add(this.getJsonValue());
-    jsonObjectEClass.getESuperTypes().add(this.getJsonValue());
-    jsonArrayEClass.getESuperTypes().add(this.getJsonValue());
     stringTypeEClass.getESuperTypes().add(this.getJsonValueClient());
-    stringTypeEClass.getESuperTypes().add(this.getJsonValue());
+    stringTypeEClass.getESuperTypes().add(this.getJsonObject());
     booleanTypeEClass.getESuperTypes().add(this.getJsonValueClient());
     booleanTypeEClass.getESuperTypes().add(this.getJsonValue());
     nullTypeEClass.getESuperTypes().add(this.getJsonValueClient());
@@ -3368,12 +3390,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_NotReplayable(), ecorePackage.getEBoolean(), "notReplayable", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(jsonDateTimeEClass, JsonDateTime.class, "JsonDateTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getJsonDateTime_DateTime(), ecorePackage.getEString(), "dateTime", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getJsonDateTime_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(jsonObjectEClass, JsonObject.class, "JsonObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getJsonObject_Members(), this.getJsonMember(), null, "members", null, 0, -1, JsonObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsonObjectAceEClass, JsonObjectAce.class, "JsonObjectAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJsonObjectAce_Members(), this.getJsonMember(), null, "members", null, 0, -1, JsonObjectAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(jsonMemberEClass, JsonMember.class, "JsonMember", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getJsonMember_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, JsonMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3383,6 +3403,10 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(jsonArrayEClass, JsonArray.class, "JsonArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getJsonArray_Values(), this.getJsonValue(), null, "values", null, 0, -1, JsonArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsonDateTimeEClass, JsonDateTime.class, "JsonDateTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJsonDateTime_DateTime(), ecorePackage.getEString(), "dateTime", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJsonDateTime_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, JsonDateTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stringTypeEClass, StringType.class, "StringType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStringType_String(), ecorePackage.getEString(), "string", null, 0, 1, StringType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

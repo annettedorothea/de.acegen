@@ -79,7 +79,7 @@ class AceExtension {
 		return '''«java.getName»'''
 	}
 	
-	def String urlWithPathParams(HttpServerAce  it, String dataVarName, boolean generateQueryParams) {
+	def String urlWithPathParams(HttpServerAce it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
 			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
 			return retUrl

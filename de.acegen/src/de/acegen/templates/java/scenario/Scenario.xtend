@@ -25,10 +25,12 @@ import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.Given
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.JsonObject
+import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.JsonObjectAce
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
+import de.acegen.aceGen.StringType
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
@@ -37,7 +39,6 @@ import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerAce
 
 class Scenario {
 
@@ -185,7 +186,7 @@ class Scenario {
 						}
 	
 						«IF thenBlock.response !== null»
-							«whenBlock.action.model.dataNameWithPackage» expectedData = «objectMapperCallExpectedData(thenBlock.response, whenBlock.action.model)»;
+							«whenBlock.action.model.dataNameWithPackage» expectedData = «thenBlock.response.data.objectMapperCallExpectedData(whenBlock.action.model)»;
 							
 							«whenBlock.action.responseDataNameWithPackage» expected = new «whenBlock.action.responseDataNameWithPackage»(expectedData);
 							
@@ -298,7 +299,7 @@ class Scenario {
 		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectBy«attributeAndValue.attribute.name.toFirstUpper»(handle, «attributeAndValue.value.primitiveValueFrom»);
 		
 		«IF expected.object !== null»
-			«model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(expected.object, model)»;
+			«model.interfaceWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
 			assertThat(actual, expected);
 		«ELSEIF expected.isNull»
 			assertIsNull(actual);
@@ -311,7 +312,7 @@ class Scenario {
 		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute : model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
 		
 		«IF expected.object !== null»
-			«model.interfaceWithPackage» expected = «objectMapperCallExpectedPersistenceData(expected.object, model)»;
+			«model.interfaceWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
 			assertThat(actual, expected);
 		«ELSEIF expected.isNull»
 			assertIsNull(actual);
@@ -370,8 +371,8 @@ class Scenario {
 		«IF dataDefinition.systemtime !== null»
 			this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
 		«ENDIF»
-		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data.members !== null»
-			«FOR attributeDefinition: dataDefinition.data.members»
+		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
+			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
 				«IF attributeDefinition.attribute.notReplayable»
 					this.callNotReplayableDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»", 
 								objectMapper.readValue("«attributeDefinition.value.valueFrom»", «IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class)«ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class)«ENDIF»);
@@ -382,31 +383,60 @@ class Scenario {
 
 	private def generateDataCreation(WhenBlock it) '''
 		«IF action.payload.size > 0»
-			«action.payloadDataNameWithPackage» payload_«index» = «dataDefinition.objectMapperCallPayload(action)»;
+			«action.payloadDataNameWithPackage» payload_«index» = «dataDefinition.data.objectMapperCallPayload(action)»;
 		«ENDIF»
-		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.objectMapperCall(action.model)»;
+		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.data.objectMapperCall(action.model)»;
 	'''
 
-	private def objectMapperCall(DataDefinition it, Model model) '''
- 		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
- 		"\"uuid\" : \"" + uuid + "\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+	private dispatch def objectMapperCall(JsonObjectAce it, Model model) '''
+ 		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
+ 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 
-	private def objectMapperCallPayload(DataDefinition it, HttpServerAce action) '''
- 		objectMapper.readValue("«IF data !== null && data.members !== null && data.members.filter[!attribute.notReplayable].size > 0»{" +
- 			"«FOR member : data.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+	private dispatch def objectMapperCall(StringType it, Model model) '''
+ 		objectMapper.readValue("«string.valueFrom»",
+		«model.dataNameWithPackage».class)'''
+
+	private dispatch def objectMapperCall(Void it, Model model) '''
+		objectMapper.readValue("{" +
+		"\"uuid\" : \"" + uuid + "\" }",
+		«model.dataNameWithPackage».class)'''
+
+	private dispatch def objectMapperCallPayload(JsonObjectAce it, HttpServerAce action) '''
+ 		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.notReplayable].size > 0»{" +
+ 			"«FOR member : it.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«action.payloadDataNameWithPackage».class)'''
 	
-	private def objectMapperCallExpectedData(DataDefinition it, Model model) '''
-		objectMapper.readValue("«IF data !== null && data.members !== null»{" +
-			"\"uuid\" : \"«uuid»\"«FOR member : data.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+	private dispatch def objectMapperCallPayload(StringType it, HttpServerAce action) '''
+ 		objectMapper.readValue("«string.valueFrom»",
+		«action.payloadDataNameWithPackage».class)'''
+	
+	private dispatch def objectMapperCallPayload(Void it, HttpServerAce action) '''
+		objectMapper.readValue("{}",
+		«action.payloadDataNameWithPackage».class)'''
+	
+	private dispatch def objectMapperCallExpectedData(JsonObjectAce it, Model model) '''
+		objectMapper.readValue("«IF it !== null && members !== null»{" +
+			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 	
-	private def objectMapperCallExpectedPersistenceData(JsonObject it, Model model) '''
+	private dispatch def objectMapperCallExpectedData(StringType it, Model model) '''
+		objectMapper.readValue("«string.valueFrom»",
+		«model.dataNameWithPackage».class)'''
+	
+	private dispatch def objectMapperCallExpectedPersistenceData(JsonObjectAce it, Model model) '''
 		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
 			"«FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.modelClassNameWithPackage».class)'''
-	
+		
+	private dispatch def objectMapperCallExpectedPersistenceData(StringType it, Model model) '''
+		objectMapper.readValue("«string.valueFrom»",
+		«model.modelClassNameWithPackage».class)'''
+		
+	private dispatch def objectMapperCallExpectedPersistenceData(Void it, Model model) '''
+		objectMapper.readValue("{}",
+		«model.modelClassNameWithPackage».class)'''
+		
 	private def generateActionCalls(WhenBlock it, HttpServer java) '''
 		
 		«IF action.getType == "POST"»

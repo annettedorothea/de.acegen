@@ -1,16 +1,16 @@
 /********************************************************************************
  * Copyright (c) 2020 Annette Pohl
- *
+ * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
- *
+ * 
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License v. 2.0 are satisfied: GNU General Public License, version 2
  * with the GNU Classpath Exception which is available at
  * https://www.gnu.org/software/classpath/license.html.
- *
+ * 
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
@@ -24,7 +24,7 @@ import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.JsonArray
 import de.acegen.aceGen.JsonDateTime
-import de.acegen.aceGen.JsonObject
+import de.acegen.aceGen.JsonObjectAce
 import de.acegen.aceGen.JsonValue
 import de.acegen.aceGen.LongType
 import de.acegen.aceGen.Model
@@ -41,17 +41,17 @@ class AttributeExtension {
 
 	@Inject
 	extension ModelExtension;
-	
+
 	public String stringLineBreak = '''," + 
 "'''
 
-	def String resourceParamType(Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
+	def String resourceParamType(
+		Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
 
 	def String resourceParam(
 		Attribute it) '''«IF type !== null && type.equals('DateTime')»LocalDateTime.parse(«name», DateTimeFormatter.ISO_DATE_TIME)«ELSE»«name»«ENDIF»'''
 
-	def String initActionData(
-		AttributeParamRef it) '''
+	def String initActionData(AttributeParamRef it) '''
 		
 		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
 			«IF notNull»
@@ -82,8 +82,7 @@ class AttributeExtension {
 		«ENDIF»
 	'''
 
-	def String initActionDataFromPayload(
-		AttributeParamRef it) '''
+	def String initActionDataFromPayload(AttributeParamRef it) '''
 		
 		«IF notNull»
 			«IF "String".equals(attribute.type) && !attribute.list»
@@ -223,7 +222,11 @@ class AttributeExtension {
 	}
 
 	def dispatch CharSequence valueFrom(
-		JsonObject it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+		JsonObjectAce it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+
+	def dispatch CharSequence valueFrom(String it) {
+		return valueFromString
+	}
 
 	def dispatch CharSequence valueFrom(JsonValue it) {
 		if (it instanceof StringType) {
@@ -236,7 +239,7 @@ class AttributeExtension {
 			return '''«long»''';
 		}
 	}
-	
+
 	def CharSequence valueFromString(String it) {
 		var returnString = it;
 		if (it.contains("${random}")) {
@@ -245,13 +248,14 @@ class AttributeExtension {
 		if (it.contains("${testId}")) {
 			returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
 		}
-		if (it.contains("${")) {
-			val beginIndex = it.indexOf("${")
-			val endIndex = it.indexOf("}")
-			val templateString = it.substring(beginIndex, endIndex+1)
-			val templateStringName = it.substring(beginIndex+2, endIndex)
-			
-			returnString = returnString.replace(templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
+		while (returnString.contains("${")) {
+			val beginIndex = returnString.indexOf("${")
+			val endIndex = returnString.indexOf("}")
+			val templateString = returnString.substring(beginIndex, endIndex + 1)
+			val templateStringName = returnString.substring(beginIndex + 2, endIndex)
+
+			returnString = returnString.replace(
+				templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
 		}
 		return '''«returnString»''';
 	}
@@ -263,12 +267,12 @@ class AttributeExtension {
 		if (dateTime.contains("${")) {
 			val beginIndex = dateTime.indexOf("${")
 			val endIndex = dateTime.indexOf("}")
-			val templateStringName = dateTime.substring(beginIndex+2, endIndex)
+			val templateStringName = dateTime.substring(beginIndex + 2, endIndex)
 			return '''\"" + LocalDateTime.parse(this.extractedValues.get("«templateStringName»").toString(), DateTimeFormatter.ofPattern("«pattern»"))  + "\"''';
 		}
 		return '''\"«dateTimeParse(dateTime, pattern)»\"'''
 	}
-	
+
 	def primitiveValueFrom(PrimitiveValue it) {
 		if (string !== null) {
 			var returnString = string;
@@ -277,14 +281,15 @@ class AttributeExtension {
 			} else if (string.contains("${")) {
 				val beginIndex = string.indexOf("${")
 				val endIndex = string.indexOf("}")
-				val templateString = string.substring(beginIndex, endIndex+1)
-				val templateStringName = string.substring(beginIndex+2, endIndex)
-				returnString = returnString.replace(templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
+				val templateString = string.substring(beginIndex, endIndex + 1)
+				val templateStringName = string.substring(beginIndex + 2, endIndex)
+				returnString = returnString.replace(
+					templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
 			}
 			return '''"«returnString»"''';
 		}
 		return getLong()
 	}
-	
+
 }
 /******* S.D.G. *******/

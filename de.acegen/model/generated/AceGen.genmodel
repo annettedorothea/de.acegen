@@ -229,12 +229,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notReplayable"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//JsonDateTime">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/dateTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/pattern"/>
-    </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//JsonObject">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//JsonObject/members"/>
+    <genClasses ecoreClass="AceGen.ecore#//JsonObject"/>
+    <genClasses ecoreClass="AceGen.ecore#//JsonObjectAce">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//JsonObjectAce/members"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonMember">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//JsonMember/attribute"/>
@@ -243,6 +240,10 @@
     <genClasses ecoreClass="AceGen.ecore#//JsonValue"/>
     <genClasses ecoreClass="AceGen.ecore#//JsonArray">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//JsonArray/values"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//JsonDateTime">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/dateTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//JsonDateTime/pattern"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//StringType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//StringType/string"/>

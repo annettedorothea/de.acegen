@@ -413,20 +413,20 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.JSON_DATE_TIME:
-      {
-        JsonDateTime jsonDateTime = (JsonDateTime)theEObject;
-        T result = caseJsonDateTime(jsonDateTime);
-        if (result == null) result = caseJsonValueClient(jsonDateTime);
-        if (result == null) result = caseJsonValue(jsonDateTime);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AceGenPackage.JSON_OBJECT:
       {
         JsonObject jsonObject = (JsonObject)theEObject;
         T result = caseJsonObject(jsonObject);
         if (result == null) result = caseJsonValue(jsonObject);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.JSON_OBJECT_ACE:
+      {
+        JsonObjectAce jsonObjectAce = (JsonObjectAce)theEObject;
+        T result = caseJsonObjectAce(jsonObjectAce);
+        if (result == null) result = caseJsonObject(jsonObjectAce);
+        if (result == null) result = caseJsonValue(jsonObjectAce);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -452,11 +452,21 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.JSON_DATE_TIME:
+      {
+        JsonDateTime jsonDateTime = (JsonDateTime)theEObject;
+        T result = caseJsonDateTime(jsonDateTime);
+        if (result == null) result = caseJsonValueClient(jsonDateTime);
+        if (result == null) result = caseJsonValue(jsonDateTime);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.STRING_TYPE:
       {
         StringType stringType = (StringType)theEObject;
         T result = caseStringType(stringType);
         if (result == null) result = caseJsonValueClient(stringType);
+        if (result == null) result = caseJsonObject(stringType);
         if (result == null) result = caseJsonValue(stringType);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -1260,22 +1270,6 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseJsonDateTime(JsonDateTime object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Json Object</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1287,6 +1281,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJsonObject(JsonObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Object Ace</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Object Ace</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonObjectAce(JsonObjectAce object)
   {
     return null;
   }
@@ -1335,6 +1345,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJsonArray(JsonArray object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Json Date Time</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJsonDateTime(JsonDateTime object)
   {
     return null;
   }

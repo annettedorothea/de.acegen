@@ -28,12 +28,14 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PersistenceVerificationExpression;
 import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
+import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.CommonExtension;
@@ -45,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -490,7 +493,7 @@ public class Scenario {
             String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(it.getWhenBlock().getAction().getModel());
             _builder.append(_dataNameWithPackage, "\t\t\t\t\t");
             _builder.append(" expectedData = ");
-            CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse(), it.getWhenBlock().getAction().getModel());
+            CharSequence _objectMapperCallExpectedData = this.objectMapperCallExpectedData(it.getThenBlock().getResponse().getData(), it.getWhenBlock().getAction().getModel());
             _builder.append(_objectMapperCallExpectedData, "\t\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
@@ -1107,9 +1110,10 @@ public class Scenario {
       }
     }
     {
-      if ((((it.getDataDefinition() != null) && (it.getDataDefinition().getData() != null)) && (it.getDataDefinition().getData().getMembers() != null))) {
+      if (((((it.getDataDefinition() != null) && (it.getDataDefinition().getData() != null)) && (it.getDataDefinition().getData() instanceof JsonObjectAce)) && (((JsonObjectAce) it.getDataDefinition().getData()).getMembers() != null))) {
         {
-          EList<JsonMember> _members = it.getDataDefinition().getData().getMembers();
+          JsonObject _data = it.getDataDefinition().getData();
+          EList<JsonMember> _members = ((JsonObjectAce) _data).getMembers();
           for(final JsonMember attributeDefinition : _members) {
             {
               boolean _isNotReplayable = attributeDefinition.getAttribute().isNotReplayable();
@@ -1165,7 +1169,7 @@ public class Scenario {
         _builder.append(" payload_");
         _builder.append(this.index);
         _builder.append(" = ");
-        CharSequence _objectMapperCallPayload = this.objectMapperCallPayload(it.getDataDefinition(), it.getAction());
+        CharSequence _objectMapperCallPayload = this.objectMapperCallPayload(it.getDataDefinition().getData(), it.getAction());
         _builder.append(_objectMapperCallPayload);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -1176,18 +1180,18 @@ public class Scenario {
     _builder.append(" data_");
     _builder.append(this.index);
     _builder.append(" = ");
-    CharSequence _objectMapperCall = this.objectMapperCall(it.getDataDefinition(), it.getAction().getModel());
+    CharSequence _objectMapperCall = this.objectMapperCall(it.getDataDefinition().getData(), it.getAction().getModel());
     _builder.append(_objectMapperCall);
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
   
-  private CharSequence objectMapperCall(final DataDefinition it, final Model model) {
+  private CharSequence _objectMapperCall(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
     {
-      if (((it.getData() != null) && (it.getData().getMembers() != null))) {
+      if (((it != null) && (it.getMembers() != null))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
         _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
@@ -1196,7 +1200,7 @@ public class Scenario {
             boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
             return Boolean.valueOf((!_isNotReplayable));
           };
-          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
@@ -1227,11 +1231,37 @@ public class Scenario {
     return _builder;
   }
   
-  private CharSequence objectMapperCallPayload(final DataDefinition it, final HttpServerAce action) {
+  private CharSequence _objectMapperCall(final StringType it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    _builder.append(_valueFrom);
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
+    _builder.append(_dataNameWithPackage, "\t\t");
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCall(final Void it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"{\" +");
+    _builder.newLine();
+    _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\" }\",");
+    _builder.newLine();
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
+    _builder.append(_dataNameWithPackage);
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallPayload(final JsonObjectAce it, final HttpServerAce action) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
     {
-      if ((((it.getData() != null) && (it.getData().getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getData().getMembers(), ((Function1<JsonMember, Boolean>) (JsonMember it_1) -> {
+      if ((((it != null) && (it.getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getMembers(), ((Function1<JsonMember, Boolean>) (JsonMember it_1) -> {
         boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
         return Boolean.valueOf((!_isNotReplayable));
       }))) > 0))) {
@@ -1244,7 +1274,7 @@ public class Scenario {
             boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
             return Boolean.valueOf((!_isNotReplayable));
           };
-          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
@@ -1274,16 +1304,41 @@ public class Scenario {
     return _builder;
   }
   
-  private CharSequence objectMapperCallExpectedData(final DataDefinition it, final Model model) {
+  private CharSequence _objectMapperCallPayload(final StringType it, final HttpServerAce action) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    _builder.append(_valueFrom);
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action);
+    _builder.append(_payloadDataNameWithPackage, "\t\t");
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallPayload(final Void it, final HttpServerAce action) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"{}\",");
+    _builder.newLine();
+    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action);
+    _builder.append(_payloadDataNameWithPackage);
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallExpectedData(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
     {
-      if (((it.getData() != null) && (it.getData().getMembers() != null))) {
+      if (((it != null) && (it.getMembers() != null))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\"\\\"uuid\\\" : \\\"");
-        String _uuid = it.getUuid();
+        EObject _eContainer = it.eContainer();
+        String _uuid = ((DataDefinition) _eContainer).getUuid();
         _builder.append(_uuid, "\t");
         _builder.append("\\\"");
         {
@@ -1291,7 +1346,7 @@ public class Scenario {
             boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
             return Boolean.valueOf((!_isNotReplayable));
           };
-          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getData().getMembers(), _function);
+          Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
           for(final JsonMember member : _filter) {
             if (!_hasElements) {
@@ -1321,7 +1376,20 @@ public class Scenario {
     return _builder;
   }
   
-  private CharSequence objectMapperCallExpectedPersistenceData(final JsonObject it, final Model model) {
+  private CharSequence _objectMapperCallExpectedData(final StringType it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    _builder.append(_valueFrom);
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(model);
+    _builder.append(_dataNameWithPackage);
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallExpectedPersistenceData(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
     {
@@ -1354,6 +1422,29 @@ public class Scenario {
     }
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
+    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallExpectedPersistenceData(final StringType it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"");
+    CharSequence _valueFrom = this._attributeExtension.valueFrom(it.getString());
+    _builder.append(_valueFrom);
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
+    _builder.append(_modelClassNameWithPackage);
+    _builder.append(".class)");
+    return _builder;
+  }
+  
+  private CharSequence _objectMapperCallExpectedPersistenceData(final Void it, final Model model) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("objectMapper.readValue(\"{}\",");
+    _builder.newLine();
     String _modelClassNameWithPackage = this._modelExtension.modelClassNameWithPackage(model);
     _builder.append(_modelClassNameWithPackage);
     _builder.append(".class)");
@@ -1560,6 +1651,56 @@ public class Scenario {
       return _persistenceVerification((SelectByPrimaryKeys)it, model);
     } else if (it instanceof SelectByUniqueAttribute) {
       return _persistenceVerification((SelectByUniqueAttribute)it, model);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, model).toString());
+    }
+  }
+  
+  private CharSequence objectMapperCall(final JsonObject it, final Model model) {
+    if (it instanceof JsonObjectAce) {
+      return _objectMapperCall((JsonObjectAce)it, model);
+    } else if (it instanceof StringType) {
+      return _objectMapperCall((StringType)it, model);
+    } else if (it == null) {
+      return _objectMapperCall((Void)null, model);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, model).toString());
+    }
+  }
+  
+  private CharSequence objectMapperCallPayload(final JsonObject it, final HttpServerAce action) {
+    if (it instanceof JsonObjectAce) {
+      return _objectMapperCallPayload((JsonObjectAce)it, action);
+    } else if (it instanceof StringType) {
+      return _objectMapperCallPayload((StringType)it, action);
+    } else if (it == null) {
+      return _objectMapperCallPayload((Void)null, action);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, action).toString());
+    }
+  }
+  
+  private CharSequence objectMapperCallExpectedData(final JsonObject it, final Model model) {
+    if (it instanceof JsonObjectAce) {
+      return _objectMapperCallExpectedData((JsonObjectAce)it, model);
+    } else if (it instanceof StringType) {
+      return _objectMapperCallExpectedData((StringType)it, model);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, model).toString());
+    }
+  }
+  
+  private CharSequence objectMapperCallExpectedPersistenceData(final JsonObject it, final Model model) {
+    if (it instanceof JsonObjectAce) {
+      return _objectMapperCallExpectedPersistenceData((JsonObjectAce)it, model);
+    } else if (it instanceof StringType) {
+      return _objectMapperCallExpectedPersistenceData((StringType)it, model);
+    } else if (it == null) {
+      return _objectMapperCallExpectedPersistenceData((Void)null, model);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it, model).toString());

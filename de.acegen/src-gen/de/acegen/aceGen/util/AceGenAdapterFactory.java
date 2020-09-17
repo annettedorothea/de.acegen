@@ -311,14 +311,14 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createAttributeAdapter();
       }
       @Override
-      public Adapter caseJsonDateTime(JsonDateTime object)
-      {
-        return createJsonDateTimeAdapter();
-      }
-      @Override
       public Adapter caseJsonObject(JsonObject object)
       {
         return createJsonObjectAdapter();
+      }
+      @Override
+      public Adapter caseJsonObjectAce(JsonObjectAce object)
+      {
+        return createJsonObjectAceAdapter();
       }
       @Override
       public Adapter caseJsonMember(JsonMember object)
@@ -334,6 +334,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseJsonArray(JsonArray object)
       {
         return createJsonArrayAdapter();
+      }
+      @Override
+      public Adapter caseJsonDateTime(JsonDateTime object)
+      {
+        return createJsonDateTimeAdapter();
       }
       @Override
       public Adapter caseStringType(StringType object)
@@ -1093,21 +1098,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.JsonDateTime
-   * @generated
-   */
-  public Adapter createJsonDateTimeAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1118,6 +1108,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJsonObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonObjectAce <em>Json Object Ace</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonObjectAce
+   * @generated
+   */
+  public Adapter createJsonObjectAceAdapter()
   {
     return null;
   }
@@ -1163,6 +1168,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJsonArrayAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.JsonDateTime <em>Json Date Time</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.JsonDateTime
+   * @generated
+   */
+  public Adapter createJsonDateTimeAdapter()
   {
     return null;
   }

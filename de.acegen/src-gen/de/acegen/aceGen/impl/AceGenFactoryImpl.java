@@ -112,11 +112,12 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.DATA_DEFINITION: return createDataDefinition();
       case AceGenPackage.AUTHORIZATION: return createAuthorization();
       case AceGenPackage.ATTRIBUTE: return createAttribute();
-      case AceGenPackage.JSON_DATE_TIME: return createJsonDateTime();
       case AceGenPackage.JSON_OBJECT: return createJsonObject();
+      case AceGenPackage.JSON_OBJECT_ACE: return createJsonObjectAce();
       case AceGenPackage.JSON_MEMBER: return createJsonMember();
       case AceGenPackage.JSON_VALUE: return createJsonValue();
       case AceGenPackage.JSON_ARRAY: return createJsonArray();
+      case AceGenPackage.JSON_DATE_TIME: return createJsonDateTime();
       case AceGenPackage.STRING_TYPE: return createStringType();
       case AceGenPackage.BOOLEAN_TYPE: return createBooleanType();
       case AceGenPackage.NULL_TYPE: return createNullType();
@@ -698,10 +699,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public JsonDateTime createJsonDateTime()
+  public JsonObject createJsonObject()
   {
-    JsonDateTimeImpl jsonDateTime = new JsonDateTimeImpl();
-    return jsonDateTime;
+    JsonObjectImpl jsonObject = new JsonObjectImpl();
+    return jsonObject;
   }
 
   /**
@@ -710,10 +711,10 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
-  public JsonObject createJsonObject()
+  public JsonObjectAce createJsonObjectAce()
   {
-    JsonObjectImpl jsonObject = new JsonObjectImpl();
-    return jsonObject;
+    JsonObjectAceImpl jsonObjectAce = new JsonObjectAceImpl();
+    return jsonObjectAce;
   }
 
   /**
@@ -750,6 +751,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     JsonArrayImpl jsonArray = new JsonArrayImpl();
     return jsonArray;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public JsonDateTime createJsonDateTime()
+  {
+    JsonDateTimeImpl jsonDateTime = new JsonDateTimeImpl();
+    return jsonDateTime;
   }
 
   /**

@@ -38,7 +38,7 @@ import de.acegen.aceGen.JsonArrayClient;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
 import de.acegen.aceGen.JsonMemberClient;
-import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonObjectClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
@@ -182,8 +182,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.JSON_MEMBER_CLIENT:
 				sequence_JsonMemberClient(context, (JsonMemberClient) semanticObject); 
 				return; 
-			case AceGenPackage.JSON_OBJECT:
-				sequence_JsonObject(context, (JsonObject) semanticObject); 
+			case AceGenPackage.JSON_OBJECT_ACE:
+				sequence_JsonObjectAce(context, (JsonObjectAce) semanticObject); 
 				return; 
 			case AceGenPackage.JSON_OBJECT_CLIENT:
 				sequence_JsonObjectClient(context, (JsonObjectClient) semanticObject); 
@@ -734,8 +734,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Contexts:
 	 *     JsonValueClient returns JsonDateTime
-	 *     JsonDateTime returns JsonDateTime
 	 *     JsonValue returns JsonDateTime
+	 *     JsonDateTime returns JsonDateTime
 	 *
 	 * Constraint:
 	 *     (dateTime=STRING pattern=STRING)
@@ -798,6 +798,20 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     JsonObject returns JsonObjectAce
+	 *     JsonObjectAce returns JsonObjectAce
+	 *     JsonValue returns JsonObjectAce
+	 *
+	 * Constraint:
+	 *     (members+=JsonMember? members+=JsonMember*)
+	 */
+	protected void sequence_JsonObjectAce(ISerializationContext context, JsonObjectAce semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     JsonObjectClient returns JsonObjectClient
 	 *     JsonValueClient returns JsonObjectClient
 	 *
@@ -805,19 +819,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (members+=JsonMemberClient? members+=JsonMemberClient*)
 	 */
 	protected void sequence_JsonObjectClient(ISerializationContext context, JsonObjectClient semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     JsonObject returns JsonObject
-	 *     JsonValue returns JsonObject
-	 *
-	 * Constraint:
-	 *     (members+=JsonMember? members+=JsonMember*)
-	 */
-	protected void sequence_JsonObject(ISerializationContext context, JsonObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1030,6 +1031,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Contexts:
 	 *     JsonValueClient returns StringType
+	 *     JsonObject returns StringType
 	 *     JsonValue returns StringType
 	 *     StringType returns StringType
 	 *

@@ -447,15 +447,6 @@ public interface AceGenFactory extends EFactory
   Attribute createAttribute();
 
   /**
-   * Returns a new object of class '<em>Json Date Time</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Json Date Time</em>'.
-   * @generated
-   */
-  JsonDateTime createJsonDateTime();
-
-  /**
    * Returns a new object of class '<em>Json Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -463,6 +454,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   JsonObject createJsonObject();
+
+  /**
+   * Returns a new object of class '<em>Json Object Ace</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Object Ace</em>'.
+   * @generated
+   */
+  JsonObjectAce createJsonObjectAce();
 
   /**
    * Returns a new object of class '<em>Json Member</em>'.
@@ -490,6 +490,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   JsonArray createJsonArray();
+
+  /**
+   * Returns a new object of class '<em>Json Date Time</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Json Date Time</em>'.
+   * @generated
+   */
+  JsonDateTime createJsonDateTime();
 
   /**
    * Returns a new object of class '<em>String Type</em>'.

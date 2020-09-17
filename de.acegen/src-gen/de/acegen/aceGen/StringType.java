@@ -20,7 +20,7 @@ package de.acegen.aceGen;
  * @model
  * @generated
  */
-public interface StringType extends JsonValueClient, JsonValue
+public interface StringType extends JsonValueClient, JsonObject
 {
   /**
    * Returns the value of the '<em><b>String</b></em>' attribute.
