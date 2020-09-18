@@ -67,6 +67,143 @@ class AceTemplate {
 		        App.render(AppState.getAppState());
 		    }
 		
+		    static httpGet(url, uuid, authorize) {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		            if (authorize === true) {
+		                let authorization = AppUtils.basicAuth();
+		                if (authorization !== undefined) {
+		                    headers.append("Authorization", authorization);
+		                }
+		            }
+		
+					if (uuid) {
+			            if (url.indexOf("?") < 0) {
+			            	url += "?uuid=" + uuid;
+			            } else {
+			            	url += "&uuid=" + uuid;
+			            }
+			        }
+		
+		            const options = {
+		                method: 'GET',
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache'
+		            };
+		            
+		            const request = new Request(url, options);
+		
+		            let status;
+		            let statusText;
+		            fetch(request).then(function (response) {
+		                status = response.status;
+		                statusText = response.statusText;
+		                if (status >= 300) {
+		                    return response.text();
+		                } else {
+		                    return response.json();
+		                }
+		            }).then(function (data) {
+		                if (status >= 300) {
+		                    const error = {
+		                        code: status,
+		                        text: statusText,
+		                        errorKey: data
+		                    };
+		                    reject(error);
+		                } else {
+		                    resolve(data);
+		                }
+		            }).catch(function (error) {
+		                const status = {
+		                    code: error.name,
+		                    text: error.message
+		                };
+		                reject(status);
+		            });
+		        });
+		    }
+		
+		    static httpChange(methodType, url, uuid, authorize, data) {
+		        return new Promise((resolve, reject) => {
+		            const headers = new Headers();
+		            headers.append("Content-Type", "application/json");
+		            headers.append("Accept", "application/json");
+		            if (authorize === true) {
+		                let authorization = AppUtils.basicAuth();
+		                if (authorization !== undefined) {
+		                    headers.append("Authorization", authorization);
+		                }
+		            }
+		
+					if (uuid) {
+					    if (url.indexOf("?") < 0) {
+					        url += "?uuid=" + uuid;
+					    } else {
+					        url += "&uuid=" + uuid;
+					    }
+					}
+		
+		            const options = {
+		                method: methodType,
+		                headers: headers,
+		                mode: 'cors',
+		                cache: 'no-cache',
+		                body: JSON.stringify(data)
+		            };
+		
+		            const request = new Request(url, options);
+		
+		            let status;
+		            let statusText;
+		            fetch(request).then(function (response) {
+		                status = response.status;
+		                statusText = response.statusText;
+		                return response.text();
+		            }).then(function (data) {
+		                if (status >= 300) {
+		                    const error = {
+		                        code: status,
+		                        text: statusText,
+		                        errorKey: data
+		                    };
+		                    reject(error);
+		                } else {
+			                if (data) {
+			                    resolve(JSON.parse(data));
+			                } else {
+			                    resolve();
+			                }
+		                }
+		            }).catch(function (error) {
+		                const status = {
+		                    code: error.name,
+		                    text: error.message
+		                };
+		                reject(status);
+		            });
+		        });
+		    }
+		
+		    static httpPost(url, uuid, authorize, data) {
+		        return AppUtils.httpChange("POST", url, uuid, authorize, data);
+		    }
+		
+		    static httpPut(url, uuid, authorize, data) {
+		        return AppUtils.httpChange("PUT", url, uuid, authorize, data);
+		    }
+		
+		    static httpDelete(url, uuid, authorize, data) {
+		        return AppUtils.httpChange("DELETE", url, uuid, authorize, data);
+		    }
+		    
+		    static basicAuth() {
+		        return "<your authorization>";
+		    }
+		    
 		    static createUUID() {
 		        let d = new Date().getTime();
 		        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -562,11 +699,10 @@ class AceTemplate {
 		                creator,
 		                clientVersion: Utils.getClientVersion(),
 		                device: browser.name + " " + browser.version,
-		                uuid,
 		                apiKey: Utils.getAceScenariosApiKey(),
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data).then(() => {
+		            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', uuid, false, data).then(() => {
 		                return new Promise((resolve) => {
 		                    resolve(uuid);
 		                });
@@ -575,7 +711,7 @@ class AceTemplate {
 		    }
 		
 		    static loadBug(id) {
-		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/bugs/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/bugs/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}}`, AppUtils.createUUID(), false);
 		    }
 		
 		    static saveScenario(description, creator) {
@@ -590,11 +726,10 @@ class AceTemplate {
 		                    creator,
 		                    clientVersion: Utils.getClientVersion(),
 		                    device: browser.name + " " + browser.version,
-		                    uuid,
 		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion
 		                };
-		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data).then(() => {
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', uuid, false, data).then(() => {
 		                    return new Promise((resolve) => {
 		                        resolve(uuid);
 		                    });
@@ -607,30 +742,28 @@ class AceTemplate {
 		        return AppUtils.httpGet('replay/e2e/timeline').then((serverTimeline) => {
 		            return Utils.getServerInfo().then((serverInfo) => {
 		                const browser = Utils.getBrowserInfo();
-		                const uuid = AppUtils.createUUID();
 		                const data = {
 		                    scenarioId: ReplayUtils.scenarioConfig.scenarioId,
 		                    timeline: JSON.stringify(normalized),
 		                    executor: ReplayUtils.scenarioConfig.executor,
 		                    result,
-		                    uuid,
 		                    clientVersion: Utils.getClientVersion(),
 		                    device: browser.name + " " + browser.version,
 		                    apiKey: Utils.getAceScenariosApiKey(),
 		                    serverVersion: serverInfo.serverVersion,
 		                    serverTimeline: JSON.stringify(serverTimeline)
 		                };
-		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', false, data);
+		                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', AppUtils.createUUID(), false, data);
 		            });
 		        });
 		    }
 		
 		    static loadScenario(id) {
-		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}`, AppUtils.createUUID(), false);
 		    }
 		
 		    static loadNextScenario(lastId) {
-		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?lastId=${lastId}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
+		        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?lastId=${lastId}&apiKey=${Utils.getAceScenariosApiKey()}`, AppUtils.createUUID(), false);
 		    }
 		
 		    static getBrowserInfo() {
@@ -675,7 +808,7 @@ class AceTemplate {
 		    static replayE2E(pauseInMillis, serverTimeline) {
 		        ReplayUtils.prepareReplay();
 		        AppUtils.createInitialAppState();
-		        AppUtils.httpPut('replay/e2e/start', false, JSON.parse(serverTimeline)).then(() => {
+		        AppUtils.httpPut('replay/e2e/start', undefined, false, JSON.parse(serverTimeline)).then(() => {
 		            ACEController.startReplay(ACEController.E2E, pauseInMillis)
 		        });
 		    }

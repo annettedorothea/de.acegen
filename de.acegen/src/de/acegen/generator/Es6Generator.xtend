@@ -93,8 +93,6 @@ class Es6Generator {
 		fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT, commandTemplate.generateCommand());
 		fsa.generateFile('ace/AbstractAsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			commandTemplate.generateAbstractAsynchronousCommand());
-		fsa.generateFile('ace/AsynchronousCommand.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-			commandTemplate.generateAsynchronousCommand());
 		fsa.generateFile('ace/AbstractSynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			commandTemplate.generateAbstractSynchronousCommand());
 		fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateEvent());

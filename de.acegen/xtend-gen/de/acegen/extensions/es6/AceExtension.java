@@ -140,19 +140,19 @@ public class AceExtension {
       String _type = it.getServerCall().getType();
       boolean _equals = Objects.equal(_type, "DELETE");
       if (_equals) {
-        _builder.append("doHttpDelete");
+        _builder.append("httpDelete");
       } else {
         String _type_1 = it.getServerCall().getType();
         boolean _equals_1 = Objects.equal(_type_1, "POST");
         if (_equals_1) {
-          _builder.append("doHttpPost");
+          _builder.append("httpPost");
         } else {
           String _type_2 = it.getServerCall().getType();
           boolean _equals_2 = Objects.equal(_type_2, "PUT");
           if (_equals_2) {
-            _builder.append("doHttpPut");
+            _builder.append("httpPut");
           } else {
-            _builder.append("doHttpGet");
+            _builder.append("httpGet");
           }
         }
       }

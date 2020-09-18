@@ -252,11 +252,11 @@ class CommandTemplate {
 		«copyright»
 
 		import ACEController from "./ACEController";
-		import AsynchronousCommand from "../../src/ace/AsynchronousCommand";
 		import AppUtils from "../../src/app/AppUtils";
 		import Utils from "./Utils";
+		import Command from "./Command";
 		
-		export default class AbstractAsynchronousCommand extends AsynchronousCommand {
+		export default class AbstractAsynchronousCommand extends Command {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
 					if (ACEController.execution !== ACEController.REPLAY) {
@@ -296,188 +296,38 @@ class CommandTemplate {
 		    	return true;
 		    }
 		
-		    doHttpGet(url, authorize) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return this.httpGet(url, authorize);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    doHttpPost(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return this.httpPost(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    doHttpPut(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return this.httpPut(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    doHttpDelete(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return this.httpDelete(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		}
-		
-		
-		«sdg»
-		
-		
-		
-	'''
-	
-	def generateAsynchronousCommand() '''
-		«copyright»
-
-		import Command from "../../gen/ace/Command";
-		
-		export default class AsynchronousCommand extends Command {
-		    
 		    httpGet(url, authorize) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		            if (authorize === true) {
-		                let authorization = this.basicAuth();
-		                if (authorization !== undefined) {
-		                    headers.append("Authorization", authorization);
-		                }
-		            }
-		
-		            if (url.indexOf("?") < 0) {
-		            	url += "?uuid=" + this.commandData.uuid;
-		            } else {
-		            	url += "&uuid=" + this.commandData.uuid;
-		            }
-		
-		            const options = {
-		                method: 'GET',
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache'
-		            };
-		            
-		            const request = new Request(url, options);
-		
-		            let status;
-		            let statusText;
-		            fetch(request).then(function (response) {
-		                status = response.status;
-		                statusText = response.statusText;
-		                if (status >= 300) {
-		                    return response.text();
-		                } else {
-		                    return response.json();
-		                }
-		            }).then(function (data) {
-		                if (status >= 300) {
-		                    const error = {
-		                        code: status,
-		                        text: statusText,
-		                        errorKey: data
-		                    };
-		                    reject(error);
-		                } else {
-		                    resolve(data);
-		                }
-		            }).catch(function (error) {
-		                const status = {
-		                    code: error.name,
-		                    text: error.message
-		                };
-		                reject(status);
-		            });
-		        });
-		    }
-		
-		    httpChange(methodType, url, authorize, data) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		            if (authorize === true) {
-		                let authorization = this.basicAuth();
-		                if (authorization !== undefined) {
-		                    headers.append("Authorization", authorization);
-		                }
-		            }
-		
-				    if (url.indexOf("?") < 0) {
-				        url += "?uuid=" + this.commandData.uuid;
-				    } else {
-				        url += "&uuid=" + this.commandData.uuid;
-				    }
-
-		            const options = {
-		                method: methodType,
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache',
-		                body: JSON.stringify(data)
-		            };
-		
-		            const request = new Request(url, options);
-
-		            let status;
-		            let statusText;
-		            fetch(request).then(function (response) {
-		                status = response.status;
-		                statusText = response.statusText;
-		                return response.text();
-		            }).then(function (data) {
-		                if (status >= 300) {
-		                    const error = {
-		                        code: status,
-		                        text: statusText,
-		                        errorKey: data
-		                    };
-		                    reject(error);
-		                } else {
-			                if (data) {
-			                    resolve(JSON.parse(data));
-			                } else {
-			                    resolve();
-			                }
-		                }
-		            }).catch(function (error) {
-		                const status = {
-		                    code: error.name,
-		                    text: error.message
-		                };
-		                reject(status);
-		            });
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
+		            return AppUtils.httpGet(url, this.commandData.uuid, authorize);
+		        }, (error) => {
+		            throw error;
 		        });
 		    }
 		
 		    httpPost(url, authorize, data) {
-		        return this.httpChange("POST", url, authorize, data);
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
+		            return AppUtils.httpPost(url, this.commandData.uuid, authorize, data);
+		        }, (error) => {
+		            throw error;
+		        });
 		    }
 		
 		    httpPut(url, authorize, data) {
-		        return this.httpChange("PUT", url, authorize, data);
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
+		            return AppUtils.httpPut(url, this.commandData.uuid, authorize, data);
+		        }, (error) => {
+		            throw error;
+		        });
 		    }
 		
 		    httpDelete(url, authorize, data) {
-		        return this.httpChange("DELETE", url, authorize, data);
+		        return Utils.prepareAction(this.commandData.uuid).then(() => {
+		            return AppUtils.httpDelete(url, this.commandData.uuid, authorize, data);
+		        }, (error) => {
+		            throw error;
+		        });
 		    }
-		    
-		    static basicAuth() {
-		        return "<your authorization>";
-		    }
-		    
-			
+		
 		}
 		
 		
