@@ -50,6 +50,7 @@ class BaseScenario {
 		import org.junit.jupiter.api.BeforeAll;
 		import org.junit.jupiter.api.BeforeEach;
 		import org.junit.jupiter.api.Test;
+		import org.junit.jupiter.api.extension.ExtendWith;
 		import org.junit.platform.runner.JUnitPlatform;
 		import org.junit.runner.RunWith;
 		import org.slf4j.Logger;
@@ -60,6 +61,7 @@ class BaseScenario {
 		import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 		
 		@RunWith(JUnitPlatform.class)
+		@ExtendWith(TestLogger.class)
 		public abstract class BaseScenario extends AbstractBaseScenario {
 		
 			static final Logger LOG = LoggerFactory.getLogger(BaseScenario.class);
@@ -86,6 +88,9 @@ class BaseScenario {
 				port = Integer.parseInt(config.getServer().getApplicationConnectors()[0].getPort());
 				protocol = config.getServer().getApplicationConnectors()[0].getType();
 				rootPath = config.getServer().getRootPath();
+				if (rootPath.charAt(rootPath.length() - 1) == '/') {
+					rootPath = rootPath.substring(0, rootPath.length() - 1);
+				}
 				jdbi = Jdbi.create(config.getDatabase().getUrl());
 			}
 		
@@ -116,6 +121,9 @@ class BaseScenario {
 			}
 		
 			private String buildUrl(String path, String uuid) {
+				if (path.charAt(0) != '/') {
+					path = "/" + path;
+				}
 				if (path.contains("?")) {
 					path += "&uuid=" + uuid;
 				} else {
@@ -225,23 +233,23 @@ class BaseScenario {
 			}
 		
 			@Override
-			protected Response callNotReplayableDataProviderPutValue(
+			protected Response callNonDeterministicDataProviderPutValue(
 					String uuid, String key, Object data) {
 				Client client = new JerseyClientBuilder().build();
 				Builder builder = client
-						.target(String.format("%s://%s:%d%s/test/not-replayable/value?uuid=" + uuid + "&key=" + key, protocol,
+						.target(String.format("%s://%s:%d%s/test/non-deterministic/value?uuid=" + uuid + "&key=" + key, protocol,
 								host, port, rootPath))
 						.request();
 				return builder.put(Entity.json(data));
 			}
 		
 			@Override
-			protected Response callNotReplayableDataProviderPutSystemTime(
+			protected Response callNonDeterministicDataProviderPutSystemTime(
 					String uuid, LocalDateTime dateTime) {
 				Client client = new JerseyClientBuilder().build();
 				Builder builder = client
 						.target(String.format(
-								"%s://%s:%d%s/test/not-replayable/system-time?uuid=" + uuid + "&system-time=" + dateTime,
+								"%s://%s:%d%s/test/non-deterministic/system-time?uuid=" + uuid + "&system-time=" + dateTime,
 								protocol, host, port, rootPath))
 						.request();
 				return builder.put(Entity.json(dateTime));
@@ -313,10 +321,10 @@ class BaseScenario {
 
 			protected abstract boolean prerequisite(String scenarioName);
 			
-			protected abstract Response callNotReplayableDataProviderPutValue(
+			protected abstract Response callNonDeterministicDataProviderPutValue(
 						String uuid, String key, Object data);
 						
-			protected abstract Response callNotReplayableDataProviderPutSystemTime(
+			protected abstract Response callNonDeterministicDataProviderPutSystemTime(
 						String uuid, LocalDateTime dateTime);
 						
 			protected abstract void addToMetrics(String action, Long duration);
@@ -328,5 +336,52 @@ class BaseScenario {
 		
 	'''
 
+	def generateTestLogger() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import java.util.Optional;
+		
+		import org.junit.jupiter.api.extension.ExtensionContext;
+		import org.junit.jupiter.api.extension.TestWatcher;
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+		
+		public class TestLogger implements TestWatcher {
+		
+			static final Logger LOG = LoggerFactory.getLogger(TestLogger.class);
+		
+			@Override
+			public void testDisabled(ExtensionContext context, Optional<String> reason) {
+				LOG.info("DISABLED {}", reason.orElse(""));
+				LOG.info("*********************************************************************************");
+			}
+		
+			@Override
+			public void testSuccessful(ExtensionContext context) {
+				LOG.info("SUCCESS");
+				LOG.info("*********************************************************************************");
+			}
+		
+			@Override
+			public void testAborted(ExtensionContext context, Throwable cause) {
+				LOG.error("ABORTED", cause);
+				LOG.error("*********************************************************************************");
+			}
+		
+			@Override
+			public void testFailed(ExtensionContext context, Throwable cause) {
+				LOG.error("FAILED", cause);
+				LOG.error("*********************************************************************************");
+			}
+		
+		
+		}
+		
+		
+		«sdg»
+		
+	'''
 	
 }

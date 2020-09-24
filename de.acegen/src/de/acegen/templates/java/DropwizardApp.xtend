@@ -42,11 +42,7 @@ class DropwizardApp {
 		import org.slf4j.LoggerFactory;
 		
 		import de.acegen.resources.GetServerInfoResource;
-		import de.acegen.resources.GetServerTimelineResource;
-		import de.acegen.resources.NotReplayableDataProviderResource;
-		import de.acegen.resources.PrepareE2EResource;
-		import de.acegen.resources.StartE2ESessionResource;
-		import de.acegen.resources.StopE2ESessionResource;
+		import de.acegen.resources.NonDeterministicDataProviderResource;
 
 		import com.codahale.metrics.servlets.AdminServlet;
 		
@@ -90,10 +86,6 @@ class DropwizardApp {
 						return configuration.getDataSourceFactory();
 					}
 				});
-		
-				if (!Config.LIVE.equals(mode)) {
-					bootstrap.addCommand(new EventReplayCommand(this));
-				}
 			}
 		
 			@Override
@@ -107,25 +99,14 @@ class DropwizardApp {
 		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
-				E2E e2e = new E2E();
-		
 				mode = configuration.getConfig().getMode();
 				LOG.info("running in {} mode", mode);
-				if (Config.REPLAY.equals(mode)) {
-					environment.jersey().register(new PrepareE2EResource(jdbi, daoProvider, viewProvider, e2e, configuration));
-					environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));
-					environment.jersey().register(new StopE2ESessionResource(e2e, configuration));
-					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are running in REPLAY mode. This is a security risc.");
-				} else if (Config.DEV.equals(mode)) {
-					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are running in DEV mode. This is a security risc.");
-				} else if (Config.TEST.equals(mode)) {
-					LOG.warn("You are running in TEST mode and the database is going to be cleared.");
+				if (Config.DEV.equals(mode)) {
+					LOG.warn("You are running in DEV mode and the database is going to be cleared.");
 					PersistenceHandle handle = new PersistenceHandle(jdbi.open());
 					daoProvider.truncateAllViews(handle);
 					handle.getHandle().close();
-					environment.jersey().register(new NotReplayableDataProviderResource());
+					environment.jersey().register(new NonDeterministicDataProviderResource());
 				}
 		
 				environment.jersey().register(new GetServerInfoResource());
@@ -147,7 +128,7 @@ class DropwizardApp {
 				configureCors(environment);
 		
 				AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider,
-						viewProvider, e2e);
+						viewProvider);
 				AppRegistration.registerConsumers(viewProvider, mode);
 			}
 		

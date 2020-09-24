@@ -217,16 +217,10 @@ public class DropwizardConfiguration {
     _builder.append("public class Config {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("public static final String REPLAY = \"REPLAY\";");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("public static final String LIVE = \"LIVE\";");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("public static final String DEV = \"DEV\";");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("public static final String TEST = \"TEST\";");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -242,7 +236,7 @@ public class DropwizardConfiguration {
     _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("private String mode = DEV;");
+    _builder.append("private String mode = LIVE;");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.newLine();

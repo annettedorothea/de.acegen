@@ -64,7 +64,6 @@ class Resource {
 		import org.apache.commons.lang3.StringUtils;
 		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.E2E;
 		import de.acegen.IDaoProvider;
 		import de.acegen.IDataContainer;
 		import de.acegen.ViewProvider;
@@ -72,7 +71,7 @@ class Resource {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.NonDeterministicDataProvider;
 		
 		«IF authorize»
 			import de.acegen.auth.AuthUser;
@@ -106,15 +105,13 @@ class Resource {
 			private CustomAppConfiguration appConfiguration;
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
-			private E2E e2e;
 
 		public «resourceName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
-				this.e2e = e2e;
 			}
 		
 		«IF getType !== null»@«getType»«ENDIF»
@@ -161,7 +158,7 @@ class Resource {
 				«ENDFOR»
 			«ENDIF»
 			
-			«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);
+			«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			action.setActionData(actionData);
 			try {
 				action.apply();

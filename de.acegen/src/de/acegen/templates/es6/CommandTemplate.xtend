@@ -43,8 +43,10 @@ class CommandTemplate {
 		import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
 		import Utils from "../../ace/Utils";
-		import ACEController from "../../ace/ACEController";
-		import * as AppState from "../../ace/AppState";
+		import AppUtils from "../../../src/app/AppUtils";
+		«IF refs.size > 0»
+			import * as AppState from "../../ace/AppState";
+		«ENDIF»
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
@@ -94,7 +96,7 @@ class CommandTemplate {
 				    		};
 				        «ENDIF»
 				
-						this.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
+						AppUtils.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, this.commandData.uuid, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
 							«IF getServerCall instanceof HttpServerAceRead»
 								«FOR attribute : (getServerCall as HttpServerAceRead).response»
 									this.commandData.«attribute.name» = data.«attribute.name»;
@@ -121,7 +123,9 @@ class CommandTemplate {
 
 		import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
 		import TriggerAction from "../../../gen/ace/TriggerAction";
-		import * as AppState from "../../ace/AppState";
+		«IF refs.size > 0»
+			import * as AppState from "../../ace/AppState";
+		«ENDIF»
 		«FOR outcome : outcomes»
 			«IF outcome.listeners.size > 0»
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
@@ -252,14 +256,12 @@ class CommandTemplate {
 		«copyright»
 
 		import ACEController from "./ACEController";
-		import AppUtils from "../../src/app/AppUtils";
-		import Utils from "./Utils";
 		import Command from "./Command";
 		
 		export default class AbstractAsynchronousCommand extends Command {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
-					if (ACEController.execution !== ACEController.REPLAY) {
+					if (ACEController.execution === ACEController.UI) {
 						if (this.validateCommandData()) {
 						    this.execute().then(() => {
 						        ACEController.addItemToTimeLine({command: this});
@@ -294,38 +296,6 @@ class CommandTemplate {
 		
 		    validateCommandData() {
 		    	return true;
-		    }
-		
-		    httpGet(url, authorize) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpGet(url, this.commandData.uuid, authorize);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpPost(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPost(url, this.commandData.uuid, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpPut(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPut(url, this.commandData.uuid, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpDelete(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpDelete(url, this.commandData.uuid, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
 		    }
 		
 		}

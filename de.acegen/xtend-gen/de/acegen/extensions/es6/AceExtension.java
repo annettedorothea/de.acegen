@@ -162,6 +162,11 @@ public class AceExtension {
   
   public String httpUrl(final HttpClientAce it) {
     String url = it.getServerCall().getUrl();
+    int _indexOf = url.indexOf("/");
+    boolean _notEquals = (_indexOf != 0);
+    if (_notEquals) {
+      url = ("/" + url);
+    }
     final String[] split1 = url.split("\\{");
     ArrayList<String> urlElements = new ArrayList<String>();
     for (final String split : split1) {
@@ -186,6 +191,6 @@ public class AceExtension {
         urlWithPathParam = (_urlWithPathParam_1 + _builder);
       }
     }
-    return ("/${Utils.getRootPath()}" + urlWithPathParam);
+    return ("${Utils.settings.rootPath}" + urlWithPathParam);
   }
 }

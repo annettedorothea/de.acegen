@@ -133,8 +133,6 @@ public class Es6Generator {
       this.aceTemplate.generateAppStub());
     fsa.generateFile("app/AppUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateAppUtilsStub());
-    fsa.generateFile("app/ReplayUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-      this.aceTemplate.generateReplayUtilsStub());
     fsa.generateFile("ace/Action.js", IFileSystemAccess.DEFAULT_OUTPUT, this.actionTemplate.generateAction());
     fsa.generateFile("ace/AsynchronousAction.js", IFileSystemAccess.DEFAULT_OUTPUT, 
       this.actionTemplate.generateAsynchronousAction());
@@ -148,7 +146,6 @@ public class Es6Generator {
     fsa.generateFile("ace/Event.js", IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateEvent());
     fsa.generateFile("ace/ACEController.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateACEController());
     fsa.generateFile("ace/TriggerAction.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateTriggerAction());
-    fsa.generateFile("ace/Scenario.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateScenario());
     fsa.generateFile("ace/Bug.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateBug());
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
     if (((httpClient.isAppStatePresent() && (httpClient.getAppState() != null)) && (httpClient.getAppState().size() > 0))) {

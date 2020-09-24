@@ -20,7 +20,7 @@ package de.acegen.templates.java.resources
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
 
-class NotReplayableDataProviderResource {
+class NonDeterministicDataProviderResource {
 
 	@Inject
 	extension CommonExtension
@@ -44,30 +44,30 @@ class NotReplayableDataProviderResource {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.NonDeterministicDataProvider;
 		
-		@Path("/test/not-replayable")
+		@Path("/test/non-deterministic")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class NotReplayableDataProviderResource {
+		public class NonDeterministicDataProviderResource {
 		
-			static final Logger LOG = LoggerFactory.getLogger(NotReplayableDataProviderResource.class);
+			static final Logger LOG = LoggerFactory.getLogger(NonDeterministicDataProviderResource.class);
 		
-			public NotReplayableDataProviderResource() {
+			public NonDeterministicDataProviderResource() {
 				super();
 			}
 		
 			@PUT
 			@Path("/value")
 			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key, String json) {
-				NotReplayableDataProvider.put(uuid, key, json);
+				NonDeterministicDataProvider.put(uuid, key, json);
 				return Response.ok().build();
 			}
 		
 			@PUT
 			@Path("/system-time")
 			public Response putSystemTime(@QueryParam("uuid") String uuid, @QueryParam("system-time") String systemTime) {
-				NotReplayableDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));
+				NonDeterministicDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));
 				return Response.ok().build();
 			}
 			

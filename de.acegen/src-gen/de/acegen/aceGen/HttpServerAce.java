@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.HttpServerAce#isProxy <em>Proxy</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerAce#getType <em>Type</em>}</li>
@@ -34,28 +33,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpServerAce extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Proxy</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Proxy</em>' attribute.
-   * @see #setProxy(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getHttpServerAce_Proxy()
-   * @model
-   * @generated
-   */
-  boolean isProxy();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpServerAce#isProxy <em>Proxy</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Proxy</em>' attribute.
-   * @see #isProxy()
-   * @generated
-   */
-  void setProxy(boolean value);
-
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

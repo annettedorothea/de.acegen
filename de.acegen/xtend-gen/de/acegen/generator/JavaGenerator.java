@@ -33,8 +33,7 @@ import de.acegen.generator.java.LiquibaseGenerator;
 import de.acegen.templates.java.AceOperation;
 import de.acegen.templates.java.Converter;
 import de.acegen.templates.java.DatabaseHandle;
-import de.acegen.templates.java.E2E;
-import de.acegen.templates.java.NotReplayableDataProvider;
+import de.acegen.templates.java.NonDeterministicDataProvider;
 import de.acegen.templates.java.Persistence;
 import de.acegen.templates.java.ServerInfo;
 import de.acegen.templates.java.TimelineItem;
@@ -117,9 +116,6 @@ public class JavaGenerator {
   private ServerInfo serverInfo;
   
   @Inject
-  private E2E e2e;
-  
-  @Inject
   private AceOperation aceOperation;
   
   @Inject
@@ -132,7 +128,7 @@ public class JavaGenerator {
   private YamlConfiguration yamlConfiguration;
   
   @Inject
-  private NotReplayableDataProvider notReplayableDataProvider;
+  private NonDeterministicDataProvider notReplayableDataProvider;
   
   @Inject
   private DatabaseHandle databaseHandle;
@@ -343,25 +339,20 @@ public class JavaGenerator {
     }
     fsa.generateFile("de/acegen/EventFactory.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.eventFactory.generateEventFactory());
-    fsa.generateFile("de/acegen/E2E.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.e2e.generate());
     fsa.generateFile("de/acegen/AceOperation.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceOperation.generate());
     fsa.generateFile("de/acegen/ServerInfo.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.serverInfo.generate());
-    fsa.generateFile("de/acegen/NotReplayableDataProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.notReplayableDataProvider.generateNotReplayableDataProvider());
+    fsa.generateFile("de/acegen/NonDeterministicDataProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.notReplayableDataProvider.generateNonDeterministicDataProvider());
     fsa.generateFile("de/acegen/AceDao.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.dao.generateAceDao());
     fsa.generateFile("de/acegen/Action.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.action.generateAction());
     fsa.generateFile("de/acegen/ReadAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.action.generateReadAction(false));
-    fsa.generateFile("de/acegen/ProxyReadAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.action.generateReadAction(true));
+      this.action.generateReadAction());
     fsa.generateFile("de/acegen/WriteAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.action.generateWriteAction(false));
-    fsa.generateFile("de/acegen/ProxyWriteAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-      this.action.generateWriteAction(true));
+      this.action.generateWriteAction());
     fsa.generateFile("de/acegen/HttpMethod.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.action.generateHttpMethod());
     fsa.generateFile("de/acegen/IAction.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
@@ -419,6 +410,8 @@ public class JavaGenerator {
     }
     fsa.generateFile("de/acegen/AbstractBaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, 
       this.baseScenario.generateAbstractBaseScenario());
+    fsa.generateFile("de/acegen/TestLogger.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, 
+      this.baseScenario.generateTestLogger());
     fsa.generateFile("de/acegen/BaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.baseScenario.generateBaseScenario());
     fsa.generateFile("de/acegen/YamlConfiguration.java", 

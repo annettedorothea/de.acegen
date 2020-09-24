@@ -149,7 +149,7 @@ HttpServerAce:
 ;
 
 HttpServerAceWrite: 
-	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
+	name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = WriteFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
@@ -166,7 +166,7 @@ HttpServerOutcome:
 ;
 
 HttpServerAceRead: 
-	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
+	name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = ReadFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
@@ -292,7 +292,7 @@ Attribute:
 	(type = Type | model = [Model | QualifiedName])
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
-	notReplayable ?= 'notReplayable'?
+	nonDeterministic ?= 'nonDeterministic'?
 ;
 
 QualifiedName:

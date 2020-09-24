@@ -81,7 +81,7 @@ class ModelExtension {
 		return list;
 	}
 	
-	def List<Attribute> allNotReplayableAttributes(Model it) {
+	def List<Attribute> allNonDeterministicAttributes(Model it) {
 		var list = new ArrayList<Attribute>()
 		if (it === null) {
 			return list
@@ -89,7 +89,7 @@ class ModelExtension {
 		var allAttributes = new ArrayList<Attribute>()
 		allAttributesRec(allAttributes)
 		for (attribute : allAttributes) {
-			if (attribute.notReplayable) {
+			if (attribute.nonDeterministic) {
 				list.add(attribute);
 			}
 		}

@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNotReplayable <em>Not Replayable</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNonDeterministic <em>Non Deterministic</em>}</li>
  * </ul>
  *
  * @generated
@@ -179,24 +179,24 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected Attribute foreignKey;
 
   /**
-   * The default value of the '{@link #isNotReplayable() <em>Not Replayable</em>}' attribute.
+   * The default value of the '{@link #isNonDeterministic() <em>Non Deterministic</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNotReplayable()
+   * @see #isNonDeterministic()
    * @generated
    * @ordered
    */
-  protected static final boolean NOT_REPLAYABLE_EDEFAULT = false;
+  protected static final boolean NON_DETERMINISTIC_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isNotReplayable() <em>Not Replayable</em>}' attribute.
+   * The cached value of the '{@link #isNonDeterministic() <em>Non Deterministic</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNotReplayable()
+   * @see #isNonDeterministic()
    * @generated
    * @ordered
    */
-  protected boolean notReplayable = NOT_REPLAYABLE_EDEFAULT;
+  protected boolean nonDeterministic = NON_DETERMINISTIC_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -465,9 +465,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public boolean isNotReplayable()
+  public boolean isNonDeterministic()
   {
-    return notReplayable;
+    return nonDeterministic;
   }
 
   /**
@@ -476,12 +476,12 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public void setNotReplayable(boolean newNotReplayable)
+  public void setNonDeterministic(boolean newNonDeterministic)
   {
-    boolean oldNotReplayable = notReplayable;
-    notReplayable = newNotReplayable;
+    boolean oldNonDeterministic = nonDeterministic;
+    nonDeterministic = newNonDeterministic;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE, oldNotReplayable, notReplayable));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC, oldNonDeterministic, nonDeterministic));
   }
 
   /**
@@ -512,8 +512,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         if (resolve) return getForeignKey();
         return basicGetForeignKey();
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
-        return isNotReplayable();
+      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
+        return isNonDeterministic();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -552,8 +552,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)newValue);
         return;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
-        setNotReplayable((Boolean)newValue);
+      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
+        setNonDeterministic((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -593,8 +593,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)null);
         return;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
-        setNotReplayable(NOT_REPLAYABLE_EDEFAULT);
+      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
+        setNonDeterministic(NON_DETERMINISTIC_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -626,8 +626,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         return foreignKey != null;
-      case AceGenPackage.ATTRIBUTE__NOT_REPLAYABLE:
-        return notReplayable != NOT_REPLAYABLE_EDEFAULT;
+      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
+        return nonDeterministic != NON_DETERMINISTIC_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -655,8 +655,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(type);
     result.append(", name: ");
     result.append(name);
-    result.append(", notReplayable: ");
-    result.append(notReplayable);
+    result.append(", nonDeterministic: ");
+    result.append(nonDeterministic);
     result.append(')');
     return result.toString();
   }

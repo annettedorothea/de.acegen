@@ -1453,7 +1453,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServerAce_Proxy()
+  public EAttribute getHttpServerAce_Name()
   {
     return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(0);
   }
@@ -1464,20 +1464,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServerAce_Name()
-  {
-    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getHttpServerAce_Model()
   {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(2);
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1488,7 +1477,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EAttribute getHttpServerAce_Type()
   {
-    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1499,7 +1488,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EAttribute getHttpServerAce_Url()
   {
-    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1510,7 +1499,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EAttribute getHttpServerAce_Authorize()
   {
-    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)httpServerAceEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1521,7 +1510,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpServerAce_PathParams()
   {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(6);
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1532,7 +1521,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpServerAce_QueryParams()
   {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(7);
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1543,7 +1532,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpServerAce_Payload()
   {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(8);
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -1554,7 +1543,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpServerAce_Response()
   {
-    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(9);
+    return (EReference)httpServerAceEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -2531,7 +2520,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getAttribute_NotReplayable()
+  public EAttribute getAttribute_NonDeterministic()
   {
     return (EAttribute)attributeEClass.getEStructuralFeatures().get(8);
   }
@@ -2943,7 +2932,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerEClass, HTTP_SERVER__SCENARIOS);
 
     httpServerAceEClass = createEClass(HTTP_SERVER_ACE);
-    createEAttribute(httpServerAceEClass, HTTP_SERVER_ACE__PROXY);
     createEAttribute(httpServerAceEClass, HTTP_SERVER_ACE__NAME);
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__MODEL);
     createEAttribute(httpServerAceEClass, HTTP_SERVER_ACE__TYPE);
@@ -3067,7 +3055,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__MODEL);
     createEAttribute(attributeEClass, ATTRIBUTE__NAME);
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
-    createEAttribute(attributeEClass, ATTRIBUTE__NOT_REPLAYABLE);
+    createEAttribute(attributeEClass, ATTRIBUTE__NON_DETERMINISTIC);
 
     jsonObjectEClass = createEClass(JSON_OBJECT);
 
@@ -3264,7 +3252,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServer_Scenarios(), this.getScenario(), null, "scenarios", null, 0, -1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceEClass, HttpServerAce.class, "HttpServerAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHttpServerAce_Proxy(), ecorePackage.getEBoolean(), "proxy", null, 0, 1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpServerAce_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAce_Model(), this.getModel(), null, "model", null, 0, 1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpServerAce_Type(), ecorePackage.getEString(), "type", null, 0, 1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3388,7 +3375,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_Model(), this.getModel(), null, "model", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAttribute_NotReplayable(), ecorePackage.getEBoolean(), "notReplayable", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAttribute_NonDeterministic(), ecorePackage.getEBoolean(), "nonDeterministic", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(jsonObjectEClass, JsonObject.class, "JsonObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

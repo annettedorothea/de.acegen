@@ -1006,22 +1006,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE = 20;
 
   /**
-   * The feature id for the '<em><b>Proxy</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_ACE__PROXY = 0;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__NAME = 1;
+  int HTTP_SERVER_ACE__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' reference.
@@ -1030,7 +1021,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__MODEL = 2;
+  int HTTP_SERVER_ACE__MODEL = 1;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1039,7 +1030,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__TYPE = 3;
+  int HTTP_SERVER_ACE__TYPE = 2;
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute.
@@ -1048,7 +1039,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__URL = 4;
+  int HTTP_SERVER_ACE__URL = 3;
 
   /**
    * The feature id for the '<em><b>Authorize</b></em>' attribute.
@@ -1057,7 +1048,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__AUTHORIZE = 5;
+  int HTTP_SERVER_ACE__AUTHORIZE = 4;
 
   /**
    * The feature id for the '<em><b>Path Params</b></em>' containment reference list.
@@ -1066,7 +1057,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__PATH_PARAMS = 6;
+  int HTTP_SERVER_ACE__PATH_PARAMS = 5;
 
   /**
    * The feature id for the '<em><b>Query Params</b></em>' containment reference list.
@@ -1075,7 +1066,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__QUERY_PARAMS = 7;
+  int HTTP_SERVER_ACE__QUERY_PARAMS = 6;
 
   /**
    * The feature id for the '<em><b>Payload</b></em>' containment reference list.
@@ -1084,7 +1075,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__PAYLOAD = 8;
+  int HTTP_SERVER_ACE__PAYLOAD = 7;
 
   /**
    * The feature id for the '<em><b>Response</b></em>' reference list.
@@ -1093,7 +1084,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE__RESPONSE = 9;
+  int HTTP_SERVER_ACE__RESPONSE = 8;
 
   /**
    * The number of structural features of the '<em>Http Server Ace</em>' class.
@@ -1102,7 +1093,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_FEATURE_COUNT = 10;
+  int HTTP_SERVER_ACE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl <em>Http Server Ace Write</em>}' class.
@@ -1113,15 +1104,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   int HTTP_SERVER_ACE_WRITE = 21;
-
-  /**
-   * The feature id for the '<em><b>Proxy</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_ACE_WRITE__PROXY = HTTP_SERVER_ACE__PROXY;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1268,15 +1250,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   int HTTP_SERVER_ACE_READ = 23;
-
-  /**
-   * The feature id for the '<em><b>Proxy</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_SERVER_ACE_READ__PROXY = HTTP_SERVER_ACE__PROXY;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2328,13 +2301,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__FOREIGN_KEY = 7;
 
   /**
-   * The feature id for the '<em><b>Not Replayable</b></em>' attribute.
+   * The feature id for the '<em><b>Non Deterministic</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__NOT_REPLAYABLE = 8;
+  int ATTRIBUTE__NON_DETERMINISTIC = 8;
 
   /**
    * The number of structural features of the '<em>Attribute</em>' class.
@@ -3562,17 +3535,6 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServerAce();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServerAce#isProxy <em>Proxy</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Proxy</em>'.
-   * @see de.acegen.aceGen.HttpServerAce#isProxy()
-   * @see #getHttpServerAce()
-   * @generated
-   */
-  EAttribute getHttpServerAce_Proxy();
-
-  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServerAce#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4614,15 +4576,15 @@ public interface AceGenPackage extends EPackage
   EReference getAttribute_ForeignKey();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isNonDeterministic <em>Non Deterministic</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Not Replayable</em>'.
-   * @see de.acegen.aceGen.Attribute#isNotReplayable()
+   * @return the meta object for the attribute '<em>Non Deterministic</em>'.
+   * @see de.acegen.aceGen.Attribute#isNonDeterministic()
    * @see #getAttribute()
    * @generated
    */
-  EAttribute getAttribute_NotReplayable();
+  EAttribute getAttribute_NonDeterministic();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
@@ -5601,14 +5563,6 @@ public interface AceGenPackage extends EPackage
     EClass HTTP_SERVER_ACE = eINSTANCE.getHttpServerAce();
 
     /**
-     * The meta object literal for the '<em><b>Proxy</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HTTP_SERVER_ACE__PROXY = eINSTANCE.getHttpServerAce_Proxy();
-
-    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6437,12 +6391,12 @@ public interface AceGenPackage extends EPackage
     EReference ATTRIBUTE__FOREIGN_KEY = eINSTANCE.getAttribute_ForeignKey();
 
     /**
-     * The meta object literal for the '<em><b>Not Replayable</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Non Deterministic</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE__NOT_REPLAYABLE = eINSTANCE.getAttribute_NotReplayable();
+    EAttribute ATTRIBUTE__NON_DETERMINISTIC = eINSTANCE.getAttribute_NonDeterministic();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.

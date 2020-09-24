@@ -41,7 +41,6 @@ class DropwizardAppRegistration {
 		import de.acegen.PersistenceConnection;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
-		import de.acegen.E2E;
 		import de.acegen.ViewProvider;
 		
 		«IF aceOperations.size > 0»
@@ -52,9 +51,9 @@ class DropwizardAppRegistration {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
+					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
 			}
 			
@@ -75,7 +74,7 @@ class DropwizardAppRegistration {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 			}
 		
 			public static void registerConsumers(ViewProvider viewProvider, String mode) {

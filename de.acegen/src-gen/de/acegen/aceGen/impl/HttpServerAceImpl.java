@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#isProxy <em>Proxy</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceImpl#getType <em>Type</em>}</li>
@@ -50,26 +49,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements HttpServerAce
 {
-  /**
-   * The default value of the '{@link #isProxy() <em>Proxy</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isProxy()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean PROXY_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isProxy() <em>Proxy</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isProxy()
-   * @generated
-   * @ordered
-   */
-  protected boolean proxy = PROXY_EDEFAULT;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -219,31 +198,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_SERVER_ACE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean isProxy()
-  {
-    return proxy;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setProxy(boolean newProxy)
-  {
-    boolean oldProxy = proxy;
-    proxy = newProxy;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER_ACE__PROXY, oldProxy, proxy));
   }
 
   /**
@@ -481,8 +435,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER_ACE__PROXY:
-        return isProxy();
       case AceGenPackage.HTTP_SERVER_ACE__NAME:
         return getName();
       case AceGenPackage.HTTP_SERVER_ACE__MODEL:
@@ -517,9 +469,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER_ACE__PROXY:
-        setProxy((Boolean)newValue);
-        return;
       case AceGenPackage.HTTP_SERVER_ACE__NAME:
         setName((String)newValue);
         return;
@@ -565,9 +514,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER_ACE__PROXY:
-        setProxy(PROXY_EDEFAULT);
-        return;
       case AceGenPackage.HTTP_SERVER_ACE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -609,8 +555,6 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER_ACE__PROXY:
-        return proxy != PROXY_EDEFAULT;
       case AceGenPackage.HTTP_SERVER_ACE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER_ACE__MODEL:
@@ -644,9 +588,7 @@ public class HttpServerAceImpl extends MinimalEObjectImpl.Container implements H
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (proxy: ");
-    result.append(proxy);
-    result.append(", name: ");
+    result.append(" (name: ");
     result.append(name);
     result.append(", type: ");
     result.append(type);

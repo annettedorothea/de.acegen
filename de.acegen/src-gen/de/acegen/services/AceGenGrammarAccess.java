@@ -1300,43 +1300,41 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	public class HttpServerAceWriteElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerAceWrite");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cProxyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cProxyProxyKeyword_0_0 = (Keyword)cProxyAssignment_0.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLessThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cModelAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cModelModelCrossReference_3_0 = (CrossReference)cModelAssignment_3.eContents().get(0);
-		private final RuleCall cModelModelQualifiedNameParserRuleCall_3_0_1 = (RuleCall)cModelModelCrossReference_3_0.eContents().get(1);
-		private final Keyword cGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeWriteFunctionTypeParserRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
-		private final Assignment cUrlAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cUrlSTRINGTerminalRuleCall_6_0 = (RuleCall)cUrlAssignment_6.eContents().get(0);
-		private final Assignment cAuthorizeAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final Keyword cAuthorizeAuthorizeKeyword_7_0 = (Keyword)cAuthorizeAssignment_7.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cLessThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cModelAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cModelModelCrossReference_2_0 = (CrossReference)cModelAssignment_2.eContents().get(0);
+		private final RuleCall cModelModelQualifiedNameParserRuleCall_2_0_1 = (RuleCall)cModelModelCrossReference_2_0.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTypeWriteFunctionTypeParserRuleCall_4_0 = (RuleCall)cTypeAssignment_4.eContents().get(0);
+		private final Assignment cUrlAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cUrlSTRINGTerminalRuleCall_5_0 = (RuleCall)cUrlAssignment_5.eContents().get(0);
+		private final Assignment cAuthorizeAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final Keyword cAuthorizeAuthorizeKeyword_6_0 = (Keyword)cAuthorizeAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cPathParamsKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cPathParamsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cPathParamsAttributeParamRefParserRuleCall_7_1_0 = (RuleCall)cPathParamsAssignment_7_1.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cPathParamsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cPathParamsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cPathParamsAttributeParamRefParserRuleCall_8_1_0 = (RuleCall)cPathParamsAssignment_8_1.eContents().get(0);
+		private final Keyword cQueryParamsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cQueryParamsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cQueryParamsAttributeParamRefParserRuleCall_8_1_0 = (RuleCall)cQueryParamsAssignment_8_1.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cQueryParamsKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cQueryParamsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cQueryParamsAttributeParamRefParserRuleCall_9_1_0 = (RuleCall)cQueryParamsAssignment_9_1.eContents().get(0);
+		private final Keyword cPayloadKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cPayloadAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cPayloadAttributeParamRefParserRuleCall_9_1_0 = (RuleCall)cPayloadAssignment_9_1.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cPayloadKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cPayloadAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final RuleCall cPayloadAttributeParamRefParserRuleCall_10_1_0 = (RuleCall)cPayloadAssignment_10_1.eContents().get(0);
-		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
-		private final Keyword cResponseKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Assignment cResponseAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
-		private final CrossReference cResponseAttributeCrossReference_11_1_0 = (CrossReference)cResponseAssignment_11_1.eContents().get(0);
-		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1 = (RuleCall)cResponseAttributeCrossReference_11_1_0.eContents().get(1);
-		private final Assignment cOutcomesAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_12_0 = (RuleCall)cOutcomesAssignment_12.eContents().get(0);
+		private final Keyword cResponseKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cResponseAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final CrossReference cResponseAttributeCrossReference_10_1_0 = (CrossReference)cResponseAssignment_10_1.eContents().get(0);
+		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_10_1_0_1 = (RuleCall)cResponseAttributeCrossReference_10_1_0.eContents().get(1);
+		private final Assignment cOutcomesAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cOutcomesHttpServerOutcomeParserRuleCall_11_0 = (RuleCall)cOutcomesAssignment_11.eContents().get(0);
 		
 		//HttpServerAceWrite:
-		//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
+		//	name=ID '<' model=[Model|QualifiedName] '>'
 		//	type=WriteFunctionType
 		//	url=STRING
 		//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
@@ -1345,112 +1343,106 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//	outcomes+=HttpServerOutcome*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>' type=WriteFunctionType url=STRING authorize?='authorize'?
-		//('pathParams' pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
+		//name=ID '<' model=[Model|QualifiedName] '>' type=WriteFunctionType url=STRING authorize?='authorize'? ('pathParams'
+		//pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
 		//payload+=AttributeParamRef*)? ('response' response+=[Attribute|QualifiedName]*)? outcomes+=HttpServerOutcome*
 		public Group getGroup() { return cGroup; }
 		
-		//proxy?='proxy'?
-		public Assignment getProxyAssignment_0() { return cProxyAssignment_0; }
-		
-		//'proxy'
-		public Keyword getProxyProxyKeyword_0_0() { return cProxyProxyKeyword_0_0; }
-		
 		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
 		//'<'
-		public Keyword getLessThanSignKeyword_2() { return cLessThanSignKeyword_2; }
+		public Keyword getLessThanSignKeyword_1() { return cLessThanSignKeyword_1; }
 		
 		//model=[Model|QualifiedName]
-		public Assignment getModelAssignment_3() { return cModelAssignment_3; }
+		public Assignment getModelAssignment_2() { return cModelAssignment_2; }
 		
 		//[Model|QualifiedName]
-		public CrossReference getModelModelCrossReference_3_0() { return cModelModelCrossReference_3_0; }
+		public CrossReference getModelModelCrossReference_2_0() { return cModelModelCrossReference_2_0; }
 		
 		//QualifiedName
-		public RuleCall getModelModelQualifiedNameParserRuleCall_3_0_1() { return cModelModelQualifiedNameParserRuleCall_3_0_1; }
+		public RuleCall getModelModelQualifiedNameParserRuleCall_2_0_1() { return cModelModelQualifiedNameParserRuleCall_2_0_1; }
 		
 		//'>'
-		public Keyword getGreaterThanSignKeyword_4() { return cGreaterThanSignKeyword_4; }
+		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
 		
 		//type=WriteFunctionType
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		public Assignment getTypeAssignment_4() { return cTypeAssignment_4; }
 		
 		//WriteFunctionType
-		public RuleCall getTypeWriteFunctionTypeParserRuleCall_5_0() { return cTypeWriteFunctionTypeParserRuleCall_5_0; }
+		public RuleCall getTypeWriteFunctionTypeParserRuleCall_4_0() { return cTypeWriteFunctionTypeParserRuleCall_4_0; }
 		
 		//url=STRING
-		public Assignment getUrlAssignment_6() { return cUrlAssignment_6; }
+		public Assignment getUrlAssignment_5() { return cUrlAssignment_5; }
 		
 		//STRING
-		public RuleCall getUrlSTRINGTerminalRuleCall_6_0() { return cUrlSTRINGTerminalRuleCall_6_0; }
+		public RuleCall getUrlSTRINGTerminalRuleCall_5_0() { return cUrlSTRINGTerminalRuleCall_5_0; }
 		
 		//authorize?='authorize'?
-		public Assignment getAuthorizeAssignment_7() { return cAuthorizeAssignment_7; }
+		public Assignment getAuthorizeAssignment_6() { return cAuthorizeAssignment_6; }
 		
 		//'authorize'
-		public Keyword getAuthorizeAuthorizeKeyword_7_0() { return cAuthorizeAuthorizeKeyword_7_0; }
+		public Keyword getAuthorizeAuthorizeKeyword_6_0() { return cAuthorizeAuthorizeKeyword_6_0; }
 		
 		//('pathParams' pathParams+=AttributeParamRef*)?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_7() { return cGroup_7; }
 		
 		//'pathParams'
-		public Keyword getPathParamsKeyword_8_0() { return cPathParamsKeyword_8_0; }
+		public Keyword getPathParamsKeyword_7_0() { return cPathParamsKeyword_7_0; }
 		
 		//pathParams+=AttributeParamRef*
-		public Assignment getPathParamsAssignment_8_1() { return cPathParamsAssignment_8_1; }
+		public Assignment getPathParamsAssignment_7_1() { return cPathParamsAssignment_7_1; }
 		
 		//AttributeParamRef
-		public RuleCall getPathParamsAttributeParamRefParserRuleCall_8_1_0() { return cPathParamsAttributeParamRefParserRuleCall_8_1_0; }
+		public RuleCall getPathParamsAttributeParamRefParserRuleCall_7_1_0() { return cPathParamsAttributeParamRefParserRuleCall_7_1_0; }
 		
 		//('queryParams' queryParams+=AttributeParamRef*)?
-		public Group getGroup_9() { return cGroup_9; }
+		public Group getGroup_8() { return cGroup_8; }
 		
 		//'queryParams'
-		public Keyword getQueryParamsKeyword_9_0() { return cQueryParamsKeyword_9_0; }
+		public Keyword getQueryParamsKeyword_8_0() { return cQueryParamsKeyword_8_0; }
 		
 		//queryParams+=AttributeParamRef*
-		public Assignment getQueryParamsAssignment_9_1() { return cQueryParamsAssignment_9_1; }
+		public Assignment getQueryParamsAssignment_8_1() { return cQueryParamsAssignment_8_1; }
 		
 		//AttributeParamRef
-		public RuleCall getQueryParamsAttributeParamRefParserRuleCall_9_1_0() { return cQueryParamsAttributeParamRefParserRuleCall_9_1_0; }
+		public RuleCall getQueryParamsAttributeParamRefParserRuleCall_8_1_0() { return cQueryParamsAttributeParamRefParserRuleCall_8_1_0; }
 		
 		//('payload' payload+=AttributeParamRef*)?
-		public Group getGroup_10() { return cGroup_10; }
+		public Group getGroup_9() { return cGroup_9; }
 		
 		//'payload'
-		public Keyword getPayloadKeyword_10_0() { return cPayloadKeyword_10_0; }
+		public Keyword getPayloadKeyword_9_0() { return cPayloadKeyword_9_0; }
 		
 		//payload+=AttributeParamRef*
-		public Assignment getPayloadAssignment_10_1() { return cPayloadAssignment_10_1; }
+		public Assignment getPayloadAssignment_9_1() { return cPayloadAssignment_9_1; }
 		
 		//AttributeParamRef
-		public RuleCall getPayloadAttributeParamRefParserRuleCall_10_1_0() { return cPayloadAttributeParamRefParserRuleCall_10_1_0; }
+		public RuleCall getPayloadAttributeParamRefParserRuleCall_9_1_0() { return cPayloadAttributeParamRefParserRuleCall_9_1_0; }
 		
 		//('response' response+=[Attribute|QualifiedName]*)?
-		public Group getGroup_11() { return cGroup_11; }
+		public Group getGroup_10() { return cGroup_10; }
 		
 		//'response'
-		public Keyword getResponseKeyword_11_0() { return cResponseKeyword_11_0; }
+		public Keyword getResponseKeyword_10_0() { return cResponseKeyword_10_0; }
 		
 		//response+=[Attribute|QualifiedName]*
-		public Assignment getResponseAssignment_11_1() { return cResponseAssignment_11_1; }
+		public Assignment getResponseAssignment_10_1() { return cResponseAssignment_10_1; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getResponseAttributeCrossReference_11_1_0() { return cResponseAttributeCrossReference_11_1_0; }
+		public CrossReference getResponseAttributeCrossReference_10_1_0() { return cResponseAttributeCrossReference_10_1_0; }
 		
 		//QualifiedName
-		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1; }
+		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_10_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_10_1_0_1; }
 		
 		//outcomes+=HttpServerOutcome*
-		public Assignment getOutcomesAssignment_12() { return cOutcomesAssignment_12; }
+		public Assignment getOutcomesAssignment_11() { return cOutcomesAssignment_11; }
 		
 		//HttpServerOutcome
-		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_12_0() { return cOutcomesHttpServerOutcomeParserRuleCall_12_0; }
+		public RuleCall getOutcomesHttpServerOutcomeParserRuleCall_11_0() { return cOutcomesHttpServerOutcomeParserRuleCall_11_0; }
 	}
 	public class HttpServerOutcomeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerOutcome");
@@ -1502,41 +1494,39 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	public class HttpServerAceReadElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerAceRead");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cProxyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cProxyProxyKeyword_0_0 = (Keyword)cProxyAssignment_0.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLessThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cModelAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cModelModelCrossReference_3_0 = (CrossReference)cModelAssignment_3.eContents().get(0);
-		private final RuleCall cModelModelQualifiedNameParserRuleCall_3_0_1 = (RuleCall)cModelModelCrossReference_3_0.eContents().get(1);
-		private final Keyword cGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeReadFunctionTypeParserRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
-		private final Assignment cUrlAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cUrlSTRINGTerminalRuleCall_6_0 = (RuleCall)cUrlAssignment_6.eContents().get(0);
-		private final Assignment cAuthorizeAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final Keyword cAuthorizeAuthorizeKeyword_7_0 = (Keyword)cAuthorizeAssignment_7.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cLessThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cModelAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cModelModelCrossReference_2_0 = (CrossReference)cModelAssignment_2.eContents().get(0);
+		private final RuleCall cModelModelQualifiedNameParserRuleCall_2_0_1 = (RuleCall)cModelModelCrossReference_2_0.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTypeReadFunctionTypeParserRuleCall_4_0 = (RuleCall)cTypeAssignment_4.eContents().get(0);
+		private final Assignment cUrlAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cUrlSTRINGTerminalRuleCall_5_0 = (RuleCall)cUrlAssignment_5.eContents().get(0);
+		private final Assignment cAuthorizeAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final Keyword cAuthorizeAuthorizeKeyword_6_0 = (Keyword)cAuthorizeAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cPathParamsKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cPathParamsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cPathParamsAttributeParamRefParserRuleCall_7_1_0 = (RuleCall)cPathParamsAssignment_7_1.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cPathParamsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cPathParamsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cPathParamsAttributeParamRefParserRuleCall_8_1_0 = (RuleCall)cPathParamsAssignment_8_1.eContents().get(0);
+		private final Keyword cQueryParamsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cQueryParamsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cQueryParamsAttributeParamRefParserRuleCall_8_1_0 = (RuleCall)cQueryParamsAssignment_8_1.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cQueryParamsKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cQueryParamsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cQueryParamsAttributeParamRefParserRuleCall_9_1_0 = (RuleCall)cQueryParamsAssignment_9_1.eContents().get(0);
+		private final Keyword cPayloadKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cPayloadAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cPayloadAttributeParamRefParserRuleCall_9_1_0 = (RuleCall)cPayloadAssignment_9_1.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cPayloadKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cPayloadAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final RuleCall cPayloadAttributeParamRefParserRuleCall_10_1_0 = (RuleCall)cPayloadAssignment_10_1.eContents().get(0);
-		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
-		private final Keyword cResponseKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
-		private final Assignment cResponseAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
-		private final CrossReference cResponseAttributeCrossReference_11_1_0 = (CrossReference)cResponseAssignment_11_1.eContents().get(0);
-		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1 = (RuleCall)cResponseAttributeCrossReference_11_1_0.eContents().get(1);
+		private final Keyword cResponseKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cResponseAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final CrossReference cResponseAttributeCrossReference_10_1_0 = (CrossReference)cResponseAssignment_10_1.eContents().get(0);
+		private final RuleCall cResponseAttributeQualifiedNameParserRuleCall_10_1_0_1 = (RuleCall)cResponseAttributeCrossReference_10_1_0.eContents().get(1);
 		
 		//HttpServerAceRead:
-		//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
+		//	name=ID '<' model=[Model|QualifiedName] '>'
 		//	type=ReadFunctionType
 		//	url=STRING
 		//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
@@ -1544,106 +1534,100 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//	response+=[Attribute|QualifiedName]*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>' type=ReadFunctionType url=STRING authorize?='authorize'?
-		//('pathParams' pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
+		//name=ID '<' model=[Model|QualifiedName] '>' type=ReadFunctionType url=STRING authorize?='authorize'? ('pathParams'
+		//pathParams+=AttributeParamRef*)? ('queryParams' queryParams+=AttributeParamRef*)? ('payload'
 		//payload+=AttributeParamRef*)? ('response' response+=[Attribute|QualifiedName]*)?
 		public Group getGroup() { return cGroup; }
 		
-		//proxy?='proxy'?
-		public Assignment getProxyAssignment_0() { return cProxyAssignment_0; }
-		
-		//'proxy'
-		public Keyword getProxyProxyKeyword_0_0() { return cProxyProxyKeyword_0_0; }
-		
 		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
 		//'<'
-		public Keyword getLessThanSignKeyword_2() { return cLessThanSignKeyword_2; }
+		public Keyword getLessThanSignKeyword_1() { return cLessThanSignKeyword_1; }
 		
 		//model=[Model|QualifiedName]
-		public Assignment getModelAssignment_3() { return cModelAssignment_3; }
+		public Assignment getModelAssignment_2() { return cModelAssignment_2; }
 		
 		//[Model|QualifiedName]
-		public CrossReference getModelModelCrossReference_3_0() { return cModelModelCrossReference_3_0; }
+		public CrossReference getModelModelCrossReference_2_0() { return cModelModelCrossReference_2_0; }
 		
 		//QualifiedName
-		public RuleCall getModelModelQualifiedNameParserRuleCall_3_0_1() { return cModelModelQualifiedNameParserRuleCall_3_0_1; }
+		public RuleCall getModelModelQualifiedNameParserRuleCall_2_0_1() { return cModelModelQualifiedNameParserRuleCall_2_0_1; }
 		
 		//'>'
-		public Keyword getGreaterThanSignKeyword_4() { return cGreaterThanSignKeyword_4; }
+		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
 		
 		//type=ReadFunctionType
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		public Assignment getTypeAssignment_4() { return cTypeAssignment_4; }
 		
 		//ReadFunctionType
-		public RuleCall getTypeReadFunctionTypeParserRuleCall_5_0() { return cTypeReadFunctionTypeParserRuleCall_5_0; }
+		public RuleCall getTypeReadFunctionTypeParserRuleCall_4_0() { return cTypeReadFunctionTypeParserRuleCall_4_0; }
 		
 		//url=STRING
-		public Assignment getUrlAssignment_6() { return cUrlAssignment_6; }
+		public Assignment getUrlAssignment_5() { return cUrlAssignment_5; }
 		
 		//STRING
-		public RuleCall getUrlSTRINGTerminalRuleCall_6_0() { return cUrlSTRINGTerminalRuleCall_6_0; }
+		public RuleCall getUrlSTRINGTerminalRuleCall_5_0() { return cUrlSTRINGTerminalRuleCall_5_0; }
 		
 		//authorize?='authorize'?
-		public Assignment getAuthorizeAssignment_7() { return cAuthorizeAssignment_7; }
+		public Assignment getAuthorizeAssignment_6() { return cAuthorizeAssignment_6; }
 		
 		//'authorize'
-		public Keyword getAuthorizeAuthorizeKeyword_7_0() { return cAuthorizeAuthorizeKeyword_7_0; }
+		public Keyword getAuthorizeAuthorizeKeyword_6_0() { return cAuthorizeAuthorizeKeyword_6_0; }
 		
 		//('pathParams' pathParams+=AttributeParamRef*)?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_7() { return cGroup_7; }
 		
 		//'pathParams'
-		public Keyword getPathParamsKeyword_8_0() { return cPathParamsKeyword_8_0; }
+		public Keyword getPathParamsKeyword_7_0() { return cPathParamsKeyword_7_0; }
 		
 		//pathParams+=AttributeParamRef*
-		public Assignment getPathParamsAssignment_8_1() { return cPathParamsAssignment_8_1; }
+		public Assignment getPathParamsAssignment_7_1() { return cPathParamsAssignment_7_1; }
 		
 		//AttributeParamRef
-		public RuleCall getPathParamsAttributeParamRefParserRuleCall_8_1_0() { return cPathParamsAttributeParamRefParserRuleCall_8_1_0; }
+		public RuleCall getPathParamsAttributeParamRefParserRuleCall_7_1_0() { return cPathParamsAttributeParamRefParserRuleCall_7_1_0; }
 		
 		//('queryParams' queryParams+=AttributeParamRef*)?
-		public Group getGroup_9() { return cGroup_9; }
+		public Group getGroup_8() { return cGroup_8; }
 		
 		//'queryParams'
-		public Keyword getQueryParamsKeyword_9_0() { return cQueryParamsKeyword_9_0; }
+		public Keyword getQueryParamsKeyword_8_0() { return cQueryParamsKeyword_8_0; }
 		
 		//queryParams+=AttributeParamRef*
-		public Assignment getQueryParamsAssignment_9_1() { return cQueryParamsAssignment_9_1; }
+		public Assignment getQueryParamsAssignment_8_1() { return cQueryParamsAssignment_8_1; }
 		
 		//AttributeParamRef
-		public RuleCall getQueryParamsAttributeParamRefParserRuleCall_9_1_0() { return cQueryParamsAttributeParamRefParserRuleCall_9_1_0; }
+		public RuleCall getQueryParamsAttributeParamRefParserRuleCall_8_1_0() { return cQueryParamsAttributeParamRefParserRuleCall_8_1_0; }
 		
 		//('payload' payload+=AttributeParamRef*)?
-		public Group getGroup_10() { return cGroup_10; }
+		public Group getGroup_9() { return cGroup_9; }
 		
 		//'payload'
-		public Keyword getPayloadKeyword_10_0() { return cPayloadKeyword_10_0; }
+		public Keyword getPayloadKeyword_9_0() { return cPayloadKeyword_9_0; }
 		
 		//payload+=AttributeParamRef*
-		public Assignment getPayloadAssignment_10_1() { return cPayloadAssignment_10_1; }
+		public Assignment getPayloadAssignment_9_1() { return cPayloadAssignment_9_1; }
 		
 		//AttributeParamRef
-		public RuleCall getPayloadAttributeParamRefParserRuleCall_10_1_0() { return cPayloadAttributeParamRefParserRuleCall_10_1_0; }
+		public RuleCall getPayloadAttributeParamRefParserRuleCall_9_1_0() { return cPayloadAttributeParamRefParserRuleCall_9_1_0; }
 		
 		//('response' response+=[Attribute|QualifiedName]*)?
-		public Group getGroup_11() { return cGroup_11; }
+		public Group getGroup_10() { return cGroup_10; }
 		
 		//'response'
-		public Keyword getResponseKeyword_11_0() { return cResponseKeyword_11_0; }
+		public Keyword getResponseKeyword_10_0() { return cResponseKeyword_10_0; }
 		
 		//response+=[Attribute|QualifiedName]*
-		public Assignment getResponseAssignment_11_1() { return cResponseAssignment_11_1; }
+		public Assignment getResponseAssignment_10_1() { return cResponseAssignment_10_1; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getResponseAttributeCrossReference_11_1_0() { return cResponseAttributeCrossReference_11_1_0; }
+		public CrossReference getResponseAttributeCrossReference_10_1_0() { return cResponseAttributeCrossReference_10_1_0; }
 		
 		//QualifiedName
-		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_11_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_11_1_0_1; }
+		public RuleCall getResponseAttributeQualifiedNameParserRuleCall_10_1_0_1() { return cResponseAttributeQualifiedNameParserRuleCall_10_1_0_1; }
 	}
 	public class AttributeParamRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.AttributeParamRef");
@@ -2646,19 +2630,19 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cForeignKeyAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final CrossReference cForeignKeyAttributeCrossReference_6_1_0 = (CrossReference)cForeignKeyAssignment_6_1.eContents().get(0);
 		private final RuleCall cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1 = (RuleCall)cForeignKeyAttributeCrossReference_6_1_0.eContents().get(1);
-		private final Assignment cNotReplayableAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final Keyword cNotReplayableNotReplayableKeyword_7_0 = (Keyword)cNotReplayableAssignment_7.eContents().get(0);
+		private final Assignment cNonDeterministicAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final Keyword cNonDeterministicNonDeterministicKeyword_7_0 = (Keyword)cNonDeterministicAssignment_7.eContents().get(0);
 		
 		//Attribute:
 		//	unique?='Unique'?
 		//	primaryKey?='PrimaryKey'?
 		//	notNull?='NotNull'?
 		//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-		//	notReplayable?='notReplayable'?;
+		//	nonDeterministic?='nonDeterministic'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//unique?='Unique'? primaryKey?='PrimaryKey'? notNull?='NotNull'? list?='List'? (type=Type | model=[Model|QualifiedName])
-		//name=ID ('references' foreignKey=[Attribute|QualifiedName])? notReplayable?='notReplayable'?
+		//name=ID ('references' foreignKey=[Attribute|QualifiedName])? nonDeterministic?='nonDeterministic'?
 		public Group getGroup() { return cGroup; }
 		
 		//unique?='Unique'?
@@ -2724,11 +2708,11 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//QualifiedName
 		public RuleCall getForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1() { return cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1; }
 		
-		//notReplayable?='notReplayable'?
-		public Assignment getNotReplayableAssignment_7() { return cNotReplayableAssignment_7; }
+		//nonDeterministic?='nonDeterministic'?
+		public Assignment getNonDeterministicAssignment_7() { return cNonDeterministicAssignment_7; }
 		
-		//'notReplayable'
-		public Keyword getNotReplayableNotReplayableKeyword_7_0() { return cNotReplayableNotReplayableKeyword_7_0; }
+		//'nonDeterministic'
+		public Keyword getNonDeterministicNonDeterministicKeyword_7_0() { return cNonDeterministicNonDeterministicKeyword_7_0; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.QualifiedName");
@@ -3585,7 +3569,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//HttpServerAceWrite:
-	//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
+	//	name=ID '<' model=[Model|QualifiedName] '>'
 	//	type=WriteFunctionType
 	//	url=STRING
 	//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
@@ -3611,7 +3595,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//HttpServerAceRead:
-	//	proxy?='proxy'? name=ID '<' model=[Model|QualifiedName] '>'
+	//	name=ID '<' model=[Model|QualifiedName] '>'
 	//	type=ReadFunctionType
 	//	url=STRING
 	//	authorize?='authorize'? ('pathParams' pathParams+=AttributeParamRef*)? ('queryParams'
@@ -3865,7 +3849,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	primaryKey?='PrimaryKey'?
 	//	notNull?='NotNull'?
 	//	list?='List'? (type=Type | model=[Model|QualifiedName]) name=ID ('references' foreignKey=[Attribute|QualifiedName])?
-	//	notReplayable?='notReplayable'?;
+	//	nonDeterministic?='nonDeterministic'?;
 	public AttributeElements getAttributeAccess() {
 		return pAttribute;
 	}

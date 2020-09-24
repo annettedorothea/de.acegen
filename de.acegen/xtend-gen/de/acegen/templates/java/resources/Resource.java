@@ -118,9 +118,6 @@ public class Resource {
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("import de.acegen.E2E;");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
     _builder.append("\t");
@@ -142,7 +139,7 @@ public class Resource {
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("import de.acegen.NotReplayableDataProvider;");
+    _builder.append("import de.acegen.NonDeterministicDataProvider;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -242,9 +239,6 @@ public class Resource {
     _builder.append("\t\t");
     _builder.append("private ViewProvider viewProvider;");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("private E2E e2e;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
@@ -253,7 +247,7 @@ public class Resource {
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("this.persistenceConnection = persistenceConnection;");
@@ -266,9 +260,6 @@ public class Resource {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("this.viewProvider = viewProvider;");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("this.e2e = e2e;");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -476,7 +467,7 @@ public class Resource {
     _builder.append(" action = new ");
     String _actionNameWithPackage_1 = this._aceExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage_1, "\t\t");
-    _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);");
+    _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("action.setActionData(actionData);");

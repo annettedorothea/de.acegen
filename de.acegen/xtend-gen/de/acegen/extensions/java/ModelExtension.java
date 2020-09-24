@@ -188,7 +188,7 @@ public class ModelExtension {
     return list;
   }
   
-  public List<Attribute> allNotReplayableAttributes(final Model it) {
+  public List<Attribute> allNonDeterministicAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     if ((it == null)) {
       return list;
@@ -196,8 +196,8 @@ public class ModelExtension {
     ArrayList<Attribute> allAttributes = new ArrayList<Attribute>();
     this.allAttributesRec(it, allAttributes);
     for (final Attribute attribute : allAttributes) {
-      boolean _isNotReplayable = attribute.isNotReplayable();
-      if (_isNotReplayable) {
+      boolean _isNonDeterministic = attribute.isNonDeterministic();
+      if (_isNonDeterministic) {
         list.add(attribute);
       }
     }

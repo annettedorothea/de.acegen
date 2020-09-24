@@ -211,7 +211,7 @@ public class Scenario {
     _builder.newLine();
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import de.acegen.NotReplayableDataProvider;");
+    _builder.append("import de.acegen.NonDeterministicDataProvider;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -1099,7 +1099,7 @@ public class Scenario {
       String _systemtime = it.getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
-        _builder.append("this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse(\"");
+        _builder.append("this.callNonDeterministicDataProviderPutSystemTime(uuid, LocalDateTime.parse(\"");
         String _systemtime_1 = it.getDataDefinition().getSystemtime();
         _builder.append(_systemtime_1);
         _builder.append("\", DateTimeFormatter.ofPattern(\"");
@@ -1116,9 +1116,9 @@ public class Scenario {
           EList<JsonMember> _members = ((JsonObjectAce) _data).getMembers();
           for(final JsonMember attributeDefinition : _members) {
             {
-              boolean _isNotReplayable = attributeDefinition.getAttribute().isNotReplayable();
-              if (_isNotReplayable) {
-                _builder.append("this.callNotReplayableDataProviderPutValue(uuid, \"");
+              boolean _isNonDeterministic = attributeDefinition.getAttribute().isNonDeterministic();
+              if (_isNonDeterministic) {
+                _builder.append("this.callNonDeterministicDataProviderPutValue(uuid, \"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
                 _builder.append("\", ");
@@ -1197,8 +1197,8 @@ public class Scenario {
         _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
-            return Boolean.valueOf((!_isNotReplayable));
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1262,8 +1262,8 @@ public class Scenario {
     _builder.append("objectMapper.readValue(\"");
     {
       if ((((it != null) && (it.getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getMembers(), ((Function1<JsonMember, Boolean>) (JsonMember it_1) -> {
-        boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
-        return Boolean.valueOf((!_isNotReplayable));
+        boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+        return Boolean.valueOf((!_isNonDeterministic));
       }))) > 0))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
@@ -1271,8 +1271,8 @@ public class Scenario {
         _builder.append("\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
-            return Boolean.valueOf((!_isNotReplayable));
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1343,8 +1343,8 @@ public class Scenario {
         _builder.append("\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNotReplayable = it_1.getAttribute().isNotReplayable();
-            return Boolean.valueOf((!_isNotReplayable));
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;

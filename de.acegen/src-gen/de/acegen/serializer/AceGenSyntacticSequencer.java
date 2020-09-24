@@ -32,14 +32,14 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpClient_ACEKeyword_1_0_q;
 	protected AbstractElementAlias match_HttpClient_ScenariosKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q;
-	protected AbstractElementAlias match_HttpServerAceRead_PathParamsKeyword_8_0_q;
-	protected AbstractElementAlias match_HttpServerAceRead_PayloadKeyword_10_0_q;
-	protected AbstractElementAlias match_HttpServerAceRead_QueryParamsKeyword_9_0_q;
-	protected AbstractElementAlias match_HttpServerAceRead_ResponseKeyword_11_0_q;
-	protected AbstractElementAlias match_HttpServerAceWrite_PathParamsKeyword_8_0_q;
-	protected AbstractElementAlias match_HttpServerAceWrite_PayloadKeyword_10_0_q;
-	protected AbstractElementAlias match_HttpServerAceWrite_QueryParamsKeyword_9_0_q;
-	protected AbstractElementAlias match_HttpServerAceWrite_ResponseKeyword_11_0_q;
+	protected AbstractElementAlias match_HttpServerAceRead_PathParamsKeyword_7_0_q;
+	protected AbstractElementAlias match_HttpServerAceRead_PayloadKeyword_9_0_q;
+	protected AbstractElementAlias match_HttpServerAceRead_QueryParamsKeyword_8_0_q;
+	protected AbstractElementAlias match_HttpServerAceRead_ResponseKeyword_10_0_q;
+	protected AbstractElementAlias match_HttpServerAceWrite_PathParamsKeyword_7_0_q;
+	protected AbstractElementAlias match_HttpServerAceWrite_PayloadKeyword_9_0_q;
+	protected AbstractElementAlias match_HttpServerAceWrite_QueryParamsKeyword_8_0_q;
+	protected AbstractElementAlias match_HttpServerAceWrite_ResponseKeyword_10_0_q;
 	protected AbstractElementAlias match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a;
 	protected AbstractElementAlias match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q;
@@ -69,14 +69,14 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpClient_ACEKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_1_0());
 		match_HttpClient_ScenariosKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getScenariosKeyword_3_0());
 		match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_2_1_0()), new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getRightCurlyBracketKeyword_2_1_2()));
-		match_HttpServerAceRead_PathParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPathParamsKeyword_8_0());
-		match_HttpServerAceRead_PayloadKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPayloadKeyword_10_0());
-		match_HttpServerAceRead_QueryParamsKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getQueryParamsKeyword_9_0());
-		match_HttpServerAceRead_ResponseKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getResponseKeyword_11_0());
-		match_HttpServerAceWrite_PathParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getPathParamsKeyword_8_0());
-		match_HttpServerAceWrite_PayloadKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getPayloadKeyword_10_0());
-		match_HttpServerAceWrite_QueryParamsKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getQueryParamsKeyword_9_0());
-		match_HttpServerAceWrite_ResponseKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_11_0());
+		match_HttpServerAceRead_PathParamsKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPathParamsKeyword_7_0());
+		match_HttpServerAceRead_PayloadKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPayloadKeyword_9_0());
+		match_HttpServerAceRead_QueryParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getQueryParamsKeyword_8_0());
+		match_HttpServerAceRead_ResponseKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getResponseKeyword_10_0());
+		match_HttpServerAceWrite_PathParamsKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getPathParamsKeyword_7_0());
+		match_HttpServerAceWrite_PayloadKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getPayloadKeyword_9_0());
+		match_HttpServerAceWrite_QueryParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getQueryParamsKeyword_8_0());
+		match_HttpServerAceWrite_ResponseKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_10_0());
 		match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()));
 		match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()));
@@ -126,22 +126,22 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpClient_ScenariosKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q.equals(syntax))
 				emit_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceRead_PathParamsKeyword_8_0_q.equals(syntax))
-				emit_HttpServerAceRead_PathParamsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceRead_PayloadKeyword_10_0_q.equals(syntax))
-				emit_HttpServerAceRead_PayloadKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceRead_QueryParamsKeyword_9_0_q.equals(syntax))
-				emit_HttpServerAceRead_QueryParamsKeyword_9_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceRead_ResponseKeyword_11_0_q.equals(syntax))
-				emit_HttpServerAceRead_ResponseKeyword_11_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceWrite_PathParamsKeyword_8_0_q.equals(syntax))
-				emit_HttpServerAceWrite_PathParamsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceWrite_PayloadKeyword_10_0_q.equals(syntax))
-				emit_HttpServerAceWrite_PayloadKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceWrite_QueryParamsKeyword_9_0_q.equals(syntax))
-				emit_HttpServerAceWrite_QueryParamsKeyword_9_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerAceWrite_ResponseKeyword_11_0_q.equals(syntax))
-				emit_HttpServerAceWrite_ResponseKeyword_11_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceRead_PathParamsKeyword_7_0_q.equals(syntax))
+				emit_HttpServerAceRead_PathParamsKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceRead_PayloadKeyword_9_0_q.equals(syntax))
+				emit_HttpServerAceRead_PayloadKeyword_9_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceRead_QueryParamsKeyword_8_0_q.equals(syntax))
+				emit_HttpServerAceRead_QueryParamsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceRead_ResponseKeyword_10_0_q.equals(syntax))
+				emit_HttpServerAceRead_ResponseKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceWrite_PathParamsKeyword_7_0_q.equals(syntax))
+				emit_HttpServerAceWrite_PathParamsKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceWrite_PayloadKeyword_9_0_q.equals(syntax))
+				emit_HttpServerAceWrite_PayloadKeyword_9_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceWrite_QueryParamsKeyword_8_0_q.equals(syntax))
+				emit_HttpServerAceWrite_QueryParamsKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerAceWrite_ResponseKeyword_10_0_q.equals(syntax))
+				emit_HttpServerAceWrite_ResponseKeyword_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a.equals(syntax))
 				emit_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a.equals(syntax))
@@ -308,7 +308,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
 	 */
-	protected void emit_HttpServerAceRead_PathParamsKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceRead_PathParamsKeyword_7_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -326,7 +326,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
 	 */
-	protected void emit_HttpServerAceRead_PayloadKeyword_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceRead_PayloadKeyword_9_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -345,7 +345,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response' response+=[Attribute|QualifiedName]
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
 	 */
-	protected void emit_HttpServerAceRead_QueryParamsKeyword_9_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceRead_QueryParamsKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -360,7 +360,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     queryParams+=AttributeParamRef 'payload'? (ambiguity) (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
 	 */
-	protected void emit_HttpServerAceRead_ResponseKeyword_11_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceRead_ResponseKeyword_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -380,7 +380,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? (rule end)
 	 *     url=STRING (ambiguity) 'queryParams'? 'payload'? 'response'? outcomes+=HttpServerOutcome
 	 */
-	protected void emit_HttpServerAceWrite_PathParamsKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceWrite_PathParamsKeyword_7_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -402,7 +402,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? (ambiguity) 'response'? outcomes+=HttpServerOutcome
 	 */
-	protected void emit_HttpServerAceWrite_PayloadKeyword_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceWrite_PayloadKeyword_9_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -424,7 +424,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? (rule end)
 	 *     url=STRING 'pathParams'? (ambiguity) 'payload'? 'response'? outcomes+=HttpServerOutcome
 	 */
-	protected void emit_HttpServerAceWrite_QueryParamsKeyword_9_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceWrite_QueryParamsKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -444,7 +444,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) (rule end)
 	 *     url=STRING 'pathParams'? 'queryParams'? 'payload'? (ambiguity) outcomes+=HttpServerOutcome
 	 */
-	protected void emit_HttpServerAceWrite_ResponseKeyword_11_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerAceWrite_ResponseKeyword_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

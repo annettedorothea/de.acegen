@@ -223,7 +223,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					for (attributeRef : scenario.whenBlock.action.pathParams) {
 						attr.add(attributeRef.attribute)
 					}
-					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
+					attr.addAll(scenario.whenBlock.action.model.allNonDeterministicAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {
 					var attr = new ArrayList<Attribute>();

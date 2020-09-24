@@ -290,7 +290,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (type=Type | model=[Model|QualifiedName]) 
 	 *         name=ID 
 	 *         foreignKey=[Attribute|QualifiedName]? 
-	 *         notReplayable?='notReplayable'?
+	 *         nonDeterministic?='nonDeterministic'?
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
@@ -555,7 +555,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         proxy?='proxy'? 
 	 *         name=ID 
 	 *         model=[Model|QualifiedName] 
 	 *         type=ReadFunctionType 
@@ -579,7 +578,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         proxy?='proxy'? 
 	 *         name=ID 
 	 *         model=[Model|QualifiedName] 
 	 *         type=WriteFunctionType 

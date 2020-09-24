@@ -61,17 +61,23 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import Utils from \"../../ace/Utils\";");
     _builder.newLine();
-    _builder.append("import ACEController from \"../../ace/ACEController\";");
+    _builder.append("import AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../../ace/AppState\";");
-    _builder.newLine();
+    {
+      int _size = it.getRefs().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import * as AppState from \"../../ace/AppState\";");
+        _builder.newLine();
+      }
+    }
     {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
         {
-          int _size = outcome.getListeners().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
+          int _size_1 = outcome.getListeners().size();
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
             _builder.append("import ");
             String _eventName = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName);
@@ -182,9 +188,9 @@ public class CommandTemplate {
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
-          int _size_1 = outcome_2.getListeners().size();
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size_2 = outcome_2.getListeners().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("promises.push(new ");
@@ -296,7 +302,7 @@ public class CommandTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t\t");
-        _builder.append("this.");
+        _builder.append("AppUtils.");
         String _httpCall = this._aceExtension.httpCall(it);
         _builder.append(_httpCall, "\t\t\t");
         _builder.append("(`");
@@ -320,7 +326,7 @@ public class CommandTemplate {
             _builder.append("}");
           }
         }
-        _builder.append("`, ");
+        _builder.append("`, this.commandData.uuid, ");
         {
           boolean _isAuthorize = it.getServerCall().isAuthorize();
           if (_isAuthorize) {
@@ -408,15 +414,21 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../../ace/AppState\";");
-    _builder.newLine();
+    {
+      int _size = it.getRefs().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import * as AppState from \"../../ace/AppState\";");
+        _builder.newLine();
+      }
+    }
     {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
         {
-          int _size = outcome.getListeners().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
+          int _size_1 = outcome.getListeners().size();
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
             _builder.append("import ");
             String _eventName = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName);
@@ -522,9 +534,9 @@ public class CommandTemplate {
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
-          int _size_1 = outcome_2.getListeners().size();
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size_2 = outcome_2.getListeners().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new ");
@@ -860,10 +872,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import ACEController from \"./ACEController\";");
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
-    _builder.newLine();
-    _builder.append("import Utils from \"./Utils\";");
-    _builder.newLine();
     _builder.append("import Command from \"./Command\";");
     _builder.newLine();
     _builder.newLine();
@@ -876,7 +884,7 @@ public class CommandTemplate {
     _builder.append("return new Promise((resolve, reject) => {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ACEController.execution !== ACEController.REPLAY) {");
+    _builder.append("if (ACEController.execution === ACEController.UI) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("if (this.validateCommandData()) {");
@@ -977,94 +985,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("httpGet(url, authorize) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpGet(url, this.commandData.uuid, authorize);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}, (error) => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("throw error;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("httpPost(url, authorize, data) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpPost(url, this.commandData.uuid, authorize, data);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}, (error) => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("throw error;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("httpPut(url, authorize, data) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpPut(url, this.commandData.uuid, authorize, data);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}, (error) => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("throw error;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("httpDelete(url, authorize, data) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("return Utils.prepareAction(this.commandData.uuid).then(() => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("return AppUtils.httpDelete(url, this.commandData.uuid, authorize, data);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}, (error) => {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("throw error;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("});");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");

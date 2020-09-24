@@ -106,7 +106,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServer/scenarios"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAce">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/proxy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAce/type"/>
@@ -227,7 +226,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/notReplayable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/nonDeterministic"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonObject"/>
     <genClasses ecoreClass="AceGen.ecore#//JsonObjectAce">

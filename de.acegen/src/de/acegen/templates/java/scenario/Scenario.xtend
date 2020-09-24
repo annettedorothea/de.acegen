@@ -113,7 +113,7 @@ class Scenario {
 		
 		import de.acegen.BaseScenario;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.NonDeterministicDataProvider;
 		
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
@@ -369,12 +369,12 @@ class Scenario {
 
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			this.callNotReplayableDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
+			this.callNonDeterministicDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
 			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
-				«IF attributeDefinition.attribute.notReplayable»
-					this.callNotReplayableDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»", 
+				«IF attributeDefinition.attribute.nonDeterministic»
+					this.callNonDeterministicDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»", 
 								objectMapper.readValue("«attributeDefinition.value.valueFrom»", «IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class)«ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class)«ENDIF»);
 				«ENDIF»
 			«ENDFOR»
@@ -390,7 +390,7 @@ class Scenario {
 
 	private dispatch def objectMapperCall(JsonObjectAce it, Model model) '''
  		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
- 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+ 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.nonDeterministic] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 
 	private dispatch def objectMapperCall(StringType it, Model model) '''
@@ -403,8 +403,8 @@ class Scenario {
 		«model.dataNameWithPackage».class)'''
 
 	private dispatch def objectMapperCallPayload(JsonObjectAce it, HttpServerAce action) '''
- 		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.notReplayable].size > 0»{" +
- 			"«FOR member : it.members.filter[!attribute.notReplayable] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+ 		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.nonDeterministic].size > 0»{" +
+ 			"«FOR member : it.members.filter[!attribute.nonDeterministic] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«action.payloadDataNameWithPackage».class)'''
 	
 	private dispatch def objectMapperCallPayload(StringType it, HttpServerAce action) '''
@@ -417,7 +417,7 @@ class Scenario {
 	
 	private dispatch def objectMapperCallExpectedData(JsonObjectAce it, Model model) '''
 		objectMapper.readValue("«IF it !== null && members !== null»{" +
-			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.notReplayable] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.nonDeterministic] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 	
 	private dispatch def objectMapperCallExpectedData(StringType it, Model model) '''

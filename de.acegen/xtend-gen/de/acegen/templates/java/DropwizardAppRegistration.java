@@ -58,8 +58,6 @@ public class DropwizardAppRegistration {
     _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
-    _builder.append("import de.acegen.E2E;");
-    _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
     _builder.newLine();
@@ -84,7 +82,7 @@ public class DropwizardAppRegistration {
     _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations = it.getAceOperations();
@@ -93,7 +91,7 @@ public class DropwizardAppRegistration {
         _builder.append("environment.jersey().register(new ");
         String _resourceName = this._aceExtension.resourceName(aceOperation);
         _builder.append(_resourceName, "\t\t");
-        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));");
+        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider));");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -136,7 +134,7 @@ public class DropwizardAppRegistration {
     _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

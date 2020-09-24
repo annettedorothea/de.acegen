@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.Attribute#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Attribute#getForeignKey <em>Foreign Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Attribute#isNonDeterministic <em>Non Deterministic</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getAttribute()
@@ -208,25 +208,25 @@ public interface Attribute extends EObject
   void setForeignKey(Attribute value);
 
   /**
-   * Returns the value of the '<em><b>Not Replayable</b></em>' attribute.
+   * Returns the value of the '<em><b>Non Deterministic</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Not Replayable</em>' attribute.
-   * @see #setNotReplayable(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NotReplayable()
+   * @return the value of the '<em>Non Deterministic</em>' attribute.
+   * @see #setNonDeterministic(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getAttribute_NonDeterministic()
    * @model
    * @generated
    */
-  boolean isNotReplayable();
+  boolean isNonDeterministic();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isNotReplayable <em>Not Replayable</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.Attribute#isNonDeterministic <em>Non Deterministic</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Not Replayable</em>' attribute.
-   * @see #isNotReplayable()
+   * @param value the new value of the '<em>Non Deterministic</em>' attribute.
+   * @see #isNonDeterministic()
    * @generated
    */
-  void setNotReplayable(boolean value);
+  void setNonDeterministic(boolean value);
 
 } // Attribute

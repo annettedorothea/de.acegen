@@ -64,6 +64,9 @@ class AceExtension {
 
 	def String httpUrl(HttpClientAce it) {
 		var url = getServerCall.getUrl;
+		if (url.indexOf('/') != 0) {
+			url = "/" + url
+		} 
 		val split1 = url.split('\\{')
 		var urlElements = new ArrayList();
 		for (split : split1) {
@@ -78,7 +81,7 @@ class AceExtension {
 				urlWithPathParam += '''${this.commandData.«urlElements.get(i)»}'''
 			}
 		}
-		return "/${Utils.getRootPath()}" + urlWithPathParam;
+		return "${Utils.settings.rootPath}" + urlWithPathParam;
 	}
 
 }

@@ -54,16 +54,15 @@ class Action {
 		import org.apache.commons.lang3.StringUtils;
 		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.E2E;
 		import de.acegen.HttpMethod;
 		import de.acegen.ICommand;
 		import de.acegen.IDaoProvider;
 		import de.acegen.IDataContainer;
 		import de.acegen.ITimelineItem;
 		import de.acegen.ViewProvider;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.NonDeterministicDataProvider;
 		import de.acegen.PersistenceConnection;
-		import de.acegen.«IF proxy»Proxy«ENDIF»WriteAction;
+		import de.acegen.WriteAction;
 
 		«getModel.dataImport»
 		«getModel.dataClassImport»
@@ -72,13 +71,13 @@ class Action {
 		«ENDIF»
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»WriteAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends WriteAction<«getModel.dataParamType»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
 				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider, e2e);
+								viewProvider);
 			}
 		
 			@Override
@@ -90,17 +89,7 @@ class Action {
 				«ENDIF»
 			}
 			
-			«initActionDataFrom»
-
-			«IF proxy»
-				@Override
-				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
-					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-					return («getModel.dataParamType»)originalData;
-				}
-			«ENDIF»
-
-			«initActionDataFromNotReplayableDataProvider»		
+			«initActionDataFromNonDeterministicDataProvider»		
 
 		}
 		
@@ -122,15 +111,14 @@ class Action {
 		import org.apache.commons.lang3.StringUtils;
 		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.E2E;
 		import de.acegen.IDaoProvider;
 		import de.acegen.IDataContainer;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
-		import de.acegen.«IF isProxy»Proxy«ENDIF»ReadAction;
+		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.NonDeterministicDataProvider;
 		
 		«IF authorize»
 			import de.acegen.auth.AuthUser;
@@ -140,28 +128,18 @@ class Action {
 		«getModel.dataClassImport»
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»ReadAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
 				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider, e2e);
+								viewProvider);
 			}
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
 		
-			«initActionDataFrom»
-			
-			«initActionDataFromNotReplayableDataProvider»
-
-			«IF proxy»
-				@Override
-				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
-					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-					return («getModel.dataParamType»)originalData;
-				}
-			«ENDIF»
+			«initActionDataFromNonDeterministicDataProvider»
 
 		}
 		
@@ -177,7 +155,6 @@ class Action {
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ViewProvider;
 		import de.acegen.IDaoProvider;
-		import de.acegen.E2E;
 		import de.acegen.PersistenceConnection;
 		«IF getType.equals("GET")»
 			import de.acegen.PersistenceHandle;
@@ -191,8 +168,8 @@ class Action {
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 		
 			public «actionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
-					ViewProvider viewProvider, E2E e2e) {
-				super(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);
+					ViewProvider viewProvider) {
+				super(persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
 		
@@ -208,7 +185,7 @@ class Action {
 			
 			public void initActionData() {
 				// init not replayable data here
-				«FOR attribute: model.allNotReplayableAttributes»
+				«FOR attribute: model.allNonDeterministicAttributes»
 					// «attribute.name»
 				«ENDFOR»
 			}
@@ -261,7 +238,7 @@ class Action {
 		
 	'''
 	
-	def generateReadAction(boolean isProxy) '''
+	def generateReadAction() '''
 		«copyright»
 		
 		package de.acegen;
@@ -270,65 +247,42 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class «IF isProxy»Proxy«ENDIF»ReadAction<T extends IDataContainer> extends Action<T> {
+		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 			
 			private PersistenceConnection persistenceConnection;
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
-			private E2E e2e;
 			
-			public «IF isProxy»Proxy«ENDIF»ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
-				this.e2e = e2e;
 			}
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
 			
-			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
-
-			protected abstract void initActionDataFromNotReplayableDataProvider();
-
-			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
+			protected abstract void initActionDataFromNonDeterministicDataProvider();
 
 			public void apply() {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
-							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
-							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
-							databaseHandle.rollbackTransaction();
-							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							databaseHandle.rollbackTransaction();
-							return;
-						}
-						this.actionData.setSystemTime(LocalDateTime.now());
-						this.initActionData();
-					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						initActionDataFrom(timelineItem);
+					if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+						databaseHandle.rollbackTransaction();
+						LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
+						databaseHandle.rollbackTransaction();
+						return;
 					}
-					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNotReplayableDataProvider();
+					this.actionData.setSystemTime(LocalDateTime.now());
+					this.initActionData();
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
+						initActionDataFromNonDeterministicDataProvider();
 					}
-					«IF isProxy»
-						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-							ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-							T originalData = this.createDataFrom(timelineItem);
-							this.setActionData(originalData);
-						} else {
-							this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
-						}
-					«ELSE»
-						this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
-					«ENDIF»
+					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
 					
 					«addActionToTimeline»
 					databaseHandle.commitTransaction();
@@ -343,7 +297,7 @@ class Action {
 		
 	'''
 
-	def generateWriteAction(boolean isProxy) '''
+	def generateWriteAction() '''
 		«copyright»
 		
 		package de.acegen;
@@ -352,31 +306,25 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class «IF isProxy»Proxy«ENDIF»WriteAction<T extends IDataContainer> extends Action<T> {
+		public abstract class WriteAction<T extends IDataContainer> extends Action<T> {
 		
-			static final Logger LOG = LoggerFactory.getLogger(«IF isProxy»Proxy«ENDIF»WriteAction.class);
+			static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
 			
 			private PersistenceConnection persistenceConnection;
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
-			private E2E e2e;
 			
-			public «IF isProxy»Proxy«ENDIF»WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			public WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
-				this.e2e = e2e;
 			}
 		
-			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
-		
-			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
-			
-			protected abstract void initActionDataFromNotReplayableDataProvider();
+			protected abstract void initActionDataFromNonDeterministicDataProvider();
 
 			protected abstract ICommand getCommand();
 		
@@ -384,37 +332,20 @@ class Action {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
-							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
-							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
-							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							databaseHandle.rollbackTransaction();
-							return;
-						}
-						this.actionData.setSystemTime(LocalDateTime.now());
-						this.initActionData();
-					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						initActionDataFrom(timelineItem);
+					if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+						LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
+						databaseHandle.rollbackTransaction();
+						return;
 					}
-					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNotReplayableDataProvider();
+					this.actionData.setSystemTime(LocalDateTime.now());
+					this.initActionData();
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
+						initActionDataFromNonDeterministicDataProvider();
 					}
 					«addActionToTimeline»
 					
 					ICommand command = this.getCommand();
-					«IF isProxy»
-						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
-							T originalData = this.createDataFrom(timelineItem);
-							command.setCommandData(originalData);
-						} else {
-							command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
-						}
-					«ELSE»
-						command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
-					«ENDIF»
+					command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
 					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
 				«catchFinallyBlock»
@@ -467,44 +398,28 @@ class Action {
 	
 	private def constructor(HttpServerAce it) '''
 		public «abstractActionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+				IDaoProvider daoProvider, ViewProvider viewProvider) {
 	'''
 	
-	private def initActionDataFrom(HttpServerAce it) '''
+	private def initActionDataFromNonDeterministicDataProvider(HttpServerAce it) '''
 		@Override
-		protected void initActionDataFrom(ITimelineItem timelineItem) {
-			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-			«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
-			this.actionData.setSystemTime(originalActionData.getSystemTime());
-			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
-				«ENDIF»
-			«ENDFOR»
-		}
-	'''
-	
-	private def initActionDataFromNotReplayableDataProvider(HttpServerAce it) '''
-		@Override
-		protected void initActionDataFromNotReplayableDataProvider() {
-			LocalDateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
+		protected void initActionDataFromNonDeterministicDataProvider() {
+			LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(this.actionData.getUuid());
 			if (systemTime != null) {
 				this.actionData.setSystemTime(systemTime);
-			} else {
-				this.actionData.setSystemTime(LocalDateTime.now());
 			}
 			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					Object value = NotReplayableDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
+				«IF attribute.nonDeterministic»
+					Object value = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
 					if (value != null) {
 						try {
 							«attribute.javaType» «attribute.name» = («attribute.javaType»)value;
 							this.actionData.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as not replayable and failed to parse {} from NotReplayableDataProvider.", value);
+							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.", value);
 						}
 					} else {
-						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
+						LOG.warn("«attribute.name» is declared as non-deterministnic but no value was found in NonDeterministicDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»
