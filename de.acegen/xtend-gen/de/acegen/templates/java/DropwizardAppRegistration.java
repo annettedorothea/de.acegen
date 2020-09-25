@@ -141,7 +141,7 @@ public class DropwizardAppRegistration {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

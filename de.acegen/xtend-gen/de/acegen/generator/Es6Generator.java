@@ -122,9 +122,9 @@ public class Es6Generator {
     fsa.generateFile(_plus, IFileSystemAccess.DEFAULT_OUTPUT, 
       this.eventTemplate.generateEventListenerRegistration(httpClient));
     String _name_1 = httpClient.getName();
-    String _plus_1 = (_name_1 + "/ActionFactoryRegistration.js");
+    String _plus_1 = (_name_1 + "/EventFactoryRegistration.js");
     fsa.generateFile(_plus_1, IFileSystemAccess.DEFAULT_OUTPUT, 
-      this.actionTemplate.generateActionFactoryRegistration(httpClient));
+      this.eventTemplate.generateEventFactoryRegistration(httpClient));
     String _name_2 = httpClient.getName();
     String _plus_2 = (_name_2 + "/ActionFunctions.js");
     fsa.generateFile(_plus_2, IFileSystemAccess.DEFAULT_OUTPUT, 

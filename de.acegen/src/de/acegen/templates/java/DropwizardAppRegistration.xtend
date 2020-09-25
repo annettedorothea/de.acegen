@@ -77,7 +77,7 @@ class DropwizardAppRegistration {
 					IDaoProvider daoProvider, ViewProvider viewProvider) {
 			}
 		
-			public static void registerConsumers(ViewProvider viewProvider, String mode) {
+			public static void registerConsumers(ViewProvider viewProvider) {
 			}
 		}
 		

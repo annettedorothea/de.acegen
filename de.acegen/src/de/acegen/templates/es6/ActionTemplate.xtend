@@ -97,29 +97,6 @@ class ActionTemplate {
 		
 	'''
 	
-	def generateActionFactoryRegistration(HttpClient it) '''
-		«copyright»
-
-		import ACEController from "../ace/ACEController";
-		«FOR aceOperation : aceOperations»
-			import «aceOperation.actionName» from "../../src/«getName»/actions/«aceOperation.actionName»";
-		«ENDFOR»
-		
-		export default class ActionFactoryRegistration«projectName» {
-		
-			static init() {
-				«FOR aceOperation : aceOperations»
-					ACEController.registerFactory('«getName».«aceOperation.actionName»', 
-						(actionData) => new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»actionData.«attr.name»«ENDFOR»));
-				«ENDFOR»
-			}
-		
-		}
-		
-		
-		«sdg»
-		
-	'''
 	def generateActionFunctionExports(HttpClient it) '''
 		«copyright»
 

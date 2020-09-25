@@ -230,4 +230,93 @@ public class EventTemplate {
     _builder.newLine();
     return _builder;
   }
+  
+  public CharSequence generateEventFactoryRegistration(final HttpClient it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import ACEController from \"../ace/ACEController\";");
+    _builder.newLine();
+    {
+      EList<HttpClientAce> _aceOperations = it.getAceOperations();
+      for(final HttpClientAce aceOperation : _aceOperations) {
+        {
+          EList<HttpClientOutcome> _outcomes = aceOperation.getOutcomes();
+          for(final HttpClientOutcome outcome : _outcomes) {
+            {
+              int _size = outcome.getListeners().size();
+              boolean _greaterThan = (_size > 0);
+              if (_greaterThan) {
+                _builder.append("import ");
+                String _eventName = this._aceExtension.eventName(aceOperation, outcome);
+                _builder.append(_eventName);
+                _builder.append(" from \"./events/");
+                String _eventName_1 = this._aceExtension.eventName(aceOperation, outcome);
+                _builder.append(_eventName_1);
+                _builder.append("\";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.newLine();
+    _builder.append("export default class EventFactoryRegistration");
+    String _projectName = this._es6Extension.projectName(it);
+    _builder.append(_projectName);
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("static init() {");
+    _builder.newLine();
+    {
+      EList<HttpClientAce> _aceOperations_1 = it.getAceOperations();
+      for(final HttpClientAce aceOperation_1 : _aceOperations_1) {
+        {
+          EList<HttpClientOutcome> _outcomes_1 = aceOperation_1.getOutcomes();
+          for(final HttpClientOutcome outcome_1 : _outcomes_1) {
+            {
+              int _size_1 = outcome_1.getListeners().size();
+              boolean _greaterThan_1 = (_size_1 > 0);
+              if (_greaterThan_1) {
+                _builder.append("\t\t");
+                _builder.append("ACEController.registerFactory(\'");
+                String _name = it.getName();
+                _builder.append(_name, "\t\t");
+                _builder.append(".");
+                String _eventName_2 = this._aceExtension.eventName(aceOperation_1, outcome_1);
+                _builder.append(_eventName_2, "\t\t");
+                _builder.append("\', ");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("(eventData) => new ");
+                String _eventName_3 = this._aceExtension.eventName(aceOperation_1, outcome_1);
+                _builder.append(_eventName_3, "\t\t\t");
+                _builder.append("(eventData));");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
 }

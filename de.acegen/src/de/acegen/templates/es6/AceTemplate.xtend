@@ -45,9 +45,9 @@ class AceTemplate {
 		
 		export default class AppUtils {
 		
-			static initEventListenersAndActionFactories() {
+			static initEventListenersAndEventFactories() {
 				// add EventListenerRegistration.init() of all modules
-				// add ActionFactoryRegistrationTodo.init() of all modules
+				// add EventFactoryRegistration.init() of all modules
 			}
 		
 		    static start() {
@@ -282,7 +282,7 @@ class AceTemplate {
 		};
 		
 		
-		AppUtils.initEventListenersAndActionFactories();
+		AppUtils.initEventListenersAndEventFactories();
 		
 		AppUtils.start();
 		
@@ -329,14 +329,14 @@ class AceTemplate {
 		        listenersForEventName.push(listener);
 		    }
 		
-		    static registerFactory(actionName, factory) {
-		        if (!actionName.trim()) {
-		            throw new Error('cannot register factory for empty actionName');
+		    static registerFactory(eventName, factory) {
+		        if (!eventName.trim()) {
+		            throw new Error('cannot register factory for empty eventName');
 		        }
 		        if (!factory) {
-		            throw new Error('cannot register undefined factory for action ' + actionName);
+		            throw new Error('cannot register undefined factory for event ' + eventName);
 		        }
-		        ACEController.factories[actionName] = factory;
+		        ACEController.factories[eventName] = factory;
 		    }
 		
 		    static addItemToTimeLine(item) {
@@ -415,20 +415,19 @@ class AceTemplate {
 		    static startReplay(pauseInMillis) {
 		        ACEController.execution = ACEController.REPLAY;
 		        ACEController.pauseInMillis = pauseInMillis;
-		        ACEController.readTimelineAndCreateReplayActions();
+		        ACEController.readTimelineAndCreateReplayEvents();
 		    }
 		
-		    static readTimelineAndCreateReplayActions() {
-		        let actions = [];
+		    static readTimelineAndCreateReplayEvents() {
+		        let events = [];
 				
 				let appStateWasSet = false;
 		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
 		            let item = ACEController.expectedTimeline[i];
-		            if (item.action) {
-		                const actionData = item.action.actionData;
-		                let action = ACEController.factories[item.action.actionName](actionData);
-		                action.actionData = actionData;
-		                actions.push(action);
+		            if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
+		                const eventData = item.event.eventData;
+		                let event = ACEController.factories[item.event.eventName](eventData);
+		                events.push(event);
 		            }
 					if (item.appState && !appStateWasSet) {
 					    AppState.setInitialAppState(item.appState);
@@ -437,9 +436,24 @@ class AceTemplate {
 		            
 		        }
 		
-		        ACEController.actionQueue = actions;
-		
-		        ACEController.applyNextActions();
+		        ACEController.replayNextEvent(events);
+		    }
+		    
+		    static replayNextEvent(events) {
+		        let event = events.shift();
+		        if (event) {
+		        	event.publish();
+		        	setTimeout(() => ACEController.replayNextEvent(events), ACEController.pauseInMillis);
+		        } else {
+					console.log("replay finished");
+					ACEController.timeline = [];
+					ACEController.actionIsProcessing = false;
+					ACEController.actionQueue = [];
+					ACEController.execution = ACEController.UI;
+					ReplayUtils.tearDownReplay();
+					AppUtils.createInitialAppState();
+					AppUtils.start();
+				}
 		    }
 		
 		    static getCommandByUuid(uuid) {

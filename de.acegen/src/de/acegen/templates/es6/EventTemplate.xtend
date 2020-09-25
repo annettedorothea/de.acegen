@@ -115,6 +115,38 @@ class EventTemplate {
 		
 		
 	'''
+
+	def generateEventFactoryRegistration(HttpClient it) '''
+		«copyright»
+
+		import ACEController from "../ace/ACEController";
+		«FOR aceOperation : aceOperations»
+			«FOR outcome : aceOperation.outcomes»
+				«IF outcome.listeners.size > 0»
+					import «aceOperation.eventName(outcome)» from "./events/«aceOperation.eventName(outcome)»";
+				«ENDIF»
+			«ENDFOR»
+		«ENDFOR»
+		
+		export default class EventFactoryRegistration«projectName» {
+		
+			static init() {
+				«FOR aceOperation : aceOperations»
+					«FOR outcome : aceOperation.outcomes»
+						«IF outcome.listeners.size > 0»
+							ACEController.registerFactory('«getName».«aceOperation.eventName(outcome)»', 
+								(eventData) => new «aceOperation.eventName(outcome)»(eventData));
+						«ENDIF»
+					«ENDFOR»
+				«ENDFOR»
+			}
+		
+		}
+		
+		
+		«sdg»
+		
+	'''
 	
 }
 	

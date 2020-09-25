@@ -24,6 +24,7 @@ import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.DropwizardApp
 import de.acegen.templates.java.DropwizardAppRegistration
 import de.acegen.templates.java.DropwizardConfiguration
+import de.acegen.templates.java.DropwizardEventReplayCommand
 import de.acegen.templates.java.DropwizardResource
 import de.acegen.templates.java.resources.GetServerInfoResource
 import de.acegen.templates.java.resources.NonDeterministicDataProviderResource
@@ -53,6 +54,9 @@ class DropwizardGenerator {
 
 	@Inject
 	DropwizardAppRegistration dropwizardAppRegistration;
+
+	@Inject
+	DropwizardEventReplayCommand dropwizardEventReplayCommand;
 
 	@Inject
 	extension JavaExtension
@@ -88,6 +92,8 @@ class DropwizardGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, dropwizardAppRegistration.generateAppRegistration(httpServer));
 		fsa.generateFile("de/acegen" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 			dropwizardAppRegistration.generateAppRegistration());
+		fsa.generateFile("de/acegen/EventReplayCommand.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			dropwizardEventReplayCommand.generateEventReplayCommand());
 	}
 
 }

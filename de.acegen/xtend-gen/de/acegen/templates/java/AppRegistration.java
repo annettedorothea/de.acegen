@@ -112,7 +112,7 @@ public class AppRegistration {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -129,7 +129,7 @@ public class AppRegistration {
   
   public CharSequence registerConsumers(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations = it.getAceOperations();

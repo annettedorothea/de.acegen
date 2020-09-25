@@ -86,6 +86,7 @@ class DropwizardApp {
 						return configuration.getDataSourceFactory();
 					}
 				});
+				//bootstrap.addCommand(new EventReplayCommand(this));
 			}
 		
 			@Override
@@ -102,10 +103,6 @@ class DropwizardApp {
 				mode = configuration.getConfig().getMode();
 				LOG.info("running in {} mode", mode);
 				if (Config.DEV.equals(mode)) {
-					LOG.warn("You are running in DEV mode and the database is going to be cleared.");
-					PersistenceHandle handle = new PersistenceHandle(jdbi.open());
-					daoProvider.truncateAllViews(handle);
-					handle.getHandle().close();
 					environment.jersey().register(new NonDeterministicDataProviderResource());
 				}
 		

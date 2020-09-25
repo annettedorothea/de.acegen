@@ -154,6 +154,9 @@ public class DropwizardApp {
     _builder.append("\t\t");
     _builder.append("});");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("//bootstrap.addCommand(new EventReplayCommand(this));");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -191,18 +194,6 @@ public class DropwizardApp {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("if (Config.DEV.equals(mode)) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.warn(\"You are running in DEV mode and the database is going to be cleared.\");");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("PersistenceHandle handle = new PersistenceHandle(jdbi.open());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("daoProvider.truncateAllViews(handle);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("handle.getHandle().close();");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("environment.jersey().register(new NonDeterministicDataProviderResource());");

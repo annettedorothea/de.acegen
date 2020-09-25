@@ -236,7 +236,7 @@ public class DropwizardConfiguration {
     _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("private String mode = LIVE;");
+    _builder.append("private String mode = DEV;");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.newLine();

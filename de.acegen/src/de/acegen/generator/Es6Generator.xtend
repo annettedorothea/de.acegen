@@ -75,8 +75,8 @@ class Es6Generator {
 		}
 		fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			eventTemplate.generateEventListenerRegistration(httpClient));
-		fsa.generateFile(httpClient.getName + '/ActionFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			actionTemplate.generateActionFactoryRegistration(httpClient));
+		fsa.generateFile(httpClient.getName + '/EventFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+			eventTemplate.generateEventFactoryRegistration(httpClient));
 		fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateActionFunctionExports(httpClient));
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,

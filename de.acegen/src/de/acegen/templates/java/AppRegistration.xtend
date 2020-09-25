@@ -69,7 +69,7 @@ class AppRegistration {
 		
 		public class AppRegistration {
 		
-			public static void registerConsumers(ViewProvider viewProvider, String mode) {
+			public static void registerConsumers(ViewProvider viewProvider) {
 			}
 		}
 		
@@ -78,7 +78,7 @@ class AppRegistration {
 	'''
 
 	def registerConsumers(HttpServer it) '''
-		public static void registerConsumers(ViewProvider viewProvider, String mode) {
+		public static void registerConsumers(ViewProvider viewProvider) {
 			«FOR aceOperation : aceOperations»
 				«registerConsumer(aceOperation, it)»
 			«ENDFOR»
