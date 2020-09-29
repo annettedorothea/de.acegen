@@ -54,7 +54,7 @@ class ActionTemplate {
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
-				}
+			}
 				
 			«IF outcomes.size > 0»
 				getCommand() {
@@ -163,37 +163,33 @@ class ActionTemplate {
 		    	   this.asynchronous = true;
 		    }
 			
-			   applyAction() {
-			       return new Promise((resolve, reject) => {
-			           if (this.preCall) {
-			           	this.preCall();
-			           }
-			           AppUtils.renderNewState();
-			           if (ACEController.execution === ACEController.UI) {
-			               this.actionData.uuid = AppUtils.createUUID();
-			               this.initActionData();
-			           }
-			           ACEController.addItemToTimeLine({action: this});
-			           let command = this.getCommand();
-					command.executeCommand().then(
-					    () => {
-					           if (this.postCall) {
-					           	this.postCall();
-					           }
-					        AppUtils.renderNewState();
-					        resolve();
-					    },
-					    (error) => {
-					           if (this.postCall) {
-					           	this.postCall();
-					           }
-					        AppUtils.renderNewState();
-					        reject(error);
+
+		    applyAction() {
+		        return new Promise((resolve, reject) => {
+		            if (this.preCall) {
+		                this.preCall();
+		            }
+		            AppUtils.renderNewState();
+		            this.actionData.uuid = AppUtils.createUUID();
+		            this.actionData.clientSystemTime = new Date();
+		            this.initActionData();
+		            ACEController.addItemToTimeLine({action: this});
+		            let command = this.getCommand();
+		            command.executeCommand().then(() => {
+					    if (this.postCall) {
+					        this.postCall();
 					    }
-					);
-					     });
-					 }
-		
+					    AppUtils.renderNewState();
+					    resolve();
+					}, (error) => {
+					    if (this.postCall) {
+					        this.postCall();
+					    }
+					    AppUtils.renderNewState();
+					    reject(error);
+					});
+		        });
+		    }
 		}
 		
 		
@@ -217,14 +213,13 @@ class ActionTemplate {
 		    }
 		
 		    applyAction() {
-		    if (ACEController.execution === ACEController.UI) {
 		        this.actionData.uuid = AppUtils.createUUID();
+				this.actionData.clientSystemTime = new Date();
 		        this.initActionData();
-		    }
-		    ACEController.addItemToTimeLine({action: this});
-		    let command = this.getCommand();
-		    command.executeCommand();
-		    AppUtils.renderNewState();
+			    ACEController.addItemToTimeLine({action: this});
+			    let command = this.getCommand();
+			    command.executeCommand();
+			    AppUtils.renderNewState();
 		    }
 		}
 		

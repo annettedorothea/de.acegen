@@ -21,7 +21,6 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
-import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
@@ -40,8 +39,10 @@ class CommandTemplate {
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
-		import TriggerAction from "../../../gen/ace/TriggerAction";
+		import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+		«IF triggeredAceOperations.size > 0»
+			import TriggerAction from "../../../gen/ace/TriggerAction";
+		«ENDIF»
 		import Utils from "../../ace/Utils";
 		import AppUtils from "../../../src/app/AppUtils";
 		«IF refs.size > 0»
@@ -56,7 +57,7 @@ class CommandTemplate {
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		export default class «abstractCommandName» extends AbstractAsynchronousCommand {
+		export default class «abstractCommandName» extends AsynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
@@ -90,18 +91,16 @@ class CommandTemplate {
 			«IF serverCall !== null»
 				execute() {
 				    return new Promise((resolve, reject) => {
-				    	«IF serverCall.type != 'GET'»
+				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0»
 				    		let payload = {
 				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : this.commandData.«payload.attribute.name»«ENDFOR»
 				    		};
 				        «ENDIF»
 				
-						AppUtils.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, this.commandData.uuid, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
-							«IF getServerCall instanceof HttpServerAceRead»
-								«FOR attribute : (getServerCall as HttpServerAceRead).response»
-									this.commandData.«attribute.name» = data.«attribute.name»;
-								«ENDFOR»
-							«ENDIF»
+						AppUtils.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, this.commandData.uuid, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((«IF serverCall.response.size > 0»data«ENDIF») => {
+							«FOR attribute : serverCall.response»
+								this.commandData.«attribute.name» = data.«attribute.name»;
+							«ENDFOR»
 							this.handleResponse(resolve, reject);
 						}, (error) => {
 							this.commandData.error = error;
@@ -121,8 +120,10 @@ class CommandTemplate {
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
-		import TriggerAction from "../../../gen/ace/TriggerAction";
+		import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
+		«IF triggeredAceOperations.size > 0»
+			import TriggerAction from "../../../gen/ace/TriggerAction";
+		«ENDIF»
 		«IF refs.size > 0»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
@@ -135,7 +136,7 @@ class CommandTemplate {
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		export default class «abstractCommandName» extends AbstractSynchronousCommand {
+		export default class «abstractCommandName» extends SynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
 		        «FOR outcome : outcomes»
@@ -252,44 +253,28 @@ class CommandTemplate {
 		
 	'''
 	
-	def generateAbstractAsynchronousCommand() '''
+	def generateAsynchronousCommand() '''
 		«copyright»
 
 		import ACEController from "./ACEController";
 		import Command from "./Command";
 		
-		export default class AbstractAsynchronousCommand extends Command {
+		export default class AsynchronousCommand extends Command {
 		    executeCommand() {
 		        return new Promise((resolve, reject) => {
-					if (ACEController.execution === ACEController.UI) {
-						if (this.validateCommandData()) {
-						    this.execute().then(() => {
-						        ACEController.addItemToTimeLine({command: this});
-						        this.publishEvents();
-						        resolve();
-						    }, (error) => {
-						    	ACEController.addItemToTimeLine({command: this});
-						        reject(error);
-						    });
-						} else {
+					if (this.validateCommandData()) {
+					    this.execute().then(() => {
 					        ACEController.addItemToTimeLine({command: this});
 					        this.publishEvents();
-							resolve();
-						}
+					        resolve();
+					    }, (error) => {
+					    	ACEController.addItemToTimeLine({command: this});
+					        reject(error);
+					    });
 					} else {
-						const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-						if (timelineCommand) {
-						    if (timelineCommand.commandData.error) {
-						        reject(timelineCommand.commandData.error);
-						    } else {
-						        this.commandData = timelineCommand.commandData;
-						        ACEController.addItemToTimeLine({command: this});
-						        this.publishEvents();
-						        resolve();
-						    }
-						} else {
-						    resolve();
-						}
+				        ACEController.addItemToTimeLine({command: this});
+				        this.publishEvents();
+						resolve();
 					}
 		        });
 		    }
@@ -307,20 +292,15 @@ class CommandTemplate {
 		
 	'''
 	
-	def generateAbstractSynchronousCommand() '''
+	def generateSynchronousCommand() '''
 		«copyright»
 
 		import ACEController from "./ACEController";
 		import Command from "./Command";
 		
-		export default class AbstractSynchronousCommand extends Command {
+		export default class SynchronousCommand extends Command {
 		    executeCommand() {
-				if (ACEController.execution !== ACEController.REPLAY) {
-				    this.execute();
-				} else {
-				    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-				    this.commandData = timelineCommand.commandData;
-				}
+			    this.execute();
 				ACEController.addItemToTimeLine({command: this});
 				this.publishEvents();
 		    }

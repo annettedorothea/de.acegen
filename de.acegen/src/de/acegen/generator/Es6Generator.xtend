@@ -89,14 +89,14 @@ class Es6Generator {
 		fsa.generateFile('ace/SynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateSynchronousAction());
 		fsa.generateFile('ace/Command.js', IFileSystemAccess.DEFAULT_OUTPUT, commandTemplate.generateCommand());
-		fsa.generateFile('ace/AbstractAsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			commandTemplate.generateAbstractAsynchronousCommand());
-		fsa.generateFile('ace/AbstractSynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			commandTemplate.generateAbstractSynchronousCommand());
+		fsa.generateFile('ace/AsynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
+			commandTemplate.generateAsynchronousCommand());
+		fsa.generateFile('ace/SynchronousCommand.js', IFileSystemAccess.DEFAULT_OUTPUT,
+			commandTemplate.generateSynchronousCommand());
 		fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateEvent());
 		fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateACEController());
-		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTriggerAction());
-		fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateBug());
+		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateTriggerAction());
+		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
 		if (httpClient.appStatePresent && httpClient.getAppState !== null && httpClient.getAppState.size > 0) {
 			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,

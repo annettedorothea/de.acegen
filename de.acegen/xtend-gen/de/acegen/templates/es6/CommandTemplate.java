@@ -23,7 +23,6 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.Input;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
@@ -55,18 +54,24 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AbstractAsynchronousCommand from \"../../../gen/ace/AbstractAsynchronousCommand\";");
+    _builder.append("import AsynchronousCommand from \"../../../gen/ace/AsynchronousCommand\";");
     _builder.newLine();
-    _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
-    _builder.newLine();
+    {
+      int _size = this._aceExtension.triggeredAceOperations(it).size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
+        _builder.newLine();
+      }
+    }
     _builder.append("import Utils from \"../../ace/Utils\";");
     _builder.newLine();
     _builder.append("import AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
     {
-      int _size = it.getRefs().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      int _size_1 = it.getRefs().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
       }
@@ -75,9 +80,9 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
         {
-          int _size_1 = outcome.getListeners().size();
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size_2 = outcome.getListeners().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("import ");
             String _eventName = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName);
@@ -114,7 +119,7 @@ public class CommandTemplate {
     _builder.append("export default class ");
     String _abstractCommandName = this._aceExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName);
-    _builder.append(" extends AbstractAsynchronousCommand {");
+    _builder.append(" extends AsynchronousCommand {");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("constructor(commandData) {");
@@ -188,9 +193,9 @@ public class CommandTemplate {
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
-          int _size_2 = outcome_2.getListeners().size();
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
+          int _size_3 = outcome_2.getListeners().size();
+          boolean _greaterThan_3 = (_size_3 > 0);
+          if (_greaterThan_3) {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("promises.push(new ");
@@ -265,9 +270,7 @@ public class CommandTemplate {
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
         {
-          String _type = it.getServerCall().getType();
-          boolean _notEquals = (!Objects.equal(_type, "GET"));
-          if (_notEquals) {
+          if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
             _builder.append("\t");
             _builder.append("    \t");
             _builder.append("let payload = {");
@@ -340,27 +343,29 @@ public class CommandTemplate {
             _builder.append(", payload");
           }
         }
-        _builder.append(").then((data) => {");
+        _builder.append(").then((");
+        {
+          int _size_4 = it.getServerCall().getResponse().size();
+          boolean _greaterThan_4 = (_size_4 > 0);
+          if (_greaterThan_4) {
+            _builder.append("data");
+          }
+        }
+        _builder.append(") => {");
         _builder.newLineIfNotEmpty();
         {
-          HttpServerAce _serverCall_1 = it.getServerCall();
-          if ((_serverCall_1 instanceof HttpServerAceRead)) {
-            {
-              HttpServerAce _serverCall_2 = it.getServerCall();
-              EList<Attribute> _response = ((HttpServerAceRead) _serverCall_2).getResponse();
-              for(final Attribute attribute : _response) {
-                _builder.append("\t");
-                _builder.append("\t\t\t");
-                _builder.append("this.commandData.");
-                String _name_11 = attribute.getName();
-                _builder.append(_name_11, "\t\t\t\t");
-                _builder.append(" = data.");
-                String _name_12 = attribute.getName();
-                _builder.append(_name_12, "\t\t\t\t");
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
-              }
-            }
+          EList<Attribute> _response = it.getServerCall().getResponse();
+          for(final Attribute attribute : _response) {
+            _builder.append("\t");
+            _builder.append("\t\t\t");
+            _builder.append("this.commandData.");
+            String _name_11 = attribute.getName();
+            _builder.append(_name_11, "\t\t\t\t");
+            _builder.append(" = data.");
+            String _name_12 = attribute.getName();
+            _builder.append(_name_12, "\t\t\t\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
           }
         }
         _builder.append("\t");
@@ -410,14 +415,20 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AbstractSynchronousCommand from \"../../../gen/ace/AbstractSynchronousCommand\";");
-    _builder.newLine();
-    _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
+    _builder.append("import SynchronousCommand from \"../../../gen/ace/SynchronousCommand\";");
     _builder.newLine();
     {
-      int _size = it.getRefs().size();
+      int _size = this._aceExtension.triggeredAceOperations(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
+        _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
+        _builder.newLine();
+      }
+    }
+    {
+      int _size_1 = it.getRefs().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
       }
@@ -426,9 +437,9 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
         {
-          int _size_1 = outcome.getListeners().size();
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size_2 = outcome.getListeners().size();
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("import ");
             String _eventName = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName);
@@ -465,7 +476,7 @@ public class CommandTemplate {
     _builder.append("export default class ");
     String _abstractCommandName = this._aceExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName);
-    _builder.append(" extends AbstractSynchronousCommand {");
+    _builder.append(" extends SynchronousCommand {");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("constructor(commandData) {");
@@ -534,9 +545,9 @@ public class CommandTemplate {
         _builder.append(":");
         _builder.newLineIfNotEmpty();
         {
-          int _size_2 = outcome_2.getListeners().size();
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
+          int _size_3 = outcome_2.getListeners().size();
+          boolean _greaterThan_3 = (_size_3 > 0);
+          if (_greaterThan_3) {
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new ");
@@ -864,7 +875,7 @@ public class CommandTemplate {
     return _builder;
   }
   
-  public CharSequence generateAbstractAsynchronousCommand() {
+  public CharSequence generateAsynchronousCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -875,7 +886,7 @@ public class CommandTemplate {
     _builder.append("import Command from \"./Command\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export default class AbstractAsynchronousCommand extends Command {");
+    _builder.append("export default class AsynchronousCommand extends Command {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("executeCommand() {");
@@ -884,91 +895,43 @@ public class CommandTemplate {
     _builder.append("return new Promise((resolve, reject) => {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (ACEController.execution === ACEController.UI) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
     _builder.append("if (this.validateCommandData()) {");
     _builder.newLine();
-    _builder.append("\t\t\t\t    ");
+    _builder.append("\t\t\t    ");
     _builder.append("this.execute().then(() => {");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t\t        ");
     _builder.append("ACEController.addItemToTimeLine({command: this});");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t\t        ");
     _builder.append("this.publishEvents();");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t\t        ");
     _builder.append("resolve();");
     _builder.newLine();
-    _builder.append("\t\t\t\t    ");
+    _builder.append("\t\t\t    ");
     _builder.append("}, (error) => {");
     _builder.newLine();
-    _builder.append("\t\t\t\t    \t");
+    _builder.append("\t\t\t    \t");
     _builder.append("ACEController.addItemToTimeLine({command: this});");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t\t        ");
     _builder.append("reject(error);");
     _builder.newLine();
-    _builder.append("\t\t\t\t    ");
+    _builder.append("\t\t\t    ");
     _builder.append("});");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t\t        ");
-    _builder.append("ACEController.addItemToTimeLine({command: this});");
-    _builder.newLine();
-    _builder.append("\t\t\t        ");
-    _builder.append("this.publishEvents();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} else {");
     _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("if (timelineCommand) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t    ");
-    _builder.append("if (timelineCommand.commandData.error) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t        ");
-    _builder.append("reject(timelineCommand.commandData.error);");
-    _builder.newLine();
-    _builder.append("\t\t\t\t    ");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t        ");
-    _builder.append("this.commandData = timelineCommand.commandData;");
-    _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t        ");
     _builder.append("ACEController.addItemToTimeLine({command: this});");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
+    _builder.append("\t\t        ");
     _builder.append("this.publishEvents();");
     _builder.newLine();
-    _builder.append("\t\t\t\t        ");
-    _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t    ");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t    ");
     _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -1003,7 +966,7 @@ public class CommandTemplate {
     return _builder;
   }
   
-  public CharSequence generateAbstractSynchronousCommand() {
+  public CharSequence generateSynchronousCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -1014,28 +977,13 @@ public class CommandTemplate {
     _builder.append("import Command from \"./Command\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export default class AbstractSynchronousCommand extends Command {");
+    _builder.append("export default class SynchronousCommand extends Command {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("executeCommand() {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (ACEController.execution !== ACEController.REPLAY) {");
-    _builder.newLine();
-    _builder.append("\t\t    ");
+    _builder.append("\t    ");
     _builder.append("this.execute();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t    ");
-    _builder.append("const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);");
-    _builder.newLine();
-    _builder.append("\t\t    ");
-    _builder.append("this.commandData = timelineCommand.commandData;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("ACEController.addItemToTimeLine({command: this});");

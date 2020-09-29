@@ -92,9 +92,15 @@ class EventTemplate {
 		
 		    publish() {
 		        this.notifyListeners();
+		        AppUtils.renderNewState();
 				ACEController.addItemToTimeLine({event: this});
 		    }
 		
+		    replay() {
+		        this.notifyListeners();
+		        AppUtils.renderNewState();
+		    }
+
 		    notifyListeners() {
 		        let i, listener;
 		        if (this.eventName !== undefined) {
@@ -115,6 +121,35 @@ class EventTemplate {
 		
 		
 	'''
+
+	def generateTriggerAction() '''
+		«copyright»
+
+		import Event from "./Event";
+		import ACEController from "./ACEController";
+		
+		export default class TriggerAction extends Event {
+		    constructor(action) {
+		        super(action, 'TriggerAction');
+		        this.eventData = action;
+		    }
+		
+			publish() {
+			    this.notifyListeners();
+			    ACEController.addItemToTimeLine({event: this});
+			}
+			
+			replay() {
+			}
+			
+		}
+		
+		
+		«sdg»
+		
+		
+	'''
+	
 
 	def generateEventFactoryRegistration(HttpClient it) '''
 		«copyright»

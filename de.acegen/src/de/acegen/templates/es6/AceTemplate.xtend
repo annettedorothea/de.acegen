@@ -38,21 +38,21 @@ class AceTemplate {
 	def generateAppUtilsStub() '''
 		«copyright»
 		
-		import CryptoJS from "crypto-js";
-		import * as AppState from "../../gen/ace/AppState";
+		
 		import * as App from "./App";
+		import * as AppState from "../../gen/ace/AppState";
 		import Utils from "../../gen/ace/Utils";
 		
 		export default class AppUtils {
 		
-			static initEventListenersAndEventFactories() {
-				// add EventListenerRegistration.init() of all modules
-				// add EventFactoryRegistration.init() of all modules
-			}
+		    static initEventListenersAndActionFactories() {
+		        //EventListenerRegistration.init();
+		        //EventFactoryRegistration.init();
+		    }
 		
 		    static start() {
 		        Utils.loadSettings().then(() => {
-		            // call init action
+		        	// call init action
 		        });
 		    }
 		
@@ -63,59 +63,64 @@ class AceTemplate {
 		    }
 		
 		    static renderNewState() {
-		        App.render(AppState.getAppState());
+		    	// render AppState.getAppState()
 		    }
 		
-		    static httpGet(url, uuid, authorize) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		            if (authorize === true) {
-		                let authorization = AppUtils.basicAuth();
-		                if (authorization !== undefined) {
-		                    headers.append("Authorization", authorization);
-		                }
+		    static createHeaders(authorize) {
+		        const headers = new Headers();
+		        headers.append("Content-Type", "application/json");
+		        headers.append("Accept", "application/json");
+		        if (authorize === true) {
+		            let authorization = AppUtils.basicAuth();
+		            if (authorization !== undefined) {
+		                headers.append("Authorization", authorization);
 		            }
+		        }
+		        return headers;
+		    }
 		
-					if (uuid) {
-			            if (url.indexOf("?") < 0) {
-			            	url += "?uuid=" + uuid;
-			            } else {
-			            	url += "&uuid=" + uuid;
-			            }
-			        }
+		    static addUuidToUrl(url, uuid) {
+		        if (uuid) {
+		            if (url.indexOf("?") < 0) {
+		                url += "?uuid=" + uuid;
+		            } else {
+		                url += "&uuid=" + uuid;
+		            }
+		        }
+		        return url;
+		    }
 		
+		    static httpRequest(methodType, url, uuid, authorize, data) {
+		        return new Promise((resolve, reject) => {
 		            const options = {
-		                method: 'GET',
-		                headers: headers,
+		                method: methodType,
+		                headers: AppUtils.createHeaders(authorize),
 		                mode: 'cors',
 		                cache: 'no-cache'
 		            };
-		            
+		            if (data && methodType !== "GET") {
+		                options.body = JSON.stringify(data);
+		            }
+		            url = AppUtils.addUuidToUrl(url, uuid);
 		            const request = new Request(url, options);
 		
-		            let status;
-		            let statusText;
 		            fetch(request).then(function (response) {
-		                status = response.status;
-		                statusText = response.statusText;
-		                if (status >= 300) {
-		                    return response.text();
-		                } else {
-		                    return response.json();
-		                }
-		            }).then(function (data) {
-		                if (status >= 300) {
-		                    const error = {
-		                        code: status,
-		                        text: statusText,
-		                        errorKey: data
-		                    };
-		                    reject(error);
-		                } else {
-		                    resolve(data);
-		                }
+		                response.text().then((text) => {
+		                    if (response.status >= 300) {
+		                        const error = {
+		                            code: response.status,
+		                            text: response.statusText,
+		                            key: text
+		                        };
+		                        reject(error);
+		                    } else {
+		                        let data = {};
+		                        if (text.length > 0) {
+		                            data = JSON.parse(text);
+		                        }
+		                        resolve(data);
+		                    }
+		                });
 		            }).catch(function (error) {
 		                const status = {
 		                    code: error.name,
@@ -126,130 +131,45 @@ class AceTemplate {
 		        });
 		    }
 		
-		    static httpChange(methodType, url, uuid, authorize, data) {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		            if (authorize === true) {
-		                let authorization = AppUtils.basicAuth();
-		                if (authorization !== undefined) {
-		                    headers.append("Authorization", authorization);
-		                }
-		            }
-		
-					if (uuid) {
-					    if (url.indexOf("?") < 0) {
-					        url += "?uuid=" + uuid;
-					    } else {
-					        url += "&uuid=" + uuid;
-					    }
-					}
-		
-		            const options = {
-		                method: methodType,
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache',
-		                body: JSON.stringify(data)
-		            };
-		
-		            const request = new Request(url, options);
-		
-		            let status;
-		            let statusText;
-		            fetch(request).then(function (response) {
-		                status = response.status;
-		                statusText = response.statusText;
-		                return response.text();
-		            }).then(function (data) {
-		                if (status >= 300) {
-		                    const error = {
-		                        code: status,
-		                        text: statusText,
-		                        errorKey: data
-		                    };
-		                    reject(error);
-		                } else {
-			                if (data) {
-			                    resolve(JSON.parse(data));
-			                } else {
-			                    resolve();
-			                }
-		                }
-		            }).catch(function (error) {
-		                const status = {
-		                    code: error.name,
-		                    text: error.message
-		                };
-		                reject(status);
-		            });
-		        });
+		    static httpGet(url, uuid, authorize) {
+		        return AppUtils.httpRequest("GET", url, uuid, authorize, null);
 		    }
 		
 		    static httpPost(url, uuid, authorize, data) {
-		        return AppUtils.httpChange("POST", url, uuid, authorize, data);
+		        return AppUtils.httpRequest("POST", url, uuid, authorize, data);
 		    }
 		
 		    static httpPut(url, uuid, authorize, data) {
-		        return AppUtils.httpChange("PUT", url, uuid, authorize, data);
+		        return AppUtils.httpRequest("PUT", url, uuid, authorize, data);
 		    }
 		
 		    static httpDelete(url, uuid, authorize, data) {
-		        return AppUtils.httpChange("DELETE", url, uuid, authorize, data);
+		        return AppUtils.httpRequest("DELETE", url, uuid, authorize, data);
 		    }
-		    
+		
 		    static basicAuth() {
 		        return "<your authorization>";
 		    }
-		    
+		
 		    static createUUID() {
 		        let d = new Date().getTime();
 		        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-		            const r = (d + Math.random() * 16) % 16 | 0;
+		            let r = (d + Math.random() * 16) % 16 | 0;
 		            d = Math.floor(d / 16);
 		            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
 		        });
 		    }
 		
 		    static displayUnexpectedError(error) {
-		        console.error(error);
-		        try {
-		            if (typeof error !== "object") {
-		                error = {
-		                    errorKey: error
-		                };
-		                //displayError(error)
-		            } else {
-		                if (error.code === 401) {
-		                    error.errorKey = "unauthorized";
-		                    //displayErrorAndLogout(error);
-		                } else if (error.code === 400) {
-		                    //displayError(error)
-		                } else {
-		                    error = {
-		                        errorKey: error.text
-		                    };
-		                    //displayError(error)
-		                }
-		            }
-		        } catch (e) {
-		            console.error(e);
-		        }
-		        //displaySaveBugDialog();
+		        console.error("unexpected error ", error);
 		    }
 		
 		    static deepCopy(object) {
-		        return object ? JSON.parse(JSON.stringify(object)) : undefined;
+		        return JSON.parse(JSON.stringify(object));
 		    }
 		
 		}
-		
-		/*       S.D.G.       */
-		
-		
-		
-		
+
 		«sdg»
 		
 	'''
@@ -262,7 +182,7 @@ class AceTemplate {
 		
 		//import Container from "../web/Container";
 		
-		export * from "../../gen/ace/Bug";
+		export * from "../../gen/ace/Timeline";
 		
 		const React = require('react');
 		const ReactDOM = require('react-dom');
@@ -296,7 +216,6 @@ class AceTemplate {
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
-		import ReplayUtils from "../../src/app/ReplayUtils";
 		import Utils from "./Utils";
 		import * as AppState from "./AppState";
 		
@@ -307,11 +226,7 @@ class AceTemplate {
 		        ACEController.listeners = {};
 		        ACEController.factories = {};
 		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
-		        ACEController.actionIsProcessing = false;
 		        ACEController.actionQueue = [];
-		        ACEController.UI = 1;
-		        ACEController.REPLAY = 2;
-		        ACEController.execution = ACEController.UI;
 		    }
 		
 		    static registerListener(eventName, listener) {
@@ -340,29 +255,18 @@ class AceTemplate {
 		    }
 		
 		    static addItemToTimeLine(item) {
-		        let timestamp = new Date();
-		        item.timestamp = timestamp.getTime();
-				if (ACEController.execution === ACEController.UI && Utils.settings.timelineSize > 0) {
-				    ACEController.timeline.push(AppUtils.deepCopy(item));
-				    if (ACEController.timeline.length > Utils.settings.timelineSize) {
-		                ACEController.timeline.shift();
-				        while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
-		                    ACEController.timeline.shift();
-		                }
+			    ACEController.timeline.push(AppUtils.deepCopy(item));
+				if (ACEController.timeline.length > Utils.settings.timelineSize) {
+				    ACEController.timeline.shift();
+				    while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
+				        ACEController.timeline.shift();
 				    }
-				} else if (ACEController.execution === ACEController.REPLAY) {
-					console.log("replayed", item);
 				}
 		    }
 		
 		    static addActionToQueue(action) {
-		        if (ACEController.execution === ACEController.UI) {
-		            ACEController.actionQueue.push(action);
-		            if (ACEController.actionIsProcessing === false) {
-		                ACEController.actionIsProcessing = true;
-		                ACEController.applyNextActions();
-		            }
-		        }
+				ACEController.actionQueue.push(action);
+			    ACEController.applyNextActions();
 		    }
 		
 		    static applyNextActions() {
@@ -385,45 +289,23 @@ class AceTemplate {
 					    	ACEController.callApplyNextActions();
 						}
 					}
-		        } else if (action === undefined) {
-		            ACEController.actionIsProcessing = false;
-		            if (ACEController.execution === ACEController.REPLAY) {
-				    	console.log("replay finished");
-		                ACEController.timeline = [];
-		                ACEController.actionIsProcessing = false;
-		                ACEController.actionQueue = [];
-		                ACEController.execution = ACEController.UI;
-				    	ReplayUtils.tearDownReplay();
-				    	AppUtils.createInitialAppState();
-		                AppUtils.start();
-		            }
 		        }
 		    }
 		    
 		    static callApplyNextActions() {
-		    	if (ACEController.execution === ACEController.UI) {
-		    		ACEController.applyNextActions();
-		    	} else {
-					setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-				}
+				ACEController.applyNextActions();
 		    }
 		
 		    static triggerAction(action) {
 		        ACEController.addActionToQueue(action);
 		    }
 		
-		    static startReplay(pauseInMillis) {
-		        ACEController.execution = ACEController.REPLAY;
-		        ACEController.pauseInMillis = pauseInMillis;
-		        ACEController.readTimelineAndCreateReplayEvents();
-		    }
-		
-		    static readTimelineAndCreateReplayEvents() {
+		    static startReplay(timeline, pauseInMillis) {
 		        let events = [];
 				
 				let appStateWasSet = false;
-		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
-		            let item = ACEController.expectedTimeline[i];
+		        for (let i = 0; i < timeline.length; i++) {
+		            let item = timeline[i];
 		            if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
 		                const eventData = item.event.eventData;
 		                let event = ACEController.factories[item.event.eventName](eventData);
@@ -436,34 +318,27 @@ class AceTemplate {
 		            
 		        }
 		
-		        ACEController.replayNextEvent(events);
+				setTimeout(() => ACEController.replayNextEvent(events, pauseInMillis), pauseInMillis);
 		    }
 		    
-		    static replayNextEvent(events) {
+		    static replayNextEvent(events, pauseInMillis) {
 		        let event = events.shift();
 		        if (event) {
-		        	event.publish();
-		        	setTimeout(() => ACEController.replayNextEvent(events), ACEController.pauseInMillis);
-		        } else {
-					console.log("replay finished");
-					ACEController.timeline = [];
-					ACEController.actionIsProcessing = false;
-					ACEController.actionQueue = [];
-					ACEController.execution = ACEController.UI;
-					ReplayUtils.tearDownReplay();
-					AppUtils.createInitialAppState();
-					AppUtils.start();
-				}
-		    }
+		        	event.replay();
+		        	setTimeout(() => ACEController.replayNextEvent(events, pauseInMillis), pauseInMillis);
+			    } else {
+			        setTimeout(() => ACEController.finishReplay(), pauseInMillis);
+			    }
+			}
+			
+			static finishReplay() {
+			    console.log("replay finished");
+			    ACEController.timeline = [];
+			    ACEController.actionQueue = [];
+			    AppUtils.createInitialAppState();
+			    AppUtils.start();
+			}
 		
-		    static getCommandByUuid(uuid) {
-		        for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
-		            let item = ACEController.expectedTimeline[i];
-		            if (item.command && item.command.commandData.uuid === uuid) {
-		                return item.command;
-		            }
-		        }
-		    }
 		
 		}
 		
@@ -475,28 +350,28 @@ class AceTemplate {
 		
 	'''
 	
-	def generateBug() '''
+	def generateTimeline() '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
-		import ReplayUtils from "../../src/app/ReplayUtils";
 		import ACEController from "./ACEController";
 		import Utils from "./Utils";
 		
-		export function runBug(bugId, pauseInMillis = 0) {
-		    Utils.loadBug(bugId).then((scenario) => {
-		        ReplayUtils.scenarioConfig = {};
-		        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
-		        ReplayUtils.prepareReplay();
+		export function replayTimeline(timelineId, pauseInMillis = 0) {
+		    Utils.loadTimeline(timelineId).then((scenario) => {
 		        AppUtils.createInitialAppState();
-		        ACEController.startReplay(pauseInMillis)
+		        ACEController.startReplay(JSON.parse(scenario.timeline), pauseInMillis)
 		    });
 		}
 		
-		export function saveBug(description, creator) {
-		    Utils.saveBug(description, creator).then((id) => {
-		        console.log(`saved bug with id ${id}`);
+		export function saveTimeline(description, creator) {
+		    Utils.saveTimeline(description, creator).then((id) => {
+		        console.log(`saved timeline with id ${id}`);
 		    });
+		}
+		
+		export function dumpTimeline() {
+		    console.log(ACEController.timeline);
 		}
 		
 		
@@ -505,108 +380,49 @@ class AceTemplate {
 		
 	'''
 
-	def generateTriggerAction() '''
-		«copyright»
-
-		import Event from "./Event";
-		import ACEController from "./ACEController";
-		
-		export default class TriggerAction extends Event {
-		    constructor(action) {
-		        super(action, 'TriggerAction');
-		        this.eventData = action;
-		    }
-		
-			publish() {
-			    ACEController.addItemToTimeLine({event: this});
-			    this.notifyListeners();
-			}
-			
-			notifyListeners() {
-			    let i, listener;
-			    if (this.eventName !== undefined) {
-			        const listenersForEvent = ACEController.listeners[this.eventName];
-			        if (listenersForEvent !== undefined) {
-			            for (i = 0; i < listenersForEvent.length; i += 1) {
-			                listener = listenersForEvent[i];
-			                listener(this.eventData);
-			            }
-			        }
-			    }
-			}
-		}
-		
-		
-		«sdg»
-		
-		
-	'''
-	
 	def generateUtils() '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
 		import ACEController from "./ACEController";
-		import ReplayUtils from "../../src/app/ReplayUtils";
 		
 		export default class Utils {
 		
 		    static getServerInfo() {
 		        return AppUtils.httpGet(Utils.settings.rootPath + '/server/info');
 		    }
+		    
+			static loadSettings() {
+			    return AppUtils.httpRequest("GET", "settings.json").then((settings) => {
+			        Utils.settings = settings;
+			        if (!Utils.settings.development) {
+			            Utils.settings.development = false;
+			        }
+			        if (!Utils.settings.clientVersion) {
+			            Utils.settings.clientVersion = "";
+			        }
+			        if (!Utils.settings.aceScenariosApiKey) {
+			            Utils.settings.aceScenariosApiKey = "";
+			        }
+			        if (!Utils.settings.aceScenariosBaseUrl) {
+			            Utils.settings.aceScenariosBaseUrl = "";
+			        }
+			        if (!Utils.settings.rootPath) {
+			            Utils.settings.rootPath = "";
+			        }
+			        if (!Utils.settings.timelineSize) {
+			            Utils.settings.timelineSize = 0;
+			        }
+			        if (Utils.settings.rootPath.startsWith("/")) {
+			            Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
+			        }
+			        if (Utils.settings.rootPath.endsWith("/")) {
+			            Utils.settings.rootPath = Utils.settings.rootPath.substring(0, Utils.settings.rootPath.length - 1);
+			        }
+			    });
+			}
 		
-		    static loadSettings() {
-		        return new Promise((resolve, reject) => {
-		            const headers = new Headers();
-		            headers.append("Content-Type", "application/json");
-		            headers.append("Accept", "application/json");
-		
-		            const options = {
-		                method: 'GET',
-		                headers: headers,
-		                mode: 'cors',
-		                cache: 'no-cache'
-		            };
-		
-		            const request = new Request("settings.json", options);
-
-		            fetch(request).then(function (response) {
-		                return response.json();
-		            }).then(function (settings) {
-		                Utils.settings = settings;
-		                if (!Utils.settings.development) {
-		                    Utils.settings.development = false;
-		                }
-		                if (!Utils.settings.clientVersion) {
-		                    Utils.settings.clientVersion = "";
-		                }
-		                if (!Utils.settings.aceScenariosApiKey) {
-		                    Utils.settings.aceScenariosApiKey = "";
-		                }
-		                if (!Utils.settings.aceScenariosBaseUrl) {
-		                    Utils.settings.aceScenariosBaseUrl = "";
-		                }
-		                if (!Utils.settings.rootPath) {
-		                    Utils.settings.rootPath = "";
-		                }
-		                if (!Utils.settings.timelineSize) {
-		                    Utils.settings.timelineSize = 0;
-		                }
-		                if (Utils.settings.rootPath.startsWith("/")) {
-		                    Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
-		                }
-		                if (Utils.settings.rootPath.endsWith("/")) {
-		                    Utils.settings.rootPath = Utils.settings.rootPath.substring(0, Utils.settings.rootPath.length - 1);
-		                }
-		                resolve();
-		            }).catch(function (error) {
-		                reject(error);
-		            });
-				
-		        });
-		    }
-		
-		    static saveBug(description, creator) {
+		    static saveTimeline(description, creator) {
 		        return Utils.getServerInfo().then((serverInfo) => {
 		            const browser = Utils.getBrowserInfo();
 		            const uuid = AppUtils.createUUID();
@@ -619,7 +435,7 @@ class AceTemplate {
 		                apiKey: Utils.settings.aceScenariosApiKey,
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/bugs/create', uuid, false, data).then(() => {
+		            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/timelines/create', uuid, false, data).then(() => {
 		                return new Promise((resolve) => {
 		                    resolve(uuid);
 		                });
@@ -627,8 +443,8 @@ class AceTemplate {
 		        });
 		    }
 		
-		    static loadBug(id) {
-		        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/bugs/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+		    static loadTimeline(id) {
+		        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timelines/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
 		    }
 		
 		    static getBrowserInfo() {
@@ -654,19 +470,6 @@ class AceTemplate {
 		        };
 		    }
 		
-		    static name(item) {
-		        if (item.action) {
-		            return item.action.actionName;
-		        }
-		        if (item.command) {
-		            return item.command.commandName;
-		        }
-		        if (item.event) {
-		            return item.event.eventName;
-		        }
-				return "AppState";
-		    }
-		    
 		}
 		
 		«sdg»
