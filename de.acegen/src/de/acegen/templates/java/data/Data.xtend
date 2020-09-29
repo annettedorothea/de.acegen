@@ -180,7 +180,9 @@ class Data {
 		
 			public static «interfaceWithPackage» generateTestData() {
 				java.util.Random random = new java.util.Random();
-				int n;
+				«IF allAttributes.filter[a | a.list].size > 0»
+					int n;
+				«ENDIF»
 				«interfaceWithPackage» testData = new «modelClassNameWithPackage»();
 				«FOR attribute : allAttributes»
 					«IF attribute.model !== null»

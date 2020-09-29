@@ -172,7 +172,7 @@ public class Model {
     }
     _builder.newLine();
     {
-      int _length = ((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length;
+      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allAttributes(it), Object.class)).length;
       boolean _greaterThan = (_length > 0);
       if (_greaterThan) {
         _builder.append("\t");

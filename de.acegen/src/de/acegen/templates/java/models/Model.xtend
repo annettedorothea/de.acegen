@@ -82,7 +82,7 @@ class Model {
 
 			«ENDFOR»
 		
-			«IF attributes.length > 0»
+			«IF allAttributes.length > 0»
 				public «modelClassName»() {
 				}
 			«ENDIF»
