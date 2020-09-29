@@ -49,7 +49,7 @@ class ModelExtension {
 	
 	def String modelMapper(Model it) '''«name.toFirstUpper»Mapper'''
 	
-	def String table(Model it) '''\"«name.toLowerCase»\"'''
+	def String table(Model it) '''«name.toLowerCase»'''
 	
 	def String importModel(Model it) '''import «interfaceWithPackage»;'''
 	

@@ -117,10 +117,8 @@ public class ModelExtension {
   
   public String table(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("\\\"");
     String _lowerCase = it.getName().toLowerCase();
     _builder.append(_lowerCase);
-    _builder.append("\\\"");
     return _builder.toString();
   }
   
