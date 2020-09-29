@@ -182,28 +182,22 @@ class AceTemplate {
 		
 		//import Container from "../web/Container";
 		
-		export * from "../../gen/ace/Timeline";
+		import React from "react";
+		import ReactDOM from "react-dom";
 		
-		const React = require('react');
-		const ReactDOM = require('react-dom');
+		export * from "../../gen/ace/Timeline";
 		
 		AppUtils.createInitialAppState();
 		
 		/*export const container = ReactDOM.render(
 		    <Container/>,
 		    document.getElementById('root')
-		);
-		
-		export function render(newAppState) {
-		    container.setState(newAppState);
-		}*/
+		);*/
 		
 		window.onhashchange = () => {
 		};
 		
-		
 		AppUtils.initEventListenersAndEventFactories();
-		
 		AppUtils.start();
 		
 		
