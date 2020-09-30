@@ -43,6 +43,10 @@ class AceTemplate {
 		import * as AppState from "../../gen/ace/AppState";
 		import Utils from "../../gen/ace/Utils";
 		
+		export function dumpAppState() {
+		    console.log(AppState.getAppState());
+		}
+
 		export default class AppUtils {
 		
 		    static initEventListenersAndActionFactories() {
@@ -186,6 +190,7 @@ class AceTemplate {
 		import ReactDOM from "react-dom";
 		
 		export * from "../../gen/ace/Timeline";
+		export { dumpAppState } from "./AppUtils";
 		
 		AppUtils.createInitialAppState();
 		

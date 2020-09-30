@@ -142,6 +142,19 @@ class EventTemplate {
 			replay() {
 			}
 			
+			notifyListeners() {
+				let i, listener;
+				if (this.eventName !== undefined) {
+					const listenersForEvent = ACEController.listeners[this.eventName];
+					if (listenersForEvent !== undefined) {
+						for (i = 0; i < listenersForEvent.length; i += 1) {
+							listener = listenersForEvent[i];
+							listener(this.eventData);
+						}
+					}
+				}
+			}
+
 		}
 		
 		

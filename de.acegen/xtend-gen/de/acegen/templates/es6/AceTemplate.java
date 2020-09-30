@@ -54,6 +54,14 @@ public class AceTemplate {
     _builder.append("import Utils from \"../../gen/ace/Utils\";");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("export function dumpAppState() {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("console.log(AppState.getAppState());");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export default class AppUtils {");
     _builder.newLine();
     _builder.newLine();
@@ -423,6 +431,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("export * from \"../../gen/ace/Timeline\";");
+    _builder.newLine();
+    _builder.append("export { dumpAppState } from \"./AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("AppUtils.createInitialAppState();");
