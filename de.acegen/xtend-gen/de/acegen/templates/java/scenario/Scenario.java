@@ -587,7 +587,15 @@ public class Scenario {
         _builder.append("\t\t\t");
         String _name_12 = verification.getName();
         _builder.append(_name_12, "\t\t\t");
-        _builder.append("(actualResponse);");
+        _builder.append("(");
+        {
+          int _size_4 = it.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan_4 = (_size_4 > 0);
+          if (_greaterThan_4) {
+            _builder.append("actualResponse");
+          }
+        }
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -616,9 +624,16 @@ public class Scenario {
         String _name_14 = verification_1.getName();
         _builder.append(_name_14, "\t");
         _builder.append("(");
-        String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_6, "\t");
-        _builder.append(" response);");
+        {
+          int _size_5 = it.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan_5 = (_size_5 > 0);
+          if (_greaterThan_5) {
+            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_6, "\t");
+            _builder.append(" response");
+          }
+        }
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }

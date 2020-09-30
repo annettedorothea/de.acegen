@@ -394,9 +394,6 @@ class AceTemplate {
 			static loadSettings() {
 			    return AppUtils.httpRequest("GET", "settings.json").then((settings) => {
 			        Utils.settings = settings;
-			        if (!Utils.settings.development) {
-			            Utils.settings.development = false;
-			        }
 			        if (!Utils.settings.clientVersion) {
 			            Utils.settings.clientVersion = "";
 			        }
@@ -434,7 +431,7 @@ class AceTemplate {
 		                apiKey: Utils.settings.aceScenariosApiKey,
 		                serverVersion: serverInfo.serverVersion
 		            };
-		            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/timelines/create', uuid, false, data).then(() => {
+		            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
 		                return new Promise((resolve) => {
 		                    resolve(uuid);
 		                });
@@ -443,7 +440,7 @@ class AceTemplate {
 		    }
 		
 		    static loadTimeline(id) {
-		        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timelines/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+		        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
 		    }
 		
 		    static getBrowserInfo() {

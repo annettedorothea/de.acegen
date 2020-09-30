@@ -133,15 +133,16 @@ class DropwizardApp {
 				final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 		
 				// Configure CORS parameters
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
-						"X-Requested-With,Content-Type,Accept,Origin,Authorization");
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-				cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
+				cors.setInitParameter("allowedOrigins", "*");
+				cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+				cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 		
 				// Add URL mapping
 				cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 		
+				// DO NOT pass a preflight request to down-stream auth filters
+				// unauthenticated preflight requests should be permitted by spec
+				cors.setInitParameter(CrossOriginFilter.CHAIN_PREFLIGHT_PARAM, Boolean.FALSE.toString());
 			}
 		
 		}		

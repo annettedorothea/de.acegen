@@ -214,7 +214,7 @@ class Scenario {
 					«ENDFOR»
 			
 					«FOR verification : thenBlock.verifications»
-						«verification.name»(actualResponse);
+						«verification.name»(«IF whenBlock.action.response.size > 0»actualResponse«ENDIF»);
 					«ENDFOR»
 				} else {
 					LOG.info("WHEN: prerequisite for «name» not met");
@@ -222,7 +222,7 @@ class Scenario {
 			}
 			
 			«FOR verification : thenBlock.verifications»
-				protected abstract void «verification.name»(«whenBlock.action.responseDataNameWithPackage» response);
+				protected abstract void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» response«ENDIF»);
 			«ENDFOR»
 			
 			«FOR persistenceVerification : thenBlock.persistenceVerifications»

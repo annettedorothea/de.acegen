@@ -927,15 +927,6 @@ public class AceTemplate {
     _builder.append("Utils.settings = settings;");
     _builder.newLine();
     _builder.append("\t        ");
-    _builder.append("if (!Utils.settings.development) {");
-    _builder.newLine();
-    _builder.append("\t            ");
-    _builder.append("Utils.settings.development = false;");
-    _builder.newLine();
-    _builder.append("\t        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t        ");
     _builder.append("if (!Utils.settings.clientVersion) {");
     _builder.newLine();
     _builder.append("\t            ");
@@ -1045,7 +1036,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + \'api/timelines/create\', uuid, false, data).then(() => {");
+    _builder.append("return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + \'api/client-timeline/create\', uuid, false, data).then(() => {");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("return new Promise((resolve) => {");
@@ -1070,7 +1061,7 @@ public class AceTemplate {
     _builder.append("static loadTimeline(id) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timelines/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);");
+    _builder.append("return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
