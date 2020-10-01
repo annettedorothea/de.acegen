@@ -311,6 +311,57 @@ public class AttributeExtension {
     return null;
   }
   
+  public String javaTypeNew(final Attribute it) {
+    String _type = it.getType();
+    boolean _tripleNotEquals = (_type != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        boolean _isList = it.isList();
+        if (_isList) {
+          _builder.append("java.util.ArrayList<");
+        }
+      }
+      {
+        boolean _equals = it.getType().equals("DateTime");
+        if (_equals) {
+          _builder.append("java.time.LocalDateTime");
+        } else {
+          String _type_1 = it.getType();
+          _builder.append(_type_1);
+        }
+      }
+      {
+        boolean _isList_1 = it.isList();
+        if (_isList_1) {
+          _builder.append(">");
+        }
+      }
+      return _builder.toString();
+    }
+    Model _model = it.getModel();
+    boolean _tripleNotEquals_1 = (_model != null);
+    if (_tripleNotEquals_1) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      {
+        boolean _isList_2 = it.isList();
+        if (_isList_2) {
+          _builder_1.append("java.util.ArrayList<");
+        }
+      }
+      String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+      _builder_1.append(_interfaceWithPackage);
+      {
+        boolean _isList_3 = it.isList();
+        if (_isList_3) {
+          _builder_1.append(">");
+        }
+      }
+      return _builder_1.toString();
+    }
+    return null;
+  }
+  
   public List<Integer> timesIterator(final int length) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     for (int i = 0; (i < length); i++) {

@@ -111,6 +111,15 @@ class AttributeExtension {
 		}
 	}
 
+	def String javaTypeNew(Attribute it) {
+		if (type !== null) {
+			return '''«IF list»java.util.ArrayList<«ENDIF»«IF type.equals('DateTime')»java.time.LocalDateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
+		}
+		if (model !== null) {
+			return '''«IF list»java.util.ArrayList<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
+		}
+	}
+
 	def List<Integer> timesIterator(int length) {
 		var list = new ArrayList();
 		for (var i = 0; i < length; i++) {

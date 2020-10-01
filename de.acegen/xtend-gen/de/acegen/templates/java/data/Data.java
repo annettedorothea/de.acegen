@@ -544,15 +544,60 @@ public class Data {
               }
             }
           } else {
-            _builder.append("\t\t");
-            _builder.append("testData.");
-            StringConcatenation _builder_3 = new StringConcatenation();
-            String _randomValue = this._attributeExtension.randomValue(attribute_2);
-            _builder_3.append(_randomValue);
-            String _setterCall_2 = this._attributeExtension.setterCall(attribute_2, _builder_3.toString());
-            _builder.append(_setterCall_2, "\t\t");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
+            {
+              boolean _isList_1 = attribute_2.isList();
+              if (_isList_1) {
+                _builder.append("\t\t");
+                String _javaType = this._attributeExtension.javaType(attribute_2);
+                _builder.append(_javaType, "\t\t");
+                _builder.append(" ");
+                String _firstLower_3 = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder.append(_firstLower_3, "\t\t");
+                _builder.append("List = new ");
+                String _javaTypeNew = this._attributeExtension.javaTypeNew(attribute_2);
+                _builder.append(_javaTypeNew, "\t\t");
+                _builder.append("();");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("n = random.nextInt(20) + 1;");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("for ( int i = 0; i < n; i++ ) {");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                String _firstLower_4 = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder.append(_firstLower_4, "\t\t\t");
+                _builder.append("List.add(");
+                String _randomValue = this._attributeExtension.randomValue(attribute_2);
+                _builder.append(_randomValue, "\t\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("}");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("testData.");
+                StringConcatenation _builder_3 = new StringConcatenation();
+                String _firstLower_5 = StringExtensions.toFirstLower(attribute_2.getName());
+                _builder_3.append(_firstLower_5);
+                _builder_3.append("List");
+                String _setterCall_2 = this._attributeExtension.setterCall(attribute_2, _builder_3.toString());
+                _builder.append(_setterCall_2, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              } else {
+                _builder.append("\t\t");
+                _builder.append("testData.");
+                StringConcatenation _builder_4 = new StringConcatenation();
+                String _randomValue_1 = this._attributeExtension.randomValue(attribute_2);
+                _builder_4.append(_randomValue_1);
+                String _setterCall_3 = this._attributeExtension.setterCall(attribute_2, _builder_4.toString());
+                _builder.append(_setterCall_3, "\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }

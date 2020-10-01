@@ -197,7 +197,16 @@ class Data {
 							testData.«attribute.setterCall('''«attribute.model.dataNameWithPackage».generateTestData()''')»;
 						«ENDIF»
 					«ELSE»
-						testData.«attribute.setterCall('''«attribute.randomValue»''')»;
+						«IF attribute.list»
+							«attribute.javaType» «attribute.name.toFirstLower»List = new «attribute.javaTypeNew»();
+							n = random.nextInt(20) + 1;
+							for ( int i = 0; i < n; i++ ) {
+								«attribute.name.toFirstLower»List.add(«attribute.randomValue»);
+							}
+							testData.«attribute.setterCall('''«attribute.name.toFirstLower»List''')»;
+						«ELSE»
+							testData.«attribute.setterCall('''«attribute.randomValue»''')»;
+						«ENDIF»
 					«ENDIF»
 				«ENDFOR»
 				return testData;
