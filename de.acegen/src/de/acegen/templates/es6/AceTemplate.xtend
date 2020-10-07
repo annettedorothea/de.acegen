@@ -54,10 +54,13 @@ class AceTemplate {
 		        //EventFactoryRegistration.init();
 		    }
 		
-		    static start() {
+		    static startApp() {
 		        Utils.loadSettings().then(() => {
 		        	// call init action
 		        });
+		    }
+		
+		    static startReplay() {
 		    }
 		
 		    static createInitialAppState() {
@@ -203,7 +206,7 @@ class AceTemplate {
 		};
 		
 		AppUtils.initEventListenersAndEventFactories();
-		AppUtils.start();
+		AppUtils.startApp();
 		
 		
 		«sdg»
@@ -300,6 +303,8 @@ class AceTemplate {
 		    }
 		
 		    static startReplay(timeline, pauseInMillis) {
+			    AppUtils.startReplay();
+
 		        let events = [];
 				
 				let appStateWasSet = false;
@@ -335,7 +340,7 @@ class AceTemplate {
 			    ACEController.timeline = [];
 			    ACEController.actionQueue = [];
 			    AppUtils.createInitialAppState();
-			    AppUtils.start();
+			    AppUtils.startApp();
 			}
 		
 		
@@ -356,7 +361,10 @@ class AceTemplate {
 		import ACEController from "./ACEController";
 		import Utils from "./Utils";
 		
-		export function replayTimeline(timelineId, pauseInMillis = 0) {
+		export function replayTimeline(timelineId, pauseInMillis = 100) {
+			if (pauseInMillis < 100) {
+				pauseInMillis = 100;
+			}
 		    Utils.loadTimeline(timelineId).then((scenario) => {
 		        AppUtils.createInitialAppState();
 		        ACEController.startReplay(JSON.parse(scenario.timeline), pauseInMillis)
@@ -568,24 +576,6 @@ class AceTemplate {
 		
 	'''
 	
-	private def resetStateFunction(SingleClientAttribute it) '''
-		export function reset_«functionName»() {
-			«IF isHash»
-				location.hash = "";
-			«ELSEIF isStorage»
-				localStorage.removeItem("«getName»");
-			«ELSE»
-				«FOR attribute: allParentAttributes»
-					if (!«attribute.elementPath») {
-						return;
-					}
-				«ENDFOR»
-				«elementPath» = undefined;
-			«ENDIF»
-		}
-		
-	'''
-	
 	private def mergeStateFunction(SingleClientAttribute it) '''
 		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage» 
 			export function merge_«functionName»(eventData) {
@@ -626,7 +616,6 @@ class AceTemplate {
 	def dispatch String generateAppStateRec(SingleClientAttribute it) '''
 		«getStateFunction»
 		«setStateFunction»
-		«resetStateFunction»
 		«mergeStateFunction»
 		«childAttributes»
 	'''
@@ -637,7 +626,6 @@ class AceTemplate {
 				«IF attribute instanceof SingleClientAttribute»
 					«attribute.getStateFunction»
 					«attribute.setStateFunction»
-					«attribute.resetStateFunction»
 					«attribute.mergeStateFunction»
 					«attribute.childAttributes»
 				«ELSE»

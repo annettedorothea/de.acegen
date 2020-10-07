@@ -1711,12 +1711,6 @@ rule__HttpClientStateFunctionType__Alternatives
 		'merge'
 		{ after(grammarAccess.getHttpClientStateFunctionTypeAccess().getMergeKeyword_1()); }
 	)
-	|
-	(
-		{ before(grammarAccess.getHttpClientStateFunctionTypeAccess().getResetKeyword_2()); }
-		'reset'
-		{ after(grammarAccess.getHttpClientStateFunctionTypeAccess().getResetKeyword_2()); }
-	)
 ;
 finally {
 	restoreStackSize(stackSize);

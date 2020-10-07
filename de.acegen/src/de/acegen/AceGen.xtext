@@ -61,7 +61,7 @@ HttpClientStateFunction:
 ;
 
 HttpClientStateFunctionType:
-	'set' | 'merge' | 'reset'
+	'set' | 'merge'
 ;
 
 ClientAttribute:

@@ -79,7 +79,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("static start() {");
+    _builder.append("static startApp() {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("Utils.loadSettings().then(() => {");
@@ -89,6 +89,13 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("});");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("static startReplay() {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -456,7 +463,7 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("AppUtils.initEventListenersAndEventFactories();");
     _builder.newLine();
-    _builder.append("AppUtils.start();");
+    _builder.append("AppUtils.startApp();");
     _builder.newLine();
     _builder.newLine();
     _builder.newLine();
@@ -709,6 +716,10 @@ public class AceTemplate {
     _builder.append("    ");
     _builder.append("static startReplay(timeline, pauseInMillis) {");
     _builder.newLine();
+    _builder.append("\t    ");
+    _builder.append("AppUtils.startReplay();");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("        ");
     _builder.append("let events = [];");
     _builder.newLine();
@@ -809,7 +820,7 @@ public class AceTemplate {
     _builder.append("AppUtils.createInitialAppState();");
     _builder.newLine();
     _builder.append("\t    ");
-    _builder.append("AppUtils.start();");
+    _builder.append("AppUtils.startApp();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -844,7 +855,16 @@ public class AceTemplate {
     _builder.append("import Utils from \"./Utils\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export function replayTimeline(timelineId, pauseInMillis = 0) {");
+    _builder.append("export function replayTimeline(timelineId, pauseInMillis = 100) {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("if (pauseInMillis < 100) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("pauseInMillis = 100;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("Utils.loadTimeline(timelineId).then((scenario) => {");
@@ -1473,61 +1493,6 @@ public class AceTemplate {
     return _builder;
   }
   
-  private CharSequence resetStateFunction(final SingleClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("export function reset_");
-    String _functionName = this._es6Extension.functionName(it);
-    _builder.append(_functionName);
-    _builder.append("() {");
-    _builder.newLineIfNotEmpty();
-    {
-      boolean _isHash = it.isHash();
-      if (_isHash) {
-        _builder.append("\t");
-        _builder.append("location.hash = \"\";");
-        _builder.newLine();
-      } else {
-        boolean _isStorage = it.isStorage();
-        if (_isStorage) {
-          _builder.append("\t");
-          _builder.append("localStorage.removeItem(\"");
-          String _name = it.getName();
-          _builder.append(_name, "\t");
-          _builder.append("\");");
-          _builder.newLineIfNotEmpty();
-        } else {
-          {
-            List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-            for(final ClientAttribute attribute : _allParentAttributes) {
-              _builder.append("\t");
-              _builder.append("if (!");
-              String _elementPath = this._es6Extension.elementPath(attribute);
-              _builder.append(_elementPath, "\t");
-              _builder.append(") {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("\t");
-              _builder.append("return;");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("}");
-              _builder.newLine();
-            }
-          }
-          _builder.append("\t");
-          String _elementPath_1 = this._es6Extension.elementPath(it);
-          _builder.append(_elementPath_1, "\t");
-          _builder.append(" = undefined;");
-          _builder.newLineIfNotEmpty();
-        }
-      }
-    }
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    return _builder;
-  }
-  
   private CharSequence mergeStateFunction(final SingleClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -1652,9 +1617,6 @@ public class AceTemplate {
     CharSequence _setStateFunction = this.setStateFunction(it);
     _builder.append(_setStateFunction);
     _builder.newLineIfNotEmpty();
-    CharSequence _resetStateFunction = this.resetStateFunction(it);
-    _builder.append(_resetStateFunction);
-    _builder.newLineIfNotEmpty();
     CharSequence _mergeStateFunction = this.mergeStateFunction(it);
     _builder.append(_mergeStateFunction);
     _builder.newLineIfNotEmpty();
@@ -1678,9 +1640,6 @@ public class AceTemplate {
                 _builder.newLineIfNotEmpty();
                 CharSequence _setStateFunction = this.setStateFunction(((SingleClientAttribute)attribute));
                 _builder.append(_setStateFunction);
-                _builder.newLineIfNotEmpty();
-                CharSequence _resetStateFunction = this.resetStateFunction(((SingleClientAttribute)attribute));
-                _builder.append(_resetStateFunction);
                 _builder.newLineIfNotEmpty();
                 CharSequence _mergeStateFunction = this.mergeStateFunction(((SingleClientAttribute)attribute));
                 _builder.append(_mergeStateFunction);

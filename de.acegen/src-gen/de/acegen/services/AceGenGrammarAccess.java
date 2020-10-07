@@ -513,13 +513,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cSetKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cMergeKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cResetKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		
 		//HttpClientStateFunctionType:
-		//	'set' | 'merge' | 'reset';
+		//	'set' | 'merge';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'set' | 'merge' | 'reset'
+		//'set' | 'merge'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'set'
@@ -527,9 +526,6 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//'merge'
 		public Keyword getMergeKeyword_1() { return cMergeKeyword_1; }
-		
-		//'reset'
-		public Keyword getResetKeyword_2() { return cResetKeyword_2; }
 	}
 	public class ClientAttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ClientAttribute");
@@ -3403,7 +3399,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//HttpClientStateFunctionType:
-	//	'set' | 'merge' | 'reset';
+	//	'set' | 'merge';
 	public HttpClientStateFunctionTypeElements getHttpClientStateFunctionTypeAccess() {
 		return pHttpClientStateFunctionType;
 	}

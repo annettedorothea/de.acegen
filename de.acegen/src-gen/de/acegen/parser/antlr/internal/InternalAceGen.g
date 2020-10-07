@@ -821,12 +821,6 @@ ruleHttpClientStateFunctionType returns [AntlrDatatypeRuleToken current=new Antl
 			$current.merge(kw);
 			newLeafNode(kw, grammarAccess.getHttpClientStateFunctionTypeAccess().getMergeKeyword_1());
 		}
-		    |
-		kw='reset'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getHttpClientStateFunctionTypeAccess().getResetKeyword_2());
-		}
 	)
 ;
 

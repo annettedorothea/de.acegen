@@ -599,6 +599,11 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t\t\t");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("response.close();");
+    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("} else {");
     _builder.newLine();
