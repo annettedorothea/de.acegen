@@ -343,9 +343,6 @@ public class Command {
     _builder.append("public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.executeCommand(readonlyHandle);");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t\t\t");
@@ -353,6 +350,9 @@ public class Command {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.executeCommand(readonlyHandle);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

@@ -454,6 +454,9 @@ public class ActionTemplate {
     _builder.append("        ");
     _builder.append("return new Promise((resolve, reject) => {");
     _builder.newLine();
+    _builder.append("            ");
+    _builder.append("ACEController.addItemToTimeLine({action: this});");
+    _builder.newLine();
     _builder.append("        \t");
     _builder.append("this.preCall();");
     _builder.newLine();
@@ -468,9 +471,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("            ");
     _builder.append("this.initActionData();");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("ACEController.addItemToTimeLine({action: this});");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("let command = this.getCommand();");
@@ -570,6 +570,9 @@ public class ActionTemplate {
     _builder.append("    ");
     _builder.append("applyAction() {");
     _builder.newLine();
+    _builder.append("\t    ");
+    _builder.append("ACEController.addItemToTimeLine({action: this});");
+    _builder.newLine();
     _builder.append("        ");
     _builder.append("this.actionData.uuid = AppUtils.createUUID();");
     _builder.newLine();
@@ -578,9 +581,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.initActionData();");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("ACEController.addItemToTimeLine({action: this});");
     _builder.newLine();
     _builder.append("\t    ");
     _builder.append("let command = this.getCommand();");

@@ -631,6 +631,13 @@ public class Action {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    CharSequence _addActionToTimeline = this.addActionToTimeline();
+    _builder.append(_addActionToTimeline, "\t\t\t");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t\t");
@@ -650,10 +657,6 @@ public class Action {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    CharSequence _addActionToTimeline = this.addActionToTimeline();
-    _builder.append(_addActionToTimeline, "\t\t\t");
-    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.commitTransaction();");
     _builder.newLine();
@@ -776,6 +779,12 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    CharSequence _addActionToTimeline = this.addActionToTimeline();
+    _builder.append(_addActionToTimeline, "\t\t\t");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
@@ -791,10 +800,6 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    CharSequence _addActionToTimeline = this.addActionToTimeline();
-    _builder.append(_addActionToTimeline, "\t\t\t");
-    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");

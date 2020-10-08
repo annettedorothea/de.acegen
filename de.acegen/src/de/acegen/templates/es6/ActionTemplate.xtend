@@ -166,12 +166,12 @@ class ActionTemplate {
 
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
+		            ACEController.addItemToTimeLine({action: this});
 		        	this.preCall();
 		            AppUtils.renderNewState();
 		            this.actionData.uuid = AppUtils.createUUID();
 		            this.actionData.clientSystemTime = new Date();
 		            this.initActionData();
-		            ACEController.addItemToTimeLine({action: this});
 		            let command = this.getCommand();
 		            command.executeCommand().then(() => {
 					    this.postCall();
@@ -214,10 +214,10 @@ class ActionTemplate {
 		    }
 		
 		    applyAction() {
+			    ACEController.addItemToTimeLine({action: this});
 		        this.actionData.uuid = AppUtils.createUUID();
 				this.actionData.clientSystemTime = new Date();
 		        this.initActionData();
-			    ACEController.addItemToTimeLine({action: this});
 			    let command = this.getCommand();
 			    command.executeCommand();
 			    AppUtils.renderNewState();

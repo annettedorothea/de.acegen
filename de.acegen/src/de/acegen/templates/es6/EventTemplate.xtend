@@ -91,9 +91,9 @@ class EventTemplate {
 		    }
 		
 		    publish() {
+				ACEController.addItemToTimeLine({event: this});
 		        this.notifyListeners();
 		        AppUtils.renderNewState();
-				ACEController.addItemToTimeLine({event: this});
 		    }
 		
 		    replay() {
@@ -135,8 +135,8 @@ class EventTemplate {
 		    }
 		
 			publish() {
-			    this.notifyListeners();
 			    ACEController.addItemToTimeLine({event: this});
+			    this.notifyListeners();
 			}
 			
 			replay() {

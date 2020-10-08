@@ -261,18 +261,16 @@ class CommandTemplate {
 		
 		export default class AsynchronousCommand extends Command {
 		    executeCommand() {
+		        ACEController.addItemToTimeLine({command: this});
 		        return new Promise((resolve, reject) => {
 					if (this.validateCommandData()) {
 					    this.execute().then(() => {
-					        ACEController.addItemToTimeLine({command: this});
 					        this.publishEvents();
 					        resolve();
 					    }, (error) => {
-					    	ACEController.addItemToTimeLine({command: this});
 					        reject(error);
 					    });
 					} else {
-				        ACEController.addItemToTimeLine({command: this});
 				        this.publishEvents();
 						resolve();
 					}
@@ -300,8 +298,8 @@ class CommandTemplate {
 		
 		export default class SynchronousCommand extends Command {
 		    executeCommand() {
-			    this.execute();
 				ACEController.addItemToTimeLine({command: this});
+			    this.execute();
 				this.publishEvents();
 		    }
 		

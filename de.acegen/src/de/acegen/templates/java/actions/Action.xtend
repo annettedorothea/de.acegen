@@ -277,6 +277,9 @@ class Action {
 						databaseHandle.rollbackTransaction();
 						return;
 					}
+					
+					«addActionToTimeline»
+
 					this.actionData.setSystemTime(LocalDateTime.now());
 					this.initActionData();
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
@@ -284,7 +287,6 @@ class Action {
 					}
 					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
 					
-					«addActionToTimeline»
 					databaseHandle.commitTransaction();
 				«catchFinallyBlock»
 				
@@ -337,12 +339,14 @@ class Action {
 						databaseHandle.rollbackTransaction();
 						return;
 					}
+
+					«addActionToTimeline»
+
 					this.actionData.setSystemTime(LocalDateTime.now());
 					this.initActionData();
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
 						initActionDataFromNonDeterministicDataProvider();
 					}
-					«addActionToTimeline»
 					
 					ICommand command = this.getCommand();
 					command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());

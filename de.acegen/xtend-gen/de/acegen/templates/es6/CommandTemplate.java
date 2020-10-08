@@ -892,6 +892,9 @@ public class CommandTemplate {
     _builder.append("executeCommand() {");
     _builder.newLine();
     _builder.append("        ");
+    _builder.append("ACEController.addItemToTimeLine({command: this});");
+    _builder.newLine();
+    _builder.append("        ");
     _builder.append("return new Promise((resolve, reject) => {");
     _builder.newLine();
     _builder.append("\t\t\t");
@@ -899,9 +902,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("this.execute().then(() => {");
-    _builder.newLine();
-    _builder.append("\t\t\t        ");
-    _builder.append("ACEController.addItemToTimeLine({command: this});");
     _builder.newLine();
     _builder.append("\t\t\t        ");
     _builder.append("this.publishEvents();");
@@ -912,9 +912,6 @@ public class CommandTemplate {
     _builder.append("\t\t\t    ");
     _builder.append("}, (error) => {");
     _builder.newLine();
-    _builder.append("\t\t\t    \t");
-    _builder.append("ACEController.addItemToTimeLine({command: this});");
-    _builder.newLine();
     _builder.append("\t\t\t        ");
     _builder.append("reject(error);");
     _builder.newLine();
@@ -923,9 +920,6 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t        ");
-    _builder.append("ACEController.addItemToTimeLine({command: this});");
     _builder.newLine();
     _builder.append("\t\t        ");
     _builder.append("this.publishEvents();");
@@ -982,11 +976,11 @@ public class CommandTemplate {
     _builder.append("    ");
     _builder.append("executeCommand() {");
     _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("this.execute();");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("ACEController.addItemToTimeLine({command: this});");
+    _builder.newLine();
+    _builder.append("\t    ");
+    _builder.append("this.execute();");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.publishEvents();");
