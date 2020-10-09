@@ -106,83 +106,82 @@ class Resource {
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 
-		public «resourceName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider) {
-				this.persistenceConnection = persistenceConnection;
-				this.appConfiguration = appConfiguration;
-				this.daoProvider = daoProvider;
-				this.viewProvider = viewProvider;
-			}
-		
-		«IF getType !== null»@«getType»«ENDIF»
-		@Timed(name = "«actionName»Timed")
-		@Metered(name = "«actionName»Metered")
-		@ExceptionMetered
-		@ResponseMetered
-		@Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public Response «resourceName.toFirstLower»(
-				«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
-				«FOR param : queryParams»
-					@QueryParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
-				«ENDFOR»
-				«FOR param : pathParams»
-					@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
-				«ENDFOR»
-				@QueryParam("uuid") String uuid«IF payload.size > 0», 
-				«getModel.dataParamType» payload«ENDIF») 
-				throws JsonProcessingException {
-			«IF payload.size > 0»
-				if (payload == null) {
-					return badRequest("payload must not be null");
+			public «resourceName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+						IDaoProvider daoProvider, ViewProvider viewProvider) {
+					this.persistenceConnection = persistenceConnection;
+					this.appConfiguration = appConfiguration;
+					this.daoProvider = daoProvider;
+					this.viewProvider = viewProvider;
 				}
-			«ENDIF»
-			if (StringUtils.isBlank(uuid)) {
-				uuid = UUID.randomUUID().toString();
-			}
-			«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
-			«FOR paramRef : queryParams»
-				«paramRef.initActionData»
-			«ENDFOR»
-			«FOR paramRef : pathParams»
-				«paramRef.initActionData»
-			«ENDFOR»
-			«FOR attributeRef : payload»
-				«attributeRef.initActionDataFromPayload»
-			«ENDFOR»
-			«IF isAuthorize && authUser !== null»
-				«FOR param : getModel.allAttributes»
-						«IF authUser.attributes.containsAttribute(param)»
-							actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
-						«ENDIF»
-				«ENDFOR»
-			«ENDIF»
 			
-			«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
-			action.setActionData(actionData);
-			try {
-				action.apply();
-				«IF response.size > 0»
-					return Response.ok(new «responseDataNameWithPackage»(action.getActionData())).build();
-				«ELSE»
-					return ok();
+			«IF getType !== null»@«getType»«ENDIF»
+			@Timed(name = "«actionName»Timed")
+			@Metered(name = "«actionName»Metered")
+			@ExceptionMetered
+			@ResponseMetered
+			@Produces(MediaType.APPLICATION_JSON)
+			@Consumes(MediaType.APPLICATION_JSON)
+			public Response «resourceName.toFirstLower»(
+					«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
+					«FOR param : queryParams»
+						@QueryParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
+					«ENDFOR»
+					«FOR param : pathParams»
+						@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
+					«ENDFOR»
+					@QueryParam("uuid") String uuid«IF payload.size > 0», 
+					«getModel.dataParamType» payload«ENDIF») 
+					throws JsonProcessingException {
+				«IF payload.size > 0»
+					if (payload == null) {
+						return badRequest("payload must not be null");
+					}
 				«ENDIF»
-			} catch (IllegalArgumentException x) {
-				LOG.error("bad request due to {} ", x.getMessage());
-				return badRequest(x.getMessage());
-			} catch (SecurityException x) {
-				LOG.error("unauthorized due to {} ", x.getMessage());
-				return unauthorized("authorization needed for «getUrl»");
-			} catch (Exception x) {
-				LOG.error("internal server error due to {} ", x.getMessage());
-				return internalServerError(x);
+				if (StringUtils.isBlank(uuid)) {
+					uuid = UUID.randomUUID().toString();
+				}
+				«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
+				«FOR paramRef : queryParams»
+					«paramRef.initActionData»
+				«ENDFOR»
+				«FOR paramRef : pathParams»
+					«paramRef.initActionData»
+				«ENDFOR»
+				«FOR attributeRef : payload»
+					«attributeRef.initActionDataFromPayload»
+				«ENDFOR»
+				«IF isAuthorize && authUser !== null»
+					«FOR param : getModel.allAttributes»
+							«IF authUser.attributes.containsAttribute(param)»
+								actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+							«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+				
+				«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
+				action.setActionData(actionData);
+				try {
+					action.apply();
+					«IF response.size > 0»
+						return Response.ok(new «responseDataNameWithPackage»(action.getActionData())).build();
+					«ELSE»
+						return ok();
+					«ENDIF»
+				} catch (IllegalArgumentException x) {
+					LOG.error("bad request due to {} ", x.getMessage());
+					return badRequest(x.getMessage());
+				} catch (SecurityException x) {
+					LOG.error("unauthorized due to {} ", x.getMessage());
+					return unauthorized("authorization needed for «getUrl»");
+				} catch (Exception x) {
+					LOG.error("internal server error due to {} ", x.getMessage());
+					return internalServerError(x);
+				}
 			}
 		}
-
-	}
-	
-	«sdg»
-	
+		
+		
+		«sdg»
 	'''
 	
 }

@@ -186,72 +186,82 @@ public class Resource {
     _builder.append("private ViewProvider viewProvider;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("\t");
     _builder.append("public ");
     String _resourceName_2 = this._aceExtension.resourceName(it);
-    _builder.append(_resourceName_2);
+    _builder.append(_resourceName_2, "\t");
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
+    _builder.append("\t\t\t\t");
     _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("this.persistenceConnection = persistenceConnection;");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("this.appConfiguration = appConfiguration;");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("this.daoProvider = daoProvider;");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("this.viewProvider = viewProvider;");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
     {
       String _type = it.getType();
       boolean _tripleNotEquals = (_type != null);
       if (_tripleNotEquals) {
         _builder.append("@");
         String _type_1 = it.getType();
-        _builder.append(_type_1);
+        _builder.append(_type_1, "\t");
       }
     }
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("@Timed(name = \"");
     String _actionName = this._aceExtension.actionName(it);
-    _builder.append(_actionName);
+    _builder.append(_actionName, "\t");
     _builder.append("Timed\")");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("@Metered(name = \"");
     String _actionName_1 = this._aceExtension.actionName(it);
-    _builder.append(_actionName_1);
+    _builder.append(_actionName_1, "\t");
     _builder.append("Metered\")");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("@ExceptionMetered");
     _builder.newLine();
+    _builder.append("\t");
     _builder.append("@ResponseMetered");
     _builder.newLine();
+    _builder.append("\t");
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
+    _builder.append("\t");
     _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
     _builder.newLine();
+    _builder.append("\t");
     _builder.append("public Response ");
     String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
-    _builder.append(_firstLower);
+    _builder.append(_firstLower, "\t");
     _builder.append("(");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     {
       if ((it.isAuthorize() && (authUser != null))) {
         _builder.append("@Auth ");
         String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper, "\t\t");
+        _builder.append(_firstUpper, "\t\t\t");
         _builder.append(" ");
         String _firstLower_1 = StringExtensions.toFirstLower(authUser.getName());
-        _builder.append(_firstLower_1, "\t\t");
+        _builder.append(_firstLower_1, "\t\t\t");
         _builder.append(", ");
       }
     }
@@ -259,16 +269,16 @@ public class Resource {
     {
       EList<AttributeParamRef> _queryParams = it.getQueryParams();
       for(final AttributeParamRef param : _queryParams) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("@QueryParam(\"");
         String _name_1 = param.getAttribute().getName();
-        _builder.append(_name_1, "\t\t");
+        _builder.append(_name_1, "\t\t\t");
         _builder.append("\") ");
         String _resourceParamType = this._attributeExtension.resourceParamType(param.getAttribute());
-        _builder.append(_resourceParamType, "\t\t");
+        _builder.append(_resourceParamType, "\t\t\t");
         _builder.append(" ");
         String _name_2 = param.getAttribute().getName();
-        _builder.append(_name_2, "\t\t");
+        _builder.append(_name_2, "\t\t\t");
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
       }
@@ -276,21 +286,21 @@ public class Resource {
     {
       EList<AttributeParamRef> _pathParams = it.getPathParams();
       for(final AttributeParamRef param_1 : _pathParams) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("@PathParam(\"");
         String _name_3 = param_1.getAttribute().getName();
-        _builder.append(_name_3, "\t\t");
+        _builder.append(_name_3, "\t\t\t");
         _builder.append("\") ");
         String _resourceParamType_1 = this._attributeExtension.resourceParamType(param_1.getAttribute());
-        _builder.append(_resourceParamType_1, "\t\t");
+        _builder.append(_resourceParamType_1, "\t\t\t");
         _builder.append(" ");
         String _name_4 = param_1.getAttribute().getName();
-        _builder.append(_name_4, "\t\t");
+        _builder.append(_name_4, "\t\t\t");
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("@QueryParam(\"uuid\") String uuid");
     {
       int _size = it.getPayload().size();
@@ -298,74 +308,74 @@ public class Resource {
       if (_greaterThan) {
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         String _dataParamType = this._modelExtension.dataParamType(it.getModel());
-        _builder.append(_dataParamType, "\t\t");
+        _builder.append(_dataParamType, "\t\t\t");
         _builder.append(" payload");
       }
     }
     _builder.append(") ");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("throws JsonProcessingException {");
     _builder.newLine();
     {
       int _size_1 = it.getPayload().size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
-        _builder.append("\t");
+        _builder.append("\t\t");
         _builder.append("if (payload == null) {");
         _builder.newLine();
-        _builder.append("\t");
+        _builder.append("\t\t");
         _builder.append("\t");
         _builder.append("return badRequest(\"payload must not be null\");");
         _builder.newLine();
-        _builder.append("\t");
+        _builder.append("\t\t");
         _builder.append("}");
         _builder.newLine();
       }
     }
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("if (StringUtils.isBlank(uuid)) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("uuid = UUID.randomUUID().toString();");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t");
     String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
-    _builder.append(_dataInterfaceNameWithPackage, "\t");
+    _builder.append(_dataInterfaceNameWithPackage, "\t\t");
     _builder.append(" actionData = new ");
     String _dataName = this._modelExtension.dataName(it.getModel());
-    _builder.append(_dataName, "\t");
+    _builder.append(_dataName, "\t\t");
     _builder.append("(uuid);");
     _builder.newLineIfNotEmpty();
     {
       EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
       for(final AttributeParamRef paramRef : _queryParams_1) {
-        _builder.append("\t");
+        _builder.append("\t\t");
         String _initActionData = this._attributeExtension.initActionData(paramRef);
-        _builder.append(_initActionData, "\t");
+        _builder.append(_initActionData, "\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
       EList<AttributeParamRef> _pathParams_1 = it.getPathParams();
       for(final AttributeParamRef paramRef_1 : _pathParams_1) {
-        _builder.append("\t");
+        _builder.append("\t\t");
         String _initActionData_1 = this._attributeExtension.initActionData(paramRef_1);
-        _builder.append(_initActionData_1, "\t");
+        _builder.append(_initActionData_1, "\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
       EList<AttributeParamRef> _payload = it.getPayload();
       for(final AttributeParamRef attributeRef : _payload) {
-        _builder.append("\t");
+        _builder.append("\t\t");
         String _initActionDataFromPayload = this._attributeExtension.initActionDataFromPayload(attributeRef);
-        _builder.append(_initActionDataFromPayload, "\t");
+        _builder.append(_initActionDataFromPayload, "\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -377,7 +387,7 @@ public class Resource {
             {
               boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_2);
               if (_containsAttribute) {
-                _builder.append("\t");
+                _builder.append("\t\t");
                 _builder.append("actionData.");
                 StringConcatenation _builder_1 = new StringConcatenation();
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
@@ -386,7 +396,7 @@ public class Resource {
                 String _terCall = this._attributeExtension.getterCall(param_2);
                 _builder_1.append(_terCall);
                 String _setterCall = this._attributeExtension.setterCall(param_2, _builder_1.toString());
-                _builder.append(_setterCall, "\t");
+                _builder.append(_setterCall, "\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
               }
@@ -395,88 +405,84 @@ public class Resource {
         }
       }
     }
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage, "\t");
-    _builder.append(" action = new ");
-    String _actionNameWithPackage_1 = this._aceExtension.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage_1, "\t");
-    _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("action.setActionData(actionData);");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("try {");
+    _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
+    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
+    _builder.append(_actionNameWithPackage, "\t\t");
+    _builder.append(" action = new ");
+    String _actionNameWithPackage_1 = this._aceExtension.actionNameWithPackage(it);
+    _builder.append(_actionNameWithPackage_1, "\t\t");
+    _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("action.setActionData(actionData);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("try {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("action.apply();");
     _builder.newLine();
     {
       int _size_2 = it.getResponse().size();
       boolean _greaterThan_2 = (_size_2 > 0);
       if (_greaterThan_2) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it);
-        _builder.append(_responseDataNameWithPackage, "\t\t");
+        _builder.append(_responseDataNameWithPackage, "\t\t\t");
         _builder.append("(action.getActionData())).build();");
         _builder.newLineIfNotEmpty();
       } else {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("return ok();");
         _builder.newLine();
       }
     }
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("} catch (IllegalArgumentException x) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("LOG.error(\"bad request due to {} \", x.getMessage());");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("return badRequest(x.getMessage());");
     _builder.newLine();
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("} catch (SecurityException x) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("LOG.error(\"unauthorized due to {} \", x.getMessage());");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("return unauthorized(\"authorization needed for ");
     String _url_1 = it.getUrl();
-    _builder.append(_url_1, "\t\t");
+    _builder.append(_url_1, "\t\t\t");
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
+    _builder.append("\t\t");
     _builder.append("} catch (Exception x) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("LOG.error(\"internal server error due to {} \", x.getMessage());");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("return internalServerError(x);");
     _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
     String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg, "\t");
+    _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.newLine();
     return _builder;
   }
 }
