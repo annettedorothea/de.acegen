@@ -66,10 +66,10 @@ public class DropwizardResource {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected Response unauthorized() {");
+    _builder.append("protected Response unauthorized(String message) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return Response.status(Response.Status.UNAUTHORIZED).build();");
+    _builder.append("return Response.status(Response.Status.UNAUTHORIZED).entity(message).build();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

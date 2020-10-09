@@ -172,7 +172,7 @@ class Resource {
 				return badRequest(x.getMessage());
 			} catch (SecurityException x) {
 				LOG.error("unauthorized due to {} ", x.getMessage());
-				return unauthorized();
+				return unauthorized("authorization needed for «getUrl»");
 			} catch (Exception x) {
 				LOG.error("internal server error due to {} ", x.getMessage());
 				return internalServerError(x);
