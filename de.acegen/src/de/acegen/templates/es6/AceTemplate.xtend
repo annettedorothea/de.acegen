@@ -544,7 +544,11 @@ class AceTemplate {
 			«IF isHash»
 				location.hash = eventData.«getName»;
 			«ELSEIF isStorage»
-				localStorage.setItem("«getName»", eventData.«getName»);
+				if (eventData.«getName») {
+					localStorage.setItem("«getName»", eventData.«getName»);
+				} else {
+					localStorage.removeItem("«getName»");
+				}
 			«ELSE»
 				«FOR attribute: allParentAttributes»
 					«IF attribute.eContainer instanceof GroupedClientAttribute»

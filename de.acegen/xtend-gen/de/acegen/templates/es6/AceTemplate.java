@@ -1356,14 +1356,34 @@ public class AceTemplate {
         boolean _isStorage = it.isStorage();
         if (_isStorage) {
           _builder.append("\t");
-          _builder.append("localStorage.setItem(\"");
+          _builder.append("if (eventData.");
           String _name_1 = it.getName();
           _builder.append(_name_1, "\t");
-          _builder.append("\", eventData.");
+          _builder.append(") {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("\t");
+          _builder.append("localStorage.setItem(\"");
           String _name_2 = it.getName();
-          _builder.append(_name_2, "\t");
+          _builder.append(_name_2, "\t\t");
+          _builder.append("\", eventData.");
+          String _name_3 = it.getName();
+          _builder.append(_name_3, "\t\t");
           _builder.append(");");
           _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("} else {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("\t");
+          _builder.append("localStorage.removeItem(\"");
+          String _name_4 = it.getName();
+          _builder.append(_name_4, "\t\t");
+          _builder.append("\");");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
         } else {
           {
             List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
@@ -1428,8 +1448,8 @@ public class AceTemplate {
             if ((_eContainer_1 instanceof GroupedClientAttribute)) {
               _builder.append("\t");
               _builder.append("if (!!eventData.");
-              String _name_3 = it.getName();
-              _builder.append(_name_3, "\t");
+              String _name_5 = it.getName();
+              _builder.append(_name_5, "\t");
               _builder.append(") {");
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
@@ -1437,8 +1457,8 @@ public class AceTemplate {
               String _elementPath_5 = this._es6Extension.elementPath(it);
               _builder.append(_elementPath_5, "\t\t");
               _builder.append(" = eventData.");
-              String _name_4 = it.getName();
-              _builder.append(_name_4, "\t\t");
+              String _name_6 = it.getName();
+              _builder.append(_name_6, "\t\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
@@ -1478,8 +1498,8 @@ public class AceTemplate {
               String _elementPath_8 = this._es6Extension.elementPath(it);
               _builder.append(_elementPath_8, "\t");
               _builder.append(" = eventData.");
-              String _name_5 = it.getName();
-              _builder.append(_name_5, "\t");
+              String _name_7 = it.getName();
+              _builder.append(_name_7, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
             }
