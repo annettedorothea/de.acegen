@@ -270,6 +270,8 @@ class BaseScenario {
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		import javax.ws.rs.core.Response;
 		import java.time.LocalDateTime;
+		import java.util.HashMap;
+		import java.util.Map;
 		
 		public abstract class AbstractBaseScenario {
 		
@@ -280,6 +282,8 @@ class BaseScenario {
 			protected PersistenceHandle handle;
 			
 			protected ObjectMapper objectMapper;
+			
+			protected Map<String, Object> extractedValues = new HashMap<String, Object>();
 			
 			public AbstractBaseScenario() {
 				objectMapper = new ObjectMapper();

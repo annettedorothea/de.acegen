@@ -228,11 +228,6 @@ public class Scenario {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private Map<String, Object> extractedValues = new HashMap<String, Object>();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("private void given() throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");

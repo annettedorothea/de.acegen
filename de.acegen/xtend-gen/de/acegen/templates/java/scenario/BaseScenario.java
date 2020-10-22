@@ -631,6 +631,10 @@ public class BaseScenario {
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
+    _builder.append("import java.util.HashMap;");
+    _builder.newLine();
+    _builder.append("import java.util.Map;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class AbstractBaseScenario {");
     _builder.newLine();
@@ -650,6 +654,11 @@ public class BaseScenario {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected ObjectMapper objectMapper;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected Map<String, Object> extractedValues = new HashMap<String, Object>();");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
