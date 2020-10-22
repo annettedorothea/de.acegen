@@ -412,6 +412,8 @@ public class JavaGenerator {
       this.baseScenario.generateAbstractBaseScenario());
     fsa.generateFile("de/acegen/TestLogger.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, 
       this.baseScenario.generateTestLogger());
+    fsa.generateFile("de/acegen/HttpResponse.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT, 
+      this.baseScenario.generateHttpResponse());
     fsa.generateFile("de/acegen/BaseScenario.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_TEST_OUTPUT_ONCE, 
       this.baseScenario.generateBaseScenario());
     fsa.generateFile("de/acegen/YamlConfiguration.java", 

@@ -71,7 +71,6 @@ class Scenario {
 		package «java.getName».scenarios;
 		
 		import «whenBlock.action.responseDataNameWithPackage»;
-		import javax.ws.rs.core.Response;
 		
 		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
@@ -103,8 +102,6 @@ class Scenario {
 		import java.util.Map;
 		import java.util.HashMap;
 		
-		import javax.ws.rs.core.Response;
-		
 		import java.time.LocalDateTime;
 		import java.time.format.DateTimeFormatter;
 		
@@ -114,6 +111,7 @@ class Scenario {
 		import de.acegen.BaseScenario;
 		import de.acegen.ITimelineItem;
 		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.HttpResponse;
 		
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
@@ -123,7 +121,6 @@ class Scenario {
 			private Map<String, Object> extractedValues = new HashMap<String, Object>();
 			
 			private void given() throws Exception {
-				Response response;
 				String uuid;
 				long timeBeforeRequest;
 				long timeAfterRequest;
@@ -135,28 +132,26 @@ class Scenario {
 				«ENDFOR»
 			}
 			
-			private Response when() throws Exception {
+			private HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> when() throws Exception {
 				«resetIndex»
 				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateDataCreation»
 				long timeBeforeRequest = System.currentTimeMillis();
-				Response response = «whenBlock.generateActionCalls(java)»
+				HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = «whenBlock.generateActionCalls(java)»
 				long timeAfterRequest = System.currentTimeMillis();
 				LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", (timeAfterRequest-timeBeforeRequest));
 				addToMetrics("«whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 				return response;
 			}
 			
-			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(Response response) throws Exception {
-				if (response.getStatus() == 500) {
-					String message = response.readEntity(String.class);
-					assertFail(message);
+			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
+				if (response.getStatusCode() == 500) {
+					assertFail(response.getStatusMessage());
 				}
 				«IF thenBlock.statusCode !== 0»
-					if (response.getStatus() != «thenBlock.statusCode») {
-						String message = response.readEntity(String.class);
-						assertFail(message);
+					if (response.getStatusCode() != «thenBlock.statusCode») {
+						assertFail(response.getStatusMessage());
 					} else {
 						LOG.info("THEN: status «thenBlock.statusCode» passed");
 					}
@@ -164,9 +159,10 @@ class Scenario {
 				
 				«IF whenBlock.action.response.size > 0»
 					«whenBlock.action.responseDataNameWithPackage» actual = null;
-					if (response.getStatus() < 400) {
+					if (response.getStatusCode() < 400) {
 						try {
-							actual = response.readEntity(«whenBlock.action.responseDataNameWithPackage».class);
+							actual = response.getEntity();
+							//readEntity(«whenBlock.action.responseDataNameWithPackage».class);
 							
 							«IF whenBlock.extractions.size > 0»
 								try {
@@ -205,7 +201,7 @@ class Scenario {
 				given();
 					
 				if (prerequisite("«name»")) {
-					Response response = when();
+					HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = when();
 		
 					«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» actualResponse = «ENDIF»then(response);
 					
@@ -216,8 +212,6 @@ class Scenario {
 					«FOR verification : thenBlock.verifications»
 						«verification.name»(«IF whenBlock.action.response.size > 0»actualResponse«ENDIF»);
 					«ENDFOR»
-					
-					response.close();
 				} else {
 					LOG.info("WHEN: prerequisite for «name» not met");
 				}
@@ -268,10 +262,10 @@ class Scenario {
 			«givenRef.scenario.whenBlock.generatePrepare»
 			«givenRef.scenario.whenBlock.generateDataCreation»
 			timeBeforeRequest = System.currentTimeMillis();
-			response = «givenRef.scenario.whenBlock.generateActionCalls(java)»
+			HttpResponse<«IF givenRef.scenario.whenBlock.action.response.size > 0»«givenRef.scenario.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «givenRef.scenario.whenBlock.generateActionCalls(java)»
 			timeAfterRequest = System.currentTimeMillis();
-			if (response.getStatus() >= 400) {
-				String message = "GIVEN «givenRef.scenario.name» fails\n" + response.readEntity(String.class);
+			if (response_«index».getStatusCode() >= 400) {
+				String message = "GIVEN «givenRef.scenario.name» fails\n" + response_«index».getStatusMessage();
 				LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
 				addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
 				assertFail(message);
@@ -281,10 +275,9 @@ class Scenario {
 			«IF givenRef.scenario.whenBlock.extractions.size > 0 && givenRef.scenario.whenBlock.action.response.size > 0»
 				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage» responseEntity_«index» = null;
 				try {
-					responseEntity_«index» = response.readEntity(«givenRef.scenario.whenBlock.action.responseDataNameWithPackage».class);
 					«FOR extraction: givenRef.scenario.whenBlock.extractions»
 						
-						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(responseEntity_«index»);
+						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(response_«index».getEntity());
 						extractedValues.put("«extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF», «extraction.name»);
 						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF»);
 					«ENDFOR»
@@ -446,26 +439,30 @@ class Scenario {
 				"«action.urlWithPathParams('''data_«index»''', false)»", 
 			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
-				uuid
+				uuid,
+				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
 			);
 		«ELSEIF action.getType == "PUT"»
 			this.httpPut(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
 			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
-				uuid
+				uuid,
+				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
 			);
 		«ELSEIF action.getType == "DELETE"»
 			this.httpDelete(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
-				uuid
+				uuid,
+				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
 			);
 		«ELSE»
 			this.httpGet(
 				"«action.urlWithPathParams('''data_«index»''', true)»", 
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
-				uuid
+				uuid,
+				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
 			);
 		«ENDIF»
 		

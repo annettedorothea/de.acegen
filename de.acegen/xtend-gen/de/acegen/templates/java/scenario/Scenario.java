@@ -102,8 +102,6 @@ public class Scenario {
     _builder.append(_responseDataNameWithPackage);
     _builder.append(";");
     _builder.newLineIfNotEmpty();
-    _builder.append("import javax.ws.rs.core.Response;");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
@@ -194,9 +192,6 @@ public class Scenario {
     _builder.append("import java.util.HashMap;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import javax.ws.rs.core.Response;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
     _builder.append("import java.time.format.DateTimeFormatter;");
@@ -212,6 +207,8 @@ public class Scenario {
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
     _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.newLine();
+    _builder.append("import de.acegen.HttpResponse;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
@@ -237,9 +234,6 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private void given() throws Exception {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("Response response;");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("String uuid;");
@@ -271,8 +265,19 @@ public class Scenario {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private Response when() throws Exception {");
-    _builder.newLine();
+    _builder.append("private HttpResponse<");
+    {
+      int _size = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage, "\t");
+      } else {
+        _builder.append("Object");
+      }
+    }
+    _builder.append("> when() throws Exception {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     this.resetIndex();
     _builder.newLineIfNotEmpty();
@@ -304,7 +309,18 @@ public class Scenario {
     _builder.append("long timeBeforeRequest = System.currentTimeMillis();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("Response response = ");
+    _builder.append("HttpResponse<");
+    {
+      int _size_1 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_1, "\t\t");
+      } else {
+        _builder.append("Object");
+      }
+    }
+    _builder.append("> response = ");
     CharSequence _generateActionCalls = this.generateActionCalls(it.getWhenBlock(), java);
     _builder.append(_generateActionCalls, "\t\t");
     _builder.newLineIfNotEmpty();
@@ -334,25 +350,33 @@ public class Scenario {
     _builder.append("\t");
     _builder.append("private ");
     {
-      int _size = it.getWhenBlock().getAction().getResponse().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage, "\t");
+      int _size_2 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_2 = (_size_2 > 0);
+      if (_greaterThan_2) {
+        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_2, "\t");
       } else {
         _builder.append("void");
       }
     }
-    _builder.append(" then(Response response) throws Exception {");
+    _builder.append(" then(HttpResponse<");
+    {
+      int _size_3 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_3 = (_size_3 > 0);
+      if (_greaterThan_3) {
+        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_3, "\t");
+      } else {
+        _builder.append("Object");
+      }
+    }
+    _builder.append("> response) throws Exception {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("if (response.getStatus() == 500) {");
+    _builder.append("if (response.getStatusCode() == 500) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("String message = response.readEntity(String.class);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("assertFail(message);");
+    _builder.append("assertFail(response.getStatusMessage());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -362,18 +386,14 @@ public class Scenario {
       boolean _tripleNotEquals_1 = (_statusCode != 0);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
-        _builder.append("if (response.getStatus() != ");
+        _builder.append("if (response.getStatusCode() != ");
         int _statusCode_1 = it.getThenBlock().getStatusCode();
         _builder.append(_statusCode_1, "\t\t");
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("String message = response.readEntity(String.class);");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("assertFail(message);");
+        _builder.append("assertFail(response.getStatusMessage());");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("} else {");
@@ -393,32 +413,35 @@ public class Scenario {
     _builder.append("\t\t");
     _builder.newLine();
     {
-      int _size_1 = it.getWhenBlock().getAction().getResponse().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
+      int _size_4 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_4 = (_size_4 > 0);
+      if (_greaterThan_4) {
         _builder.append("\t\t\t\t");
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_1, "\t\t\t\t");
+        String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_4, "\t\t\t\t");
         _builder.append(" actual = null;");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t\t");
-        _builder.append("if (response.getStatus() < 400) {");
+        _builder.append("if (response.getStatusCode() < 400) {");
         _builder.newLine();
         _builder.append("\t\t\t\t\t");
         _builder.append("try {");
         _builder.newLine();
         _builder.append("\t\t\t\t\t\t");
-        _builder.append("actual = response.readEntity(");
-        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_2, "\t\t\t\t\t\t");
+        _builder.append("actual = response.getEntity();");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append("//readEntity(");
+        String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t\t");
         _builder.append(".class);");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t\t\t\t");
         _builder.newLine();
         {
-          int _size_2 = it.getWhenBlock().getExtractions().size();
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
+          int _size_5 = it.getWhenBlock().getExtractions().size();
+          boolean _greaterThan_5 = (_size_5 > 0);
+          if (_greaterThan_5) {
             _builder.append("\t\t\t\t\t\t");
             _builder.append("try {");
             _builder.newLine();
@@ -500,11 +523,11 @@ public class Scenario {
             _builder.append("\t\t\t\t\t");
             _builder.newLine();
             _builder.append("\t\t\t\t\t");
-            String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-            _builder.append(_responseDataNameWithPackage_3, "\t\t\t\t\t");
+            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_6, "\t\t\t\t\t");
             _builder.append(" expected = new ");
-            String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-            _builder.append(_responseDataNameWithPackage_4, "\t\t\t\t\t");
+            String _responseDataNameWithPackage_7 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_7, "\t\t\t\t\t");
             _builder.append("(expectedData);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t\t\t\t");
@@ -551,16 +574,27 @@ public class Scenario {
     _builder.append("\")) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    _builder.append("Response response = when();");
-    _builder.newLine();
+    _builder.append("HttpResponse<");
+    {
+      int _size_6 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_6 = (_size_6 > 0);
+      if (_greaterThan_6) {
+        String _responseDataNameWithPackage_8 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_8, "\t\t\t");
+      } else {
+        _builder.append("Object");
+      }
+    }
+    _builder.append("> response = when();");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t\t\t");
     {
-      int _size_3 = it.getWhenBlock().getAction().getResponse().size();
-      boolean _greaterThan_3 = (_size_3 > 0);
-      if (_greaterThan_3) {
-        String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_5, "\t\t\t");
+      int _size_7 = it.getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan_7 = (_size_7 > 0);
+      if (_greaterThan_7) {
+        String _responseDataNameWithPackage_9 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_9, "\t\t\t");
         _builder.append(" actualResponse = ");
       }
     }
@@ -589,9 +623,9 @@ public class Scenario {
         _builder.append(_name_12, "\t\t\t");
         _builder.append("(");
         {
-          int _size_4 = it.getWhenBlock().getAction().getResponse().size();
-          boolean _greaterThan_4 = (_size_4 > 0);
-          if (_greaterThan_4) {
+          int _size_8 = it.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan_8 = (_size_8 > 0);
+          if (_greaterThan_8) {
             _builder.append("actualResponse");
           }
         }
@@ -599,11 +633,6 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("\t\t\t");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("response.close();");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("} else {");
     _builder.newLine();
@@ -630,11 +659,11 @@ public class Scenario {
         _builder.append(_name_14, "\t");
         _builder.append("(");
         {
-          int _size_5 = it.getWhenBlock().getAction().getResponse().size();
-          boolean _greaterThan_5 = (_size_5 > 0);
-          if (_greaterThan_5) {
-            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-            _builder.append(_responseDataNameWithPackage_6, "\t");
+          int _size_9 = it.getWhenBlock().getAction().getResponse().size();
+          boolean _greaterThan_9 = (_size_9 > 0);
+          if (_greaterThan_9) {
+            String _responseDataNameWithPackage_10 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_10, "\t");
             _builder.append(" response");
           }
         }
@@ -790,7 +819,20 @@ public class Scenario {
     _builder.append("timeBeforeRequest = System.currentTimeMillis();");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("response = ");
+    _builder.append("HttpResponse<");
+    {
+      int _size = givenRef.getScenario().getWhenBlock().getAction().getResponse().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(givenRef.getScenario().getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage, "\t");
+      } else {
+        _builder.append("Object");
+      }
+    }
+    _builder.append("> response_");
+    _builder.append(this.index, "\t");
+    _builder.append(" = ");
     CharSequence _generateActionCalls = this.generateActionCalls(givenRef.getScenario().getWhenBlock(), java);
     _builder.append(_generateActionCalls, "\t");
     _builder.newLineIfNotEmpty();
@@ -798,13 +840,17 @@ public class Scenario {
     _builder.append("timeAfterRequest = System.currentTimeMillis();");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("if (response.getStatus() >= 400) {");
-    _builder.newLine();
+    _builder.append("if (response_");
+    _builder.append(this.index, "\t");
+    _builder.append(".getStatusCode() >= 400) {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("String message = \"GIVEN ");
     String _name_1 = givenRef.getScenario().getName();
     _builder.append(_name_1, "\t\t");
-    _builder.append(" fails\\n\" + response.readEntity(String.class);");
+    _builder.append(" fails\\n\" + response_");
+    _builder.append(this.index, "\t\t");
+    _builder.append(".getStatusMessage();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("LOG.info(\"GIVEN: ");
@@ -839,8 +885,8 @@ public class Scenario {
     {
       if (((givenRef.getScenario().getWhenBlock().getExtractions().size() > 0) && (givenRef.getScenario().getWhenBlock().getAction().getResponse().size() > 0))) {
         _builder.append("\t");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage, "\t");
+        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(givenRef.getScenario().getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_1, "\t");
         _builder.append(" responseEntity_");
         _builder.append(this.index, "\t");
         _builder.append(" = null;");
@@ -848,15 +894,6 @@ public class Scenario {
         _builder.append("\t");
         _builder.append("try {");
         _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("responseEntity_");
-        _builder.append(this.index, "\t\t");
-        _builder.append(" = response.readEntity(");
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_1, "\t\t");
-        _builder.append(".class);");
-        _builder.newLineIfNotEmpty();
         {
           EList<Extraction> _extractions = givenRef.getScenario().getWhenBlock().getExtractions();
           for(final Extraction extraction : _extractions) {
@@ -871,9 +908,9 @@ public class Scenario {
             _builder.append(" = this.extract");
             String _firstUpper = StringExtensions.toFirstUpper(extraction.getName());
             _builder.append(_firstUpper, "\t\t");
-            _builder.append("(responseEntity_");
+            _builder.append("(response_");
             _builder.append(this.index, "\t\t");
-            _builder.append(");");
+            _builder.append(".getEntity());");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t");
@@ -1520,8 +1557,21 @@ public class Scenario {
         _builder.append(",");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("uuid");
+        _builder.append("uuid,");
         _builder.newLine();
+        _builder.append("\t");
+        {
+          int _size_1 = it.getAction().getResponse().size();
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
+            String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getAction());
+            _builder.append(_responseDataNameWithPackage, "\t");
+            _builder.append(".class");
+          } else {
+            _builder.append("null");
+          }
+        }
+        _builder.newLineIfNotEmpty();
         _builder.append(");");
         _builder.newLine();
       } else {
@@ -1542,9 +1592,9 @@ public class Scenario {
           _builder.newLineIfNotEmpty();
           _builder.append(" \t");
           {
-            int _size_1 = it.getAction().getPayload().size();
-            boolean _greaterThan_1 = (_size_1 > 0);
-            if (_greaterThan_1) {
+            int _size_2 = it.getAction().getPayload().size();
+            boolean _greaterThan_2 = (_size_2 > 0);
+            if (_greaterThan_2) {
               _builder.append("payload_");
               _builder.append(this.index, " \t");
             } else {
@@ -1570,8 +1620,21 @@ public class Scenario {
           _builder.append(",");
           _builder.newLineIfNotEmpty();
           _builder.append("\t");
-          _builder.append("uuid");
+          _builder.append("uuid,");
           _builder.newLine();
+          _builder.append("\t");
+          {
+            int _size_3 = it.getAction().getResponse().size();
+            boolean _greaterThan_3 = (_size_3 > 0);
+            if (_greaterThan_3) {
+              String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+              _builder.append(_responseDataNameWithPackage_1, "\t");
+              _builder.append(".class");
+            } else {
+              _builder.append("null");
+            }
+          }
+          _builder.newLineIfNotEmpty();
           _builder.append(");");
           _builder.newLine();
         } else {
@@ -1607,8 +1670,21 @@ public class Scenario {
             _builder.append(",");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("uuid");
+            _builder.append("uuid,");
             _builder.newLine();
+            _builder.append("\t");
+            {
+              int _size_4 = it.getAction().getResponse().size();
+              boolean _greaterThan_4 = (_size_4 > 0);
+              if (_greaterThan_4) {
+                String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+                _builder.append(_responseDataNameWithPackage_2, "\t");
+                _builder.append(".class");
+              } else {
+                _builder.append("null");
+              }
+            }
+            _builder.newLineIfNotEmpty();
             _builder.append(");");
             _builder.newLine();
           } else {
@@ -1641,8 +1717,21 @@ public class Scenario {
             _builder.append(",");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("uuid");
+            _builder.append("uuid,");
             _builder.newLine();
+            _builder.append("\t");
+            {
+              int _size_5 = it.getAction().getResponse().size();
+              boolean _greaterThan_5 = (_size_5 > 0);
+              if (_greaterThan_5) {
+                String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+                _builder.append(_responseDataNameWithPackage_3, "\t");
+                _builder.append(".class");
+              } else {
+                _builder.append("null");
+              }
+            }
+            _builder.newLineIfNotEmpty();
             _builder.append(");");
             _builder.newLine();
           }

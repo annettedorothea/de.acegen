@@ -132,7 +132,7 @@ class BaseScenario {
 				return String.format("%s://%s:%d%s%s", protocol, host, port, rootPath, path);
 			}
 		
-			protected Response httpGet(String path, String authorization, String uuid) {
+			protected <T> HttpResponse<T> httpGet(String path, String authorization, String uuid, Class<T> entityType) {
 				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
@@ -140,7 +140,7 @@ class BaseScenario {
 				return builder.get();
 			}
 		
-			protected Response httpPost(String path, Object payload, String authorization, String uuid) {
+			protected <T> HttpResponse<T> httpPost(String path, Object payload, String authorization, String uuid, Class<T> entityType) {
 				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
@@ -148,7 +148,7 @@ class BaseScenario {
 				return builder.post(Entity.json(payload));
 			}
 		
-			protected Response httpPut(String path, Object payload, String authorization, String uuid) {
+			protected <T> HttpResponse<T> httpPut(String path, Object payload, String authorization, String uuid, Class<T> entityType) {
 				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
@@ -156,7 +156,7 @@ class BaseScenario {
 				return builder.put(payload != null ? Entity.json(payload) : Entity.json(""));
 			}
 		
-			protected Response httpDelete(String path, String authorization, String uuid) {
+			protected <T> HttpResponse<T> httpDelete(String path, String authorization, String uuid, Class<T> entityType) {
 				Builder builder = client.target(buildUrl(path, uuid)).request();
 				if (authorization != null) {
 					builder.header("Authorization", authorization);
@@ -287,13 +287,13 @@ class BaseScenario {
 		
 			protected abstract void runTest() throws Exception;
 
-			protected abstract Response httpGet(String path, String authorization, String uuid);
+			protected abstract <T> HttpResponse<T> httpGet(String path, String authorization, String uuid, Class<T> entityType);
 			
-			protected abstract Response httpPost(String path, Object payload, String authorization, String uuid);
+			protected abstract <T> HttpResponse<T> httpPost(String path, Object payload, String authorization, String uuid, Class<T> entityType);
 			
-			protected abstract Response httpPut(String path, Object payload, String authorization, String uuid);
+			protected abstract <T> HttpResponse<T> httpPut(String path, Object payload, String authorization, String uuid, Class<T> entityType);
 			
-			protected abstract Response httpDelete(String path, String authorization, String uuid);
+			protected abstract <T> HttpResponse<T> httpDelete(String path, String authorization, String uuid, Class<T> entityType);
 			
 			protected abstract String randomString();
 			
@@ -378,6 +378,46 @@ class BaseScenario {
 		
 		
 		}
+		
+		
+		«sdg»
+		
+	'''
+	
+	def generateHttpResponse() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		public class HttpResponse<T> {
+		
+			private T entity;
+			
+			private String statusMessage;
+			
+			private int statusCode;
+		
+			public HttpResponse(T entity, String statusMessage, int statusCode) {
+				super();
+				this.entity = entity;
+				this.statusMessage = statusMessage;
+				this.statusCode = statusCode;
+			}
+		
+			public T getEntity() {
+				return entity;
+			}
+		
+			public String getStatusMessage() {
+				return statusMessage;
+			}
+		
+			public int getStatusCode() {
+				return statusCode;
+			}
+			
+		}
+		
 		
 		
 		«sdg»
