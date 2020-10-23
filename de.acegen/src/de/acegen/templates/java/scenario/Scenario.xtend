@@ -120,8 +120,6 @@ class Scenario {
 			
 			private void given() throws Exception {
 				String uuid;
-				long timeBeforeRequest;
-				long timeAfterRequest;
 				
 				«resetIndex»
 				«FOR given : allGivenItems»
@@ -135,11 +133,11 @@ class Scenario {
 				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 				«whenBlock.generatePrepare»
 				«whenBlock.generateDataCreation»
-				long timeBeforeRequest = System.currentTimeMillis();
 				HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = «whenBlock.generateActionCalls(java)»
-				long timeAfterRequest = System.currentTimeMillis();
-				LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", (timeAfterRequest-timeBeforeRequest));
-				addToMetrics("«whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+				LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", response.getDuration());
+				if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+					addToMetrics("«whenBlock.action.name»", response.getDuration());
+				}
 				return response;
 			}
 			
@@ -259,17 +257,14 @@ class Scenario {
 			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
 			«givenRef.scenario.whenBlock.generatePrepare»
 			«givenRef.scenario.whenBlock.generateDataCreation»
-			timeBeforeRequest = System.currentTimeMillis();
 			HttpResponse<«IF givenRef.scenario.whenBlock.action.response.size > 0»«givenRef.scenario.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «givenRef.scenario.whenBlock.generateActionCalls(java)»
-			timeAfterRequest = System.currentTimeMillis();
 			if (response_«index».getStatusCode() >= 400) {
 				String message = "GIVEN «givenRef.scenario.name» fails\n" + response_«index».getStatusMessage();
-				LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, (timeAfterRequest-timeBeforeRequest));
-				addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+				LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
 				assertFail(message);
 			}
-			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", (timeAfterRequest-timeBeforeRequest));
-			addToMetrics("«givenRef.scenario.whenBlock.action.name»", (timeAfterRequest-timeBeforeRequest));
+			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", response_«index».getDuration());
+			addToMetrics("«givenRef.scenario.whenBlock.action.name»", response_«index».getDuration());
 			«IF givenRef.scenario.whenBlock.extractions.size > 0 && givenRef.scenario.whenBlock.action.response.size > 0»
 				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage» responseEntity_«index» = null;
 				try {

@@ -234,12 +234,6 @@ public class Scenario {
     _builder.append("String uuid;");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("long timeBeforeRequest;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("long timeAfterRequest;");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
     this.resetIndex();
@@ -301,9 +295,6 @@ public class Scenario {
     _builder.append(_generateDataCreation, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("long timeBeforeRequest = System.currentTimeMillis();");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("HttpResponse<");
     {
       int _size_1 = it.getWhenBlock().getAction().getResponse().size();
@@ -320,20 +311,23 @@ public class Scenario {
     _builder.append(_generateActionCalls, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("long timeAfterRequest = System.currentTimeMillis();");
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("LOG.info(\"WHEN: ");
     String _name_3 = it.getWhenBlock().getAction().getName();
     _builder.append(_name_3, "\t\t");
-    _builder.append(" finished in {} ms\", (timeAfterRequest-timeBeforeRequest));");
+    _builder.append(" finished in {} ms\", response.getDuration());");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
+    _builder.append("if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("addToMetrics(\"");
     String _name_4 = it.getWhenBlock().getAction().getName();
-    _builder.append(_name_4, "\t\t");
-    _builder.append("\", (timeAfterRequest-timeBeforeRequest));");
+    _builder.append(_name_4, "\t\t\t");
+    _builder.append("\", response.getDuration());");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return response;");
     _builder.newLine();
@@ -811,9 +805,6 @@ public class Scenario {
     _builder.append(_generateDataCreation, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("timeBeforeRequest = System.currentTimeMillis();");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("HttpResponse<");
     {
       int _size = givenRef.getScenario().getWhenBlock().getAction().getResponse().size();
@@ -832,9 +823,6 @@ public class Scenario {
     _builder.append(_generateActionCalls, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("timeAfterRequest = System.currentTimeMillis();");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("if (response_");
     _builder.append(this.index, "\t");
     _builder.append(".getStatusCode() >= 400) {");
@@ -851,13 +839,9 @@ public class Scenario {
     _builder.append("LOG.info(\"GIVEN: ");
     String _name_2 = givenRef.getScenario().getName();
     _builder.append(_name_2, "\t\t");
-    _builder.append(" fails due to {} in {} ms\", message, (timeAfterRequest-timeBeforeRequest));");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("addToMetrics(\"");
-    String _name_3 = givenRef.getScenario().getWhenBlock().getAction().getName();
-    _builder.append(_name_3, "\t\t");
-    _builder.append("\", (timeAfterRequest-timeBeforeRequest));");
+    _builder.append(" fails due to {} in {} ms\", message, response_");
+    _builder.append(this.index, "\t\t");
+    _builder.append(".getDuration());");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("assertFail(message);");
@@ -867,15 +851,19 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("LOG.info(\"GIVEN: ");
-    String _name_4 = givenRef.getScenario().getName();
-    _builder.append(_name_4, "\t");
-    _builder.append(" success in {} ms\", (timeAfterRequest-timeBeforeRequest));");
+    String _name_3 = givenRef.getScenario().getName();
+    _builder.append(_name_3, "\t");
+    _builder.append(" success in {} ms\", response_");
+    _builder.append(this.index, "\t");
+    _builder.append(".getDuration());");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("addToMetrics(\"");
-    String _name_5 = givenRef.getScenario().getWhenBlock().getAction().getName();
-    _builder.append(_name_5, "\t");
-    _builder.append("\", (timeAfterRequest-timeBeforeRequest));");
+    String _name_4 = givenRef.getScenario().getWhenBlock().getAction().getName();
+    _builder.append(_name_4, "\t");
+    _builder.append("\", response_");
+    _builder.append(this.index, "\t");
+    _builder.append(".getDuration());");
     _builder.newLineIfNotEmpty();
     {
       if (((givenRef.getScenario().getWhenBlock().getExtractions().size() > 0) && (givenRef.getScenario().getWhenBlock().getAction().getResponse().size() > 0))) {
@@ -898,8 +886,8 @@ public class Scenario {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("Object ");
-            String _name_6 = extraction.getName();
-            _builder.append(_name_6, "\t\t");
+            String _name_5 = extraction.getName();
+            _builder.append(_name_5, "\t\t");
             _builder.append(" = this.extract");
             String _firstUpper = StringExtensions.toFirstUpper(extraction.getName());
             _builder.append(_firstUpper, "\t\t");
@@ -910,8 +898,8 @@ public class Scenario {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("extractedValues.put(\"");
-            String _name_7 = extraction.getName();
-            _builder.append(_name_7, "\t\t");
+            String _name_6 = extraction.getName();
+            _builder.append(_name_6, "\t\t");
             {
               if (forLoop) {
                 _builder.append("_\" + i");
@@ -920,18 +908,18 @@ public class Scenario {
               }
             }
             _builder.append(", ");
-            String _name_8 = extraction.getName();
-            _builder.append(_name_8, "\t\t");
+            String _name_7 = extraction.getName();
+            _builder.append(_name_7, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("LOG.info(\"GIVEN: extracted \" + ");
+            String _name_8 = extraction.getName();
+            _builder.append(_name_8, "\t\t");
+            _builder.append(".toString()  + \" as ");
             String _name_9 = extraction.getName();
             _builder.append(_name_9, "\t\t");
-            _builder.append(".toString()  + \" as ");
-            String _name_10 = extraction.getName();
-            _builder.append(_name_10, "\t\t");
             {
               if (forLoop) {
                 _builder.append("_\" + i");
@@ -959,8 +947,8 @@ public class Scenario {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("LOG.info(\"GIVEN: prerequisite for ");
-    String _name_11 = givenRef.getScenario().getName();
-    _builder.append(_name_11, "\t");
+    String _name_10 = givenRef.getScenario().getName();
+    _builder.append(_name_10, "\t");
     _builder.append(" not met\");");
     _builder.newLineIfNotEmpty();
     _builder.append("}");
