@@ -453,7 +453,7 @@ class Action {
 			}
 			throw x;
 		} catch (SecurityException x) {
-			LOG.error(actionName + " SecurityException {} ", x.getMessage());
+			LOG.error(actionName + " SecurityException");
 			try {
 				«addExceptionToTimeline»
 				databaseHandle.rollbackTransaction();

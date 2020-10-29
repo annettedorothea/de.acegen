@@ -1068,7 +1068,7 @@ public class Action {
     _builder.append("} catch (SecurityException x) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("LOG.error(actionName + \" SecurityException {} \", x.getMessage());");
+    _builder.append("LOG.error(actionName + \" SecurityException\");");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("try {");
