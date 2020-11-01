@@ -140,27 +140,27 @@ class Resource {
 				if (StringUtils.isBlank(uuid)) {
 					uuid = UUID.randomUUID().toString();
 				}
-				«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
-				«FOR paramRef : queryParams»
-					«paramRef.initActionData»
-				«ENDFOR»
-				«FOR paramRef : pathParams»
-					«paramRef.initActionData»
-				«ENDFOR»
-				«FOR attributeRef : payload»
-					«attributeRef.initActionDataFromPayload»
-				«ENDFOR»
-				«IF isAuthorize && authUser !== null»
-					«FOR param : getModel.allAttributes»
-							«IF authUser.attributes.containsAttribute(param)»
-								actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
-							«ENDIF»
-					«ENDFOR»
-				«ENDIF»
-				
-				«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
-				action.setActionData(actionData);
 				try {
+					«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
+					«FOR paramRef : queryParams»
+						«paramRef.initActionData»
+					«ENDFOR»
+					«FOR paramRef : pathParams»
+						«paramRef.initActionData»
+					«ENDFOR»
+					«FOR attributeRef : payload»
+						«attributeRef.initActionDataFromPayload»
+					«ENDFOR»
+					«IF isAuthorize && authUser !== null»
+						«FOR param : getModel.allAttributes»
+								«IF authUser.attributes.containsAttribute(param)»
+									actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+								«ENDIF»
+						«ENDFOR»
+					«ENDIF»
+					
+					«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
+					action.setActionData(actionData);
 					action.apply();
 					«IF response.size > 0»
 						return Response.ok(new «responseDataNameWithPackage»(action.getActionData())).build();

@@ -365,6 +365,9 @@ public class Scenario {
     _builder.append("if (response.getStatusCode() == 500) {");
     _builder.newLine();
     _builder.append("\t\t\t");
+    _builder.append("LOG.error(\"THEN: status \" + response.getStatusCode() + \" failed: \" + response.getStatusMessage());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("assertFail(response.getStatusMessage());");
     _builder.newLine();
     _builder.append("\t\t");
@@ -382,6 +385,13 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("\t");
+        _builder.append("LOG.error(\"THEN: status \" + response.getStatusCode() + \" failed, expected ");
+        int _statusCode_2 = it.getThenBlock().getStatusCode();
+        _builder.append(_statusCode_2, "\t\t\t");
+        _builder.append(": \" + response.getStatusMessage());");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("\t");
         _builder.append("assertFail(response.getStatusMessage());");
         _builder.newLine();
         _builder.append("\t\t");
@@ -390,8 +400,8 @@ public class Scenario {
         _builder.append("\t\t");
         _builder.append("\t");
         _builder.append("LOG.info(\"THEN: status ");
-        int _statusCode_2 = it.getThenBlock().getStatusCode();
-        _builder.append(_statusCode_2, "\t\t\t");
+        int _statusCode_3 = it.getThenBlock().getStatusCode();
+        _builder.append(_statusCode_3, "\t\t\t");
         _builder.append(" passed\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
@@ -419,12 +429,6 @@ public class Scenario {
         _builder.append("\t\t\t\t\t\t");
         _builder.append("actual = response.getEntity();");
         _builder.newLine();
-        _builder.append("\t\t\t\t\t\t");
-        _builder.append("//readEntity(");
-        String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t\t");
-        _builder.append(".class);");
-        _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t\t\t\t");
         _builder.newLine();
         {
@@ -512,11 +516,11 @@ public class Scenario {
             _builder.append("\t\t\t\t\t");
             _builder.newLine();
             _builder.append("\t\t\t\t\t");
+            String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_5, "\t\t\t\t\t");
+            _builder.append(" expected = new ");
             String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_6, "\t\t\t\t\t");
-            _builder.append(" expected = new ");
-            String _responseDataNameWithPackage_7 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-            _builder.append(_responseDataNameWithPackage_7, "\t\t\t\t\t");
             _builder.append("(expectedData);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t\t\t\t");
@@ -568,8 +572,8 @@ public class Scenario {
       int _size_6 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_6 = (_size_6 > 0);
       if (_greaterThan_6) {
-        String _responseDataNameWithPackage_8 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_8, "\t\t\t");
+        String _responseDataNameWithPackage_7 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_7, "\t\t\t");
       } else {
         _builder.append("Object");
       }
@@ -582,8 +586,8 @@ public class Scenario {
       int _size_7 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_7 = (_size_7 > 0);
       if (_greaterThan_7) {
-        String _responseDataNameWithPackage_9 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-        _builder.append(_responseDataNameWithPackage_9, "\t\t\t");
+        String _responseDataNameWithPackage_8 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        _builder.append(_responseDataNameWithPackage_8, "\t\t\t");
         _builder.append(" actualResponse = ");
       }
     }
@@ -651,8 +655,8 @@ public class Scenario {
           int _size_9 = it.getWhenBlock().getAction().getResponse().size();
           boolean _greaterThan_9 = (_size_9 > 0);
           if (_greaterThan_9) {
-            String _responseDataNameWithPackage_10 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
-            _builder.append(_responseDataNameWithPackage_10, "\t");
+            String _responseDataNameWithPackage_9 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            _builder.append(_responseDataNameWithPackage_9, "\t");
             _builder.append(" response");
           }
         }
@@ -836,7 +840,7 @@ public class Scenario {
     _builder.append(".getStatusMessage();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("LOG.info(\"GIVEN: ");
+    _builder.append("LOG.error(\"GIVEN: ");
     String _name_2 = givenRef.getScenario().getName();
     _builder.append(_name_2, "\t\t");
     _builder.append(" fails due to {} in {} ms\", message, response_");
@@ -936,7 +940,7 @@ public class Scenario {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("LOG.info(\"GIVEN: failed to extract values from response \", x);");
+        _builder.append("LOG.error(\"GIVEN: failed to extract values from response \", x);");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");

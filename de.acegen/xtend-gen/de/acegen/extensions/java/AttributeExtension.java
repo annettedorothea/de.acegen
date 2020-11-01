@@ -62,14 +62,7 @@ public class AttributeExtension {
   
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
-        _builder.append("String");
-      } else {
-        String _type = it.getType();
-        _builder.append(_type);
-      }
-    }
+    _builder.append("String");
     return _builder.toString();
   }
   
@@ -91,7 +84,6 @@ public class AttributeExtension {
   
   public String initActionData(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
     {
       if ((((it.getAttribute().getType() != null) && it.getAttribute().getType().equals("DateTime")) && (!it.getAttribute().isList()))) {
         {
@@ -150,47 +142,49 @@ public class AttributeExtension {
         {
           boolean _isNotNull_1 = it.isNotNull();
           if (_isNotNull_1) {
-            {
-              if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
-                _builder.append("if (StringUtils.isBlank(");
-                String _name_6 = it.getAttribute().getName();
-                _builder.append(_name_6);
-                _builder.append(") || \"null\".equals(");
-                String _name_7 = it.getAttribute().getName();
-                _builder.append(_name_7);
-                _builder.append(")) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("return badRequest(\"");
-                String _name_8 = it.getAttribute().getName();
-                _builder.append(_name_8, "\t");
-                _builder.append(" is mandatory\");");
-                _builder.newLineIfNotEmpty();
-                _builder.append("}");
-                _builder.newLine();
-              } else {
-                _builder.append("if (");
-                String _name_9 = it.getAttribute().getName();
-                _builder.append(_name_9);
-                _builder.append(" == null) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("return badRequest(\"");
-                String _name_10 = it.getAttribute().getName();
-                _builder.append(_name_10, "\t");
-                _builder.append(" is mandatory\");");
-                _builder.newLineIfNotEmpty();
-                _builder.append("}");
-                _builder.newLine();
-              }
+            _builder.append("if (StringUtils.isBlank(");
+            String _name_6 = it.getAttribute().getName();
+            _builder.append(_name_6);
+            _builder.append(") || \"null\".equals(");
+            String _name_7 = it.getAttribute().getName();
+            _builder.append(_name_7);
+            _builder.append(")) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("return badRequest(\"");
+            String _name_8 = it.getAttribute().getName();
+            _builder.append(_name_8, "\t");
+            _builder.append(" is mandatory\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+        {
+          boolean _equals = "Integer".equals(it.getAttribute().getType());
+          if (_equals) {
+            _builder.append("actionData.");
+            String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType(), "Int");
+            _builder.append(_setterCall_1);
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          } else {
+            boolean _equals_1 = "String".equals(it.getAttribute().getType());
+            if (_equals_1) {
+              _builder.append("actionData.");
+              String _setterCall_2 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
+              _builder.append(_setterCall_2);
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+            } else {
+              _builder.append("actionData.");
+              String _setterCall_3 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType());
+              _builder.append(_setterCall_3);
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
             }
           }
         }
-        _builder.append("actionData.");
-        String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
-        _builder.append(_setterCall_1);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
       }
     }
     return _builder.toString();
@@ -198,7 +192,6 @@ public class AttributeExtension {
   
   public String initActionDataFromPayload(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
     {
       boolean _isNotNull = it.isNotNull();
       if (_isNotNull) {
@@ -713,6 +706,41 @@ public class AttributeExtension {
     _builder.append("(");
     _builder.append(param);
     _builder.append(")");
+    return _builder.toString();
+  }
+  
+  public String setterCall(final Attribute it, final String param, final String type) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("set");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("(\"null\".equals(");
+    _builder.append(param);
+    _builder.append(") ? null : ");
+    _builder.append(type);
+    _builder.append(".parse");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(type);
+    _builder.append(_firstUpper_1);
+    _builder.append("(");
+    _builder.append(param);
+    _builder.append("))");
+    return _builder.toString();
+  }
+  
+  public String setterCall(final Attribute it, final String param, final String type, final String parse) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("set");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("(\"null\".equals(");
+    _builder.append(param);
+    _builder.append(") ? null : ");
+    _builder.append(type);
+    _builder.append(".parse");
+    _builder.append(parse);
+    _builder.append("(");
+    _builder.append(param);
+    _builder.append("))");
     return _builder.toString();
   }
   

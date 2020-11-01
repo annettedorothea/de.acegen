@@ -143,10 +143,12 @@ class Scenario {
 			
 			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
 				if (response.getStatusCode() == 500) {
+					LOG.error("THEN: status " + response.getStatusCode() + " failed: " + response.getStatusMessage());
 					assertFail(response.getStatusMessage());
 				}
 				«IF thenBlock.statusCode !== 0»
 					if (response.getStatusCode() != «thenBlock.statusCode») {
+						LOG.error("THEN: status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + response.getStatusMessage());
 						assertFail(response.getStatusMessage());
 					} else {
 						LOG.info("THEN: status «thenBlock.statusCode» passed");
@@ -158,7 +160,6 @@ class Scenario {
 					if (response.getStatusCode() < 400) {
 						try {
 							actual = response.getEntity();
-							//readEntity(«whenBlock.action.responseDataNameWithPackage».class);
 							
 							«IF whenBlock.extractions.size > 0»
 								try {
@@ -260,7 +261,7 @@ class Scenario {
 			HttpResponse<«IF givenRef.scenario.whenBlock.action.response.size > 0»«givenRef.scenario.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «givenRef.scenario.whenBlock.generateActionCalls(java)»
 			if (response_«index».getStatusCode() >= 400) {
 				String message = "GIVEN «givenRef.scenario.name» fails\n" + response_«index».getStatusMessage();
-				LOG.info("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
+				LOG.error("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
 				assertFail(message);
 			}
 			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", response_«index».getDuration());
@@ -275,7 +276,7 @@ class Scenario {
 						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF»);
 					«ENDFOR»
 				} catch (Exception x) {
-					LOG.info("GIVEN: failed to extract values from response ", x);
+					LOG.error("GIVEN: failed to extract values from response ", x);
 				}
 			«ENDIF»
 		} else {

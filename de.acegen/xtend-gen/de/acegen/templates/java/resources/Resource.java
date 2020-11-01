@@ -345,37 +345,40 @@ public class Resource {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
+    _builder.append("try {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
-    _builder.append(_dataInterfaceNameWithPackage, "\t\t");
+    _builder.append(_dataInterfaceNameWithPackage, "\t\t\t");
     _builder.append(" actionData = new ");
     String _dataName = this._modelExtension.dataName(it.getModel());
-    _builder.append(_dataName, "\t\t");
+    _builder.append(_dataName, "\t\t\t");
     _builder.append("(uuid);");
     _builder.newLineIfNotEmpty();
     {
       EList<AttributeParamRef> _queryParams_1 = it.getQueryParams();
       for(final AttributeParamRef paramRef : _queryParams_1) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         String _initActionData = this._attributeExtension.initActionData(paramRef);
-        _builder.append(_initActionData, "\t\t");
+        _builder.append(_initActionData, "\t\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
       EList<AttributeParamRef> _pathParams_1 = it.getPathParams();
       for(final AttributeParamRef paramRef_1 : _pathParams_1) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         String _initActionData_1 = this._attributeExtension.initActionData(paramRef_1);
-        _builder.append(_initActionData_1, "\t\t");
+        _builder.append(_initActionData_1, "\t\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
     {
       EList<AttributeParamRef> _payload = it.getPayload();
       for(final AttributeParamRef attributeRef : _payload) {
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         String _initActionDataFromPayload = this._attributeExtension.initActionDataFromPayload(attributeRef);
-        _builder.append(_initActionDataFromPayload, "\t\t");
+        _builder.append(_initActionDataFromPayload, "\t\t\t");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -387,7 +390,7 @@ public class Resource {
             {
               boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_2);
               if (_containsAttribute) {
-                _builder.append("\t\t");
+                _builder.append("\t\t\t");
                 _builder.append("actionData.");
                 StringConcatenation _builder_1 = new StringConcatenation();
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
@@ -396,7 +399,7 @@ public class Resource {
                 String _terCall = this._attributeExtension.getterCall(param_2);
                 _builder_1.append(_terCall);
                 String _setterCall = this._attributeExtension.setterCall(param_2, _builder_1.toString());
-                _builder.append(_setterCall, "\t\t");
+                _builder.append(_setterCall, "\t\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
               }
@@ -405,21 +408,18 @@ public class Resource {
         }
       }
     }
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage, "\t\t");
+    _builder.append(_actionNameWithPackage, "\t\t\t");
     _builder.append(" action = new ");
     String _actionNameWithPackage_1 = this._aceExtension.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage_1, "\t\t");
+    _builder.append(_actionNameWithPackage_1, "\t\t\t");
     _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t\t\t");
     _builder.append("action.setActionData(actionData);");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("action.apply();");

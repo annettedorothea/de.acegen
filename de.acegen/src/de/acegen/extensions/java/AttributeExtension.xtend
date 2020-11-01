@@ -46,13 +46,12 @@ class AttributeExtension {
 "'''
 
 	def String resourceParamType(
-		Attribute it) '''«IF type !== null && type.equals('DateTime')»String«ELSE»«type»«ENDIF»'''
+		Attribute it) '''String'''
 
 	def String resourceParam(
 		Attribute it) '''«IF type !== null && type.equals('DateTime')»LocalDateTime.parse(«name», DateTimeFormatter.ISO_DATE_TIME)«ELSE»«name»«ENDIF»'''
 
 	def String initActionData(AttributeParamRef it) '''
-		
 		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
 			«IF notNull»
 				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
@@ -68,22 +67,21 @@ class AttributeExtension {
 			}
 		«ELSE»
 			«IF notNull»
-				«IF "String".equals(attribute.type) && !attribute.list»
-					if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
-						return badRequest("«attribute.name» is mandatory");
-					}
-				«ELSE»
-					if («attribute.name» == null) {
-						return badRequest("«attribute.name» is mandatory");
-					}
-				«ENDIF»
+				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
+					return badRequest("«attribute.name» is mandatory");
+				}
 			«ENDIF»
-			actionData.«attribute.setterCall(attribute.resourceParam)»;
+			«IF "Integer".equals(attribute.type)»
+				actionData.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+			«ELSEIF "String".equals(attribute.type)»
+				actionData.«attribute.setterCall(attribute.resourceParam)»;
+			«ELSE»
+				actionData.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+			«ENDIF»
 		«ENDIF»
 	'''
 
 	def String initActionDataFromPayload(AttributeParamRef it) '''
-		
 		«IF notNull»
 			«IF "String".equals(attribute.type) && !attribute.list»
 				if (StringUtils.isBlank(payload.«attribute.getterCall») || "null".equals(payload.«attribute.getterCall»)) {
@@ -217,6 +215,10 @@ class AttributeExtension {
 	'''
 
 	def String setterCall(Attribute it, String param) '''set«name.toFirstUpper»(«param»)'''
+
+	def String setterCall(Attribute it, String param, String type) '''set«name.toFirstUpper»("null".equals(«param») ? null : «type».parse«type.toFirstUpper»(«param»))'''
+
+	def String setterCall(Attribute it, String param, String type, String parse) '''set«name.toFirstUpper»("null".equals(«param») ? null : «type».parse«parse»(«param»))'''
 
 	def boolean isPrimitive(Attribute it) {
 		return !list && model === null;
