@@ -68,18 +68,6 @@ class BaseScenario {
 		import org.junit.runner.RunWith;
 		import org.slf4j.LoggerFactory;
 		
-		import com.anfelisa.box.data.GetBoxStatisticsResponse;
-		import com.anfelisa.box.data.GetBoxesResponse;
-		import com.anfelisa.box.models.IBoxStatisticsModel;
-		import com.anfelisa.box.models.IBoxViewModel;
-		import com.anfelisa.card.data.GetCardsResponse;
-		import com.anfelisa.card.data.GetDuplicatesResponse;
-		import com.anfelisa.card.models.ICardWithCategoryNameModel;
-		import com.anfelisa.card.models.ICardWithInfoModel;
-		import com.anfelisa.category.data.GetCategoryTreeResponse;
-		import com.anfelisa.category.models.ICategoryTreeItemModel;
-		import com.anfelisa.user.data.GetAllUsersResponse;
-		import com.anfelisa.user.models.IUserModel;
 		import com.fasterxml.jackson.core.JsonProcessingException;
 		import com.fasterxml.jackson.databind.DeserializationFeature;
 		import com.fasterxml.jackson.databind.ObjectMapper;

@@ -233,14 +233,6 @@ public class Action {
     _builder.append("import de.acegen.NonDeterministicDataProvider;");
     _builder.newLine();
     _builder.newLine();
-    {
-      boolean _isAuthorize = it.isAuthorize();
-      if (_isAuthorize) {
-        _builder.append("import de.acegen.auth.AuthUser;");
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
     _builder.append(_dataImport);
     _builder.newLineIfNotEmpty();
@@ -275,11 +267,8 @@ public class Action {
     _builder.append("super(\"");
     String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
-    _builder.append("\", persistenceConnection, appConfiguration, daoProvider,");
+    _builder.append("\", persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t\t");
-    _builder.append("viewProvider);");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();

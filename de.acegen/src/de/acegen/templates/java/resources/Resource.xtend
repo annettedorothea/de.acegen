@@ -74,7 +74,7 @@ class Resource {
 		import de.acegen.NonDeterministicDataProvider;
 		
 		«IF authorize»
-			import de.acegen.auth.AuthUser;
+			import de.acegen.auth.«authUser.name.toFirstUpper»;
 			import io.dropwizard.auth.Auth;
 		«ENDIF»
 

@@ -120,10 +120,6 @@ class Action {
 		import de.acegen.ITimelineItem;
 		import de.acegen.NonDeterministicDataProvider;
 		
-		«IF authorize»
-			import de.acegen.auth.AuthUser;
-		«ENDIF»
-
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
@@ -133,8 +129,7 @@ class Action {
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider);
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
 			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);

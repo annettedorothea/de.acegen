@@ -88,7 +88,7 @@ public class DropwizardGenerator {
     fsa.generateFile("de/acegen/resources/NonDeterministicDataProviderResource.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.notReplayableDataProviderResource.generate());
     fsa.generateFile("de/acegen/App.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-      this.dropwizardApp.generate());
+      this.dropwizardApp.generate(authUser));
     fsa.generateFile("de/acegen/CustomAppConfiguration.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.dropwizardConfiguration.generateCustomAppConfiguration());
     fsa.generateFile("de/acegen/AppConfiguration.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 

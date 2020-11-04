@@ -15,10 +15,12 @@
  */
 package de.acegen.templates.java;
 
+import de.acegen.aceGen.AuthUser;
 import de.acegen.extensions.CommonExtension;
 import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class DropwizardApp {
@@ -26,7 +28,7 @@ public class DropwizardApp {
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generate() {
+  public CharSequence generate(final AuthUser authUser) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -83,8 +85,11 @@ public class DropwizardApp {
     _builder.append("import io.dropwizard.setup.Environment;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("//import de.acegen.auth.AuthUser;");
-    _builder.newLine();
+    _builder.append("//import de.acegen.auth.");
+    String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
+    _builder.append(_firstUpper);
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class App extends Application<CustomAppConfiguration> {");
     _builder.newLine();
@@ -220,8 +225,11 @@ public class DropwizardApp {
     _builder.append("//\t\t.register(new AuthDynamicFeature(");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<AuthUser>()");
-    _builder.newLine();
+    _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
+    _builder.append(_firstUpper_1, "\t\t");
+    _builder.append(">()");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("//\t\t\t\t\t\t.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))");
     _builder.newLine();
@@ -229,8 +237,11 @@ public class DropwizardApp {
     _builder.append("//\t\t\t\t\t\t.setPrefix(\"basic\").setRealm(\"basic private realm\").buildAuthFilter()));");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(AuthUser.class));");
-    _builder.newLine();
+    _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(");
+    String _firstUpper_2 = StringExtensions.toFirstUpper(authUser.getName());
+    _builder.append(_firstUpper_2, "\t\t");
+    _builder.append(".class));");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("environment.jersey().register(RolesAllowedDynamicFeature.class);");
@@ -251,7 +262,7 @@ public class DropwizardApp {
     _builder.append("viewProvider);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppRegistration.registerConsumers(viewProvider, mode);");
+    _builder.append("AppRegistration.registerConsumers(viewProvider);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

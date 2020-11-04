@@ -114,8 +114,11 @@ public class Resource {
     {
       boolean _isAuthorize = it.isAuthorize();
       if (_isAuthorize) {
-        _builder.append("import de.acegen.auth.AuthUser;");
-        _builder.newLine();
+        _builder.append("import de.acegen.auth.");
+        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
         _builder.append("import io.dropwizard.auth.Auth;");
         _builder.newLine();
       }
@@ -257,8 +260,8 @@ public class Resource {
     {
       if ((it.isAuthorize() && (authUser != null))) {
         _builder.append("@Auth ");
-        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-        _builder.append(_firstUpper, "\t\t\t");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper_1, "\t\t\t");
         _builder.append(" ");
         String _firstLower_1 = StringExtensions.toFirstLower(authUser.getName());
         _builder.append(_firstLower_1, "\t\t\t");

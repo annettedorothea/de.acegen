@@ -19,13 +19,14 @@ package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
+import de.acegen.aceGen.AuthUser
 
 class DropwizardApp {
 
 	@Inject
 	extension CommonExtension
 
-	def generate() '''
+	def generate(AuthUser authUser) '''
 		«copyright»
 
 		package de.acegen;
@@ -57,7 +58,7 @@ class DropwizardApp {
 		import io.dropwizard.setup.Bootstrap;
 		import io.dropwizard.setup.Environment;
 		
-		//import de.acegen.auth.AuthUser;
+		//import de.acegen.auth.«authUser.name.toFirstUpper»;
 		
 		public class App extends Application<CustomAppConfiguration> {
 		
@@ -113,10 +114,10 @@ class DropwizardApp {
 		
 				//environment.jersey()
 				//		.register(new AuthDynamicFeature(
-				//				new BasicCredentialAuthFilter.Builder<AuthUser>()
+				//				new BasicCredentialAuthFilter.Builder<«authUser.name.toFirstUpper»>()
 				//						.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))
 				//						.setPrefix("basic").setRealm("basic private realm").buildAuthFilter()));
-				//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(AuthUser.class));
+				//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(«authUser.name.toFirstUpper».class));
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
@@ -126,7 +127,7 @@ class DropwizardApp {
 		
 				AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider,
 						viewProvider);
-				AppRegistration.registerConsumers(viewProvider, mode);
+				AppRegistration.registerConsumers(viewProvider);
 			}
 		
 			private void configureCors(Environment environment) {
