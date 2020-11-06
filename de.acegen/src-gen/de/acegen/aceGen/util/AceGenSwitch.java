@@ -152,6 +152,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.CLIENT_GIVEN_REF:
+      {
+        ClientGivenRef clientGivenRef = (ClientGivenRef)theEObject;
+        T result = caseClientGivenRef(clientGivenRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.CLIENT_WHEN_BLOCK:
       {
         ClientWhenBlock clientWhenBlock = (ClientWhenBlock)theEObject;
@@ -689,6 +696,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClientScenario(ClientScenario object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Client Given Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Client Given Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClientGivenRef(ClientGivenRef object)
   {
     return null;
   }

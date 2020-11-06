@@ -38,7 +38,7 @@ HttpClientAce:
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
-	('UIEvent' uiEvent = STRING)? ('ID' id = STRING)?
+	('UIEvent' uiEvent = STRING)? 
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -87,14 +87,21 @@ GroupedClientAttribute:
 
 ClientScenario:
 	name = ID
-	('GIVEN' (givenRefs += [ClientScenario | QualifiedName])* )? 
+	('GIVEN' (givenRefs += ClientGivenRef)* )? 
 	'WHEN' whenBlock = ClientWhenBlock
 	'THEN' thenBlock = ClientThenBlock
+;
+
+ClientGivenRef:
+	scenario = [ClientScenario | QualifiedName]
 ;
 
 ClientWhenBlock: 
 	action = [HttpClientAce|QualifiedName] 
 	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
+	('uuid' uuid = STRING)? 
+	('systemTime' systemtime = STRING)?
+	('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?
 ;
 
 InputValue:

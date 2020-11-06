@@ -4,9 +4,11 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.InputValue;
+import de.acegen.aceGen.PrimitiveValue;
 
 import java.util.Collection;
 
@@ -34,6 +36,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getInputValues <em>Input Values</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getUuid <em>Uuid</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getSystemtime <em>Systemtime</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,6 +65,66 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<InputValue> inputValues;
+
+  /**
+   * The default value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUuid()
+   * @generated
+   * @ordered
+   */
+  protected static final String UUID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUuid()
+   * @generated
+   * @ordered
+   */
+  protected String uuid = UUID_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getSystemtime() <em>Systemtime</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSystemtime()
+   * @generated
+   * @ordered
+   */
+  protected static final String SYSTEMTIME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSystemtime() <em>Systemtime</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSystemtime()
+   * @generated
+   * @ordered
+   */
+  protected String systemtime = SYSTEMTIME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAttribute()
+   * @generated
+   * @ordered
+   */
+  protected Attribute attribute;
+
+  /**
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected PrimitiveValue value;
 
   /**
    * <!-- begin-user-doc -->
@@ -147,12 +213,159 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public String getUuid()
+  {
+    return uuid;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setUuid(String newUuid)
+  {
+    String oldUuid = uuid;
+    uuid = newUuid;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__UUID, oldUuid, uuid));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getSystemtime()
+  {
+    return systemtime;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setSystemtime(String newSystemtime)
+  {
+    String oldSystemtime = systemtime;
+    systemtime = newSystemtime;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME, oldSystemtime, systemtime));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Attribute getAttribute()
+  {
+    if (attribute != null && attribute.eIsProxy())
+    {
+      InternalEObject oldAttribute = (InternalEObject)attribute;
+      attribute = (Attribute)eResolveProxy(oldAttribute);
+      if (attribute != oldAttribute)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE, oldAttribute, attribute));
+      }
+    }
+    return attribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attribute basicGetAttribute()
+  {
+    return attribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAttribute(Attribute newAttribute)
+  {
+    Attribute oldAttribute = attribute;
+    attribute = newAttribute;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE, oldAttribute, attribute));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public PrimitiveValue getValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetValue(PrimitiveValue newValue, NotificationChain msgs)
+  {
+    PrimitiveValue oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, oldValue, newValue);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setValue(PrimitiveValue newValue)
+  {
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, newValue, newValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return ((InternalEList<?>)getInputValues()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
+        return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -172,6 +385,15 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return basicGetAction();
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return getInputValues();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
+        return getUuid();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
+        return getSystemtime();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
+        if (resolve) return getAttribute();
+        return basicGetAttribute();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -194,6 +416,18 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         getInputValues().clear();
         getInputValues().addAll((Collection<? extends InputValue>)newValue);
         return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
+        setUuid((String)newValue);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
+        setSystemtime((String)newValue);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
+        setAttribute((Attribute)newValue);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
+        setValue((PrimitiveValue)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -214,6 +448,18 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         getInputValues().clear();
         return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
+        setUuid(UUID_EDEFAULT);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
+        setSystemtime(SYSTEMTIME_EDEFAULT);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
+        setAttribute((Attribute)null);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
+        setValue((PrimitiveValue)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -232,8 +478,35 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return action != null;
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return inputValues != null && !inputValues.isEmpty();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
+        return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
+        return SYSTEMTIME_EDEFAULT == null ? systemtime != null : !SYSTEMTIME_EDEFAULT.equals(systemtime);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
+        return attribute != null;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
+        return value != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (uuid: ");
+    result.append(uuid);
+    result.append(", systemtime: ");
+    result.append(systemtime);
+    result.append(')');
+    return result.toString();
   }
 
 } //ClientWhenBlockImpl

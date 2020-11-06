@@ -131,15 +131,31 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         }
       }
     }
+    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.CLIENT_WHEN_BLOCK__ATTRIBUTE))) {
+      final IScope scope_2 = super.getScope(context, reference);
+      final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
+      Iterable<IEObjectDescription> _allElements = scope_2.getAllElements();
+      for (final IEObjectDescription element : _allElements) {
+        {
+          EObject _resolve = EcoreUtil2.resolve(element.getEObjectOrProxy(), context);
+          final Attribute attribute = ((Attribute) _resolve);
+          boolean _isNonDeterministic = attribute.isNonDeterministic();
+          if (_isNonDeterministic) {
+            filtered.add(attribute);
+          }
+        }
+      }
+      return Scopes.scopeFor(filtered);
+    }
     if ((context instanceof Model)) {
       final Model aceModel_1 = ((Model) context);
-      final IScope scope_2 = super.getScope(context, reference);
+      final IScope scope_3 = super.getScope(context, reference);
       final Predicate<IEObjectDescription> _function_2 = (IEObjectDescription it) -> {
         EObject _eObjectOrProxy = it.getEObjectOrProxy();
         boolean _equals_2 = ((Model) _eObjectOrProxy).equals(aceModel_1);
         return (!_equals_2);
       };
-      return new FilteringScope(scope_2, _function_2);
+      return new FilteringScope(scope_3, _function_2);
     }
     if (((context instanceof AttributeAndValue) && 
       Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
@@ -153,13 +169,13 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       EObject _eContainer_4 = context.eContainer();
       final boolean selectByPrimary = (_eContainer_4 instanceof SelectByPrimaryKeys);
       if ((selectByUnique || selectByPrimary)) {
-        final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
+        final ArrayList<Attribute> filtered_1 = new ArrayList<Attribute>();
         for (final Attribute attribute : attrs_3) {
           if (((attribute.isUnique() && selectByUnique) || (attribute.isPrimaryKey() && selectByPrimary))) {
-            filtered.add(attribute);
+            filtered_1.add(attribute);
           }
         }
-        return Scopes.scopeFor(filtered);
+        return Scopes.scopeFor(filtered_1);
       }
       return Scopes.scopeFor(attrs_3);
     }
@@ -170,14 +186,14 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final Model model_1 = persistenceVerification_1.getModel();
       final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(model_1, attrs_4);
-      final ArrayList<Attribute> filtered_1 = new ArrayList<Attribute>();
+      final ArrayList<Attribute> filtered_2 = new ArrayList<Attribute>();
       for (final Attribute attribute_1 : attrs_4) {
         boolean _isPrimaryKey = attribute_1.isPrimaryKey();
         if (_isPrimaryKey) {
-          filtered_1.add(attribute_1);
+          filtered_2.add(attribute_1);
         }
       }
-      return Scopes.scopeFor(filtered_1);
+      return Scopes.scopeFor(filtered_2);
     }
     if (((context instanceof SelectByUniqueAttribute) && 
       Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
@@ -186,14 +202,14 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final Model model_2 = persistenceVerification_2.getModel();
       final ArrayList<Attribute> attrs_5 = new ArrayList<Attribute>();
       this._modelExtension.allAttributesRec(model_2, attrs_5);
-      final ArrayList<Attribute> filtered_2 = new ArrayList<Attribute>();
+      final ArrayList<Attribute> filtered_3 = new ArrayList<Attribute>();
       for (final Attribute attribute_2 : attrs_5) {
         boolean _isUnique = attribute_2.isUnique();
         if (_isUnique) {
-          filtered_2.add(attribute_2);
+          filtered_3.add(attribute_2);
         }
       }
-      return Scopes.scopeFor(filtered_2);
+      return Scopes.scopeFor(filtered_3);
     }
     if (((context instanceof Count) && Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE))) {
       EObject _eContainer_7 = context.eContainer();
@@ -205,12 +221,12 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
     }
     if (((context instanceof PersistenceVerification) && 
       Objects.equal(reference, AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL))) {
-      final IScope scope_3 = super.getScope(context, reference);
+      final IScope scope_4 = super.getScope(context, reference);
       final ArrayList<Model> models = new ArrayList<Model>();
-      Iterable<IEObjectDescription> _allElements = scope_3.getAllElements();
-      for (final IEObjectDescription element : _allElements) {
+      Iterable<IEObjectDescription> _allElements_1 = scope_4.getAllElements();
+      for (final IEObjectDescription element_1 : _allElements_1) {
         {
-          EObject _resolve = EcoreUtil2.resolve(element.getEObjectOrProxy(), context);
+          EObject _resolve = EcoreUtil2.resolve(element_1.getEObjectOrProxy(), context);
           final Model model_4 = ((Model) _resolve);
           boolean _isPersistent = model_4.isPersistent();
           if (_isPersistent) {

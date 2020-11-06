@@ -501,35 +501,11 @@ ruleHttpClientAce returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_19='ID'
-			{
-				newLeafNode(otherlv_19, grammarAccess.getHttpClientAceAccess().getIDKeyword_7_0());
-			}
-			(
-				(
-					lv_id_20_0=RULE_STRING
-					{
-						newLeafNode(lv_id_20_0, grammarAccess.getHttpClientAceAccess().getIdSTRINGTerminalRuleCall_7_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpClientAceRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"id",
-							lv_id_20_0,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
-			)
-		)?
-		(
 			(
 				{
-					newCompositeNode(grammarAccess.getHttpClientAceAccess().getOutcomesHttpClientOutcomeParserRuleCall_8_0());
+					newCompositeNode(grammarAccess.getHttpClientAceAccess().getOutcomesHttpClientOutcomeParserRuleCall_7_0());
 				}
-				lv_outcomes_21_0=ruleHttpClientOutcome
+				lv_outcomes_19_0=ruleHttpClientOutcome
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getHttpClientAceRule());
@@ -537,7 +513,7 @@ ruleHttpClientAce returns [EObject current=null]
 					add(
 						$current,
 						"outcomes",
-						lv_outcomes_21_0,
+						lv_outcomes_19_0,
 						"de.acegen.AceGen.HttpClientOutcome");
 					afterParserOrEnumRuleCall();
 				}
@@ -1154,15 +1130,18 @@ ruleClientScenario returns [EObject current=null]
 			(
 				(
 					{
+						newCompositeNode(grammarAccess.getClientScenarioAccess().getGivenRefsClientGivenRefParserRuleCall_1_1_0());
+					}
+					lv_givenRefs_2_0=ruleClientGivenRef
+					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getClientScenarioRule());
+							$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
 						}
-					}
-					{
-						newCompositeNode(grammarAccess.getClientScenarioAccess().getGivenRefsClientScenarioCrossReference_1_1_0());
-					}
-					ruleQualifiedName
-					{
+						add(
+							$current,
+							"givenRefs",
+							lv_givenRefs_2_0,
+							"de.acegen.AceGen.ClientGivenRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1213,6 +1192,39 @@ ruleClientScenario returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
+		)
+	)
+;
+
+// Entry rule entryRuleClientGivenRef
+entryRuleClientGivenRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getClientGivenRefRule()); }
+	iv_ruleClientGivenRef=ruleClientGivenRef
+	{ $current=$iv_ruleClientGivenRef.current; }
+	EOF;
+
+// Rule ClientGivenRef
+ruleClientGivenRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getClientGivenRefRule());
+				}
+			}
+			{
+				newCompositeNode(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioCrossReference_0());
+			}
+			ruleQualifiedName
+			{
+				afterParserOrEnumRuleCall();
+			}
 		)
 	)
 ;
@@ -1304,6 +1316,99 @@ ruleClientWhenBlock returns [EObject current=null]
 			{
 				newLeafNode(otherlv_5, grammarAccess.getClientWhenBlockAccess().getRightParenthesisKeyword_1_2());
 			}
+		)?
+		(
+			otherlv_6='uuid'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getUuidKeyword_2_0());
+			}
+			(
+				(
+					lv_uuid_7_0=RULE_STRING
+					{
+						newLeafNode(lv_uuid_7_0, grammarAccess.getClientWhenBlockAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientWhenBlockRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"uuid",
+							lv_uuid_7_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+		)?
+		(
+			otherlv_8='systemTime'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getClientWhenBlockAccess().getSystemTimeKeyword_3_0());
+			}
+			(
+				(
+					lv_systemtime_9_0=RULE_STRING
+					{
+						newLeafNode(lv_systemtime_9_0, grammarAccess.getClientWhenBlockAccess().getSystemtimeSTRINGTerminalRuleCall_3_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientWhenBlockRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"systemtime",
+							lv_systemtime_9_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+		)?
+		(
+			otherlv_10='nonDeterministic'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getClientWhenBlockAccess().getNonDeterministicKeyword_4_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientWhenBlockRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getAttributeAttributeCrossReference_4_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_12=':'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getClientWhenBlockAccess().getColonKeyword_4_2());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getValuePrimitiveValueParserRuleCall_4_3_0());
+					}
+					lv_value_13_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getClientWhenBlockRule());
+						}
+						set(
+							$current,
+							"value",
+							lv_value_13_0,
+							"de.acegen.AceGen.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
 		)?
 	)
 ;

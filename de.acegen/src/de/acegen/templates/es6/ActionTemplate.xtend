@@ -129,6 +129,19 @@ class ActionTemplate {
 		            actionData = {};
 		        }
 		        this.actionData = AppUtils.deepCopy(actionData);
+		        if (Utils.settings === "dev") {
+		        	this.actionData.uuid = localStorage.getItem("uuid");
+		        	this.actionData.clientSystemTime = localStorage.getItem("clientSystemTime");
+		        	if (this.actionData.uuid === null) {
+		        		this.actionData.uuid = AppUtils.createUUID();
+		        	}
+		        	if (this.actionData.clientSystemTime === null) {
+						this.actionData.clientSystemTime = new Date();
+					}
+				} else {
+					this.actionData.uuid = AppUtils.createUUID();
+					this.actionData.clientSystemTime = new Date();
+				}
 		    }
 		
 		    initActionData() {
@@ -169,8 +182,6 @@ class ActionTemplate {
 		            ACEController.addItemToTimeLine({action: this});
 		        	this.preCall();
 		            AppUtils.renderNewState();
-		            this.actionData.uuid = AppUtils.createUUID();
-		            this.actionData.clientSystemTime = new Date();
 		            this.initActionData();
 		            let command = this.getCommand();
 		            command.executeCommand().then(() => {
@@ -215,8 +226,6 @@ class ActionTemplate {
 		
 		    applyAction() {
 			    ACEController.addItemToTimeLine({action: this});
-		        this.actionData.uuid = AppUtils.createUUID();
-				this.actionData.clientSystemTime = new Date();
 		        this.initActionData();
 			    let command = this.getCommand();
 			    command.executeCommand();

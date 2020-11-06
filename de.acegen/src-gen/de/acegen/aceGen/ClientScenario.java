@@ -51,16 +51,16 @@ public interface ClientScenario extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Given Refs</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.ClientScenario}.
+   * Returns the value of the '<em><b>Given Refs</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.ClientGivenRef}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Given Refs</em>' reference list.
+   * @return the value of the '<em>Given Refs</em>' containment reference list.
    * @see de.acegen.aceGen.AceGenPackage#getClientScenario_GivenRefs()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  EList<ClientScenario> getGivenRefs();
+  EList<ClientGivenRef> getGivenRefs();
 
   /**
    * Returns the value of the '<em><b>When Block</b></em>' containment reference.

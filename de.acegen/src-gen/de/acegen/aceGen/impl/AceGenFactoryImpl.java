@@ -76,6 +76,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE: return createSingleClientAttribute();
       case AceGenPackage.GROUPED_CLIENT_ATTRIBUTE: return createGroupedClientAttribute();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
+      case AceGenPackage.CLIENT_GIVEN_REF: return createClientGivenRef();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
       case AceGenPackage.CLIENT_THEN_BLOCK: return createClientThenBlock();
@@ -259,6 +260,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientScenarioImpl clientScenario = new ClientScenarioImpl();
     return clientScenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientGivenRef createClientGivenRef()
+  {
+    ClientGivenRefImpl clientGivenRef = new ClientGivenRefImpl();
+    return clientGivenRef;
   }
 
   /**

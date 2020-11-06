@@ -4,6 +4,7 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
@@ -21,7 +22,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,14 +64,14 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getGivenRefs() <em>Given Refs</em>}' reference list.
+   * The cached value of the '{@link #getGivenRefs() <em>Given Refs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getGivenRefs()
    * @generated
    * @ordered
    */
-  protected EList<ClientScenario> givenRefs;
+  protected EList<ClientGivenRef> givenRefs;
 
   /**
    * The cached value of the '{@link #getWhenBlock() <em>When Block</em>}' containment reference.
@@ -143,11 +145,11 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public EList<ClientScenario> getGivenRefs()
+  public EList<ClientGivenRef> getGivenRefs()
   {
     if (givenRefs == null)
     {
-      givenRefs = new EObjectResolvingEList<ClientScenario>(ClientScenario.class, this, AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS);
+      givenRefs = new EObjectContainmentEList<ClientGivenRef>(ClientGivenRef.class, this, AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS);
     }
     return givenRefs;
   }
@@ -262,6 +264,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
+        return ((InternalEList<?>)getGivenRefs()).basicRemove(otherEnd, msgs);
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         return basicSetWhenBlock(null, msgs);
       case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
@@ -308,7 +312,7 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return;
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         getGivenRefs().clear();
-        getGivenRefs().addAll((Collection<? extends ClientScenario>)newValue);
+        getGivenRefs().addAll((Collection<? extends ClientGivenRef>)newValue);
         return;
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         setWhenBlock((ClientWhenBlock)newValue);

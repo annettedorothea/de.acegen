@@ -85,10 +85,14 @@ public class DropwizardApp {
     _builder.append("import io.dropwizard.setup.Environment;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("//import de.acegen.auth.");
-    String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
-    _builder.append(_firstUpper);
-    _builder.append(";");
+    {
+      if ((authUser != null)) {
+        _builder.append("//import de.acegen.auth.");
+        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper);
+        _builder.append(";");
+      }
+    }
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class App extends Application<CustomAppConfiguration> {");
@@ -217,31 +221,34 @@ public class DropwizardApp {
     _builder.append("\t\t");
     _builder.append("environment.jersey().register(dbiExceptionsBundle);");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//environment.jersey()");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t.register(new AuthDynamicFeature(");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<");
-    String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
-    _builder.append(_firstUpper_1, "\t\t");
-    _builder.append(">()");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\t\t\t.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\t\t\t.setPrefix(\"basic\").setRealm(\"basic private realm\").buildAuthFilter()));");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(");
-    String _firstUpper_2 = StringExtensions.toFirstUpper(authUser.getName());
-    _builder.append(_firstUpper_2, "\t\t");
-    _builder.append(".class));");
-    _builder.newLineIfNotEmpty();
+    {
+      if ((authUser != null)) {
+        _builder.append("\t\t");
+        _builder.append("//environment.jersey()");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t.register(new AuthDynamicFeature(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper_1, "\t\t");
+        _builder.append(">()");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\t\t\t.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\t\t\t.setPrefix(\"basic\").setRealm(\"basic private realm\").buildAuthFilter()));");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper_2, "\t\t");
+        _builder.append(".class));");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("environment.jersey().register(RolesAllowedDynamicFeature.class);");

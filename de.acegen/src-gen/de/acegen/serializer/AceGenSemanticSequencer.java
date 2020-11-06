@@ -11,6 +11,7 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.BooleanType;
+import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
@@ -100,6 +101,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.BOOLEAN_TYPE:
 				sequence_BooleanType(context, (BooleanType) semanticObject); 
+				return; 
+			case AceGenPackage.CLIENT_GIVEN_REF:
+				sequence_ClientGivenRef(context, (ClientGivenRef) semanticObject); 
 				return; 
 			case AceGenPackage.CLIENT_SCENARIO:
 				sequence_ClientScenario(context, (ClientScenario) semanticObject); 
@@ -353,10 +357,28 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ClientGivenRef returns ClientGivenRef
+	 *
+	 * Constraint:
+	 *     scenario=[ClientScenario|QualifiedName]
+	 */
+	protected void sequence_ClientGivenRef(ISerializationContext context, ClientGivenRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioQualifiedNameParserRuleCall_0_1(), semanticObject.eGet(AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ClientScenario returns ClientScenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenRefs+=[ClientScenario|QualifiedName]* whenBlock=ClientWhenBlock thenBlock=ClientThenBlock)
+	 *     (name=ID givenRefs+=ClientGivenRef* whenBlock=ClientWhenBlock thenBlock=ClientThenBlock)
 	 */
 	protected void sequence_ClientScenario(ISerializationContext context, ClientScenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -380,7 +402,13 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientWhenBlock returns ClientWhenBlock
 	 *
 	 * Constraint:
-	 *     (action=[HttpClientAce|QualifiedName] (inputValues+=InputValue inputValues+=InputValue*)?)
+	 *     (
+	 *         action=[HttpClientAce|QualifiedName] 
+	 *         (inputValues+=InputValue inputValues+=InputValue*)? 
+	 *         uuid=STRING? 
+	 *         systemtime=STRING? 
+	 *         (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?
+	 *     )
 	 */
 	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -494,7 +522,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
 	 *         loadingFlag=[SingleClientAttribute|QualifiedName]? 
 	 *         uiEvent=STRING? 
-	 *         id=STRING? 
 	 *         outcomes+=HttpClientOutcome*
 	 *     )
 	 */

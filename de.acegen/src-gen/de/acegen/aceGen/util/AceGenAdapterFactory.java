@@ -131,6 +131,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientScenarioAdapter();
       }
       @Override
+      public Adapter caseClientGivenRef(ClientGivenRef object)
+      {
+        return createClientGivenRefAdapter();
+      }
+      @Override
       public Adapter caseClientWhenBlock(ClientWhenBlock object)
       {
         return createClientWhenBlockAdapter();
@@ -553,6 +558,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientGivenRef <em>Client Given Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientGivenRef
+   * @generated
+   */
+  public Adapter createClientGivenRefAdapter()
   {
     return null;
   }

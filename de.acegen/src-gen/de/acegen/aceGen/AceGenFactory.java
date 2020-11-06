@@ -123,6 +123,15 @@ public interface AceGenFactory extends EFactory
   ClientScenario createClientScenario();
 
   /**
+   * Returns a new object of class '<em>Client Given Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client Given Ref</em>'.
+   * @generated
+   */
+  ClientGivenRef createClientGivenRef();
+
+  /**
    * Returns a new object of class '<em>Client When Block</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -991,6 +991,15 @@ public class AceTemplate {
     _builder.append("\t        ");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("if (!Utils.settings.mode) {");
+    _builder.newLine();
+    _builder.append("\t\t\t    ");
+    _builder.append("Utils.settings.mode = \"live\";");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t        ");
     _builder.append("if (Utils.settings.rootPath.startsWith(\"/\")) {");
     _builder.newLine();

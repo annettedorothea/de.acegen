@@ -12,6 +12,7 @@ import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.Authorization;
 import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
@@ -156,6 +157,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass clientScenarioEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass clientGivenRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -749,20 +757,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClientAce_Id()
-  {
-    return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getHttpClientAce_Outcomes()
   {
-    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(8);
+    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -1090,6 +1087,28 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EClass getClientGivenRef()
+  {
+    return clientGivenRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientGivenRef_Scenario()
+  {
+    return (EReference)clientGivenRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getClientWhenBlock()
   {
     return clientWhenBlockEClass;
@@ -1115,6 +1134,50 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getClientWhenBlock_InputValues()
   {
     return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientWhenBlock_Uuid()
+  {
+    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientWhenBlock_Systemtime()
+  {
+    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientWhenBlock_Attribute()
+  {
+    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientWhenBlock_Value()
+  {
+    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -2850,7 +2913,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__SERVER_CALL);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__LOADING_FLAG);
     createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__UI_EVENT);
-    createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__ID);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__OUTCOMES);
 
     fromAppStateRefEClass = createEClass(FROM_APP_STATE_REF);
@@ -2890,9 +2952,16 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(clientScenarioEClass, CLIENT_SCENARIO__WHEN_BLOCK);
     createEReference(clientScenarioEClass, CLIENT_SCENARIO__THEN_BLOCK);
 
+    clientGivenRefEClass = createEClass(CLIENT_GIVEN_REF);
+    createEReference(clientGivenRefEClass, CLIENT_GIVEN_REF__SCENARIO);
+
     clientWhenBlockEClass = createEClass(CLIENT_WHEN_BLOCK);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ACTION);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__INPUT_VALUES);
+    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__UUID);
+    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__SYSTEMTIME);
+    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ATTRIBUTE);
+    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__VALUE);
 
     inputValueEClass = createEClass(INPUT_VALUE);
     createEReference(inputValueEClass, INPUT_VALUE__INPUT);
@@ -3170,7 +3239,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpClientAce_ServerCall(), this.getHttpServerAce(), null, "serverCall", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_LoadingFlag(), this.getSingleClientAttribute(), null, "loadingFlag", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClientAce_UiEvent(), ecorePackage.getEString(), "uiEvent", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpClientAce_Id(), ecorePackage.getEString(), "id", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_Outcomes(), this.getHttpClientOutcome(), null, "outcomes", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fromAppStateRefEClass, FromAppStateRef.class, "FromAppStateRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3206,13 +3274,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(clientScenarioEClass, ClientScenario.class, "ClientScenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClientScenario_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientScenario_GivenRefs(), this.getClientScenario(), null, "givenRefs", null, 0, -1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientScenario_GivenRefs(), this.getClientGivenRef(), null, "givenRefs", null, 0, -1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientScenario_WhenBlock(), this.getClientWhenBlock(), null, "whenBlock", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientScenario_ThenBlock(), this.getClientThenBlock(), null, "thenBlock", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(clientGivenRefEClass, ClientGivenRef.class, "ClientGivenRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getClientGivenRef_Scenario(), this.getClientScenario(), null, "scenario", null, 0, 1, ClientGivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(clientWhenBlockEClass, ClientWhenBlock.class, "ClientWhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClientWhenBlock_Action(), this.getHttpClientAce(), null, "action", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientWhenBlock_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientWhenBlock_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientWhenBlock_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientWhenBlock_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputValueEClass, InputValue.class, "InputValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInputValue_Input(), this.getInput(), null, "input", null, 0, 1, InputValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

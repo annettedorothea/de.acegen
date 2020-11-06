@@ -58,7 +58,7 @@ class DropwizardApp {
 		import io.dropwizard.setup.Bootstrap;
 		import io.dropwizard.setup.Environment;
 		
-		//import de.acegen.auth.«authUser.name.toFirstUpper»;
+		«IF authUser !== null»//import de.acegen.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		
 		public class App extends Application<CustomAppConfiguration> {
 		
@@ -111,13 +111,14 @@ class DropwizardApp {
 		
 				JdbiExceptionsBundle dbiExceptionsBundle = new JdbiExceptionsBundle();
 				environment.jersey().register(dbiExceptionsBundle);
-		
-				//environment.jersey()
-				//		.register(new AuthDynamicFeature(
-				//				new BasicCredentialAuthFilter.Builder<«authUser.name.toFirstUpper»>()
-				//						.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))
-				//						.setPrefix("basic").setRealm("basic private realm").buildAuthFilter()));
-				//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(«authUser.name.toFirstUpper».class));
+				«IF authUser !== null»
+					//environment.jersey()
+					//		.register(new AuthDynamicFeature(
+					//				new BasicCredentialAuthFilter.Builder<«authUser.name.toFirstUpper»>()
+					//						.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))
+					//						.setPrefix("basic").setRealm("basic private realm").buildAuthFilter()));
+					//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(«authUser.name.toFirstUpper».class));
+				«ENDIF»
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		

@@ -27,7 +27,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//HttpServerAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//SingleClientAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uiEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
   </eClassifiers>
@@ -68,17 +67,25 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientScenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" unique="false"
-        upperBound="-1" eType="#//ClientScenario"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" upperBound="-1"
+        eType="#//ClientGivenRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//ClientWhenBlock"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ClientThenBlock"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientGivenRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//ClientScenario"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientWhenBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpClientAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1"
         eType="#//InputValue" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PrimitiveValue"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InputValue">
     <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Input"/>

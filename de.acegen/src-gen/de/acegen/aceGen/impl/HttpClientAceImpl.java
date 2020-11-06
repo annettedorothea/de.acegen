@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getLoadingFlag <em>Loading Flag</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getUiEvent <em>Ui Event</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientAceImpl#getOutcomes <em>Outcomes</em>}</li>
  * </ul>
  *
@@ -149,26 +148,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @ordered
    */
   protected String uiEvent = UI_EVENT_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getId()
-   * @generated
-   * @ordered
-   */
-  protected static final String ID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getId()
-   * @generated
-   * @ordered
-   */
-  protected String id = ID_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getOutcomes() <em>Outcomes</em>}' containment reference list.
@@ -402,31 +381,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public String getId()
-  {
-    return id;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setId(String newId)
-  {
-    String oldId = id;
-    id = newId;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__ID, oldId, id));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<HttpClientOutcome> getOutcomes()
   {
     if (outcomes == null)
@@ -482,8 +436,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return basicGetLoadingFlag();
       case AceGenPackage.HTTP_CLIENT_ACE__UI_EVENT:
         return getUiEvent();
-      case AceGenPackage.HTTP_CLIENT_ACE__ID:
-        return getId();
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         return getOutcomes();
     }
@@ -524,9 +476,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_CLIENT_ACE__UI_EVENT:
         setUiEvent((String)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT_ACE__ID:
-        setId((String)newValue);
-        return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();
         getOutcomes().addAll((Collection<? extends HttpClientOutcome>)newValue);
@@ -566,9 +515,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
       case AceGenPackage.HTTP_CLIENT_ACE__UI_EVENT:
         setUiEvent(UI_EVENT_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_CLIENT_ACE__ID:
-        setId(ID_EDEFAULT);
-        return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();
         return;
@@ -600,8 +546,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         return loadingFlag != null;
       case AceGenPackage.HTTP_CLIENT_ACE__UI_EVENT:
         return UI_EVENT_EDEFAULT == null ? uiEvent != null : !UI_EVENT_EDEFAULT.equals(uiEvent);
-      case AceGenPackage.HTTP_CLIENT_ACE__ID:
-        return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         return outcomes != null && !outcomes.isEmpty();
     }
@@ -625,8 +569,6 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
     result.append(name);
     result.append(", uiEvent: ");
     result.append(uiEvent);
-    result.append(", id: ");
-    result.append(id);
     result.append(')');
     return result.toString();
   }
