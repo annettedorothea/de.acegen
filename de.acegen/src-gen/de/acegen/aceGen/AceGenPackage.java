@@ -223,22 +223,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_ACE__LOADING_FLAG = 5;
 
   /**
-   * The feature id for the '<em><b>Ui Event</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_CLIENT_ACE__UI_EVENT = 6;
-
-  /**
    * The feature id for the '<em><b>Outcomes</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE__OUTCOMES = 7;
+  int HTTP_CLIENT_ACE__OUTCOMES = 6;
 
   /**
    * The number of structural features of the '<em>Http Client Ace</em>' class.
@@ -247,7 +238,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_ACE_FEATURE_COUNT = 8;
+  int HTTP_CLIENT_ACE_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.FromAppStateRefImpl <em>From App State Ref</em>}' class.
@@ -674,13 +665,22 @@ public interface AceGenPackage extends EPackage
   int CLIENT_WHEN_BLOCK__UUID = 2;
 
   /**
-   * The feature id for the '<em><b>Systemtime</b></em>' attribute.
+   * The feature id for the '<em><b>Client System Time</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK__SYSTEMTIME = 3;
+  int CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME = 3;
+
+  /**
+   * The feature id for the '<em><b>Server System Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME = 4;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -689,7 +689,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK__ATTRIBUTE = 4;
+  int CLIENT_WHEN_BLOCK__ATTRIBUTE = 5;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -698,7 +698,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK__VALUE = 5;
+  int CLIENT_WHEN_BLOCK__VALUE = 6;
 
   /**
    * The number of structural features of the '<em>Client When Block</em>' class.
@@ -707,7 +707,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK_FEATURE_COUNT = 6;
+  int CLIENT_WHEN_BLOCK_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.InputValueImpl <em>Input Value</em>}' class.
@@ -2893,17 +2893,6 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClientAce_LoadingFlag();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClientAce#getUiEvent <em>Ui Event</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Ui Event</em>'.
-   * @see de.acegen.aceGen.HttpClientAce#getUiEvent()
-   * @see #getHttpClientAce()
-   * @generated
-   */
-  EAttribute getHttpClientAce_UiEvent();
-
-  /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClientAce#getOutcomes <em>Outcomes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3290,15 +3279,26 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientWhenBlock_Uuid();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getSystemtime <em>Systemtime</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getClientSystemTime <em>Client System Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Systemtime</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getSystemtime()
+   * @return the meta object for the attribute '<em>Client System Time</em>'.
+   * @see de.acegen.aceGen.ClientWhenBlock#getClientSystemTime()
    * @see #getClientWhenBlock()
    * @generated
    */
-  EAttribute getClientWhenBlock_Systemtime();
+  EAttribute getClientWhenBlock_ClientSystemTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getServerSystemTime <em>Server System Time</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Server System Time</em>'.
+   * @see de.acegen.aceGen.ClientWhenBlock#getServerSystemTime()
+   * @see #getClientWhenBlock()
+   * @generated
+   */
+  EAttribute getClientWhenBlock_ServerSystemTime();
 
   /**
    * Returns the meta object for the reference '{@link de.acegen.aceGen.ClientWhenBlock#getAttribute <em>Attribute</em>}'.
@@ -5116,14 +5116,6 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT_ACE__LOADING_FLAG = eINSTANCE.getHttpClientAce_LoadingFlag();
 
     /**
-     * The meta object literal for the '<em><b>Ui Event</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HTTP_CLIENT_ACE__UI_EVENT = eINSTANCE.getHttpClientAce_UiEvent();
-
-    /**
      * The meta object literal for the '<em><b>Outcomes</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5432,12 +5424,20 @@ public interface AceGenPackage extends EPackage
     EAttribute CLIENT_WHEN_BLOCK__UUID = eINSTANCE.getClientWhenBlock_Uuid();
 
     /**
-     * The meta object literal for the '<em><b>Systemtime</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Client System Time</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLIENT_WHEN_BLOCK__SYSTEMTIME = eINSTANCE.getClientWhenBlock_Systemtime();
+    EAttribute CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME = eINSTANCE.getClientWhenBlock_ClientSystemTime();
+
+    /**
+     * The meta object literal for the '<em><b>Server System Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME = eINSTANCE.getClientWhenBlock_ServerSystemTime();
 
     /**
      * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.

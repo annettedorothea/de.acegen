@@ -26,7 +26,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//HttpServerAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//SingleClientAttribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uiEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
   </eClassifiers>
@@ -82,7 +81,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1"
         eType="#//InputValue" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PrimitiveValue"
         containment="true"/>

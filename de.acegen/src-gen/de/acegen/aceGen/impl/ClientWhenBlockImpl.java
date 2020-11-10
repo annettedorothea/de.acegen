@@ -37,7 +37,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getInputValues <em>Input Values</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getUuid <em>Uuid</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getSystemtime <em>Systemtime</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getClientSystemTime <em>Client System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getServerSystemTime <em>Server System Time</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAttribute <em>Attribute</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getValue <em>Value</em>}</li>
  * </ul>
@@ -87,24 +88,44 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
   protected String uuid = UUID_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getSystemtime() <em>Systemtime</em>}' attribute.
+   * The default value of the '{@link #getClientSystemTime() <em>Client System Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSystemtime()
+   * @see #getClientSystemTime()
    * @generated
    * @ordered
    */
-  protected static final String SYSTEMTIME_EDEFAULT = null;
+  protected static final String CLIENT_SYSTEM_TIME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getSystemtime() <em>Systemtime</em>}' attribute.
+   * The cached value of the '{@link #getClientSystemTime() <em>Client System Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSystemtime()
+   * @see #getClientSystemTime()
    * @generated
    * @ordered
    */
-  protected String systemtime = SYSTEMTIME_EDEFAULT;
+  protected String clientSystemTime = CLIENT_SYSTEM_TIME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getServerSystemTime() <em>Server System Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getServerSystemTime()
+   * @generated
+   * @ordered
+   */
+  protected static final String SERVER_SYSTEM_TIME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getServerSystemTime() <em>Server System Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getServerSystemTime()
+   * @generated
+   * @ordered
+   */
+  protected String serverSystemTime = SERVER_SYSTEM_TIME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
@@ -238,9 +259,9 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public String getSystemtime()
+  public String getClientSystemTime()
   {
-    return systemtime;
+    return clientSystemTime;
   }
 
   /**
@@ -249,12 +270,37 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public void setSystemtime(String newSystemtime)
+  public void setClientSystemTime(String newClientSystemTime)
   {
-    String oldSystemtime = systemtime;
-    systemtime = newSystemtime;
+    String oldClientSystemTime = clientSystemTime;
+    clientSystemTime = newClientSystemTime;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME, oldSystemtime, systemtime));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME, oldClientSystemTime, clientSystemTime));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getServerSystemTime()
+  {
+    return serverSystemTime;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setServerSystemTime(String newServerSystemTime)
+  {
+    String oldServerSystemTime = serverSystemTime;
+    serverSystemTime = newServerSystemTime;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME, oldServerSystemTime, serverSystemTime));
   }
 
   /**
@@ -387,8 +433,10 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return getInputValues();
       case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
         return getUuid();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
-        return getSystemtime();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
+        return getClientSystemTime();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
+        return getServerSystemTime();
       case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
         if (resolve) return getAttribute();
         return basicGetAttribute();
@@ -419,8 +467,11 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
         setUuid((String)newValue);
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
-        setSystemtime((String)newValue);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
+        setClientSystemTime((String)newValue);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
+        setServerSystemTime((String)newValue);
         return;
       case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
         setAttribute((Attribute)newValue);
@@ -451,8 +502,11 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
         setUuid(UUID_EDEFAULT);
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
-        setSystemtime(SYSTEMTIME_EDEFAULT);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
+        setClientSystemTime(CLIENT_SYSTEM_TIME_EDEFAULT);
+        return;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
+        setServerSystemTime(SERVER_SYSTEM_TIME_EDEFAULT);
         return;
       case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
         setAttribute((Attribute)null);
@@ -480,8 +534,10 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return inputValues != null && !inputValues.isEmpty();
       case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
         return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SYSTEMTIME:
-        return SYSTEMTIME_EDEFAULT == null ? systemtime != null : !SYSTEMTIME_EDEFAULT.equals(systemtime);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
+        return CLIENT_SYSTEM_TIME_EDEFAULT == null ? clientSystemTime != null : !CLIENT_SYSTEM_TIME_EDEFAULT.equals(clientSystemTime);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
+        return SERVER_SYSTEM_TIME_EDEFAULT == null ? serverSystemTime != null : !SERVER_SYSTEM_TIME_EDEFAULT.equals(serverSystemTime);
       case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
         return attribute != null;
       case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
@@ -503,8 +559,10 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (uuid: ");
     result.append(uuid);
-    result.append(", systemtime: ");
-    result.append(systemtime);
+    result.append(", clientSystemTime: ");
+    result.append(clientSystemTime);
+    result.append(", serverSystemTime: ");
+    result.append(serverSystemTime);
     result.append(')');
     return result.toString();
   }

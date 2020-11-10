@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getRefs <em>Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getServerCall <em>Server Call</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getLoadingFlag <em>Loading Flag</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClientAce#getUiEvent <em>Ui Event</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientAce#getOutcomes <em>Outcomes</em>}</li>
  * </ul>
  *
@@ -143,28 +142,6 @@ public interface HttpClientAce extends EObject
    * @generated
    */
   void setLoadingFlag(SingleClientAttribute value);
-
-  /**
-   * Returns the value of the '<em><b>Ui Event</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Ui Event</em>' attribute.
-   * @see #setUiEvent(String)
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_UiEvent()
-   * @model
-   * @generated
-   */
-  String getUiEvent();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpClientAce#getUiEvent <em>Ui Event</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Ui Event</em>' attribute.
-   * @see #getUiEvent()
-   * @generated
-   */
-  void setUiEvent(String value);
 
   /**
    * Returns the value of the '<em><b>Outcomes</b></em>' containment reference list.

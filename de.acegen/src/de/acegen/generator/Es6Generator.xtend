@@ -19,15 +19,16 @@
 
 package de.acegen.generator
 
+import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.templates.es6.AceTemplate
 import de.acegen.templates.es6.ActionTemplate
 import de.acegen.templates.es6.CommandTemplate
 import de.acegen.templates.es6.EventTemplate
+import de.acegen.templates.es6.ScenarioTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.aceGen.HttpClient
 
 class Es6Generator {
 	@Inject
@@ -41,6 +42,9 @@ class Es6Generator {
 
 	@Inject
 	AceTemplate aceTemplate;
+
+	@Inject
+	ScenarioTemplate scenarioTemplate;
 
 	@Inject
 	extension AceExtension
@@ -73,12 +77,14 @@ class Es6Generator {
 				}
 			}
 		}
-		fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			eventTemplate.generateEventListenerRegistration(httpClient));
-		fsa.generateFile(httpClient.getName + '/EventFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			eventTemplate.generateEventFactoryRegistration(httpClient));
-		fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			actionTemplate.generateActionFunctionExports(httpClient));
+		if (httpClient.aceOperations.size > 0) {
+			fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				eventTemplate.generateEventListenerRegistration(httpClient));
+			fsa.generateFile(httpClient.getName + '/EventFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				eventTemplate.generateEventFactoryRegistration(httpClient));
+			fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				actionTemplate.generateActionFunctionExports(httpClient));
+		}
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppStub());
 		fsa.generateFile('app/AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
@@ -102,6 +108,12 @@ class Es6Generator {
 			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
 				aceTemplate.generateAppState(httpClient.getAppState, ""));
 		}
+		
+		for (scenario : httpClient.scenarios) {
+			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
+				scenarioTemplate.generateScenario(scenario));
+		}
+		fsa.generateFile('ScenarioUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, scenarioTemplate.generateScenarioUtils());
 		
 	}
 }

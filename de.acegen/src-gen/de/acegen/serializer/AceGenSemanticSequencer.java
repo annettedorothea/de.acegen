@@ -406,7 +406,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         action=[HttpClientAce|QualifiedName] 
 	 *         (inputValues+=InputValue inputValues+=InputValue*)? 
 	 *         uuid=STRING? 
-	 *         systemtime=STRING? 
+	 *         clientSystemTime=STRING? 
+	 *         serverSystemTime=STRING? 
 	 *         (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?
 	 *     )
 	 */
@@ -521,7 +522,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (refs+=FromAppStateRef refs+=FromAppStateRef*)? 
 	 *         serverCall=[HttpServerAce|QualifiedName]? 
 	 *         loadingFlag=[SingleClientAttribute|QualifiedName]? 
-	 *         uiEvent=STRING? 
 	 *         outcomes+=HttpClientOutcome*
 	 *     )
 	 */

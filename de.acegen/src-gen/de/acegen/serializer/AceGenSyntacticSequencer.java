@@ -203,8 +203,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'clientSystemTime' clientSystemTime=STRING
 	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'nonDeterministic' attribute=[Attribute|QualifiedName]
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'systemTime' systemtime=STRING
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'serverSystemTime' serverSystemTime=STRING
 	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'uuid' uuid=STRING
 	 *     action=[HttpClientAce|QualifiedName] (ambiguity) (rule end)
 	 */

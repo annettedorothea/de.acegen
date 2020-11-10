@@ -4,7 +4,7 @@ import de.acegen.aceGen.ClientScenario
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
 
-class Scenario {
+class ScenarioTemplate {
 	
 	@Inject
 	extension CommonExtension

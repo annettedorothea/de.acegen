@@ -409,13 +409,13 @@ class Action {
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.nonDeterministic»
-					Object value = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
-					if (value != null) {
+					Object «attribute.name»Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
+					if («attribute.name»Object != null) {
 						try {
-							«attribute.javaType» «attribute.name» = («attribute.javaType»)value;
+							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
 							this.actionData.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.", value);
+							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.", «attribute.name»Object);
 						}
 					} else {
 						LOG.warn("«attribute.name» is declared as non-deterministnic but no value was found in NonDeterministicDataProvider.");

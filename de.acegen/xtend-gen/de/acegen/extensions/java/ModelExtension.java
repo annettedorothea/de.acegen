@@ -117,7 +117,15 @@ public class ModelExtension {
   
   public String table(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public.");
+    _builder.append("\\\"");
+    String _lowerCase = it.getName().toLowerCase();
+    _builder.append(_lowerCase);
+    _builder.append("\\\"");
+    return _builder.toString();
+  }
+  
+  public String tableFkRef(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
     String _lowerCase = it.getName().toLowerCase();
     _builder.append(_lowerCase);
     return _builder.toString();

@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getInputValues <em>Input Values</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getUuid <em>Uuid</em>}</li>
- *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getSystemtime <em>Systemtime</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getClientSystemTime <em>Client System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getServerSystemTime <em>Server System Time</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getAttribute <em>Attribute</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getValue <em>Value</em>}</li>
  * </ul>
@@ -87,26 +88,48 @@ public interface ClientWhenBlock extends EObject
   void setUuid(String value);
 
   /**
-   * Returns the value of the '<em><b>Systemtime</b></em>' attribute.
+   * Returns the value of the '<em><b>Client System Time</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Systemtime</em>' attribute.
-   * @see #setSystemtime(String)
-   * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock_Systemtime()
+   * @return the value of the '<em>Client System Time</em>' attribute.
+   * @see #setClientSystemTime(String)
+   * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock_ClientSystemTime()
    * @model
    * @generated
    */
-  String getSystemtime();
+  String getClientSystemTime();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.ClientWhenBlock#getSystemtime <em>Systemtime</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.ClientWhenBlock#getClientSystemTime <em>Client System Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Systemtime</em>' attribute.
-   * @see #getSystemtime()
+   * @param value the new value of the '<em>Client System Time</em>' attribute.
+   * @see #getClientSystemTime()
    * @generated
    */
-  void setSystemtime(String value);
+  void setClientSystemTime(String value);
+
+  /**
+   * Returns the value of the '<em><b>Server System Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Server System Time</em>' attribute.
+   * @see #setServerSystemTime(String)
+   * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock_ServerSystemTime()
+   * @model
+   * @generated
+   */
+  String getServerSystemTime();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientWhenBlock#getServerSystemTime <em>Server System Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Server System Time</em>' attribute.
+   * @see #getServerSystemTime()
+   * @generated
+   */
+  void setServerSystemTime(String value);
 
   /**
    * Returns the value of the '<em><b>Attribute</b></em>' reference.

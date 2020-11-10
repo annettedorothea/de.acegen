@@ -33,10 +33,15 @@ public class AppRegistrationGenerator {
   private JavaExtension _javaExtension;
   
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
-    String _packageFolder = this._javaExtension.packageFolder(httpServer);
-    String _plus = (_packageFolder + "/AppRegistration.java");
-    fsa.generateFile(_plus, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.appRegistration.generateAppRegistration(httpServer));
+    int _size = httpServer.getAceOperations().size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      String _packageFolder = this._javaExtension.packageFolder(httpServer);
+      String _plus = (_packageFolder + "/AppRegistration.java");
+      fsa.generateFile(_plus, 
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+        this.appRegistration.generateAppRegistration(httpServer));
+    }
     fsa.generateFile("de/acegen/AppRegistration.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.appRegistration.generateAppRegistration());
   }

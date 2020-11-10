@@ -82,8 +82,8 @@ public class Liquibase {
             String _lowerCase_2 = attribute.getForeignKey().getName().toLowerCase();
             _builder.append(_lowerCase_2, "\t\t");
             _builder.append(")\" deleteCascade=\"true\" foreignKeyName=\"fk_");
-            String _table = this._modelExtension.table(it);
-            _builder.append(_table, "\t\t");
+            String _tableFkRef = this._modelExtension.tableFkRef(it);
+            _builder.append(_tableFkRef, "\t\t");
             _builder.append("_");
             String _lowerCase_3 = attribute.getForeignKey().getName().toLowerCase();
             _builder.append(_lowerCase_3, "\t\t");

@@ -9,7 +9,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
-public class Scenario {
+public class ScenarioTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;

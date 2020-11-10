@@ -46,6 +46,7 @@ class ActionTemplate {
 		«IF getLoadingFlag !== null»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
+		import Utils from "./Utils";
 		
 		export default class «abstractActionName» extends Action {
 		

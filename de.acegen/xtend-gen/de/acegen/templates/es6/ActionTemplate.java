@@ -83,6 +83,8 @@ public class ActionTemplate {
         _builder.newLine();
       }
     }
+    _builder.append("import Utils from \"./Utils\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ");
     String _abstractActionName = this._aceExtension.abstractActionName(it);

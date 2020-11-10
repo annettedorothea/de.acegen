@@ -59,7 +59,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 
 		OutputConfiguration testOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT);
 		testOutput.setDescription("generated JavaScript test sources");
-		testOutput.setOutputDirectory("./es6/test/gen/");
+		testOutput.setOutputDirectory("./cypress/integration/gen/");
 		testOutput.setOverrideExistingResources(true);
 		testOutput.setCreateOutputDirectory(true);
 		testOutput.setCleanUpDerivedResources(true);
@@ -67,7 +67,7 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		
 		OutputConfiguration onceTestOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE);
 		onceTestOutput.setDescription("initial JavaScript test sources");
-		onceTestOutput.setOutputDirectory("./es6/test/scr/");
+		onceTestOutput.setOutputDirectory("./cypress/integration/src/");
 		onceTestOutput.setOverrideExistingResources(false);
 		onceTestOutput.setCreateOutputDirectory(true);
 		onceTestOutput.setCleanUpDerivedResources(false);
@@ -120,7 +120,9 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 				onceJavaOutput, 
 				defaultResourceOutput,
 				onceJavaTestOutput, 
-				javaTestOutput);
+				javaTestOutput,
+				testOutput,
+				onceTestOutput);
 	}
 
 }

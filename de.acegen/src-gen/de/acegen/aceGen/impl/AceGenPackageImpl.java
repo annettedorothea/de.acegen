@@ -746,20 +746,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClientAce_UiEvent()
-  {
-    return (EAttribute)httpClientAceEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getHttpClientAce_Outcomes()
   {
-    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(7);
+    return (EReference)httpClientAceEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1153,7 +1142,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientWhenBlock_Systemtime()
+  public EAttribute getClientWhenBlock_ClientSystemTime()
   {
     return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(3);
   }
@@ -1164,9 +1153,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getClientWhenBlock_ServerSystemTime()
+  {
+    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getClientWhenBlock_Attribute()
   {
-    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(4);
+    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1177,7 +1177,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getClientWhenBlock_Value()
   {
-    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(5);
+    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -2912,7 +2912,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__REFS);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__SERVER_CALL);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__LOADING_FLAG);
-    createEAttribute(httpClientAceEClass, HTTP_CLIENT_ACE__UI_EVENT);
     createEReference(httpClientAceEClass, HTTP_CLIENT_ACE__OUTCOMES);
 
     fromAppStateRefEClass = createEClass(FROM_APP_STATE_REF);
@@ -2959,7 +2958,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ACTION);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__INPUT_VALUES);
     createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__UUID);
-    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__SYSTEMTIME);
+    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME);
+    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ATTRIBUTE);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__VALUE);
 
@@ -3238,7 +3238,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpClientAce_Refs(), this.getFromAppStateRef(), null, "refs", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_ServerCall(), this.getHttpServerAce(), null, "serverCall", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_LoadingFlag(), this.getSingleClientAttribute(), null, "loadingFlag", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpClientAce_UiEvent(), ecorePackage.getEString(), "uiEvent", null, 0, 1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClientAce_Outcomes(), this.getHttpClientOutcome(), null, "outcomes", null, 0, -1, HttpClientAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fromAppStateRefEClass, FromAppStateRef.class, "FromAppStateRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3285,7 +3284,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getClientWhenBlock_Action(), this.getHttpClientAce(), null, "action", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientWhenBlock_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientWhenBlock_Systemtime(), ecorePackage.getEString(), "systemtime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientWhenBlock_ClientSystemTime(), ecorePackage.getEString(), "clientSystemTime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientWhenBlock_ServerSystemTime(), ecorePackage.getEString(), "serverSystemTime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

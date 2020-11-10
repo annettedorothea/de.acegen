@@ -477,35 +477,11 @@ ruleHttpClientAce returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_17='UIEvent'
-			{
-				newLeafNode(otherlv_17, grammarAccess.getHttpClientAceAccess().getUIEventKeyword_6_0());
-			}
-			(
-				(
-					lv_uiEvent_18_0=RULE_STRING
-					{
-						newLeafNode(lv_uiEvent_18_0, grammarAccess.getHttpClientAceAccess().getUiEventSTRINGTerminalRuleCall_6_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpClientAceRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"uiEvent",
-							lv_uiEvent_18_0,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
-			)
-		)?
-		(
 			(
 				{
-					newCompositeNode(grammarAccess.getHttpClientAceAccess().getOutcomesHttpClientOutcomeParserRuleCall_7_0());
+					newCompositeNode(grammarAccess.getHttpClientAceAccess().getOutcomesHttpClientOutcomeParserRuleCall_6_0());
 				}
-				lv_outcomes_19_0=ruleHttpClientOutcome
+				lv_outcomes_17_0=ruleHttpClientOutcome
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getHttpClientAceRule());
@@ -513,7 +489,7 @@ ruleHttpClientAce returns [EObject current=null]
 					add(
 						$current,
 						"outcomes",
-						lv_outcomes_19_0,
+						lv_outcomes_17_0,
 						"de.acegen.AceGen.HttpClientOutcome");
 					afterParserOrEnumRuleCall();
 				}
@@ -1342,15 +1318,15 @@ ruleClientWhenBlock returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_8='systemTime'
+			otherlv_8='clientSystemTime'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getClientWhenBlockAccess().getSystemTimeKeyword_3_0());
+				newLeafNode(otherlv_8, grammarAccess.getClientWhenBlockAccess().getClientSystemTimeKeyword_3_0());
 			}
 			(
 				(
-					lv_systemtime_9_0=RULE_STRING
+					lv_clientSystemTime_9_0=RULE_STRING
 					{
-						newLeafNode(lv_systemtime_9_0, grammarAccess.getClientWhenBlockAccess().getSystemtimeSTRINGTerminalRuleCall_3_1_0());
+						newLeafNode(lv_clientSystemTime_9_0, grammarAccess.getClientWhenBlockAccess().getClientSystemTimeSTRINGTerminalRuleCall_3_1_0());
 					}
 					{
 						if ($current==null) {
@@ -1358,17 +1334,41 @@ ruleClientWhenBlock returns [EObject current=null]
 						}
 						setWithLastConsumed(
 							$current,
-							"systemtime",
-							lv_systemtime_9_0,
+							"clientSystemTime",
+							lv_clientSystemTime_9_0,
 							"org.eclipse.xtext.common.Terminals.STRING");
 					}
 				)
 			)
 		)?
 		(
-			otherlv_10='nonDeterministic'
+			otherlv_10='serverSystemTime'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getClientWhenBlockAccess().getNonDeterministicKeyword_4_0());
+				newLeafNode(otherlv_10, grammarAccess.getClientWhenBlockAccess().getServerSystemTimeKeyword_4_0());
+			}
+			(
+				(
+					lv_serverSystemTime_11_0=RULE_STRING
+					{
+						newLeafNode(lv_serverSystemTime_11_0, grammarAccess.getClientWhenBlockAccess().getServerSystemTimeSTRINGTerminalRuleCall_4_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientWhenBlockRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"serverSystemTime",
+							lv_serverSystemTime_11_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+		)?
+		(
+			otherlv_12='nonDeterministic'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getClientWhenBlockAccess().getNonDeterministicKeyword_5_0());
 			}
 			(
 				(
@@ -1378,7 +1378,7 @@ ruleClientWhenBlock returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getAttributeAttributeCrossReference_4_1_0());
+						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getAttributeAttributeCrossReference_5_1_0());
 					}
 					ruleQualifiedName
 					{
@@ -1386,16 +1386,16 @@ ruleClientWhenBlock returns [EObject current=null]
 					}
 				)
 			)
-			otherlv_12=':'
+			otherlv_14=':'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getClientWhenBlockAccess().getColonKeyword_4_2());
+				newLeafNode(otherlv_14, grammarAccess.getClientWhenBlockAccess().getColonKeyword_5_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getValuePrimitiveValueParserRuleCall_4_3_0());
+						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getValuePrimitiveValueParserRuleCall_5_3_0());
 					}
-					lv_value_13_0=rulePrimitiveValue
+					lv_value_15_0=rulePrimitiveValue
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getClientWhenBlockRule());
@@ -1403,7 +1403,7 @@ ruleClientWhenBlock returns [EObject current=null]
 						set(
 							$current,
 							"value",
-							lv_value_13_0,
+							lv_value_15_0,
 							"de.acegen.AceGen.PrimitiveValue");
 						afterParserOrEnumRuleCall();
 					}

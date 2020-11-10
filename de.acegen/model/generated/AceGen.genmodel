@@ -24,7 +24,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/refs"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/serverCall"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/loadingFlag"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientAce/uiEvent"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientAce/outcomes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//FromAppStateRef">
@@ -71,7 +70,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/action"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/inputValues"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/uuid"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/systemtime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/clientSystemTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/serverSystemTime"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/attribute"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/value"/>
     </genClasses>

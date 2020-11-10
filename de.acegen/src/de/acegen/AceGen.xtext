@@ -38,7 +38,6 @@ HttpClientAce:
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
-	('UIEvent' uiEvent = STRING)? 
 	(outcomes += HttpClientOutcome)*
 ;
 
@@ -100,7 +99,8 @@ ClientWhenBlock:
 	action = [HttpClientAce|QualifiedName] 
 	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
 	('uuid' uuid = STRING)? 
-	('systemTime' systemtime = STRING)?
+	('clientSystemTime' clientSystemTime = STRING)?
+	('serverSystemTime' serverSystemTime = STRING)?
 	('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?
 ;
 
