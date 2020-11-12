@@ -137,6 +137,10 @@ public class Es6Generator {
       String _plus_2 = (_name_2 + "/ActionFunctions.js");
       fsa.generateFile(_plus_2, IFileSystemAccess.DEFAULT_OUTPUT, 
         this.actionTemplate.generateActionFunctionExports(httpClient));
+      String _name_3 = httpClient.getName();
+      String _plus_3 = (_name_3 + "/ActionIds.js");
+      fsa.generateFile(_plus_3, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+        this.actionTemplate.generateActionIds(httpClient));
     }
     fsa.generateFile("app/App.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateAppStub());
@@ -163,12 +167,12 @@ public class Es6Generator {
     }
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
-      String _name_3 = httpClient.getName();
-      String _plus_3 = (_name_3 + "/");
-      String _name_4 = scenario.getName();
-      String _plus_4 = (_plus_3 + _name_4);
-      String _plus_5 = (_plus_4 + ".js");
-      fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      String _name_4 = httpClient.getName();
+      String _plus_4 = (_name_4 + "/");
+      String _name_5 = scenario.getName();
+      String _plus_5 = (_plus_4 + _name_5);
+      String _plus_6 = (_plus_5 + ".js");
+      fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.scenarioTemplate.generateScenario(scenario));
     }
     fsa.generateFile("ScenarioUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenarioUtils());

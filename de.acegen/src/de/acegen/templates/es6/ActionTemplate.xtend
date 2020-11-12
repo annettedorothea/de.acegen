@@ -46,7 +46,6 @@ class ActionTemplate {
 		«IF getLoadingFlag !== null»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
-		import Utils from "./Utils";
 		
 		export default class «abstractActionName» extends Action {
 		
@@ -117,11 +116,25 @@ class ActionTemplate {
 		
 	'''
 	
+	def generateActionIds(HttpClient it) '''
+		«copyright»
+
+		«FOR aceOperation : aceOperations»
+			export let «aceOperation.getName.toFirstLower» = "«packageFolder»_«aceOperation.getName.toFirstLower»";
+			
+		«ENDFOR»
+		
+		
+		«sdg»
+		
+	'''
+	
 	def generateAction() '''
 		«copyright»
 
 		import ACEController from "./ACEController";
 		import AppUtils from "../../src/app/AppUtils";
+		import Utils from "./Utils";
 		
 		export default class Action {
 		    constructor(actionData, actionName) {

@@ -83,8 +83,6 @@ public class ActionTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("import Utils from \"./Utils\";");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ");
     String _abstractActionName = this._aceExtension.abstractActionName(it);
@@ -346,6 +344,38 @@ public class ActionTemplate {
     return _builder;
   }
   
+  public CharSequence generateActionIds(final HttpClient it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      EList<HttpClientAce> _aceOperations = it.getAceOperations();
+      for(final HttpClientAce aceOperation : _aceOperations) {
+        _builder.append("export let ");
+        String _firstLower = StringExtensions.toFirstLower(aceOperation.getName());
+        _builder.append(_firstLower);
+        _builder.append(" = \"");
+        String _packageFolder = this._es6Extension.packageFolder(it);
+        _builder.append(_packageFolder);
+        _builder.append("_");
+        String _firstLower_1 = StringExtensions.toFirstLower(aceOperation.getName());
+        _builder.append(_firstLower_1);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
   public CharSequence generateAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -355,6 +385,8 @@ public class ActionTemplate {
     _builder.append("import ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
+    _builder.newLine();
+    _builder.append("import Utils from \"./Utils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Action {");

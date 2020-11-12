@@ -84,6 +84,8 @@ class Es6Generator {
 				eventTemplate.generateEventFactoryRegistration(httpClient));
 			fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 				actionTemplate.generateActionFunctionExports(httpClient));
+			fsa.generateFile(httpClient.getName + '/ActionIds.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
+				actionTemplate.generateActionIds(httpClient));
 		}
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppStub());

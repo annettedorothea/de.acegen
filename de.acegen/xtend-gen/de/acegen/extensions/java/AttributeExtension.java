@@ -499,8 +499,8 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       StringConcatenation _builder = new StringConcatenation();
       EObject _eContainer = it.eContainer();
-      String _table = this._modelExtension.table(((Model) _eContainer));
-      _builder.append(_table);
+      String _tableFkRef = this._modelExtension.tableFkRef(((Model) _eContainer));
+      _builder.append(_tableFkRef);
       _xifexpression = _builder.toString();
     }
     return _xifexpression;

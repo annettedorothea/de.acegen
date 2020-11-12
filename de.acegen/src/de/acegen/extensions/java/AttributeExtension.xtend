@@ -163,7 +163,7 @@ class AttributeExtension {
 
 	def String tableName(Attribute it) {
 		if (type !== null) {
-			'''«(eContainer as Model).table»'''
+			'''«(eContainer as Model).tableFkRef»'''
 		}
 	}
 
