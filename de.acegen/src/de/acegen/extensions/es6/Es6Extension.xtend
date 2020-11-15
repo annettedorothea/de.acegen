@@ -19,11 +19,21 @@
 
 package de.acegen.extensions.es6
 
+import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.ClientAttribute
+import de.acegen.aceGen.ClientGivenRef
+import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
+import de.acegen.aceGen.JsonArrayClient
+import de.acegen.aceGen.JsonObjectClient
+import de.acegen.aceGen.JsonValueClient
+import de.acegen.aceGen.LongType
+import de.acegen.aceGen.NullType
+import de.acegen.aceGen.PrimitiveValue
 import de.acegen.aceGen.SingleClientAttribute
+import de.acegen.aceGen.StringType
 import java.util.ArrayList
 import java.util.List
 
@@ -98,6 +108,49 @@ class Es6Extension {
 		}
 		return attributes
 	}
+	
+	def List<HttpClient> allReferencedHttpClients(ClientScenario it) {
+		var list = new ArrayList<HttpClient>();
+		var httpClient = whenBlock.action.eContainer as HttpClient
+		if (!list.contains(httpClient)) {
+			list.add(httpClient)
+		}
+		for(ClientGivenRef givenRef: givenRefs) {
+			httpClient = givenRef.scenario.whenBlock.action.eContainer as HttpClient
+			if (!list.contains(httpClient)) {
+				list.add(httpClient)
+			}
+		}
+		return list;
+	}
+	
+	def actionIdName(HttpClient it) '''«name.toFirstUpper»ActionIds'''
+	
+	def primitiveValueFrom(PrimitiveValue it) {
+		if (string !== null) {
+			return '''`«string»`''';
+		}
+		return getLong()
+	}
+
+	def dispatch CharSequence valueFrom(
+		JsonObjectClient it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+
+
+	def dispatch CharSequence valueFrom(JsonValueClient it) {
+		if (it instanceof StringType) {
+			return '''`«string»`''';
+		} else if (it instanceof BooleanType) {
+			return boolean;
+		} else if (it instanceof NullType) {
+			return "null";
+		} else if (it instanceof LongType) {
+			return '''«long»''';
+		} else if (it instanceof JsonArrayClient) {
+			return '''[«FOR value: (it as JsonArrayClient).values»«value.valueFrom»«ENDFOR»]''';
+		}
+	}
+
 
 }
 /******* S.D.G. *******/

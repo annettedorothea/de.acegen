@@ -1,13 +1,18 @@
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientScenario
+import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
+import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
 
 class ScenarioTemplate {
 	
 	@Inject
 	extension CommonExtension
+	
+	@Inject
+	extension Es6Extension
 
 	def generateScenarioUtils() '''
 		«copyright»
@@ -20,28 +25,32 @@ class ScenarioTemplate {
 	def generateScenario(ClientScenario it) '''
 		«copyright»
 		
+		import * as ScenarioUtils from "../../src/ScenarioUtils";
+		«FOR httpClient: allReferencedHttpClients»
+			import * as «httpClient.actionIdName» from "../«httpClient.name»/«httpClient.actionIdName»";
+		«ENDFOR»
+		
+		const testId = ScenarioUtils.testId();
+		
 		context('«name»', () => {
 		    beforeEach(() => {
 		    	«FOR givenRef: givenRefs»
-		    		// «givenRef.scenario.name»
+		    		ScenarioUtils.getCypressFor(«(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower», «FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE '[' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»)
 		    	«ENDFOR»
 		    	
 		    	«IF whenBlock.uuid !== null»
 		    		localStorage.setItem("uuid", "whenBlock.uuid")
 		    	«ENDIF»
-		        AppUtils.httpPut('/api/test/non-deterministic/system-time?uuid=9d0723a3&system-time=2020-07-07T16:30:21')
-		        cy.visit('http://127.0.0.1:9999/')
-		        cy.get('#newTodoInput').type('NEW')
 		    })
 		
-		    it('should reset newTodo and reload todoList', () => {
-		        const lastAppState = JSON.parse(localStorage.getItem('appState'));
-		        cy.get('#newTodoInput').type(String.fromCharCode(13)).should(() => {
-		            const appState = JSON.parse(localStorage.getItem('appState'));
-		            expect(appState.newTodo, 'reset newTodo').to.eq('')
-		            expect(appState.todoList.length).to.eq(lastAppState.todoList.length + 1)
-		            expect(appState.todoList[appState.todoList.length - 1].description).to.eq('NEW')
-		            expect(appState.todoList[appState.todoList.length - 1].done).to.eq(false)
+		    it('should change appState', () => {
+		    	ScenarioUtils.getCypressFor(«(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower», «FOR arg: whenBlock.inputValues BEFORE '[' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»).should(() => {
+		    		ScenarioUtils.wait(500).should(() => {
+			            const appState = JSON.parse(localStorage.getItem('appState'))
+			            «FOR stateVerification: thenBlock.stateVerifications»
+			            	expect(appState.«stateVerification.stateRef.name», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
+			            «ENDFOR»
+		    		})
 		        })
 		    })
 		})
@@ -51,4 +60,5 @@ class ScenarioTemplate {
 		
 		
 	'''
+	
 }

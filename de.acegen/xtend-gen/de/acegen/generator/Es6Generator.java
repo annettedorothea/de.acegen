@@ -20,6 +20,7 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.extensions.es6.AceExtension;
+import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.es6.AceTemplate;
 import de.acegen.templates.es6.ActionTemplate;
@@ -52,6 +53,10 @@ public class Es6Generator {
   @Inject
   @Extension
   private AceExtension _aceExtension;
+  
+  @Inject
+  @Extension
+  private Es6Extension _es6Extension;
   
   public void doGenerate(final HttpClient httpClient, final IFileSystemAccess2 fsa) {
     EList<HttpClientAce> _aceOperations = httpClient.getAceOperations();
@@ -138,8 +143,11 @@ public class Es6Generator {
       fsa.generateFile(_plus_2, IFileSystemAccess.DEFAULT_OUTPUT, 
         this.actionTemplate.generateActionFunctionExports(httpClient));
       String _name_3 = httpClient.getName();
-      String _plus_3 = (_name_3 + "/ActionIds.js");
-      fsa.generateFile(_plus_3, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      String _plus_3 = (_name_3 + "/");
+      CharSequence _actionIdName = this._es6Extension.actionIdName(httpClient);
+      String _plus_4 = (_plus_3 + _actionIdName);
+      String _plus_5 = (_plus_4 + ".js");
+      fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.actionTemplate.generateActionIds(httpClient));
     }
     fsa.generateFile("app/App.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
@@ -168,11 +176,11 @@ public class Es6Generator {
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
       String _name_4 = httpClient.getName();
-      String _plus_4 = (_name_4 + "/");
+      String _plus_6 = (_name_4 + "/");
       String _name_5 = scenario.getName();
-      String _plus_5 = (_plus_4 + _name_5);
-      String _plus_6 = (_plus_5 + ".js");
-      fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      String _plus_7 = (_plus_6 + _name_5);
+      String _plus_8 = (_plus_7 + ".js");
+      fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.scenarioTemplate.generateScenario(scenario));
     }
     fsa.generateFile("ScenarioUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenarioUtils());

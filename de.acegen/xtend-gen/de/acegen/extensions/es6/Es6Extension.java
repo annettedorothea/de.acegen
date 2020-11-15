@@ -15,13 +15,26 @@
  */
 package de.acegen.extensions.es6;
 
+import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.ClientGivenRef;
+import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
+import de.acegen.aceGen.JsonArrayClient;
+import de.acegen.aceGen.JsonMemberClient;
+import de.acegen.aceGen.JsonObjectClient;
+import de.acegen.aceGen.JsonValueClient;
+import de.acegen.aceGen.LongType;
+import de.acegen.aceGen.NullType;
+import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SingleClientAttribute;
+import de.acegen.aceGen.StringType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -176,5 +189,127 @@ public class Es6Extension {
       }
     }
     return attributes;
+  }
+  
+  public List<HttpClient> allReferencedHttpClients(final ClientScenario it) {
+    ArrayList<HttpClient> list = new ArrayList<HttpClient>();
+    EObject _eContainer = it.getWhenBlock().getAction().eContainer();
+    HttpClient httpClient = ((HttpClient) _eContainer);
+    boolean _contains = list.contains(httpClient);
+    boolean _not = (!_contains);
+    if (_not) {
+      list.add(httpClient);
+    }
+    EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
+    for (final ClientGivenRef givenRef : _givenRefs) {
+      {
+        EObject _eContainer_1 = givenRef.getScenario().getWhenBlock().getAction().eContainer();
+        httpClient = ((HttpClient) _eContainer_1);
+        boolean _contains_1 = list.contains(httpClient);
+        boolean _not_1 = (!_contains_1);
+        if (_not_1) {
+          list.add(httpClient);
+        }
+      }
+    }
+    return list;
+  }
+  
+  public CharSequence actionIdName(final HttpClient it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("ActionIds");
+    return _builder;
+  }
+  
+  public Object primitiveValueFrom(final PrimitiveValue it) {
+    String _string = it.getString();
+    boolean _tripleNotEquals = (_string != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("`");
+      String _string_1 = it.getString();
+      _builder.append(_string_1);
+      _builder.append("`");
+      return _builder.toString();
+    }
+    return Integer.valueOf(it.getLong());
+  }
+  
+  protected CharSequence _valueFrom(final JsonObjectClient it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
+        _builder.append("{ ");
+        {
+          EList<JsonMemberClient> _members = it.getMembers();
+          for(final JsonMemberClient member : _members) {
+            _builder.append("\\\"");
+            String _name = member.getAttribute().getName();
+            _builder.append(_name);
+            _builder.append("\\\" : ");
+            CharSequence _valueFrom = this.valueFrom(member.getValue());
+            _builder.append(_valueFrom);
+          }
+        }
+        _builder.append("}");
+      } else {
+        _builder.append("{}");
+      }
+    }
+    return _builder;
+  }
+  
+  protected CharSequence _valueFrom(final JsonValueClient it) {
+    if ((it instanceof StringType)) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("`");
+      String _string = ((StringType)it).getString();
+      _builder.append(_string);
+      _builder.append("`");
+      return _builder;
+    } else {
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
+      } else {
+        if ((it instanceof NullType)) {
+          return "null";
+        } else {
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          } else {
+            if ((it instanceof JsonArrayClient)) {
+              StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("[");
+              {
+                EList<JsonValueClient> _values = ((JsonArrayClient) it).getValues();
+                for(final JsonValueClient value : _values) {
+                  CharSequence _valueFrom = this.valueFrom(value);
+                  _builder_2.append(_valueFrom);
+                }
+              }
+              _builder_2.append("]");
+              return _builder_2;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
+  public CharSequence valueFrom(final JsonValueClient it) {
+    if (it instanceof JsonObjectClient) {
+      return _valueFrom((JsonObjectClient)it);
+    } else if (it != null) {
+      return _valueFrom(it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
   }
 }

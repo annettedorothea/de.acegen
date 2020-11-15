@@ -21,6 +21,7 @@ package de.acegen.generator
 
 import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.es6.AceExtension
+import de.acegen.extensions.es6.Es6Extension
 import de.acegen.templates.es6.AceTemplate
 import de.acegen.templates.es6.ActionTemplate
 import de.acegen.templates.es6.CommandTemplate
@@ -48,6 +49,9 @@ class Es6Generator {
 
 	@Inject
 	extension AceExtension
+
+	@Inject
+	extension Es6Extension
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		for (ace : httpClient.aceOperations) {
@@ -84,7 +88,7 @@ class Es6Generator {
 				eventTemplate.generateEventFactoryRegistration(httpClient));
 			fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 				actionTemplate.generateActionFunctionExports(httpClient));
-			fsa.generateFile(httpClient.getName + '/ActionIds.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
+			fsa.generateFile(httpClient.getName + '/' + httpClient.actionIdName + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
 				actionTemplate.generateActionIds(httpClient));
 		}
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
