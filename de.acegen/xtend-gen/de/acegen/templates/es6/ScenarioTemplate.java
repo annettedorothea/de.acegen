@@ -7,6 +7,7 @@ import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -45,7 +46,7 @@ public class ScenarioTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import * as ScenarioUtils from \"../../src/ScenarioUtils\";");
+    _builder.append("import * as ScenarioUtils from \"../../../acegen/src/ScenarioUtils\";");
     _builder.newLine();
     {
       List<HttpClient> _allReferencedHttpClients = this._es6Extension.allReferencedHttpClients(it);
@@ -53,7 +54,7 @@ public class ScenarioTemplate {
         _builder.append("import * as ");
         CharSequence _actionIdName = this._es6Extension.actionIdName(httpClient);
         _builder.append(_actionIdName);
-        _builder.append(" from \"../");
+        _builder.append(" from \"../../../acegen/gen/");
         String _name = httpClient.getName();
         _builder.append(_name);
         _builder.append("/");
@@ -76,8 +77,8 @@ public class ScenarioTemplate {
     _builder.append("beforeEach(() => {");
     _builder.newLine();
     {
-      EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
-      for(final ClientGivenRef givenRef : _givenRefs) {
+      ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
+      for(final ClientGivenRef givenRef : _allGivenItems) {
         _builder.append("    \t");
         _builder.append("ScenarioUtils.getCypressFor(");
         EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
@@ -155,8 +156,14 @@ public class ScenarioTemplate {
     _builder.append(").should(() => {");
     _builder.newLineIfNotEmpty();
     _builder.append("    \t\t");
-    _builder.append("ScenarioUtils.wait(500).should(() => {");
-    _builder.newLine();
+    _builder.append("ScenarioUtils.wait(");
+    int _numberOfSyncCalls = this._es6Extension.numberOfSyncCalls(it.getWhenBlock().getAction());
+    _builder.append(_numberOfSyncCalls, "    \t\t");
+    _builder.append(", ");
+    int _numberOfAsyncCalls = this._es6Extension.numberOfAsyncCalls(it.getWhenBlock().getAction());
+    _builder.append(_numberOfAsyncCalls, "    \t\t");
+    _builder.append(").should(() => {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t            ");
     _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
     _builder.newLine();
@@ -196,5 +203,26 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.newLine();
     return _builder;
+  }
+  
+  private ArrayList<ClientGivenRef> allGivenItems(final ClientScenario it) {
+    ArrayList<ClientGivenRef> allWhenBlocks = new ArrayList<ClientGivenRef>();
+    EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
+    for (final ClientGivenRef given : _givenRefs) {
+      if ((given instanceof ClientGivenRef)) {
+        this.allGivenItemsRec(given, allWhenBlocks);
+      }
+    }
+    return allWhenBlocks;
+  }
+  
+  private void allGivenItemsRec(final ClientGivenRef it, final List<ClientGivenRef> allWhenBlocks) {
+    if ((it instanceof ClientGivenRef)) {
+      EList<ClientGivenRef> _givenRefs = it.getScenario().getGivenRefs();
+      for (final ClientGivenRef given : _givenRefs) {
+        this.allGivenItemsRec(given, allWhenBlocks);
+      }
+    }
+    allWhenBlocks.add(it);
   }
 }

@@ -29,8 +29,10 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 public class ACEOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 	public final static String DEFAULT_JAVASCRIPT_OUTPUT_ONCE = "DEFAULT_JAVASCRIPT_OUTPUT_ONCE";
+	public final static String DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT = "DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT";
 	public final static String DEFAULT_JAVASCRIPT_TEST_OUTPUT = "DEFAULT_JAVASCRIPT_TEST_OUTPUT";
 	public final static String DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE = "DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE";
+	
 	public final static String DEFAULT_JAVA_OUTPUT = "DEFAULT_JAVA_OUTPUT";
 	public final static String DEFAULT_RESOURCE_OUTPUT = "DEFAULT_RESOURCE_OUTPUT";
 	public final static String DEFAULT_JAVA_OUTPUT_ONCE = "DEFAULT_JAVA_OUTPUT_ONCE";
@@ -57,21 +59,29 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 		onceOutput.setCleanUpDerivedResources(false);
 		onceOutput.setSetDerivedProperty(false);
 
-		OutputConfiguration testOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT);
-		testOutput.setDescription("generated JavaScript test sources");
-		testOutput.setOutputDirectory("./cypress/integration/gen/");
-		testOutput.setOverrideExistingResources(true);
-		testOutput.setCreateOutputDirectory(true);
-		testOutput.setCleanUpDerivedResources(true);
-		testOutput.setSetDerivedProperty(true);
+		OutputConfiguration integrationOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT);
+		integrationOutput.setDescription("generated JavaScript test sources");
+		integrationOutput.setOutputDirectory("./cypress/integration/gen/");
+		integrationOutput.setOverrideExistingResources(true);
+		integrationOutput.setCreateOutputDirectory(true);
+		integrationOutput.setCleanUpDerivedResources(true);
+		integrationOutput.setSetDerivedProperty(true);
 		
 		OutputConfiguration onceTestOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE);
 		onceTestOutput.setDescription("initial JavaScript test sources");
-		onceTestOutput.setOutputDirectory("./cypress/integration/src/");
+		onceTestOutput.setOutputDirectory("./cypress/acegen/src/");
 		onceTestOutput.setOverrideExistingResources(false);
 		onceTestOutput.setCreateOutputDirectory(true);
 		onceTestOutput.setCleanUpDerivedResources(false);
 		onceTestOutput.setSetDerivedProperty(false);
+		
+		OutputConfiguration testOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT);
+		testOutput.setDescription("initial JavaScript test sources");
+		testOutput.setOutputDirectory("./cypress/acegen/gen/");
+		testOutput.setOverrideExistingResources(true);
+		testOutput.setCreateOutputDirectory(true);
+		testOutput.setCleanUpDerivedResources(true);
+		testOutput.setSetDerivedProperty(true);
 		
 		OutputConfiguration defaultJavaOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT);
 		defaultJavaOutput.setDescription("generated Java sources");
@@ -121,8 +131,9 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 				defaultResourceOutput,
 				onceJavaTestOutput, 
 				javaTestOutput,
-				testOutput,
-				onceTestOutput);
+				integrationOutput,
+				onceTestOutput,
+				testOutput);
 	}
 
 }

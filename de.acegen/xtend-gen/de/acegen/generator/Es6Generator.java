@@ -180,7 +180,7 @@ public class Es6Generator {
       String _name_5 = scenario.getName();
       String _plus_7 = (_plus_6 + _name_5);
       String _plus_8 = (_plus_7 + ".js");
-      fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT, 
         this.scenarioTemplate.generateScenario(scenario));
     }
     fsa.generateFile("ScenarioUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenarioUtils());

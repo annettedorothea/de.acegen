@@ -21,6 +21,8 @@ import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
+import de.acegen.aceGen.HttpClientAce;
+import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.JsonArrayClient;
 import de.acegen.aceGen.JsonMemberClient;
@@ -300,6 +302,56 @@ public class Es6Extension {
       }
     }
     return null;
+  }
+  
+  public int numberOfAsyncCalls(final HttpClientAce it) {
+    int number = 0;
+    if ((it.isAsync() || (it.getServerCall() != null))) {
+      number = 1;
+    }
+    int triggeredAsyncCalls = 0;
+    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
+    for (final HttpClientOutcome outcome : _outcomes) {
+      int _size = outcome.getAceOperations().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
+        for (final HttpClientAce triggered : _aceOperations) {
+          {
+            final int n = this.numberOfAsyncCalls(triggered);
+            if ((n > triggeredAsyncCalls)) {
+              triggeredAsyncCalls = n;
+            }
+          }
+        }
+      }
+    }
+    return (number + triggeredAsyncCalls);
+  }
+  
+  public int numberOfSyncCalls(final HttpClientAce it) {
+    int number = 0;
+    if (((!it.isAsync()) && (it.getServerCall() == null))) {
+      number = 1;
+    }
+    int triggeredSyncCalls = 0;
+    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
+    for (final HttpClientOutcome outcome : _outcomes) {
+      int _size = outcome.getAceOperations().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
+        for (final HttpClientAce triggered : _aceOperations) {
+          {
+            final int n = this.numberOfSyncCalls(triggered);
+            if ((n > triggeredSyncCalls)) {
+              triggeredSyncCalls = n;
+            }
+          }
+        }
+      }
+    }
+    return (number + triggeredSyncCalls);
   }
   
   public CharSequence valueFrom(final JsonValueClient it) {

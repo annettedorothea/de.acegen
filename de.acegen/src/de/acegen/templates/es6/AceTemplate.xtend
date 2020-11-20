@@ -257,12 +257,14 @@ class AceTemplate {
 		    }
 		
 		    static addItemToTimeLine(item) {
-			    ACEController.timeline.push(AppUtils.deepCopy(item));
-				if (ACEController.timeline.length > Utils.settings.timelineSize) {
-				    ACEController.timeline.shift();
-				    while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
-				        ACEController.timeline.shift();
-				    }
+		    	if (Utils.settings && Utils.settings.timelineSize > 0) {
+				    ACEController.timeline.push(AppUtils.deepCopy(item));
+					if (ACEController.timeline.length > Utils.settings.timelineSize) {
+					    ACEController.timeline.shift();
+					    while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
+					        ACEController.timeline.shift();
+					    }
+					}
 				}
 		    }
 		

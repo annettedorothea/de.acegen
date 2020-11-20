@@ -25,6 +25,7 @@ import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
+import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientStateFunction
 import de.acegen.aceGen.JsonArrayClient
 import de.acegen.aceGen.JsonObjectClient
@@ -149,6 +150,44 @@ class Es6Extension {
 		} else if (it instanceof JsonArrayClient) {
 			return '''[«FOR value: (it as JsonArrayClient).values»«value.valueFrom»«ENDFOR»]''';
 		}
+	}
+	
+	def int numberOfAsyncCalls(HttpClientAce it) {
+		var number = 0;
+		if (async || serverCall !== null) {
+			number = 1
+		}
+		var triggeredAsyncCalls = 0;
+		for (outcome : outcomes) {
+			if (outcome.aceOperations.size > 0) {
+				for (triggered : outcome.aceOperations) {
+					val n = numberOfAsyncCalls(triggered)
+					if (n > triggeredAsyncCalls) {
+						triggeredAsyncCalls = n;
+					}
+				}
+			}
+		}
+		return number + triggeredAsyncCalls;
+	}
+
+	def int numberOfSyncCalls(HttpClientAce it) {
+		var number = 0;
+		if (!async && serverCall === null) {
+			number = 1
+		}
+		var triggeredSyncCalls = 0;
+		for (outcome : outcomes) {
+			if (outcome.aceOperations.size > 0) {
+				for (triggered : outcome.aceOperations) {
+					val n = numberOfSyncCalls(triggered)
+					if (n > triggeredSyncCalls) {
+						triggeredSyncCalls = n;
+					}
+				}
+			}
+		}
+		return number + triggeredSyncCalls;
 	}
 
 
