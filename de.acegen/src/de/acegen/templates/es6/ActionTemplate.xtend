@@ -143,9 +143,11 @@ class ActionTemplate {
 		            actionData = {};
 		        }
 		        this.actionData = AppUtils.deepCopy(actionData);
-		        if (Utils.settings === "dev") {
+		        if (Utils.settings.mode === "dev") {
 		        	this.actionData.uuid = localStorage.getItem("uuid");
+		        	localStorage.removeItem("uuid");
 		        	this.actionData.clientSystemTime = localStorage.getItem("clientSystemTime");
+		        	localStorage.removeItem("clientSystemTime");
 		        	if (this.actionData.uuid === null) {
 		        		this.actionData.uuid = AppUtils.createUUID();
 		        	}
@@ -187,9 +189,8 @@ class ActionTemplate {
 		
 		    constructor(actionData, actionName) {
 		    	super(actionData, actionName);
-		    	   this.asynchronous = true;
+		    	this.asynchronous = true;
 		    }
-			
 
 		    applyAction() {
 		        return new Promise((resolve, reject) => {
@@ -235,7 +236,7 @@ class ActionTemplate {
 		
 		    constructor(actionData, actionName) {
 		    	super(actionData, actionName);
-		    	   this.asynchronous = false;
+		    	this.asynchronous = false;
 		    }
 		
 		    applyAction() {
