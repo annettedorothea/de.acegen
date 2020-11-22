@@ -78,6 +78,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_GIVEN_REF: return createClientGivenRef();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
+      case AceGenPackage.NON_DETERMINISTIC_VALUE: return createNonDeterministicValue();
       case AceGenPackage.INPUT_VALUE: return createInputValue();
       case AceGenPackage.CLIENT_THEN_BLOCK: return createClientThenBlock();
       case AceGenPackage.STATE_VERIFICATION: return createStateVerification();
@@ -284,6 +285,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientWhenBlockImpl clientWhenBlock = new ClientWhenBlockImpl();
     return clientWhenBlock;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NonDeterministicValue createNonDeterministicValue()
+  {
+    NonDeterministicValueImpl nonDeterministicValue = new NonDeterministicValueImpl();
+    return nonDeterministicValue;
   }
 
   /**

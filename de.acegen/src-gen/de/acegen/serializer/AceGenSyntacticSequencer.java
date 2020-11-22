@@ -24,6 +24,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AceGenGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_ClientScenario_GIVENKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_ExpectedStateKeyword_1_0_q;
+	protected AbstractElementAlias match_ClientThenBlock_VerificationsKeyword_2_0_q;
 	protected AbstractElementAlias match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_Count_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_CustomCall_CommaKeyword_3_0_q;
@@ -61,6 +62,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		grammarAccess = (AceGenGrammarAccess) access;
 		match_ClientScenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientScenarioAccess().getGIVENKeyword_1_0());
 		match_ClientThenBlock_ExpectedStateKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getExpectedStateKeyword_1_0());
+		match_ClientThenBlock_VerificationsKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getVerificationsKeyword_2_0());
 		match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getRightParenthesisKeyword_1_2()));
 		match_Count_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCountAccess().getCommaKeyword_3_0());
 		match_CustomCall_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCustomCallAccess().getCommaKeyword_3_0());
@@ -110,6 +112,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_ClientScenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientThenBlock_ExpectedStateKeyword_1_0_q.equals(syntax))
 				emit_ClientThenBlock_ExpectedStateKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClientThenBlock_VerificationsKeyword_2_0_q.equals(syntax))
+				emit_ClientThenBlock_VerificationsKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Count_CommaKeyword_3_0_q.equals(syntax))
@@ -192,9 +196,22 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'expectedState'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
+	 *     (rule start) (ambiguity) 'verifications' verifications+=ID
+	 *     (rule start) (ambiguity) 'verifications'? (rule start)
 	 */
 	protected void emit_ClientThenBlock_ExpectedStateKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'verifications'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'expectedState'? (ambiguity) (rule start)
+	 *     stateVerifications+=StateVerification (ambiguity) (rule end)
+	 */
+	protected void emit_ClientThenBlock_VerificationsKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -203,10 +220,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'clientSystemTime' clientSystemTime=STRING
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'nonDeterministic' attribute=[Attribute|QualifiedName]
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'serverSystemTime' serverSystemTime=STRING
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'uuid' uuid=STRING
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue
 	 *     action=[HttpClientAce|QualifiedName] (ambiguity) (rule end)
 	 */
 	protected void emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

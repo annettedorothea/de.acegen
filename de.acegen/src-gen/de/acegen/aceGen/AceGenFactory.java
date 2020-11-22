@@ -141,6 +141,15 @@ public interface AceGenFactory extends EFactory
   ClientWhenBlock createClientWhenBlock();
 
   /**
+   * Returns a new object of class '<em>Non Deterministic Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Non Deterministic Value</em>'.
+   * @generated
+   */
+  NonDeterministicValue createNonDeterministicValue();
+
+  /**
    * Returns a new object of class '<em>Input Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

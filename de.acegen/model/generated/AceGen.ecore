@@ -80,6 +80,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpClientAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1"
         eType="#//InputValue" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonDeterministicValues"
+        upperBound="-1" eType="#//NonDeterministicValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NonDeterministicValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -95,6 +99,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ClientThenBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateVerifications" upperBound="-1"
         eType="#//StateVerification" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verifications" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateVerification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

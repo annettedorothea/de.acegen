@@ -175,13 +175,26 @@ public class Es6Generator {
     }
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
-      String _name_4 = httpClient.getName();
-      String _plus_6 = (_name_4 + "/");
-      String _name_5 = scenario.getName();
-      String _plus_7 = (_plus_6 + _name_5);
-      String _plus_8 = (_plus_7 + ".js");
-      fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT, 
-        this.scenarioTemplate.generateScenario(scenario));
+      {
+        String _name_4 = httpClient.getName();
+        String _plus_6 = (_name_4 + "/");
+        String _name_5 = scenario.getName();
+        String _plus_7 = (_plus_6 + _name_5);
+        String _plus_8 = (_plus_7 + ".js");
+        fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT, 
+          this.scenarioTemplate.generateScenario(scenario, httpClient));
+        int _size_1 = scenario.getThenBlock().getVerifications().size();
+        boolean _greaterThan_1 = (_size_1 > 0);
+        if (_greaterThan_1) {
+          String _name_6 = httpClient.getName();
+          String _plus_9 = (_name_6 + "/");
+          String _name_7 = scenario.getName();
+          String _plus_10 = (_plus_9 + _name_7);
+          String _plus_11 = (_plus_10 + "Verifications.js");
+          fsa.generateFile(_plus_11, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, 
+            this.scenarioTemplate.generateVerifications(scenario));
+        }
+      }
     }
     fsa.generateFile("ScenarioUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, this.scenarioTemplate.generateScenarioUtils());
   }

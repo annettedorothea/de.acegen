@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.ClientThenBlock#getStateVerifications <em>State Verifications</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientThenBlock#getVerifications <em>Verifications</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getClientThenBlock()
@@ -36,5 +37,17 @@ public interface ClientThenBlock extends EObject
    * @generated
    */
   EList<StateVerification> getStateVerifications();
+
+  /**
+   * Returns the value of the '<em><b>Verifications</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Verifications</em>' attribute list.
+   * @see de.acegen.aceGen.AceGenPackage#getClientThenBlock_Verifications()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getVerifications();
 
 } // ClientThenBlock

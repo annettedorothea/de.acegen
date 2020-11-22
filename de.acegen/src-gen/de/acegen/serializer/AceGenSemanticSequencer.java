@@ -43,6 +43,7 @@ import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonObjectClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PrimitiveValue;
@@ -197,6 +198,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case AceGenPackage.NON_DETERMINISTIC_VALUE:
+				sequence_NonDeterministicValue(context, (NonDeterministicValue) semanticObject); 
 				return; 
 			case AceGenPackage.NULL_TYPE:
 				sequence_NullType(context, (NullType) semanticObject); 
@@ -390,7 +394,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientThenBlock returns ClientThenBlock
 	 *
 	 * Constraint:
-	 *     stateVerifications+=StateVerification*
+	 *     (stateVerifications+=StateVerification* verifications+=ID*)
 	 */
 	protected void sequence_ClientThenBlock(ISerializationContext context, ClientThenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -405,10 +409,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         action=[HttpClientAce|QualifiedName] 
 	 *         (inputValues+=InputValue inputValues+=InputValue*)? 
-	 *         uuid=STRING? 
-	 *         clientSystemTime=STRING? 
-	 *         serverSystemTime=STRING? 
-	 *         (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?
+	 *         (nonDeterministicValues+=NonDeterministicValue nonDeterministicValues+=NonDeterministicValue*)?
 	 *     )
 	 */
 	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
@@ -876,6 +877,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (persistent?='persistent'? name=ID (superModels+=[Model|QualifiedName] superModels+=[Model|QualifiedName]*)? attributes+=Attribute*)
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NonDeterministicValue returns NonDeterministicValue
+	 *
+	 * Constraint:
+	 *     (uuid=STRING clientSystemTime=STRING? serverSystemTime=STRING? (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?)?
+	 */
+	protected void sequence_NonDeterministicValue(ISerializationContext context, NonDeterministicValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

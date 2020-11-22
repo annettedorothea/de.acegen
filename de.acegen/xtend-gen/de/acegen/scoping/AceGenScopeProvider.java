@@ -131,7 +131,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         }
       }
     }
-    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.CLIENT_WHEN_BLOCK__ATTRIBUTE))) {
+    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.NON_DETERMINISTIC_VALUE__ATTRIBUTE))) {
       final IScope scope_2 = super.getScope(context, reference);
       final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
       Iterable<IEObjectDescription> _allElements = scope_2.getAllElements();

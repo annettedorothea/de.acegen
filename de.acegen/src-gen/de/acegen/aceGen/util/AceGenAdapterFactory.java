@@ -141,6 +141,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientWhenBlockAdapter();
       }
       @Override
+      public Adapter caseNonDeterministicValue(NonDeterministicValue object)
+      {
+        return createNonDeterministicValueAdapter();
+      }
+      @Override
       public Adapter caseInputValue(InputValue object)
       {
         return createInputValueAdapter();
@@ -588,6 +593,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientWhenBlockAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.NonDeterministicValue <em>Non Deterministic Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.NonDeterministicValue
+   * @generated
+   */
+  public Adapter createNonDeterministicValueAdapter()
   {
     return null;
   }

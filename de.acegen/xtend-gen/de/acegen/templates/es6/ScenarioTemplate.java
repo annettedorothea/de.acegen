@@ -1,10 +1,12 @@
 package de.acegen.templates.es6;
 
+import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
+import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -41,7 +43,7 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  public CharSequence generateScenario(final ClientScenario it) {
+  public CharSequence generateScenario(final ClientScenario it, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -53,17 +55,31 @@ public class ScenarioTemplate {
     _builder.newLine();
     {
       List<HttpClient> _allReferencedHttpClients = this._es6Extension.allReferencedHttpClients(it);
-      for(final HttpClient httpClient : _allReferencedHttpClients) {
+      for(final HttpClient referencedHttpClient : _allReferencedHttpClients) {
         _builder.append("import * as ");
-        CharSequence _actionIdName = this._es6Extension.actionIdName(httpClient);
+        CharSequence _actionIdName = this._es6Extension.actionIdName(referencedHttpClient);
         _builder.append(_actionIdName);
         _builder.append(" from \"../../../acegen/gen/");
-        String _name = httpClient.getName();
+        String _name = referencedHttpClient.getName();
         _builder.append(_name);
         _builder.append("/");
-        CharSequence _actionIdName_1 = this._es6Extension.actionIdName(httpClient);
+        CharSequence _actionIdName_1 = this._es6Extension.actionIdName(referencedHttpClient);
         _builder.append(_actionIdName_1);
         _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      int _size = it.getThenBlock().getVerifications().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import * as Verifications from \"../../../acegen/src/");
+        String _name_1 = httpClient.getName();
+        _builder.append(_name_1);
+        _builder.append("/");
+        String _name_2 = it.getName();
+        _builder.append(_name_2);
+        _builder.append("Verifications\";");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -72,28 +88,34 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("context(\'");
-    String _name_1 = it.getName();
-    _builder.append(_name_1);
+    String _name_3 = it.getName();
+    _builder.append(_name_3);
     _builder.append("\', () => {");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("beforeEach(() => {");
     _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("let nonDeterministicValues;");
+    _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("let nonDeterministicValue;");
+    _builder.newLine();
     {
       ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
       for(final ClientGivenRef givenRef : _allGivenItems) {
-        _builder.append("    \t");
+        _builder.append("\t\t");
         CharSequence _initNonDeterministicData = this.initNonDeterministicData(givenRef.getScenario().getWhenBlock());
-        _builder.append(_initNonDeterministicData, "    \t");
+        _builder.append(_initNonDeterministicData, "\t\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("    \t");
+        _builder.append("\t\t");
         _builder.append("ScenarioUtils.getCypressFor(");
         EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
         CharSequence _actionIdName_2 = this._es6Extension.actionIdName(((HttpClient) _eContainer));
-        _builder.append(_actionIdName_2, "    \t");
+        _builder.append(_actionIdName_2, "\t\t");
         _builder.append(".");
         String _firstLower = StringExtensions.toFirstLower(givenRef.getScenario().getWhenBlock().getAction().getName());
-        _builder.append(_firstLower, "    \t");
+        _builder.append(_firstLower, "\t\t");
         _builder.append(", ");
         {
           EList<InputValue> _inputValues = givenRef.getScenario().getWhenBlock().getInputValues();
@@ -101,28 +123,39 @@ public class ScenarioTemplate {
           for(final InputValue arg : _inputValues) {
             if (!_hasElements) {
               _hasElements = true;
-              _builder.append("[", "    \t");
+              _builder.append("[", "\t\t");
             } else {
-              _builder.appendImmediate(",", "    \t");
+              _builder.appendImmediate(",", "\t\t");
             }
             Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(arg.getValue());
-            _builder.append(_primitiveValueFrom, "    \t");
+            _builder.append(_primitiveValueFrom, "\t\t");
           }
           if (_hasElements) {
-            _builder.append("]", "    \t");
+            _builder.append("]", "\t\t");
           }
         }
-        _builder.append(")");
+        _builder.append(").should(() => {");
         _builder.newLineIfNotEmpty();
-        _builder.append("    \t");
+        _builder.append("\t\t");
         _builder.append("ScenarioUtils.wait(");
         int _numberOfSyncCalls = this._es6Extension.numberOfSyncCalls(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_numberOfSyncCalls, "    \t");
+        _builder.append(_numberOfSyncCalls, "\t\t");
         _builder.append(", ");
         int _numberOfAsyncCalls = this._es6Extension.numberOfAsyncCalls(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_numberOfAsyncCalls, "    \t");
-        _builder.append(")");
+        _builder.append(_numberOfAsyncCalls, "\t\t");
+        _builder.append(").should(() => {");
         _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      ArrayList<ClientGivenRef> _allGivenItems_1 = this.allGivenItems(it);
+      for(final ClientGivenRef givenRef_1 : _allGivenItems_1) {
+        _builder.append("\t\t");
+        _builder.append("});");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("});");
+        _builder.newLine();
       }
     }
     _builder.append("    ");
@@ -130,12 +163,51 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("it(\'should change appState\', () => {");
-    _builder.newLine();
+    _builder.append("it(\'");
+    {
+      EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
+      boolean _hasElements_1 = false;
+      for(final StateVerification stateVerification : _stateVerifications) {
+        if (!_hasElements_1) {
+          _hasElements_1 = true;
+        } else {
+          _builder.appendImmediate(" ", "    ");
+        }
+        String _name_4 = stateVerification.getName();
+        _builder.append(_name_4, "    ");
+      }
+    }
+    _builder.append(" ");
+    {
+      EList<String> _verifications = it.getThenBlock().getVerifications();
+      boolean _hasElements_2 = false;
+      for(final String verification : _verifications) {
+        if (!_hasElements_2) {
+          _hasElements_2 = true;
+        } else {
+          _builder.appendImmediate(" ", "    ");
+        }
+        _builder.append(verification, "    ");
+      }
+    }
+    _builder.append("\', () => {");
+    _builder.newLineIfNotEmpty();
+    {
+      if (((it.getWhenBlock().getNonDeterministicValues() != null) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
+        _builder.append("\t\t");
+        _builder.append("let nonDeterministicValues;");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("let nonDeterministicValue;");
+        _builder.newLine();
+      }
+    }
     _builder.append("    \t");
     CharSequence _initNonDeterministicData_1 = this.initNonDeterministicData(it.getWhenBlock());
     _builder.append(_initNonDeterministicData_1, "    \t");
     _builder.newLineIfNotEmpty();
+    _builder.append("    \t");
+    _builder.newLine();
     _builder.append("    \t");
     _builder.append("ScenarioUtils.getCypressFor(");
     EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
@@ -147,10 +219,10 @@ public class ScenarioTemplate {
     _builder.append(", ");
     {
       EList<InputValue> _inputValues_1 = it.getWhenBlock().getInputValues();
-      boolean _hasElements_1 = false;
+      boolean _hasElements_3 = false;
       for(final InputValue arg_1 : _inputValues_1) {
-        if (!_hasElements_1) {
-          _hasElements_1 = true;
+        if (!_hasElements_3) {
+          _hasElements_3 = true;
           _builder.append("[", "    \t");
         } else {
           _builder.appendImmediate(",", "    \t");
@@ -158,7 +230,7 @@ public class ScenarioTemplate {
         Object _primitiveValueFrom_1 = this._es6Extension.primitiveValueFrom(arg_1.getValue());
         _builder.append(_primitiveValueFrom_1, "    \t");
       }
-      if (_hasElements_1) {
+      if (_hasElements_3) {
         _builder.append("]", "    \t");
       }
     }
@@ -177,19 +249,29 @@ public class ScenarioTemplate {
     _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
     _builder.newLine();
     {
-      EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
-      for(final StateVerification stateVerification : _stateVerifications) {
+      EList<StateVerification> _stateVerifications_1 = it.getThenBlock().getStateVerifications();
+      for(final StateVerification stateVerification_1 : _stateVerifications_1) {
         _builder.append("\t            ");
         _builder.append("expect(appState.");
-        String _name_2 = stateVerification.getStateRef().getName();
-        _builder.append(_name_2, "\t            ");
+        String _name_5 = stateVerification_1.getStateRef().getName();
+        _builder.append(_name_5, "\t            ");
         _builder.append(", \"");
-        String _name_3 = stateVerification.getName();
-        _builder.append(_name_3, "\t            ");
+        String _name_6 = stateVerification_1.getName();
+        _builder.append(_name_6, "\t            ");
         _builder.append("\").to.eql(");
-        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
+        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
         _builder.append(_valueFrom, "\t            ");
         _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<String> _verifications_1 = it.getThenBlock().getVerifications();
+      for(final String verification_1 : _verifications_1) {
+        _builder.append("\t            ");
+        _builder.append("Verifications.");
+        _builder.append(verification_1, "\t            ");
+        _builder.append("();");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -217,39 +299,79 @@ public class ScenarioTemplate {
   private CharSequence initNonDeterministicData(final ClientWhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      String _uuid = it.getUuid();
-      boolean _tripleNotEquals = (_uuid != null);
-      if (_tripleNotEquals) {
-        _builder.append("localStorage.setItem(\"uuid\", `");
-        String _uuid_1 = it.getUuid();
-        _builder.append(_uuid_1);
-        _builder.append("`)");
-        _builder.newLineIfNotEmpty();
+      if (((it.getNonDeterministicValues() != null) && (it.getNonDeterministicValues().size() > 0))) {
+        _builder.append("nonDeterministicValues = JSON.parse(localStorage.getItem(\'nonDeterministicValues\'));");
+        _builder.newLine();
+        _builder.append("if (!nonDeterministicValues) {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("nonDeterministicValues = [];");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
         {
-          String _serverSystemTime = it.getServerSystemTime();
-          boolean _tripleNotEquals_1 = (_serverSystemTime != null);
-          if (_tripleNotEquals_1) {
-            _builder.append("AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=");
-            String _uuid_2 = it.getUuid();
-            _builder.append(_uuid_2);
-            _builder.append("&system-time=${new Date(\'");
-            String _serverSystemTime_1 = it.getServerSystemTime();
-            _builder.append(_serverSystemTime_1);
-            _builder.append("\').toISOString()}`)");
+          EList<NonDeterministicValue> _nonDeterministicValues = it.getNonDeterministicValues();
+          for(final NonDeterministicValue nonDeterministicValue : _nonDeterministicValues) {
+            _builder.append("nonDeterministicValue = {");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("uuid: `");
+            String _uuid = nonDeterministicValue.getUuid();
+            _builder.append(_uuid, "\t");
+            _builder.append("`");
+            {
+              String _clientSystemTime = nonDeterministicValue.getClientSystemTime();
+              boolean _tripleNotEquals = (_clientSystemTime != null);
+              if (_tripleNotEquals) {
+                _builder.append(",");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("clientSystemTime: `");
+                String _clientSystemTime_1 = nonDeterministicValue.getClientSystemTime();
+                _builder.append(_clientSystemTime_1, "\t");
+                _builder.append("`");
+              }
+            }
             _builder.newLineIfNotEmpty();
+            _builder.append("};");
+            _builder.newLine();
+            _builder.append("nonDeterministicValues.push(nonDeterministicValue);");
+            _builder.newLine();
+            {
+              String _serverSystemTime = nonDeterministicValue.getServerSystemTime();
+              boolean _tripleNotEquals_1 = (_serverSystemTime != null);
+              if (_tripleNotEquals_1) {
+                _builder.append("AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=");
+                String _uuid_1 = nonDeterministicValue.getUuid();
+                _builder.append(_uuid_1);
+                _builder.append("&system-time=${new Date(\'");
+                String _serverSystemTime_1 = nonDeterministicValue.getServerSystemTime();
+                _builder.append(_serverSystemTime_1);
+                _builder.append("\').toISOString()}`)");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            {
+              Attribute _attribute = nonDeterministicValue.getAttribute();
+              boolean _tripleNotEquals_2 = (_attribute != null);
+              if (_tripleNotEquals_2) {
+                _builder.append("AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=");
+                String _uuid_2 = nonDeterministicValue.getUuid();
+                _builder.append(_uuid_2);
+                _builder.append("&");
+                String _firstLower = StringExtensions.toFirstLower(nonDeterministicValue.getAttribute().getName());
+                _builder.append(_firstLower);
+                _builder.append("=${");
+                Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(nonDeterministicValue.getValue());
+                _builder.append(_primitiveValueFrom);
+                _builder.append("}`);");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
-      }
-    }
-    {
-      String _clientSystemTime = it.getClientSystemTime();
-      boolean _tripleNotEquals_2 = (_clientSystemTime != null);
-      if (_tripleNotEquals_2) {
-        _builder.append("localStorage.setItem(\"clientSystemTime\", \"");
-        String _clientSystemTime_1 = it.getClientSystemTime();
-        _builder.append(_clientSystemTime_1);
-        _builder.append("\")");
-        _builder.newLineIfNotEmpty();
+        _builder.append("localStorage.setItem(\'nonDeterministicValues\', JSON.stringify(nonDeterministicValues));");
+        _builder.newLine();
       }
     }
     return _builder;
@@ -274,5 +396,34 @@ public class ScenarioTemplate {
       }
     }
     allWhenBlocks.add(it);
+  }
+  
+  public CharSequence generateVerifications(final ClientScenario it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      EList<String> _verifications = it.getThenBlock().getVerifications();
+      for(final String verification : _verifications) {
+        _builder.append("export function ");
+        _builder.append(verification);
+        _builder.append("() {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("assert.fail(\"");
+        _builder.append(verification, "\t");
+        _builder.append(" not implemented\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    return _builder;
   }
 }

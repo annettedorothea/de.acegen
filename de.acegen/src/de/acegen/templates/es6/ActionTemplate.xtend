@@ -144,10 +144,15 @@ class ActionTemplate {
 		        }
 		        this.actionData = AppUtils.deepCopy(actionData);
 		        if (Utils.settings.mode === "dev") {
-		        	this.actionData.uuid = localStorage.getItem("uuid");
-		        	localStorage.removeItem("uuid");
-		        	this.actionData.clientSystemTime = localStorage.getItem("clientSystemTime");
-		        	localStorage.removeItem("clientSystemTime");
+		        	let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
+		        	if (nonDeterministicValues) {
+		        		const nonDeterministicValue = nonDeterministicValues.shift();
+		        		if (nonDeterministicValue) {
+			        		this.actionData.uuid = nonDeterministicValue.uuid;
+			        		this.actionData.clientSystemTime = nonDeterministicValue.clientSystemTime;
+			        	}
+		        		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
+		        	}
 		        	if (this.actionData.uuid === null) {
 		        		this.actionData.uuid = AppUtils.createUUID();
 		        	}

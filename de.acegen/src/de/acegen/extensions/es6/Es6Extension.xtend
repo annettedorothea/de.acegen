@@ -135,7 +135,14 @@ class Es6Extension {
 	}
 
 	def dispatch CharSequence valueFrom(
-		JsonObjectClient it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+		JsonObjectClient it) '''
+		«IF it !== null && members !== null && members.size > 0»
+			{ 
+				«FOR member : members SEPARATOR ",\n"»«member.attribute.name» : «member.value.valueFrom()»«ENDFOR»
+			}
+		«ELSE»{}
+		«ENDIF»
+		'''
 
 
 	def dispatch CharSequence valueFrom(JsonValueClient it) {
@@ -148,7 +155,12 @@ class Es6Extension {
 		} else if (it instanceof LongType) {
 			return '''«long»''';
 		} else if (it instanceof JsonArrayClient) {
-			return '''[«FOR value: (it as JsonArrayClient).values»«value.valueFrom»«ENDFOR»]''';
+			return 
+				'''
+					[
+						«FOR value: (it as JsonArrayClient).values SEPARATOR ","»«value.valueFrom»«ENDFOR»
+					]
+				''';
 		}
 	}
 	

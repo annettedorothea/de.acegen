@@ -98,10 +98,16 @@ ClientGivenRef:
 ClientWhenBlock: 
 	action = [HttpClientAce|QualifiedName] 
 	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
-	('uuid' uuid = STRING)? 
-	('clientSystemTime' clientSystemTime = STRING)?
-	('serverSystemTime' serverSystemTime = STRING)?
-	('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?
+	('nonDeterministicValues' nonDeterministicValues += NonDeterministicValue (',' nonDeterministicValues += NonDeterministicValue)*)?
+;
+
+NonDeterministicValue:
+	{NonDeterministicValue} '{'
+		('uuid' uuid = STRING 
+		('clientSystemTime' clientSystemTime = STRING)?
+		('serverSystemTime' serverSystemTime = STRING)?
+		('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
+	'}'
 ;
 
 InputValue:
@@ -110,6 +116,7 @@ InputValue:
 
 ClientThenBlock: {ClientThenBlock} 
 	('expectedState' stateVerifications += StateVerification*)?
+	('verifications' verifications += ID*)?
 ;
 
 StateVerification:

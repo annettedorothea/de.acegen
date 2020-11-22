@@ -768,35 +768,23 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cInputValuesInputValueParserRuleCall_1_1_1_1_0 = (RuleCall)cInputValuesAssignment_1_1_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cUuidKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cUuidAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cUuidSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cUuidAssignment_2_1.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cClientSystemTimeKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cClientSystemTimeAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cClientSystemTimeSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cClientSystemTimeAssignment_3_1.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cServerSystemTimeKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cServerSystemTimeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cServerSystemTimeSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cServerSystemTimeAssignment_4_1.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cNonDeterministicKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cAttributeAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final CrossReference cAttributeAttributeCrossReference_5_1_0 = (CrossReference)cAttributeAssignment_5_1.eContents().get(0);
-		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_5_1_0_1 = (RuleCall)cAttributeAttributeCrossReference_5_1_0.eContents().get(1);
-		private final Keyword cColonKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
-		private final Assignment cValueAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cValuePrimitiveValueParserRuleCall_5_3_0 = (RuleCall)cValueAssignment_5_3.eContents().get(0);
+		private final Keyword cNonDeterministicValuesKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cNonDeterministicValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0 = (RuleCall)cNonDeterministicValuesAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cNonDeterministicValuesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0 = (RuleCall)cNonDeterministicValuesAssignment_2_2_1.eContents().get(0);
 		
 		//ClientWhenBlock:
-		//	action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')? ('uuid'
-		//	uuid=STRING)? ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime' serverSystemTime=STRING)?
-		//	('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?;
+		//	action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')?
+		//	('nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue (','
+		//	nonDeterministicValues+=NonDeterministicValue)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')? ('uuid'
-		//uuid=STRING)? ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime' serverSystemTime=STRING)?
-		//('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?
+		//action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')?
+		//('nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue (','
+		//nonDeterministicValues+=NonDeterministicValue)*)?
 		public Group getGroup() { return cGroup; }
 		
 		//action=[HttpClientAce|QualifiedName]
@@ -838,7 +826,76 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//')'
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 		
-		//('uuid' uuid=STRING)?
+		//('nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue (','
+		//nonDeterministicValues+=NonDeterministicValue)*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'nonDeterministicValues'
+		public Keyword getNonDeterministicValuesKeyword_2_0() { return cNonDeterministicValuesKeyword_2_0; }
+		
+		//nonDeterministicValues+=NonDeterministicValue
+		public Assignment getNonDeterministicValuesAssignment_2_1() { return cNonDeterministicValuesAssignment_2_1; }
+		
+		//NonDeterministicValue
+		public RuleCall getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0() { return cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0; }
+		
+		//(',' nonDeterministicValues+=NonDeterministicValue)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//nonDeterministicValues+=NonDeterministicValue
+		public Assignment getNonDeterministicValuesAssignment_2_2_1() { return cNonDeterministicValuesAssignment_2_2_1; }
+		
+		//NonDeterministicValue
+		public RuleCall getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0() { return cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0; }
+	}
+	public class NonDeterministicValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.NonDeterministicValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cNonDeterministicValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cUuidKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cUuidAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cUuidSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cUuidAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cClientSystemTimeKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cClientSystemTimeAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0 = (RuleCall)cClientSystemTimeAssignment_2_2_1.eContents().get(0);
+		private final Group cGroup_2_3 = (Group)cGroup_2.eContents().get(3);
+		private final Keyword cServerSystemTimeKeyword_2_3_0 = (Keyword)cGroup_2_3.eContents().get(0);
+		private final Assignment cServerSystemTimeAssignment_2_3_1 = (Assignment)cGroup_2_3.eContents().get(1);
+		private final RuleCall cServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0 = (RuleCall)cServerSystemTimeAssignment_2_3_1.eContents().get(0);
+		private final Group cGroup_2_4 = (Group)cGroup_2.eContents().get(4);
+		private final Keyword cNonDeterministicKeyword_2_4_0 = (Keyword)cGroup_2_4.eContents().get(0);
+		private final Assignment cAttributeAssignment_2_4_1 = (Assignment)cGroup_2_4.eContents().get(1);
+		private final CrossReference cAttributeAttributeCrossReference_2_4_1_0 = (CrossReference)cAttributeAssignment_2_4_1.eContents().get(0);
+		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1 = (RuleCall)cAttributeAttributeCrossReference_2_4_1_0.eContents().get(1);
+		private final Keyword cColonKeyword_2_4_2 = (Keyword)cGroup_2_4.eContents().get(2);
+		private final Assignment cValueAssignment_2_4_3 = (Assignment)cGroup_2_4.eContents().get(3);
+		private final RuleCall cValuePrimitiveValueParserRuleCall_2_4_3_0 = (RuleCall)cValueAssignment_2_4_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//NonDeterministicValue:
+		//	{NonDeterministicValue} '{' ('uuid' uuid=STRING ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime'
+		//	serverSystemTime=STRING)? ('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?)?
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{NonDeterministicValue} '{' ('uuid' uuid=STRING ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime'
+		//serverSystemTime=STRING)? ('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?)? '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{NonDeterministicValue}
+		public Action getNonDeterministicValueAction_0() { return cNonDeterministicValueAction_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//('uuid' uuid=STRING ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime' serverSystemTime=STRING)?
+		//('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'uuid'
@@ -851,52 +908,55 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		public RuleCall getUuidSTRINGTerminalRuleCall_2_1_0() { return cUuidSTRINGTerminalRuleCall_2_1_0; }
 		
 		//('clientSystemTime' clientSystemTime=STRING)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//'clientSystemTime'
-		public Keyword getClientSystemTimeKeyword_3_0() { return cClientSystemTimeKeyword_3_0; }
+		public Keyword getClientSystemTimeKeyword_2_2_0() { return cClientSystemTimeKeyword_2_2_0; }
 		
 		//clientSystemTime=STRING
-		public Assignment getClientSystemTimeAssignment_3_1() { return cClientSystemTimeAssignment_3_1; }
+		public Assignment getClientSystemTimeAssignment_2_2_1() { return cClientSystemTimeAssignment_2_2_1; }
 		
 		//STRING
-		public RuleCall getClientSystemTimeSTRINGTerminalRuleCall_3_1_0() { return cClientSystemTimeSTRINGTerminalRuleCall_3_1_0; }
+		public RuleCall getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0() { return cClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0; }
 		
 		//('serverSystemTime' serverSystemTime=STRING)?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_2_3() { return cGroup_2_3; }
 		
 		//'serverSystemTime'
-		public Keyword getServerSystemTimeKeyword_4_0() { return cServerSystemTimeKeyword_4_0; }
+		public Keyword getServerSystemTimeKeyword_2_3_0() { return cServerSystemTimeKeyword_2_3_0; }
 		
 		//serverSystemTime=STRING
-		public Assignment getServerSystemTimeAssignment_4_1() { return cServerSystemTimeAssignment_4_1; }
+		public Assignment getServerSystemTimeAssignment_2_3_1() { return cServerSystemTimeAssignment_2_3_1; }
 		
 		//STRING
-		public RuleCall getServerSystemTimeSTRINGTerminalRuleCall_4_1_0() { return cServerSystemTimeSTRINGTerminalRuleCall_4_1_0; }
+		public RuleCall getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0() { return cServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0; }
 		
 		//('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?
-		public Group getGroup_5() { return cGroup_5; }
+		public Group getGroup_2_4() { return cGroup_2_4; }
 		
 		//'nonDeterministic'
-		public Keyword getNonDeterministicKeyword_5_0() { return cNonDeterministicKeyword_5_0; }
+		public Keyword getNonDeterministicKeyword_2_4_0() { return cNonDeterministicKeyword_2_4_0; }
 		
 		//attribute=[Attribute|QualifiedName]
-		public Assignment getAttributeAssignment_5_1() { return cAttributeAssignment_5_1; }
+		public Assignment getAttributeAssignment_2_4_1() { return cAttributeAssignment_2_4_1; }
 		
 		//[Attribute|QualifiedName]
-		public CrossReference getAttributeAttributeCrossReference_5_1_0() { return cAttributeAttributeCrossReference_5_1_0; }
+		public CrossReference getAttributeAttributeCrossReference_2_4_1_0() { return cAttributeAttributeCrossReference_2_4_1_0; }
 		
 		//QualifiedName
-		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_5_1_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_5_1_0_1; }
+		public RuleCall getAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1() { return cAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1; }
 		
 		//':'
-		public Keyword getColonKeyword_5_2() { return cColonKeyword_5_2; }
+		public Keyword getColonKeyword_2_4_2() { return cColonKeyword_2_4_2; }
 		
 		//value=PrimitiveValue
-		public Assignment getValueAssignment_5_3() { return cValueAssignment_5_3; }
+		public Assignment getValueAssignment_2_4_3() { return cValueAssignment_2_4_3; }
 		
 		//PrimitiveValue
-		public RuleCall getValuePrimitiveValueParserRuleCall_5_3_0() { return cValuePrimitiveValueParserRuleCall_5_3_0; }
+		public RuleCall getValuePrimitiveValueParserRuleCall_2_4_3_0() { return cValuePrimitiveValueParserRuleCall_2_4_3_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 	public class InputValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.InputValue");
@@ -941,12 +1001,16 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cExpectedStateKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cStateVerificationsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cStateVerificationsStateVerificationParserRuleCall_1_1_0 = (RuleCall)cStateVerificationsAssignment_1_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cVerificationsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cVerificationsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cVerificationsIDTerminalRuleCall_2_1_0 = (RuleCall)cVerificationsAssignment_2_1.eContents().get(0);
 		
 		//ClientThenBlock:
-		//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)?;
+		//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('verifications' verifications+=ID*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)?
+		//{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('verifications' verifications+=ID*)?
 		public Group getGroup() { return cGroup; }
 		
 		//{ClientThenBlock}
@@ -963,6 +1027,18 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//StateVerification
 		public RuleCall getStateVerificationsStateVerificationParserRuleCall_1_1_0() { return cStateVerificationsStateVerificationParserRuleCall_1_1_0; }
+		
+		//('verifications' verifications+=ID*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'verifications'
+		public Keyword getVerificationsKeyword_2_0() { return cVerificationsKeyword_2_0; }
+		
+		//verifications+=ID*
+		public Assignment getVerificationsAssignment_2_1() { return cVerificationsAssignment_2_1; }
+		
+		//ID
+		public RuleCall getVerificationsIDTerminalRuleCall_2_1_0() { return cVerificationsIDTerminalRuleCall_2_1_0; }
 	}
 	public class StateVerificationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.StateVerification");
@@ -3232,6 +3308,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final ClientScenarioElements pClientScenario;
 	private final ClientGivenRefElements pClientGivenRef;
 	private final ClientWhenBlockElements pClientWhenBlock;
+	private final NonDeterministicValueElements pNonDeterministicValue;
 	private final InputValueElements pInputValue;
 	private final ClientThenBlockElements pClientThenBlock;
 	private final StateVerificationElements pStateVerification;
@@ -3308,6 +3385,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pClientScenario = new ClientScenarioElements();
 		this.pClientGivenRef = new ClientGivenRefElements();
 		this.pClientWhenBlock = new ClientWhenBlockElements();
+		this.pNonDeterministicValue = new NonDeterministicValueElements();
 		this.pInputValue = new InputValueElements();
 		this.pClientThenBlock = new ClientThenBlockElements();
 		this.pStateVerification = new StateVerificationElements();
@@ -3535,15 +3613,27 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//ClientWhenBlock:
-	//	action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')? ('uuid'
-	//	uuid=STRING)? ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime' serverSystemTime=STRING)?
-	//	('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?;
+	//	action=[HttpClientAce|QualifiedName] ('(' (inputValues+=InputValue (',' inputValues+=InputValue)*)? ')')?
+	//	('nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue (','
+	//	nonDeterministicValues+=NonDeterministicValue)*)?;
 	public ClientWhenBlockElements getClientWhenBlockAccess() {
 		return pClientWhenBlock;
 	}
 	
 	public ParserRule getClientWhenBlockRule() {
 		return getClientWhenBlockAccess().getRule();
+	}
+	
+	//NonDeterministicValue:
+	//	{NonDeterministicValue} '{' ('uuid' uuid=STRING ('clientSystemTime' clientSystemTime=STRING)? ('serverSystemTime'
+	//	serverSystemTime=STRING)? ('nonDeterministic' attribute=[Attribute|QualifiedName] ':' value=PrimitiveValue)?)?
+	//	'}';
+	public NonDeterministicValueElements getNonDeterministicValueAccess() {
+		return pNonDeterministicValue;
+	}
+	
+	public ParserRule getNonDeterministicValueRule() {
+		return getNonDeterministicValueAccess().getRule();
 	}
 	
 	//InputValue:
@@ -3557,7 +3647,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//ClientThenBlock:
-	//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)?;
+	//	{ClientThenBlock} ('expectedState' stateVerifications+=StateVerification*)? ('verifications' verifications+=ID*)?;
 	public ClientThenBlockElements getClientThenBlockAccess() {
 		return pClientThenBlock;
 	}

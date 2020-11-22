@@ -4,11 +4,10 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.InputValue;
-import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.NonDeterministicValue;
 
 import java.util.Collection;
 
@@ -36,11 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getInputValues <em>Input Values</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getUuid <em>Uuid</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getClientSystemTime <em>Client System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getServerSystemTime <em>Server System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getNonDeterministicValues <em>Non Deterministic Values</em>}</li>
  * </ul>
  *
  * @generated
@@ -68,84 +63,14 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
   protected EList<InputValue> inputValues;
 
   /**
-   * The default value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+   * The cached value of the '{@link #getNonDeterministicValues() <em>Non Deterministic Values</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUuid()
+   * @see #getNonDeterministicValues()
    * @generated
    * @ordered
    */
-  protected static final String UUID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getUuid()
-   * @generated
-   * @ordered
-   */
-  protected String uuid = UUID_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getClientSystemTime() <em>Client System Time</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getClientSystemTime()
-   * @generated
-   * @ordered
-   */
-  protected static final String CLIENT_SYSTEM_TIME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getClientSystemTime() <em>Client System Time</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getClientSystemTime()
-   * @generated
-   * @ordered
-   */
-  protected String clientSystemTime = CLIENT_SYSTEM_TIME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getServerSystemTime() <em>Server System Time</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getServerSystemTime()
-   * @generated
-   * @ordered
-   */
-  protected static final String SERVER_SYSTEM_TIME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getServerSystemTime() <em>Server System Time</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getServerSystemTime()
-   * @generated
-   * @ordered
-   */
-  protected String serverSystemTime = SERVER_SYSTEM_TIME_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAttribute()
-   * @generated
-   * @ordered
-   */
-  protected Attribute attribute;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected PrimitiveValue value;
+  protected EList<NonDeterministicValue> nonDeterministicValues;
 
   /**
    * <!-- begin-user-doc -->
@@ -234,168 +159,13 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public String getUuid()
+  public EList<NonDeterministicValue> getNonDeterministicValues()
   {
-    return uuid;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setUuid(String newUuid)
-  {
-    String oldUuid = uuid;
-    uuid = newUuid;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__UUID, oldUuid, uuid));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getClientSystemTime()
-  {
-    return clientSystemTime;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setClientSystemTime(String newClientSystemTime)
-  {
-    String oldClientSystemTime = clientSystemTime;
-    clientSystemTime = newClientSystemTime;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME, oldClientSystemTime, clientSystemTime));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getServerSystemTime()
-  {
-    return serverSystemTime;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setServerSystemTime(String newServerSystemTime)
-  {
-    String oldServerSystemTime = serverSystemTime;
-    serverSystemTime = newServerSystemTime;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME, oldServerSystemTime, serverSystemTime));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Attribute getAttribute()
-  {
-    if (attribute != null && attribute.eIsProxy())
+    if (nonDeterministicValues == null)
     {
-      InternalEObject oldAttribute = (InternalEObject)attribute;
-      attribute = (Attribute)eResolveProxy(oldAttribute);
-      if (attribute != oldAttribute)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE, oldAttribute, attribute));
-      }
+      nonDeterministicValues = new EObjectContainmentEList<NonDeterministicValue>(NonDeterministicValue.class, this, AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES);
     }
-    return attribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Attribute basicGetAttribute()
-  {
-    return attribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setAttribute(Attribute newAttribute)
-  {
-    Attribute oldAttribute = attribute;
-    attribute = newAttribute;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE, oldAttribute, attribute));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PrimitiveValue getValue()
-  {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetValue(PrimitiveValue newValue, NotificationChain msgs)
-  {
-    PrimitiveValue oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, oldValue, newValue);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setValue(PrimitiveValue newValue)
-  {
-    if (newValue != value)
-    {
-      NotificationChain msgs = null;
-      if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, null, msgs);
-      if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, null, msgs);
-      msgs = basicSetValue(newValue, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_WHEN_BLOCK__VALUE, newValue, newValue));
+    return nonDeterministicValues;
   }
 
   /**
@@ -410,8 +180,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
     {
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return ((InternalEList<?>)getInputValues()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
-        return basicSetValue(null, msgs);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
+        return ((InternalEList<?>)getNonDeterministicValues()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -431,17 +201,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return basicGetAction();
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return getInputValues();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
-        return getUuid();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
-        return getClientSystemTime();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
-        return getServerSystemTime();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
-        if (resolve) return getAttribute();
-        return basicGetAttribute();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
-        return getValue();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
+        return getNonDeterministicValues();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -464,20 +225,9 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         getInputValues().clear();
         getInputValues().addAll((Collection<? extends InputValue>)newValue);
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
-        setUuid((String)newValue);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
-        setClientSystemTime((String)newValue);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
-        setServerSystemTime((String)newValue);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
-        setAttribute((Attribute)newValue);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
-        setValue((PrimitiveValue)newValue);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
+        getNonDeterministicValues().clear();
+        getNonDeterministicValues().addAll((Collection<? extends NonDeterministicValue>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -499,20 +249,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         getInputValues().clear();
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
-        setUuid(UUID_EDEFAULT);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
-        setClientSystemTime(CLIENT_SYSTEM_TIME_EDEFAULT);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
-        setServerSystemTime(SERVER_SYSTEM_TIME_EDEFAULT);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
-        setAttribute((Attribute)null);
-        return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
-        setValue((PrimitiveValue)null);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
+        getNonDeterministicValues().clear();
         return;
     }
     super.eUnset(featureID);
@@ -532,39 +270,10 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return action != null;
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return inputValues != null && !inputValues.isEmpty();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__UUID:
-        return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME:
-        return CLIENT_SYSTEM_TIME_EDEFAULT == null ? clientSystemTime != null : !CLIENT_SYSTEM_TIME_EDEFAULT.equals(clientSystemTime);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME:
-        return SERVER_SYSTEM_TIME_EDEFAULT == null ? serverSystemTime != null : !SERVER_SYSTEM_TIME_EDEFAULT.equals(serverSystemTime);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__ATTRIBUTE:
-        return attribute != null;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__VALUE:
-        return value != null;
+      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
+        return nonDeterministicValues != null && !nonDeterministicValues.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (uuid: ");
-    result.append(uuid);
-    result.append(", clientSystemTime: ");
-    result.append(clientSystemTime);
-    result.append(", serverSystemTime: ");
-    result.append(serverSystemTime);
-    result.append(')');
-    return result.toString();
   }
 
 } //ClientWhenBlockImpl

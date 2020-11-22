@@ -69,11 +69,14 @@
     <genClasses ecoreClass="AceGen.ecore#//ClientWhenBlock">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/action"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/inputValues"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/uuid"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/clientSystemTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenBlock/serverSystemTime"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/attribute"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/nonDeterministicValues"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//NonDeterministicValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/uuid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/clientSystemTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/serverSystemTime"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//NonDeterministicValue/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//NonDeterministicValue/value"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//InputValue">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//InputValue/input"/>
@@ -81,6 +84,7 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ClientThenBlock">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientThenBlock/stateVerifications"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientThenBlock/verifications"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//StateVerification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//StateVerification/name"/>

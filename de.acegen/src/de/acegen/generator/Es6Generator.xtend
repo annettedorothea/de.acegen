@@ -117,7 +117,11 @@ class Es6Generator {
 		
 		for (scenario : httpClient.scenarios) {
 			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT,
-				scenarioTemplate.generateScenario(scenario));
+				scenarioTemplate.generateScenario(scenario, httpClient));
+			if (scenario.thenBlock.verifications.size > 0) {
+				fsa.generateFile(httpClient.getName + '/' + scenario.name + 'Verifications.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE,
+					scenarioTemplate.generateVerifications(scenario));
+			}
 		}
 		fsa.generateFile('ScenarioUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, scenarioTemplate.generateScenarioUtils());
 		

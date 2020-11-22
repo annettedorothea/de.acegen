@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientThenBlockImpl#getStateVerifications <em>State Verifications</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientThenBlockImpl#getVerifications <em>Verifications</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,6 +47,16 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<StateVerification> stateVerifications;
+
+  /**
+   * The cached value of the '{@link #getVerifications() <em>Verifications</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVerifications()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> verifications;
 
   /**
    * <!-- begin-user-doc -->
@@ -88,6 +100,21 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public EList<String> getVerifications()
+  {
+    if (verifications == null)
+    {
+      verifications = new EDataTypeEList<String>(String.class, this, AceGenPackage.CLIENT_THEN_BLOCK__VERIFICATIONS);
+    }
+    return verifications;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -110,6 +137,8 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
     {
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         return getStateVerifications();
+      case AceGenPackage.CLIENT_THEN_BLOCK__VERIFICATIONS:
+        return getVerifications();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -129,6 +158,10 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
         getStateVerifications().clear();
         getStateVerifications().addAll((Collection<? extends StateVerification>)newValue);
         return;
+      case AceGenPackage.CLIENT_THEN_BLOCK__VERIFICATIONS:
+        getVerifications().clear();
+        getVerifications().addAll((Collection<? extends String>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -146,6 +179,9 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         getStateVerifications().clear();
         return;
+      case AceGenPackage.CLIENT_THEN_BLOCK__VERIFICATIONS:
+        getVerifications().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -162,8 +198,27 @@ public class ClientThenBlockImpl extends MinimalEObjectImpl.Container implements
     {
       case AceGenPackage.CLIENT_THEN_BLOCK__STATE_VERIFICATIONS:
         return stateVerifications != null && !stateVerifications.isEmpty();
+      case AceGenPackage.CLIENT_THEN_BLOCK__VERIFICATIONS:
+        return verifications != null && !verifications.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (verifications: ");
+    result.append(verifications);
+    result.append(')');
+    return result.toString();
   }
 
 } //ClientThenBlockImpl

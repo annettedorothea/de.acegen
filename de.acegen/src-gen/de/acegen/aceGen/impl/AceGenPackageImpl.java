@@ -49,6 +49,7 @@ import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.JsonValueClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PersistenceVerificationExpression;
@@ -171,6 +172,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass clientWhenBlockEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nonDeterministicValueEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1131,9 +1139,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientWhenBlock_Uuid()
+  public EReference getClientWhenBlock_NonDeterministicValues()
   {
-    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(2);
+    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1142,9 +1150,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientWhenBlock_ClientSystemTime()
+  public EClass getNonDeterministicValue()
   {
-    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(3);
+    return nonDeterministicValueEClass;
   }
 
   /**
@@ -1153,9 +1161,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientWhenBlock_ServerSystemTime()
+  public EAttribute getNonDeterministicValue_Uuid()
   {
-    return (EAttribute)clientWhenBlockEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1164,9 +1172,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientWhenBlock_Attribute()
+  public EAttribute getNonDeterministicValue_ClientSystemTime()
   {
-    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1175,9 +1183,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientWhenBlock_Value()
+  public EAttribute getNonDeterministicValue_ServerSystemTime()
   {
-    return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(6);
+    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getNonDeterministicValue_Attribute()
+  {
+    return (EReference)nonDeterministicValueEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getNonDeterministicValue_Value()
+  {
+    return (EReference)nonDeterministicValueEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1233,6 +1263,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   public EReference getClientThenBlock_StateVerifications()
   {
     return (EReference)clientThenBlockEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientThenBlock_Verifications()
+  {
+    return (EAttribute)clientThenBlockEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2957,11 +2998,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     clientWhenBlockEClass = createEClass(CLIENT_WHEN_BLOCK);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ACTION);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__INPUT_VALUES);
-    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__UUID);
-    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME);
-    createEAttribute(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME);
-    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ATTRIBUTE);
-    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__VALUE);
+    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES);
+
+    nonDeterministicValueEClass = createEClass(NON_DETERMINISTIC_VALUE);
+    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__UUID);
+    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME);
+    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME);
+    createEReference(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__ATTRIBUTE);
+    createEReference(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__VALUE);
 
     inputValueEClass = createEClass(INPUT_VALUE);
     createEReference(inputValueEClass, INPUT_VALUE__INPUT);
@@ -2969,6 +3013,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     clientThenBlockEClass = createEClass(CLIENT_THEN_BLOCK);
     createEReference(clientThenBlockEClass, CLIENT_THEN_BLOCK__STATE_VERIFICATIONS);
+    createEAttribute(clientThenBlockEClass, CLIENT_THEN_BLOCK__VERIFICATIONS);
 
     stateVerificationEClass = createEClass(STATE_VERIFICATION);
     createEAttribute(stateVerificationEClass, STATE_VERIFICATION__NAME);
@@ -3283,11 +3328,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(clientWhenBlockEClass, ClientWhenBlock.class, "ClientWhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClientWhenBlock_Action(), this.getHttpClientAce(), null, "action", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientWhenBlock_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientWhenBlock_ClientSystemTime(), ecorePackage.getEString(), "clientSystemTime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClientWhenBlock_ServerSystemTime(), ecorePackage.getEString(), "serverSystemTime", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientWhenBlock_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientWhenBlock_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientWhenBlock_NonDeterministicValues(), this.getNonDeterministicValue(), null, "nonDeterministicValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nonDeterministicValueEClass, NonDeterministicValue.class, "NonDeterministicValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNonDeterministicValue_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNonDeterministicValue_ClientSystemTime(), ecorePackage.getEString(), "clientSystemTime", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNonDeterministicValue_ServerSystemTime(), ecorePackage.getEString(), "serverSystemTime", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNonDeterministicValue_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNonDeterministicValue_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputValueEClass, InputValue.class, "InputValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInputValue_Input(), this.getInput(), null, "input", null, 0, 1, InputValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3295,6 +3343,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(clientThenBlockEClass, ClientThenBlock.class, "ClientThenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClientThenBlock_StateVerifications(), this.getStateVerification(), null, "stateVerifications", null, 0, -1, ClientThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientThenBlock_Verifications(), ecorePackage.getEString(), "verifications", null, 0, -1, ClientThenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateVerificationEClass, StateVerification.class, "StateVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStateVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

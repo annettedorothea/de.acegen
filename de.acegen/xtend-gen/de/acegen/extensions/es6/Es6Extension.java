@@ -244,20 +244,31 @@ public class Es6Extension {
     {
       if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
         _builder.append("{ ");
+        _builder.newLine();
+        _builder.append("\t");
         {
           EList<JsonMemberClient> _members = it.getMembers();
+          boolean _hasElements = false;
           for(final JsonMemberClient member : _members) {
-            _builder.append("\\\"");
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(",\n", "\t");
+            }
             String _name = member.getAttribute().getName();
-            _builder.append(_name);
-            _builder.append("\\\" : ");
+            _builder.append(_name, "\t");
+            _builder.append(" : ");
             CharSequence _valueFrom = this.valueFrom(member.getValue());
-            _builder.append(_valueFrom);
+            _builder.append(_valueFrom, "\t");
           }
         }
+        _builder.newLineIfNotEmpty();
         _builder.append("}");
+        _builder.newLine();
+        _builder.append("\t\t");
       } else {
         _builder.append("{}");
+        _builder.newLineIfNotEmpty();
       }
     }
     return _builder;
@@ -287,14 +298,24 @@ public class Es6Extension {
             if ((it instanceof JsonArrayClient)) {
               StringConcatenation _builder_2 = new StringConcatenation();
               _builder_2.append("[");
+              _builder_2.newLine();
+              _builder_2.append("\t");
               {
                 EList<JsonValueClient> _values = ((JsonArrayClient) it).getValues();
+                boolean _hasElements = false;
                 for(final JsonValueClient value : _values) {
+                  if (!_hasElements) {
+                    _hasElements = true;
+                  } else {
+                    _builder_2.appendImmediate(",", "\t");
+                  }
                   CharSequence _valueFrom = this.valueFrom(value);
-                  _builder_2.append(_valueFrom);
+                  _builder_2.append(_valueFrom, "\t");
                 }
               }
+              _builder_2.newLineIfNotEmpty();
               _builder_2.append("]");
+              _builder_2.newLine();
               return _builder_2;
             }
           }

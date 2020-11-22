@@ -656,49 +656,13 @@ public interface AceGenPackage extends EPackage
   int CLIENT_WHEN_BLOCK__INPUT_VALUES = 1;
 
   /**
-   * The feature id for the '<em><b>Uuid</b></em>' attribute.
+   * The feature id for the '<em><b>Non Deterministic Values</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK__UUID = 2;
-
-  /**
-   * The feature id for the '<em><b>Client System Time</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME = 3;
-
-  /**
-   * The feature id for the '<em><b>Server System Time</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME = 4;
-
-  /**
-   * The feature id for the '<em><b>Attribute</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_WHEN_BLOCK__ATTRIBUTE = 5;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_WHEN_BLOCK__VALUE = 6;
+  int CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES = 2;
 
   /**
    * The number of structural features of the '<em>Client When Block</em>' class.
@@ -707,7 +671,71 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK_FEATURE_COUNT = 7;
+  int CLIENT_WHEN_BLOCK_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.NonDeterministicValueImpl <em>Non Deterministic Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.NonDeterministicValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNonDeterministicValue()
+   * @generated
+   */
+  int NON_DETERMINISTIC_VALUE = 13;
+
+  /**
+   * The feature id for the '<em><b>Uuid</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE__UUID = 0;
+
+  /**
+   * The feature id for the '<em><b>Client System Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME = 1;
+
+  /**
+   * The feature id for the '<em><b>Server System Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME = 2;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE__ATTRIBUTE = 3;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE__VALUE = 4;
+
+  /**
+   * The number of structural features of the '<em>Non Deterministic Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NON_DETERMINISTIC_VALUE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.InputValueImpl <em>Input Value</em>}' class.
@@ -717,7 +745,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getInputValue()
    * @generated
    */
-  int INPUT_VALUE = 13;
+  int INPUT_VALUE = 14;
 
   /**
    * The feature id for the '<em><b>Input</b></em>' reference.
@@ -754,7 +782,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientThenBlock()
    * @generated
    */
-  int CLIENT_THEN_BLOCK = 14;
+  int CLIENT_THEN_BLOCK = 15;
 
   /**
    * The feature id for the '<em><b>State Verifications</b></em>' containment reference list.
@@ -766,13 +794,22 @@ public interface AceGenPackage extends EPackage
   int CLIENT_THEN_BLOCK__STATE_VERIFICATIONS = 0;
 
   /**
+   * The feature id for the '<em><b>Verifications</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_THEN_BLOCK__VERIFICATIONS = 1;
+
+  /**
    * The number of structural features of the '<em>Client Then Block</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_THEN_BLOCK_FEATURE_COUNT = 1;
+  int CLIENT_THEN_BLOCK_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.StateVerificationImpl <em>State Verification</em>}' class.
@@ -782,7 +819,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStateVerification()
    * @generated
    */
-  int STATE_VERIFICATION = 15;
+  int STATE_VERIFICATION = 16;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -828,7 +865,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValueClient()
    * @generated
    */
-  int JSON_VALUE_CLIENT = 18;
+  int JSON_VALUE_CLIENT = 19;
 
   /**
    * The number of structural features of the '<em>Json Value Client</em>' class.
@@ -847,7 +884,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectClient()
    * @generated
    */
-  int JSON_OBJECT_CLIENT = 16;
+  int JSON_OBJECT_CLIENT = 17;
 
   /**
    * The feature id for the '<em><b>Members</b></em>' containment reference list.
@@ -875,7 +912,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMemberClient()
    * @generated
    */
-  int JSON_MEMBER_CLIENT = 17;
+  int JSON_MEMBER_CLIENT = 18;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -912,7 +949,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArrayClient()
    * @generated
    */
-  int JSON_ARRAY_CLIENT = 19;
+  int JSON_ARRAY_CLIENT = 20;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -940,7 +977,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServer()
    * @generated
    */
-  int HTTP_SERVER = 20;
+  int HTTP_SERVER = 21;
 
   /**
    * The feature id for the '<em><b>Language</b></em>' attribute.
@@ -1058,7 +1095,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAce()
    * @generated
    */
-  int HTTP_SERVER_ACE = 21;
+  int HTTP_SERVER_ACE = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1158,7 +1195,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAceWrite()
    * @generated
    */
-  int HTTP_SERVER_ACE_WRITE = 22;
+  int HTTP_SERVER_ACE_WRITE = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1267,7 +1304,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerOutcome()
    * @generated
    */
-  int HTTP_SERVER_OUTCOME = 23;
+  int HTTP_SERVER_OUTCOME = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1304,7 +1341,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerAceRead()
    * @generated
    */
-  int HTTP_SERVER_ACE_READ = 24;
+  int HTTP_SERVER_ACE_READ = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1404,7 +1441,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeParamRef()
    * @generated
    */
-  int ATTRIBUTE_PARAM_REF = 25;
+  int ATTRIBUTE_PARAM_REF = 26;
 
   /**
    * The feature id for the '<em><b>Not Null</b></em>' attribute.
@@ -1441,7 +1478,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerView()
    * @generated
    */
-  int HTTP_SERVER_VIEW = 26;
+  int HTTP_SERVER_VIEW = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1478,7 +1515,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpServerViewFunction()
    * @generated
    */
-  int HTTP_SERVER_VIEW_FUNCTION = 27;
+  int HTTP_SERVER_VIEW_FUNCTION = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1515,7 +1552,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthUser()
    * @generated
    */
-  int AUTH_USER = 28;
+  int AUTH_USER = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1552,7 +1589,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 29;
+  int MODEL = 30;
 
   /**
    * The feature id for the '<em><b>Persistent</b></em>' attribute.
@@ -1607,7 +1644,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getScenario()
    * @generated
    */
-  int SCENARIO = 30;
+  int SCENARIO = 31;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1662,7 +1699,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGiven()
    * @generated
    */
-  int GIVEN = 31;
+  int GIVEN = 32;
 
   /**
    * The number of structural features of the '<em>Given</em>' class.
@@ -1681,7 +1718,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCustomCall()
    * @generated
    */
-  int CUSTOM_CALL = 32;
+  int CUSTOM_CALL = 33;
 
   /**
    * The feature id for the '<em><b>Custom Call Name</b></em>' attribute.
@@ -1718,7 +1755,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGivenRef()
    * @generated
    */
-  int GIVEN_REF = 33;
+  int GIVEN_REF = 34;
 
   /**
    * The feature id for the '<em><b>Scenario</b></em>' reference.
@@ -1764,7 +1801,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getWhenBlock()
    * @generated
    */
-  int WHEN_BLOCK = 34;
+  int WHEN_BLOCK = 35;
 
   /**
    * The feature id for the '<em><b>Action</b></em>' reference.
@@ -1819,7 +1856,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getThenBlock()
    * @generated
    */
-  int THEN_BLOCK = 35;
+  int THEN_BLOCK = 36;
 
   /**
    * The feature id for the '<em><b>Status Code</b></em>' attribute.
@@ -1874,7 +1911,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerification()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION = 36;
+  int PERSISTENCE_VERIFICATION = 37;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1920,7 +1957,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPersistenceVerificationExpression()
    * @generated
    */
-  int PERSISTENCE_VERIFICATION_EXPRESSION = 37;
+  int PERSISTENCE_VERIFICATION_EXPRESSION = 38;
 
   /**
    * The number of structural features of the '<em>Persistence Verification Expression</em>' class.
@@ -1939,7 +1976,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByPrimaryKeys()
    * @generated
    */
-  int SELECT_BY_PRIMARY_KEYS = 38;
+  int SELECT_BY_PRIMARY_KEYS = 39;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -1976,7 +2013,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByUniqueAttribute()
    * @generated
    */
-  int SELECT_BY_UNIQUE_ATTRIBUTE = 39;
+  int SELECT_BY_UNIQUE_ATTRIBUTE = 40;
 
   /**
    * The feature id for the '<em><b>Attribute And Value</b></em>' containment reference.
@@ -2013,7 +2050,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getCount()
    * @generated
    */
-  int COUNT = 40;
+  int COUNT = 41;
 
   /**
    * The feature id for the '<em><b>Attribute And Values</b></em>' containment reference list.
@@ -2050,7 +2087,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttributeAndValue()
    * @generated
    */
-  int ATTRIBUTE_AND_VALUE = 41;
+  int ATTRIBUTE_AND_VALUE = 42;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2087,7 +2124,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getVerification()
    * @generated
    */
-  int VERIFICATION = 42;
+  int VERIFICATION = 43;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2115,7 +2152,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getExtraction()
    * @generated
    */
-  int EXTRACTION = 43;
+  int EXTRACTION = 44;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2143,7 +2180,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSelectByExpectation()
    * @generated
    */
-  int SELECT_BY_EXPECTATION = 44;
+  int SELECT_BY_EXPECTATION = 45;
 
   /**
    * The feature id for the '<em><b>Object</b></em>' containment reference.
@@ -2189,7 +2226,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getDataDefinition()
    * @generated
    */
-  int DATA_DEFINITION = 45;
+  int DATA_DEFINITION = 46;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -2244,7 +2281,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAuthorization()
    * @generated
    */
-  int AUTHORIZATION = 46;
+  int AUTHORIZATION = 47;
 
   /**
    * The feature id for the '<em><b>Username</b></em>' attribute.
@@ -2281,7 +2318,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getAttribute()
    * @generated
    */
-  int ATTRIBUTE = 47;
+  int ATTRIBUTE = 48;
 
   /**
    * The feature id for the '<em><b>Unique</b></em>' attribute.
@@ -2381,7 +2418,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonValue()
    * @generated
    */
-  int JSON_VALUE = 51;
+  int JSON_VALUE = 52;
 
   /**
    * The number of structural features of the '<em>Json Value</em>' class.
@@ -2400,7 +2437,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObject()
    * @generated
    */
-  int JSON_OBJECT = 48;
+  int JSON_OBJECT = 49;
 
   /**
    * The number of structural features of the '<em>Json Object</em>' class.
@@ -2419,7 +2456,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonObjectAce()
    * @generated
    */
-  int JSON_OBJECT_ACE = 49;
+  int JSON_OBJECT_ACE = 50;
 
   /**
    * The feature id for the '<em><b>Members</b></em>' containment reference list.
@@ -2447,7 +2484,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonMember()
    * @generated
    */
-  int JSON_MEMBER = 50;
+  int JSON_MEMBER = 51;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -2484,7 +2521,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonArray()
    * @generated
    */
-  int JSON_ARRAY = 52;
+  int JSON_ARRAY = 53;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -2512,7 +2549,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getJsonDateTime()
    * @generated
    */
-  int JSON_DATE_TIME = 53;
+  int JSON_DATE_TIME = 54;
 
   /**
    * The feature id for the '<em><b>Date Time</b></em>' attribute.
@@ -2549,7 +2586,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getStringType()
    * @generated
    */
-  int STRING_TYPE = 54;
+  int STRING_TYPE = 55;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -2577,7 +2614,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 55;
+  int BOOLEAN_TYPE = 56;
 
   /**
    * The feature id for the '<em><b>Boolean</b></em>' attribute.
@@ -2605,7 +2642,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNullType()
    * @generated
    */
-  int NULL_TYPE = 56;
+  int NULL_TYPE = 57;
 
   /**
    * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -2633,7 +2670,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getUndefinedType()
    * @generated
    */
-  int UNDEFINED_TYPE = 57;
+  int UNDEFINED_TYPE = 58;
 
   /**
    * The feature id for the '<em><b>Undefined</b></em>' attribute.
@@ -2661,7 +2698,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getLongType()
    * @generated
    */
-  int LONG_TYPE = 58;
+  int LONG_TYPE = 59;
 
   /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
@@ -2689,7 +2726,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getPrimitiveValue()
    * @generated
    */
-  int PRIMITIVE_VALUE = 59;
+  int PRIMITIVE_VALUE = 60;
 
   /**
    * The feature id for the '<em><b>String</b></em>' attribute.
@@ -3268,59 +3305,80 @@ public interface AceGenPackage extends EPackage
   EReference getClientWhenBlock_InputValues();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getUuid <em>Uuid</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientWhenBlock#getNonDeterministicValues <em>Non Deterministic Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Non Deterministic Values</em>'.
+   * @see de.acegen.aceGen.ClientWhenBlock#getNonDeterministicValues()
+   * @see #getClientWhenBlock()
+   * @generated
+   */
+  EReference getClientWhenBlock_NonDeterministicValues();
+
+  /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.NonDeterministicValue <em>Non Deterministic Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Non Deterministic Value</em>'.
+   * @see de.acegen.aceGen.NonDeterministicValue
+   * @generated
+   */
+  EClass getNonDeterministicValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getUuid <em>Uuid</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Uuid</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getUuid()
-   * @see #getClientWhenBlock()
+   * @see de.acegen.aceGen.NonDeterministicValue#getUuid()
+   * @see #getNonDeterministicValue()
    * @generated
    */
-  EAttribute getClientWhenBlock_Uuid();
+  EAttribute getNonDeterministicValue_Uuid();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getClientSystemTime <em>Client System Time</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getClientSystemTime <em>Client System Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Client System Time</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getClientSystemTime()
-   * @see #getClientWhenBlock()
+   * @see de.acegen.aceGen.NonDeterministicValue#getClientSystemTime()
+   * @see #getNonDeterministicValue()
    * @generated
    */
-  EAttribute getClientWhenBlock_ClientSystemTime();
+  EAttribute getNonDeterministicValue_ClientSystemTime();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientWhenBlock#getServerSystemTime <em>Server System Time</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getServerSystemTime <em>Server System Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Server System Time</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getServerSystemTime()
-   * @see #getClientWhenBlock()
+   * @see de.acegen.aceGen.NonDeterministicValue#getServerSystemTime()
+   * @see #getNonDeterministicValue()
    * @generated
    */
-  EAttribute getClientWhenBlock_ServerSystemTime();
+  EAttribute getNonDeterministicValue_ServerSystemTime();
 
   /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.ClientWhenBlock#getAttribute <em>Attribute</em>}'.
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.NonDeterministicValue#getAttribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Attribute</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getAttribute()
-   * @see #getClientWhenBlock()
+   * @see de.acegen.aceGen.NonDeterministicValue#getAttribute()
+   * @see #getNonDeterministicValue()
    * @generated
    */
-  EReference getClientWhenBlock_Attribute();
+  EReference getNonDeterministicValue_Attribute();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ClientWhenBlock#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.NonDeterministicValue#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getValue()
-   * @see #getClientWhenBlock()
+   * @see de.acegen.aceGen.NonDeterministicValue#getValue()
+   * @see #getNonDeterministicValue()
    * @generated
    */
-  EReference getClientWhenBlock_Value();
+  EReference getNonDeterministicValue_Value();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.InputValue <em>Input Value</em>}'.
@@ -3374,6 +3432,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getClientThenBlock_StateVerifications();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.acegen.aceGen.ClientThenBlock#getVerifications <em>Verifications</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Verifications</em>'.
+   * @see de.acegen.aceGen.ClientThenBlock#getVerifications()
+   * @see #getClientThenBlock()
+   * @generated
+   */
+  EAttribute getClientThenBlock_Verifications();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.StateVerification <em>State Verification</em>}'.
@@ -5416,12 +5485,30 @@ public interface AceGenPackage extends EPackage
     EReference CLIENT_WHEN_BLOCK__INPUT_VALUES = eINSTANCE.getClientWhenBlock_InputValues();
 
     /**
+     * The meta object literal for the '<em><b>Non Deterministic Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES = eINSTANCE.getClientWhenBlock_NonDeterministicValues();
+
+    /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.NonDeterministicValueImpl <em>Non Deterministic Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.NonDeterministicValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNonDeterministicValue()
+     * @generated
+     */
+    EClass NON_DETERMINISTIC_VALUE = eINSTANCE.getNonDeterministicValue();
+
+    /**
      * The meta object literal for the '<em><b>Uuid</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLIENT_WHEN_BLOCK__UUID = eINSTANCE.getClientWhenBlock_Uuid();
+    EAttribute NON_DETERMINISTIC_VALUE__UUID = eINSTANCE.getNonDeterministicValue_Uuid();
 
     /**
      * The meta object literal for the '<em><b>Client System Time</b></em>' attribute feature.
@@ -5429,7 +5516,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLIENT_WHEN_BLOCK__CLIENT_SYSTEM_TIME = eINSTANCE.getClientWhenBlock_ClientSystemTime();
+    EAttribute NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME = eINSTANCE.getNonDeterministicValue_ClientSystemTime();
 
     /**
      * The meta object literal for the '<em><b>Server System Time</b></em>' attribute feature.
@@ -5437,7 +5524,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLIENT_WHEN_BLOCK__SERVER_SYSTEM_TIME = eINSTANCE.getClientWhenBlock_ServerSystemTime();
+    EAttribute NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME = eINSTANCE.getNonDeterministicValue_ServerSystemTime();
 
     /**
      * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
@@ -5445,7 +5532,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CLIENT_WHEN_BLOCK__ATTRIBUTE = eINSTANCE.getClientWhenBlock_Attribute();
+    EReference NON_DETERMINISTIC_VALUE__ATTRIBUTE = eINSTANCE.getNonDeterministicValue_Attribute();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
@@ -5453,7 +5540,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CLIENT_WHEN_BLOCK__VALUE = eINSTANCE.getClientWhenBlock_Value();
+    EReference NON_DETERMINISTIC_VALUE__VALUE = eINSTANCE.getNonDeterministicValue_Value();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.InputValueImpl <em>Input Value</em>}' class.
@@ -5498,6 +5585,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference CLIENT_THEN_BLOCK__STATE_VERIFICATIONS = eINSTANCE.getClientThenBlock_StateVerifications();
+
+    /**
+     * The meta object literal for the '<em><b>Verifications</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_THEN_BLOCK__VERIFICATIONS = eINSTANCE.getClientThenBlock_Verifications();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.StateVerificationImpl <em>State Verification</em>}' class.
