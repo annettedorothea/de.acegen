@@ -436,7 +436,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     CustomCall returns CustomCall
 	 *
 	 * Constraint:
-	 *     (customCallName=ID values+=PrimitiveValue values+=PrimitiveValue*)
+	 *     (customCallName=ID (values+=PrimitiveValue values+=PrimitiveValue*)?)
 	 */
 	protected void sequence_CustomCall(ISerializationContext context, CustomCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

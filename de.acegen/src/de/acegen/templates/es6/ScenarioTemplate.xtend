@@ -20,10 +20,27 @@ class ScenarioTemplate {
 
 	def generateScenarioUtils() '''
 		«copyright»
+
+		export function getCypressFor(action, args) {
+			throw "getCypressFor not implemented";
+		}
+		
+		export function wait(numberOfSyncCalls, numberOfAsyncCalls) {
+			return cy.wait(numberOfSyncCalls * 5 + numberOfAsyncCalls * 100);
+		}
+		
+		export function testId() {
+		    let d = new Date().getTime();
+		    return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
+		        let r = (d + Math.random() * 16) % 16 | 0;
+		        d = Math.floor(d / 16);
+		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+		    });
+		}
 		
 		«sdg»
-		
-		
+
+
 	'''
 
 	def generateScenario(ClientScenario it, HttpClient httpClient) '''

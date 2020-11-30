@@ -27,7 +27,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_ClientThenBlock_VerificationsKeyword_2_0_q;
 	protected AbstractElementAlias match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_Count_CommaKeyword_3_0_q;
-	protected AbstractElementAlias match_CustomCall_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q;
 	protected AbstractElementAlias match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_HttpClient_ACEKeyword_1_0_q;
@@ -65,7 +64,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_ClientThenBlock_VerificationsKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getVerificationsKeyword_2_0());
 		match_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getClientWhenBlockAccess().getRightParenthesisKeyword_1_2()));
 		match_Count_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCountAccess().getCommaKeyword_3_0());
-		match_CustomCall_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCustomCallAccess().getCommaKeyword_3_0());
 		match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_3_3()));
 		match_HttpClient_ACEKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_1_0());
@@ -118,8 +116,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Count_CommaKeyword_3_0_q.equals(syntax))
 				emit_Count_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_CustomCall_CommaKeyword_3_0_q.equals(syntax))
-				emit_CustomCall_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q.equals(syntax))
 				emit_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q.equals(syntax))
@@ -235,17 +231,6 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     attributeAndValues+=AttributeAndValue (ambiguity) ')' 'shouldBe' expected=INT
 	 */
 	protected void emit_Count_CommaKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ','?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     values+=PrimitiveValue (ambiguity) ')' (rule end)
-	 */
-	protected void emit_CustomCall_CommaKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

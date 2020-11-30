@@ -230,7 +230,7 @@ Given:
 ;
 
 CustomCall:
-	customCallName = ID '(' values += PrimitiveValue (',' values += PrimitiveValue*)? ')'
+	customCallName = ID '(' (values += PrimitiveValue (',' values += PrimitiveValue)*)? ')'
 ;
 
 GivenRef:

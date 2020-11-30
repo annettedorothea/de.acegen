@@ -127,7 +127,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScenarioAccess().getGroup(), "rule__Scenario__Group__0");
 			builder.put(grammarAccess.getScenarioAccess().getGroup_1(), "rule__Scenario__Group_1__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup(), "rule__CustomCall__Group__0");
-			builder.put(grammarAccess.getCustomCallAccess().getGroup_3(), "rule__CustomCall__Group_3__0");
+			builder.put(grammarAccess.getCustomCallAccess().getGroup_2(), "rule__CustomCall__Group_2__0");
+			builder.put(grammarAccess.getCustomCallAccess().getGroup_2_1(), "rule__CustomCall__Group_2_1__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup(), "rule__GivenRef__Group__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup_1(), "rule__GivenRef__Group_1__0");
 			builder.put(grammarAccess.getWhenBlockAccess().getGroup(), "rule__WhenBlock__Group__0");
@@ -271,8 +272,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScenarioAccess().getWhenBlockAssignment_3(), "rule__Scenario__WhenBlockAssignment_3");
 			builder.put(grammarAccess.getScenarioAccess().getThenBlockAssignment_5(), "rule__Scenario__ThenBlockAssignment_5");
 			builder.put(grammarAccess.getCustomCallAccess().getCustomCallNameAssignment_0(), "rule__CustomCall__CustomCallNameAssignment_0");
-			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2(), "rule__CustomCall__ValuesAssignment_2");
-			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_3_1(), "rule__CustomCall__ValuesAssignment_3_1");
+			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_0(), "rule__CustomCall__ValuesAssignment_2_0");
+			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_1_1(), "rule__CustomCall__ValuesAssignment_2_1_1");
 			builder.put(grammarAccess.getGivenRefAccess().getScenarioAssignment_0(), "rule__GivenRef__ScenarioAssignment_0");
 			builder.put(grammarAccess.getGivenRefAccess().getTimesAssignment_1_0(), "rule__GivenRef__TimesAssignment_1_0");
 			builder.put(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2(), "rule__GivenRef__ExcludeGivenAssignment_2");

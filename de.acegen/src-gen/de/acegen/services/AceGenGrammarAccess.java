@@ -2095,19 +2095,20 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cCustomCallNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cCustomCallNameIDTerminalRuleCall_0_0 = (RuleCall)cCustomCallNameAssignment_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValuesPrimitiveValueParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cValuesPrimitiveValueParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cValuesAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cValuesPrimitiveValueParserRuleCall_2_0_0 = (RuleCall)cValuesAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cValuesPrimitiveValueParserRuleCall_2_1_1_0 = (RuleCall)cValuesAssignment_2_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//CustomCall:
-		//	customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')';
+		//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')'
+		//customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')'
 		public Group getGroup() { return cGroup; }
 		
 		//customCallName=ID
@@ -2119,26 +2120,29 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 		
+		//(values+=PrimitiveValue (',' values+=PrimitiveValue)*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
 		//values+=PrimitiveValue
-		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+		public Assignment getValuesAssignment_2_0() { return cValuesAssignment_2_0; }
 		
 		//PrimitiveValue
-		public RuleCall getValuesPrimitiveValueParserRuleCall_2_0() { return cValuesPrimitiveValueParserRuleCall_2_0; }
+		public RuleCall getValuesPrimitiveValueParserRuleCall_2_0_0() { return cValuesPrimitiveValueParserRuleCall_2_0_0; }
 		
-		//(',' values+=PrimitiveValue*)?
-		public Group getGroup_3() { return cGroup_3; }
+		//(',' values+=PrimitiveValue)*
+		public Group getGroup_2_1() { return cGroup_2_1; }
 		
 		//','
-		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
 		
-		//values+=PrimitiveValue*
-		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
+		//values+=PrimitiveValue
+		public Assignment getValuesAssignment_2_1_1() { return cValuesAssignment_2_1_1; }
 		
 		//PrimitiveValue
-		public RuleCall getValuesPrimitiveValueParserRuleCall_3_1_0() { return cValuesPrimitiveValueParserRuleCall_3_1_0; }
+		public RuleCall getValuesPrimitiveValueParserRuleCall_2_1_1_0() { return cValuesPrimitiveValueParserRuleCall_2_1_1_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 	public class GivenRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.GivenRef");
@@ -3854,7 +3858,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//CustomCall:
-	//	customCallName=ID '(' values+=PrimitiveValue (',' values+=PrimitiveValue*)? ')';
+	//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')';
 	public CustomCallElements getCustomCallAccess() {
 		return pCustomCall;
 	}

@@ -3341,34 +3341,11 @@ ruleCustomCall returns [EObject current=null]
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_0());
-				}
-				lv_values_2_0=rulePrimitiveValue
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCustomCallRule());
-					}
-					add(
-						$current,
-						"values",
-						lv_values_2_0,
-						"de.acegen.AceGen.PrimitiveValue");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_3=','
-			{
-				newLeafNode(otherlv_3, grammarAccess.getCustomCallAccess().getCommaKeyword_3_0());
-			}
-			(
 				(
 					{
-						newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_0_0());
 					}
-					lv_values_4_0=rulePrimitiveValue
+					lv_values_2_0=rulePrimitiveValue
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getCustomCallRule());
@@ -3376,16 +3353,41 @@ ruleCustomCall returns [EObject current=null]
 						add(
 							$current,
 							"values",
-							lv_values_4_0,
+							lv_values_2_0,
 							"de.acegen.AceGen.PrimitiveValue");
 						afterParserOrEnumRuleCall();
 					}
+				)
+			)
+			(
+				otherlv_3=','
+				{
+					newLeafNode(otherlv_3, grammarAccess.getCustomCallAccess().getCommaKeyword_2_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_1_1_0());
+						}
+						lv_values_4_0=rulePrimitiveValue
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getCustomCallRule());
+							}
+							add(
+								$current,
+								"values",
+								lv_values_4_0,
+								"de.acegen.AceGen.PrimitiveValue");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)*
 		)?
 		otherlv_5=')'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getCustomCallAccess().getRightParenthesisKeyword_4());
+			newLeafNode(otherlv_5, grammarAccess.getCustomCallAccess().getRightParenthesisKeyword_3());
 		}
 	)
 ;
