@@ -200,7 +200,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ThenBlock"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Given"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Given">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="times" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomCall" eSuperTypes="#//Given">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="customCallName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
@@ -208,7 +210,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GivenRef" eSuperTypes="#//Given">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//Scenario"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="times" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludeGiven" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WhenBlock">

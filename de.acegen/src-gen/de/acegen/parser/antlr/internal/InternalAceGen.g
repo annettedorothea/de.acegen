@@ -3389,6 +3389,30 @@ ruleCustomCall returns [EObject current=null]
 		{
 			newLeafNode(otherlv_5, grammarAccess.getCustomCallAccess().getRightParenthesisKeyword_3());
 		}
+		(
+			(
+				(
+					lv_times_6_0=RULE_INT
+					{
+						newLeafNode(lv_times_6_0, grammarAccess.getCustomCallAccess().getTimesINTTerminalRuleCall_4_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getCustomCallRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"times",
+							lv_times_6_0,
+							"org.eclipse.xtext.common.Terminals.INT");
+					}
+				)
+			)
+			otherlv_7='x'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getCustomCallAccess().getXKeyword_4_1());
+			}
+		)?
 	)
 ;
 

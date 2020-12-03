@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getScenario <em>Scenario</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#getTimes <em>Times</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.GivenRefImpl#isExcludeGiven <em>Exclude Given</em>}</li>
  * </ul>
  *
@@ -40,26 +39,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
    * @ordered
    */
   protected Scenario scenario;
-
-  /**
-   * The default value of the '{@link #getTimes() <em>Times</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTimes()
-   * @generated
-   * @ordered
-   */
-  protected static final int TIMES_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getTimes() <em>Times</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTimes()
-   * @generated
-   * @ordered
-   */
-  protected int times = TIMES_EDEFAULT;
 
   /**
    * The default value of the '{@link #isExcludeGiven() <em>Exclude Given</em>}' attribute.
@@ -153,31 +132,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
    * @generated
    */
   @Override
-  public int getTimes()
-  {
-    return times;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setTimes(int newTimes)
-  {
-    int oldTimes = times;
-    times = newTimes;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.GIVEN_REF__TIMES, oldTimes, times));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public boolean isExcludeGiven()
   {
     return excludeGiven;
@@ -210,8 +164,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
       case AceGenPackage.GIVEN_REF__SCENARIO:
         if (resolve) return getScenario();
         return basicGetScenario();
-      case AceGenPackage.GIVEN_REF__TIMES:
-        return getTimes();
       case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
         return isExcludeGiven();
     }
@@ -230,9 +182,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
     {
       case AceGenPackage.GIVEN_REF__SCENARIO:
         setScenario((Scenario)newValue);
-        return;
-      case AceGenPackage.GIVEN_REF__TIMES:
-        setTimes((Integer)newValue);
         return;
       case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
         setExcludeGiven((Boolean)newValue);
@@ -254,9 +203,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
       case AceGenPackage.GIVEN_REF__SCENARIO:
         setScenario((Scenario)null);
         return;
-      case AceGenPackage.GIVEN_REF__TIMES:
-        setTimes(TIMES_EDEFAULT);
-        return;
       case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
         setExcludeGiven(EXCLUDE_GIVEN_EDEFAULT);
         return;
@@ -276,8 +222,6 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
     {
       case AceGenPackage.GIVEN_REF__SCENARIO:
         return scenario != null;
-      case AceGenPackage.GIVEN_REF__TIMES:
-        return times != TIMES_EDEFAULT;
       case AceGenPackage.GIVEN_REF__EXCLUDE_GIVEN:
         return excludeGiven != EXCLUDE_GIVEN_EDEFAULT;
     }
@@ -295,9 +239,7 @@ public class GivenRefImpl extends GivenImpl implements GivenRef
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (times: ");
-    result.append(times);
-    result.append(", excludeGiven: ");
+    result.append(" (excludeGiven: ");
     result.append(excludeGiven);
     result.append(')');
     return result.toString();

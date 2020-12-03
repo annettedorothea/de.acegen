@@ -250,7 +250,15 @@ class Scenario {
 	'''
 
 	private def dispatch givenItem(CustomCall it, HttpServer java) '''
-		this.«customCallName»(«FOR value : values SEPARATOR ', '»«value.primitiveValueFrom»«ENDFOR»);
+		«IF times > 0»
+			for (int i=0; i<«times»; i++) {
+				this.«customCallName»(«FOR value : values SEPARATOR ', '»«value.primitiveValueFrom»«ENDFOR»);
+			}
+			«incIndex»
+		«ELSE»
+			this.«customCallName»(«FOR value : values SEPARATOR ', '»«value.primitiveValueFrom»«ENDFOR»);
+			«incIndex»
+		«ENDIF»
 	'''
 
 	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''

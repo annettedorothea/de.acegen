@@ -14,7 +14,6 @@ package de.acegen.aceGen;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.GivenRef#getScenario <em>Scenario</em>}</li>
- *   <li>{@link de.acegen.aceGen.GivenRef#getTimes <em>Times</em>}</li>
  *   <li>{@link de.acegen.aceGen.GivenRef#isExcludeGiven <em>Exclude Given</em>}</li>
  * </ul>
  *
@@ -45,28 +44,6 @@ public interface GivenRef extends Given
    * @generated
    */
   void setScenario(Scenario value);
-
-  /**
-   * Returns the value of the '<em><b>Times</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Times</em>' attribute.
-   * @see #setTimes(int)
-   * @see de.acegen.aceGen.AceGenPackage#getGivenRef_Times()
-   * @model
-   * @generated
-   */
-  int getTimes();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.GivenRef#getTimes <em>Times</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Times</em>' attribute.
-   * @see #getTimes()
-   * @generated
-   */
-  void setTimes(int value);
 
   /**
    * Returns the value of the '<em><b>Exclude Given</b></em>' attribute.

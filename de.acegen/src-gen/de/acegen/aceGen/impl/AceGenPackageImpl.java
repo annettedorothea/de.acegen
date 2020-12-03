@@ -1975,6 +1975,17 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getGiven_Times()
+  {
+    return (EAttribute)givenEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getCustomCall()
   {
     return customCallEClass;
@@ -2030,20 +2041,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getGivenRef_Times()
-  {
-    return (EAttribute)givenRefEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getGivenRef_ExcludeGiven()
   {
-    return (EAttribute)givenRefEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)givenRefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3094,6 +3094,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(scenarioEClass, SCENARIO__THEN_BLOCK);
 
     givenEClass = createEClass(GIVEN);
+    createEAttribute(givenEClass, GIVEN__TIMES);
 
     customCallEClass = createEClass(CUSTOM_CALL);
     createEAttribute(customCallEClass, CUSTOM_CALL__CUSTOM_CALL_NAME);
@@ -3101,7 +3102,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     givenRefEClass = createEClass(GIVEN_REF);
     createEReference(givenRefEClass, GIVEN_REF__SCENARIO);
-    createEAttribute(givenRefEClass, GIVEN_REF__TIMES);
     createEAttribute(givenRefEClass, GIVEN_REF__EXCLUDE_GIVEN);
 
     whenBlockEClass = createEClass(WHEN_BLOCK);
@@ -3424,6 +3424,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getScenario_ThenBlock(), this.getThenBlock(), null, "thenBlock", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(givenEClass, Given.class, "Given", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGiven_Times(), ecorePackage.getEInt(), "times", null, 0, 1, Given.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(customCallEClass, CustomCall.class, "CustomCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCustomCall_CustomCallName(), ecorePackage.getEString(), "customCallName", null, 0, 1, CustomCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3431,7 +3432,6 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(givenRefEClass, GivenRef.class, "GivenRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGivenRef_Scenario(), this.getScenario(), null, "scenario", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getGivenRef_Times(), ecorePackage.getEInt(), "times", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGivenRef_ExcludeGiven(), ecorePackage.getEBoolean(), "excludeGiven", null, 0, 1, GivenRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(whenBlockEClass, WhenBlock.class, "WhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

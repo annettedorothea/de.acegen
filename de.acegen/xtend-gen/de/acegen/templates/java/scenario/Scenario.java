@@ -755,25 +755,63 @@ public class Scenario {
   
   private CharSequence _givenItem(final CustomCall it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("this.");
-    String _customCallName = it.getCustomCallName();
-    _builder.append(_customCallName);
-    _builder.append("(");
     {
-      EList<PrimitiveValue> _values = it.getValues();
-      boolean _hasElements = false;
-      for(final PrimitiveValue value : _values) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate(", ", "");
+      int _times = it.getTimes();
+      boolean _greaterThan = (_times > 0);
+      if (_greaterThan) {
+        _builder.append("for (int i=0; i<");
+        int _times_1 = it.getTimes();
+        _builder.append(_times_1);
+        _builder.append("; i++) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("this.");
+        String _customCallName = it.getCustomCallName();
+        _builder.append(_customCallName, "\t");
+        _builder.append("(");
+        {
+          EList<PrimitiveValue> _values = it.getValues();
+          boolean _hasElements = false;
+          for(final PrimitiveValue value : _values) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "\t");
+            }
+            Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(value);
+            _builder.append(_primitiveValueFrom, "\t");
+          }
         }
-        Object _primitiveValueFrom = this._attributeExtension.primitiveValueFrom(value);
-        _builder.append(_primitiveValueFrom);
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("}");
+        _builder.newLine();
+        this.incIndex();
+        _builder.newLineIfNotEmpty();
+      } else {
+        _builder.append("this.");
+        String _customCallName_1 = it.getCustomCallName();
+        _builder.append(_customCallName_1);
+        _builder.append("(");
+        {
+          EList<PrimitiveValue> _values_1 = it.getValues();
+          boolean _hasElements_1 = false;
+          for(final PrimitiveValue value_1 : _values_1) {
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            Object _primitiveValueFrom_1 = this._attributeExtension.primitiveValueFrom(value_1);
+            _builder.append(_primitiveValueFrom_1);
+          }
+        }
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+        this.incIndex();
+        _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
     return _builder;
   }
   

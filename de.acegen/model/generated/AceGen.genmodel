@@ -162,14 +162,15 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenBlock"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/thenBlock"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//Given"/>
+    <genClasses ecoreClass="AceGen.ecore#//Given">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Given/times"/>
+    </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//CustomCall">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//CustomCall/customCallName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//CustomCall/values"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//GivenRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//GivenRef/scenario"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//GivenRef/times"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//GivenRef/excludeGiven"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//WhenBlock">

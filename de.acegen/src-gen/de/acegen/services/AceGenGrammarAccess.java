@@ -2103,12 +2103,16 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cValuesAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
 		private final RuleCall cValuesPrimitiveValueParserRuleCall_2_1_1_0 = (RuleCall)cValuesAssignment_2_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Assignment cTimesAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
+		private final RuleCall cTimesINTTerminalRuleCall_4_0_0 = (RuleCall)cTimesAssignment_4_0.eContents().get(0);
+		private final Keyword cXKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
 		
 		//CustomCall:
-		//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')';
+		//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')' (times=INT 'x')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')'
+		//customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')' (times=INT 'x')?
 		public Group getGroup() { return cGroup; }
 		
 		//customCallName=ID
@@ -2143,6 +2147,18 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		
+		//(times=INT 'x')?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//times=INT
+		public Assignment getTimesAssignment_4_0() { return cTimesAssignment_4_0; }
+		
+		//INT
+		public RuleCall getTimesINTTerminalRuleCall_4_0_0() { return cTimesINTTerminalRuleCall_4_0_0; }
+		
+		//'x'
+		public Keyword getXKeyword_4_1() { return cXKeyword_4_1; }
 	}
 	public class GivenRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.GivenRef");
@@ -3858,7 +3874,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//CustomCall:
-	//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')';
+	//	customCallName=ID '(' (values+=PrimitiveValue (',' values+=PrimitiveValue)*)? ')' (times=INT 'x')?;
 	public CustomCallElements getCustomCallAccess() {
 		return pCustomCall;
 	}

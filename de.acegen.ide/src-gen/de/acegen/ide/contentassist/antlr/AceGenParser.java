@@ -129,6 +129,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCustomCallAccess().getGroup(), "rule__CustomCall__Group__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup_2(), "rule__CustomCall__Group_2__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup_2_1(), "rule__CustomCall__Group_2_1__0");
+			builder.put(grammarAccess.getCustomCallAccess().getGroup_4(), "rule__CustomCall__Group_4__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup(), "rule__GivenRef__Group__0");
 			builder.put(grammarAccess.getGivenRefAccess().getGroup_1(), "rule__GivenRef__Group_1__0");
 			builder.put(grammarAccess.getWhenBlockAccess().getGroup(), "rule__WhenBlock__Group__0");
@@ -274,6 +275,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCustomCallAccess().getCustomCallNameAssignment_0(), "rule__CustomCall__CustomCallNameAssignment_0");
 			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_0(), "rule__CustomCall__ValuesAssignment_2_0");
 			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_1_1(), "rule__CustomCall__ValuesAssignment_2_1_1");
+			builder.put(grammarAccess.getCustomCallAccess().getTimesAssignment_4_0(), "rule__CustomCall__TimesAssignment_4_0");
 			builder.put(grammarAccess.getGivenRefAccess().getScenarioAssignment_0(), "rule__GivenRef__ScenarioAssignment_0");
 			builder.put(grammarAccess.getGivenRefAccess().getTimesAssignment_1_0(), "rule__GivenRef__TimesAssignment_1_0");
 			builder.put(grammarAccess.getGivenRefAccess().getExcludeGivenAssignment_2(), "rule__GivenRef__ExcludeGivenAssignment_2");

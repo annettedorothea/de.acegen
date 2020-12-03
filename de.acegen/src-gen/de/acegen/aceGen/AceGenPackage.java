@@ -1702,13 +1702,22 @@ public interface AceGenPackage extends EPackage
   int GIVEN = 32;
 
   /**
+   * The feature id for the '<em><b>Times</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIVEN__TIMES = 0;
+
+  /**
    * The number of structural features of the '<em>Given</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIVEN_FEATURE_COUNT = 0;
+  int GIVEN_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.CustomCallImpl <em>Custom Call</em>}' class.
@@ -1719,6 +1728,15 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   int CUSTOM_CALL = 33;
+
+  /**
+   * The feature id for the '<em><b>Times</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_CALL__TIMES = GIVEN__TIMES;
 
   /**
    * The feature id for the '<em><b>Custom Call Name</b></em>' attribute.
@@ -1758,6 +1776,15 @@ public interface AceGenPackage extends EPackage
   int GIVEN_REF = 34;
 
   /**
+   * The feature id for the '<em><b>Times</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIVEN_REF__TIMES = GIVEN__TIMES;
+
+  /**
    * The feature id for the '<em><b>Scenario</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1767,22 +1794,13 @@ public interface AceGenPackage extends EPackage
   int GIVEN_REF__SCENARIO = GIVEN_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Times</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIVEN_REF__TIMES = GIVEN_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Exclude Given</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIVEN_REF__EXCLUDE_GIVEN = GIVEN_FEATURE_COUNT + 2;
+  int GIVEN_REF__EXCLUDE_GIVEN = GIVEN_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Given Ref</em>' class.
@@ -1791,7 +1809,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIVEN_REF_FEATURE_COUNT = GIVEN_FEATURE_COUNT + 3;
+  int GIVEN_REF_FEATURE_COUNT = GIVEN_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.WhenBlockImpl <em>When Block</em>}' class.
@@ -4121,6 +4139,17 @@ public interface AceGenPackage extends EPackage
   EClass getGiven();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Given#getTimes <em>Times</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Times</em>'.
+   * @see de.acegen.aceGen.Given#getTimes()
+   * @see #getGiven()
+   * @generated
+   */
+  EAttribute getGiven_Times();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.CustomCall <em>Custom Call</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4172,17 +4201,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getGivenRef_Scenario();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.GivenRef#getTimes <em>Times</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Times</em>'.
-   * @see de.acegen.aceGen.GivenRef#getTimes()
-   * @see #getGivenRef()
-   * @generated
-   */
-  EAttribute getGivenRef_Times();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.GivenRef#isExcludeGiven <em>Exclude Given</em>}'.
@@ -6133,6 +6151,14 @@ public interface AceGenPackage extends EPackage
     EClass GIVEN = eINSTANCE.getGiven();
 
     /**
+     * The meta object literal for the '<em><b>Times</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GIVEN__TIMES = eINSTANCE.getGiven_Times();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.CustomCallImpl <em>Custom Call</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6175,14 +6201,6 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference GIVEN_REF__SCENARIO = eINSTANCE.getGivenRef_Scenario();
-
-    /**
-     * The meta object literal for the '<em><b>Times</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute GIVEN_REF__TIMES = eINSTANCE.getGivenRef_Times();
 
     /**
      * The meta object literal for the '<em><b>Exclude Given</b></em>' attribute feature.
