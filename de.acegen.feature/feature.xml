@@ -2,7 +2,7 @@
 <feature
       id="de.acegen.feature"
       label="AceGen Feature"
-      version="1.0.5">
+      version="1.1.0">
 
    <description url="https://todo.acegen.de">
       If the iron is blunt, and one does not sharpen the edge, he must use more strength, but wisdom helps one to succeed.
