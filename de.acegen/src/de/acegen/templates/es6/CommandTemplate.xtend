@@ -77,7 +77,7 @@ class CommandTemplate {
 			    
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
-						if (this.commandData.outcomes.indexOf("«outcome.getName»") >= 0) {
+						if (this.commandData.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								promises.push(new «eventName(outcome)»(this.commandData).publish());
 							«ENDIF»
@@ -156,7 +156,7 @@ class CommandTemplate {
 		    publishEvents() {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
-						if (this.commandData.outcomes.indexOf("«outcome.getName»") >= 0) {
+						if (this.commandData.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new «eventName(outcome)»(this.commandData).publish();
 							«ENDIF»

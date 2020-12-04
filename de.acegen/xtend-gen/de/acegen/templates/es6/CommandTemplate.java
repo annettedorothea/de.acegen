@@ -198,10 +198,10 @@ public class CommandTemplate {
         {
           if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
             _builder.append("\t\t");
-            _builder.append("if (this.commandData.outcomes.indexOf(\"");
+            _builder.append("if (this.commandData.outcomes.includes(\"");
             String _name_4 = outcome_2.getName();
             _builder.append(_name_4, "\t\t");
-            _builder.append("\") >= 0) {");
+            _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
               int _size_3 = outcome_2.getListeners().size();
@@ -549,10 +549,10 @@ public class CommandTemplate {
         {
           if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
             _builder.append("\t\t");
-            _builder.append("if (this.commandData.outcomes.indexOf(\"");
+            _builder.append("if (this.commandData.outcomes.includes(\"");
             String _name_4 = outcome_2.getName();
             _builder.append(_name_4, "\t\t");
-            _builder.append("\") >= 0) {");
+            _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
               int _size_3 = outcome_2.getListeners().size();
