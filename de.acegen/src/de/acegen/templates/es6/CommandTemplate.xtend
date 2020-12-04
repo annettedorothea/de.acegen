@@ -60,31 +60,33 @@ class CommandTemplate {
 		export default class «abstractCommandName» extends AsynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
-		        «FOR outcome : outcomes»
-		        	this.«outcome.getName» = "«outcome.getName»";
-		        «ENDFOR»
 		        «FOR ref : refs»
 		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
 		        «ENDFOR»
+		        this.commandData.outcomes = [];
 		    }
 		
+			«FOR outcome : outcomes»
+				add«outcome.getName.toFirstUpper»Outcome() {
+					this.commandData.outcomes.push("«outcome.getName»");
+				}
+			«ENDFOR»
+
 		    publishEvents() {
 				let promises = [];
-			    	
-				switch (this.commandData.outcome) {
+			    
 				«FOR outcome : outcomes»
-					case this.«outcome.getName»:
-						«IF outcome.listeners.size > 0»
-							promises.push(new «eventName(outcome)»(this.commandData).publish());
-						«ENDIF»
-						«FOR aceOperation : outcome.aceOperations»
-							promises.push(new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish());
-						«ENDFOR»
-						break;
+					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
+						if (this.commandData.outcomes.indexOf("«outcome.getName»") >= 0) {
+							«IF outcome.listeners.size > 0»
+								promises.push(new «eventName(outcome)»(this.commandData).publish());
+							«ENDIF»
+							«FOR aceOperation : outcome.aceOperations»
+								promises.push(new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish());
+							«ENDFOR»
+						}
+					«ENDIF»
 				«ENDFOR»
-				default:
-					return new Promise((resolve, reject) => {reject('«commandName» unhandled outcome: ' + this.commandData.outcome)});
-				}
 				return Promise.all(promises);
 		    }
 		    
@@ -139,29 +141,31 @@ class CommandTemplate {
 		export default class «abstractCommandName» extends SynchronousCommand {
 		    constructor(commandData) {
 		        super(commandData, "«es6.getName».«commandName»");
-		        «FOR outcome : outcomes»
-		        	this.«outcome.getName» = "«outcome.getName»";
-		        «ENDFOR»
+		        this.commandData.outcomes = [];
 		        «FOR ref : refs»
 		        	this.commandData.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
 		        «ENDFOR»
 		    }
 		
-		    publishEvents() {
-				switch (this.commandData.outcome) {
-				«FOR outcome : outcomes»
-					case this.«outcome.getName»:
-						«IF outcome.listeners.size > 0»
-							new «eventName(outcome)»(this.commandData).publish();
-						«ENDIF»
-						«FOR aceOperation : outcome.aceOperations»
-							new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish();
-						«ENDFOR»
-						break;
-				«ENDFOR»
-				default:
-					throw '«commandName» unhandled outcome: ' + this.commandData.outcome;
+			«FOR outcome : outcomes»
+				add«outcome.getName.toFirstUpper»Outcome() {
+					this.commandData.outcomes.push("«outcome.getName»");
 				}
+			«ENDFOR»
+
+		    publishEvents() {
+				«FOR outcome : outcomes»
+					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
+						if (this.commandData.outcomes.indexOf("«outcome.getName»") >= 0) {
+							«IF outcome.listeners.size > 0»
+								new «eventName(outcome)»(this.commandData).publish();
+							«ENDIF»
+							«FOR aceOperation : outcome.aceOperations»
+								new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish();
+							«ENDFOR»
+						}
+					«ENDIF»
+				«ENDFOR»
 		    }
 		}
 		
@@ -192,7 +196,7 @@ class CommandTemplate {
 		    }
 		
 		    handleResponse(resolve, reject) {
-		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).getName»;«ENDIF»
+		    	«IF outcomes.size == 1»this.add«outcomes.get(0).getName.toFirstUpper»Outcome();«ENDIF»
 		    	resolve();
 		    }
 		    handleError(resolve, reject) {
@@ -218,7 +222,7 @@ class CommandTemplate {
 		
 		export default class «commandName» extends «abstractCommandName» {
 		    execute() {
-		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).getName»;«ENDIF»
+		    	«IF outcomes.size == 1»this.add«outcomes.get(0).getName.toFirstUpper»Outcome();«ENDIF»
 		    }
 		}
 		

@@ -33,6 +33,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class CommandTemplate {
@@ -134,20 +135,6 @@ public class CommandTemplate {
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
     {
-      EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
-      for(final HttpClientOutcome outcome_1 : _outcomes_1) {
-        _builder.append("        ");
-        _builder.append("this.");
-        String _name_3 = outcome_1.getName();
-        _builder.append(_name_3, "        ");
-        _builder.append(" = \"");
-        String _name_4 = outcome_1.getName();
-        _builder.append(_name_4, "        ");
-        _builder.append("\";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
       EList<FromAppStateRef> _refs = it.getRefs();
       for(final FromAppStateRef ref : _refs) {
         _builder.append("        ");
@@ -168,9 +155,34 @@ public class CommandTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("        ");
+    _builder.append("this.commandData.outcomes = [];");
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
+    _builder.newLine();
+    {
+      EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
+      for(final HttpClientOutcome outcome_1 : _outcomes_1) {
+        _builder.append("\t");
+        _builder.append("add");
+        String _firstUpper = StringExtensions.toFirstUpper(outcome_1.getName());
+        _builder.append(_firstUpper, "\t");
+        _builder.append("Outcome() {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("this.commandData.outcomes.push(\"");
+        String _name_3 = outcome_1.getName();
+        _builder.append(_name_3, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("    ");
     _builder.append("publishEvents() {");
@@ -178,78 +190,66 @@ public class CommandTemplate {
     _builder.append("\t\t");
     _builder.append("let promises = [];");
     _builder.newLine();
-    _builder.append("\t    \t");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("switch (this.commandData.outcome) {");
+    _builder.append("\t    ");
     _builder.newLine();
     {
       EList<HttpClientOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
-        _builder.append("\t\t");
-        _builder.append("case this.");
-        String _name_5 = outcome_2.getName();
-        _builder.append(_name_5, "\t\t");
-        _builder.append(":");
-        _builder.newLineIfNotEmpty();
         {
-          int _size_3 = outcome_2.getListeners().size();
-          boolean _greaterThan_3 = (_size_3 > 0);
-          if (_greaterThan_3) {
+          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
             _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("promises.push(new ");
-            String _eventName_2 = this._aceExtension.eventName(it, outcome_2);
-            _builder.append(_eventName_2, "\t\t\t");
-            _builder.append("(this.commandData).publish());");
+            _builder.append("if (this.commandData.outcomes.indexOf(\"");
+            String _name_4 = outcome_2.getName();
+            _builder.append(_name_4, "\t\t");
+            _builder.append("\") >= 0) {");
             _builder.newLineIfNotEmpty();
-          }
-        }
-        {
-          EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
-          for(final HttpClientAce aceOperation_1 : _aceOperations) {
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("promises.push(new TriggerAction(new ");
-            String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
-            _builder.append(_actionName_2, "\t\t\t");
-            _builder.append("(");
             {
-              EList<Input> _input = aceOperation_1.getInput();
-              boolean _hasElements = false;
-              for(final Input inputParam : _input) {
-                if (!_hasElements) {
-                  _hasElements = true;
-                } else {
-                  _builder.appendImmediate(", ", "\t\t\t");
-                }
-                _builder.append("this.commandData.");
-                String _name_6 = inputParam.getName();
-                _builder.append(_name_6, "\t\t\t");
+              int _size_3 = outcome_2.getListeners().size();
+              boolean _greaterThan_3 = (_size_3 > 0);
+              if (_greaterThan_3) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("promises.push(new ");
+                String _eventName_2 = this._aceExtension.eventName(it, outcome_2);
+                _builder.append(_eventName_2, "\t\t\t");
+                _builder.append("(this.commandData).publish());");
+                _builder.newLineIfNotEmpty();
               }
             }
-            _builder.append(")).publish());");
-            _builder.newLineIfNotEmpty();
+            {
+              EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
+              for(final HttpClientAce aceOperation_1 : _aceOperations) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("promises.push(new TriggerAction(new ");
+                String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
+                _builder.append(_actionName_2, "\t\t\t");
+                _builder.append("(");
+                {
+                  EList<Input> _input = aceOperation_1.getInput();
+                  boolean _hasElements = false;
+                  for(final Input inputParam : _input) {
+                    if (!_hasElements) {
+                      _hasElements = true;
+                    } else {
+                      _builder.appendImmediate(", ", "\t\t\t");
+                    }
+                    _builder.append("this.commandData.");
+                    String _name_5 = inputParam.getName();
+                    _builder.append(_name_5, "\t\t\t");
+                  }
+                }
+                _builder.append(")).publish());");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t");
+            _builder.append("}");
+            _builder.newLine();
           }
         }
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("break;");
-        _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.append("default:");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return new Promise((resolve, reject) => {reject(\'");
-    String _commandName_1 = this._aceExtension.commandName(it);
-    _builder.append(_commandName_1, "\t\t\t");
-    _builder.append(" unhandled outcome: \' + this.commandData.outcome)});");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Promise.all(promises);");
     _builder.newLine();
@@ -287,11 +287,11 @@ public class CommandTemplate {
                 } else {
                   _builder.appendImmediate(",\n", "\t    \t\t");
                 }
+                String _name_6 = payload.getAttribute().getName();
+                _builder.append(_name_6, "\t    \t\t");
+                _builder.append(" : this.commandData.");
                 String _name_7 = payload.getAttribute().getName();
                 _builder.append(_name_7, "\t    \t\t");
-                _builder.append(" : this.commandData.");
-                String _name_8 = payload.getAttribute().getName();
-                _builder.append(_name_8, "\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
@@ -321,11 +321,11 @@ public class CommandTemplate {
             } else {
               _builder.appendImmediate("&", "\t\t\t");
             }
+            String _name_8 = queryParam.getAttribute().getName();
+            _builder.append(_name_8, "\t\t\t");
+            _builder.append("=${this.commandData.");
             String _name_9 = queryParam.getAttribute().getName();
             _builder.append(_name_9, "\t\t\t");
-            _builder.append("=${this.commandData.");
-            String _name_10 = queryParam.getAttribute().getName();
-            _builder.append(_name_10, "\t\t\t");
             _builder.append("}");
           }
         }
@@ -359,11 +359,11 @@ public class CommandTemplate {
             _builder.append("\t");
             _builder.append("\t\t\t");
             _builder.append("this.commandData.");
+            String _name_10 = attribute.getName();
+            _builder.append(_name_10, "\t\t\t\t");
+            _builder.append(" = data.");
             String _name_11 = attribute.getName();
             _builder.append(_name_11, "\t\t\t\t");
-            _builder.append(" = data.");
-            String _name_12 = attribute.getName();
-            _builder.append(_name_12, "\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
@@ -490,20 +490,9 @@ public class CommandTemplate {
     _builder.append(_commandName, "        ");
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
-    {
-      EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
-      for(final HttpClientOutcome outcome_1 : _outcomes_1) {
-        _builder.append("        ");
-        _builder.append("this.");
-        String _name_3 = outcome_1.getName();
-        _builder.append(_name_3, "        ");
-        _builder.append(" = \"");
-        String _name_4 = outcome_1.getName();
-        _builder.append(_name_4, "        ");
-        _builder.append("\";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
+    _builder.append("        ");
+    _builder.append("this.commandData.outcomes = [];");
+    _builder.newLine();
     {
       EList<FromAppStateRef> _refs = it.getRefs();
       for(final FromAppStateRef ref : _refs) {
@@ -529,79 +518,89 @@ public class CommandTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    {
+      EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
+      for(final HttpClientOutcome outcome_1 : _outcomes_1) {
+        _builder.append("\t");
+        _builder.append("add");
+        String _firstUpper = StringExtensions.toFirstUpper(outcome_1.getName());
+        _builder.append(_firstUpper, "\t");
+        _builder.append("Outcome() {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("this.commandData.outcomes.push(\"");
+        String _name_3 = outcome_1.getName();
+        _builder.append(_name_3, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("publishEvents() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("switch (this.commandData.outcome) {");
     _builder.newLine();
     {
       EList<HttpClientOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
-        _builder.append("\t\t");
-        _builder.append("case this.");
-        String _name_5 = outcome_2.getName();
-        _builder.append(_name_5, "\t\t");
-        _builder.append(":");
-        _builder.newLineIfNotEmpty();
         {
-          int _size_3 = outcome_2.getListeners().size();
-          boolean _greaterThan_3 = (_size_3 > 0);
-          if (_greaterThan_3) {
+          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
             _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("new ");
-            String _eventName_2 = this._aceExtension.eventName(it, outcome_2);
-            _builder.append(_eventName_2, "\t\t\t");
-            _builder.append("(this.commandData).publish();");
+            _builder.append("if (this.commandData.outcomes.indexOf(\"");
+            String _name_4 = outcome_2.getName();
+            _builder.append(_name_4, "\t\t");
+            _builder.append("\") >= 0) {");
             _builder.newLineIfNotEmpty();
-          }
-        }
-        {
-          EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
-          for(final HttpClientAce aceOperation_1 : _aceOperations) {
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("new TriggerAction(new ");
-            String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
-            _builder.append(_actionName_2, "\t\t\t");
-            _builder.append("(");
             {
-              EList<Input> _input = aceOperation_1.getInput();
-              boolean _hasElements = false;
-              for(final Input inputParam : _input) {
-                if (!_hasElements) {
-                  _hasElements = true;
-                } else {
-                  _builder.appendImmediate(", ", "\t\t\t");
-                }
-                _builder.append("this.commandData.");
-                String _name_6 = inputParam.getName();
-                _builder.append(_name_6, "\t\t\t");
+              int _size_3 = outcome_2.getListeners().size();
+              boolean _greaterThan_3 = (_size_3 > 0);
+              if (_greaterThan_3) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("new ");
+                String _eventName_2 = this._aceExtension.eventName(it, outcome_2);
+                _builder.append(_eventName_2, "\t\t\t");
+                _builder.append("(this.commandData).publish();");
+                _builder.newLineIfNotEmpty();
               }
             }
-            _builder.append(")).publish();");
-            _builder.newLineIfNotEmpty();
+            {
+              EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
+              for(final HttpClientAce aceOperation_1 : _aceOperations) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("new TriggerAction(new ");
+                String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
+                _builder.append(_actionName_2, "\t\t\t");
+                _builder.append("(");
+                {
+                  EList<Input> _input = aceOperation_1.getInput();
+                  boolean _hasElements = false;
+                  for(final Input inputParam : _input) {
+                    if (!_hasElements) {
+                      _hasElements = true;
+                    } else {
+                      _builder.appendImmediate(", ", "\t\t\t");
+                    }
+                    _builder.append("this.commandData.");
+                    String _name_5 = inputParam.getName();
+                    _builder.append(_name_5, "\t\t\t");
+                  }
+                }
+                _builder.append(")).publish();");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t");
+            _builder.append("}");
+            _builder.newLine();
           }
         }
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("break;");
-        _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.append("default:");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("throw \'");
-    String _commandName_1 = this._aceExtension.commandName(it);
-    _builder.append(_commandName_1, "\t\t\t");
-    _builder.append(" unhandled outcome: \' + this.commandData.outcome;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
@@ -719,10 +718,10 @@ public class CommandTemplate {
           int _size = it.getOutcomes().size();
           boolean _equals = (_size == 1);
           if (_equals) {
-            _builder.append("this.commandData.outcome = this.");
-            String _name_4 = it.getOutcomes().get(0).getName();
-            _builder.append(_name_4, "    \t");
-            _builder.append(";");
+            _builder.append("this.add");
+            String _firstUpper = StringExtensions.toFirstUpper(it.getOutcomes().get(0).getName());
+            _builder.append(_firstUpper, "    \t");
+            _builder.append("Outcome();");
           }
         }
         _builder.newLineIfNotEmpty();
@@ -799,10 +798,10 @@ public class CommandTemplate {
       int _size = it.getOutcomes().size();
       boolean _equals = (_size == 1);
       if (_equals) {
-        _builder.append("this.commandData.outcome = this.");
-        String _name_1 = it.getOutcomes().get(0).getName();
-        _builder.append(_name_1, "    \t");
-        _builder.append(";");
+        _builder.append("this.add");
+        String _firstUpper = StringExtensions.toFirstUpper(it.getOutcomes().get(0).getName());
+        _builder.append(_firstUpper, "    \t");
+        _builder.append("Outcome();");
       }
     }
     _builder.newLineIfNotEmpty();
