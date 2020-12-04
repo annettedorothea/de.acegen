@@ -356,6 +356,7 @@ class Data {
 		package de.acegen;
 		
 		import java.time.LocalDateTime;
+		import java.util.List;
 		
 		public interface IDataContainer {
 		
@@ -363,9 +364,11 @@ class Data {
 			
 			void setUuid(String uuid);
 
-			String getOutcome();
+			boolean hasOutcome(String outcome);
 
-			void setOutcome(String outcome);
+			List<String> getOutcomes();
+
+			void addOutcome(String outcome);
 		
 			LocalDateTime getSystemTime();
 		
@@ -386,6 +389,8 @@ class Data {
 		package de.acegen;
 		
 		import java.time.LocalDateTime;
+		import java.util.List;
+		import java.util.ArrayList;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -395,12 +400,13 @@ class Data {
 		
 			private String uuid;
 			
-			private String outcome;
+			private List<String> outcomes;
 			
 			private LocalDateTime systemTime;
 			
 			public AbstractData( String uuid ) {
 				this.uuid = uuid;
+				outcomes = new ArrayList<String>();
 			}
 		
 			@JsonProperty
@@ -426,13 +432,17 @@ class Data {
 			}
 		
 			@JsonProperty
-			public String getOutcome() {
-				return outcome;
+			public List<String> getOutcomes() {
+				return this.outcomes;
+			}
+			
+			public boolean hasOutcome(String outcome) {
+				return outcomes.contains(outcome);
 			}
 		
 			@JsonProperty
-			public void setOutcome(String outcome) {
-				this.outcome = outcome;
+			public void addOutcome(String outcome) {
+				this.outcomes.add(outcome);
 			}
 			
 		}

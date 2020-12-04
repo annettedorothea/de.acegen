@@ -59,8 +59,6 @@ class Liquibase {
 			</column>
 		</createTable>
 		
-		<addUniqueConstraint columnNames="type, uuid" tableName="timeline" />
-		
 	'''
 
 	

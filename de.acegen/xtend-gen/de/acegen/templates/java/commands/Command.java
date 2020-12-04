@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Command {
@@ -76,21 +77,6 @@ public class Command {
     _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    {
-      EList<HttpServerOutcome> _outcomes = it.getOutcomes();
-      for(final HttpServerOutcome outcome : _outcomes) {
-        _builder.append("\t");
-        _builder.append("protected static final String ");
-        String _name_1 = outcome.getName();
-        _builder.append(_name_1, "\t");
-        _builder.append(" = \"");
-        String _name_2 = outcome.getName();
-        _builder.append(_name_2, "\t");
-        _builder.append("\";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
     String _abstractCommandName_1 = this._aceExtension.abstractCommandName(it);
@@ -102,8 +88,8 @@ public class Command {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _name_3 = java.getName();
-    _builder.append(_name_3, "\t\t");
+    String _name_1 = java.getName();
+    _builder.append(_name_1, "\t\t");
     _builder.append(".commands.");
     String _commandName = this._aceExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
@@ -113,28 +99,47 @@ public class Command {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    {
+      EList<HttpServerOutcome> _outcomes = it.getOutcomes();
+      for(final HttpServerOutcome outcome : _outcomes) {
+        _builder.append("\t");
+        _builder.append("protected void add");
+        String _firstUpper = StringExtensions.toFirstUpper(outcome.getName());
+        _builder.append(_firstUpper, "\t");
+        _builder.append("Outcome() {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("this.commandData.addOutcome(\"");
+        String _name_2 = outcome.getName();
+        _builder.append(_name_2, "\t\t");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("switch (this.commandData.getOutcome()) {");
-    _builder.newLine();
     {
       EList<HttpServerOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpServerOutcome outcome_1 : _outcomes_1) {
-        _builder.append("\t\t");
-        _builder.append("case ");
-        String _name_4 = outcome_1.getName();
-        _builder.append(_name_4, "\t\t");
-        _builder.append(":");
-        _builder.newLineIfNotEmpty();
         {
           int _size = outcome_1.getListeners().size();
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
+            _builder.append("\t\t");
+            _builder.append("if (this.commandData.hasOutcome(\"");
+            String _name_3 = outcome_1.getName();
+            _builder.append(_name_3, "\t\t");
+            _builder.append("\")){");
+            _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new ");
@@ -142,23 +147,13 @@ public class Command {
             _builder.append(_eventNameWithPackage, "\t\t\t");
             _builder.append("(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("}");
+            _builder.newLine();
           }
         }
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("break;");
-        _builder.newLine();
       }
     }
-    _builder.append("\t\t");
-    _builder.append("default:");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("throw new RuntimeException(\"unhandled outcome \" + this.commandData.getOutcome());");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
@@ -251,10 +246,10 @@ public class Command {
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("\t\t");
-        _builder.append("this.commandData.setOutcome(");
-        String _name_1 = it.getOutcomes().get(0).getName();
-        _builder.append(_name_1, "\t\t");
-        _builder.append(");");
+        _builder.append("this.commandData.add");
+        String _firstUpper = StringExtensions.toFirstUpper(it.getOutcomes().get(0).getName());
+        _builder.append(_firstUpper, "\t\t");
+        _builder.append("Outcome();");
         _builder.newLineIfNotEmpty();
       }
     }

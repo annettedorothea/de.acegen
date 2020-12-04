@@ -50,27 +50,25 @@ class Command {
 		
 		public abstract class «abstractCommandName» extends Command<«getModel.dataParamType»> {
 		
-			«FOR outcome : outcomes»
-				protected static final String «outcome.getName» = "«outcome.getName»";
-			«ENDFOR»
-		
 			public «abstractCommandName»(«getModel.dataParamType» commandParam, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super("«java.getName».commands.«commandName»", commandParam, daoProvider, viewProvider, appConfiguration);
 			}
 		
+			«FOR outcome : outcomes»
+				protected void add«outcome.getName.toFirstUpper»Outcome() {
+					this.commandData.addOutcome("«outcome.getName»");
+				}
+
+			«ENDFOR»
 			@Override
 			public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
-				switch (this.commandData.getOutcome()) {
 				«FOR outcome : outcomes»
-					case «outcome.getName»:
-						«IF outcome.listeners.size > 0»
+					«IF outcome.listeners.size > 0»
+						if (this.commandData.hasOutcome("«outcome.getName»")){
 							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);
-						«ENDIF»
-						break;
+						}
+					«ENDIF»
 				«ENDFOR»
-				default:
-					throw new RuntimeException("unhandled outcome " + this.commandData.getOutcome());
-				}
 			}
 			
 		}
@@ -107,7 +105,7 @@ class Command {
 			@Override
 			protected void executeCommand(PersistenceHandle readonlyHandle) {
 				«IF outcomes.size > 0»
-					this.commandData.setOutcome(«outcomes.get(0).getName»);
+					this.commandData.add«outcomes.get(0).getName.toFirstUpper»Outcome();
 				«ENDIF»
 			}
 		

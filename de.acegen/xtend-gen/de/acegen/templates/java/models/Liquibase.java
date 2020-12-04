@@ -154,9 +154,6 @@ public class Liquibase {
     _builder.append("</createTable>");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("<addUniqueConstraint columnNames=\"type, uuid\" tableName=\"timeline\" />");
-    _builder.newLine();
-    _builder.newLine();
     return _builder;
   }
 }
