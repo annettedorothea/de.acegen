@@ -8132,9 +8132,9 @@ rule__HttpServerView__Group__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getHttpServerViewAccess().getNameAssignment_0()); }
-	(rule__HttpServerView__NameAssignment_0)
-	{ after(grammarAccess.getHttpServerViewAccess().getNameAssignment_0()); }
+	{ before(grammarAccess.getHttpServerViewAccess().getAfterCommitAssignment_0()); }
+	(rule__HttpServerView__AfterCommitAssignment_0)?
+	{ after(grammarAccess.getHttpServerViewAccess().getAfterCommitAssignment_0()); }
 )
 ;
 finally {
@@ -8147,6 +8147,7 @@ rule__HttpServerView__Group__1
 	}
 :
 	rule__HttpServerView__Group__1__Impl
+	rule__HttpServerView__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -8158,9 +8159,35 @@ rule__HttpServerView__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getHttpServerViewAccess().getGroup_1()); }
-	(rule__HttpServerView__Group_1__0)?
-	{ after(grammarAccess.getHttpServerViewAccess().getGroup_1()); }
+	{ before(grammarAccess.getHttpServerViewAccess().getNameAssignment_1()); }
+	(rule__HttpServerView__NameAssignment_1)
+	{ after(grammarAccess.getHttpServerViewAccess().getNameAssignment_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__HttpServerView__Group__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__HttpServerView__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__HttpServerView__Group__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getHttpServerViewAccess().getGroup_2()); }
+	(rule__HttpServerView__Group_2__0)?
+	{ after(grammarAccess.getHttpServerViewAccess().getGroup_2()); }
 )
 ;
 finally {
@@ -8168,80 +8195,80 @@ finally {
 }
 
 
-rule__HttpServerView__Group_1__0
+rule__HttpServerView__Group_2__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__HttpServerView__Group_1__0__Impl
-	rule__HttpServerView__Group_1__1
+	rule__HttpServerView__Group_2__0__Impl
+	rule__HttpServerView__Group_2__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__Group_1__0__Impl
+rule__HttpServerView__Group_2__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()); }
+	{ before(grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_2_0()); }
 	'{'
-	{ after(grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()); }
+	{ after(grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_2_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__Group_1__1
+rule__HttpServerView__Group_2__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__HttpServerView__Group_1__1__Impl
-	rule__HttpServerView__Group_1__2
+	rule__HttpServerView__Group_2__1__Impl
+	rule__HttpServerView__Group_2__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__Group_1__1__Impl
+rule__HttpServerView__Group_2__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_1_1()); }
-	(rule__HttpServerView__RenderFunctionsAssignment_1_1)*
-	{ after(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_1_1()); }
+	{ before(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_2_1()); }
+	(rule__HttpServerView__RenderFunctionsAssignment_2_1)*
+	{ after(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_2_1()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__Group_1__2
+rule__HttpServerView__Group_2__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__HttpServerView__Group_1__2__Impl
+	rule__HttpServerView__Group_2__2__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__Group_1__2__Impl
+rule__HttpServerView__Group_2__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()); }
+	{ before(grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_2_2()); }
 	'}'
-	{ after(grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()); }
+	{ after(grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_2_2()); }
 )
 ;
 finally {
@@ -13612,30 +13639,49 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__NameAssignment_0
+rule__HttpServerView__AfterCommitAssignment_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_0_0()); }
-		RULE_ID
-		{ after(grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_0_0()); }
+		{ before(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); }
+		(
+			{ before(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); }
+			'afterCommit'
+			{ after(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); }
+		)
+		{ after(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpServerView__RenderFunctionsAssignment_1_1
+rule__HttpServerView__NameAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0()); }
+		{ before(grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_1_0()); }
+		RULE_ID
+		{ after(grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__HttpServerView__RenderFunctionsAssignment_2_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0()); }
 		ruleHttpServerViewFunction
-		{ after(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0()); }
+		{ after(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0()); }
 	)
 ;
 finally {

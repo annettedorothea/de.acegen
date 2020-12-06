@@ -803,6 +803,9 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.commitTransaction();");
     _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("command.publishAfterCommitEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
+    _builder.newLine();
     _builder.append("\t\t");
     CharSequence _catchFinallyBlock = this.catchFinallyBlock();
     _builder.append(_catchFinallyBlock, "\t\t");

@@ -1481,13 +1481,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_VIEW = 27;
 
   /**
+   * The feature id for the '<em><b>After Commit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER_VIEW__AFTER_COMMIT = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_VIEW__NAME = 0;
+  int HTTP_SERVER_VIEW__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Render Functions</b></em>' containment reference list.
@@ -1496,7 +1505,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_VIEW__RENDER_FUNCTIONS = 1;
+  int HTTP_SERVER_VIEW__RENDER_FUNCTIONS = 2;
 
   /**
    * The number of structural features of the '<em>Http Server View</em>' class.
@@ -1505,7 +1514,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_VIEW_FEATURE_COUNT = 2;
+  int HTTP_SERVER_VIEW_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerViewFunctionImpl <em>Http Server View Function</em>}' class.
@@ -3935,6 +3944,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServerView();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServerView#isAfterCommit <em>After Commit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>After Commit</em>'.
+   * @see de.acegen.aceGen.HttpServerView#isAfterCommit()
+   * @see #getHttpServerView()
+   * @generated
+   */
+  EAttribute getHttpServerView_AfterCommit();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServerView#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5987,6 +6007,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_SERVER_VIEW = eINSTANCE.getHttpServerView();
+
+    /**
+     * The meta object literal for the '<em><b>After Commit</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER_VIEW__AFTER_COMMIT = eINSTANCE.getHttpServerView_AfterCommit();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

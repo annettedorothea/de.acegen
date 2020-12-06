@@ -116,7 +116,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpServerAceReadAccess().getGroup_10(), "rule__HttpServerAceRead__Group_10__0");
 			builder.put(grammarAccess.getAttributeParamRefAccess().getGroup(), "rule__AttributeParamRef__Group__0");
 			builder.put(grammarAccess.getHttpServerViewAccess().getGroup(), "rule__HttpServerView__Group__0");
-			builder.put(grammarAccess.getHttpServerViewAccess().getGroup_1(), "rule__HttpServerView__Group_1__0");
+			builder.put(grammarAccess.getHttpServerViewAccess().getGroup_2(), "rule__HttpServerView__Group_2__0");
 			builder.put(grammarAccess.getHttpServerViewFunctionAccess().getGroup(), "rule__HttpServerViewFunction__Group__0");
 			builder.put(grammarAccess.getAuthUserAccess().getGroup(), "rule__AuthUser__Group__0");
 			builder.put(grammarAccess.getAuthUserAccess().getGroup_1(), "rule__AuthUser__Group_1__0");
@@ -257,8 +257,9 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpServerAceReadAccess().getResponseAssignment_10_1(), "rule__HttpServerAceRead__ResponseAssignment_10_1");
 			builder.put(grammarAccess.getAttributeParamRefAccess().getNotNullAssignment_0(), "rule__AttributeParamRef__NotNullAssignment_0");
 			builder.put(grammarAccess.getAttributeParamRefAccess().getAttributeAssignment_1(), "rule__AttributeParamRef__AttributeAssignment_1");
-			builder.put(grammarAccess.getHttpServerViewAccess().getNameAssignment_0(), "rule__HttpServerView__NameAssignment_0");
-			builder.put(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_1_1(), "rule__HttpServerView__RenderFunctionsAssignment_1_1");
+			builder.put(grammarAccess.getHttpServerViewAccess().getAfterCommitAssignment_0(), "rule__HttpServerView__AfterCommitAssignment_0");
+			builder.put(grammarAccess.getHttpServerViewAccess().getNameAssignment_1(), "rule__HttpServerView__NameAssignment_1");
+			builder.put(grammarAccess.getHttpServerViewAccess().getRenderFunctionsAssignment_2_1(), "rule__HttpServerView__RenderFunctionsAssignment_2_1");
 			builder.put(grammarAccess.getHttpServerViewFunctionAccess().getNameAssignment_0(), "rule__HttpServerViewFunction__NameAssignment_0");
 			builder.put(grammarAccess.getHttpServerViewFunctionAccess().getModelAssignment_2(), "rule__HttpServerViewFunction__ModelAssignment_2");
 			builder.put(grammarAccess.getAuthUserAccess().getNameAssignment_0(), "rule__AuthUser__NameAssignment_0");

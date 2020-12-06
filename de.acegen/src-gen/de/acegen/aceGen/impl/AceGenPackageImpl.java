@@ -1766,7 +1766,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServerView_Name()
+  public EAttribute getHttpServerView_AfterCommit()
   {
     return (EAttribute)httpServerViewEClass.getEStructuralFeatures().get(0);
   }
@@ -1777,9 +1777,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getHttpServerView_Name()
+  {
+    return (EAttribute)httpServerViewEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getHttpServerView_RenderFunctions()
   {
-    return (EReference)httpServerViewEClass.getEStructuralFeatures().get(1);
+    return (EReference)httpServerViewEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3070,6 +3081,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeParamRefEClass, ATTRIBUTE_PARAM_REF__ATTRIBUTE);
 
     httpServerViewEClass = createEClass(HTTP_SERVER_VIEW);
+    createEAttribute(httpServerViewEClass, HTTP_SERVER_VIEW__AFTER_COMMIT);
     createEAttribute(httpServerViewEClass, HTTP_SERVER_VIEW__NAME);
     createEReference(httpServerViewEClass, HTTP_SERVER_VIEW__RENDER_FUNCTIONS);
 
@@ -3400,6 +3412,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttributeParamRef_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeParamRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerViewEClass, HttpServerView.class, "HttpServerView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHttpServerView_AfterCommit(), ecorePackage.getEBoolean(), "afterCommit", null, 0, 1, HttpServerView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpServerView_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServerView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerView_RenderFunctions(), this.getHttpServerViewFunction(), null, "renderFunctions", null, 0, -1, HttpServerView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

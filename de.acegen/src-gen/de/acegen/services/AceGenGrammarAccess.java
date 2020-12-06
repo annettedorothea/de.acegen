@@ -1800,43 +1800,51 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	public class HttpServerViewElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerView");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cRenderFunctionsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0 = (RuleCall)cRenderFunctionsAssignment_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cAfterCommitAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cAfterCommitAfterCommitKeyword_0_0 = (Keyword)cAfterCommitAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cRenderFunctionsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0 = (RuleCall)cRenderFunctionsAssignment_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//HttpServerView:
-		//	name=ID ('{'
+		//	afterCommit?='afterCommit'? name=ID ('{'
 		//	renderFunctions+=HttpServerViewFunction*
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('{' renderFunctions+=HttpServerViewFunction* '}')?
+		//afterCommit?='afterCommit'? name=ID ('{' renderFunctions+=HttpServerViewFunction* '}')?
 		public Group getGroup() { return cGroup; }
 		
+		//afterCommit?='afterCommit'?
+		public Assignment getAfterCommitAssignment_0() { return cAfterCommitAssignment_0; }
+		
+		//'afterCommit'
+		public Keyword getAfterCommitAfterCommitKeyword_0_0() { return cAfterCommitAfterCommitKeyword_0_0; }
+		
 		//name=ID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
 		//('{' renderFunctions+=HttpServerViewFunction* '}')?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_0() { return cLeftCurlyBracketKeyword_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 		
 		//renderFunctions+=HttpServerViewFunction*
-		public Assignment getRenderFunctionsAssignment_1_1() { return cRenderFunctionsAssignment_1_1; }
+		public Assignment getRenderFunctionsAssignment_2_1() { return cRenderFunctionsAssignment_2_1; }
 		
 		//HttpServerViewFunction
-		public RuleCall getRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0() { return cRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0; }
+		public RuleCall getRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0() { return cRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_2() { return cRightCurlyBracketKeyword_1_2; }
+		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 	public class HttpServerViewFunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerViewFunction");
@@ -3805,7 +3813,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//HttpServerView:
-	//	name=ID ('{'
+	//	afterCommit?='afterCommit'? name=ID ('{'
 	//	renderFunctions+=HttpServerViewFunction*
 	//	'}')?;
 	public HttpServerViewElements getHttpServerViewAccess() {

@@ -139,6 +139,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//AttributeParamRef/attribute"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerView">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerView/afterCommit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerView/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerView/renderFunctions"/>
     </genClasses>

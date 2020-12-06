@@ -661,7 +661,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpServerView returns HttpServerView
 	 *
 	 * Constraint:
-	 *     (name=ID renderFunctions+=HttpServerViewFunction*)
+	 *     (afterCommit?='afterCommit'? name=ID renderFunctions+=HttpServerViewFunction*)
 	 */
 	protected void sequence_HttpServerView(ISerializationContext context, HttpServerView semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

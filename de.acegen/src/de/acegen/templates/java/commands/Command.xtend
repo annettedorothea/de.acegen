@@ -23,6 +23,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerView
 
 class Command {
 
@@ -63,9 +64,20 @@ class Command {
 			@Override
 			public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0»
+					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (this.commandData.hasOutcome("«outcome.getName»")){
 							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);
+						}
+					«ENDIF»
+				«ENDFOR»
+			}
+			
+			@Override
+			public void publishAfterCommitEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+				«FOR outcome : outcomes»
+					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
+						if (this.commandData.hasOutcome("«outcome.getName»")){
+							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publishAfterCommit(handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -194,6 +206,9 @@ class Command {
 			void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
 		
 			void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);
+
+			void publishAfterCommitEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);
+
 		}
 		
 		

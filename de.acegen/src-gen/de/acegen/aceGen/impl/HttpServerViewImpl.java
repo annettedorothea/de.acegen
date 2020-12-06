@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerViewImpl#isAfterCommit <em>After Commit</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerViewImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerViewImpl#getRenderFunctions <em>Render Functions</em>}</li>
  * </ul>
@@ -39,6 +40,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements HttpServerView
 {
+  /**
+   * The default value of the '{@link #isAfterCommit() <em>After Commit</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAfterCommit()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean AFTER_COMMIT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isAfterCommit() <em>After Commit</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAfterCommit()
+   * @generated
+   * @ordered
+   */
+  protected boolean afterCommit = AFTER_COMMIT_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -88,6 +109,31 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_SERVER_VIEW;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isAfterCommit()
+  {
+    return afterCommit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAfterCommit(boolean newAfterCommit)
+  {
+    boolean oldAfterCommit = afterCommit;
+    afterCommit = newAfterCommit;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER_VIEW__AFTER_COMMIT, oldAfterCommit, afterCommit));
   }
 
   /**
@@ -156,6 +202,8 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_VIEW__AFTER_COMMIT:
+        return isAfterCommit();
       case AceGenPackage.HTTP_SERVER_VIEW__NAME:
         return getName();
       case AceGenPackage.HTTP_SERVER_VIEW__RENDER_FUNCTIONS:
@@ -175,6 +223,9 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_VIEW__AFTER_COMMIT:
+        setAfterCommit((Boolean)newValue);
+        return;
       case AceGenPackage.HTTP_SERVER_VIEW__NAME:
         setName((String)newValue);
         return;
@@ -196,6 +247,9 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_VIEW__AFTER_COMMIT:
+        setAfterCommit(AFTER_COMMIT_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_SERVER_VIEW__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -216,6 +270,8 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_VIEW__AFTER_COMMIT:
+        return afterCommit != AFTER_COMMIT_EDEFAULT;
       case AceGenPackage.HTTP_SERVER_VIEW__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER_VIEW__RENDER_FUNCTIONS:
@@ -235,7 +291,9 @@ public class HttpServerViewImpl extends MinimalEObjectImpl.Container implements 
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (afterCommit: ");
+    result.append(afterCommit);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

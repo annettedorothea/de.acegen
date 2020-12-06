@@ -59,9 +59,11 @@ class ViewProvider {
 		public class AbstractViewProvider {
 		
 			private final Map<String, List<EventConsumer>> consumerMap;
+			private final Map<String, List<EventConsumer>> afterCommitConsumerMap;
 		
 			public AbstractViewProvider() {
 				consumerMap = new HashMap<String, List<EventConsumer>>();
+				afterCommitConsumerMap = new HashMap<String, List<EventConsumer>>();
 			}
 			
 			public void addConsumer(String eventName, EventConsumer eventConsumer) {
@@ -73,8 +75,21 @@ class ViewProvider {
 				consumerForEvent.add(eventConsumer);
 			}
 		
+			public void addAfterCommitConsumer(String eventName, EventConsumer eventConsumer) {
+				List<EventConsumer> consumerForEvent = afterCommitConsumerMap.get(eventName);
+				if (consumerForEvent == null) {
+					consumerForEvent = new ArrayList<EventConsumer>();
+					afterCommitConsumerMap.put(eventName, consumerForEvent);
+				}
+				consumerForEvent.add(eventConsumer);
+			}
+		
 			public List<EventConsumer> getConsumerForEvent(String eventName) {
 				return consumerMap.get(eventName);
+			}
+		
+			public List<EventConsumer> getAfterCommitConsumerForEvent(String eventName) {
+				return afterCommitConsumerMap.get(eventName);
 			}
 		
 		}

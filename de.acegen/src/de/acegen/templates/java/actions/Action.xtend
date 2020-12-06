@@ -347,6 +347,7 @@ class Action {
 					command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
 					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
+					command.publishAfterCommitEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 				«catchFinallyBlock»
 			}
 		

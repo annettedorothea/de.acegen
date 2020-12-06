@@ -2858,9 +2858,23 @@ ruleHttpServerView returns [EObject current=null]
 	(
 		(
 			(
-				lv_name_0_0=RULE_ID
+				lv_afterCommit_0_0='afterCommit'
 				{
-					newLeafNode(lv_name_0_0, grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_0_0());
+					newLeafNode(lv_afterCommit_0_0, grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getHttpServerViewRule());
+					}
+					setWithLastConsumed($current, "afterCommit", lv_afterCommit_0_0 != null, "afterCommit");
+				}
+			)
+		)?
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
@@ -2869,22 +2883,22 @@ ruleHttpServerView returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_0_0,
+						lv_name_1_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_1='{'
+			otherlv_2='{'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0());
+				newLeafNode(otherlv_2, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0());
 					}
-					lv_renderFunctions_2_0=ruleHttpServerViewFunction
+					lv_renderFunctions_3_0=ruleHttpServerViewFunction
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerViewRule());
@@ -2892,15 +2906,15 @@ ruleHttpServerView returns [EObject current=null]
 						add(
 							$current,
 							"renderFunctions",
-							lv_renderFunctions_2_0,
+							lv_renderFunctions_3_0,
 							"de.acegen.AceGen.HttpServerViewFunction");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_3='}'
+			otherlv_4='}'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2());
+				newLeafNode(otherlv_4, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_2_2());
 			}
 		)?
 	)

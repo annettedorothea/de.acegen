@@ -20,6 +20,7 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
+import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AceExtension;
@@ -28,6 +29,7 @@ import de.acegen.extensions.java.ViewExtension;
 import java.util.Arrays;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
@@ -153,9 +155,19 @@ public class AppRegistration {
         {
           EList<HttpServerViewFunction> _listeners = outcome.getListeners();
           for(final HttpServerViewFunction listener : _listeners) {
-            CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
-            _builder.append(_addConsumers);
-            _builder.newLineIfNotEmpty();
+            {
+              EObject _eContainer = listener.eContainer();
+              boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
+              if (_isAfterCommit) {
+                CharSequence _addAfterCommitConsumers = this.addAfterCommitConsumers(httpServer, it, outcome, listener);
+                _builder.append(_addAfterCommitConsumers);
+                _builder.newLineIfNotEmpty();
+              } else {
+                CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
+                _builder.append(_addConsumers);
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }
@@ -171,6 +183,31 @@ public class AppRegistration {
   private CharSequence addConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("viewProvider.addConsumer(\"");
+    String _name = java.getName();
+    _builder.append(_name);
+    _builder.append(".events.");
+    String _eventName = this._aceExtension.eventName(aceOperation, outcome);
+    _builder.append(_eventName);
+    _builder.append("\", (dataContainer, handle) -> {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("viewProvider.");
+    String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
+    _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
+    _builder.append("((");
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
+    _builder.append(_dataNameWithPackage, "\t");
+    _builder.append(") dataContainer, handle);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("});");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence addAfterCommitConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("viewProvider.addAfterCommitConsumer(\"");
     String _name = java.getName();
     _builder.append(_name);
     _builder.append(".events.");

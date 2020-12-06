@@ -42,7 +42,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_HttpServerAceWrite_ResponseKeyword_10_0_q;
 	protected AbstractElementAlias match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a;
 	protected AbstractElementAlias match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a;
-	protected AbstractElementAlias match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q;
+	protected AbstractElementAlias match_HttpServerView___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q;
 	protected AbstractElementAlias match_HttpServer_ACEKeyword_7_0_q;
 	protected AbstractElementAlias match_HttpServer_ModelsKeyword_9_0_q;
 	protected AbstractElementAlias match_HttpServer_ScenariosKeyword_10_0_q;
@@ -79,7 +79,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_HttpServerAceWrite_ResponseKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_10_0());
 		match_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2()), new TokenAlias(false, false, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0()));
-		match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_1_2()));
+		match_HttpServerView___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpServerViewAccess().getRightCurlyBracketKeyword_2_2()));
 		match_HttpServer_ACEKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getACEKeyword_7_0());
 		match_HttpServer_ModelsKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getModelsKeyword_9_0());
 		match_HttpServer_ScenariosKeyword_10_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAccess().getScenariosKeyword_10_0());
@@ -146,8 +146,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpServerOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a.equals(syntax))
 				emit_HttpServerOutcome___RightParenthesisKeyword_2_2_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q.equals(syntax))
-				emit_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpServerView___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q.equals(syntax))
+				emit_HttpServerView___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ACEKeyword_7_0_q.equals(syntax))
 				emit_HttpServer_ACEKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServer_ModelsKeyword_9_0_q.equals(syntax))
@@ -482,7 +482,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     name=ID (ambiguity) (rule end)
 	 */
-	protected void emit_HttpServerView___LeftCurlyBracketKeyword_1_0_RightCurlyBracketKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpServerView___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

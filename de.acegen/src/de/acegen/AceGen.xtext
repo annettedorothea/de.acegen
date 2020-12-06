@@ -195,7 +195,7 @@ AttributeParamRef:
 ;
 
 HttpServerView: 
-	name = ID 
+	afterCommit ?= 'afterCommit'? name = ID 
 	('{'
 		(renderFunctions += HttpServerViewFunction)*
 	'}')?		

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpServerView#isAfterCommit <em>After Commit</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerView#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpServerView#getRenderFunctions <em>Render Functions</em>}</li>
  * </ul>
@@ -26,6 +27,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpServerView extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>After Commit</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>After Commit</em>' attribute.
+   * @see #setAfterCommit(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpServerView_AfterCommit()
+   * @model
+   * @generated
+   */
+  boolean isAfterCommit();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpServerView#isAfterCommit <em>After Commit</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>After Commit</em>' attribute.
+   * @see #isAfterCommit()
+   * @generated
+   */
+  void setAfterCommit(boolean value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

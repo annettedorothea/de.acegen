@@ -28,6 +28,7 @@ import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.extensions.java.ViewExtension
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerView
 
 class AppRegistration {
 
@@ -88,7 +89,11 @@ class AppRegistration {
 	private def dispatch registerConsumer(HttpServerAceWrite it, HttpServer httpServer) '''
 		«FOR outcome : outcomes»
 			«FOR listener : outcome.listeners»
-				«addConsumers(httpServer, it, outcome, listener)»
+				«IF (listener.eContainer as HttpServerView).afterCommit»
+					«addAfterCommitConsumers(httpServer, it, outcome, listener)»
+				«ELSE»
+					«addConsumers(httpServer, it, outcome, listener)»
+				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
 	'''
@@ -97,6 +102,13 @@ class AppRegistration {
 	
 	private def addConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
 		viewProvider.addConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
+			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
+		});
+		
+	'''
+
+	private def addAfterCommitConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
+		viewProvider.addAfterCommitConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
 			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
 		});
 		

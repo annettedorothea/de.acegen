@@ -93,6 +93,15 @@ class Event {
 				}
 			}
 		
+			public void notifyAfterCommitListeners(PersistenceHandle handle) {
+				List<EventConsumer> consumerList = viewProvider.getAfterCommitConsumerForEvent(eventName);
+				if (consumerList != null) {
+					for (EventConsumer consumer : consumerList) {
+						consumer.consumeEvent(this.eventData, handle);
+					}
+				}
+			}
+		
 			public IDataContainer getEventData() {
 				return eventData;
 			}
@@ -106,6 +115,13 @@ class Event {
 					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
 				}
 				this.notifyListeners(handle);
+			}
+		
+			public void publishAfterCommit(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+				if (appConfiguration.getConfig().writeTimeline()) {
+					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
+				}
+				this.notifyAfterCommitListeners(handle);
 			}
 		
 		}
@@ -126,8 +142,12 @@ class Event {
 			IDataContainer getEventData();
 			
 			void publish(PersistenceHandle handle, PersistenceHandle timelineHandle);
+
+			void publishAfterCommit(PersistenceHandle handle, PersistenceHandle timelineHandle);
 			
 			void notifyListeners(PersistenceHandle handle);
+
+			void notifyAfterCommitListeners(PersistenceHandle handle);
 		
 		}
 		
