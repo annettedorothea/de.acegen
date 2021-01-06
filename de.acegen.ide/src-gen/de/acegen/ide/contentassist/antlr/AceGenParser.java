@@ -70,7 +70,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientAttributeAccess().getGroup_1(), "rule__ClientAttribute__Group_1__0");
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup(), "rule__SingleClientAttribute__Group__0");
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup_4(), "rule__SingleClientAttribute__Group_4__0");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup_7(), "rule__SingleClientAttribute__Group_7__0");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getGroup(), "rule__GroupedClientAttribute__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup(), "rule__ClientScenario__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup_1(), "rule__ClientScenario__Group_1__0");
@@ -164,8 +163,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1(), "rule__Project__HttpServerAssignment_1_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
 			builder.put(grammarAccess.getHttpClientAccess().getAceOperationsAssignment_1_1(), "rule__HttpClient__AceOperationsAssignment_1_1");
-			builder.put(grammarAccess.getHttpClientAccess().getAppStatePresentAssignment_2_0(), "rule__HttpClient__AppStatePresentAssignment_2_0");
-			builder.put(grammarAccess.getHttpClientAccess().getAppStateAssignment_2_1_1(), "rule__HttpClient__AppStateAssignment_2_1_1");
+			builder.put(grammarAccess.getHttpClientAccess().getUiPresentAssignment_2_0(), "rule__HttpClient__UiPresentAssignment_2_0");
+			builder.put(grammarAccess.getHttpClientAccess().getUiAssignment_2_1_1(), "rule__HttpClient__UiAssignment_2_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getScenariosAssignment_3_1(), "rule__HttpClient__ScenariosAssignment_3_1");
 			builder.put(grammarAccess.getHttpClientAceAccess().getAsyncAssignment_0(), "rule__HttpClientAce__AsyncAssignment_0");
 			builder.put(grammarAccess.getHttpClientAceAccess().getNameAssignment_1(), "rule__HttpClientAce__NameAssignment_1");
@@ -184,14 +183,11 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpClientOutcomeAccess().getAceOperationsAssignment_3_2(), "rule__HttpClientOutcome__AceOperationsAssignment_3_2");
 			builder.put(grammarAccess.getHttpClientStateFunctionAccess().getStateFunctionTypeAssignment_0(), "rule__HttpClientStateFunction__StateFunctionTypeAssignment_0");
 			builder.put(grammarAccess.getHttpClientStateFunctionAccess().getStateElementAssignment_1(), "rule__HttpClientStateFunction__StateElementAssignment_1");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getNotNullAssignment_0(), "rule__SingleClientAttribute__NotNullAssignment_0");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getListAssignment_1(), "rule__SingleClientAttribute__ListAssignment_1");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getTypeAssignment_2(), "rule__SingleClientAttribute__TypeAssignment_2");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getNameAssignment_3(), "rule__SingleClientAttribute__NameAssignment_3");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getModelAssignment_4_1(), "rule__SingleClientAttribute__ModelAssignment_4_1");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getHashAssignment_5(), "rule__SingleClientAttribute__HashAssignment_5");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getStorageAssignment_6(), "rule__SingleClientAttribute__StorageAssignment_6");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getAttributesAssignment_7_1(), "rule__SingleClientAttribute__AttributesAssignment_7_1");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getListAssignment_0(), "rule__SingleClientAttribute__ListAssignment_0");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getNameAssignment_1(), "rule__SingleClientAttribute__NameAssignment_1");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getHashAssignment_2(), "rule__SingleClientAttribute__HashAssignment_2");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getStorageAssignment_3(), "rule__SingleClientAttribute__StorageAssignment_3");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getAttributesAssignment_4_1(), "rule__SingleClientAttribute__AttributesAssignment_4_1");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getNameAssignment_0(), "rule__GroupedClientAttribute__NameAssignment_0");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupAssignment_2(), "rule__GroupedClientAttribute__AttributeGroupAssignment_2");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupAssignment_3(), "rule__GroupedClientAttribute__AttributeGroupAssignment_3");

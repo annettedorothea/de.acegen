@@ -569,7 +569,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* (appStatePresent?='appState' appState+=ClientAttribute*)? scenarios+=ClientScenario*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* (uiPresent?='ui' ui+=ClientAttribute*)? scenarios+=ClientScenario*)
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1026,16 +1026,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SingleClientAttribute returns SingleClientAttribute
 	 *
 	 * Constraint:
-	 *     (
-	 *         notNull?='NotNull'? 
-	 *         list?='List'? 
-	 *         type=Type? 
-	 *         name=ID 
-	 *         model=[Model|QualifiedName]? 
-	 *         hash?='location.hash'? 
-	 *         storage?='storage'? 
-	 *         attributes+=ClientAttribute*
-	 *     )
+	 *     (list?='List'? name=ID hash?='location.hash'? storage?='storage'? attributes+=ClientAttribute*)
 	 */
 	protected void sequence_SingleClientAttribute(ISerializationContext context, SingleClientAttribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

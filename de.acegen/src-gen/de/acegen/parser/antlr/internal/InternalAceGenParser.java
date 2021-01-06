@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'appState'", "'{'", "'}'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'set'", "'merge'", "'group'", "'NotNull'", "'List'", "'serverModel'", "'location.hash'", "'storage'", "'GIVEN'", "'WHEN'", "'THEN'", "'nonDeterministicValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'nonDeterministic'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'afterCommit'", "'persistent'", "'extends'", "'x'", "'excludeGIVEN'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'json'", "'undefined'", "'true'", "'false'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'{'", "'}'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'set'", "'merge'", "'group'", "'List'", "'location.hash'", "'storage'", "'GIVEN'", "'WHEN'", "'THEN'", "'nonDeterministicValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'nonDeterministic'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'afterCommit'", "'persistent'", "'extends'", "'x'", "'excludeGIVEN'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'json'", "'undefined'", "'true'", "'false'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -81,7 +81,6 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final int T__13=13;
     public static final int T__14=14;
     public static final int T__95=95;
-    public static final int T__96=96;
     public static final int T__26=26;
     public static final int T__27=27;
     public static final int T__28=28;
@@ -309,7 +308,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
-                    if ( (LA2_0==50) ) {
+                    if ( (LA2_0==48) ) {
                         alt2=1;
                     }
                     switch (alt2) {
@@ -415,12 +414,12 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpClient"
-    // InternalAceGen.g:150:1: ruleHttpClient returns [EObject current=null] : ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? ) ;
+    // InternalAceGen.g:150:1: ruleHttpClient returns [EObject current=null] : ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? ) ;
     public final EObject ruleHttpClient() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
-        Token lv_appStatePresent_3_0=null;
+        Token lv_uiPresent_3_0=null;
         Token otherlv_4=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
@@ -428,7 +427,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
         EObject lv_aceOperations_2_0 = null;
 
-        EObject lv_appState_5_0 = null;
+        EObject lv_ui_5_0 = null;
 
         EObject lv_scenarios_8_0 = null;
 
@@ -437,11 +436,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:156:2: ( ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? ) )
-            // InternalAceGen.g:157:2: ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? )
+            // InternalAceGen.g:156:2: ( ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? ) )
+            // InternalAceGen.g:157:2: ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? )
             {
-            // InternalAceGen.g:157:2: ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? )
-            // InternalAceGen.g:158:3: ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )?
+            // InternalAceGen.g:157:2: ( ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )? )
+            // InternalAceGen.g:158:3: ( (lv_name_0_0= ruleQualifiedName ) ) (otherlv_1= 'ACE' ( (lv_aceOperations_2_0= ruleHttpClientAce ) )* )? ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )? (otherlv_7= 'scenarios' ( (lv_scenarios_8_0= ruleClientScenario ) )* )?
             {
             // InternalAceGen.g:158:3: ( (lv_name_0_0= ruleQualifiedName ) )
             // InternalAceGen.g:159:4: (lv_name_0_0= ruleQualifiedName )
@@ -544,7 +543,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:202:3: ( ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )?
+            // InternalAceGen.g:202:3: ( ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -553,23 +552,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // InternalAceGen.g:203:4: ( (lv_appStatePresent_3_0= 'appState' ) ) (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
+                    // InternalAceGen.g:203:4: ( (lv_uiPresent_3_0= 'ui' ) ) (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
                     {
-                    // InternalAceGen.g:203:4: ( (lv_appStatePresent_3_0= 'appState' ) )
-                    // InternalAceGen.g:204:5: (lv_appStatePresent_3_0= 'appState' )
+                    // InternalAceGen.g:203:4: ( (lv_uiPresent_3_0= 'ui' ) )
+                    // InternalAceGen.g:204:5: (lv_uiPresent_3_0= 'ui' )
                     {
-                    // InternalAceGen.g:204:5: (lv_appStatePresent_3_0= 'appState' )
-                    // InternalAceGen.g:205:6: lv_appStatePresent_3_0= 'appState'
+                    // InternalAceGen.g:204:5: (lv_uiPresent_3_0= 'ui' )
+                    // InternalAceGen.g:205:6: lv_uiPresent_3_0= 'ui'
                     {
-                    lv_appStatePresent_3_0=(Token)match(input,14,FOLLOW_7); 
+                    lv_uiPresent_3_0=(Token)match(input,14,FOLLOW_7); 
 
-                    						newLeafNode(lv_appStatePresent_3_0, grammarAccess.getHttpClientAccess().getAppStatePresentAppStateKeyword_2_0_0());
+                    						newLeafNode(lv_uiPresent_3_0, grammarAccess.getHttpClientAccess().getUiPresentUiKeyword_2_0_0());
                     					
 
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getHttpClientRule());
                     						}
-                    						setWithLastConsumed(current, "appStatePresent", lv_appStatePresent_3_0 != null, "appState");
+                    						setWithLastConsumed(current, "uiPresent", lv_uiPresent_3_0 != null, "ui");
                     					
 
                     }
@@ -577,7 +576,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:217:4: (otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
+                    // InternalAceGen.g:217:4: (otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
                     int alt7=2;
                     int LA7_0 = input.LA(1);
 
@@ -586,35 +585,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt7) {
                         case 1 :
-                            // InternalAceGen.g:218:5: otherlv_4= '{' ( (lv_appState_5_0= ruleClientAttribute ) )* otherlv_6= '}'
+                            // InternalAceGen.g:218:5: otherlv_4= '{' ( (lv_ui_5_0= ruleClientAttribute ) )* otherlv_6= '}'
                             {
                             otherlv_4=(Token)match(input,15,FOLLOW_8); 
 
                             					newLeafNode(otherlv_4, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_2_1_0());
                             				
-                            // InternalAceGen.g:222:5: ( (lv_appState_5_0= ruleClientAttribute ) )*
+                            // InternalAceGen.g:222:5: ( (lv_ui_5_0= ruleClientAttribute ) )*
                             loop6:
                             do {
                                 int alt6=2;
                                 int LA6_0 = input.LA(1);
 
-                                if ( (LA6_0==RULE_ID||(LA6_0>=30 && LA6_0<=32)||(LA6_0>=87 && LA6_0<=92)) ) {
+                                if ( (LA6_0==RULE_ID||(LA6_0>=30 && LA6_0<=31)) ) {
                                     alt6=1;
                                 }
 
 
                                 switch (alt6) {
                             	case 1 :
-                            	    // InternalAceGen.g:223:6: (lv_appState_5_0= ruleClientAttribute )
+                            	    // InternalAceGen.g:223:6: (lv_ui_5_0= ruleClientAttribute )
                             	    {
-                            	    // InternalAceGen.g:223:6: (lv_appState_5_0= ruleClientAttribute )
-                            	    // InternalAceGen.g:224:7: lv_appState_5_0= ruleClientAttribute
+                            	    // InternalAceGen.g:223:6: (lv_ui_5_0= ruleClientAttribute )
+                            	    // InternalAceGen.g:224:7: lv_ui_5_0= ruleClientAttribute
                             	    {
 
-                            	    							newCompositeNode(grammarAccess.getHttpClientAccess().getAppStateClientAttributeParserRuleCall_2_1_1_0());
+                            	    							newCompositeNode(grammarAccess.getHttpClientAccess().getUiClientAttributeParserRuleCall_2_1_1_0());
                             	    						
                             	    pushFollow(FOLLOW_8);
-                            	    lv_appState_5_0=ruleClientAttribute();
+                            	    lv_ui_5_0=ruleClientAttribute();
 
                             	    state._fsp--;
 
@@ -624,8 +623,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             	    							}
                             	    							add(
                             	    								current,
-                            	    								"appState",
-                            	    								lv_appState_5_0,
+                            	    								"ui",
+                            	    								lv_ui_5_0,
                             	    								"de.acegen.AceGen.ClientAttribute");
                             	    							afterParserOrEnumRuleCall();
                             	    						
@@ -2096,7 +2095,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             int alt25=2;
             int LA25_0 = input.LA(1);
 
-            if ( (LA25_0==RULE_ID||(LA25_0>=31 && LA25_0<=32)||(LA25_0>=87 && LA25_0<=92)) ) {
+            if ( (LA25_0==RULE_ID||LA25_0==31) ) {
                 alt25=1;
             }
             else if ( (LA25_0==30) ) {
@@ -2214,34 +2213,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSingleClientAttribute"
-    // InternalAceGen.g:829:1: ruleSingleClientAttribute returns [EObject current=null] : ( ( (lv_notNull_0_0= 'NotNull' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_type_2_0= ruleType ) )? ( (lv_name_3_0= RULE_ID ) ) (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )? ( (lv_hash_6_0= 'location.hash' ) )? ( (lv_storage_7_0= 'storage' ) )? (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )? ) ;
+    // InternalAceGen.g:829:1: ruleSingleClientAttribute returns [EObject current=null] : ( ( (lv_list_0_0= 'List' ) )? ( (lv_name_1_0= RULE_ID ) ) ( (lv_hash_2_0= 'location.hash' ) )? ( (lv_storage_3_0= 'storage' ) )? (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? ) ;
     public final EObject ruleSingleClientAttribute() throws RecognitionException {
         EObject current = null;
 
-        Token lv_notNull_0_0=null;
-        Token lv_list_1_0=null;
-        Token lv_name_3_0=null;
+        Token lv_list_0_0=null;
+        Token lv_name_1_0=null;
+        Token lv_hash_2_0=null;
+        Token lv_storage_3_0=null;
         Token otherlv_4=null;
-        Token lv_hash_6_0=null;
-        Token lv_storage_7_0=null;
-        Token otherlv_8=null;
-        Token otherlv_10=null;
-        AntlrDatatypeRuleToken lv_type_2_0 = null;
-
-        EObject lv_attributes_9_0 = null;
+        Token otherlv_6=null;
+        EObject lv_attributes_5_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAceGen.g:835:2: ( ( ( (lv_notNull_0_0= 'NotNull' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_type_2_0= ruleType ) )? ( (lv_name_3_0= RULE_ID ) ) (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )? ( (lv_hash_6_0= 'location.hash' ) )? ( (lv_storage_7_0= 'storage' ) )? (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )? ) )
-            // InternalAceGen.g:836:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_type_2_0= ruleType ) )? ( (lv_name_3_0= RULE_ID ) ) (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )? ( (lv_hash_6_0= 'location.hash' ) )? ( (lv_storage_7_0= 'storage' ) )? (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )? )
+            // InternalAceGen.g:835:2: ( ( ( (lv_list_0_0= 'List' ) )? ( (lv_name_1_0= RULE_ID ) ) ( (lv_hash_2_0= 'location.hash' ) )? ( (lv_storage_3_0= 'storage' ) )? (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? ) )
+            // InternalAceGen.g:836:2: ( ( (lv_list_0_0= 'List' ) )? ( (lv_name_1_0= RULE_ID ) ) ( (lv_hash_2_0= 'location.hash' ) )? ( (lv_storage_3_0= 'storage' ) )? (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )
             {
-            // InternalAceGen.g:836:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_type_2_0= ruleType ) )? ( (lv_name_3_0= RULE_ID ) ) (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )? ( (lv_hash_6_0= 'location.hash' ) )? ( (lv_storage_7_0= 'storage' ) )? (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )? )
-            // InternalAceGen.g:837:3: ( (lv_notNull_0_0= 'NotNull' ) )? ( (lv_list_1_0= 'List' ) )? ( (lv_type_2_0= ruleType ) )? ( (lv_name_3_0= RULE_ID ) ) (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )? ( (lv_hash_6_0= 'location.hash' ) )? ( (lv_storage_7_0= 'storage' ) )? (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )?
+            // InternalAceGen.g:836:2: ( ( (lv_list_0_0= 'List' ) )? ( (lv_name_1_0= RULE_ID ) ) ( (lv_hash_2_0= 'location.hash' ) )? ( (lv_storage_3_0= 'storage' ) )? (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )? )
+            // InternalAceGen.g:837:3: ( (lv_list_0_0= 'List' ) )? ( (lv_name_1_0= RULE_ID ) ) ( (lv_hash_2_0= 'location.hash' ) )? ( (lv_storage_3_0= 'storage' ) )? (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
             {
-            // InternalAceGen.g:837:3: ( (lv_notNull_0_0= 'NotNull' ) )?
+            // InternalAceGen.g:837:3: ( (lv_list_0_0= 'List' ) )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2250,20 +2245,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt26) {
                 case 1 :
-                    // InternalAceGen.g:838:4: (lv_notNull_0_0= 'NotNull' )
+                    // InternalAceGen.g:838:4: (lv_list_0_0= 'List' )
                     {
-                    // InternalAceGen.g:838:4: (lv_notNull_0_0= 'NotNull' )
-                    // InternalAceGen.g:839:5: lv_notNull_0_0= 'NotNull'
+                    // InternalAceGen.g:838:4: (lv_list_0_0= 'List' )
+                    // InternalAceGen.g:839:5: lv_list_0_0= 'List'
                     {
-                    lv_notNull_0_0=(Token)match(input,31,FOLLOW_23); 
+                    lv_list_0_0=(Token)match(input,31,FOLLOW_10); 
 
-                    					newLeafNode(lv_notNull_0_0, grammarAccess.getSingleClientAttributeAccess().getNotNullNotNullKeyword_0_0());
+                    					newLeafNode(lv_list_0_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_0_0());
                     				
 
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
                     					}
-                    					setWithLastConsumed(current, "notNull", lv_notNull_0_0 != null, "NotNull");
+                    					setWithLastConsumed(current, "list", lv_list_0_0 != null, "List");
                     				
 
                     }
@@ -2274,90 +2269,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:851:3: ( (lv_list_1_0= 'List' ) )?
-            int alt27=2;
-            int LA27_0 = input.LA(1);
-
-            if ( (LA27_0==32) ) {
-                alt27=1;
-            }
-            switch (alt27) {
-                case 1 :
-                    // InternalAceGen.g:852:4: (lv_list_1_0= 'List' )
-                    {
-                    // InternalAceGen.g:852:4: (lv_list_1_0= 'List' )
-                    // InternalAceGen.g:853:5: lv_list_1_0= 'List'
-                    {
-                    lv_list_1_0=(Token)match(input,32,FOLLOW_24); 
-
-                    					newLeafNode(lv_list_1_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_1_0());
-                    				
-
-                    					if (current==null) {
-                    						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-                    					}
-                    					setWithLastConsumed(current, "list", lv_list_1_0 != null, "List");
-                    				
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-            // InternalAceGen.g:865:3: ( (lv_type_2_0= ruleType ) )?
-            int alt28=2;
-            int LA28_0 = input.LA(1);
-
-            if ( ((LA28_0>=87 && LA28_0<=92)) ) {
-                alt28=1;
-            }
-            switch (alt28) {
-                case 1 :
-                    // InternalAceGen.g:866:4: (lv_type_2_0= ruleType )
-                    {
-                    // InternalAceGen.g:866:4: (lv_type_2_0= ruleType )
-                    // InternalAceGen.g:867:5: lv_type_2_0= ruleType
-                    {
-
-                    					newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getTypeTypeParserRuleCall_2_0());
-                    				
-                    pushFollow(FOLLOW_10);
-                    lv_type_2_0=ruleType();
-
-                    state._fsp--;
-
-
-                    					if (current==null) {
-                    						current = createModelElementForParent(grammarAccess.getSingleClientAttributeRule());
-                    					}
-                    					set(
-                    						current,
-                    						"type",
-                    						lv_type_2_0,
-                    						"de.acegen.AceGen.Type");
-                    					afterParserOrEnumRuleCall();
-                    				
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-            // InternalAceGen.g:884:3: ( (lv_name_3_0= RULE_ID ) )
-            // InternalAceGen.g:885:4: (lv_name_3_0= RULE_ID )
+            // InternalAceGen.g:851:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:852:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalAceGen.g:885:4: (lv_name_3_0= RULE_ID )
-            // InternalAceGen.g:886:5: lv_name_3_0= RULE_ID
+            // InternalAceGen.g:852:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:853:5: lv_name_1_0= RULE_ID
             {
-            lv_name_3_0=(Token)match(input,RULE_ID,FOLLOW_25); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_23); 
 
-            					newLeafNode(lv_name_3_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_3_0());
+            					newLeafNode(lv_name_1_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_1_0());
             				
 
             					if (current==null) {
@@ -2366,7 +2286,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             					setWithLastConsumed(
             						current,
             						"name",
-            						lv_name_3_0,
+            						lv_name_1_0,
             						"org.eclipse.xtext.common.Terminals.ID");
             				
 
@@ -2375,46 +2295,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:902:3: (otherlv_4= 'serverModel' ( ( ruleQualifiedName ) ) )?
-            int alt29=2;
-            int LA29_0 = input.LA(1);
+            // InternalAceGen.g:869:3: ( (lv_hash_2_0= 'location.hash' ) )?
+            int alt27=2;
+            int LA27_0 = input.LA(1);
 
-            if ( (LA29_0==33) ) {
-                alt29=1;
+            if ( (LA27_0==32) ) {
+                alt27=1;
             }
-            switch (alt29) {
+            switch (alt27) {
                 case 1 :
-                    // InternalAceGen.g:903:4: otherlv_4= 'serverModel' ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:870:4: (lv_hash_2_0= 'location.hash' )
                     {
-                    otherlv_4=(Token)match(input,33,FOLLOW_10); 
-
-                    				newLeafNode(otherlv_4, grammarAccess.getSingleClientAttributeAccess().getServerModelKeyword_4_0());
-                    			
-                    // InternalAceGen.g:907:4: ( ( ruleQualifiedName ) )
-                    // InternalAceGen.g:908:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:870:4: (lv_hash_2_0= 'location.hash' )
+                    // InternalAceGen.g:871:5: lv_hash_2_0= 'location.hash'
                     {
-                    // InternalAceGen.g:908:5: ( ruleQualifiedName )
-                    // InternalAceGen.g:909:6: ruleQualifiedName
-                    {
+                    lv_hash_2_0=(Token)match(input,32,FOLLOW_24); 
 
-                    						if (current==null) {
-                    							current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-                    						}
-                    					
+                    					newLeafNode(lv_hash_2_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_2_0());
+                    				
 
-                    						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getModelModelCrossReference_4_1_0());
-                    					
-                    pushFollow(FOLLOW_26);
-                    ruleQualifiedName();
-
-                    state._fsp--;
-
-
-                    						afterParserOrEnumRuleCall();
-                    					
-
-                    }
-
+                    					if (current==null) {
+                    						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
+                    					}
+                    					setWithLastConsumed(current, "hash", lv_hash_2_0 != null, "location.hash");
+                    				
 
                     }
 
@@ -2424,110 +2328,77 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:924:3: ( (lv_hash_6_0= 'location.hash' ) )?
+            // InternalAceGen.g:883:3: ( (lv_storage_3_0= 'storage' ) )?
+            int alt28=2;
+            int LA28_0 = input.LA(1);
+
+            if ( (LA28_0==33) ) {
+                alt28=1;
+            }
+            switch (alt28) {
+                case 1 :
+                    // InternalAceGen.g:884:4: (lv_storage_3_0= 'storage' )
+                    {
+                    // InternalAceGen.g:884:4: (lv_storage_3_0= 'storage' )
+                    // InternalAceGen.g:885:5: lv_storage_3_0= 'storage'
+                    {
+                    lv_storage_3_0=(Token)match(input,33,FOLLOW_25); 
+
+                    					newLeafNode(lv_storage_3_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_3_0());
+                    				
+
+                    					if (current==null) {
+                    						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
+                    					}
+                    					setWithLastConsumed(current, "storage", lv_storage_3_0 != null, "storage");
+                    				
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+
+            // InternalAceGen.g:897:3: (otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}' )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==34) ) {
+            if ( (LA30_0==15) ) {
                 alt30=1;
             }
             switch (alt30) {
                 case 1 :
-                    // InternalAceGen.g:925:4: (lv_hash_6_0= 'location.hash' )
+                    // InternalAceGen.g:898:4: otherlv_4= '{' ( (lv_attributes_5_0= ruleClientAttribute ) )* otherlv_6= '}'
                     {
-                    // InternalAceGen.g:925:4: (lv_hash_6_0= 'location.hash' )
-                    // InternalAceGen.g:926:5: lv_hash_6_0= 'location.hash'
-                    {
-                    lv_hash_6_0=(Token)match(input,34,FOLLOW_27); 
+                    otherlv_4=(Token)match(input,15,FOLLOW_8); 
 
-                    					newLeafNode(lv_hash_6_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_5_0());
-                    				
-
-                    					if (current==null) {
-                    						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-                    					}
-                    					setWithLastConsumed(current, "hash", lv_hash_6_0 != null, "location.hash");
-                    				
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-            // InternalAceGen.g:938:3: ( (lv_storage_7_0= 'storage' ) )?
-            int alt31=2;
-            int LA31_0 = input.LA(1);
-
-            if ( (LA31_0==35) ) {
-                alt31=1;
-            }
-            switch (alt31) {
-                case 1 :
-                    // InternalAceGen.g:939:4: (lv_storage_7_0= 'storage' )
-                    {
-                    // InternalAceGen.g:939:4: (lv_storage_7_0= 'storage' )
-                    // InternalAceGen.g:940:5: lv_storage_7_0= 'storage'
-                    {
-                    lv_storage_7_0=(Token)match(input,35,FOLLOW_28); 
-
-                    					newLeafNode(lv_storage_7_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_6_0());
-                    				
-
-                    					if (current==null) {
-                    						current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-                    					}
-                    					setWithLastConsumed(current, "storage", lv_storage_7_0 != null, "storage");
-                    				
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-            // InternalAceGen.g:952:3: (otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}' )?
-            int alt33=2;
-            int LA33_0 = input.LA(1);
-
-            if ( (LA33_0==15) ) {
-                alt33=1;
-            }
-            switch (alt33) {
-                case 1 :
-                    // InternalAceGen.g:953:4: otherlv_8= '{' ( (lv_attributes_9_0= ruleClientAttribute ) )* otherlv_10= '}'
-                    {
-                    otherlv_8=(Token)match(input,15,FOLLOW_8); 
-
-                    				newLeafNode(otherlv_8, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_7_0());
+                    				newLeafNode(otherlv_4, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_4_0());
                     			
-                    // InternalAceGen.g:957:4: ( (lv_attributes_9_0= ruleClientAttribute ) )*
-                    loop32:
+                    // InternalAceGen.g:902:4: ( (lv_attributes_5_0= ruleClientAttribute ) )*
+                    loop29:
                     do {
-                        int alt32=2;
-                        int LA32_0 = input.LA(1);
+                        int alt29=2;
+                        int LA29_0 = input.LA(1);
 
-                        if ( (LA32_0==RULE_ID||(LA32_0>=30 && LA32_0<=32)||(LA32_0>=87 && LA32_0<=92)) ) {
-                            alt32=1;
+                        if ( (LA29_0==RULE_ID||(LA29_0>=30 && LA29_0<=31)) ) {
+                            alt29=1;
                         }
 
 
-                        switch (alt32) {
+                        switch (alt29) {
                     	case 1 :
-                    	    // InternalAceGen.g:958:5: (lv_attributes_9_0= ruleClientAttribute )
+                    	    // InternalAceGen.g:903:5: (lv_attributes_5_0= ruleClientAttribute )
                     	    {
-                    	    // InternalAceGen.g:958:5: (lv_attributes_9_0= ruleClientAttribute )
-                    	    // InternalAceGen.g:959:6: lv_attributes_9_0= ruleClientAttribute
+                    	    // InternalAceGen.g:903:5: (lv_attributes_5_0= ruleClientAttribute )
+                    	    // InternalAceGen.g:904:6: lv_attributes_5_0= ruleClientAttribute
                     	    {
 
-                    	    						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_7_1_0());
+                    	    						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_4_1_0());
                     	    					
                     	    pushFollow(FOLLOW_8);
-                    	    lv_attributes_9_0=ruleClientAttribute();
+                    	    lv_attributes_5_0=ruleClientAttribute();
 
                     	    state._fsp--;
 
@@ -2538,7 +2409,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    						add(
                     	    							current,
                     	    							"attributes",
-                    	    							lv_attributes_9_0,
+                    	    							lv_attributes_5_0,
                     	    							"de.acegen.AceGen.ClientAttribute");
                     	    						afterParserOrEnumRuleCall();
                     	    					
@@ -2550,13 +2421,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop32;
+                    	    break loop29;
                         }
                     } while (true);
 
-                    otherlv_10=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_6=(Token)match(input,16,FOLLOW_2); 
 
-                    				newLeafNode(otherlv_10, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_7_2());
+                    				newLeafNode(otherlv_6, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_4_2());
                     			
 
                     }
@@ -2587,7 +2458,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGroupedClientAttribute"
-    // InternalAceGen.g:985:1: entryRuleGroupedClientAttribute returns [EObject current=null] : iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF ;
+    // InternalAceGen.g:930:1: entryRuleGroupedClientAttribute returns [EObject current=null] : iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF ;
     public final EObject entryRuleGroupedClientAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -2595,8 +2466,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:985:63: (iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF )
-            // InternalAceGen.g:986:2: iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF
+            // InternalAceGen.g:930:63: (iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF )
+            // InternalAceGen.g:931:2: iv_ruleGroupedClientAttribute= ruleGroupedClientAttribute EOF
             {
              newCompositeNode(grammarAccess.getGroupedClientAttributeRule()); 
             pushFollow(FOLLOW_1);
@@ -2623,7 +2494,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGroupedClientAttribute"
-    // InternalAceGen.g:992:1: ruleGroupedClientAttribute returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' ) ;
+    // InternalAceGen.g:937:1: ruleGroupedClientAttribute returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' ) ;
     public final EObject ruleGroupedClientAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -2639,19 +2510,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:998:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' ) )
-            // InternalAceGen.g:999:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' )
+            // InternalAceGen.g:943:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' ) )
+            // InternalAceGen.g:944:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' )
             {
-            // InternalAceGen.g:999:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' )
-            // InternalAceGen.g:1000:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}'
+            // InternalAceGen.g:944:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}' )
+            // InternalAceGen.g:945:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' ( (lv_attributeGroup_2_0= ruleClientAttribute ) ) ( (lv_attributeGroup_3_0= ruleClientAttribute ) )* otherlv_4= '}'
             {
-            // InternalAceGen.g:1000:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:1001:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:945:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:946:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:1001:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:1002:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:946:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:947:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_29); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_26); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getGroupedClientAttributeAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -2671,15 +2542,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,15,FOLLOW_30); 
+            otherlv_1=(Token)match(input,15,FOLLOW_27); 
 
             			newLeafNode(otherlv_1, grammarAccess.getGroupedClientAttributeAccess().getLeftCurlyBracketKeyword_1());
             		
-            // InternalAceGen.g:1022:3: ( (lv_attributeGroup_2_0= ruleClientAttribute ) )
-            // InternalAceGen.g:1023:4: (lv_attributeGroup_2_0= ruleClientAttribute )
+            // InternalAceGen.g:967:3: ( (lv_attributeGroup_2_0= ruleClientAttribute ) )
+            // InternalAceGen.g:968:4: (lv_attributeGroup_2_0= ruleClientAttribute )
             {
-            // InternalAceGen.g:1023:4: (lv_attributeGroup_2_0= ruleClientAttribute )
-            // InternalAceGen.g:1024:5: lv_attributeGroup_2_0= ruleClientAttribute
+            // InternalAceGen.g:968:4: (lv_attributeGroup_2_0= ruleClientAttribute )
+            // InternalAceGen.g:969:5: lv_attributeGroup_2_0= ruleClientAttribute
             {
 
             					newCompositeNode(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupClientAttributeParserRuleCall_2_0());
@@ -2706,23 +2577,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1041:3: ( (lv_attributeGroup_3_0= ruleClientAttribute ) )*
-            loop34:
+            // InternalAceGen.g:986:3: ( (lv_attributeGroup_3_0= ruleClientAttribute ) )*
+            loop31:
             do {
-                int alt34=2;
-                int LA34_0 = input.LA(1);
+                int alt31=2;
+                int LA31_0 = input.LA(1);
 
-                if ( (LA34_0==RULE_ID||(LA34_0>=30 && LA34_0<=32)||(LA34_0>=87 && LA34_0<=92)) ) {
-                    alt34=1;
+                if ( (LA31_0==RULE_ID||(LA31_0>=30 && LA31_0<=31)) ) {
+                    alt31=1;
                 }
 
 
-                switch (alt34) {
+                switch (alt31) {
             	case 1 :
-            	    // InternalAceGen.g:1042:4: (lv_attributeGroup_3_0= ruleClientAttribute )
+            	    // InternalAceGen.g:987:4: (lv_attributeGroup_3_0= ruleClientAttribute )
             	    {
-            	    // InternalAceGen.g:1042:4: (lv_attributeGroup_3_0= ruleClientAttribute )
-            	    // InternalAceGen.g:1043:5: lv_attributeGroup_3_0= ruleClientAttribute
+            	    // InternalAceGen.g:987:4: (lv_attributeGroup_3_0= ruleClientAttribute )
+            	    // InternalAceGen.g:988:5: lv_attributeGroup_3_0= ruleClientAttribute
             	    {
 
             	    					newCompositeNode(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupClientAttributeParserRuleCall_3_0());
@@ -2751,7 +2622,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop34;
+            	    break loop31;
                 }
             } while (true);
 
@@ -2782,7 +2653,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClientScenario"
-    // InternalAceGen.g:1068:1: entryRuleClientScenario returns [EObject current=null] : iv_ruleClientScenario= ruleClientScenario EOF ;
+    // InternalAceGen.g:1013:1: entryRuleClientScenario returns [EObject current=null] : iv_ruleClientScenario= ruleClientScenario EOF ;
     public final EObject entryRuleClientScenario() throws RecognitionException {
         EObject current = null;
 
@@ -2790,8 +2661,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1068:55: (iv_ruleClientScenario= ruleClientScenario EOF )
-            // InternalAceGen.g:1069:2: iv_ruleClientScenario= ruleClientScenario EOF
+            // InternalAceGen.g:1013:55: (iv_ruleClientScenario= ruleClientScenario EOF )
+            // InternalAceGen.g:1014:2: iv_ruleClientScenario= ruleClientScenario EOF
             {
              newCompositeNode(grammarAccess.getClientScenarioRule()); 
             pushFollow(FOLLOW_1);
@@ -2818,7 +2689,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientScenario"
-    // InternalAceGen.g:1075:1: ruleClientScenario returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) ) ;
+    // InternalAceGen.g:1020:1: ruleClientScenario returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) ) ;
     public final EObject ruleClientScenario() throws RecognitionException {
         EObject current = null;
 
@@ -2837,19 +2708,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1081:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) ) )
-            // InternalAceGen.g:1082:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) )
+            // InternalAceGen.g:1026:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) ) )
+            // InternalAceGen.g:1027:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) )
             {
-            // InternalAceGen.g:1082:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) )
-            // InternalAceGen.g:1083:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) )
+            // InternalAceGen.g:1027:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) ) )
+            // InternalAceGen.g:1028:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleClientWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleClientThenBlock ) )
             {
-            // InternalAceGen.g:1083:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:1084:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:1028:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:1029:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:1084:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:1085:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:1029:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:1030:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_31); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_28); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getClientScenarioAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -2869,43 +2740,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1101:3: (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // InternalAceGen.g:1046:3: (otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )* )?
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            if ( (LA36_0==36) ) {
-                alt36=1;
+            if ( (LA33_0==34) ) {
+                alt33=1;
             }
-            switch (alt36) {
+            switch (alt33) {
                 case 1 :
-                    // InternalAceGen.g:1102:4: otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )*
+                    // InternalAceGen.g:1047:4: otherlv_1= 'GIVEN' ( (lv_givenRefs_2_0= ruleClientGivenRef ) )*
                     {
-                    otherlv_1=(Token)match(input,36,FOLLOW_32); 
+                    otherlv_1=(Token)match(input,34,FOLLOW_29); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getClientScenarioAccess().getGIVENKeyword_1_0());
                     			
-                    // InternalAceGen.g:1106:4: ( (lv_givenRefs_2_0= ruleClientGivenRef ) )*
-                    loop35:
+                    // InternalAceGen.g:1051:4: ( (lv_givenRefs_2_0= ruleClientGivenRef ) )*
+                    loop32:
                     do {
-                        int alt35=2;
-                        int LA35_0 = input.LA(1);
+                        int alt32=2;
+                        int LA32_0 = input.LA(1);
 
-                        if ( (LA35_0==RULE_ID) ) {
-                            alt35=1;
+                        if ( (LA32_0==RULE_ID) ) {
+                            alt32=1;
                         }
 
 
-                        switch (alt35) {
+                        switch (alt32) {
                     	case 1 :
-                    	    // InternalAceGen.g:1107:5: (lv_givenRefs_2_0= ruleClientGivenRef )
+                    	    // InternalAceGen.g:1052:5: (lv_givenRefs_2_0= ruleClientGivenRef )
                     	    {
-                    	    // InternalAceGen.g:1107:5: (lv_givenRefs_2_0= ruleClientGivenRef )
-                    	    // InternalAceGen.g:1108:6: lv_givenRefs_2_0= ruleClientGivenRef
+                    	    // InternalAceGen.g:1052:5: (lv_givenRefs_2_0= ruleClientGivenRef )
+                    	    // InternalAceGen.g:1053:6: lv_givenRefs_2_0= ruleClientGivenRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getClientScenarioAccess().getGivenRefsClientGivenRefParserRuleCall_1_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_32);
+                    	    pushFollow(FOLLOW_29);
                     	    lv_givenRefs_2_0=ruleClientGivenRef();
 
                     	    state._fsp--;
@@ -2929,7 +2800,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop35;
+                    	    break loop32;
                         }
                     } while (true);
 
@@ -2939,20 +2810,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_10); 
+            otherlv_3=(Token)match(input,35,FOLLOW_10); 
 
             			newLeafNode(otherlv_3, grammarAccess.getClientScenarioAccess().getWHENKeyword_2());
             		
-            // InternalAceGen.g:1130:3: ( (lv_whenBlock_4_0= ruleClientWhenBlock ) )
-            // InternalAceGen.g:1131:4: (lv_whenBlock_4_0= ruleClientWhenBlock )
+            // InternalAceGen.g:1075:3: ( (lv_whenBlock_4_0= ruleClientWhenBlock ) )
+            // InternalAceGen.g:1076:4: (lv_whenBlock_4_0= ruleClientWhenBlock )
             {
-            // InternalAceGen.g:1131:4: (lv_whenBlock_4_0= ruleClientWhenBlock )
-            // InternalAceGen.g:1132:5: lv_whenBlock_4_0= ruleClientWhenBlock
+            // InternalAceGen.g:1076:4: (lv_whenBlock_4_0= ruleClientWhenBlock )
+            // InternalAceGen.g:1077:5: lv_whenBlock_4_0= ruleClientWhenBlock
             {
 
             					newCompositeNode(grammarAccess.getClientScenarioAccess().getWhenBlockClientWhenBlockParserRuleCall_3_0());
             				
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_30);
             lv_whenBlock_4_0=ruleClientWhenBlock();
 
             state._fsp--;
@@ -2974,15 +2845,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,38,FOLLOW_34); 
+            otherlv_5=(Token)match(input,36,FOLLOW_31); 
 
             			newLeafNode(otherlv_5, grammarAccess.getClientScenarioAccess().getTHENKeyword_4());
             		
-            // InternalAceGen.g:1153:3: ( (lv_thenBlock_6_0= ruleClientThenBlock ) )
-            // InternalAceGen.g:1154:4: (lv_thenBlock_6_0= ruleClientThenBlock )
+            // InternalAceGen.g:1098:3: ( (lv_thenBlock_6_0= ruleClientThenBlock ) )
+            // InternalAceGen.g:1099:4: (lv_thenBlock_6_0= ruleClientThenBlock )
             {
-            // InternalAceGen.g:1154:4: (lv_thenBlock_6_0= ruleClientThenBlock )
-            // InternalAceGen.g:1155:5: lv_thenBlock_6_0= ruleClientThenBlock
+            // InternalAceGen.g:1099:4: (lv_thenBlock_6_0= ruleClientThenBlock )
+            // InternalAceGen.g:1100:5: lv_thenBlock_6_0= ruleClientThenBlock
             {
 
             					newCompositeNode(grammarAccess.getClientScenarioAccess().getThenBlockClientThenBlockParserRuleCall_5_0());
@@ -3032,7 +2903,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClientGivenRef"
-    // InternalAceGen.g:1176:1: entryRuleClientGivenRef returns [EObject current=null] : iv_ruleClientGivenRef= ruleClientGivenRef EOF ;
+    // InternalAceGen.g:1121:1: entryRuleClientGivenRef returns [EObject current=null] : iv_ruleClientGivenRef= ruleClientGivenRef EOF ;
     public final EObject entryRuleClientGivenRef() throws RecognitionException {
         EObject current = null;
 
@@ -3040,8 +2911,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1176:55: (iv_ruleClientGivenRef= ruleClientGivenRef EOF )
-            // InternalAceGen.g:1177:2: iv_ruleClientGivenRef= ruleClientGivenRef EOF
+            // InternalAceGen.g:1121:55: (iv_ruleClientGivenRef= ruleClientGivenRef EOF )
+            // InternalAceGen.g:1122:2: iv_ruleClientGivenRef= ruleClientGivenRef EOF
             {
              newCompositeNode(grammarAccess.getClientGivenRefRule()); 
             pushFollow(FOLLOW_1);
@@ -3068,7 +2939,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientGivenRef"
-    // InternalAceGen.g:1183:1: ruleClientGivenRef returns [EObject current=null] : ( ( ruleQualifiedName ) ) ;
+    // InternalAceGen.g:1128:1: ruleClientGivenRef returns [EObject current=null] : ( ( ruleQualifiedName ) ) ;
     public final EObject ruleClientGivenRef() throws RecognitionException {
         EObject current = null;
 
@@ -3076,14 +2947,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1189:2: ( ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:1190:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1134:2: ( ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:1135:2: ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:1190:2: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:1191:3: ( ruleQualifiedName )
+            // InternalAceGen.g:1135:2: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1136:3: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:1191:3: ( ruleQualifiedName )
-            // InternalAceGen.g:1192:4: ruleQualifiedName
+            // InternalAceGen.g:1136:3: ( ruleQualifiedName )
+            // InternalAceGen.g:1137:4: ruleQualifiedName
             {
 
             				if (current==null) {
@@ -3127,7 +2998,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClientWhenBlock"
-    // InternalAceGen.g:1209:1: entryRuleClientWhenBlock returns [EObject current=null] : iv_ruleClientWhenBlock= ruleClientWhenBlock EOF ;
+    // InternalAceGen.g:1154:1: entryRuleClientWhenBlock returns [EObject current=null] : iv_ruleClientWhenBlock= ruleClientWhenBlock EOF ;
     public final EObject entryRuleClientWhenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -3135,8 +3006,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1209:56: (iv_ruleClientWhenBlock= ruleClientWhenBlock EOF )
-            // InternalAceGen.g:1210:2: iv_ruleClientWhenBlock= ruleClientWhenBlock EOF
+            // InternalAceGen.g:1154:56: (iv_ruleClientWhenBlock= ruleClientWhenBlock EOF )
+            // InternalAceGen.g:1155:2: iv_ruleClientWhenBlock= ruleClientWhenBlock EOF
             {
              newCompositeNode(grammarAccess.getClientWhenBlockRule()); 
             pushFollow(FOLLOW_1);
@@ -3163,7 +3034,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientWhenBlock"
-    // InternalAceGen.g:1216:1: ruleClientWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) ;
+    // InternalAceGen.g:1161:1: ruleClientWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) ;
     public final EObject ruleClientWhenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -3185,17 +3056,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1222:2: ( ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) )
-            // InternalAceGen.g:1223:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
+            // InternalAceGen.g:1167:2: ( ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) )
+            // InternalAceGen.g:1168:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
             {
-            // InternalAceGen.g:1223:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
-            // InternalAceGen.g:1224:3: ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
+            // InternalAceGen.g:1168:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
+            // InternalAceGen.g:1169:3: ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
             {
-            // InternalAceGen.g:1224:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:1225:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1169:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1170:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:1225:4: ( ruleQualifiedName )
-            // InternalAceGen.g:1226:5: ruleQualifiedName
+            // InternalAceGen.g:1170:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1171:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -3205,7 +3076,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getClientWhenBlockAccess().getActionHttpClientAceCrossReference_0_0());
             				
-            pushFollow(FOLLOW_35);
+            pushFollow(FOLLOW_32);
             ruleQualifiedName();
 
             state._fsp--;
@@ -3219,37 +3090,37 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1240:3: (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )?
-            int alt39=2;
-            int LA39_0 = input.LA(1);
+            // InternalAceGen.g:1185:3: (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )?
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA39_0==19) ) {
-                alt39=1;
+            if ( (LA36_0==19) ) {
+                alt36=1;
             }
-            switch (alt39) {
+            switch (alt36) {
                 case 1 :
-                    // InternalAceGen.g:1241:4: otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')'
+                    // InternalAceGen.g:1186:4: otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')'
                     {
                     otherlv_1=(Token)match(input,19,FOLLOW_22); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getClientWhenBlockAccess().getLeftParenthesisKeyword_1_0());
                     			
-                    // InternalAceGen.g:1245:4: ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )?
-                    int alt38=2;
-                    int LA38_0 = input.LA(1);
+                    // InternalAceGen.g:1190:4: ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )?
+                    int alt35=2;
+                    int LA35_0 = input.LA(1);
 
-                    if ( (LA38_0==RULE_ID) ) {
-                        alt38=1;
+                    if ( (LA35_0==RULE_ID) ) {
+                        alt35=1;
                     }
-                    switch (alt38) {
+                    switch (alt35) {
                         case 1 :
-                            // InternalAceGen.g:1246:5: ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )*
+                            // InternalAceGen.g:1191:5: ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )*
                             {
-                            // InternalAceGen.g:1246:5: ( (lv_inputValues_2_0= ruleInputValue ) )
-                            // InternalAceGen.g:1247:6: (lv_inputValues_2_0= ruleInputValue )
+                            // InternalAceGen.g:1191:5: ( (lv_inputValues_2_0= ruleInputValue ) )
+                            // InternalAceGen.g:1192:6: (lv_inputValues_2_0= ruleInputValue )
                             {
-                            // InternalAceGen.g:1247:6: (lv_inputValues_2_0= ruleInputValue )
-                            // InternalAceGen.g:1248:7: lv_inputValues_2_0= ruleInputValue
+                            // InternalAceGen.g:1192:6: (lv_inputValues_2_0= ruleInputValue )
+                            // InternalAceGen.g:1193:7: lv_inputValues_2_0= ruleInputValue
                             {
 
                             							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getInputValuesInputValueParserRuleCall_1_1_0_0());
@@ -3276,30 +3147,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            // InternalAceGen.g:1265:5: (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )*
-                            loop37:
+                            // InternalAceGen.g:1210:5: (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )*
+                            loop34:
                             do {
-                                int alt37=2;
-                                int LA37_0 = input.LA(1);
+                                int alt34=2;
+                                int LA34_0 = input.LA(1);
 
-                                if ( (LA37_0==20) ) {
-                                    alt37=1;
+                                if ( (LA34_0==20) ) {
+                                    alt34=1;
                                 }
 
 
-                                switch (alt37) {
+                                switch (alt34) {
                             	case 1 :
-                            	    // InternalAceGen.g:1266:6: otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) )
+                            	    // InternalAceGen.g:1211:6: otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) )
                             	    {
                             	    otherlv_3=(Token)match(input,20,FOLLOW_10); 
 
                             	    						newLeafNode(otherlv_3, grammarAccess.getClientWhenBlockAccess().getCommaKeyword_1_1_1_0());
                             	    					
-                            	    // InternalAceGen.g:1270:6: ( (lv_inputValues_4_0= ruleInputValue ) )
-                            	    // InternalAceGen.g:1271:7: (lv_inputValues_4_0= ruleInputValue )
+                            	    // InternalAceGen.g:1215:6: ( (lv_inputValues_4_0= ruleInputValue ) )
+                            	    // InternalAceGen.g:1216:7: (lv_inputValues_4_0= ruleInputValue )
                             	    {
-                            	    // InternalAceGen.g:1271:7: (lv_inputValues_4_0= ruleInputValue )
-                            	    // InternalAceGen.g:1272:8: lv_inputValues_4_0= ruleInputValue
+                            	    // InternalAceGen.g:1216:7: (lv_inputValues_4_0= ruleInputValue )
+                            	    // InternalAceGen.g:1217:8: lv_inputValues_4_0= ruleInputValue
                             	    {
 
                             	    								newCompositeNode(grammarAccess.getClientWhenBlockAccess().getInputValuesInputValueParserRuleCall_1_1_1_1_0());
@@ -3331,7 +3202,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             	    break;
 
                             	default :
-                            	    break loop37;
+                            	    break loop34;
                                 }
                             } while (true);
 
@@ -3341,7 +3212,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,21,FOLLOW_36); 
+                    otherlv_5=(Token)match(input,21,FOLLOW_33); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getClientWhenBlockAccess().getRightParenthesisKeyword_1_2());
                     			
@@ -3351,31 +3222,31 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1296:3: (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
-            int alt41=2;
-            int LA41_0 = input.LA(1);
+            // InternalAceGen.g:1241:3: (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
+            int alt38=2;
+            int LA38_0 = input.LA(1);
 
-            if ( (LA41_0==39) ) {
-                alt41=1;
+            if ( (LA38_0==37) ) {
+                alt38=1;
             }
-            switch (alt41) {
+            switch (alt38) {
                 case 1 :
-                    // InternalAceGen.g:1297:4: otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
+                    // InternalAceGen.g:1242:4: otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
                     {
-                    otherlv_6=(Token)match(input,39,FOLLOW_29); 
+                    otherlv_6=(Token)match(input,37,FOLLOW_26); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesKeyword_2_0());
                     			
-                    // InternalAceGen.g:1301:4: ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) )
-                    // InternalAceGen.g:1302:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
+                    // InternalAceGen.g:1246:4: ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) )
+                    // InternalAceGen.g:1247:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
                     {
-                    // InternalAceGen.g:1302:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
-                    // InternalAceGen.g:1303:6: lv_nonDeterministicValues_7_0= ruleNonDeterministicValue
+                    // InternalAceGen.g:1247:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
+                    // InternalAceGen.g:1248:6: lv_nonDeterministicValues_7_0= ruleNonDeterministicValue
                     {
 
                     						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0());
                     					
-                    pushFollow(FOLLOW_37);
+                    pushFollow(FOLLOW_34);
                     lv_nonDeterministicValues_7_0=ruleNonDeterministicValue();
 
                     state._fsp--;
@@ -3397,35 +3268,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1320:4: (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
-                    loop40:
+                    // InternalAceGen.g:1265:4: (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
+                    loop37:
                     do {
-                        int alt40=2;
-                        int LA40_0 = input.LA(1);
+                        int alt37=2;
+                        int LA37_0 = input.LA(1);
 
-                        if ( (LA40_0==20) ) {
-                            alt40=1;
+                        if ( (LA37_0==20) ) {
+                            alt37=1;
                         }
 
 
-                        switch (alt40) {
+                        switch (alt37) {
                     	case 1 :
-                    	    // InternalAceGen.g:1321:5: otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
+                    	    // InternalAceGen.g:1266:5: otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
                     	    {
-                    	    otherlv_8=(Token)match(input,20,FOLLOW_29); 
+                    	    otherlv_8=(Token)match(input,20,FOLLOW_26); 
 
                     	    					newLeafNode(otherlv_8, grammarAccess.getClientWhenBlockAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalAceGen.g:1325:5: ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
-                    	    // InternalAceGen.g:1326:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
+                    	    // InternalAceGen.g:1270:5: ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
+                    	    // InternalAceGen.g:1271:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
                     	    {
-                    	    // InternalAceGen.g:1326:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
-                    	    // InternalAceGen.g:1327:7: lv_nonDeterministicValues_9_0= ruleNonDeterministicValue
+                    	    // InternalAceGen.g:1271:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
+                    	    // InternalAceGen.g:1272:7: lv_nonDeterministicValues_9_0= ruleNonDeterministicValue
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0());
                     	    						
-                    	    pushFollow(FOLLOW_37);
+                    	    pushFollow(FOLLOW_34);
                     	    lv_nonDeterministicValues_9_0=ruleNonDeterministicValue();
 
                     	    state._fsp--;
@@ -3452,7 +3323,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop40;
+                    	    break loop37;
                         }
                     } while (true);
 
@@ -3485,7 +3356,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNonDeterministicValue"
-    // InternalAceGen.g:1350:1: entryRuleNonDeterministicValue returns [EObject current=null] : iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF ;
+    // InternalAceGen.g:1295:1: entryRuleNonDeterministicValue returns [EObject current=null] : iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF ;
     public final EObject entryRuleNonDeterministicValue() throws RecognitionException {
         EObject current = null;
 
@@ -3493,8 +3364,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1350:62: (iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF )
-            // InternalAceGen.g:1351:2: iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF
+            // InternalAceGen.g:1295:62: (iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF )
+            // InternalAceGen.g:1296:2: iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF
             {
              newCompositeNode(grammarAccess.getNonDeterministicValueRule()); 
             pushFollow(FOLLOW_1);
@@ -3521,7 +3392,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNonDeterministicValue"
-    // InternalAceGen.g:1357:1: ruleNonDeterministicValue returns [EObject current=null] : ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) ;
+    // InternalAceGen.g:1302:1: ruleNonDeterministicValue returns [EObject current=null] : ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) ;
     public final EObject ruleNonDeterministicValue() throws RecognitionException {
         EObject current = null;
 
@@ -3542,14 +3413,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1363:2: ( ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) )
-            // InternalAceGen.g:1364:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
+            // InternalAceGen.g:1308:2: ( ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) )
+            // InternalAceGen.g:1309:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
             {
-            // InternalAceGen.g:1364:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
-            // InternalAceGen.g:1365:3: () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}'
+            // InternalAceGen.g:1309:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
+            // InternalAceGen.g:1310:3: () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}'
             {
-            // InternalAceGen.g:1365:3: ()
-            // InternalAceGen.g:1366:4: 
+            // InternalAceGen.g:1310:3: ()
+            // InternalAceGen.g:1311:4: 
             {
 
             				current = forceCreateModelElement(
@@ -3559,32 +3430,32 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,15,FOLLOW_38); 
+            otherlv_1=(Token)match(input,15,FOLLOW_35); 
 
             			newLeafNode(otherlv_1, grammarAccess.getNonDeterministicValueAccess().getLeftCurlyBracketKeyword_1());
             		
-            // InternalAceGen.g:1376:3: (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )?
-            int alt45=2;
-            int LA45_0 = input.LA(1);
+            // InternalAceGen.g:1321:3: (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )?
+            int alt42=2;
+            int LA42_0 = input.LA(1);
 
-            if ( (LA45_0==40) ) {
-                alt45=1;
+            if ( (LA42_0==38) ) {
+                alt42=1;
             }
-            switch (alt45) {
+            switch (alt42) {
                 case 1 :
-                    // InternalAceGen.g:1377:4: otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
+                    // InternalAceGen.g:1322:4: otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
                     {
-                    otherlv_2=(Token)match(input,40,FOLLOW_39); 
+                    otherlv_2=(Token)match(input,38,FOLLOW_36); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getNonDeterministicValueAccess().getUuidKeyword_2_0());
                     			
-                    // InternalAceGen.g:1381:4: ( (lv_uuid_3_0= RULE_STRING ) )
-                    // InternalAceGen.g:1382:5: (lv_uuid_3_0= RULE_STRING )
+                    // InternalAceGen.g:1326:4: ( (lv_uuid_3_0= RULE_STRING ) )
+                    // InternalAceGen.g:1327:5: (lv_uuid_3_0= RULE_STRING )
                     {
-                    // InternalAceGen.g:1382:5: (lv_uuid_3_0= RULE_STRING )
-                    // InternalAceGen.g:1383:6: lv_uuid_3_0= RULE_STRING
+                    // InternalAceGen.g:1327:5: (lv_uuid_3_0= RULE_STRING )
+                    // InternalAceGen.g:1328:6: lv_uuid_3_0= RULE_STRING
                     {
-                    lv_uuid_3_0=(Token)match(input,RULE_STRING,FOLLOW_40); 
+                    lv_uuid_3_0=(Token)match(input,RULE_STRING,FOLLOW_37); 
 
                     						newLeafNode(lv_uuid_3_0, grammarAccess.getNonDeterministicValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
                     					
@@ -3604,28 +3475,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1399:4: (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )?
-                    int alt42=2;
-                    int LA42_0 = input.LA(1);
+                    // InternalAceGen.g:1344:4: (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )?
+                    int alt39=2;
+                    int LA39_0 = input.LA(1);
 
-                    if ( (LA42_0==41) ) {
-                        alt42=1;
+                    if ( (LA39_0==39) ) {
+                        alt39=1;
                     }
-                    switch (alt42) {
+                    switch (alt39) {
                         case 1 :
-                            // InternalAceGen.g:1400:5: otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) )
+                            // InternalAceGen.g:1345:5: otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) )
                             {
-                            otherlv_4=(Token)match(input,41,FOLLOW_39); 
+                            otherlv_4=(Token)match(input,39,FOLLOW_36); 
 
                             					newLeafNode(otherlv_4, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeKeyword_2_2_0());
                             				
-                            // InternalAceGen.g:1404:5: ( (lv_clientSystemTime_5_0= RULE_STRING ) )
-                            // InternalAceGen.g:1405:6: (lv_clientSystemTime_5_0= RULE_STRING )
+                            // InternalAceGen.g:1349:5: ( (lv_clientSystemTime_5_0= RULE_STRING ) )
+                            // InternalAceGen.g:1350:6: (lv_clientSystemTime_5_0= RULE_STRING )
                             {
-                            // InternalAceGen.g:1405:6: (lv_clientSystemTime_5_0= RULE_STRING )
-                            // InternalAceGen.g:1406:7: lv_clientSystemTime_5_0= RULE_STRING
+                            // InternalAceGen.g:1350:6: (lv_clientSystemTime_5_0= RULE_STRING )
+                            // InternalAceGen.g:1351:7: lv_clientSystemTime_5_0= RULE_STRING
                             {
-                            lv_clientSystemTime_5_0=(Token)match(input,RULE_STRING,FOLLOW_41); 
+                            lv_clientSystemTime_5_0=(Token)match(input,RULE_STRING,FOLLOW_38); 
 
                             							newLeafNode(lv_clientSystemTime_5_0, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0());
                             						
@@ -3651,28 +3522,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1423:4: (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )?
-                    int alt43=2;
-                    int LA43_0 = input.LA(1);
+                    // InternalAceGen.g:1368:4: (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )?
+                    int alt40=2;
+                    int LA40_0 = input.LA(1);
 
-                    if ( (LA43_0==42) ) {
-                        alt43=1;
+                    if ( (LA40_0==40) ) {
+                        alt40=1;
                     }
-                    switch (alt43) {
+                    switch (alt40) {
                         case 1 :
-                            // InternalAceGen.g:1424:5: otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) )
+                            // InternalAceGen.g:1369:5: otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) )
                             {
-                            otherlv_6=(Token)match(input,42,FOLLOW_39); 
+                            otherlv_6=(Token)match(input,40,FOLLOW_36); 
 
                             					newLeafNode(otherlv_6, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeKeyword_2_3_0());
                             				
-                            // InternalAceGen.g:1428:5: ( (lv_serverSystemTime_7_0= RULE_STRING ) )
-                            // InternalAceGen.g:1429:6: (lv_serverSystemTime_7_0= RULE_STRING )
+                            // InternalAceGen.g:1373:5: ( (lv_serverSystemTime_7_0= RULE_STRING ) )
+                            // InternalAceGen.g:1374:6: (lv_serverSystemTime_7_0= RULE_STRING )
                             {
-                            // InternalAceGen.g:1429:6: (lv_serverSystemTime_7_0= RULE_STRING )
-                            // InternalAceGen.g:1430:7: lv_serverSystemTime_7_0= RULE_STRING
+                            // InternalAceGen.g:1374:6: (lv_serverSystemTime_7_0= RULE_STRING )
+                            // InternalAceGen.g:1375:7: lv_serverSystemTime_7_0= RULE_STRING
                             {
-                            lv_serverSystemTime_7_0=(Token)match(input,RULE_STRING,FOLLOW_42); 
+                            lv_serverSystemTime_7_0=(Token)match(input,RULE_STRING,FOLLOW_39); 
 
                             							newLeafNode(lv_serverSystemTime_7_0, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0());
                             						
@@ -3698,26 +3569,26 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1447:4: (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
-                    int alt44=2;
-                    int LA44_0 = input.LA(1);
+                    // InternalAceGen.g:1392:4: (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
+                    int alt41=2;
+                    int LA41_0 = input.LA(1);
 
-                    if ( (LA44_0==43) ) {
-                        alt44=1;
+                    if ( (LA41_0==41) ) {
+                        alt41=1;
                     }
-                    switch (alt44) {
+                    switch (alt41) {
                         case 1 :
-                            // InternalAceGen.g:1448:5: otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) )
+                            // InternalAceGen.g:1393:5: otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) )
                             {
-                            otherlv_8=(Token)match(input,43,FOLLOW_10); 
+                            otherlv_8=(Token)match(input,41,FOLLOW_10); 
 
                             					newLeafNode(otherlv_8, grammarAccess.getNonDeterministicValueAccess().getNonDeterministicKeyword_2_4_0());
                             				
-                            // InternalAceGen.g:1452:5: ( ( ruleQualifiedName ) )
-                            // InternalAceGen.g:1453:6: ( ruleQualifiedName )
+                            // InternalAceGen.g:1397:5: ( ( ruleQualifiedName ) )
+                            // InternalAceGen.g:1398:6: ( ruleQualifiedName )
                             {
-                            // InternalAceGen.g:1453:6: ( ruleQualifiedName )
-                            // InternalAceGen.g:1454:7: ruleQualifiedName
+                            // InternalAceGen.g:1398:6: ( ruleQualifiedName )
+                            // InternalAceGen.g:1399:7: ruleQualifiedName
                             {
 
                             							if (current==null) {
@@ -3727,7 +3598,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                             							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeCrossReference_2_4_1_0());
                             						
-                            pushFollow(FOLLOW_43);
+                            pushFollow(FOLLOW_40);
                             ruleQualifiedName();
 
                             state._fsp--;
@@ -3741,20 +3612,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            otherlv_10=(Token)match(input,44,FOLLOW_44); 
+                            otherlv_10=(Token)match(input,42,FOLLOW_41); 
 
                             					newLeafNode(otherlv_10, grammarAccess.getNonDeterministicValueAccess().getColonKeyword_2_4_2());
                             				
-                            // InternalAceGen.g:1472:5: ( (lv_value_11_0= rulePrimitiveValue ) )
-                            // InternalAceGen.g:1473:6: (lv_value_11_0= rulePrimitiveValue )
+                            // InternalAceGen.g:1417:5: ( (lv_value_11_0= rulePrimitiveValue ) )
+                            // InternalAceGen.g:1418:6: (lv_value_11_0= rulePrimitiveValue )
                             {
-                            // InternalAceGen.g:1473:6: (lv_value_11_0= rulePrimitiveValue )
-                            // InternalAceGen.g:1474:7: lv_value_11_0= rulePrimitiveValue
+                            // InternalAceGen.g:1418:6: (lv_value_11_0= rulePrimitiveValue )
+                            // InternalAceGen.g:1419:7: lv_value_11_0= rulePrimitiveValue
                             {
 
                             							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0());
                             						
-                            pushFollow(FOLLOW_45);
+                            pushFollow(FOLLOW_42);
                             lv_value_11_0=rulePrimitiveValue();
 
                             state._fsp--;
@@ -3815,7 +3686,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInputValue"
-    // InternalAceGen.g:1501:1: entryRuleInputValue returns [EObject current=null] : iv_ruleInputValue= ruleInputValue EOF ;
+    // InternalAceGen.g:1446:1: entryRuleInputValue returns [EObject current=null] : iv_ruleInputValue= ruleInputValue EOF ;
     public final EObject entryRuleInputValue() throws RecognitionException {
         EObject current = null;
 
@@ -3823,8 +3694,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1501:51: (iv_ruleInputValue= ruleInputValue EOF )
-            // InternalAceGen.g:1502:2: iv_ruleInputValue= ruleInputValue EOF
+            // InternalAceGen.g:1446:51: (iv_ruleInputValue= ruleInputValue EOF )
+            // InternalAceGen.g:1447:2: iv_ruleInputValue= ruleInputValue EOF
             {
              newCompositeNode(grammarAccess.getInputValueRule()); 
             pushFollow(FOLLOW_1);
@@ -3851,7 +3722,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInputValue"
-    // InternalAceGen.g:1508:1: ruleInputValue returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) ;
+    // InternalAceGen.g:1453:1: ruleInputValue returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) ;
     public final EObject ruleInputValue() throws RecognitionException {
         EObject current = null;
 
@@ -3863,17 +3734,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1514:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) )
-            // InternalAceGen.g:1515:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
+            // InternalAceGen.g:1459:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) )
+            // InternalAceGen.g:1460:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
             {
-            // InternalAceGen.g:1515:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
-            // InternalAceGen.g:1516:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) )
+            // InternalAceGen.g:1460:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
+            // InternalAceGen.g:1461:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) )
             {
-            // InternalAceGen.g:1516:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:1517:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1461:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1462:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:1517:4: ( ruleQualifiedName )
-            // InternalAceGen.g:1518:5: ruleQualifiedName
+            // InternalAceGen.g:1462:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1463:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -3883,7 +3754,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getInputValueAccess().getInputInputCrossReference_0_0());
             				
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_40);
             ruleQualifiedName();
 
             state._fsp--;
@@ -3897,15 +3768,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,44,FOLLOW_44); 
+            otherlv_1=(Token)match(input,42,FOLLOW_41); 
 
             			newLeafNode(otherlv_1, grammarAccess.getInputValueAccess().getColonKeyword_1());
             		
-            // InternalAceGen.g:1536:3: ( (lv_value_2_0= rulePrimitiveValue ) )
-            // InternalAceGen.g:1537:4: (lv_value_2_0= rulePrimitiveValue )
+            // InternalAceGen.g:1481:3: ( (lv_value_2_0= rulePrimitiveValue ) )
+            // InternalAceGen.g:1482:4: (lv_value_2_0= rulePrimitiveValue )
             {
-            // InternalAceGen.g:1537:4: (lv_value_2_0= rulePrimitiveValue )
-            // InternalAceGen.g:1538:5: lv_value_2_0= rulePrimitiveValue
+            // InternalAceGen.g:1482:4: (lv_value_2_0= rulePrimitiveValue )
+            // InternalAceGen.g:1483:5: lv_value_2_0= rulePrimitiveValue
             {
 
             					newCompositeNode(grammarAccess.getInputValueAccess().getValuePrimitiveValueParserRuleCall_2_0());
@@ -3955,7 +3826,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClientThenBlock"
-    // InternalAceGen.g:1559:1: entryRuleClientThenBlock returns [EObject current=null] : iv_ruleClientThenBlock= ruleClientThenBlock EOF ;
+    // InternalAceGen.g:1504:1: entryRuleClientThenBlock returns [EObject current=null] : iv_ruleClientThenBlock= ruleClientThenBlock EOF ;
     public final EObject entryRuleClientThenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -3963,8 +3834,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1559:56: (iv_ruleClientThenBlock= ruleClientThenBlock EOF )
-            // InternalAceGen.g:1560:2: iv_ruleClientThenBlock= ruleClientThenBlock EOF
+            // InternalAceGen.g:1504:56: (iv_ruleClientThenBlock= ruleClientThenBlock EOF )
+            // InternalAceGen.g:1505:2: iv_ruleClientThenBlock= ruleClientThenBlock EOF
             {
              newCompositeNode(grammarAccess.getClientThenBlockRule()); 
             pushFollow(FOLLOW_1);
@@ -3991,7 +3862,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientThenBlock"
-    // InternalAceGen.g:1566:1: ruleClientThenBlock returns [EObject current=null] : ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? ) ;
+    // InternalAceGen.g:1511:1: ruleClientThenBlock returns [EObject current=null] : ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? ) ;
     public final EObject ruleClientThenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -4005,14 +3876,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1572:2: ( ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? ) )
-            // InternalAceGen.g:1573:2: ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? )
+            // InternalAceGen.g:1517:2: ( ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? ) )
+            // InternalAceGen.g:1518:2: ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? )
             {
-            // InternalAceGen.g:1573:2: ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? )
-            // InternalAceGen.g:1574:3: () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )?
+            // InternalAceGen.g:1518:2: ( () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )? )
+            // InternalAceGen.g:1519:3: () (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )? (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )?
             {
-            // InternalAceGen.g:1574:3: ()
-            // InternalAceGen.g:1575:4: 
+            // InternalAceGen.g:1519:3: ()
+            // InternalAceGen.g:1520:4: 
             {
 
             				current = forceCreateModelElement(
@@ -4022,49 +3893,49 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1581:3: (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )?
-            int alt47=2;
-            int LA47_0 = input.LA(1);
+            // InternalAceGen.g:1526:3: (otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )* )?
+            int alt44=2;
+            int LA44_0 = input.LA(1);
 
-            if ( (LA47_0==45) ) {
-                alt47=1;
+            if ( (LA44_0==43) ) {
+                alt44=1;
             }
-            switch (alt47) {
+            switch (alt44) {
                 case 1 :
-                    // InternalAceGen.g:1582:4: otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )*
+                    // InternalAceGen.g:1527:4: otherlv_1= 'expectedState' ( (lv_stateVerifications_2_0= ruleStateVerification ) )*
                     {
-                    otherlv_1=(Token)match(input,45,FOLLOW_46); 
+                    otherlv_1=(Token)match(input,43,FOLLOW_43); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getClientThenBlockAccess().getExpectedStateKeyword_1_0());
                     			
-                    // InternalAceGen.g:1586:4: ( (lv_stateVerifications_2_0= ruleStateVerification ) )*
-                    loop46:
+                    // InternalAceGen.g:1531:4: ( (lv_stateVerifications_2_0= ruleStateVerification ) )*
+                    loop43:
                     do {
-                        int alt46=2;
-                        int LA46_0 = input.LA(1);
+                        int alt43=2;
+                        int LA43_0 = input.LA(1);
 
-                        if ( (LA46_0==RULE_ID) ) {
-                            int LA46_2 = input.LA(2);
+                        if ( (LA43_0==RULE_ID) ) {
+                            int LA43_2 = input.LA(2);
 
-                            if ( (LA46_2==RULE_ID) ) {
-                                alt46=1;
+                            if ( (LA43_2==RULE_ID) ) {
+                                alt43=1;
                             }
 
 
                         }
 
 
-                        switch (alt46) {
+                        switch (alt43) {
                     	case 1 :
-                    	    // InternalAceGen.g:1587:5: (lv_stateVerifications_2_0= ruleStateVerification )
+                    	    // InternalAceGen.g:1532:5: (lv_stateVerifications_2_0= ruleStateVerification )
                     	    {
-                    	    // InternalAceGen.g:1587:5: (lv_stateVerifications_2_0= ruleStateVerification )
-                    	    // InternalAceGen.g:1588:6: lv_stateVerifications_2_0= ruleStateVerification
+                    	    // InternalAceGen.g:1532:5: (lv_stateVerifications_2_0= ruleStateVerification )
+                    	    // InternalAceGen.g:1533:6: lv_stateVerifications_2_0= ruleStateVerification
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getClientThenBlockAccess().getStateVerificationsStateVerificationParserRuleCall_1_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_46);
+                    	    pushFollow(FOLLOW_43);
                     	    lv_stateVerifications_2_0=ruleStateVerification();
 
                     	    state._fsp--;
@@ -4088,7 +3959,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop46;
+                    	    break loop43;
                         }
                     } while (true);
 
@@ -4098,44 +3969,44 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1606:3: (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )?
-            int alt49=2;
-            int LA49_0 = input.LA(1);
+            // InternalAceGen.g:1551:3: (otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )* )?
+            int alt46=2;
+            int LA46_0 = input.LA(1);
 
-            if ( (LA49_0==46) ) {
-                alt49=1;
+            if ( (LA46_0==44) ) {
+                alt46=1;
             }
-            switch (alt49) {
+            switch (alt46) {
                 case 1 :
-                    // InternalAceGen.g:1607:4: otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )*
+                    // InternalAceGen.g:1552:4: otherlv_3= 'verifications' ( (lv_verifications_4_0= RULE_ID ) )*
                     {
-                    otherlv_3=(Token)match(input,46,FOLLOW_3); 
+                    otherlv_3=(Token)match(input,44,FOLLOW_3); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getClientThenBlockAccess().getVerificationsKeyword_2_0());
                     			
-                    // InternalAceGen.g:1611:4: ( (lv_verifications_4_0= RULE_ID ) )*
-                    loop48:
+                    // InternalAceGen.g:1556:4: ( (lv_verifications_4_0= RULE_ID ) )*
+                    loop45:
                     do {
-                        int alt48=2;
-                        int LA48_0 = input.LA(1);
+                        int alt45=2;
+                        int LA45_0 = input.LA(1);
 
-                        if ( (LA48_0==RULE_ID) ) {
-                            int LA48_2 = input.LA(2);
+                        if ( (LA45_0==RULE_ID) ) {
+                            int LA45_2 = input.LA(2);
 
-                            if ( (LA48_2==EOF||LA48_2==RULE_ID) ) {
-                                alt48=1;
+                            if ( (LA45_2==EOF||LA45_2==RULE_ID) ) {
+                                alt45=1;
                             }
 
 
                         }
 
 
-                        switch (alt48) {
+                        switch (alt45) {
                     	case 1 :
-                    	    // InternalAceGen.g:1612:5: (lv_verifications_4_0= RULE_ID )
+                    	    // InternalAceGen.g:1557:5: (lv_verifications_4_0= RULE_ID )
                     	    {
-                    	    // InternalAceGen.g:1612:5: (lv_verifications_4_0= RULE_ID )
-                    	    // InternalAceGen.g:1613:6: lv_verifications_4_0= RULE_ID
+                    	    // InternalAceGen.g:1557:5: (lv_verifications_4_0= RULE_ID )
+                    	    // InternalAceGen.g:1558:6: lv_verifications_4_0= RULE_ID
                     	    {
                     	    lv_verifications_4_0=(Token)match(input,RULE_ID,FOLLOW_3); 
 
@@ -4159,7 +4030,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop48;
+                    	    break loop45;
                         }
                     } while (true);
 
@@ -4192,7 +4063,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStateVerification"
-    // InternalAceGen.g:1634:1: entryRuleStateVerification returns [EObject current=null] : iv_ruleStateVerification= ruleStateVerification EOF ;
+    // InternalAceGen.g:1579:1: entryRuleStateVerification returns [EObject current=null] : iv_ruleStateVerification= ruleStateVerification EOF ;
     public final EObject entryRuleStateVerification() throws RecognitionException {
         EObject current = null;
 
@@ -4200,8 +4071,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1634:58: (iv_ruleStateVerification= ruleStateVerification EOF )
-            // InternalAceGen.g:1635:2: iv_ruleStateVerification= ruleStateVerification EOF
+            // InternalAceGen.g:1579:58: (iv_ruleStateVerification= ruleStateVerification EOF )
+            // InternalAceGen.g:1580:2: iv_ruleStateVerification= ruleStateVerification EOF
             {
              newCompositeNode(grammarAccess.getStateVerificationRule()); 
             pushFollow(FOLLOW_1);
@@ -4228,7 +4099,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStateVerification"
-    // InternalAceGen.g:1641:1: ruleStateVerification returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) ) ;
+    // InternalAceGen.g:1586:1: ruleStateVerification returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) ) ;
     public final EObject ruleStateVerification() throws RecognitionException {
         EObject current = null;
 
@@ -4241,17 +4112,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1647:2: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) ) )
-            // InternalAceGen.g:1648:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) )
+            // InternalAceGen.g:1592:2: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) ) )
+            // InternalAceGen.g:1593:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) )
             {
-            // InternalAceGen.g:1648:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) )
-            // InternalAceGen.g:1649:3: ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) )
+            // InternalAceGen.g:1593:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) ) )
+            // InternalAceGen.g:1594:3: ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) otherlv_2= 'shouldBe' ( (lv_value_3_0= ruleJsonValueClient ) )
             {
-            // InternalAceGen.g:1649:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:1650:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:1594:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:1595:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:1650:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:1651:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:1595:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:1596:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_10); 
 
@@ -4273,11 +4144,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1667:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:1668:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1612:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1613:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:1668:4: ( ruleQualifiedName )
-            // InternalAceGen.g:1669:5: ruleQualifiedName
+            // InternalAceGen.g:1613:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1614:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -4287,7 +4158,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getStateVerificationAccess().getStateRefSingleClientAttributeCrossReference_1_0());
             				
-            pushFollow(FOLLOW_47);
+            pushFollow(FOLLOW_44);
             ruleQualifiedName();
 
             state._fsp--;
@@ -4301,15 +4172,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,47,FOLLOW_48); 
+            otherlv_2=(Token)match(input,45,FOLLOW_45); 
 
             			newLeafNode(otherlv_2, grammarAccess.getStateVerificationAccess().getShouldBeKeyword_2());
             		
-            // InternalAceGen.g:1687:3: ( (lv_value_3_0= ruleJsonValueClient ) )
-            // InternalAceGen.g:1688:4: (lv_value_3_0= ruleJsonValueClient )
+            // InternalAceGen.g:1632:3: ( (lv_value_3_0= ruleJsonValueClient ) )
+            // InternalAceGen.g:1633:4: (lv_value_3_0= ruleJsonValueClient )
             {
-            // InternalAceGen.g:1688:4: (lv_value_3_0= ruleJsonValueClient )
-            // InternalAceGen.g:1689:5: lv_value_3_0= ruleJsonValueClient
+            // InternalAceGen.g:1633:4: (lv_value_3_0= ruleJsonValueClient )
+            // InternalAceGen.g:1634:5: lv_value_3_0= ruleJsonValueClient
             {
 
             					newCompositeNode(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0());
@@ -4359,7 +4230,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectClient"
-    // InternalAceGen.g:1710:1: entryRuleJsonObjectClient returns [EObject current=null] : iv_ruleJsonObjectClient= ruleJsonObjectClient EOF ;
+    // InternalAceGen.g:1655:1: entryRuleJsonObjectClient returns [EObject current=null] : iv_ruleJsonObjectClient= ruleJsonObjectClient EOF ;
     public final EObject entryRuleJsonObjectClient() throws RecognitionException {
         EObject current = null;
 
@@ -4367,8 +4238,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1710:57: (iv_ruleJsonObjectClient= ruleJsonObjectClient EOF )
-            // InternalAceGen.g:1711:2: iv_ruleJsonObjectClient= ruleJsonObjectClient EOF
+            // InternalAceGen.g:1655:57: (iv_ruleJsonObjectClient= ruleJsonObjectClient EOF )
+            // InternalAceGen.g:1656:2: iv_ruleJsonObjectClient= ruleJsonObjectClient EOF
             {
              newCompositeNode(grammarAccess.getJsonObjectClientRule()); 
             pushFollow(FOLLOW_1);
@@ -4395,7 +4266,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectClient"
-    // InternalAceGen.g:1717:1: ruleJsonObjectClient returns [EObject current=null] : ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' ) ;
+    // InternalAceGen.g:1662:1: ruleJsonObjectClient returns [EObject current=null] : ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' ) ;
     public final EObject ruleJsonObjectClient() throws RecognitionException {
         EObject current = null;
 
@@ -4411,14 +4282,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1723:2: ( ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' ) )
-            // InternalAceGen.g:1724:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' )
+            // InternalAceGen.g:1668:2: ( ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' ) )
+            // InternalAceGen.g:1669:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' )
             {
-            // InternalAceGen.g:1724:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' )
-            // InternalAceGen.g:1725:3: () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}'
+            // InternalAceGen.g:1669:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}' )
+            // InternalAceGen.g:1670:3: () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMemberClient ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )* otherlv_5= '}'
             {
-            // InternalAceGen.g:1725:3: ()
-            // InternalAceGen.g:1726:4: 
+            // InternalAceGen.g:1670:3: ()
+            // InternalAceGen.g:1671:4: 
             {
 
             				current = forceCreateModelElement(
@@ -4428,28 +4299,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,15,FOLLOW_49); 
+            otherlv_1=(Token)match(input,15,FOLLOW_46); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonObjectClientAccess().getLeftCurlyBracketKeyword_1());
             		
-            // InternalAceGen.g:1736:3: ( (lv_members_2_0= ruleJsonMemberClient ) )?
-            int alt50=2;
-            int LA50_0 = input.LA(1);
+            // InternalAceGen.g:1681:3: ( (lv_members_2_0= ruleJsonMemberClient ) )?
+            int alt47=2;
+            int LA47_0 = input.LA(1);
 
-            if ( (LA50_0==RULE_ID) ) {
-                alt50=1;
+            if ( (LA47_0==RULE_ID) ) {
+                alt47=1;
             }
-            switch (alt50) {
+            switch (alt47) {
                 case 1 :
-                    // InternalAceGen.g:1737:4: (lv_members_2_0= ruleJsonMemberClient )
+                    // InternalAceGen.g:1682:4: (lv_members_2_0= ruleJsonMemberClient )
                     {
-                    // InternalAceGen.g:1737:4: (lv_members_2_0= ruleJsonMemberClient )
-                    // InternalAceGen.g:1738:5: lv_members_2_0= ruleJsonMemberClient
+                    // InternalAceGen.g:1682:4: (lv_members_2_0= ruleJsonMemberClient )
+                    // InternalAceGen.g:1683:5: lv_members_2_0= ruleJsonMemberClient
                     {
 
                     					newCompositeNode(grammarAccess.getJsonObjectClientAccess().getMembersJsonMemberClientParserRuleCall_2_0());
                     				
-                    pushFollow(FOLLOW_50);
+                    pushFollow(FOLLOW_47);
                     lv_members_2_0=ruleJsonMemberClient();
 
                     state._fsp--;
@@ -4474,35 +4345,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1755:3: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )*
-            loop51:
+            // InternalAceGen.g:1700:3: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) ) )*
+            loop48:
             do {
-                int alt51=2;
-                int LA51_0 = input.LA(1);
+                int alt48=2;
+                int LA48_0 = input.LA(1);
 
-                if ( (LA51_0==20) ) {
-                    alt51=1;
+                if ( (LA48_0==20) ) {
+                    alt48=1;
                 }
 
 
-                switch (alt51) {
+                switch (alt48) {
             	case 1 :
-            	    // InternalAceGen.g:1756:4: otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) )
+            	    // InternalAceGen.g:1701:4: otherlv_3= ',' ( (lv_members_4_0= ruleJsonMemberClient ) )
             	    {
             	    otherlv_3=(Token)match(input,20,FOLLOW_10); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getJsonObjectClientAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalAceGen.g:1760:4: ( (lv_members_4_0= ruleJsonMemberClient ) )
-            	    // InternalAceGen.g:1761:5: (lv_members_4_0= ruleJsonMemberClient )
+            	    // InternalAceGen.g:1705:4: ( (lv_members_4_0= ruleJsonMemberClient ) )
+            	    // InternalAceGen.g:1706:5: (lv_members_4_0= ruleJsonMemberClient )
             	    {
-            	    // InternalAceGen.g:1761:5: (lv_members_4_0= ruleJsonMemberClient )
-            	    // InternalAceGen.g:1762:6: lv_members_4_0= ruleJsonMemberClient
+            	    // InternalAceGen.g:1706:5: (lv_members_4_0= ruleJsonMemberClient )
+            	    // InternalAceGen.g:1707:6: lv_members_4_0= ruleJsonMemberClient
             	    {
 
             	    						newCompositeNode(grammarAccess.getJsonObjectClientAccess().getMembersJsonMemberClientParserRuleCall_3_1_0());
             	    					
-            	    pushFollow(FOLLOW_50);
+            	    pushFollow(FOLLOW_47);
             	    lv_members_4_0=ruleJsonMemberClient();
 
             	    state._fsp--;
@@ -4529,7 +4400,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop51;
+            	    break loop48;
                 }
             } while (true);
 
@@ -4560,7 +4431,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonMemberClient"
-    // InternalAceGen.g:1788:1: entryRuleJsonMemberClient returns [EObject current=null] : iv_ruleJsonMemberClient= ruleJsonMemberClient EOF ;
+    // InternalAceGen.g:1733:1: entryRuleJsonMemberClient returns [EObject current=null] : iv_ruleJsonMemberClient= ruleJsonMemberClient EOF ;
     public final EObject entryRuleJsonMemberClient() throws RecognitionException {
         EObject current = null;
 
@@ -4568,8 +4439,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1788:57: (iv_ruleJsonMemberClient= ruleJsonMemberClient EOF )
-            // InternalAceGen.g:1789:2: iv_ruleJsonMemberClient= ruleJsonMemberClient EOF
+            // InternalAceGen.g:1733:57: (iv_ruleJsonMemberClient= ruleJsonMemberClient EOF )
+            // InternalAceGen.g:1734:2: iv_ruleJsonMemberClient= ruleJsonMemberClient EOF
             {
              newCompositeNode(grammarAccess.getJsonMemberClientRule()); 
             pushFollow(FOLLOW_1);
@@ -4596,7 +4467,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonMemberClient"
-    // InternalAceGen.g:1795:1: ruleJsonMemberClient returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) ) ;
+    // InternalAceGen.g:1740:1: ruleJsonMemberClient returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) ) ;
     public final EObject ruleJsonMemberClient() throws RecognitionException {
         EObject current = null;
 
@@ -4608,17 +4479,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1801:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) ) )
-            // InternalAceGen.g:1802:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) )
+            // InternalAceGen.g:1746:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) ) )
+            // InternalAceGen.g:1747:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) )
             {
-            // InternalAceGen.g:1802:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) )
-            // InternalAceGen.g:1803:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) )
+            // InternalAceGen.g:1747:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) ) )
+            // InternalAceGen.g:1748:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValueClient ) )
             {
-            // InternalAceGen.g:1803:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:1804:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1748:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:1749:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:1804:4: ( ruleQualifiedName )
-            // InternalAceGen.g:1805:5: ruleQualifiedName
+            // InternalAceGen.g:1749:4: ( ruleQualifiedName )
+            // InternalAceGen.g:1750:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -4628,7 +4499,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getJsonMemberClientAccess().getAttributeSingleClientAttributeCrossReference_0_0());
             				
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_40);
             ruleQualifiedName();
 
             state._fsp--;
@@ -4642,15 +4513,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,44,FOLLOW_48); 
+            otherlv_1=(Token)match(input,42,FOLLOW_45); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonMemberClientAccess().getColonKeyword_1());
             		
-            // InternalAceGen.g:1823:3: ( (lv_value_2_0= ruleJsonValueClient ) )
-            // InternalAceGen.g:1824:4: (lv_value_2_0= ruleJsonValueClient )
+            // InternalAceGen.g:1768:3: ( (lv_value_2_0= ruleJsonValueClient ) )
+            // InternalAceGen.g:1769:4: (lv_value_2_0= ruleJsonValueClient )
             {
-            // InternalAceGen.g:1824:4: (lv_value_2_0= ruleJsonValueClient )
-            // InternalAceGen.g:1825:5: lv_value_2_0= ruleJsonValueClient
+            // InternalAceGen.g:1769:4: (lv_value_2_0= ruleJsonValueClient )
+            // InternalAceGen.g:1770:5: lv_value_2_0= ruleJsonValueClient
             {
 
             					newCompositeNode(grammarAccess.getJsonMemberClientAccess().getValueJsonValueClientParserRuleCall_2_0());
@@ -4700,7 +4571,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonValueClient"
-    // InternalAceGen.g:1846:1: entryRuleJsonValueClient returns [EObject current=null] : iv_ruleJsonValueClient= ruleJsonValueClient EOF ;
+    // InternalAceGen.g:1791:1: entryRuleJsonValueClient returns [EObject current=null] : iv_ruleJsonValueClient= ruleJsonValueClient EOF ;
     public final EObject entryRuleJsonValueClient() throws RecognitionException {
         EObject current = null;
 
@@ -4708,8 +4579,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1846:56: (iv_ruleJsonValueClient= ruleJsonValueClient EOF )
-            // InternalAceGen.g:1847:2: iv_ruleJsonValueClient= ruleJsonValueClient EOF
+            // InternalAceGen.g:1791:56: (iv_ruleJsonValueClient= ruleJsonValueClient EOF )
+            // InternalAceGen.g:1792:2: iv_ruleJsonValueClient= ruleJsonValueClient EOF
             {
              newCompositeNode(grammarAccess.getJsonValueClientRule()); 
             pushFollow(FOLLOW_1);
@@ -4736,7 +4607,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonValueClient"
-    // InternalAceGen.g:1853:1: ruleJsonValueClient returns [EObject current=null] : (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType ) ;
+    // InternalAceGen.g:1798:1: ruleJsonValueClient returns [EObject current=null] : (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType ) ;
     public final EObject ruleJsonValueClient() throws RecognitionException {
         EObject current = null;
 
@@ -4761,15 +4632,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1859:2: ( (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType ) )
-            // InternalAceGen.g:1860:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )
+            // InternalAceGen.g:1804:2: ( (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType ) )
+            // InternalAceGen.g:1805:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )
             {
-            // InternalAceGen.g:1860:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )
-            int alt52=8;
-            alt52 = dfa52.predict(input);
-            switch (alt52) {
+            // InternalAceGen.g:1805:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )
+            int alt49=8;
+            alt49 = dfa49.predict(input);
+            switch (alt49) {
                 case 1 :
-                    // InternalAceGen.g:1861:3: this_JsonObjectClient_0= ruleJsonObjectClient
+                    // InternalAceGen.g:1806:3: this_JsonObjectClient_0= ruleJsonObjectClient
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getJsonObjectClientParserRuleCall_0());
@@ -4787,7 +4658,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:1870:3: this_StringType_1= ruleStringType
+                    // InternalAceGen.g:1815:3: this_StringType_1= ruleStringType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getStringTypeParserRuleCall_1());
@@ -4805,7 +4676,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:1879:3: this_JsonArrayClient_2= ruleJsonArrayClient
+                    // InternalAceGen.g:1824:3: this_JsonArrayClient_2= ruleJsonArrayClient
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getJsonArrayClientParserRuleCall_2());
@@ -4823,7 +4694,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalAceGen.g:1888:3: this_BooleanType_3= ruleBooleanType
+                    // InternalAceGen.g:1833:3: this_BooleanType_3= ruleBooleanType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getBooleanTypeParserRuleCall_3());
@@ -4841,7 +4712,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalAceGen.g:1897:3: this_NullType_4= ruleNullType
+                    // InternalAceGen.g:1842:3: this_NullType_4= ruleNullType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getNullTypeParserRuleCall_4());
@@ -4859,7 +4730,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalAceGen.g:1906:3: this_LongType_5= ruleLongType
+                    // InternalAceGen.g:1851:3: this_LongType_5= ruleLongType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getLongTypeParserRuleCall_5());
@@ -4877,7 +4748,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalAceGen.g:1915:3: this_JsonDateTime_6= ruleJsonDateTime
+                    // InternalAceGen.g:1860:3: this_JsonDateTime_6= ruleJsonDateTime
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getJsonDateTimeParserRuleCall_6());
@@ -4895,7 +4766,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalAceGen.g:1924:3: this_UndefinedType_7= ruleUndefinedType
+                    // InternalAceGen.g:1869:3: this_UndefinedType_7= ruleUndefinedType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueClientAccess().getUndefinedTypeParserRuleCall_7());
@@ -4935,7 +4806,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonArrayClient"
-    // InternalAceGen.g:1936:1: entryRuleJsonArrayClient returns [EObject current=null] : iv_ruleJsonArrayClient= ruleJsonArrayClient EOF ;
+    // InternalAceGen.g:1881:1: entryRuleJsonArrayClient returns [EObject current=null] : iv_ruleJsonArrayClient= ruleJsonArrayClient EOF ;
     public final EObject entryRuleJsonArrayClient() throws RecognitionException {
         EObject current = null;
 
@@ -4943,8 +4814,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:1936:56: (iv_ruleJsonArrayClient= ruleJsonArrayClient EOF )
-            // InternalAceGen.g:1937:2: iv_ruleJsonArrayClient= ruleJsonArrayClient EOF
+            // InternalAceGen.g:1881:56: (iv_ruleJsonArrayClient= ruleJsonArrayClient EOF )
+            // InternalAceGen.g:1882:2: iv_ruleJsonArrayClient= ruleJsonArrayClient EOF
             {
              newCompositeNode(grammarAccess.getJsonArrayClientRule()); 
             pushFollow(FOLLOW_1);
@@ -4971,7 +4842,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonArrayClient"
-    // InternalAceGen.g:1943:1: ruleJsonArrayClient returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' ) ;
+    // InternalAceGen.g:1888:1: ruleJsonArrayClient returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' ) ;
     public final EObject ruleJsonArrayClient() throws RecognitionException {
         EObject current = null;
 
@@ -4987,14 +4858,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1949:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' ) )
-            // InternalAceGen.g:1950:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:1894:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' ) )
+            // InternalAceGen.g:1895:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' )
             {
-            // InternalAceGen.g:1950:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' )
-            // InternalAceGen.g:1951:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']'
+            // InternalAceGen.g:1895:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:1896:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValueClient ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )* otherlv_5= ']'
             {
-            // InternalAceGen.g:1951:3: ()
-            // InternalAceGen.g:1952:4: 
+            // InternalAceGen.g:1896:3: ()
+            // InternalAceGen.g:1897:4: 
             {
 
             				current = forceCreateModelElement(
@@ -5004,28 +4875,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,48,FOLLOW_51); 
+            otherlv_1=(Token)match(input,46,FOLLOW_48); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonArrayClientAccess().getLeftSquareBracketKeyword_1());
             		
-            // InternalAceGen.g:1962:3: ( (lv_values_2_0= ruleJsonValueClient ) )?
-            int alt53=2;
-            int LA53_0 = input.LA(1);
+            // InternalAceGen.g:1907:3: ( (lv_values_2_0= ruleJsonValueClient ) )?
+            int alt50=2;
+            int LA50_0 = input.LA(1);
 
-            if ( ((LA53_0>=RULE_STRING && LA53_0<=RULE_INT)||LA53_0==15||LA53_0==48||LA53_0==76||(LA53_0>=94 && LA53_0<=96)) ) {
-                alt53=1;
+            if ( ((LA50_0>=RULE_STRING && LA50_0<=RULE_INT)||LA50_0==15||LA50_0==46||LA50_0==75||(LA50_0>=93 && LA50_0<=95)) ) {
+                alt50=1;
             }
-            switch (alt53) {
+            switch (alt50) {
                 case 1 :
-                    // InternalAceGen.g:1963:4: (lv_values_2_0= ruleJsonValueClient )
+                    // InternalAceGen.g:1908:4: (lv_values_2_0= ruleJsonValueClient )
                     {
-                    // InternalAceGen.g:1963:4: (lv_values_2_0= ruleJsonValueClient )
-                    // InternalAceGen.g:1964:5: lv_values_2_0= ruleJsonValueClient
+                    // InternalAceGen.g:1908:4: (lv_values_2_0= ruleJsonValueClient )
+                    // InternalAceGen.g:1909:5: lv_values_2_0= ruleJsonValueClient
                     {
 
                     					newCompositeNode(grammarAccess.getJsonArrayClientAccess().getValuesJsonValueClientParserRuleCall_2_0());
                     				
-                    pushFollow(FOLLOW_52);
+                    pushFollow(FOLLOW_49);
                     lv_values_2_0=ruleJsonValueClient();
 
                     state._fsp--;
@@ -5050,35 +4921,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1981:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )*
-            loop54:
+            // InternalAceGen.g:1926:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) ) )*
+            loop51:
             do {
-                int alt54=2;
-                int LA54_0 = input.LA(1);
+                int alt51=2;
+                int LA51_0 = input.LA(1);
 
-                if ( (LA54_0==20) ) {
-                    alt54=1;
+                if ( (LA51_0==20) ) {
+                    alt51=1;
                 }
 
 
-                switch (alt54) {
+                switch (alt51) {
             	case 1 :
-            	    // InternalAceGen.g:1982:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) )
+            	    // InternalAceGen.g:1927:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValueClient ) )
             	    {
-            	    otherlv_3=(Token)match(input,20,FOLLOW_48); 
+            	    otherlv_3=(Token)match(input,20,FOLLOW_45); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getJsonArrayClientAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalAceGen.g:1986:4: ( (lv_values_4_0= ruleJsonValueClient ) )
-            	    // InternalAceGen.g:1987:5: (lv_values_4_0= ruleJsonValueClient )
+            	    // InternalAceGen.g:1931:4: ( (lv_values_4_0= ruleJsonValueClient ) )
+            	    // InternalAceGen.g:1932:5: (lv_values_4_0= ruleJsonValueClient )
             	    {
-            	    // InternalAceGen.g:1987:5: (lv_values_4_0= ruleJsonValueClient )
-            	    // InternalAceGen.g:1988:6: lv_values_4_0= ruleJsonValueClient
+            	    // InternalAceGen.g:1932:5: (lv_values_4_0= ruleJsonValueClient )
+            	    // InternalAceGen.g:1933:6: lv_values_4_0= ruleJsonValueClient
             	    {
 
             	    						newCompositeNode(grammarAccess.getJsonArrayClientAccess().getValuesJsonValueClientParserRuleCall_3_1_0());
             	    					
-            	    pushFollow(FOLLOW_52);
+            	    pushFollow(FOLLOW_49);
             	    lv_values_4_0=ruleJsonValueClient();
 
             	    state._fsp--;
@@ -5105,11 +4976,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop54;
+            	    break loop51;
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,49,FOLLOW_2); 
+            otherlv_5=(Token)match(input,47,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getJsonArrayClientAccess().getRightSquareBracketKeyword_4());
             		
@@ -5136,7 +5007,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServer"
-    // InternalAceGen.g:2014:1: entryRuleHttpServer returns [EObject current=null] : iv_ruleHttpServer= ruleHttpServer EOF ;
+    // InternalAceGen.g:1959:1: entryRuleHttpServer returns [EObject current=null] : iv_ruleHttpServer= ruleHttpServer EOF ;
     public final EObject entryRuleHttpServer() throws RecognitionException {
         EObject current = null;
 
@@ -5144,8 +5015,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2014:51: (iv_ruleHttpServer= ruleHttpServer EOF )
-            // InternalAceGen.g:2015:2: iv_ruleHttpServer= ruleHttpServer EOF
+            // InternalAceGen.g:1959:51: (iv_ruleHttpServer= ruleHttpServer EOF )
+            // InternalAceGen.g:1960:2: iv_ruleHttpServer= ruleHttpServer EOF
             {
              newCompositeNode(grammarAccess.getHttpServerRule()); 
             pushFollow(FOLLOW_1);
@@ -5172,7 +5043,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServer"
-    // InternalAceGen.g:2021:1: ruleHttpServer returns [EObject current=null] : ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? ) ;
+    // InternalAceGen.g:1966:1: ruleHttpServer returns [EObject current=null] : ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? ) ;
     public final EObject ruleHttpServer() throws RecognitionException {
         EObject current = null;
 
@@ -5203,19 +5074,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2027:2: ( ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? ) )
-            // InternalAceGen.g:2028:2: ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? )
+            // InternalAceGen.g:1972:2: ( ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? ) )
+            // InternalAceGen.g:1973:2: ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? )
             {
-            // InternalAceGen.g:2028:2: ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? )
-            // InternalAceGen.g:2029:3: ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )?
+            // InternalAceGen.g:1973:2: ( ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )? )
+            // InternalAceGen.g:1974:3: ( (lv_language_0_0= 'Java' ) ) ( (lv_type_1_0= 'Dropwizard' ) )? ( (lv_persistenceLayer_2_0= 'JDBI3' ) )? ( (lv_migrations_3_0= 'Liquibase' ) )? ( (lv_name_4_0= ruleQualifiedName ) ) (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )? (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )? (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )? (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )? (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )? (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )?
             {
-            // InternalAceGen.g:2029:3: ( (lv_language_0_0= 'Java' ) )
-            // InternalAceGen.g:2030:4: (lv_language_0_0= 'Java' )
+            // InternalAceGen.g:1974:3: ( (lv_language_0_0= 'Java' ) )
+            // InternalAceGen.g:1975:4: (lv_language_0_0= 'Java' )
             {
-            // InternalAceGen.g:2030:4: (lv_language_0_0= 'Java' )
-            // InternalAceGen.g:2031:5: lv_language_0_0= 'Java'
+            // InternalAceGen.g:1975:4: (lv_language_0_0= 'Java' )
+            // InternalAceGen.g:1976:5: lv_language_0_0= 'Java'
             {
-            lv_language_0_0=(Token)match(input,50,FOLLOW_53); 
+            lv_language_0_0=(Token)match(input,48,FOLLOW_50); 
 
             					newLeafNode(lv_language_0_0, grammarAccess.getHttpServerAccess().getLanguageJavaKeyword_0_0());
             				
@@ -5231,21 +5102,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2043:3: ( (lv_type_1_0= 'Dropwizard' ) )?
-            int alt55=2;
-            int LA55_0 = input.LA(1);
+            // InternalAceGen.g:1988:3: ( (lv_type_1_0= 'Dropwizard' ) )?
+            int alt52=2;
+            int LA52_0 = input.LA(1);
 
-            if ( (LA55_0==51) ) {
-                alt55=1;
+            if ( (LA52_0==49) ) {
+                alt52=1;
             }
-            switch (alt55) {
+            switch (alt52) {
                 case 1 :
-                    // InternalAceGen.g:2044:4: (lv_type_1_0= 'Dropwizard' )
+                    // InternalAceGen.g:1989:4: (lv_type_1_0= 'Dropwizard' )
                     {
-                    // InternalAceGen.g:2044:4: (lv_type_1_0= 'Dropwizard' )
-                    // InternalAceGen.g:2045:5: lv_type_1_0= 'Dropwizard'
+                    // InternalAceGen.g:1989:4: (lv_type_1_0= 'Dropwizard' )
+                    // InternalAceGen.g:1990:5: lv_type_1_0= 'Dropwizard'
                     {
-                    lv_type_1_0=(Token)match(input,51,FOLLOW_54); 
+                    lv_type_1_0=(Token)match(input,49,FOLLOW_51); 
 
                     					newLeafNode(lv_type_1_0, grammarAccess.getHttpServerAccess().getTypeDropwizardKeyword_1_0());
                     				
@@ -5264,21 +5135,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2057:3: ( (lv_persistenceLayer_2_0= 'JDBI3' ) )?
-            int alt56=2;
-            int LA56_0 = input.LA(1);
+            // InternalAceGen.g:2002:3: ( (lv_persistenceLayer_2_0= 'JDBI3' ) )?
+            int alt53=2;
+            int LA53_0 = input.LA(1);
 
-            if ( (LA56_0==52) ) {
-                alt56=1;
+            if ( (LA53_0==50) ) {
+                alt53=1;
             }
-            switch (alt56) {
+            switch (alt53) {
                 case 1 :
-                    // InternalAceGen.g:2058:4: (lv_persistenceLayer_2_0= 'JDBI3' )
+                    // InternalAceGen.g:2003:4: (lv_persistenceLayer_2_0= 'JDBI3' )
                     {
-                    // InternalAceGen.g:2058:4: (lv_persistenceLayer_2_0= 'JDBI3' )
-                    // InternalAceGen.g:2059:5: lv_persistenceLayer_2_0= 'JDBI3'
+                    // InternalAceGen.g:2003:4: (lv_persistenceLayer_2_0= 'JDBI3' )
+                    // InternalAceGen.g:2004:5: lv_persistenceLayer_2_0= 'JDBI3'
                     {
-                    lv_persistenceLayer_2_0=(Token)match(input,52,FOLLOW_55); 
+                    lv_persistenceLayer_2_0=(Token)match(input,50,FOLLOW_52); 
 
                     					newLeafNode(lv_persistenceLayer_2_0, grammarAccess.getHttpServerAccess().getPersistenceLayerJDBI3Keyword_2_0());
                     				
@@ -5297,21 +5168,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2071:3: ( (lv_migrations_3_0= 'Liquibase' ) )?
-            int alt57=2;
-            int LA57_0 = input.LA(1);
+            // InternalAceGen.g:2016:3: ( (lv_migrations_3_0= 'Liquibase' ) )?
+            int alt54=2;
+            int LA54_0 = input.LA(1);
 
-            if ( (LA57_0==53) ) {
-                alt57=1;
+            if ( (LA54_0==51) ) {
+                alt54=1;
             }
-            switch (alt57) {
+            switch (alt54) {
                 case 1 :
-                    // InternalAceGen.g:2072:4: (lv_migrations_3_0= 'Liquibase' )
+                    // InternalAceGen.g:2017:4: (lv_migrations_3_0= 'Liquibase' )
                     {
-                    // InternalAceGen.g:2072:4: (lv_migrations_3_0= 'Liquibase' )
-                    // InternalAceGen.g:2073:5: lv_migrations_3_0= 'Liquibase'
+                    // InternalAceGen.g:2017:4: (lv_migrations_3_0= 'Liquibase' )
+                    // InternalAceGen.g:2018:5: lv_migrations_3_0= 'Liquibase'
                     {
-                    lv_migrations_3_0=(Token)match(input,53,FOLLOW_10); 
+                    lv_migrations_3_0=(Token)match(input,51,FOLLOW_10); 
 
                     					newLeafNode(lv_migrations_3_0, grammarAccess.getHttpServerAccess().getMigrationsLiquibaseKeyword_3_0());
                     				
@@ -5330,16 +5201,16 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2085:3: ( (lv_name_4_0= ruleQualifiedName ) )
-            // InternalAceGen.g:2086:4: (lv_name_4_0= ruleQualifiedName )
+            // InternalAceGen.g:2030:3: ( (lv_name_4_0= ruleQualifiedName ) )
+            // InternalAceGen.g:2031:4: (lv_name_4_0= ruleQualifiedName )
             {
-            // InternalAceGen.g:2086:4: (lv_name_4_0= ruleQualifiedName )
-            // InternalAceGen.g:2087:5: lv_name_4_0= ruleQualifiedName
+            // InternalAceGen.g:2031:4: (lv_name_4_0= ruleQualifiedName )
+            // InternalAceGen.g:2032:5: lv_name_4_0= ruleQualifiedName
             {
 
             					newCompositeNode(grammarAccess.getHttpServerAccess().getNameQualifiedNameParserRuleCall_4_0());
             				
-            pushFollow(FOLLOW_56);
+            pushFollow(FOLLOW_53);
             lv_name_4_0=ruleQualifiedName();
 
             state._fsp--;
@@ -5361,31 +5232,31 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2104:3: (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )?
-            int alt58=2;
-            int LA58_0 = input.LA(1);
+            // InternalAceGen.g:2049:3: (otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) ) )?
+            int alt55=2;
+            int LA55_0 = input.LA(1);
 
-            if ( (LA58_0==54) ) {
-                alt58=1;
+            if ( (LA55_0==52) ) {
+                alt55=1;
             }
-            switch (alt58) {
+            switch (alt55) {
                 case 1 :
-                    // InternalAceGen.g:2105:4: otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) )
+                    // InternalAceGen.g:2050:4: otherlv_5= 'Authorization' ( (lv_authUser_6_0= ruleAuthUser ) )
                     {
-                    otherlv_5=(Token)match(input,54,FOLLOW_10); 
+                    otherlv_5=(Token)match(input,52,FOLLOW_10); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getHttpServerAccess().getAuthorizationKeyword_5_0());
                     			
-                    // InternalAceGen.g:2109:4: ( (lv_authUser_6_0= ruleAuthUser ) )
-                    // InternalAceGen.g:2110:5: (lv_authUser_6_0= ruleAuthUser )
+                    // InternalAceGen.g:2054:4: ( (lv_authUser_6_0= ruleAuthUser ) )
+                    // InternalAceGen.g:2055:5: (lv_authUser_6_0= ruleAuthUser )
                     {
-                    // InternalAceGen.g:2110:5: (lv_authUser_6_0= ruleAuthUser )
-                    // InternalAceGen.g:2111:6: lv_authUser_6_0= ruleAuthUser
+                    // InternalAceGen.g:2055:5: (lv_authUser_6_0= ruleAuthUser )
+                    // InternalAceGen.g:2056:6: lv_authUser_6_0= ruleAuthUser
                     {
 
                     						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserAuthUserParserRuleCall_5_1_0());
                     					
-                    pushFollow(FOLLOW_57);
+                    pushFollow(FOLLOW_54);
                     lv_authUser_6_0=ruleAuthUser();
 
                     state._fsp--;
@@ -5413,26 +5284,26 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2129:3: (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )?
-            int alt59=2;
-            int LA59_0 = input.LA(1);
+            // InternalAceGen.g:2074:3: (otherlv_7= 'import' ( ( ruleQualifiedName ) ) )?
+            int alt56=2;
+            int LA56_0 = input.LA(1);
 
-            if ( (LA59_0==55) ) {
-                alt59=1;
+            if ( (LA56_0==53) ) {
+                alt56=1;
             }
-            switch (alt59) {
+            switch (alt56) {
                 case 1 :
-                    // InternalAceGen.g:2130:4: otherlv_7= 'import' ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:2075:4: otherlv_7= 'import' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_7=(Token)match(input,55,FOLLOW_10); 
+                    otherlv_7=(Token)match(input,53,FOLLOW_10); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getHttpServerAccess().getImportKeyword_6_0());
                     			
-                    // InternalAceGen.g:2134:4: ( ( ruleQualifiedName ) )
-                    // InternalAceGen.g:2135:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:2079:4: ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:2080:5: ( ruleQualifiedName )
                     {
-                    // InternalAceGen.g:2135:5: ( ruleQualifiedName )
-                    // InternalAceGen.g:2136:6: ruleQualifiedName
+                    // InternalAceGen.g:2080:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:2081:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -5442,7 +5313,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     						newCompositeNode(grammarAccess.getHttpServerAccess().getAuthUserRefAuthUserCrossReference_6_1_0());
                     					
-                    pushFollow(FOLLOW_58);
+                    pushFollow(FOLLOW_55);
                     ruleQualifiedName();
 
                     state._fsp--;
@@ -5462,43 +5333,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2151:3: (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )?
-            int alt61=2;
-            int LA61_0 = input.LA(1);
+            // InternalAceGen.g:2096:3: (otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )* )?
+            int alt58=2;
+            int LA58_0 = input.LA(1);
 
-            if ( (LA61_0==13) ) {
-                alt61=1;
+            if ( (LA58_0==13) ) {
+                alt58=1;
             }
-            switch (alt61) {
+            switch (alt58) {
                 case 1 :
-                    // InternalAceGen.g:2152:4: otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )*
+                    // InternalAceGen.g:2097:4: otherlv_9= 'ACE' ( (lv_aceOperations_10_0= ruleHttpServerAce ) )*
                     {
-                    otherlv_9=(Token)match(input,13,FOLLOW_59); 
+                    otherlv_9=(Token)match(input,13,FOLLOW_56); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getHttpServerAccess().getACEKeyword_7_0());
                     			
-                    // InternalAceGen.g:2156:4: ( (lv_aceOperations_10_0= ruleHttpServerAce ) )*
-                    loop60:
+                    // InternalAceGen.g:2101:4: ( (lv_aceOperations_10_0= ruleHttpServerAce ) )*
+                    loop57:
                     do {
-                        int alt60=2;
-                        int LA60_0 = input.LA(1);
+                        int alt57=2;
+                        int LA57_0 = input.LA(1);
 
-                        if ( (LA60_0==RULE_ID) ) {
-                            alt60=1;
+                        if ( (LA57_0==RULE_ID) ) {
+                            alt57=1;
                         }
 
 
-                        switch (alt60) {
+                        switch (alt57) {
                     	case 1 :
-                    	    // InternalAceGen.g:2157:5: (lv_aceOperations_10_0= ruleHttpServerAce )
+                    	    // InternalAceGen.g:2102:5: (lv_aceOperations_10_0= ruleHttpServerAce )
                     	    {
-                    	    // InternalAceGen.g:2157:5: (lv_aceOperations_10_0= ruleHttpServerAce )
-                    	    // InternalAceGen.g:2158:6: lv_aceOperations_10_0= ruleHttpServerAce
+                    	    // InternalAceGen.g:2102:5: (lv_aceOperations_10_0= ruleHttpServerAce )
+                    	    // InternalAceGen.g:2103:6: lv_aceOperations_10_0= ruleHttpServerAce
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAccess().getAceOperationsHttpServerAceParserRuleCall_7_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_59);
+                    	    pushFollow(FOLLOW_56);
                     	    lv_aceOperations_10_0=ruleHttpServerAce();
 
                     	    state._fsp--;
@@ -5522,7 +5393,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop60;
+                    	    break loop57;
                         }
                     } while (true);
 
@@ -5532,43 +5403,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2176:3: (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )?
-            int alt63=2;
-            int LA63_0 = input.LA(1);
+            // InternalAceGen.g:2121:3: (otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )* )?
+            int alt60=2;
+            int LA60_0 = input.LA(1);
 
-            if ( (LA63_0==56) ) {
-                alt63=1;
+            if ( (LA60_0==54) ) {
+                alt60=1;
             }
-            switch (alt63) {
+            switch (alt60) {
                 case 1 :
-                    // InternalAceGen.g:2177:4: otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )*
+                    // InternalAceGen.g:2122:4: otherlv_11= 'views' ( (lv_views_12_0= ruleHttpServerView ) )*
                     {
-                    otherlv_11=(Token)match(input,56,FOLLOW_60); 
+                    otherlv_11=(Token)match(input,54,FOLLOW_57); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getHttpServerAccess().getViewsKeyword_8_0());
                     			
-                    // InternalAceGen.g:2181:4: ( (lv_views_12_0= ruleHttpServerView ) )*
-                    loop62:
+                    // InternalAceGen.g:2126:4: ( (lv_views_12_0= ruleHttpServerView ) )*
+                    loop59:
                     do {
-                        int alt62=2;
-                        int LA62_0 = input.LA(1);
+                        int alt59=2;
+                        int LA59_0 = input.LA(1);
 
-                        if ( (LA62_0==RULE_ID||LA62_0==65) ) {
-                            alt62=1;
+                        if ( (LA59_0==RULE_ID||LA59_0==64) ) {
+                            alt59=1;
                         }
 
 
-                        switch (alt62) {
+                        switch (alt59) {
                     	case 1 :
-                    	    // InternalAceGen.g:2182:5: (lv_views_12_0= ruleHttpServerView )
+                    	    // InternalAceGen.g:2127:5: (lv_views_12_0= ruleHttpServerView )
                     	    {
-                    	    // InternalAceGen.g:2182:5: (lv_views_12_0= ruleHttpServerView )
-                    	    // InternalAceGen.g:2183:6: lv_views_12_0= ruleHttpServerView
+                    	    // InternalAceGen.g:2127:5: (lv_views_12_0= ruleHttpServerView )
+                    	    // InternalAceGen.g:2128:6: lv_views_12_0= ruleHttpServerView
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAccess().getViewsHttpServerViewParserRuleCall_8_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_60);
+                    	    pushFollow(FOLLOW_57);
                     	    lv_views_12_0=ruleHttpServerView();
 
                     	    state._fsp--;
@@ -5592,7 +5463,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop62;
+                    	    break loop59;
                         }
                     } while (true);
 
@@ -5602,43 +5473,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2201:3: (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )?
-            int alt65=2;
-            int LA65_0 = input.LA(1);
+            // InternalAceGen.g:2146:3: (otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )* )?
+            int alt62=2;
+            int LA62_0 = input.LA(1);
 
-            if ( (LA65_0==57) ) {
-                alt65=1;
+            if ( (LA62_0==55) ) {
+                alt62=1;
             }
-            switch (alt65) {
+            switch (alt62) {
                 case 1 :
-                    // InternalAceGen.g:2202:4: otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )*
+                    // InternalAceGen.g:2147:4: otherlv_13= 'models' ( (lv_models_14_0= ruleModel ) )*
                     {
-                    otherlv_13=(Token)match(input,57,FOLLOW_61); 
+                    otherlv_13=(Token)match(input,55,FOLLOW_58); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getHttpServerAccess().getModelsKeyword_9_0());
                     			
-                    // InternalAceGen.g:2206:4: ( (lv_models_14_0= ruleModel ) )*
-                    loop64:
+                    // InternalAceGen.g:2151:4: ( (lv_models_14_0= ruleModel ) )*
+                    loop61:
                     do {
-                        int alt64=2;
-                        int LA64_0 = input.LA(1);
+                        int alt61=2;
+                        int LA61_0 = input.LA(1);
 
-                        if ( (LA64_0==RULE_ID||LA64_0==66) ) {
-                            alt64=1;
+                        if ( (LA61_0==RULE_ID||LA61_0==65) ) {
+                            alt61=1;
                         }
 
 
-                        switch (alt64) {
+                        switch (alt61) {
                     	case 1 :
-                    	    // InternalAceGen.g:2207:5: (lv_models_14_0= ruleModel )
+                    	    // InternalAceGen.g:2152:5: (lv_models_14_0= ruleModel )
                     	    {
-                    	    // InternalAceGen.g:2207:5: (lv_models_14_0= ruleModel )
-                    	    // InternalAceGen.g:2208:6: lv_models_14_0= ruleModel
+                    	    // InternalAceGen.g:2152:5: (lv_models_14_0= ruleModel )
+                    	    // InternalAceGen.g:2153:6: lv_models_14_0= ruleModel
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAccess().getModelsModelParserRuleCall_9_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_61);
+                    	    pushFollow(FOLLOW_58);
                     	    lv_models_14_0=ruleModel();
 
                     	    state._fsp--;
@@ -5662,7 +5533,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop64;
+                    	    break loop61;
                         }
                     } while (true);
 
@@ -5672,38 +5543,38 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2226:3: (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )?
-            int alt67=2;
-            int LA67_0 = input.LA(1);
+            // InternalAceGen.g:2171:3: (otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )* )?
+            int alt64=2;
+            int LA64_0 = input.LA(1);
 
-            if ( (LA67_0==17) ) {
-                alt67=1;
+            if ( (LA64_0==17) ) {
+                alt64=1;
             }
-            switch (alt67) {
+            switch (alt64) {
                 case 1 :
-                    // InternalAceGen.g:2227:4: otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )*
+                    // InternalAceGen.g:2172:4: otherlv_15= 'scenarios' ( (lv_scenarios_16_0= ruleScenario ) )*
                     {
                     otherlv_15=(Token)match(input,17,FOLLOW_3); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getHttpServerAccess().getScenariosKeyword_10_0());
                     			
-                    // InternalAceGen.g:2231:4: ( (lv_scenarios_16_0= ruleScenario ) )*
-                    loop66:
+                    // InternalAceGen.g:2176:4: ( (lv_scenarios_16_0= ruleScenario ) )*
+                    loop63:
                     do {
-                        int alt66=2;
-                        int LA66_0 = input.LA(1);
+                        int alt63=2;
+                        int LA63_0 = input.LA(1);
 
-                        if ( (LA66_0==RULE_ID) ) {
-                            alt66=1;
+                        if ( (LA63_0==RULE_ID) ) {
+                            alt63=1;
                         }
 
 
-                        switch (alt66) {
+                        switch (alt63) {
                     	case 1 :
-                    	    // InternalAceGen.g:2232:5: (lv_scenarios_16_0= ruleScenario )
+                    	    // InternalAceGen.g:2177:5: (lv_scenarios_16_0= ruleScenario )
                     	    {
-                    	    // InternalAceGen.g:2232:5: (lv_scenarios_16_0= ruleScenario )
-                    	    // InternalAceGen.g:2233:6: lv_scenarios_16_0= ruleScenario
+                    	    // InternalAceGen.g:2177:5: (lv_scenarios_16_0= ruleScenario )
+                    	    // InternalAceGen.g:2178:6: lv_scenarios_16_0= ruleScenario
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAccess().getScenariosScenarioParserRuleCall_10_1_0());
@@ -5732,7 +5603,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop66;
+                    	    break loop63;
                         }
                     } while (true);
 
@@ -5765,7 +5636,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerAce"
-    // InternalAceGen.g:2255:1: entryRuleHttpServerAce returns [EObject current=null] : iv_ruleHttpServerAce= ruleHttpServerAce EOF ;
+    // InternalAceGen.g:2200:1: entryRuleHttpServerAce returns [EObject current=null] : iv_ruleHttpServerAce= ruleHttpServerAce EOF ;
     public final EObject entryRuleHttpServerAce() throws RecognitionException {
         EObject current = null;
 
@@ -5773,8 +5644,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2255:54: (iv_ruleHttpServerAce= ruleHttpServerAce EOF )
-            // InternalAceGen.g:2256:2: iv_ruleHttpServerAce= ruleHttpServerAce EOF
+            // InternalAceGen.g:2200:54: (iv_ruleHttpServerAce= ruleHttpServerAce EOF )
+            // InternalAceGen.g:2201:2: iv_ruleHttpServerAce= ruleHttpServerAce EOF
             {
              newCompositeNode(grammarAccess.getHttpServerAceRule()); 
             pushFollow(FOLLOW_1);
@@ -5801,7 +5672,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerAce"
-    // InternalAceGen.g:2262:1: ruleHttpServerAce returns [EObject current=null] : (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead ) ;
+    // InternalAceGen.g:2207:1: ruleHttpServerAce returns [EObject current=null] : (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead ) ;
     public final EObject ruleHttpServerAce() throws RecognitionException {
         EObject current = null;
 
@@ -5814,15 +5685,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2268:2: ( (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead ) )
-            // InternalAceGen.g:2269:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )
+            // InternalAceGen.g:2213:2: ( (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead ) )
+            // InternalAceGen.g:2214:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )
             {
-            // InternalAceGen.g:2269:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )
-            int alt68=2;
-            alt68 = dfa68.predict(input);
-            switch (alt68) {
+            // InternalAceGen.g:2214:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )
+            int alt65=2;
+            alt65 = dfa65.predict(input);
+            switch (alt65) {
                 case 1 :
-                    // InternalAceGen.g:2270:3: this_HttpServerAceWrite_0= ruleHttpServerAceWrite
+                    // InternalAceGen.g:2215:3: this_HttpServerAceWrite_0= ruleHttpServerAceWrite
                     {
 
                     			newCompositeNode(grammarAccess.getHttpServerAceAccess().getHttpServerAceWriteParserRuleCall_0());
@@ -5840,7 +5711,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:2279:3: this_HttpServerAceRead_1= ruleHttpServerAceRead
+                    // InternalAceGen.g:2224:3: this_HttpServerAceRead_1= ruleHttpServerAceRead
                     {
 
                     			newCompositeNode(grammarAccess.getHttpServerAceAccess().getHttpServerAceReadParserRuleCall_1());
@@ -5880,7 +5751,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerAceWrite"
-    // InternalAceGen.g:2291:1: entryRuleHttpServerAceWrite returns [EObject current=null] : iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF ;
+    // InternalAceGen.g:2236:1: entryRuleHttpServerAceWrite returns [EObject current=null] : iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF ;
     public final EObject entryRuleHttpServerAceWrite() throws RecognitionException {
         EObject current = null;
 
@@ -5888,8 +5759,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2291:59: (iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF )
-            // InternalAceGen.g:2292:2: iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF
+            // InternalAceGen.g:2236:59: (iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF )
+            // InternalAceGen.g:2237:2: iv_ruleHttpServerAceWrite= ruleHttpServerAceWrite EOF
             {
              newCompositeNode(grammarAccess.getHttpServerAceWriteRule()); 
             pushFollow(FOLLOW_1);
@@ -5916,7 +5787,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerAceWrite"
-    // InternalAceGen.g:2298:1: ruleHttpServerAceWrite returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* ) ;
+    // InternalAceGen.g:2243:1: ruleHttpServerAceWrite returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* ) ;
     public final EObject ruleHttpServerAceWrite() throws RecognitionException {
         EObject current = null;
 
@@ -5944,19 +5815,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2304:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* ) )
-            // InternalAceGen.g:2305:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* )
+            // InternalAceGen.g:2249:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* ) )
+            // InternalAceGen.g:2250:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* )
             {
-            // InternalAceGen.g:2305:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* )
-            // InternalAceGen.g:2306:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )*
+            // InternalAceGen.g:2250:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )* )
+            // InternalAceGen.g:2251:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleWriteFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )*
             {
-            // InternalAceGen.g:2306:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:2307:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2251:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:2252:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:2307:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:2308:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:2252:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2253:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_62); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_59); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getHttpServerAceWriteAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -5976,15 +5847,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,58,FOLLOW_10); 
+            otherlv_1=(Token)match(input,56,FOLLOW_10); 
 
             			newLeafNode(otherlv_1, grammarAccess.getHttpServerAceWriteAccess().getLessThanSignKeyword_1());
             		
-            // InternalAceGen.g:2328:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:2329:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2273:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:2274:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:2329:4: ( ruleQualifiedName )
-            // InternalAceGen.g:2330:5: ruleQualifiedName
+            // InternalAceGen.g:2274:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2275:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -5994,7 +5865,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getModelModelCrossReference_2_0());
             				
-            pushFollow(FOLLOW_63);
+            pushFollow(FOLLOW_60);
             ruleQualifiedName();
 
             state._fsp--;
@@ -6008,20 +5879,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,59,FOLLOW_64); 
+            otherlv_3=(Token)match(input,57,FOLLOW_61); 
 
             			newLeafNode(otherlv_3, grammarAccess.getHttpServerAceWriteAccess().getGreaterThanSignKeyword_3());
             		
-            // InternalAceGen.g:2348:3: ( (lv_type_4_0= ruleWriteFunctionType ) )
-            // InternalAceGen.g:2349:4: (lv_type_4_0= ruleWriteFunctionType )
+            // InternalAceGen.g:2293:3: ( (lv_type_4_0= ruleWriteFunctionType ) )
+            // InternalAceGen.g:2294:4: (lv_type_4_0= ruleWriteFunctionType )
             {
-            // InternalAceGen.g:2349:4: (lv_type_4_0= ruleWriteFunctionType )
-            // InternalAceGen.g:2350:5: lv_type_4_0= ruleWriteFunctionType
+            // InternalAceGen.g:2294:4: (lv_type_4_0= ruleWriteFunctionType )
+            // InternalAceGen.g:2295:5: lv_type_4_0= ruleWriteFunctionType
             {
 
             					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getTypeWriteFunctionTypeParserRuleCall_4_0());
             				
-            pushFollow(FOLLOW_39);
+            pushFollow(FOLLOW_36);
             lv_type_4_0=ruleWriteFunctionType();
 
             state._fsp--;
@@ -6043,13 +5914,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2367:3: ( (lv_url_5_0= RULE_STRING ) )
-            // InternalAceGen.g:2368:4: (lv_url_5_0= RULE_STRING )
+            // InternalAceGen.g:2312:3: ( (lv_url_5_0= RULE_STRING ) )
+            // InternalAceGen.g:2313:4: (lv_url_5_0= RULE_STRING )
             {
-            // InternalAceGen.g:2368:4: (lv_url_5_0= RULE_STRING )
-            // InternalAceGen.g:2369:5: lv_url_5_0= RULE_STRING
+            // InternalAceGen.g:2313:4: (lv_url_5_0= RULE_STRING )
+            // InternalAceGen.g:2314:5: lv_url_5_0= RULE_STRING
             {
-            lv_url_5_0=(Token)match(input,RULE_STRING,FOLLOW_65); 
+            lv_url_5_0=(Token)match(input,RULE_STRING,FOLLOW_62); 
 
             					newLeafNode(lv_url_5_0, grammarAccess.getHttpServerAceWriteAccess().getUrlSTRINGTerminalRuleCall_5_0());
             				
@@ -6069,21 +5940,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2385:3: ( (lv_authorize_6_0= 'authorize' ) )?
-            int alt69=2;
-            int LA69_0 = input.LA(1);
+            // InternalAceGen.g:2330:3: ( (lv_authorize_6_0= 'authorize' ) )?
+            int alt66=2;
+            int LA66_0 = input.LA(1);
 
-            if ( (LA69_0==60) ) {
-                alt69=1;
+            if ( (LA66_0==58) ) {
+                alt66=1;
             }
-            switch (alt69) {
+            switch (alt66) {
                 case 1 :
-                    // InternalAceGen.g:2386:4: (lv_authorize_6_0= 'authorize' )
+                    // InternalAceGen.g:2331:4: (lv_authorize_6_0= 'authorize' )
                     {
-                    // InternalAceGen.g:2386:4: (lv_authorize_6_0= 'authorize' )
-                    // InternalAceGen.g:2387:5: lv_authorize_6_0= 'authorize'
+                    // InternalAceGen.g:2331:4: (lv_authorize_6_0= 'authorize' )
+                    // InternalAceGen.g:2332:5: lv_authorize_6_0= 'authorize'
                     {
-                    lv_authorize_6_0=(Token)match(input,60,FOLLOW_66); 
+                    lv_authorize_6_0=(Token)match(input,58,FOLLOW_63); 
 
                     					newLeafNode(lv_authorize_6_0, grammarAccess.getHttpServerAceWriteAccess().getAuthorizeAuthorizeKeyword_6_0());
                     				
@@ -6102,52 +5973,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2399:3: (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )?
-            int alt71=2;
-            int LA71_0 = input.LA(1);
+            // InternalAceGen.g:2344:3: (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )?
+            int alt68=2;
+            int LA68_0 = input.LA(1);
 
-            if ( (LA71_0==61) ) {
-                alt71=1;
+            if ( (LA68_0==59) ) {
+                alt68=1;
             }
-            switch (alt71) {
+            switch (alt68) {
                 case 1 :
-                    // InternalAceGen.g:2400:4: otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2345:4: otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_7=(Token)match(input,61,FOLLOW_67); 
+                    otherlv_7=(Token)match(input,59,FOLLOW_64); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getHttpServerAceWriteAccess().getPathParamsKeyword_7_0());
                     			
-                    // InternalAceGen.g:2404:4: ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
-                    loop70:
+                    // InternalAceGen.g:2349:4: ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
+                    loop67:
                     do {
-                        int alt70=2;
-                        int LA70_0 = input.LA(1);
+                        int alt67=2;
+                        int LA67_0 = input.LA(1);
 
-                        if ( (LA70_0==RULE_ID) ) {
-                            int LA70_2 = input.LA(2);
+                        if ( (LA67_0==RULE_ID) ) {
+                            int LA67_2 = input.LA(2);
 
-                            if ( (LA70_2==EOF||LA70_2==RULE_ID||LA70_2==17||LA70_2==26||LA70_2==31||(LA70_2>=56 && LA70_2<=57)||(LA70_2>=62 && LA70_2<=64)||LA70_2==82) ) {
-                                alt70=1;
+                            if ( (LA67_2==EOF||LA67_2==RULE_ID||LA67_2==17||LA67_2==26||(LA67_2>=54 && LA67_2<=55)||(LA67_2>=60 && LA67_2<=63)||LA67_2==81) ) {
+                                alt67=1;
                             }
 
 
                         }
-                        else if ( (LA70_0==31) ) {
-                            alt70=1;
+                        else if ( (LA67_0==63) ) {
+                            alt67=1;
                         }
 
 
-                        switch (alt70) {
+                        switch (alt67) {
                     	case 1 :
-                    	    // InternalAceGen.g:2405:5: (lv_pathParams_8_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2350:5: (lv_pathParams_8_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2405:5: (lv_pathParams_8_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2406:6: lv_pathParams_8_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2350:5: (lv_pathParams_8_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2351:6: lv_pathParams_8_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeParamRefParserRuleCall_7_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_67);
+                    	    pushFollow(FOLLOW_64);
                     	    lv_pathParams_8_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -6171,7 +6042,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop70;
+                    	    break loop67;
                         }
                     } while (true);
 
@@ -6181,52 +6052,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2424:3: (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )?
-            int alt73=2;
-            int LA73_0 = input.LA(1);
+            // InternalAceGen.g:2369:3: (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )?
+            int alt70=2;
+            int LA70_0 = input.LA(1);
 
-            if ( (LA73_0==62) ) {
-                alt73=1;
+            if ( (LA70_0==60) ) {
+                alt70=1;
             }
-            switch (alt73) {
+            switch (alt70) {
                 case 1 :
-                    // InternalAceGen.g:2425:4: otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2370:4: otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_9=(Token)match(input,62,FOLLOW_68); 
+                    otherlv_9=(Token)match(input,60,FOLLOW_65); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getHttpServerAceWriteAccess().getQueryParamsKeyword_8_0());
                     			
-                    // InternalAceGen.g:2429:4: ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
-                    loop72:
+                    // InternalAceGen.g:2374:4: ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
+                    loop69:
                     do {
-                        int alt72=2;
-                        int LA72_0 = input.LA(1);
+                        int alt69=2;
+                        int LA69_0 = input.LA(1);
 
-                        if ( (LA72_0==RULE_ID) ) {
-                            int LA72_2 = input.LA(2);
+                        if ( (LA69_0==RULE_ID) ) {
+                            int LA69_2 = input.LA(2);
 
-                            if ( (LA72_2==EOF||LA72_2==RULE_ID||LA72_2==17||LA72_2==26||LA72_2==31||(LA72_2>=56 && LA72_2<=57)||(LA72_2>=63 && LA72_2<=64)||LA72_2==82) ) {
-                                alt72=1;
+                            if ( (LA69_2==EOF||LA69_2==RULE_ID||LA69_2==17||LA69_2==26||(LA69_2>=54 && LA69_2<=55)||(LA69_2>=61 && LA69_2<=63)||LA69_2==81) ) {
+                                alt69=1;
                             }
 
 
                         }
-                        else if ( (LA72_0==31) ) {
-                            alt72=1;
+                        else if ( (LA69_0==63) ) {
+                            alt69=1;
                         }
 
 
-                        switch (alt72) {
+                        switch (alt69) {
                     	case 1 :
-                    	    // InternalAceGen.g:2430:5: (lv_queryParams_10_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2375:5: (lv_queryParams_10_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2430:5: (lv_queryParams_10_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2431:6: lv_queryParams_10_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2375:5: (lv_queryParams_10_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2376:6: lv_queryParams_10_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeParamRefParserRuleCall_8_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_68);
+                    	    pushFollow(FOLLOW_65);
                     	    lv_queryParams_10_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -6250,7 +6121,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop72;
+                    	    break loop69;
                         }
                     } while (true);
 
@@ -6260,52 +6131,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2449:3: (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )?
-            int alt75=2;
-            int LA75_0 = input.LA(1);
+            // InternalAceGen.g:2394:3: (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )?
+            int alt72=2;
+            int LA72_0 = input.LA(1);
 
-            if ( (LA75_0==63) ) {
-                alt75=1;
+            if ( (LA72_0==61) ) {
+                alt72=1;
             }
-            switch (alt75) {
+            switch (alt72) {
                 case 1 :
-                    // InternalAceGen.g:2450:4: otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2395:4: otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_11=(Token)match(input,63,FOLLOW_69); 
+                    otherlv_11=(Token)match(input,61,FOLLOW_66); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getHttpServerAceWriteAccess().getPayloadKeyword_9_0());
                     			
-                    // InternalAceGen.g:2454:4: ( (lv_payload_12_0= ruleAttributeParamRef ) )*
-                    loop74:
+                    // InternalAceGen.g:2399:4: ( (lv_payload_12_0= ruleAttributeParamRef ) )*
+                    loop71:
                     do {
-                        int alt74=2;
-                        int LA74_0 = input.LA(1);
+                        int alt71=2;
+                        int LA71_0 = input.LA(1);
 
-                        if ( (LA74_0==RULE_ID) ) {
-                            int LA74_2 = input.LA(2);
+                        if ( (LA71_0==RULE_ID) ) {
+                            int LA71_2 = input.LA(2);
 
-                            if ( (LA74_2==EOF||LA74_2==RULE_ID||LA74_2==17||LA74_2==26||LA74_2==31||(LA74_2>=56 && LA74_2<=57)||LA74_2==64||LA74_2==82) ) {
-                                alt74=1;
+                            if ( (LA71_2==EOF||LA71_2==RULE_ID||LA71_2==17||LA71_2==26||(LA71_2>=54 && LA71_2<=55)||(LA71_2>=62 && LA71_2<=63)||LA71_2==81) ) {
+                                alt71=1;
                             }
 
 
                         }
-                        else if ( (LA74_0==31) ) {
-                            alt74=1;
+                        else if ( (LA71_0==63) ) {
+                            alt71=1;
                         }
 
 
-                        switch (alt74) {
+                        switch (alt71) {
                     	case 1 :
-                    	    // InternalAceGen.g:2455:5: (lv_payload_12_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2400:5: (lv_payload_12_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2455:5: (lv_payload_12_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2456:6: lv_payload_12_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2400:5: (lv_payload_12_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2401:6: lv_payload_12_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeParamRefParserRuleCall_9_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_69);
+                    	    pushFollow(FOLLOW_66);
                     	    lv_payload_12_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -6329,7 +6200,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop74;
+                    	    break loop71;
                         }
                     } while (true);
 
@@ -6339,44 +6210,44 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2474:3: (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
-            int alt77=2;
-            int LA77_0 = input.LA(1);
+            // InternalAceGen.g:2419:3: (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
+            int alt74=2;
+            int LA74_0 = input.LA(1);
 
-            if ( (LA77_0==64) ) {
-                alt77=1;
+            if ( (LA74_0==62) ) {
+                alt74=1;
             }
-            switch (alt77) {
+            switch (alt74) {
                 case 1 :
-                    // InternalAceGen.g:2475:4: otherlv_13= 'response' ( ( ruleQualifiedName ) )*
+                    // InternalAceGen.g:2420:4: otherlv_13= 'response' ( ( ruleQualifiedName ) )*
                     {
-                    otherlv_13=(Token)match(input,64,FOLLOW_70); 
+                    otherlv_13=(Token)match(input,62,FOLLOW_67); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_10_0());
                     			
-                    // InternalAceGen.g:2479:4: ( ( ruleQualifiedName ) )*
-                    loop76:
+                    // InternalAceGen.g:2424:4: ( ( ruleQualifiedName ) )*
+                    loop73:
                     do {
-                        int alt76=2;
-                        int LA76_0 = input.LA(1);
+                        int alt73=2;
+                        int LA73_0 = input.LA(1);
 
-                        if ( (LA76_0==RULE_ID) ) {
-                            int LA76_2 = input.LA(2);
+                        if ( (LA73_0==RULE_ID) ) {
+                            int LA73_2 = input.LA(2);
 
-                            if ( (LA76_2==EOF||LA76_2==RULE_ID||LA76_2==17||LA76_2==26||(LA76_2>=56 && LA76_2<=57)||LA76_2==82) ) {
-                                alt76=1;
+                            if ( (LA73_2==EOF||LA73_2==RULE_ID||LA73_2==17||LA73_2==26||(LA73_2>=54 && LA73_2<=55)||LA73_2==81) ) {
+                                alt73=1;
                             }
 
 
                         }
 
 
-                        switch (alt76) {
+                        switch (alt73) {
                     	case 1 :
-                    	    // InternalAceGen.g:2480:5: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:2425:5: ( ruleQualifiedName )
                     	    {
-                    	    // InternalAceGen.g:2480:5: ( ruleQualifiedName )
-                    	    // InternalAceGen.g:2481:6: ruleQualifiedName
+                    	    // InternalAceGen.g:2425:5: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:2426:6: ruleQualifiedName
                     	    {
 
                     	    						if (current==null) {
@@ -6386,7 +6257,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeCrossReference_10_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_70);
+                    	    pushFollow(FOLLOW_67);
                     	    ruleQualifiedName();
 
                     	    state._fsp--;
@@ -6402,7 +6273,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop76;
+                    	    break loop73;
                         }
                     } while (true);
 
@@ -6412,23 +6283,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2496:3: ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )*
-            loop78:
+            // InternalAceGen.g:2441:3: ( (lv_outcomes_15_0= ruleHttpServerOutcome ) )*
+            loop75:
             do {
-                int alt78=2;
-                int LA78_0 = input.LA(1);
+                int alt75=2;
+                int LA75_0 = input.LA(1);
 
-                if ( (LA78_0==26) ) {
-                    alt78=1;
+                if ( (LA75_0==26) ) {
+                    alt75=1;
                 }
 
 
-                switch (alt78) {
+                switch (alt75) {
             	case 1 :
-            	    // InternalAceGen.g:2497:4: (lv_outcomes_15_0= ruleHttpServerOutcome )
+            	    // InternalAceGen.g:2442:4: (lv_outcomes_15_0= ruleHttpServerOutcome )
             	    {
-            	    // InternalAceGen.g:2497:4: (lv_outcomes_15_0= ruleHttpServerOutcome )
-            	    // InternalAceGen.g:2498:5: lv_outcomes_15_0= ruleHttpServerOutcome
+            	    // InternalAceGen.g:2442:4: (lv_outcomes_15_0= ruleHttpServerOutcome )
+            	    // InternalAceGen.g:2443:5: lv_outcomes_15_0= ruleHttpServerOutcome
             	    {
 
             	    					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_11_0());
@@ -6457,7 +6328,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop78;
+            	    break loop75;
                 }
             } while (true);
 
@@ -6484,7 +6355,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerOutcome"
-    // InternalAceGen.g:2519:1: entryRuleHttpServerOutcome returns [EObject current=null] : iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF ;
+    // InternalAceGen.g:2464:1: entryRuleHttpServerOutcome returns [EObject current=null] : iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF ;
     public final EObject entryRuleHttpServerOutcome() throws RecognitionException {
         EObject current = null;
 
@@ -6492,8 +6363,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2519:58: (iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF )
-            // InternalAceGen.g:2520:2: iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF
+            // InternalAceGen.g:2464:58: (iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF )
+            // InternalAceGen.g:2465:2: iv_ruleHttpServerOutcome= ruleHttpServerOutcome EOF
             {
              newCompositeNode(grammarAccess.getHttpServerOutcomeRule()); 
             pushFollow(FOLLOW_1);
@@ -6520,7 +6391,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerOutcome"
-    // InternalAceGen.g:2526:1: ruleHttpServerOutcome returns [EObject current=null] : (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* ) ;
+    // InternalAceGen.g:2471:1: ruleHttpServerOutcome returns [EObject current=null] : (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* ) ;
     public final EObject ruleHttpServerOutcome() throws RecognitionException {
         EObject current = null;
 
@@ -6533,23 +6404,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2532:2: ( (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* ) )
-            // InternalAceGen.g:2533:2: (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* )
+            // InternalAceGen.g:2477:2: ( (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* ) )
+            // InternalAceGen.g:2478:2: (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* )
             {
-            // InternalAceGen.g:2533:2: (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* )
-            // InternalAceGen.g:2534:3: otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )*
+            // InternalAceGen.g:2478:2: (otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )* )
+            // InternalAceGen.g:2479:3: otherlv_0= 'on' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )*
             {
             otherlv_0=(Token)match(input,26,FOLLOW_10); 
 
             			newLeafNode(otherlv_0, grammarAccess.getHttpServerOutcomeAccess().getOnKeyword_0());
             		
-            // InternalAceGen.g:2538:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalAceGen.g:2539:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:2483:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:2484:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalAceGen.g:2539:4: (lv_name_1_0= RULE_ID )
-            // InternalAceGen.g:2540:5: lv_name_1_0= RULE_ID
+            // InternalAceGen.g:2484:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:2485:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_71); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_68); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getHttpServerOutcomeAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -6569,42 +6440,42 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2556:3: (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )*
-            loop80:
+            // InternalAceGen.g:2501:3: (otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')' )*
+            loop77:
             do {
-                int alt80=2;
-                int LA80_0 = input.LA(1);
+                int alt77=2;
+                int LA77_0 = input.LA(1);
 
-                if ( (LA80_0==19) ) {
-                    alt80=1;
+                if ( (LA77_0==19) ) {
+                    alt77=1;
                 }
 
 
-                switch (alt80) {
+                switch (alt77) {
             	case 1 :
-            	    // InternalAceGen.g:2557:4: otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')'
+            	    // InternalAceGen.g:2502:4: otherlv_2= '(' ( ( ruleQualifiedName ) )* otherlv_4= ')'
             	    {
             	    otherlv_2=(Token)match(input,19,FOLLOW_22); 
 
             	    				newLeafNode(otherlv_2, grammarAccess.getHttpServerOutcomeAccess().getLeftParenthesisKeyword_2_0());
             	    			
-            	    // InternalAceGen.g:2561:4: ( ( ruleQualifiedName ) )*
-            	    loop79:
+            	    // InternalAceGen.g:2506:4: ( ( ruleQualifiedName ) )*
+            	    loop76:
             	    do {
-            	        int alt79=2;
-            	        int LA79_0 = input.LA(1);
+            	        int alt76=2;
+            	        int LA76_0 = input.LA(1);
 
-            	        if ( (LA79_0==RULE_ID) ) {
-            	            alt79=1;
+            	        if ( (LA76_0==RULE_ID) ) {
+            	            alt76=1;
             	        }
 
 
-            	        switch (alt79) {
+            	        switch (alt76) {
             	    	case 1 :
-            	    	    // InternalAceGen.g:2562:5: ( ruleQualifiedName )
+            	    	    // InternalAceGen.g:2507:5: ( ruleQualifiedName )
             	    	    {
-            	    	    // InternalAceGen.g:2562:5: ( ruleQualifiedName )
-            	    	    // InternalAceGen.g:2563:6: ruleQualifiedName
+            	    	    // InternalAceGen.g:2507:5: ( ruleQualifiedName )
+            	    	    // InternalAceGen.g:2508:6: ruleQualifiedName
             	    	    {
 
             	    	    						if (current==null) {
@@ -6630,11 +6501,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    	    break;
 
             	    	default :
-            	    	    break loop79;
+            	    	    break loop76;
             	        }
             	    } while (true);
 
-            	    otherlv_4=(Token)match(input,21,FOLLOW_71); 
+            	    otherlv_4=(Token)match(input,21,FOLLOW_68); 
 
             	    				newLeafNode(otherlv_4, grammarAccess.getHttpServerOutcomeAccess().getRightParenthesisKeyword_2_2());
             	    			
@@ -6643,7 +6514,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop80;
+            	    break loop77;
                 }
             } while (true);
 
@@ -6670,7 +6541,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerAceRead"
-    // InternalAceGen.g:2586:1: entryRuleHttpServerAceRead returns [EObject current=null] : iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF ;
+    // InternalAceGen.g:2531:1: entryRuleHttpServerAceRead returns [EObject current=null] : iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF ;
     public final EObject entryRuleHttpServerAceRead() throws RecognitionException {
         EObject current = null;
 
@@ -6678,8 +6549,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2586:58: (iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF )
-            // InternalAceGen.g:2587:2: iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF
+            // InternalAceGen.g:2531:58: (iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF )
+            // InternalAceGen.g:2532:2: iv_ruleHttpServerAceRead= ruleHttpServerAceRead EOF
             {
              newCompositeNode(grammarAccess.getHttpServerAceReadRule()); 
             pushFollow(FOLLOW_1);
@@ -6706,7 +6577,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerAceRead"
-    // InternalAceGen.g:2593:1: ruleHttpServerAceRead returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ) ;
+    // InternalAceGen.g:2538:1: ruleHttpServerAceRead returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ) ;
     public final EObject ruleHttpServerAceRead() throws RecognitionException {
         EObject current = null;
 
@@ -6732,19 +6603,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2599:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ) )
-            // InternalAceGen.g:2600:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? )
+            // InternalAceGen.g:2544:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? ) )
+            // InternalAceGen.g:2545:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? )
             {
-            // InternalAceGen.g:2600:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? )
-            // InternalAceGen.g:2601:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
+            // InternalAceGen.g:2545:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )? )
+            // InternalAceGen.g:2546:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '<' ( ( ruleQualifiedName ) ) otherlv_3= '>' ( (lv_type_4_0= ruleReadFunctionType ) ) ( (lv_url_5_0= RULE_STRING ) ) ( (lv_authorize_6_0= 'authorize' ) )? (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )? (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )? (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )? (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
             {
-            // InternalAceGen.g:2601:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:2602:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2546:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:2547:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:2602:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:2603:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:2547:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2548:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_62); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_59); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getHttpServerAceReadAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -6764,15 +6635,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,58,FOLLOW_10); 
+            otherlv_1=(Token)match(input,56,FOLLOW_10); 
 
             			newLeafNode(otherlv_1, grammarAccess.getHttpServerAceReadAccess().getLessThanSignKeyword_1());
             		
-            // InternalAceGen.g:2623:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:2624:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2568:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:2569:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:2624:4: ( ruleQualifiedName )
-            // InternalAceGen.g:2625:5: ruleQualifiedName
+            // InternalAceGen.g:2569:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2570:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -6782,7 +6653,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getModelModelCrossReference_2_0());
             				
-            pushFollow(FOLLOW_63);
+            pushFollow(FOLLOW_60);
             ruleQualifiedName();
 
             state._fsp--;
@@ -6796,20 +6667,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,59,FOLLOW_72); 
+            otherlv_3=(Token)match(input,57,FOLLOW_69); 
 
             			newLeafNode(otherlv_3, grammarAccess.getHttpServerAceReadAccess().getGreaterThanSignKeyword_3());
             		
-            // InternalAceGen.g:2643:3: ( (lv_type_4_0= ruleReadFunctionType ) )
-            // InternalAceGen.g:2644:4: (lv_type_4_0= ruleReadFunctionType )
+            // InternalAceGen.g:2588:3: ( (lv_type_4_0= ruleReadFunctionType ) )
+            // InternalAceGen.g:2589:4: (lv_type_4_0= ruleReadFunctionType )
             {
-            // InternalAceGen.g:2644:4: (lv_type_4_0= ruleReadFunctionType )
-            // InternalAceGen.g:2645:5: lv_type_4_0= ruleReadFunctionType
+            // InternalAceGen.g:2589:4: (lv_type_4_0= ruleReadFunctionType )
+            // InternalAceGen.g:2590:5: lv_type_4_0= ruleReadFunctionType
             {
 
             					newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getTypeReadFunctionTypeParserRuleCall_4_0());
             				
-            pushFollow(FOLLOW_39);
+            pushFollow(FOLLOW_36);
             lv_type_4_0=ruleReadFunctionType();
 
             state._fsp--;
@@ -6831,13 +6702,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2662:3: ( (lv_url_5_0= RULE_STRING ) )
-            // InternalAceGen.g:2663:4: (lv_url_5_0= RULE_STRING )
+            // InternalAceGen.g:2607:3: ( (lv_url_5_0= RULE_STRING ) )
+            // InternalAceGen.g:2608:4: (lv_url_5_0= RULE_STRING )
             {
-            // InternalAceGen.g:2663:4: (lv_url_5_0= RULE_STRING )
-            // InternalAceGen.g:2664:5: lv_url_5_0= RULE_STRING
+            // InternalAceGen.g:2608:4: (lv_url_5_0= RULE_STRING )
+            // InternalAceGen.g:2609:5: lv_url_5_0= RULE_STRING
             {
-            lv_url_5_0=(Token)match(input,RULE_STRING,FOLLOW_73); 
+            lv_url_5_0=(Token)match(input,RULE_STRING,FOLLOW_70); 
 
             					newLeafNode(lv_url_5_0, grammarAccess.getHttpServerAceReadAccess().getUrlSTRINGTerminalRuleCall_5_0());
             				
@@ -6857,21 +6728,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2680:3: ( (lv_authorize_6_0= 'authorize' ) )?
-            int alt81=2;
-            int LA81_0 = input.LA(1);
+            // InternalAceGen.g:2625:3: ( (lv_authorize_6_0= 'authorize' ) )?
+            int alt78=2;
+            int LA78_0 = input.LA(1);
 
-            if ( (LA81_0==60) ) {
-                alt81=1;
+            if ( (LA78_0==58) ) {
+                alt78=1;
             }
-            switch (alt81) {
+            switch (alt78) {
                 case 1 :
-                    // InternalAceGen.g:2681:4: (lv_authorize_6_0= 'authorize' )
+                    // InternalAceGen.g:2626:4: (lv_authorize_6_0= 'authorize' )
                     {
-                    // InternalAceGen.g:2681:4: (lv_authorize_6_0= 'authorize' )
-                    // InternalAceGen.g:2682:5: lv_authorize_6_0= 'authorize'
+                    // InternalAceGen.g:2626:4: (lv_authorize_6_0= 'authorize' )
+                    // InternalAceGen.g:2627:5: lv_authorize_6_0= 'authorize'
                     {
-                    lv_authorize_6_0=(Token)match(input,60,FOLLOW_74); 
+                    lv_authorize_6_0=(Token)match(input,58,FOLLOW_71); 
 
                     					newLeafNode(lv_authorize_6_0, grammarAccess.getHttpServerAceReadAccess().getAuthorizeAuthorizeKeyword_6_0());
                     				
@@ -6890,52 +6761,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2694:3: (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )?
-            int alt83=2;
-            int LA83_0 = input.LA(1);
+            // InternalAceGen.g:2639:3: (otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )* )?
+            int alt80=2;
+            int LA80_0 = input.LA(1);
 
-            if ( (LA83_0==61) ) {
-                alt83=1;
+            if ( (LA80_0==59) ) {
+                alt80=1;
             }
-            switch (alt83) {
+            switch (alt80) {
                 case 1 :
-                    // InternalAceGen.g:2695:4: otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2640:4: otherlv_7= 'pathParams' ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_7=(Token)match(input,61,FOLLOW_75); 
+                    otherlv_7=(Token)match(input,59,FOLLOW_72); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getHttpServerAceReadAccess().getPathParamsKeyword_7_0());
                     			
-                    // InternalAceGen.g:2699:4: ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
-                    loop82:
+                    // InternalAceGen.g:2644:4: ( (lv_pathParams_8_0= ruleAttributeParamRef ) )*
+                    loop79:
                     do {
-                        int alt82=2;
-                        int LA82_0 = input.LA(1);
+                        int alt79=2;
+                        int LA79_0 = input.LA(1);
 
-                        if ( (LA82_0==RULE_ID) ) {
-                            int LA82_2 = input.LA(2);
+                        if ( (LA79_0==RULE_ID) ) {
+                            int LA79_2 = input.LA(2);
 
-                            if ( (LA82_2==EOF||LA82_2==RULE_ID||LA82_2==17||LA82_2==31||(LA82_2>=56 && LA82_2<=57)||(LA82_2>=62 && LA82_2<=64)||LA82_2==82) ) {
-                                alt82=1;
+                            if ( (LA79_2==EOF||LA79_2==RULE_ID||LA79_2==17||(LA79_2>=54 && LA79_2<=55)||(LA79_2>=60 && LA79_2<=63)||LA79_2==81) ) {
+                                alt79=1;
                             }
 
 
                         }
-                        else if ( (LA82_0==31) ) {
-                            alt82=1;
+                        else if ( (LA79_0==63) ) {
+                            alt79=1;
                         }
 
 
-                        switch (alt82) {
+                        switch (alt79) {
                     	case 1 :
-                    	    // InternalAceGen.g:2700:5: (lv_pathParams_8_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2645:5: (lv_pathParams_8_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2700:5: (lv_pathParams_8_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2701:6: lv_pathParams_8_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2645:5: (lv_pathParams_8_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2646:6: lv_pathParams_8_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPathParamsAttributeParamRefParserRuleCall_7_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_75);
+                    	    pushFollow(FOLLOW_72);
                     	    lv_pathParams_8_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -6959,7 +6830,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop82;
+                    	    break loop79;
                         }
                     } while (true);
 
@@ -6969,52 +6840,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2719:3: (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )?
-            int alt85=2;
-            int LA85_0 = input.LA(1);
+            // InternalAceGen.g:2664:3: (otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )* )?
+            int alt82=2;
+            int LA82_0 = input.LA(1);
 
-            if ( (LA85_0==62) ) {
-                alt85=1;
+            if ( (LA82_0==60) ) {
+                alt82=1;
             }
-            switch (alt85) {
+            switch (alt82) {
                 case 1 :
-                    // InternalAceGen.g:2720:4: otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2665:4: otherlv_9= 'queryParams' ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_9=(Token)match(input,62,FOLLOW_76); 
+                    otherlv_9=(Token)match(input,60,FOLLOW_73); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getHttpServerAceReadAccess().getQueryParamsKeyword_8_0());
                     			
-                    // InternalAceGen.g:2724:4: ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
-                    loop84:
+                    // InternalAceGen.g:2669:4: ( (lv_queryParams_10_0= ruleAttributeParamRef ) )*
+                    loop81:
                     do {
-                        int alt84=2;
-                        int LA84_0 = input.LA(1);
+                        int alt81=2;
+                        int LA81_0 = input.LA(1);
 
-                        if ( (LA84_0==RULE_ID) ) {
-                            int LA84_2 = input.LA(2);
+                        if ( (LA81_0==RULE_ID) ) {
+                            int LA81_2 = input.LA(2);
 
-                            if ( (LA84_2==EOF||LA84_2==RULE_ID||LA84_2==17||LA84_2==31||(LA84_2>=56 && LA84_2<=57)||(LA84_2>=63 && LA84_2<=64)||LA84_2==82) ) {
-                                alt84=1;
+                            if ( (LA81_2==EOF||LA81_2==RULE_ID||LA81_2==17||(LA81_2>=54 && LA81_2<=55)||(LA81_2>=61 && LA81_2<=63)||LA81_2==81) ) {
+                                alt81=1;
                             }
 
 
                         }
-                        else if ( (LA84_0==31) ) {
-                            alt84=1;
+                        else if ( (LA81_0==63) ) {
+                            alt81=1;
                         }
 
 
-                        switch (alt84) {
+                        switch (alt81) {
                     	case 1 :
-                    	    // InternalAceGen.g:2725:5: (lv_queryParams_10_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2670:5: (lv_queryParams_10_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2725:5: (lv_queryParams_10_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2726:6: lv_queryParams_10_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2670:5: (lv_queryParams_10_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2671:6: lv_queryParams_10_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getQueryParamsAttributeParamRefParserRuleCall_8_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_76);
+                    	    pushFollow(FOLLOW_73);
                     	    lv_queryParams_10_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -7038,7 +6909,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop84;
+                    	    break loop81;
                         }
                     } while (true);
 
@@ -7048,52 +6919,52 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2744:3: (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )?
-            int alt87=2;
-            int LA87_0 = input.LA(1);
+            // InternalAceGen.g:2689:3: (otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )* )?
+            int alt84=2;
+            int LA84_0 = input.LA(1);
 
-            if ( (LA87_0==63) ) {
-                alt87=1;
+            if ( (LA84_0==61) ) {
+                alt84=1;
             }
-            switch (alt87) {
+            switch (alt84) {
                 case 1 :
-                    // InternalAceGen.g:2745:4: otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )*
+                    // InternalAceGen.g:2690:4: otherlv_11= 'payload' ( (lv_payload_12_0= ruleAttributeParamRef ) )*
                     {
-                    otherlv_11=(Token)match(input,63,FOLLOW_77); 
+                    otherlv_11=(Token)match(input,61,FOLLOW_74); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getHttpServerAceReadAccess().getPayloadKeyword_9_0());
                     			
-                    // InternalAceGen.g:2749:4: ( (lv_payload_12_0= ruleAttributeParamRef ) )*
-                    loop86:
+                    // InternalAceGen.g:2694:4: ( (lv_payload_12_0= ruleAttributeParamRef ) )*
+                    loop83:
                     do {
-                        int alt86=2;
-                        int LA86_0 = input.LA(1);
+                        int alt83=2;
+                        int LA83_0 = input.LA(1);
 
-                        if ( (LA86_0==RULE_ID) ) {
-                            int LA86_2 = input.LA(2);
+                        if ( (LA83_0==RULE_ID) ) {
+                            int LA83_2 = input.LA(2);
 
-                            if ( (LA86_2==EOF||LA86_2==RULE_ID||LA86_2==17||LA86_2==31||(LA86_2>=56 && LA86_2<=57)||LA86_2==64||LA86_2==82) ) {
-                                alt86=1;
+                            if ( (LA83_2==EOF||LA83_2==RULE_ID||LA83_2==17||(LA83_2>=54 && LA83_2<=55)||(LA83_2>=62 && LA83_2<=63)||LA83_2==81) ) {
+                                alt83=1;
                             }
 
 
                         }
-                        else if ( (LA86_0==31) ) {
-                            alt86=1;
+                        else if ( (LA83_0==63) ) {
+                            alt83=1;
                         }
 
 
-                        switch (alt86) {
+                        switch (alt83) {
                     	case 1 :
-                    	    // InternalAceGen.g:2750:5: (lv_payload_12_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2695:5: (lv_payload_12_0= ruleAttributeParamRef )
                     	    {
-                    	    // InternalAceGen.g:2750:5: (lv_payload_12_0= ruleAttributeParamRef )
-                    	    // InternalAceGen.g:2751:6: lv_payload_12_0= ruleAttributeParamRef
+                    	    // InternalAceGen.g:2695:5: (lv_payload_12_0= ruleAttributeParamRef )
+                    	    // InternalAceGen.g:2696:6: lv_payload_12_0= ruleAttributeParamRef
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerAceReadAccess().getPayloadAttributeParamRefParserRuleCall_9_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_77);
+                    	    pushFollow(FOLLOW_74);
                     	    lv_payload_12_0=ruleAttributeParamRef();
 
                     	    state._fsp--;
@@ -7117,7 +6988,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop86;
+                    	    break loop83;
                         }
                     } while (true);
 
@@ -7127,44 +6998,44 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2769:3: (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
-            int alt89=2;
-            int LA89_0 = input.LA(1);
+            // InternalAceGen.g:2714:3: (otherlv_13= 'response' ( ( ruleQualifiedName ) )* )?
+            int alt86=2;
+            int LA86_0 = input.LA(1);
 
-            if ( (LA89_0==64) ) {
-                alt89=1;
+            if ( (LA86_0==62) ) {
+                alt86=1;
             }
-            switch (alt89) {
+            switch (alt86) {
                 case 1 :
-                    // InternalAceGen.g:2770:4: otherlv_13= 'response' ( ( ruleQualifiedName ) )*
+                    // InternalAceGen.g:2715:4: otherlv_13= 'response' ( ( ruleQualifiedName ) )*
                     {
-                    otherlv_13=(Token)match(input,64,FOLLOW_3); 
+                    otherlv_13=(Token)match(input,62,FOLLOW_3); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getHttpServerAceReadAccess().getResponseKeyword_10_0());
                     			
-                    // InternalAceGen.g:2774:4: ( ( ruleQualifiedName ) )*
-                    loop88:
+                    // InternalAceGen.g:2719:4: ( ( ruleQualifiedName ) )*
+                    loop85:
                     do {
-                        int alt88=2;
-                        int LA88_0 = input.LA(1);
+                        int alt85=2;
+                        int LA85_0 = input.LA(1);
 
-                        if ( (LA88_0==RULE_ID) ) {
-                            int LA88_2 = input.LA(2);
+                        if ( (LA85_0==RULE_ID) ) {
+                            int LA85_2 = input.LA(2);
 
-                            if ( (LA88_2==EOF||LA88_2==RULE_ID||LA88_2==17||(LA88_2>=56 && LA88_2<=57)||LA88_2==82) ) {
-                                alt88=1;
+                            if ( (LA85_2==EOF||LA85_2==RULE_ID||LA85_2==17||(LA85_2>=54 && LA85_2<=55)||LA85_2==81) ) {
+                                alt85=1;
                             }
 
 
                         }
 
 
-                        switch (alt88) {
+                        switch (alt85) {
                     	case 1 :
-                    	    // InternalAceGen.g:2775:5: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:2720:5: ( ruleQualifiedName )
                     	    {
-                    	    // InternalAceGen.g:2775:5: ( ruleQualifiedName )
-                    	    // InternalAceGen.g:2776:6: ruleQualifiedName
+                    	    // InternalAceGen.g:2720:5: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:2721:6: ruleQualifiedName
                     	    {
 
                     	    						if (current==null) {
@@ -7190,7 +7061,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop88;
+                    	    break loop85;
                         }
                     } while (true);
 
@@ -7223,7 +7094,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAttributeParamRef"
-    // InternalAceGen.g:2795:1: entryRuleAttributeParamRef returns [EObject current=null] : iv_ruleAttributeParamRef= ruleAttributeParamRef EOF ;
+    // InternalAceGen.g:2740:1: entryRuleAttributeParamRef returns [EObject current=null] : iv_ruleAttributeParamRef= ruleAttributeParamRef EOF ;
     public final EObject entryRuleAttributeParamRef() throws RecognitionException {
         EObject current = null;
 
@@ -7231,8 +7102,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2795:58: (iv_ruleAttributeParamRef= ruleAttributeParamRef EOF )
-            // InternalAceGen.g:2796:2: iv_ruleAttributeParamRef= ruleAttributeParamRef EOF
+            // InternalAceGen.g:2740:58: (iv_ruleAttributeParamRef= ruleAttributeParamRef EOF )
+            // InternalAceGen.g:2741:2: iv_ruleAttributeParamRef= ruleAttributeParamRef EOF
             {
              newCompositeNode(grammarAccess.getAttributeParamRefRule()); 
             pushFollow(FOLLOW_1);
@@ -7259,7 +7130,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAttributeParamRef"
-    // InternalAceGen.g:2802:1: ruleAttributeParamRef returns [EObject current=null] : ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) ) ;
+    // InternalAceGen.g:2747:1: ruleAttributeParamRef returns [EObject current=null] : ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) ) ;
     public final EObject ruleAttributeParamRef() throws RecognitionException {
         EObject current = null;
 
@@ -7269,27 +7140,27 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2808:2: ( ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) ) )
-            // InternalAceGen.g:2809:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:2753:2: ( ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) ) )
+            // InternalAceGen.g:2754:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) )
             {
-            // InternalAceGen.g:2809:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) )
-            // InternalAceGen.g:2810:3: ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:2754:2: ( ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) ) )
+            // InternalAceGen.g:2755:3: ( (lv_notNull_0_0= 'NotNull' ) )? ( ( ruleQualifiedName ) )
             {
-            // InternalAceGen.g:2810:3: ( (lv_notNull_0_0= 'NotNull' ) )?
-            int alt90=2;
-            int LA90_0 = input.LA(1);
+            // InternalAceGen.g:2755:3: ( (lv_notNull_0_0= 'NotNull' ) )?
+            int alt87=2;
+            int LA87_0 = input.LA(1);
 
-            if ( (LA90_0==31) ) {
-                alt90=1;
+            if ( (LA87_0==63) ) {
+                alt87=1;
             }
-            switch (alt90) {
+            switch (alt87) {
                 case 1 :
-                    // InternalAceGen.g:2811:4: (lv_notNull_0_0= 'NotNull' )
+                    // InternalAceGen.g:2756:4: (lv_notNull_0_0= 'NotNull' )
                     {
-                    // InternalAceGen.g:2811:4: (lv_notNull_0_0= 'NotNull' )
-                    // InternalAceGen.g:2812:5: lv_notNull_0_0= 'NotNull'
+                    // InternalAceGen.g:2756:4: (lv_notNull_0_0= 'NotNull' )
+                    // InternalAceGen.g:2757:5: lv_notNull_0_0= 'NotNull'
                     {
-                    lv_notNull_0_0=(Token)match(input,31,FOLLOW_10); 
+                    lv_notNull_0_0=(Token)match(input,63,FOLLOW_10); 
 
                     					newLeafNode(lv_notNull_0_0, grammarAccess.getAttributeParamRefAccess().getNotNullNotNullKeyword_0_0());
                     				
@@ -7308,11 +7179,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2824:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:2825:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2769:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:2770:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:2825:4: ( ruleQualifiedName )
-            // InternalAceGen.g:2826:5: ruleQualifiedName
+            // InternalAceGen.g:2770:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2771:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -7359,7 +7230,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerView"
-    // InternalAceGen.g:2844:1: entryRuleHttpServerView returns [EObject current=null] : iv_ruleHttpServerView= ruleHttpServerView EOF ;
+    // InternalAceGen.g:2789:1: entryRuleHttpServerView returns [EObject current=null] : iv_ruleHttpServerView= ruleHttpServerView EOF ;
     public final EObject entryRuleHttpServerView() throws RecognitionException {
         EObject current = null;
 
@@ -7367,8 +7238,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2844:55: (iv_ruleHttpServerView= ruleHttpServerView EOF )
-            // InternalAceGen.g:2845:2: iv_ruleHttpServerView= ruleHttpServerView EOF
+            // InternalAceGen.g:2789:55: (iv_ruleHttpServerView= ruleHttpServerView EOF )
+            // InternalAceGen.g:2790:2: iv_ruleHttpServerView= ruleHttpServerView EOF
             {
              newCompositeNode(grammarAccess.getHttpServerViewRule()); 
             pushFollow(FOLLOW_1);
@@ -7395,7 +7266,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerView"
-    // InternalAceGen.g:2851:1: ruleHttpServerView returns [EObject current=null] : ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) ;
+    // InternalAceGen.g:2796:1: ruleHttpServerView returns [EObject current=null] : ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) ;
     public final EObject ruleHttpServerView() throws RecognitionException {
         EObject current = null;
 
@@ -7410,27 +7281,27 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2857:2: ( ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) )
-            // InternalAceGen.g:2858:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
+            // InternalAceGen.g:2802:2: ( ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) )
+            // InternalAceGen.g:2803:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
             {
-            // InternalAceGen.g:2858:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
-            // InternalAceGen.g:2859:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
+            // InternalAceGen.g:2803:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
+            // InternalAceGen.g:2804:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
             {
-            // InternalAceGen.g:2859:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )?
-            int alt91=2;
-            int LA91_0 = input.LA(1);
+            // InternalAceGen.g:2804:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )?
+            int alt88=2;
+            int LA88_0 = input.LA(1);
 
-            if ( (LA91_0==65) ) {
-                alt91=1;
+            if ( (LA88_0==64) ) {
+                alt88=1;
             }
-            switch (alt91) {
+            switch (alt88) {
                 case 1 :
-                    // InternalAceGen.g:2860:4: (lv_afterCommit_0_0= 'afterCommit' )
+                    // InternalAceGen.g:2805:4: (lv_afterCommit_0_0= 'afterCommit' )
                     {
-                    // InternalAceGen.g:2860:4: (lv_afterCommit_0_0= 'afterCommit' )
-                    // InternalAceGen.g:2861:5: lv_afterCommit_0_0= 'afterCommit'
+                    // InternalAceGen.g:2805:4: (lv_afterCommit_0_0= 'afterCommit' )
+                    // InternalAceGen.g:2806:5: lv_afterCommit_0_0= 'afterCommit'
                     {
-                    lv_afterCommit_0_0=(Token)match(input,65,FOLLOW_10); 
+                    lv_afterCommit_0_0=(Token)match(input,64,FOLLOW_10); 
 
                     					newLeafNode(lv_afterCommit_0_0, grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0());
                     				
@@ -7449,13 +7320,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2873:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalAceGen.g:2874:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:2818:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:2819:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalAceGen.g:2874:4: (lv_name_1_0= RULE_ID )
-            // InternalAceGen.g:2875:5: lv_name_1_0= RULE_ID
+            // InternalAceGen.g:2819:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:2820:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_28); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_25); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getHttpServerViewAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -7475,43 +7346,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:2891:3: (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
-            int alt93=2;
-            int LA93_0 = input.LA(1);
+            // InternalAceGen.g:2836:3: (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
+            int alt90=2;
+            int LA90_0 = input.LA(1);
 
-            if ( (LA93_0==15) ) {
-                alt93=1;
+            if ( (LA90_0==15) ) {
+                alt90=1;
             }
-            switch (alt93) {
+            switch (alt90) {
                 case 1 :
-                    // InternalAceGen.g:2892:4: otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}'
+                    // InternalAceGen.g:2837:4: otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}'
                     {
-                    otherlv_2=(Token)match(input,15,FOLLOW_78); 
+                    otherlv_2=(Token)match(input,15,FOLLOW_75); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getHttpServerViewAccess().getLeftCurlyBracketKeyword_2_0());
                     			
-                    // InternalAceGen.g:2896:4: ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )*
-                    loop92:
+                    // InternalAceGen.g:2841:4: ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )*
+                    loop89:
                     do {
-                        int alt92=2;
-                        int LA92_0 = input.LA(1);
+                        int alt89=2;
+                        int LA89_0 = input.LA(1);
 
-                        if ( (LA92_0==RULE_ID) ) {
-                            alt92=1;
+                        if ( (LA89_0==RULE_ID) ) {
+                            alt89=1;
                         }
 
 
-                        switch (alt92) {
+                        switch (alt89) {
                     	case 1 :
-                    	    // InternalAceGen.g:2897:5: (lv_renderFunctions_3_0= ruleHttpServerViewFunction )
+                    	    // InternalAceGen.g:2842:5: (lv_renderFunctions_3_0= ruleHttpServerViewFunction )
                     	    {
-                    	    // InternalAceGen.g:2897:5: (lv_renderFunctions_3_0= ruleHttpServerViewFunction )
-                    	    // InternalAceGen.g:2898:6: lv_renderFunctions_3_0= ruleHttpServerViewFunction
+                    	    // InternalAceGen.g:2842:5: (lv_renderFunctions_3_0= ruleHttpServerViewFunction )
+                    	    // InternalAceGen.g:2843:6: lv_renderFunctions_3_0= ruleHttpServerViewFunction
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getHttpServerViewAccess().getRenderFunctionsHttpServerViewFunctionParserRuleCall_2_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_78);
+                    	    pushFollow(FOLLOW_75);
                     	    lv_renderFunctions_3_0=ruleHttpServerViewFunction();
 
                     	    state._fsp--;
@@ -7535,7 +7406,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop92;
+                    	    break loop89;
                         }
                     } while (true);
 
@@ -7572,7 +7443,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHttpServerViewFunction"
-    // InternalAceGen.g:2924:1: entryRuleHttpServerViewFunction returns [EObject current=null] : iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF ;
+    // InternalAceGen.g:2869:1: entryRuleHttpServerViewFunction returns [EObject current=null] : iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF ;
     public final EObject entryRuleHttpServerViewFunction() throws RecognitionException {
         EObject current = null;
 
@@ -7580,8 +7451,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2924:63: (iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF )
-            // InternalAceGen.g:2925:2: iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF
+            // InternalAceGen.g:2869:63: (iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF )
+            // InternalAceGen.g:2870:2: iv_ruleHttpServerViewFunction= ruleHttpServerViewFunction EOF
             {
              newCompositeNode(grammarAccess.getHttpServerViewFunctionRule()); 
             pushFollow(FOLLOW_1);
@@ -7608,7 +7479,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerViewFunction"
-    // InternalAceGen.g:2931:1: ruleHttpServerViewFunction returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' ) ;
+    // InternalAceGen.g:2876:1: ruleHttpServerViewFunction returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' ) ;
     public final EObject ruleHttpServerViewFunction() throws RecognitionException {
         EObject current = null;
 
@@ -7620,17 +7491,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2937:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' ) )
-            // InternalAceGen.g:2938:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' )
+            // InternalAceGen.g:2882:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' ) )
+            // InternalAceGen.g:2883:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' )
             {
-            // InternalAceGen.g:2938:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' )
-            // InternalAceGen.g:2939:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')'
+            // InternalAceGen.g:2883:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')' )
+            // InternalAceGen.g:2884:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '(' ( ( ruleQualifiedName ) ) otherlv_3= ')'
             {
-            // InternalAceGen.g:2939:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:2940:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2884:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:2885:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:2940:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:2941:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:2885:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2886:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_14); 
 
@@ -7656,11 +7527,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getHttpServerViewFunctionAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalAceGen.g:2961:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:2962:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2906:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:2907:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:2962:4: ( ruleQualifiedName )
-            // InternalAceGen.g:2963:5: ruleQualifiedName
+            // InternalAceGen.g:2907:4: ( ruleQualifiedName )
+            // InternalAceGen.g:2908:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -7670,7 +7541,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getHttpServerViewFunctionAccess().getModelModelCrossReference_2_0());
             				
-            pushFollow(FOLLOW_79);
+            pushFollow(FOLLOW_76);
             ruleQualifiedName();
 
             state._fsp--;
@@ -7711,7 +7582,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAuthUser"
-    // InternalAceGen.g:2985:1: entryRuleAuthUser returns [EObject current=null] : iv_ruleAuthUser= ruleAuthUser EOF ;
+    // InternalAceGen.g:2930:1: entryRuleAuthUser returns [EObject current=null] : iv_ruleAuthUser= ruleAuthUser EOF ;
     public final EObject entryRuleAuthUser() throws RecognitionException {
         EObject current = null;
 
@@ -7719,8 +7590,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:2985:49: (iv_ruleAuthUser= ruleAuthUser EOF )
-            // InternalAceGen.g:2986:2: iv_ruleAuthUser= ruleAuthUser EOF
+            // InternalAceGen.g:2930:49: (iv_ruleAuthUser= ruleAuthUser EOF )
+            // InternalAceGen.g:2931:2: iv_ruleAuthUser= ruleAuthUser EOF
             {
              newCompositeNode(grammarAccess.getAuthUserRule()); 
             pushFollow(FOLLOW_1);
@@ -7747,7 +7618,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAuthUser"
-    // InternalAceGen.g:2992:1: ruleAuthUser returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) ) ;
+    // InternalAceGen.g:2937:1: ruleAuthUser returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) ) ;
     public final EObject ruleAuthUser() throws RecognitionException {
         EObject current = null;
 
@@ -7761,19 +7632,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:2998:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) ) )
-            // InternalAceGen.g:2999:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) )
+            // InternalAceGen.g:2943:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) ) )
+            // InternalAceGen.g:2944:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) )
             {
-            // InternalAceGen.g:2999:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) )
-            // InternalAceGen.g:3000:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' )
+            // InternalAceGen.g:2944:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' ) )
+            // InternalAceGen.g:2945:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' )
             {
-            // InternalAceGen.g:3000:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:3001:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2945:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:2946:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:3001:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:3002:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:2946:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:2947:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_29); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_26); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getAuthUserAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -7793,35 +7664,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3018:3: (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' )
-            // InternalAceGen.g:3019:4: otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}'
+            // InternalAceGen.g:2963:3: (otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}' )
+            // InternalAceGen.g:2964:4: otherlv_1= '{' ( (lv_attributes_2_0= ruleAttribute ) )* otherlv_3= '}'
             {
-            otherlv_1=(Token)match(input,15,FOLLOW_80); 
+            otherlv_1=(Token)match(input,15,FOLLOW_77); 
 
             				newLeafNode(otherlv_1, grammarAccess.getAuthUserAccess().getLeftCurlyBracketKeyword_1_0());
             			
-            // InternalAceGen.g:3023:4: ( (lv_attributes_2_0= ruleAttribute ) )*
-            loop94:
+            // InternalAceGen.g:2968:4: ( (lv_attributes_2_0= ruleAttribute ) )*
+            loop91:
             do {
-                int alt94=2;
-                int LA94_0 = input.LA(1);
+                int alt91=2;
+                int LA91_0 = input.LA(1);
 
-                if ( (LA94_0==RULE_ID||(LA94_0>=31 && LA94_0<=32)||(LA94_0>=79 && LA94_0<=80)||(LA94_0>=87 && LA94_0<=92)) ) {
-                    alt94=1;
+                if ( (LA91_0==RULE_ID||LA91_0==31||LA91_0==63||(LA91_0>=78 && LA91_0<=79)||(LA91_0>=86 && LA91_0<=91)) ) {
+                    alt91=1;
                 }
 
 
-                switch (alt94) {
+                switch (alt91) {
             	case 1 :
-            	    // InternalAceGen.g:3024:5: (lv_attributes_2_0= ruleAttribute )
+            	    // InternalAceGen.g:2969:5: (lv_attributes_2_0= ruleAttribute )
             	    {
-            	    // InternalAceGen.g:3024:5: (lv_attributes_2_0= ruleAttribute )
-            	    // InternalAceGen.g:3025:6: lv_attributes_2_0= ruleAttribute
+            	    // InternalAceGen.g:2969:5: (lv_attributes_2_0= ruleAttribute )
+            	    // InternalAceGen.g:2970:6: lv_attributes_2_0= ruleAttribute
             	    {
 
             	    						newCompositeNode(grammarAccess.getAuthUserAccess().getAttributesAttributeParserRuleCall_1_1_0());
             	    					
-            	    pushFollow(FOLLOW_80);
+            	    pushFollow(FOLLOW_77);
             	    lv_attributes_2_0=ruleAttribute();
 
             	    state._fsp--;
@@ -7845,7 +7716,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop94;
+            	    break loop91;
                 }
             } while (true);
 
@@ -7879,7 +7750,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleModel"
-    // InternalAceGen.g:3051:1: entryRuleModel returns [EObject current=null] : iv_ruleModel= ruleModel EOF ;
+    // InternalAceGen.g:2996:1: entryRuleModel returns [EObject current=null] : iv_ruleModel= ruleModel EOF ;
     public final EObject entryRuleModel() throws RecognitionException {
         EObject current = null;
 
@@ -7887,8 +7758,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3051:46: (iv_ruleModel= ruleModel EOF )
-            // InternalAceGen.g:3052:2: iv_ruleModel= ruleModel EOF
+            // InternalAceGen.g:2996:46: (iv_ruleModel= ruleModel EOF )
+            // InternalAceGen.g:2997:2: iv_ruleModel= ruleModel EOF
             {
              newCompositeNode(grammarAccess.getModelRule()); 
             pushFollow(FOLLOW_1);
@@ -7915,7 +7786,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModel"
-    // InternalAceGen.g:3058:1: ruleModel returns [EObject current=null] : ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? ) ;
+    // InternalAceGen.g:3003:1: ruleModel returns [EObject current=null] : ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? ) ;
     public final EObject ruleModel() throws RecognitionException {
         EObject current = null;
 
@@ -7932,27 +7803,27 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3064:2: ( ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? ) )
-            // InternalAceGen.g:3065:2: ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? )
+            // InternalAceGen.g:3009:2: ( ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? ) )
+            // InternalAceGen.g:3010:2: ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? )
             {
-            // InternalAceGen.g:3065:2: ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? )
-            // InternalAceGen.g:3066:3: ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )?
+            // InternalAceGen.g:3010:2: ( ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )? )
+            // InternalAceGen.g:3011:3: ( (lv_persistent_0_0= 'persistent' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )? (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )?
             {
-            // InternalAceGen.g:3066:3: ( (lv_persistent_0_0= 'persistent' ) )?
-            int alt95=2;
-            int LA95_0 = input.LA(1);
+            // InternalAceGen.g:3011:3: ( (lv_persistent_0_0= 'persistent' ) )?
+            int alt92=2;
+            int LA92_0 = input.LA(1);
 
-            if ( (LA95_0==66) ) {
-                alt95=1;
+            if ( (LA92_0==65) ) {
+                alt92=1;
             }
-            switch (alt95) {
+            switch (alt92) {
                 case 1 :
-                    // InternalAceGen.g:3067:4: (lv_persistent_0_0= 'persistent' )
+                    // InternalAceGen.g:3012:4: (lv_persistent_0_0= 'persistent' )
                     {
-                    // InternalAceGen.g:3067:4: (lv_persistent_0_0= 'persistent' )
-                    // InternalAceGen.g:3068:5: lv_persistent_0_0= 'persistent'
+                    // InternalAceGen.g:3012:4: (lv_persistent_0_0= 'persistent' )
+                    // InternalAceGen.g:3013:5: lv_persistent_0_0= 'persistent'
                     {
-                    lv_persistent_0_0=(Token)match(input,66,FOLLOW_10); 
+                    lv_persistent_0_0=(Token)match(input,65,FOLLOW_10); 
 
                     					newLeafNode(lv_persistent_0_0, grammarAccess.getModelAccess().getPersistentPersistentKeyword_0_0());
                     				
@@ -7971,13 +7842,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3080:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalAceGen.g:3081:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:3025:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:3026:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalAceGen.g:3081:4: (lv_name_1_0= RULE_ID )
-            // InternalAceGen.g:3082:5: lv_name_1_0= RULE_ID
+            // InternalAceGen.g:3026:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:3027:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_81); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_78); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getModelAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -7997,26 +7868,26 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3098:3: (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )?
-            int alt97=2;
-            int LA97_0 = input.LA(1);
+            // InternalAceGen.g:3043:3: (otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )* )?
+            int alt94=2;
+            int LA94_0 = input.LA(1);
 
-            if ( (LA97_0==67) ) {
-                alt97=1;
+            if ( (LA94_0==66) ) {
+                alt94=1;
             }
-            switch (alt97) {
+            switch (alt94) {
                 case 1 :
-                    // InternalAceGen.g:3099:4: otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )*
+                    // InternalAceGen.g:3044:4: otherlv_2= 'extends' ( ( ruleQualifiedName ) ) (otherlv_4= ',' ( ( ruleQualifiedName ) ) )*
                     {
-                    otherlv_2=(Token)match(input,67,FOLLOW_10); 
+                    otherlv_2=(Token)match(input,66,FOLLOW_10); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getModelAccess().getExtendsKeyword_2_0());
                     			
-                    // InternalAceGen.g:3103:4: ( ( ruleQualifiedName ) )
-                    // InternalAceGen.g:3104:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:3048:4: ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:3049:5: ( ruleQualifiedName )
                     {
-                    // InternalAceGen.g:3104:5: ( ruleQualifiedName )
-                    // InternalAceGen.g:3105:6: ruleQualifiedName
+                    // InternalAceGen.g:3049:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:3050:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -8026,7 +7897,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     						newCompositeNode(grammarAccess.getModelAccess().getSuperModelsModelCrossReference_2_1_0());
                     					
-                    pushFollow(FOLLOW_82);
+                    pushFollow(FOLLOW_79);
                     ruleQualifiedName();
 
                     state._fsp--;
@@ -8040,30 +7911,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:3119:4: (otherlv_4= ',' ( ( ruleQualifiedName ) ) )*
-                    loop96:
+                    // InternalAceGen.g:3064:4: (otherlv_4= ',' ( ( ruleQualifiedName ) ) )*
+                    loop93:
                     do {
-                        int alt96=2;
-                        int LA96_0 = input.LA(1);
+                        int alt93=2;
+                        int LA93_0 = input.LA(1);
 
-                        if ( (LA96_0==20) ) {
-                            alt96=1;
+                        if ( (LA93_0==20) ) {
+                            alt93=1;
                         }
 
 
-                        switch (alt96) {
+                        switch (alt93) {
                     	case 1 :
-                    	    // InternalAceGen.g:3120:5: otherlv_4= ',' ( ( ruleQualifiedName ) )
+                    	    // InternalAceGen.g:3065:5: otherlv_4= ',' ( ( ruleQualifiedName ) )
                     	    {
                     	    otherlv_4=(Token)match(input,20,FOLLOW_10); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getModelAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalAceGen.g:3124:5: ( ( ruleQualifiedName ) )
-                    	    // InternalAceGen.g:3125:6: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:3069:5: ( ( ruleQualifiedName ) )
+                    	    // InternalAceGen.g:3070:6: ( ruleQualifiedName )
                     	    {
-                    	    // InternalAceGen.g:3125:6: ( ruleQualifiedName )
-                    	    // InternalAceGen.g:3126:7: ruleQualifiedName
+                    	    // InternalAceGen.g:3070:6: ( ruleQualifiedName )
+                    	    // InternalAceGen.g:3071:7: ruleQualifiedName
                     	    {
 
                     	    							if (current==null) {
@@ -8073,7 +7944,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     	    							newCompositeNode(grammarAccess.getModelAccess().getSuperModelsModelCrossReference_2_2_1_0());
                     	    						
-                    	    pushFollow(FOLLOW_82);
+                    	    pushFollow(FOLLOW_79);
                     	    ruleQualifiedName();
 
                     	    state._fsp--;
@@ -8092,7 +7963,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop96;
+                    	    break loop93;
                         }
                     } while (true);
 
@@ -8102,43 +7973,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3142:3: (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )?
-            int alt99=2;
-            int LA99_0 = input.LA(1);
+            // InternalAceGen.g:3087:3: (otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}' )?
+            int alt96=2;
+            int LA96_0 = input.LA(1);
 
-            if ( (LA99_0==15) ) {
-                alt99=1;
+            if ( (LA96_0==15) ) {
+                alt96=1;
             }
-            switch (alt99) {
+            switch (alt96) {
                 case 1 :
-                    // InternalAceGen.g:3143:4: otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}'
+                    // InternalAceGen.g:3088:4: otherlv_6= '{' ( (lv_attributes_7_0= ruleAttribute ) )* otherlv_8= '}'
                     {
-                    otherlv_6=(Token)match(input,15,FOLLOW_80); 
+                    otherlv_6=(Token)match(input,15,FOLLOW_77); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_3_0());
                     			
-                    // InternalAceGen.g:3147:4: ( (lv_attributes_7_0= ruleAttribute ) )*
-                    loop98:
+                    // InternalAceGen.g:3092:4: ( (lv_attributes_7_0= ruleAttribute ) )*
+                    loop95:
                     do {
-                        int alt98=2;
-                        int LA98_0 = input.LA(1);
+                        int alt95=2;
+                        int LA95_0 = input.LA(1);
 
-                        if ( (LA98_0==RULE_ID||(LA98_0>=31 && LA98_0<=32)||(LA98_0>=79 && LA98_0<=80)||(LA98_0>=87 && LA98_0<=92)) ) {
-                            alt98=1;
+                        if ( (LA95_0==RULE_ID||LA95_0==31||LA95_0==63||(LA95_0>=78 && LA95_0<=79)||(LA95_0>=86 && LA95_0<=91)) ) {
+                            alt95=1;
                         }
 
 
-                        switch (alt98) {
+                        switch (alt95) {
                     	case 1 :
-                    	    // InternalAceGen.g:3148:5: (lv_attributes_7_0= ruleAttribute )
+                    	    // InternalAceGen.g:3093:5: (lv_attributes_7_0= ruleAttribute )
                     	    {
-                    	    // InternalAceGen.g:3148:5: (lv_attributes_7_0= ruleAttribute )
-                    	    // InternalAceGen.g:3149:6: lv_attributes_7_0= ruleAttribute
+                    	    // InternalAceGen.g:3093:5: (lv_attributes_7_0= ruleAttribute )
+                    	    // InternalAceGen.g:3094:6: lv_attributes_7_0= ruleAttribute
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getModelAccess().getAttributesAttributeParserRuleCall_3_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_80);
+                    	    pushFollow(FOLLOW_77);
                     	    lv_attributes_7_0=ruleAttribute();
 
                     	    state._fsp--;
@@ -8162,7 +8033,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop98;
+                    	    break loop95;
                         }
                     } while (true);
 
@@ -8199,7 +8070,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScenario"
-    // InternalAceGen.g:3175:1: entryRuleScenario returns [EObject current=null] : iv_ruleScenario= ruleScenario EOF ;
+    // InternalAceGen.g:3120:1: entryRuleScenario returns [EObject current=null] : iv_ruleScenario= ruleScenario EOF ;
     public final EObject entryRuleScenario() throws RecognitionException {
         EObject current = null;
 
@@ -8207,8 +8078,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3175:49: (iv_ruleScenario= ruleScenario EOF )
-            // InternalAceGen.g:3176:2: iv_ruleScenario= ruleScenario EOF
+            // InternalAceGen.g:3120:49: (iv_ruleScenario= ruleScenario EOF )
+            // InternalAceGen.g:3121:2: iv_ruleScenario= ruleScenario EOF
             {
              newCompositeNode(grammarAccess.getScenarioRule()); 
             pushFollow(FOLLOW_1);
@@ -8235,7 +8106,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScenario"
-    // InternalAceGen.g:3182:1: ruleScenario returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) ) ;
+    // InternalAceGen.g:3127:1: ruleScenario returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) ) ;
     public final EObject ruleScenario() throws RecognitionException {
         EObject current = null;
 
@@ -8254,19 +8125,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3188:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) ) )
-            // InternalAceGen.g:3189:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) )
+            // InternalAceGen.g:3133:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) ) )
+            // InternalAceGen.g:3134:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) )
             {
-            // InternalAceGen.g:3189:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) )
-            // InternalAceGen.g:3190:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) )
+            // InternalAceGen.g:3134:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) ) )
+            // InternalAceGen.g:3135:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )? otherlv_3= 'WHEN' ( (lv_whenBlock_4_0= ruleWhenBlock ) ) otherlv_5= 'THEN' ( (lv_thenBlock_6_0= ruleThenBlock ) )
             {
-            // InternalAceGen.g:3190:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:3191:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:3135:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:3136:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:3191:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:3192:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:3136:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:3137:5: lv_name_0_0= RULE_ID
             {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_31); 
+            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_28); 
 
             					newLeafNode(lv_name_0_0, grammarAccess.getScenarioAccess().getNameIDTerminalRuleCall_0_0());
             				
@@ -8286,43 +8157,43 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3208:3: (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )?
-            int alt101=2;
-            int LA101_0 = input.LA(1);
+            // InternalAceGen.g:3153:3: (otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )* )?
+            int alt98=2;
+            int LA98_0 = input.LA(1);
 
-            if ( (LA101_0==36) ) {
-                alt101=1;
+            if ( (LA98_0==34) ) {
+                alt98=1;
             }
-            switch (alt101) {
+            switch (alt98) {
                 case 1 :
-                    // InternalAceGen.g:3209:4: otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )*
+                    // InternalAceGen.g:3154:4: otherlv_1= 'GIVEN' ( (lv_givenItems_2_0= ruleGiven ) )*
                     {
-                    otherlv_1=(Token)match(input,36,FOLLOW_32); 
+                    otherlv_1=(Token)match(input,34,FOLLOW_29); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
                     			
-                    // InternalAceGen.g:3213:4: ( (lv_givenItems_2_0= ruleGiven ) )*
-                    loop100:
+                    // InternalAceGen.g:3158:4: ( (lv_givenItems_2_0= ruleGiven ) )*
+                    loop97:
                     do {
-                        int alt100=2;
-                        int LA100_0 = input.LA(1);
+                        int alt97=2;
+                        int LA97_0 = input.LA(1);
 
-                        if ( (LA100_0==RULE_ID) ) {
-                            alt100=1;
+                        if ( (LA97_0==RULE_ID) ) {
+                            alt97=1;
                         }
 
 
-                        switch (alt100) {
+                        switch (alt97) {
                     	case 1 :
-                    	    // InternalAceGen.g:3214:5: (lv_givenItems_2_0= ruleGiven )
+                    	    // InternalAceGen.g:3159:5: (lv_givenItems_2_0= ruleGiven )
                     	    {
-                    	    // InternalAceGen.g:3214:5: (lv_givenItems_2_0= ruleGiven )
-                    	    // InternalAceGen.g:3215:6: lv_givenItems_2_0= ruleGiven
+                    	    // InternalAceGen.g:3159:5: (lv_givenItems_2_0= ruleGiven )
+                    	    // InternalAceGen.g:3160:6: lv_givenItems_2_0= ruleGiven
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getScenarioAccess().getGivenItemsGivenParserRuleCall_1_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_32);
+                    	    pushFollow(FOLLOW_29);
                     	    lv_givenItems_2_0=ruleGiven();
 
                     	    state._fsp--;
@@ -8346,7 +8217,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop100;
+                    	    break loop97;
                         }
                     } while (true);
 
@@ -8356,20 +8227,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_10); 
+            otherlv_3=(Token)match(input,35,FOLLOW_10); 
 
             			newLeafNode(otherlv_3, grammarAccess.getScenarioAccess().getWHENKeyword_2());
             		
-            // InternalAceGen.g:3237:3: ( (lv_whenBlock_4_0= ruleWhenBlock ) )
-            // InternalAceGen.g:3238:4: (lv_whenBlock_4_0= ruleWhenBlock )
+            // InternalAceGen.g:3182:3: ( (lv_whenBlock_4_0= ruleWhenBlock ) )
+            // InternalAceGen.g:3183:4: (lv_whenBlock_4_0= ruleWhenBlock )
             {
-            // InternalAceGen.g:3238:4: (lv_whenBlock_4_0= ruleWhenBlock )
-            // InternalAceGen.g:3239:5: lv_whenBlock_4_0= ruleWhenBlock
+            // InternalAceGen.g:3183:4: (lv_whenBlock_4_0= ruleWhenBlock )
+            // InternalAceGen.g:3184:5: lv_whenBlock_4_0= ruleWhenBlock
             {
 
             					newCompositeNode(grammarAccess.getScenarioAccess().getWhenBlockWhenBlockParserRuleCall_3_0());
             				
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_30);
             lv_whenBlock_4_0=ruleWhenBlock();
 
             state._fsp--;
@@ -8391,15 +8262,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,38,FOLLOW_83); 
+            otherlv_5=(Token)match(input,36,FOLLOW_80); 
 
             			newLeafNode(otherlv_5, grammarAccess.getScenarioAccess().getTHENKeyword_4());
             		
-            // InternalAceGen.g:3260:3: ( (lv_thenBlock_6_0= ruleThenBlock ) )
-            // InternalAceGen.g:3261:4: (lv_thenBlock_6_0= ruleThenBlock )
+            // InternalAceGen.g:3205:3: ( (lv_thenBlock_6_0= ruleThenBlock ) )
+            // InternalAceGen.g:3206:4: (lv_thenBlock_6_0= ruleThenBlock )
             {
-            // InternalAceGen.g:3261:4: (lv_thenBlock_6_0= ruleThenBlock )
-            // InternalAceGen.g:3262:5: lv_thenBlock_6_0= ruleThenBlock
+            // InternalAceGen.g:3206:4: (lv_thenBlock_6_0= ruleThenBlock )
+            // InternalAceGen.g:3207:5: lv_thenBlock_6_0= ruleThenBlock
             {
 
             					newCompositeNode(grammarAccess.getScenarioAccess().getThenBlockThenBlockParserRuleCall_5_0());
@@ -8449,7 +8320,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGiven"
-    // InternalAceGen.g:3283:1: entryRuleGiven returns [EObject current=null] : iv_ruleGiven= ruleGiven EOF ;
+    // InternalAceGen.g:3228:1: entryRuleGiven returns [EObject current=null] : iv_ruleGiven= ruleGiven EOF ;
     public final EObject entryRuleGiven() throws RecognitionException {
         EObject current = null;
 
@@ -8457,8 +8328,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3283:46: (iv_ruleGiven= ruleGiven EOF )
-            // InternalAceGen.g:3284:2: iv_ruleGiven= ruleGiven EOF
+            // InternalAceGen.g:3228:46: (iv_ruleGiven= ruleGiven EOF )
+            // InternalAceGen.g:3229:2: iv_ruleGiven= ruleGiven EOF
             {
              newCompositeNode(grammarAccess.getGivenRule()); 
             pushFollow(FOLLOW_1);
@@ -8485,7 +8356,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGiven"
-    // InternalAceGen.g:3290:1: ruleGiven returns [EObject current=null] : (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall ) ;
+    // InternalAceGen.g:3235:1: ruleGiven returns [EObject current=null] : (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall ) ;
     public final EObject ruleGiven() throws RecognitionException {
         EObject current = null;
 
@@ -8498,38 +8369,38 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3296:2: ( (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall ) )
-            // InternalAceGen.g:3297:2: (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall )
+            // InternalAceGen.g:3241:2: ( (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall ) )
+            // InternalAceGen.g:3242:2: (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall )
             {
-            // InternalAceGen.g:3297:2: (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall )
-            int alt102=2;
-            int LA102_0 = input.LA(1);
+            // InternalAceGen.g:3242:2: (this_GivenRef_0= ruleGivenRef | this_CustomCall_1= ruleCustomCall )
+            int alt99=2;
+            int LA99_0 = input.LA(1);
 
-            if ( (LA102_0==RULE_ID) ) {
-                int LA102_1 = input.LA(2);
+            if ( (LA99_0==RULE_ID) ) {
+                int LA99_1 = input.LA(2);
 
-                if ( (LA102_1==19) ) {
-                    alt102=2;
+                if ( (LA99_1==19) ) {
+                    alt99=2;
                 }
-                else if ( (LA102_1==EOF||LA102_1==RULE_ID||LA102_1==RULE_INT||LA102_1==37||LA102_1==69||LA102_1==82) ) {
-                    alt102=1;
+                else if ( (LA99_1==EOF||LA99_1==RULE_ID||LA99_1==RULE_INT||LA99_1==35||LA99_1==68||LA99_1==81) ) {
+                    alt99=1;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 102, 1, input);
+                        new NoViableAltException("", 99, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 102, 0, input);
+                    new NoViableAltException("", 99, 0, input);
 
                 throw nvae;
             }
-            switch (alt102) {
+            switch (alt99) {
                 case 1 :
-                    // InternalAceGen.g:3298:3: this_GivenRef_0= ruleGivenRef
+                    // InternalAceGen.g:3243:3: this_GivenRef_0= ruleGivenRef
                     {
 
                     			newCompositeNode(grammarAccess.getGivenAccess().getGivenRefParserRuleCall_0());
@@ -8547,7 +8418,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:3307:3: this_CustomCall_1= ruleCustomCall
+                    // InternalAceGen.g:3252:3: this_CustomCall_1= ruleCustomCall
                     {
 
                     			newCompositeNode(grammarAccess.getGivenAccess().getCustomCallParserRuleCall_1());
@@ -8587,7 +8458,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCustomCall"
-    // InternalAceGen.g:3319:1: entryRuleCustomCall returns [EObject current=null] : iv_ruleCustomCall= ruleCustomCall EOF ;
+    // InternalAceGen.g:3264:1: entryRuleCustomCall returns [EObject current=null] : iv_ruleCustomCall= ruleCustomCall EOF ;
     public final EObject entryRuleCustomCall() throws RecognitionException {
         EObject current = null;
 
@@ -8595,8 +8466,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3319:51: (iv_ruleCustomCall= ruleCustomCall EOF )
-            // InternalAceGen.g:3320:2: iv_ruleCustomCall= ruleCustomCall EOF
+            // InternalAceGen.g:3264:51: (iv_ruleCustomCall= ruleCustomCall EOF )
+            // InternalAceGen.g:3265:2: iv_ruleCustomCall= ruleCustomCall EOF
             {
              newCompositeNode(grammarAccess.getCustomCallRule()); 
             pushFollow(FOLLOW_1);
@@ -8623,7 +8494,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCustomCall"
-    // InternalAceGen.g:3326:1: ruleCustomCall returns [EObject current=null] : ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? ) ;
+    // InternalAceGen.g:3271:1: ruleCustomCall returns [EObject current=null] : ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? ) ;
     public final EObject ruleCustomCall() throws RecognitionException {
         EObject current = null;
 
@@ -8642,17 +8513,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3332:2: ( ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? ) )
-            // InternalAceGen.g:3333:2: ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? )
+            // InternalAceGen.g:3277:2: ( ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? ) )
+            // InternalAceGen.g:3278:2: ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? )
             {
-            // InternalAceGen.g:3333:2: ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? )
-            // InternalAceGen.g:3334:3: ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )?
+            // InternalAceGen.g:3278:2: ( ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )? )
+            // InternalAceGen.g:3279:3: ( (lv_customCallName_0_0= RULE_ID ) ) otherlv_1= '(' ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )? otherlv_5= ')' ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )?
             {
-            // InternalAceGen.g:3334:3: ( (lv_customCallName_0_0= RULE_ID ) )
-            // InternalAceGen.g:3335:4: (lv_customCallName_0_0= RULE_ID )
+            // InternalAceGen.g:3279:3: ( (lv_customCallName_0_0= RULE_ID ) )
+            // InternalAceGen.g:3280:4: (lv_customCallName_0_0= RULE_ID )
             {
-            // InternalAceGen.g:3335:4: (lv_customCallName_0_0= RULE_ID )
-            // InternalAceGen.g:3336:5: lv_customCallName_0_0= RULE_ID
+            // InternalAceGen.g:3280:4: (lv_customCallName_0_0= RULE_ID )
+            // InternalAceGen.g:3281:5: lv_customCallName_0_0= RULE_ID
             {
             lv_customCallName_0_0=(Token)match(input,RULE_ID,FOLLOW_14); 
 
@@ -8674,26 +8545,26 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,19,FOLLOW_84); 
+            otherlv_1=(Token)match(input,19,FOLLOW_81); 
 
             			newLeafNode(otherlv_1, grammarAccess.getCustomCallAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalAceGen.g:3356:3: ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )?
-            int alt104=2;
-            int LA104_0 = input.LA(1);
+            // InternalAceGen.g:3301:3: ( ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )* )?
+            int alt101=2;
+            int LA101_0 = input.LA(1);
 
-            if ( ((LA104_0>=RULE_STRING && LA104_0<=RULE_INT)) ) {
-                alt104=1;
+            if ( ((LA101_0>=RULE_STRING && LA101_0<=RULE_INT)) ) {
+                alt101=1;
             }
-            switch (alt104) {
+            switch (alt101) {
                 case 1 :
-                    // InternalAceGen.g:3357:4: ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )*
+                    // InternalAceGen.g:3302:4: ( (lv_values_2_0= rulePrimitiveValue ) ) (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )*
                     {
-                    // InternalAceGen.g:3357:4: ( (lv_values_2_0= rulePrimitiveValue ) )
-                    // InternalAceGen.g:3358:5: (lv_values_2_0= rulePrimitiveValue )
+                    // InternalAceGen.g:3302:4: ( (lv_values_2_0= rulePrimitiveValue ) )
+                    // InternalAceGen.g:3303:5: (lv_values_2_0= rulePrimitiveValue )
                     {
-                    // InternalAceGen.g:3358:5: (lv_values_2_0= rulePrimitiveValue )
-                    // InternalAceGen.g:3359:6: lv_values_2_0= rulePrimitiveValue
+                    // InternalAceGen.g:3303:5: (lv_values_2_0= rulePrimitiveValue )
+                    // InternalAceGen.g:3304:6: lv_values_2_0= rulePrimitiveValue
                     {
 
                     						newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_0_0());
@@ -8720,30 +8591,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:3376:4: (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )*
-                    loop103:
+                    // InternalAceGen.g:3321:4: (otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) ) )*
+                    loop100:
                     do {
-                        int alt103=2;
-                        int LA103_0 = input.LA(1);
+                        int alt100=2;
+                        int LA100_0 = input.LA(1);
 
-                        if ( (LA103_0==20) ) {
-                            alt103=1;
+                        if ( (LA100_0==20) ) {
+                            alt100=1;
                         }
 
 
-                        switch (alt103) {
+                        switch (alt100) {
                     	case 1 :
-                    	    // InternalAceGen.g:3377:5: otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) )
+                    	    // InternalAceGen.g:3322:5: otherlv_3= ',' ( (lv_values_4_0= rulePrimitiveValue ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,20,FOLLOW_44); 
+                    	    otherlv_3=(Token)match(input,20,FOLLOW_41); 
 
                     	    					newLeafNode(otherlv_3, grammarAccess.getCustomCallAccess().getCommaKeyword_2_1_0());
                     	    				
-                    	    // InternalAceGen.g:3381:5: ( (lv_values_4_0= rulePrimitiveValue ) )
-                    	    // InternalAceGen.g:3382:6: (lv_values_4_0= rulePrimitiveValue )
+                    	    // InternalAceGen.g:3326:5: ( (lv_values_4_0= rulePrimitiveValue ) )
+                    	    // InternalAceGen.g:3327:6: (lv_values_4_0= rulePrimitiveValue )
                     	    {
-                    	    // InternalAceGen.g:3382:6: (lv_values_4_0= rulePrimitiveValue )
-                    	    // InternalAceGen.g:3383:7: lv_values_4_0= rulePrimitiveValue
+                    	    // InternalAceGen.g:3327:6: (lv_values_4_0= rulePrimitiveValue )
+                    	    // InternalAceGen.g:3328:7: lv_values_4_0= rulePrimitiveValue
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getCustomCallAccess().getValuesPrimitiveValueParserRuleCall_2_1_1_0());
@@ -8775,7 +8646,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop103;
+                    	    break loop100;
                         }
                     } while (true);
 
@@ -8785,28 +8656,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,21,FOLLOW_85); 
+            otherlv_5=(Token)match(input,21,FOLLOW_82); 
 
             			newLeafNode(otherlv_5, grammarAccess.getCustomCallAccess().getRightParenthesisKeyword_3());
             		
-            // InternalAceGen.g:3406:3: ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )?
-            int alt105=2;
-            int LA105_0 = input.LA(1);
+            // InternalAceGen.g:3351:3: ( ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x' )?
+            int alt102=2;
+            int LA102_0 = input.LA(1);
 
-            if ( (LA105_0==RULE_INT) ) {
-                alt105=1;
+            if ( (LA102_0==RULE_INT) ) {
+                alt102=1;
             }
-            switch (alt105) {
+            switch (alt102) {
                 case 1 :
-                    // InternalAceGen.g:3407:4: ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x'
+                    // InternalAceGen.g:3352:4: ( (lv_times_6_0= RULE_INT ) ) otherlv_7= 'x'
                     {
-                    // InternalAceGen.g:3407:4: ( (lv_times_6_0= RULE_INT ) )
-                    // InternalAceGen.g:3408:5: (lv_times_6_0= RULE_INT )
+                    // InternalAceGen.g:3352:4: ( (lv_times_6_0= RULE_INT ) )
+                    // InternalAceGen.g:3353:5: (lv_times_6_0= RULE_INT )
                     {
-                    // InternalAceGen.g:3408:5: (lv_times_6_0= RULE_INT )
-                    // InternalAceGen.g:3409:6: lv_times_6_0= RULE_INT
+                    // InternalAceGen.g:3353:5: (lv_times_6_0= RULE_INT )
+                    // InternalAceGen.g:3354:6: lv_times_6_0= RULE_INT
                     {
-                    lv_times_6_0=(Token)match(input,RULE_INT,FOLLOW_86); 
+                    lv_times_6_0=(Token)match(input,RULE_INT,FOLLOW_83); 
 
                     						newLeafNode(lv_times_6_0, grammarAccess.getCustomCallAccess().getTimesINTTerminalRuleCall_4_0_0());
                     					
@@ -8826,7 +8697,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_7=(Token)match(input,68,FOLLOW_2); 
+                    otherlv_7=(Token)match(input,67,FOLLOW_2); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getCustomCallAccess().getXKeyword_4_1());
                     			
@@ -8859,7 +8730,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGivenRef"
-    // InternalAceGen.g:3434:1: entryRuleGivenRef returns [EObject current=null] : iv_ruleGivenRef= ruleGivenRef EOF ;
+    // InternalAceGen.g:3379:1: entryRuleGivenRef returns [EObject current=null] : iv_ruleGivenRef= ruleGivenRef EOF ;
     public final EObject entryRuleGivenRef() throws RecognitionException {
         EObject current = null;
 
@@ -8867,8 +8738,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3434:49: (iv_ruleGivenRef= ruleGivenRef EOF )
-            // InternalAceGen.g:3435:2: iv_ruleGivenRef= ruleGivenRef EOF
+            // InternalAceGen.g:3379:49: (iv_ruleGivenRef= ruleGivenRef EOF )
+            // InternalAceGen.g:3380:2: iv_ruleGivenRef= ruleGivenRef EOF
             {
              newCompositeNode(grammarAccess.getGivenRefRule()); 
             pushFollow(FOLLOW_1);
@@ -8895,7 +8766,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGivenRef"
-    // InternalAceGen.g:3441:1: ruleGivenRef returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? ) ;
+    // InternalAceGen.g:3386:1: ruleGivenRef returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? ) ;
     public final EObject ruleGivenRef() throws RecognitionException {
         EObject current = null;
 
@@ -8907,17 +8778,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3447:2: ( ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? ) )
-            // InternalAceGen.g:3448:2: ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? )
+            // InternalAceGen.g:3392:2: ( ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? ) )
+            // InternalAceGen.g:3393:2: ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? )
             {
-            // InternalAceGen.g:3448:2: ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? )
-            // InternalAceGen.g:3449:3: ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )?
+            // InternalAceGen.g:3393:2: ( ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )? )
+            // InternalAceGen.g:3394:3: ( ( ruleQualifiedName ) ) ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )? ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )?
             {
-            // InternalAceGen.g:3449:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:3450:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3394:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:3395:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:3450:4: ( ruleQualifiedName )
-            // InternalAceGen.g:3451:5: ruleQualifiedName
+            // InternalAceGen.g:3395:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3396:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -8927,7 +8798,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getGivenRefAccess().getScenarioScenarioCrossReference_0_0());
             				
-            pushFollow(FOLLOW_87);
+            pushFollow(FOLLOW_84);
             ruleQualifiedName();
 
             state._fsp--;
@@ -8941,24 +8812,24 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3465:3: ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )?
-            int alt106=2;
-            int LA106_0 = input.LA(1);
+            // InternalAceGen.g:3410:3: ( ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x' )?
+            int alt103=2;
+            int LA103_0 = input.LA(1);
 
-            if ( (LA106_0==RULE_INT) ) {
-                alt106=1;
+            if ( (LA103_0==RULE_INT) ) {
+                alt103=1;
             }
-            switch (alt106) {
+            switch (alt103) {
                 case 1 :
-                    // InternalAceGen.g:3466:4: ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x'
+                    // InternalAceGen.g:3411:4: ( (lv_times_1_0= RULE_INT ) ) otherlv_2= 'x'
                     {
-                    // InternalAceGen.g:3466:4: ( (lv_times_1_0= RULE_INT ) )
-                    // InternalAceGen.g:3467:5: (lv_times_1_0= RULE_INT )
+                    // InternalAceGen.g:3411:4: ( (lv_times_1_0= RULE_INT ) )
+                    // InternalAceGen.g:3412:5: (lv_times_1_0= RULE_INT )
                     {
-                    // InternalAceGen.g:3467:5: (lv_times_1_0= RULE_INT )
-                    // InternalAceGen.g:3468:6: lv_times_1_0= RULE_INT
+                    // InternalAceGen.g:3412:5: (lv_times_1_0= RULE_INT )
+                    // InternalAceGen.g:3413:6: lv_times_1_0= RULE_INT
                     {
-                    lv_times_1_0=(Token)match(input,RULE_INT,FOLLOW_86); 
+                    lv_times_1_0=(Token)match(input,RULE_INT,FOLLOW_83); 
 
                     						newLeafNode(lv_times_1_0, grammarAccess.getGivenRefAccess().getTimesINTTerminalRuleCall_1_0_0());
                     					
@@ -8978,7 +8849,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,68,FOLLOW_88); 
+                    otherlv_2=(Token)match(input,67,FOLLOW_85); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getGivenRefAccess().getXKeyword_1_1());
                     			
@@ -8988,21 +8859,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3489:3: ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )?
-            int alt107=2;
-            int LA107_0 = input.LA(1);
+            // InternalAceGen.g:3434:3: ( (lv_excludeGiven_3_0= 'excludeGIVEN' ) )?
+            int alt104=2;
+            int LA104_0 = input.LA(1);
 
-            if ( (LA107_0==69) ) {
-                alt107=1;
+            if ( (LA104_0==68) ) {
+                alt104=1;
             }
-            switch (alt107) {
+            switch (alt104) {
                 case 1 :
-                    // InternalAceGen.g:3490:4: (lv_excludeGiven_3_0= 'excludeGIVEN' )
+                    // InternalAceGen.g:3435:4: (lv_excludeGiven_3_0= 'excludeGIVEN' )
                     {
-                    // InternalAceGen.g:3490:4: (lv_excludeGiven_3_0= 'excludeGIVEN' )
-                    // InternalAceGen.g:3491:5: lv_excludeGiven_3_0= 'excludeGIVEN'
+                    // InternalAceGen.g:3435:4: (lv_excludeGiven_3_0= 'excludeGIVEN' )
+                    // InternalAceGen.g:3436:5: lv_excludeGiven_3_0= 'excludeGIVEN'
                     {
-                    lv_excludeGiven_3_0=(Token)match(input,69,FOLLOW_2); 
+                    lv_excludeGiven_3_0=(Token)match(input,68,FOLLOW_2); 
 
                     					newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0());
                     				
@@ -9044,7 +8915,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWhenBlock"
-    // InternalAceGen.g:3507:1: entryRuleWhenBlock returns [EObject current=null] : iv_ruleWhenBlock= ruleWhenBlock EOF ;
+    // InternalAceGen.g:3452:1: entryRuleWhenBlock returns [EObject current=null] : iv_ruleWhenBlock= ruleWhenBlock EOF ;
     public final EObject entryRuleWhenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -9052,8 +8923,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3507:50: (iv_ruleWhenBlock= ruleWhenBlock EOF )
-            // InternalAceGen.g:3508:2: iv_ruleWhenBlock= ruleWhenBlock EOF
+            // InternalAceGen.g:3452:50: (iv_ruleWhenBlock= ruleWhenBlock EOF )
+            // InternalAceGen.g:3453:2: iv_ruleWhenBlock= ruleWhenBlock EOF
             {
              newCompositeNode(grammarAccess.getWhenBlockRule()); 
             pushFollow(FOLLOW_1);
@@ -9080,7 +8951,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWhenBlock"
-    // InternalAceGen.g:3514:1: ruleWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* ) ;
+    // InternalAceGen.g:3459:1: ruleWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* ) ;
     public final EObject ruleWhenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -9095,17 +8966,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3520:2: ( ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* ) )
-            // InternalAceGen.g:3521:2: ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* )
+            // InternalAceGen.g:3465:2: ( ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* ) )
+            // InternalAceGen.g:3466:2: ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* )
             {
-            // InternalAceGen.g:3521:2: ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* )
-            // InternalAceGen.g:3522:3: ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )*
+            // InternalAceGen.g:3466:2: ( ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )* )
+            // InternalAceGen.g:3467:3: ( ( ruleQualifiedName ) ) ( (lv_dataDefinition_1_0= ruleDataDefinition ) ) ( (lv_authorization_2_0= ruleAuthorization ) )? ( (lv_extractions_3_0= ruleExtraction ) )*
             {
-            // InternalAceGen.g:3522:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:3523:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3467:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:3468:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:3523:4: ( ruleQualifiedName )
-            // InternalAceGen.g:3524:5: ruleQualifiedName
+            // InternalAceGen.g:3468:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3469:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -9115,7 +8986,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getWhenBlockAccess().getActionHttpServerAceCrossReference_0_0());
             				
-            pushFollow(FOLLOW_89);
+            pushFollow(FOLLOW_86);
             ruleQualifiedName();
 
             state._fsp--;
@@ -9129,16 +9000,16 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3538:3: ( (lv_dataDefinition_1_0= ruleDataDefinition ) )
-            // InternalAceGen.g:3539:4: (lv_dataDefinition_1_0= ruleDataDefinition )
+            // InternalAceGen.g:3483:3: ( (lv_dataDefinition_1_0= ruleDataDefinition ) )
+            // InternalAceGen.g:3484:4: (lv_dataDefinition_1_0= ruleDataDefinition )
             {
-            // InternalAceGen.g:3539:4: (lv_dataDefinition_1_0= ruleDataDefinition )
-            // InternalAceGen.g:3540:5: lv_dataDefinition_1_0= ruleDataDefinition
+            // InternalAceGen.g:3484:4: (lv_dataDefinition_1_0= ruleDataDefinition )
+            // InternalAceGen.g:3485:5: lv_dataDefinition_1_0= ruleDataDefinition
             {
 
             					newCompositeNode(grammarAccess.getWhenBlockAccess().getDataDefinitionDataDefinitionParserRuleCall_1_0());
             				
-            pushFollow(FOLLOW_90);
+            pushFollow(FOLLOW_87);
             lv_dataDefinition_1_0=ruleDataDefinition();
 
             state._fsp--;
@@ -9160,24 +9031,24 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3557:3: ( (lv_authorization_2_0= ruleAuthorization ) )?
-            int alt108=2;
-            int LA108_0 = input.LA(1);
+            // InternalAceGen.g:3502:3: ( (lv_authorization_2_0= ruleAuthorization ) )?
+            int alt105=2;
+            int LA105_0 = input.LA(1);
 
-            if ( (LA108_0==78) ) {
-                alt108=1;
+            if ( (LA105_0==77) ) {
+                alt105=1;
             }
-            switch (alt108) {
+            switch (alt105) {
                 case 1 :
-                    // InternalAceGen.g:3558:4: (lv_authorization_2_0= ruleAuthorization )
+                    // InternalAceGen.g:3503:4: (lv_authorization_2_0= ruleAuthorization )
                     {
-                    // InternalAceGen.g:3558:4: (lv_authorization_2_0= ruleAuthorization )
-                    // InternalAceGen.g:3559:5: lv_authorization_2_0= ruleAuthorization
+                    // InternalAceGen.g:3503:4: (lv_authorization_2_0= ruleAuthorization )
+                    // InternalAceGen.g:3504:5: lv_authorization_2_0= ruleAuthorization
                     {
 
                     					newCompositeNode(grammarAccess.getWhenBlockAccess().getAuthorizationAuthorizationParserRuleCall_2_0());
                     				
-                    pushFollow(FOLLOW_91);
+                    pushFollow(FOLLOW_88);
                     lv_authorization_2_0=ruleAuthorization();
 
                     state._fsp--;
@@ -9202,28 +9073,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3576:3: ( (lv_extractions_3_0= ruleExtraction ) )*
-            loop109:
+            // InternalAceGen.g:3521:3: ( (lv_extractions_3_0= ruleExtraction ) )*
+            loop106:
             do {
-                int alt109=2;
-                int LA109_0 = input.LA(1);
+                int alt106=2;
+                int LA106_0 = input.LA(1);
 
-                if ( (LA109_0==74) ) {
-                    alt109=1;
+                if ( (LA106_0==73) ) {
+                    alt106=1;
                 }
 
 
-                switch (alt109) {
+                switch (alt106) {
             	case 1 :
-            	    // InternalAceGen.g:3577:4: (lv_extractions_3_0= ruleExtraction )
+            	    // InternalAceGen.g:3522:4: (lv_extractions_3_0= ruleExtraction )
             	    {
-            	    // InternalAceGen.g:3577:4: (lv_extractions_3_0= ruleExtraction )
-            	    // InternalAceGen.g:3578:5: lv_extractions_3_0= ruleExtraction
+            	    // InternalAceGen.g:3522:4: (lv_extractions_3_0= ruleExtraction )
+            	    // InternalAceGen.g:3523:5: lv_extractions_3_0= ruleExtraction
             	    {
 
             	    					newCompositeNode(grammarAccess.getWhenBlockAccess().getExtractionsExtractionParserRuleCall_3_0());
             	    				
-            	    pushFollow(FOLLOW_91);
+            	    pushFollow(FOLLOW_88);
             	    lv_extractions_3_0=ruleExtraction();
 
             	    state._fsp--;
@@ -9247,7 +9118,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop109;
+            	    break loop106;
                 }
             } while (true);
 
@@ -9274,7 +9145,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleThenBlock"
-    // InternalAceGen.g:3599:1: entryRuleThenBlock returns [EObject current=null] : iv_ruleThenBlock= ruleThenBlock EOF ;
+    // InternalAceGen.g:3544:1: entryRuleThenBlock returns [EObject current=null] : iv_ruleThenBlock= ruleThenBlock EOF ;
     public final EObject entryRuleThenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -9282,8 +9153,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3599:50: (iv_ruleThenBlock= ruleThenBlock EOF )
-            // InternalAceGen.g:3600:2: iv_ruleThenBlock= ruleThenBlock EOF
+            // InternalAceGen.g:3544:50: (iv_ruleThenBlock= ruleThenBlock EOF )
+            // InternalAceGen.g:3545:2: iv_ruleThenBlock= ruleThenBlock EOF
             {
              newCompositeNode(grammarAccess.getThenBlockRule()); 
             pushFollow(FOLLOW_1);
@@ -9310,7 +9181,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleThenBlock"
-    // InternalAceGen.g:3606:1: ruleThenBlock returns [EObject current=null] : ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? ) ;
+    // InternalAceGen.g:3551:1: ruleThenBlock returns [EObject current=null] : ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? ) ;
     public final EObject ruleThenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -9330,19 +9201,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3612:2: ( ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? ) )
-            // InternalAceGen.g:3613:2: ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? )
+            // InternalAceGen.g:3557:2: ( ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? ) )
+            // InternalAceGen.g:3558:2: ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? )
             {
-            // InternalAceGen.g:3613:2: ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? )
-            // InternalAceGen.g:3614:3: ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )?
+            // InternalAceGen.g:3558:2: ( ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )? )
+            // InternalAceGen.g:3559:3: ( (lv_statusCode_0_0= RULE_INT ) ) (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )? (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )? (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )?
             {
-            // InternalAceGen.g:3614:3: ( (lv_statusCode_0_0= RULE_INT ) )
-            // InternalAceGen.g:3615:4: (lv_statusCode_0_0= RULE_INT )
+            // InternalAceGen.g:3559:3: ( (lv_statusCode_0_0= RULE_INT ) )
+            // InternalAceGen.g:3560:4: (lv_statusCode_0_0= RULE_INT )
             {
-            // InternalAceGen.g:3615:4: (lv_statusCode_0_0= RULE_INT )
-            // InternalAceGen.g:3616:5: lv_statusCode_0_0= RULE_INT
+            // InternalAceGen.g:3560:4: (lv_statusCode_0_0= RULE_INT )
+            // InternalAceGen.g:3561:5: lv_statusCode_0_0= RULE_INT
             {
-            lv_statusCode_0_0=(Token)match(input,RULE_INT,FOLLOW_92); 
+            lv_statusCode_0_0=(Token)match(input,RULE_INT,FOLLOW_89); 
 
             					newLeafNode(lv_statusCode_0_0, grammarAccess.getThenBlockAccess().getStatusCodeINTTerminalRuleCall_0_0());
             				
@@ -9362,35 +9233,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3632:3: (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )?
-            int alt110=2;
-            int LA110_0 = input.LA(1);
+            // InternalAceGen.g:3577:3: (otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) ) )?
+            int alt107=2;
+            int LA107_0 = input.LA(1);
 
-            if ( (LA110_0==64) ) {
-                alt110=1;
+            if ( (LA107_0==62) ) {
+                alt107=1;
             }
-            switch (alt110) {
+            switch (alt107) {
                 case 1 :
-                    // InternalAceGen.g:3633:4: otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) )
+                    // InternalAceGen.g:3578:4: otherlv_1= 'response' otherlv_2= 'shouldBe' ( (lv_response_3_0= ruleDataDefinition ) )
                     {
-                    otherlv_1=(Token)match(input,64,FOLLOW_47); 
+                    otherlv_1=(Token)match(input,62,FOLLOW_44); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getThenBlockAccess().getResponseKeyword_1_0());
                     			
-                    otherlv_2=(Token)match(input,47,FOLLOW_93); 
+                    otherlv_2=(Token)match(input,45,FOLLOW_90); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getThenBlockAccess().getShouldBeKeyword_1_1());
                     			
-                    // InternalAceGen.g:3641:4: ( (lv_response_3_0= ruleDataDefinition ) )
-                    // InternalAceGen.g:3642:5: (lv_response_3_0= ruleDataDefinition )
+                    // InternalAceGen.g:3586:4: ( (lv_response_3_0= ruleDataDefinition ) )
+                    // InternalAceGen.g:3587:5: (lv_response_3_0= ruleDataDefinition )
                     {
-                    // InternalAceGen.g:3642:5: (lv_response_3_0= ruleDataDefinition )
-                    // InternalAceGen.g:3643:6: lv_response_3_0= ruleDataDefinition
+                    // InternalAceGen.g:3587:5: (lv_response_3_0= ruleDataDefinition )
+                    // InternalAceGen.g:3588:6: lv_response_3_0= ruleDataDefinition
                     {
 
                     						newCompositeNode(grammarAccess.getThenBlockAccess().getResponseDataDefinitionParserRuleCall_1_2_0());
                     					
-                    pushFollow(FOLLOW_94);
+                    pushFollow(FOLLOW_91);
                     lv_response_3_0=ruleDataDefinition();
 
                     state._fsp--;
@@ -9418,49 +9289,49 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3661:3: (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )?
-            int alt112=2;
-            int LA112_0 = input.LA(1);
+            // InternalAceGen.g:3606:3: (otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )* )?
+            int alt109=2;
+            int LA109_0 = input.LA(1);
 
-            if ( (LA112_0==70) ) {
-                alt112=1;
+            if ( (LA109_0==69) ) {
+                alt109=1;
             }
-            switch (alt112) {
+            switch (alt109) {
                 case 1 :
-                    // InternalAceGen.g:3662:4: otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )*
+                    // InternalAceGen.g:3607:4: otherlv_4= 'persistence' ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )*
                     {
-                    otherlv_4=(Token)match(input,70,FOLLOW_46); 
+                    otherlv_4=(Token)match(input,69,FOLLOW_43); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getThenBlockAccess().getPersistenceKeyword_2_0());
                     			
-                    // InternalAceGen.g:3666:4: ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )*
-                    loop111:
+                    // InternalAceGen.g:3611:4: ( (lv_persistenceVerifications_5_0= rulePersistenceVerification ) )*
+                    loop108:
                     do {
-                        int alt111=2;
-                        int LA111_0 = input.LA(1);
+                        int alt108=2;
+                        int LA108_0 = input.LA(1);
 
-                        if ( (LA111_0==RULE_ID) ) {
-                            int LA111_2 = input.LA(2);
+                        if ( (LA108_0==RULE_ID) ) {
+                            int LA108_2 = input.LA(2);
 
-                            if ( (LA111_2==RULE_ID) ) {
-                                alt111=1;
+                            if ( (LA108_2==RULE_ID) ) {
+                                alt108=1;
                             }
 
 
                         }
 
 
-                        switch (alt111) {
+                        switch (alt108) {
                     	case 1 :
-                    	    // InternalAceGen.g:3667:5: (lv_persistenceVerifications_5_0= rulePersistenceVerification )
+                    	    // InternalAceGen.g:3612:5: (lv_persistenceVerifications_5_0= rulePersistenceVerification )
                     	    {
-                    	    // InternalAceGen.g:3667:5: (lv_persistenceVerifications_5_0= rulePersistenceVerification )
-                    	    // InternalAceGen.g:3668:6: lv_persistenceVerifications_5_0= rulePersistenceVerification
+                    	    // InternalAceGen.g:3612:5: (lv_persistenceVerifications_5_0= rulePersistenceVerification )
+                    	    // InternalAceGen.g:3613:6: lv_persistenceVerifications_5_0= rulePersistenceVerification
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getThenBlockAccess().getPersistenceVerificationsPersistenceVerificationParserRuleCall_2_1_0());
                     	    					
-                    	    pushFollow(FOLLOW_46);
+                    	    pushFollow(FOLLOW_43);
                     	    lv_persistenceVerifications_5_0=rulePersistenceVerification();
 
                     	    state._fsp--;
@@ -9484,7 +9355,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop111;
+                    	    break loop108;
                         }
                     } while (true);
 
@@ -9494,44 +9365,44 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3686:3: (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )?
-            int alt114=2;
-            int LA114_0 = input.LA(1);
+            // InternalAceGen.g:3631:3: (otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )* )?
+            int alt111=2;
+            int LA111_0 = input.LA(1);
 
-            if ( (LA114_0==46) ) {
-                alt114=1;
+            if ( (LA111_0==44) ) {
+                alt111=1;
             }
-            switch (alt114) {
+            switch (alt111) {
                 case 1 :
-                    // InternalAceGen.g:3687:4: otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )*
+                    // InternalAceGen.g:3632:4: otherlv_6= 'verifications' ( (lv_verifications_7_0= ruleVerification ) )*
                     {
-                    otherlv_6=(Token)match(input,46,FOLLOW_3); 
+                    otherlv_6=(Token)match(input,44,FOLLOW_3); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getThenBlockAccess().getVerificationsKeyword_3_0());
                     			
-                    // InternalAceGen.g:3691:4: ( (lv_verifications_7_0= ruleVerification ) )*
-                    loop113:
+                    // InternalAceGen.g:3636:4: ( (lv_verifications_7_0= ruleVerification ) )*
+                    loop110:
                     do {
-                        int alt113=2;
-                        int LA113_0 = input.LA(1);
+                        int alt110=2;
+                        int LA110_0 = input.LA(1);
 
-                        if ( (LA113_0==RULE_ID) ) {
-                            int LA113_2 = input.LA(2);
+                        if ( (LA110_0==RULE_ID) ) {
+                            int LA110_2 = input.LA(2);
 
-                            if ( (LA113_2==EOF||LA113_2==RULE_ID) ) {
-                                alt113=1;
+                            if ( (LA110_2==EOF||LA110_2==RULE_ID) ) {
+                                alt110=1;
                             }
 
 
                         }
 
 
-                        switch (alt113) {
+                        switch (alt110) {
                     	case 1 :
-                    	    // InternalAceGen.g:3692:5: (lv_verifications_7_0= ruleVerification )
+                    	    // InternalAceGen.g:3637:5: (lv_verifications_7_0= ruleVerification )
                     	    {
-                    	    // InternalAceGen.g:3692:5: (lv_verifications_7_0= ruleVerification )
-                    	    // InternalAceGen.g:3693:6: lv_verifications_7_0= ruleVerification
+                    	    // InternalAceGen.g:3637:5: (lv_verifications_7_0= ruleVerification )
+                    	    // InternalAceGen.g:3638:6: lv_verifications_7_0= ruleVerification
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getThenBlockAccess().getVerificationsVerificationParserRuleCall_3_1_0());
@@ -9560,7 +9431,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop113;
+                    	    break loop110;
                         }
                     } while (true);
 
@@ -9593,7 +9464,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePersistenceVerification"
-    // InternalAceGen.g:3715:1: entryRulePersistenceVerification returns [EObject current=null] : iv_rulePersistenceVerification= rulePersistenceVerification EOF ;
+    // InternalAceGen.g:3660:1: entryRulePersistenceVerification returns [EObject current=null] : iv_rulePersistenceVerification= rulePersistenceVerification EOF ;
     public final EObject entryRulePersistenceVerification() throws RecognitionException {
         EObject current = null;
 
@@ -9601,8 +9472,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3715:64: (iv_rulePersistenceVerification= rulePersistenceVerification EOF )
-            // InternalAceGen.g:3716:2: iv_rulePersistenceVerification= rulePersistenceVerification EOF
+            // InternalAceGen.g:3660:64: (iv_rulePersistenceVerification= rulePersistenceVerification EOF )
+            // InternalAceGen.g:3661:2: iv_rulePersistenceVerification= rulePersistenceVerification EOF
             {
              newCompositeNode(grammarAccess.getPersistenceVerificationRule()); 
             pushFollow(FOLLOW_1);
@@ -9629,7 +9500,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePersistenceVerification"
-    // InternalAceGen.g:3722:1: rulePersistenceVerification returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) ) ;
+    // InternalAceGen.g:3667:1: rulePersistenceVerification returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) ) ;
     public final EObject rulePersistenceVerification() throws RecognitionException {
         EObject current = null;
 
@@ -9641,17 +9512,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3728:2: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) ) )
-            // InternalAceGen.g:3729:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) )
+            // InternalAceGen.g:3673:2: ( ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) ) )
+            // InternalAceGen.g:3674:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) )
             {
-            // InternalAceGen.g:3729:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) )
-            // InternalAceGen.g:3730:3: ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) )
+            // InternalAceGen.g:3674:2: ( ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) ) )
+            // InternalAceGen.g:3675:3: ( (lv_name_0_0= RULE_ID ) ) ( ( ruleQualifiedName ) ) ( (lv_expression_2_0= rulePersistenceVerificationExpression ) )
             {
-            // InternalAceGen.g:3730:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:3731:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:3675:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:3676:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:3731:4: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:3732:5: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:3676:4: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:3677:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_10); 
 
@@ -9673,11 +9544,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3748:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:3749:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3693:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:3694:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:3749:4: ( ruleQualifiedName )
-            // InternalAceGen.g:3750:5: ruleQualifiedName
+            // InternalAceGen.g:3694:4: ( ruleQualifiedName )
+            // InternalAceGen.g:3695:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -9687,7 +9558,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getModelModelCrossReference_1_0());
             				
-            pushFollow(FOLLOW_95);
+            pushFollow(FOLLOW_92);
             ruleQualifiedName();
 
             state._fsp--;
@@ -9701,11 +9572,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3764:3: ( (lv_expression_2_0= rulePersistenceVerificationExpression ) )
-            // InternalAceGen.g:3765:4: (lv_expression_2_0= rulePersistenceVerificationExpression )
+            // InternalAceGen.g:3709:3: ( (lv_expression_2_0= rulePersistenceVerificationExpression ) )
+            // InternalAceGen.g:3710:4: (lv_expression_2_0= rulePersistenceVerificationExpression )
             {
-            // InternalAceGen.g:3765:4: (lv_expression_2_0= rulePersistenceVerificationExpression )
-            // InternalAceGen.g:3766:5: lv_expression_2_0= rulePersistenceVerificationExpression
+            // InternalAceGen.g:3710:4: (lv_expression_2_0= rulePersistenceVerificationExpression )
+            // InternalAceGen.g:3711:5: lv_expression_2_0= rulePersistenceVerificationExpression
             {
 
             					newCompositeNode(grammarAccess.getPersistenceVerificationAccess().getExpressionPersistenceVerificationExpressionParserRuleCall_2_0());
@@ -9755,7 +9626,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePersistenceVerificationExpression"
-    // InternalAceGen.g:3787:1: entryRulePersistenceVerificationExpression returns [EObject current=null] : iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF ;
+    // InternalAceGen.g:3732:1: entryRulePersistenceVerificationExpression returns [EObject current=null] : iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF ;
     public final EObject entryRulePersistenceVerificationExpression() throws RecognitionException {
         EObject current = null;
 
@@ -9763,8 +9634,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3787:74: (iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF )
-            // InternalAceGen.g:3788:2: iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF
+            // InternalAceGen.g:3732:74: (iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF )
+            // InternalAceGen.g:3733:2: iv_rulePersistenceVerificationExpression= rulePersistenceVerificationExpression EOF
             {
              newCompositeNode(grammarAccess.getPersistenceVerificationExpressionRule()); 
             pushFollow(FOLLOW_1);
@@ -9791,7 +9662,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePersistenceVerificationExpression"
-    // InternalAceGen.g:3794:1: rulePersistenceVerificationExpression returns [EObject current=null] : (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount ) ;
+    // InternalAceGen.g:3739:1: rulePersistenceVerificationExpression returns [EObject current=null] : (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount ) ;
     public final EObject rulePersistenceVerificationExpression() throws RecognitionException {
         EObject current = null;
 
@@ -9806,37 +9677,37 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3800:2: ( (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount ) )
-            // InternalAceGen.g:3801:2: (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount )
+            // InternalAceGen.g:3745:2: ( (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount ) )
+            // InternalAceGen.g:3746:2: (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount )
             {
-            // InternalAceGen.g:3801:2: (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount )
-            int alt115=3;
+            // InternalAceGen.g:3746:2: (this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute | this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys | this_Count_2= ruleCount )
+            int alt112=3;
             switch ( input.LA(1) ) {
-            case 72:
-                {
-                alt115=1;
-                }
-                break;
             case 71:
                 {
-                alt115=2;
+                alt112=1;
                 }
                 break;
-            case 73:
+            case 70:
                 {
-                alt115=3;
+                alt112=2;
+                }
+                break;
+            case 72:
+                {
+                alt112=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 115, 0, input);
+                    new NoViableAltException("", 112, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt115) {
+            switch (alt112) {
                 case 1 :
-                    // InternalAceGen.g:3802:3: this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute
+                    // InternalAceGen.g:3747:3: this_SelectByUniqueAttribute_0= ruleSelectByUniqueAttribute
                     {
 
                     			newCompositeNode(grammarAccess.getPersistenceVerificationExpressionAccess().getSelectByUniqueAttributeParserRuleCall_0());
@@ -9854,7 +9725,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:3811:3: this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys
+                    // InternalAceGen.g:3756:3: this_SelectByPrimaryKeys_1= ruleSelectByPrimaryKeys
                     {
 
                     			newCompositeNode(grammarAccess.getPersistenceVerificationExpressionAccess().getSelectByPrimaryKeysParserRuleCall_1());
@@ -9872,7 +9743,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:3820:3: this_Count_2= ruleCount
+                    // InternalAceGen.g:3765:3: this_Count_2= ruleCount
                     {
 
                     			newCompositeNode(grammarAccess.getPersistenceVerificationExpressionAccess().getCountParserRuleCall_2());
@@ -9912,7 +9783,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSelectByPrimaryKeys"
-    // InternalAceGen.g:3832:1: entryRuleSelectByPrimaryKeys returns [EObject current=null] : iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF ;
+    // InternalAceGen.g:3777:1: entryRuleSelectByPrimaryKeys returns [EObject current=null] : iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF ;
     public final EObject entryRuleSelectByPrimaryKeys() throws RecognitionException {
         EObject current = null;
 
@@ -9920,8 +9791,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3832:60: (iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF )
-            // InternalAceGen.g:3833:2: iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF
+            // InternalAceGen.g:3777:60: (iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF )
+            // InternalAceGen.g:3778:2: iv_ruleSelectByPrimaryKeys= ruleSelectByPrimaryKeys EOF
             {
              newCompositeNode(grammarAccess.getSelectByPrimaryKeysRule()); 
             pushFollow(FOLLOW_1);
@@ -9948,7 +9819,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSelectByPrimaryKeys"
-    // InternalAceGen.g:3839:1: ruleSelectByPrimaryKeys returns [EObject current=null] : (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) ) ;
+    // InternalAceGen.g:3784:1: ruleSelectByPrimaryKeys returns [EObject current=null] : (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) ) ;
     public final EObject ruleSelectByPrimaryKeys() throws RecognitionException {
         EObject current = null;
 
@@ -9968,13 +9839,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3845:2: ( (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) ) )
-            // InternalAceGen.g:3846:2: (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) )
+            // InternalAceGen.g:3790:2: ( (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) ) )
+            // InternalAceGen.g:3791:2: (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) )
             {
-            // InternalAceGen.g:3846:2: (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) )
-            // InternalAceGen.g:3847:3: otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) )
+            // InternalAceGen.g:3791:2: (otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) ) )
+            // InternalAceGen.g:3792:3: otherlv_0= 'selectByPrimaryKey' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= ruleSelectByExpectation ) )
             {
-            otherlv_0=(Token)match(input,71,FOLLOW_14); 
+            otherlv_0=(Token)match(input,70,FOLLOW_14); 
 
             			newLeafNode(otherlv_0, grammarAccess.getSelectByPrimaryKeysAccess().getSelectByPrimaryKeyKeyword_0());
             		
@@ -9982,11 +9853,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getSelectByPrimaryKeysAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalAceGen.g:3855:3: ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) )
-            // InternalAceGen.g:3856:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3800:3: ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) )
+            // InternalAceGen.g:3801:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
             {
-            // InternalAceGen.g:3856:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
-            // InternalAceGen.g:3857:5: lv_attributeAndValues_2_0= ruleAttributeAndValue
+            // InternalAceGen.g:3801:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3802:5: lv_attributeAndValues_2_0= ruleAttributeAndValue
             {
 
             					newCompositeNode(grammarAccess.getSelectByPrimaryKeysAccess().getAttributeAndValuesAttributeAndValueParserRuleCall_2_0());
@@ -10013,38 +9884,38 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:3874:3: (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )?
-            int alt117=2;
-            int LA117_0 = input.LA(1);
+            // InternalAceGen.g:3819:3: (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )?
+            int alt114=2;
+            int LA114_0 = input.LA(1);
 
-            if ( (LA117_0==20) ) {
-                alt117=1;
+            if ( (LA114_0==20) ) {
+                alt114=1;
             }
-            switch (alt117) {
+            switch (alt114) {
                 case 1 :
-                    // InternalAceGen.g:3875:4: otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
+                    // InternalAceGen.g:3820:4: otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
                     {
                     otherlv_3=(Token)match(input,20,FOLLOW_22); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getSelectByPrimaryKeysAccess().getCommaKeyword_3_0());
                     			
-                    // InternalAceGen.g:3879:4: ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
-                    loop116:
+                    // InternalAceGen.g:3824:4: ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
+                    loop113:
                     do {
-                        int alt116=2;
-                        int LA116_0 = input.LA(1);
+                        int alt113=2;
+                        int LA113_0 = input.LA(1);
 
-                        if ( (LA116_0==RULE_ID) ) {
-                            alt116=1;
+                        if ( (LA113_0==RULE_ID) ) {
+                            alt113=1;
                         }
 
 
-                        switch (alt116) {
+                        switch (alt113) {
                     	case 1 :
-                    	    // InternalAceGen.g:3880:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
+                    	    // InternalAceGen.g:3825:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
                     	    {
-                    	    // InternalAceGen.g:3880:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
-                    	    // InternalAceGen.g:3881:6: lv_attributeAndValues_4_0= ruleAttributeAndValue
+                    	    // InternalAceGen.g:3825:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
+                    	    // InternalAceGen.g:3826:6: lv_attributeAndValues_4_0= ruleAttributeAndValue
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getSelectByPrimaryKeysAccess().getAttributeAndValuesAttributeAndValueParserRuleCall_3_1_0());
@@ -10073,7 +9944,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop116;
+                    	    break loop113;
                         }
                     } while (true);
 
@@ -10083,19 +9954,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,21,FOLLOW_47); 
+            otherlv_5=(Token)match(input,21,FOLLOW_44); 
 
             			newLeafNode(otherlv_5, grammarAccess.getSelectByPrimaryKeysAccess().getRightParenthesisKeyword_4());
             		
-            otherlv_6=(Token)match(input,47,FOLLOW_96); 
+            otherlv_6=(Token)match(input,45,FOLLOW_93); 
 
             			newLeafNode(otherlv_6, grammarAccess.getSelectByPrimaryKeysAccess().getShouldBeKeyword_5());
             		
-            // InternalAceGen.g:3907:3: ( (lv_expected_7_0= ruleSelectByExpectation ) )
-            // InternalAceGen.g:3908:4: (lv_expected_7_0= ruleSelectByExpectation )
+            // InternalAceGen.g:3852:3: ( (lv_expected_7_0= ruleSelectByExpectation ) )
+            // InternalAceGen.g:3853:4: (lv_expected_7_0= ruleSelectByExpectation )
             {
-            // InternalAceGen.g:3908:4: (lv_expected_7_0= ruleSelectByExpectation )
-            // InternalAceGen.g:3909:5: lv_expected_7_0= ruleSelectByExpectation
+            // InternalAceGen.g:3853:4: (lv_expected_7_0= ruleSelectByExpectation )
+            // InternalAceGen.g:3854:5: lv_expected_7_0= ruleSelectByExpectation
             {
 
             					newCompositeNode(grammarAccess.getSelectByPrimaryKeysAccess().getExpectedSelectByExpectationParserRuleCall_6_0());
@@ -10145,7 +10016,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSelectByUniqueAttribute"
-    // InternalAceGen.g:3930:1: entryRuleSelectByUniqueAttribute returns [EObject current=null] : iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF ;
+    // InternalAceGen.g:3875:1: entryRuleSelectByUniqueAttribute returns [EObject current=null] : iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF ;
     public final EObject entryRuleSelectByUniqueAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -10153,8 +10024,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:3930:64: (iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF )
-            // InternalAceGen.g:3931:2: iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF
+            // InternalAceGen.g:3875:64: (iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF )
+            // InternalAceGen.g:3876:2: iv_ruleSelectByUniqueAttribute= ruleSelectByUniqueAttribute EOF
             {
              newCompositeNode(grammarAccess.getSelectByUniqueAttributeRule()); 
             pushFollow(FOLLOW_1);
@@ -10181,7 +10052,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSelectByUniqueAttribute"
-    // InternalAceGen.g:3937:1: ruleSelectByUniqueAttribute returns [EObject current=null] : (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) ) ;
+    // InternalAceGen.g:3882:1: ruleSelectByUniqueAttribute returns [EObject current=null] : (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) ) ;
     public final EObject ruleSelectByUniqueAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -10198,13 +10069,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3943:2: ( (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) ) )
-            // InternalAceGen.g:3944:2: (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) )
+            // InternalAceGen.g:3888:2: ( (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) ) )
+            // InternalAceGen.g:3889:2: (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) )
             {
-            // InternalAceGen.g:3944:2: (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) )
-            // InternalAceGen.g:3945:3: otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) )
+            // InternalAceGen.g:3889:2: (otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) ) )
+            // InternalAceGen.g:3890:3: otherlv_0= 'selectBy' otherlv_1= '(' ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) ) otherlv_3= ')' otherlv_4= 'shouldBe' ( (lv_expected_5_0= ruleSelectByExpectation ) )
             {
-            otherlv_0=(Token)match(input,72,FOLLOW_14); 
+            otherlv_0=(Token)match(input,71,FOLLOW_14); 
 
             			newLeafNode(otherlv_0, grammarAccess.getSelectByUniqueAttributeAccess().getSelectByKeyword_0());
             		
@@ -10212,16 +10083,16 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getSelectByUniqueAttributeAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalAceGen.g:3953:3: ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) )
-            // InternalAceGen.g:3954:4: (lv_attributeAndValue_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3898:3: ( (lv_attributeAndValue_2_0= ruleAttributeAndValue ) )
+            // InternalAceGen.g:3899:4: (lv_attributeAndValue_2_0= ruleAttributeAndValue )
             {
-            // InternalAceGen.g:3954:4: (lv_attributeAndValue_2_0= ruleAttributeAndValue )
-            // InternalAceGen.g:3955:5: lv_attributeAndValue_2_0= ruleAttributeAndValue
+            // InternalAceGen.g:3899:4: (lv_attributeAndValue_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3900:5: lv_attributeAndValue_2_0= ruleAttributeAndValue
             {
 
             					newCompositeNode(grammarAccess.getSelectByUniqueAttributeAccess().getAttributeAndValueAttributeAndValueParserRuleCall_2_0());
             				
-            pushFollow(FOLLOW_79);
+            pushFollow(FOLLOW_76);
             lv_attributeAndValue_2_0=ruleAttributeAndValue();
 
             state._fsp--;
@@ -10243,19 +10114,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,21,FOLLOW_47); 
+            otherlv_3=(Token)match(input,21,FOLLOW_44); 
 
             			newLeafNode(otherlv_3, grammarAccess.getSelectByUniqueAttributeAccess().getRightParenthesisKeyword_3());
             		
-            otherlv_4=(Token)match(input,47,FOLLOW_96); 
+            otherlv_4=(Token)match(input,45,FOLLOW_93); 
 
             			newLeafNode(otherlv_4, grammarAccess.getSelectByUniqueAttributeAccess().getShouldBeKeyword_4());
             		
-            // InternalAceGen.g:3980:3: ( (lv_expected_5_0= ruleSelectByExpectation ) )
-            // InternalAceGen.g:3981:4: (lv_expected_5_0= ruleSelectByExpectation )
+            // InternalAceGen.g:3925:3: ( (lv_expected_5_0= ruleSelectByExpectation ) )
+            // InternalAceGen.g:3926:4: (lv_expected_5_0= ruleSelectByExpectation )
             {
-            // InternalAceGen.g:3981:4: (lv_expected_5_0= ruleSelectByExpectation )
-            // InternalAceGen.g:3982:5: lv_expected_5_0= ruleSelectByExpectation
+            // InternalAceGen.g:3926:4: (lv_expected_5_0= ruleSelectByExpectation )
+            // InternalAceGen.g:3927:5: lv_expected_5_0= ruleSelectByExpectation
             {
 
             					newCompositeNode(grammarAccess.getSelectByUniqueAttributeAccess().getExpectedSelectByExpectationParserRuleCall_5_0());
@@ -10305,7 +10176,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCount"
-    // InternalAceGen.g:4003:1: entryRuleCount returns [EObject current=null] : iv_ruleCount= ruleCount EOF ;
+    // InternalAceGen.g:3948:1: entryRuleCount returns [EObject current=null] : iv_ruleCount= ruleCount EOF ;
     public final EObject entryRuleCount() throws RecognitionException {
         EObject current = null;
 
@@ -10313,8 +10184,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4003:46: (iv_ruleCount= ruleCount EOF )
-            // InternalAceGen.g:4004:2: iv_ruleCount= ruleCount EOF
+            // InternalAceGen.g:3948:46: (iv_ruleCount= ruleCount EOF )
+            // InternalAceGen.g:3949:2: iv_ruleCount= ruleCount EOF
             {
              newCompositeNode(grammarAccess.getCountRule()); 
             pushFollow(FOLLOW_1);
@@ -10341,7 +10212,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCount"
-    // InternalAceGen.g:4010:1: ruleCount returns [EObject current=null] : (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) ) ;
+    // InternalAceGen.g:3955:1: ruleCount returns [EObject current=null] : (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) ) ;
     public final EObject ruleCount() throws RecognitionException {
         EObject current = null;
 
@@ -10360,13 +10231,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4016:2: ( (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) ) )
-            // InternalAceGen.g:4017:2: (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) )
+            // InternalAceGen.g:3961:2: ( (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) ) )
+            // InternalAceGen.g:3962:2: (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) )
             {
-            // InternalAceGen.g:4017:2: (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) )
-            // InternalAceGen.g:4018:3: otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) )
+            // InternalAceGen.g:3962:2: (otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) ) )
+            // InternalAceGen.g:3963:3: otherlv_0= 'filterAndCountBy' otherlv_1= '(' ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) ) (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )? otherlv_5= ')' otherlv_6= 'shouldBe' ( (lv_expected_7_0= RULE_INT ) )
             {
-            otherlv_0=(Token)match(input,73,FOLLOW_14); 
+            otherlv_0=(Token)match(input,72,FOLLOW_14); 
 
             			newLeafNode(otherlv_0, grammarAccess.getCountAccess().getFilterAndCountByKeyword_0());
             		
@@ -10374,11 +10245,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getCountAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalAceGen.g:4026:3: ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) )
-            // InternalAceGen.g:4027:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3971:3: ( (lv_attributeAndValues_2_0= ruleAttributeAndValue ) )
+            // InternalAceGen.g:3972:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
             {
-            // InternalAceGen.g:4027:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
-            // InternalAceGen.g:4028:5: lv_attributeAndValues_2_0= ruleAttributeAndValue
+            // InternalAceGen.g:3972:4: (lv_attributeAndValues_2_0= ruleAttributeAndValue )
+            // InternalAceGen.g:3973:5: lv_attributeAndValues_2_0= ruleAttributeAndValue
             {
 
             					newCompositeNode(grammarAccess.getCountAccess().getAttributeAndValuesAttributeAndValueParserRuleCall_2_0());
@@ -10405,38 +10276,38 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4045:3: (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )?
-            int alt119=2;
-            int LA119_0 = input.LA(1);
+            // InternalAceGen.g:3990:3: (otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )* )?
+            int alt116=2;
+            int LA116_0 = input.LA(1);
 
-            if ( (LA119_0==20) ) {
-                alt119=1;
+            if ( (LA116_0==20) ) {
+                alt116=1;
             }
-            switch (alt119) {
+            switch (alt116) {
                 case 1 :
-                    // InternalAceGen.g:4046:4: otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
+                    // InternalAceGen.g:3991:4: otherlv_3= ',' ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
                     {
                     otherlv_3=(Token)match(input,20,FOLLOW_22); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getCountAccess().getCommaKeyword_3_0());
                     			
-                    // InternalAceGen.g:4050:4: ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
-                    loop118:
+                    // InternalAceGen.g:3995:4: ( (lv_attributeAndValues_4_0= ruleAttributeAndValue ) )*
+                    loop115:
                     do {
-                        int alt118=2;
-                        int LA118_0 = input.LA(1);
+                        int alt115=2;
+                        int LA115_0 = input.LA(1);
 
-                        if ( (LA118_0==RULE_ID) ) {
-                            alt118=1;
+                        if ( (LA115_0==RULE_ID) ) {
+                            alt115=1;
                         }
 
 
-                        switch (alt118) {
+                        switch (alt115) {
                     	case 1 :
-                    	    // InternalAceGen.g:4051:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
+                    	    // InternalAceGen.g:3996:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
                     	    {
-                    	    // InternalAceGen.g:4051:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
-                    	    // InternalAceGen.g:4052:6: lv_attributeAndValues_4_0= ruleAttributeAndValue
+                    	    // InternalAceGen.g:3996:5: (lv_attributeAndValues_4_0= ruleAttributeAndValue )
+                    	    // InternalAceGen.g:3997:6: lv_attributeAndValues_4_0= ruleAttributeAndValue
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getCountAccess().getAttributeAndValuesAttributeAndValueParserRuleCall_3_1_0());
@@ -10465,7 +10336,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop118;
+                    	    break loop115;
                         }
                     } while (true);
 
@@ -10475,19 +10346,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,21,FOLLOW_47); 
+            otherlv_5=(Token)match(input,21,FOLLOW_44); 
 
             			newLeafNode(otherlv_5, grammarAccess.getCountAccess().getRightParenthesisKeyword_4());
             		
-            otherlv_6=(Token)match(input,47,FOLLOW_83); 
+            otherlv_6=(Token)match(input,45,FOLLOW_80); 
 
             			newLeafNode(otherlv_6, grammarAccess.getCountAccess().getShouldBeKeyword_5());
             		
-            // InternalAceGen.g:4078:3: ( (lv_expected_7_0= RULE_INT ) )
-            // InternalAceGen.g:4079:4: (lv_expected_7_0= RULE_INT )
+            // InternalAceGen.g:4023:3: ( (lv_expected_7_0= RULE_INT ) )
+            // InternalAceGen.g:4024:4: (lv_expected_7_0= RULE_INT )
             {
-            // InternalAceGen.g:4079:4: (lv_expected_7_0= RULE_INT )
-            // InternalAceGen.g:4080:5: lv_expected_7_0= RULE_INT
+            // InternalAceGen.g:4024:4: (lv_expected_7_0= RULE_INT )
+            // InternalAceGen.g:4025:5: lv_expected_7_0= RULE_INT
             {
             lv_expected_7_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
@@ -10532,7 +10403,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAttributeAndValue"
-    // InternalAceGen.g:4100:1: entryRuleAttributeAndValue returns [EObject current=null] : iv_ruleAttributeAndValue= ruleAttributeAndValue EOF ;
+    // InternalAceGen.g:4045:1: entryRuleAttributeAndValue returns [EObject current=null] : iv_ruleAttributeAndValue= ruleAttributeAndValue EOF ;
     public final EObject entryRuleAttributeAndValue() throws RecognitionException {
         EObject current = null;
 
@@ -10540,8 +10411,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4100:58: (iv_ruleAttributeAndValue= ruleAttributeAndValue EOF )
-            // InternalAceGen.g:4101:2: iv_ruleAttributeAndValue= ruleAttributeAndValue EOF
+            // InternalAceGen.g:4045:58: (iv_ruleAttributeAndValue= ruleAttributeAndValue EOF )
+            // InternalAceGen.g:4046:2: iv_ruleAttributeAndValue= ruleAttributeAndValue EOF
             {
              newCompositeNode(grammarAccess.getAttributeAndValueRule()); 
             pushFollow(FOLLOW_1);
@@ -10568,7 +10439,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAttributeAndValue"
-    // InternalAceGen.g:4107:1: ruleAttributeAndValue returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) ;
+    // InternalAceGen.g:4052:1: ruleAttributeAndValue returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) ;
     public final EObject ruleAttributeAndValue() throws RecognitionException {
         EObject current = null;
 
@@ -10580,17 +10451,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4113:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) )
-            // InternalAceGen.g:4114:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
+            // InternalAceGen.g:4058:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) ) )
+            // InternalAceGen.g:4059:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
             {
-            // InternalAceGen.g:4114:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
-            // InternalAceGen.g:4115:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) )
+            // InternalAceGen.g:4059:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) ) )
+            // InternalAceGen.g:4060:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= rulePrimitiveValue ) )
             {
-            // InternalAceGen.g:4115:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:4116:4: ( ruleQualifiedName )
+            // InternalAceGen.g:4060:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:4061:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:4116:4: ( ruleQualifiedName )
-            // InternalAceGen.g:4117:5: ruleQualifiedName
+            // InternalAceGen.g:4061:4: ( ruleQualifiedName )
+            // InternalAceGen.g:4062:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -10600,7 +10471,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getAttributeAndValueAccess().getAttributeAttributeCrossReference_0_0());
             				
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_40);
             ruleQualifiedName();
 
             state._fsp--;
@@ -10614,15 +10485,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,44,FOLLOW_44); 
+            otherlv_1=(Token)match(input,42,FOLLOW_41); 
 
             			newLeafNode(otherlv_1, grammarAccess.getAttributeAndValueAccess().getColonKeyword_1());
             		
-            // InternalAceGen.g:4135:3: ( (lv_value_2_0= rulePrimitiveValue ) )
-            // InternalAceGen.g:4136:4: (lv_value_2_0= rulePrimitiveValue )
+            // InternalAceGen.g:4080:3: ( (lv_value_2_0= rulePrimitiveValue ) )
+            // InternalAceGen.g:4081:4: (lv_value_2_0= rulePrimitiveValue )
             {
-            // InternalAceGen.g:4136:4: (lv_value_2_0= rulePrimitiveValue )
-            // InternalAceGen.g:4137:5: lv_value_2_0= rulePrimitiveValue
+            // InternalAceGen.g:4081:4: (lv_value_2_0= rulePrimitiveValue )
+            // InternalAceGen.g:4082:5: lv_value_2_0= rulePrimitiveValue
             {
 
             					newCompositeNode(grammarAccess.getAttributeAndValueAccess().getValuePrimitiveValueParserRuleCall_2_0());
@@ -10672,7 +10543,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVerification"
-    // InternalAceGen.g:4158:1: entryRuleVerification returns [EObject current=null] : iv_ruleVerification= ruleVerification EOF ;
+    // InternalAceGen.g:4103:1: entryRuleVerification returns [EObject current=null] : iv_ruleVerification= ruleVerification EOF ;
     public final EObject entryRuleVerification() throws RecognitionException {
         EObject current = null;
 
@@ -10680,8 +10551,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4158:53: (iv_ruleVerification= ruleVerification EOF )
-            // InternalAceGen.g:4159:2: iv_ruleVerification= ruleVerification EOF
+            // InternalAceGen.g:4103:53: (iv_ruleVerification= ruleVerification EOF )
+            // InternalAceGen.g:4104:2: iv_ruleVerification= ruleVerification EOF
             {
              newCompositeNode(grammarAccess.getVerificationRule()); 
             pushFollow(FOLLOW_1);
@@ -10708,7 +10579,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVerification"
-    // InternalAceGen.g:4165:1: ruleVerification returns [EObject current=null] : ( (lv_name_0_0= RULE_ID ) ) ;
+    // InternalAceGen.g:4110:1: ruleVerification returns [EObject current=null] : ( (lv_name_0_0= RULE_ID ) ) ;
     public final EObject ruleVerification() throws RecognitionException {
         EObject current = null;
 
@@ -10718,14 +10589,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4171:2: ( ( (lv_name_0_0= RULE_ID ) ) )
-            // InternalAceGen.g:4172:2: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:4116:2: ( ( (lv_name_0_0= RULE_ID ) ) )
+            // InternalAceGen.g:4117:2: ( (lv_name_0_0= RULE_ID ) )
             {
-            // InternalAceGen.g:4172:2: ( (lv_name_0_0= RULE_ID ) )
-            // InternalAceGen.g:4173:3: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:4117:2: ( (lv_name_0_0= RULE_ID ) )
+            // InternalAceGen.g:4118:3: (lv_name_0_0= RULE_ID )
             {
-            // InternalAceGen.g:4173:3: (lv_name_0_0= RULE_ID )
-            // InternalAceGen.g:4174:4: lv_name_0_0= RULE_ID
+            // InternalAceGen.g:4118:3: (lv_name_0_0= RULE_ID )
+            // InternalAceGen.g:4119:4: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_2); 
 
@@ -10767,7 +10638,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtraction"
-    // InternalAceGen.g:4193:1: entryRuleExtraction returns [EObject current=null] : iv_ruleExtraction= ruleExtraction EOF ;
+    // InternalAceGen.g:4138:1: entryRuleExtraction returns [EObject current=null] : iv_ruleExtraction= ruleExtraction EOF ;
     public final EObject entryRuleExtraction() throws RecognitionException {
         EObject current = null;
 
@@ -10775,8 +10646,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4193:51: (iv_ruleExtraction= ruleExtraction EOF )
-            // InternalAceGen.g:4194:2: iv_ruleExtraction= ruleExtraction EOF
+            // InternalAceGen.g:4138:51: (iv_ruleExtraction= ruleExtraction EOF )
+            // InternalAceGen.g:4139:2: iv_ruleExtraction= ruleExtraction EOF
             {
              newCompositeNode(grammarAccess.getExtractionRule()); 
             pushFollow(FOLLOW_1);
@@ -10803,7 +10674,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtraction"
-    // InternalAceGen.g:4200:1: ruleExtraction returns [EObject current=null] : (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) ) ;
+    // InternalAceGen.g:4145:1: ruleExtraction returns [EObject current=null] : (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) ) ;
     public final EObject ruleExtraction() throws RecognitionException {
         EObject current = null;
 
@@ -10814,21 +10685,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4206:2: ( (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) ) )
-            // InternalAceGen.g:4207:2: (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) )
+            // InternalAceGen.g:4151:2: ( (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) ) )
+            // InternalAceGen.g:4152:2: (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) )
             {
-            // InternalAceGen.g:4207:2: (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) )
-            // InternalAceGen.g:4208:3: otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:4152:2: (otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) ) )
+            // InternalAceGen.g:4153:3: otherlv_0= 'extract' ( (lv_name_1_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,74,FOLLOW_10); 
+            otherlv_0=(Token)match(input,73,FOLLOW_10); 
 
             			newLeafNode(otherlv_0, grammarAccess.getExtractionAccess().getExtractKeyword_0());
             		
-            // InternalAceGen.g:4212:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalAceGen.g:4213:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:4157:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalAceGen.g:4158:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalAceGen.g:4213:4: (lv_name_1_0= RULE_ID )
-            // InternalAceGen.g:4214:5: lv_name_1_0= RULE_ID
+            // InternalAceGen.g:4158:4: (lv_name_1_0= RULE_ID )
+            // InternalAceGen.g:4159:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_2); 
 
@@ -10873,7 +10744,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSelectByExpectation"
-    // InternalAceGen.g:4234:1: entryRuleSelectByExpectation returns [EObject current=null] : iv_ruleSelectByExpectation= ruleSelectByExpectation EOF ;
+    // InternalAceGen.g:4179:1: entryRuleSelectByExpectation returns [EObject current=null] : iv_ruleSelectByExpectation= ruleSelectByExpectation EOF ;
     public final EObject entryRuleSelectByExpectation() throws RecognitionException {
         EObject current = null;
 
@@ -10881,8 +10752,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4234:60: (iv_ruleSelectByExpectation= ruleSelectByExpectation EOF )
-            // InternalAceGen.g:4235:2: iv_ruleSelectByExpectation= ruleSelectByExpectation EOF
+            // InternalAceGen.g:4179:60: (iv_ruleSelectByExpectation= ruleSelectByExpectation EOF )
+            // InternalAceGen.g:4180:2: iv_ruleSelectByExpectation= ruleSelectByExpectation EOF
             {
              newCompositeNode(grammarAccess.getSelectByExpectationRule()); 
             pushFollow(FOLLOW_1);
@@ -10909,7 +10780,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSelectByExpectation"
-    // InternalAceGen.g:4241:1: ruleSelectByExpectation returns [EObject current=null] : ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) ) ;
+    // InternalAceGen.g:4186:1: ruleSelectByExpectation returns [EObject current=null] : ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) ) ;
     public final EObject ruleSelectByExpectation() throws RecognitionException {
         EObject current = null;
 
@@ -10922,44 +10793,44 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4247:2: ( ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) ) )
-            // InternalAceGen.g:4248:2: ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) )
+            // InternalAceGen.g:4192:2: ( ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) ) )
+            // InternalAceGen.g:4193:2: ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) )
             {
-            // InternalAceGen.g:4248:2: ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) )
-            int alt120=3;
+            // InternalAceGen.g:4193:2: ( ( (lv_object_0_0= ruleJsonObject ) ) | ( (lv_isNotNull_1_0= 'notNull' ) ) | ( (lv_isNull_2_0= 'null' ) ) )
+            int alt117=3;
             switch ( input.LA(1) ) {
             case 15:
-            case 93:
+            case 92:
                 {
-                alt120=1;
+                alt117=1;
+                }
+                break;
+            case 74:
+                {
+                alt117=2;
                 }
                 break;
             case 75:
                 {
-                alt120=2;
-                }
-                break;
-            case 76:
-                {
-                alt120=3;
+                alt117=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 120, 0, input);
+                    new NoViableAltException("", 117, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt120) {
+            switch (alt117) {
                 case 1 :
-                    // InternalAceGen.g:4249:3: ( (lv_object_0_0= ruleJsonObject ) )
+                    // InternalAceGen.g:4194:3: ( (lv_object_0_0= ruleJsonObject ) )
                     {
-                    // InternalAceGen.g:4249:3: ( (lv_object_0_0= ruleJsonObject ) )
-                    // InternalAceGen.g:4250:4: (lv_object_0_0= ruleJsonObject )
+                    // InternalAceGen.g:4194:3: ( (lv_object_0_0= ruleJsonObject ) )
+                    // InternalAceGen.g:4195:4: (lv_object_0_0= ruleJsonObject )
                     {
-                    // InternalAceGen.g:4250:4: (lv_object_0_0= ruleJsonObject )
-                    // InternalAceGen.g:4251:5: lv_object_0_0= ruleJsonObject
+                    // InternalAceGen.g:4195:4: (lv_object_0_0= ruleJsonObject )
+                    // InternalAceGen.g:4196:5: lv_object_0_0= ruleJsonObject
                     {
 
                     					newCompositeNode(grammarAccess.getSelectByExpectationAccess().getObjectJsonObjectParserRuleCall_0_0());
@@ -10990,15 +10861,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4269:3: ( (lv_isNotNull_1_0= 'notNull' ) )
+                    // InternalAceGen.g:4214:3: ( (lv_isNotNull_1_0= 'notNull' ) )
                     {
-                    // InternalAceGen.g:4269:3: ( (lv_isNotNull_1_0= 'notNull' ) )
-                    // InternalAceGen.g:4270:4: (lv_isNotNull_1_0= 'notNull' )
+                    // InternalAceGen.g:4214:3: ( (lv_isNotNull_1_0= 'notNull' ) )
+                    // InternalAceGen.g:4215:4: (lv_isNotNull_1_0= 'notNull' )
                     {
-                    // InternalAceGen.g:4270:4: (lv_isNotNull_1_0= 'notNull' )
-                    // InternalAceGen.g:4271:5: lv_isNotNull_1_0= 'notNull'
+                    // InternalAceGen.g:4215:4: (lv_isNotNull_1_0= 'notNull' )
+                    // InternalAceGen.g:4216:5: lv_isNotNull_1_0= 'notNull'
                     {
-                    lv_isNotNull_1_0=(Token)match(input,75,FOLLOW_2); 
+                    lv_isNotNull_1_0=(Token)match(input,74,FOLLOW_2); 
 
                     					newLeafNode(lv_isNotNull_1_0, grammarAccess.getSelectByExpectationAccess().getIsNotNullNotNullKeyword_1_0());
                     				
@@ -11018,15 +10889,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:4284:3: ( (lv_isNull_2_0= 'null' ) )
+                    // InternalAceGen.g:4229:3: ( (lv_isNull_2_0= 'null' ) )
                     {
-                    // InternalAceGen.g:4284:3: ( (lv_isNull_2_0= 'null' ) )
-                    // InternalAceGen.g:4285:4: (lv_isNull_2_0= 'null' )
+                    // InternalAceGen.g:4229:3: ( (lv_isNull_2_0= 'null' ) )
+                    // InternalAceGen.g:4230:4: (lv_isNull_2_0= 'null' )
                     {
-                    // InternalAceGen.g:4285:4: (lv_isNull_2_0= 'null' )
-                    // InternalAceGen.g:4286:5: lv_isNull_2_0= 'null'
+                    // InternalAceGen.g:4230:4: (lv_isNull_2_0= 'null' )
+                    // InternalAceGen.g:4231:5: lv_isNull_2_0= 'null'
                     {
-                    lv_isNull_2_0=(Token)match(input,76,FOLLOW_2); 
+                    lv_isNull_2_0=(Token)match(input,75,FOLLOW_2); 
 
                     					newLeafNode(lv_isNull_2_0, grammarAccess.getSelectByExpectationAccess().getIsNullNullKeyword_2_0());
                     				
@@ -11068,7 +10939,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataDefinition"
-    // InternalAceGen.g:4302:1: entryRuleDataDefinition returns [EObject current=null] : iv_ruleDataDefinition= ruleDataDefinition EOF ;
+    // InternalAceGen.g:4247:1: entryRuleDataDefinition returns [EObject current=null] : iv_ruleDataDefinition= ruleDataDefinition EOF ;
     public final EObject entryRuleDataDefinition() throws RecognitionException {
         EObject current = null;
 
@@ -11076,8 +10947,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4302:55: (iv_ruleDataDefinition= ruleDataDefinition EOF )
-            // InternalAceGen.g:4303:2: iv_ruleDataDefinition= ruleDataDefinition EOF
+            // InternalAceGen.g:4247:55: (iv_ruleDataDefinition= ruleDataDefinition EOF )
+            // InternalAceGen.g:4248:2: iv_ruleDataDefinition= ruleDataDefinition EOF
             {
              newCompositeNode(grammarAccess.getDataDefinitionRule()); 
             pushFollow(FOLLOW_1);
@@ -11104,7 +10975,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataDefinition"
-    // InternalAceGen.g:4309:1: ruleDataDefinition returns [EObject current=null] : ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? ) ;
+    // InternalAceGen.g:4254:1: ruleDataDefinition returns [EObject current=null] : ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? ) ;
     public final EObject ruleDataDefinition() throws RecognitionException {
         EObject current = null;
 
@@ -11120,14 +10991,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4315:2: ( ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? ) )
-            // InternalAceGen.g:4316:2: ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? )
+            // InternalAceGen.g:4260:2: ( ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? ) )
+            // InternalAceGen.g:4261:2: ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? )
             {
-            // InternalAceGen.g:4316:2: ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? )
-            // InternalAceGen.g:4317:3: () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )?
+            // InternalAceGen.g:4261:2: ( () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )? )
+            // InternalAceGen.g:4262:3: () (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )? (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )? ( (lv_data_6_0= ruleJsonObject ) )?
             {
-            // InternalAceGen.g:4317:3: ()
-            // InternalAceGen.g:4318:4: 
+            // InternalAceGen.g:4262:3: ()
+            // InternalAceGen.g:4263:4: 
             {
 
             				current = forceCreateModelElement(
@@ -11137,28 +11008,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4324:3: (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )?
-            int alt121=2;
-            int LA121_0 = input.LA(1);
+            // InternalAceGen.g:4269:3: (otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) ) )?
+            int alt118=2;
+            int LA118_0 = input.LA(1);
 
-            if ( (LA121_0==40) ) {
-                alt121=1;
+            if ( (LA118_0==38) ) {
+                alt118=1;
             }
-            switch (alt121) {
+            switch (alt118) {
                 case 1 :
-                    // InternalAceGen.g:4325:4: otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) )
+                    // InternalAceGen.g:4270:4: otherlv_1= 'uuid' ( (lv_uuid_2_0= RULE_STRING ) )
                     {
-                    otherlv_1=(Token)match(input,40,FOLLOW_39); 
+                    otherlv_1=(Token)match(input,38,FOLLOW_36); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getDataDefinitionAccess().getUuidKeyword_1_0());
                     			
-                    // InternalAceGen.g:4329:4: ( (lv_uuid_2_0= RULE_STRING ) )
-                    // InternalAceGen.g:4330:5: (lv_uuid_2_0= RULE_STRING )
+                    // InternalAceGen.g:4274:4: ( (lv_uuid_2_0= RULE_STRING ) )
+                    // InternalAceGen.g:4275:5: (lv_uuid_2_0= RULE_STRING )
                     {
-                    // InternalAceGen.g:4330:5: (lv_uuid_2_0= RULE_STRING )
-                    // InternalAceGen.g:4331:6: lv_uuid_2_0= RULE_STRING
+                    // InternalAceGen.g:4275:5: (lv_uuid_2_0= RULE_STRING )
+                    // InternalAceGen.g:4276:6: lv_uuid_2_0= RULE_STRING
                     {
-                    lv_uuid_2_0=(Token)match(input,RULE_STRING,FOLLOW_97); 
+                    lv_uuid_2_0=(Token)match(input,RULE_STRING,FOLLOW_94); 
 
                     						newLeafNode(lv_uuid_2_0, grammarAccess.getDataDefinitionAccess().getUuidSTRINGTerminalRuleCall_1_1_0());
                     					
@@ -11184,28 +11055,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4348:3: (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )?
-            int alt122=2;
-            int LA122_0 = input.LA(1);
+            // InternalAceGen.g:4293:3: (otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) ) )?
+            int alt119=2;
+            int LA119_0 = input.LA(1);
 
-            if ( (LA122_0==77) ) {
-                alt122=1;
+            if ( (LA119_0==76) ) {
+                alt119=1;
             }
-            switch (alt122) {
+            switch (alt119) {
                 case 1 :
-                    // InternalAceGen.g:4349:4: otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) )
+                    // InternalAceGen.g:4294:4: otherlv_3= 'systemTime' ( (lv_systemtime_4_0= RULE_STRING ) ) ( (lv_pattern_5_0= RULE_STRING ) )
                     {
-                    otherlv_3=(Token)match(input,77,FOLLOW_39); 
+                    otherlv_3=(Token)match(input,76,FOLLOW_36); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDataDefinitionAccess().getSystemTimeKeyword_2_0());
                     			
-                    // InternalAceGen.g:4353:4: ( (lv_systemtime_4_0= RULE_STRING ) )
-                    // InternalAceGen.g:4354:5: (lv_systemtime_4_0= RULE_STRING )
+                    // InternalAceGen.g:4298:4: ( (lv_systemtime_4_0= RULE_STRING ) )
+                    // InternalAceGen.g:4299:5: (lv_systemtime_4_0= RULE_STRING )
                     {
-                    // InternalAceGen.g:4354:5: (lv_systemtime_4_0= RULE_STRING )
-                    // InternalAceGen.g:4355:6: lv_systemtime_4_0= RULE_STRING
+                    // InternalAceGen.g:4299:5: (lv_systemtime_4_0= RULE_STRING )
+                    // InternalAceGen.g:4300:6: lv_systemtime_4_0= RULE_STRING
                     {
-                    lv_systemtime_4_0=(Token)match(input,RULE_STRING,FOLLOW_39); 
+                    lv_systemtime_4_0=(Token)match(input,RULE_STRING,FOLLOW_36); 
 
                     						newLeafNode(lv_systemtime_4_0, grammarAccess.getDataDefinitionAccess().getSystemtimeSTRINGTerminalRuleCall_2_1_0());
                     					
@@ -11225,13 +11096,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:4371:4: ( (lv_pattern_5_0= RULE_STRING ) )
-                    // InternalAceGen.g:4372:5: (lv_pattern_5_0= RULE_STRING )
+                    // InternalAceGen.g:4316:4: ( (lv_pattern_5_0= RULE_STRING ) )
+                    // InternalAceGen.g:4317:5: (lv_pattern_5_0= RULE_STRING )
                     {
-                    // InternalAceGen.g:4372:5: (lv_pattern_5_0= RULE_STRING )
-                    // InternalAceGen.g:4373:6: lv_pattern_5_0= RULE_STRING
+                    // InternalAceGen.g:4317:5: (lv_pattern_5_0= RULE_STRING )
+                    // InternalAceGen.g:4318:6: lv_pattern_5_0= RULE_STRING
                     {
-                    lv_pattern_5_0=(Token)match(input,RULE_STRING,FOLLOW_98); 
+                    lv_pattern_5_0=(Token)match(input,RULE_STRING,FOLLOW_95); 
 
                     						newLeafNode(lv_pattern_5_0, grammarAccess.getDataDefinitionAccess().getPatternSTRINGTerminalRuleCall_2_2_0());
                     					
@@ -11257,19 +11128,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4390:3: ( (lv_data_6_0= ruleJsonObject ) )?
-            int alt123=2;
-            int LA123_0 = input.LA(1);
+            // InternalAceGen.g:4335:3: ( (lv_data_6_0= ruleJsonObject ) )?
+            int alt120=2;
+            int LA120_0 = input.LA(1);
 
-            if ( (LA123_0==15||LA123_0==93) ) {
-                alt123=1;
+            if ( (LA120_0==15||LA120_0==92) ) {
+                alt120=1;
             }
-            switch (alt123) {
+            switch (alt120) {
                 case 1 :
-                    // InternalAceGen.g:4391:4: (lv_data_6_0= ruleJsonObject )
+                    // InternalAceGen.g:4336:4: (lv_data_6_0= ruleJsonObject )
                     {
-                    // InternalAceGen.g:4391:4: (lv_data_6_0= ruleJsonObject )
-                    // InternalAceGen.g:4392:5: lv_data_6_0= ruleJsonObject
+                    // InternalAceGen.g:4336:4: (lv_data_6_0= ruleJsonObject )
+                    // InternalAceGen.g:4337:5: lv_data_6_0= ruleJsonObject
                     {
 
                     					newCompositeNode(grammarAccess.getDataDefinitionAccess().getDataJsonObjectParserRuleCall_3_0());
@@ -11322,7 +11193,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAuthorization"
-    // InternalAceGen.g:4413:1: entryRuleAuthorization returns [EObject current=null] : iv_ruleAuthorization= ruleAuthorization EOF ;
+    // InternalAceGen.g:4358:1: entryRuleAuthorization returns [EObject current=null] : iv_ruleAuthorization= ruleAuthorization EOF ;
     public final EObject entryRuleAuthorization() throws RecognitionException {
         EObject current = null;
 
@@ -11330,8 +11201,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4413:54: (iv_ruleAuthorization= ruleAuthorization EOF )
-            // InternalAceGen.g:4414:2: iv_ruleAuthorization= ruleAuthorization EOF
+            // InternalAceGen.g:4358:54: (iv_ruleAuthorization= ruleAuthorization EOF )
+            // InternalAceGen.g:4359:2: iv_ruleAuthorization= ruleAuthorization EOF
             {
              newCompositeNode(grammarAccess.getAuthorizationRule()); 
             pushFollow(FOLLOW_1);
@@ -11358,7 +11229,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAuthorization"
-    // InternalAceGen.g:4420:1: ruleAuthorization returns [EObject current=null] : (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) ) ;
+    // InternalAceGen.g:4365:1: ruleAuthorization returns [EObject current=null] : (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) ) ;
     public final EObject ruleAuthorization() throws RecognitionException {
         EObject current = null;
 
@@ -11371,23 +11242,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4426:2: ( (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) ) )
-            // InternalAceGen.g:4427:2: (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) )
+            // InternalAceGen.g:4371:2: ( (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) ) )
+            // InternalAceGen.g:4372:2: (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) )
             {
-            // InternalAceGen.g:4427:2: (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) )
-            // InternalAceGen.g:4428:3: otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) )
+            // InternalAceGen.g:4372:2: (otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) ) )
+            // InternalAceGen.g:4373:3: otherlv_0= 'authorization' ( (lv_username_1_0= RULE_STRING ) ) otherlv_2= ':' ( (lv_password_3_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,78,FOLLOW_39); 
+            otherlv_0=(Token)match(input,77,FOLLOW_36); 
 
             			newLeafNode(otherlv_0, grammarAccess.getAuthorizationAccess().getAuthorizationKeyword_0());
             		
-            // InternalAceGen.g:4432:3: ( (lv_username_1_0= RULE_STRING ) )
-            // InternalAceGen.g:4433:4: (lv_username_1_0= RULE_STRING )
+            // InternalAceGen.g:4377:3: ( (lv_username_1_0= RULE_STRING ) )
+            // InternalAceGen.g:4378:4: (lv_username_1_0= RULE_STRING )
             {
-            // InternalAceGen.g:4433:4: (lv_username_1_0= RULE_STRING )
-            // InternalAceGen.g:4434:5: lv_username_1_0= RULE_STRING
+            // InternalAceGen.g:4378:4: (lv_username_1_0= RULE_STRING )
+            // InternalAceGen.g:4379:5: lv_username_1_0= RULE_STRING
             {
-            lv_username_1_0=(Token)match(input,RULE_STRING,FOLLOW_43); 
+            lv_username_1_0=(Token)match(input,RULE_STRING,FOLLOW_40); 
 
             					newLeafNode(lv_username_1_0, grammarAccess.getAuthorizationAccess().getUsernameSTRINGTerminalRuleCall_1_0());
             				
@@ -11407,15 +11278,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,44,FOLLOW_39); 
+            otherlv_2=(Token)match(input,42,FOLLOW_36); 
 
             			newLeafNode(otherlv_2, grammarAccess.getAuthorizationAccess().getColonKeyword_2());
             		
-            // InternalAceGen.g:4454:3: ( (lv_password_3_0= RULE_STRING ) )
-            // InternalAceGen.g:4455:4: (lv_password_3_0= RULE_STRING )
+            // InternalAceGen.g:4399:3: ( (lv_password_3_0= RULE_STRING ) )
+            // InternalAceGen.g:4400:4: (lv_password_3_0= RULE_STRING )
             {
-            // InternalAceGen.g:4455:4: (lv_password_3_0= RULE_STRING )
-            // InternalAceGen.g:4456:5: lv_password_3_0= RULE_STRING
+            // InternalAceGen.g:4400:4: (lv_password_3_0= RULE_STRING )
+            // InternalAceGen.g:4401:5: lv_password_3_0= RULE_STRING
             {
             lv_password_3_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -11460,7 +11331,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAttribute"
-    // InternalAceGen.g:4476:1: entryRuleAttribute returns [EObject current=null] : iv_ruleAttribute= ruleAttribute EOF ;
+    // InternalAceGen.g:4421:1: entryRuleAttribute returns [EObject current=null] : iv_ruleAttribute= ruleAttribute EOF ;
     public final EObject entryRuleAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -11468,8 +11339,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4476:50: (iv_ruleAttribute= ruleAttribute EOF )
-            // InternalAceGen.g:4477:2: iv_ruleAttribute= ruleAttribute EOF
+            // InternalAceGen.g:4421:50: (iv_ruleAttribute= ruleAttribute EOF )
+            // InternalAceGen.g:4422:2: iv_ruleAttribute= ruleAttribute EOF
             {
              newCompositeNode(grammarAccess.getAttributeRule()); 
             pushFollow(FOLLOW_1);
@@ -11496,7 +11367,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAttribute"
-    // InternalAceGen.g:4483:1: ruleAttribute returns [EObject current=null] : ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) ;
+    // InternalAceGen.g:4428:1: ruleAttribute returns [EObject current=null] : ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) ;
     public final EObject ruleAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -11514,27 +11385,27 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4489:2: ( ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) )
-            // InternalAceGen.g:4490:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
+            // InternalAceGen.g:4434:2: ( ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) )
+            // InternalAceGen.g:4435:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
             {
-            // InternalAceGen.g:4490:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
-            // InternalAceGen.g:4491:3: ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
+            // InternalAceGen.g:4435:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
+            // InternalAceGen.g:4436:3: ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
             {
-            // InternalAceGen.g:4491:3: ( (lv_unique_0_0= 'Unique' ) )?
-            int alt124=2;
-            int LA124_0 = input.LA(1);
+            // InternalAceGen.g:4436:3: ( (lv_unique_0_0= 'Unique' ) )?
+            int alt121=2;
+            int LA121_0 = input.LA(1);
 
-            if ( (LA124_0==79) ) {
-                alt124=1;
+            if ( (LA121_0==78) ) {
+                alt121=1;
             }
-            switch (alt124) {
+            switch (alt121) {
                 case 1 :
-                    // InternalAceGen.g:4492:4: (lv_unique_0_0= 'Unique' )
+                    // InternalAceGen.g:4437:4: (lv_unique_0_0= 'Unique' )
                     {
-                    // InternalAceGen.g:4492:4: (lv_unique_0_0= 'Unique' )
-                    // InternalAceGen.g:4493:5: lv_unique_0_0= 'Unique'
+                    // InternalAceGen.g:4437:4: (lv_unique_0_0= 'Unique' )
+                    // InternalAceGen.g:4438:5: lv_unique_0_0= 'Unique'
                     {
-                    lv_unique_0_0=(Token)match(input,79,FOLLOW_99); 
+                    lv_unique_0_0=(Token)match(input,78,FOLLOW_96); 
 
                     					newLeafNode(lv_unique_0_0, grammarAccess.getAttributeAccess().getUniqueUniqueKeyword_0_0());
                     				
@@ -11553,21 +11424,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4505:3: ( (lv_primaryKey_1_0= 'PrimaryKey' ) )?
-            int alt125=2;
-            int LA125_0 = input.LA(1);
+            // InternalAceGen.g:4450:3: ( (lv_primaryKey_1_0= 'PrimaryKey' ) )?
+            int alt122=2;
+            int LA122_0 = input.LA(1);
 
-            if ( (LA125_0==80) ) {
-                alt125=1;
+            if ( (LA122_0==79) ) {
+                alt122=1;
             }
-            switch (alt125) {
+            switch (alt122) {
                 case 1 :
-                    // InternalAceGen.g:4506:4: (lv_primaryKey_1_0= 'PrimaryKey' )
+                    // InternalAceGen.g:4451:4: (lv_primaryKey_1_0= 'PrimaryKey' )
                     {
-                    // InternalAceGen.g:4506:4: (lv_primaryKey_1_0= 'PrimaryKey' )
-                    // InternalAceGen.g:4507:5: lv_primaryKey_1_0= 'PrimaryKey'
+                    // InternalAceGen.g:4451:4: (lv_primaryKey_1_0= 'PrimaryKey' )
+                    // InternalAceGen.g:4452:5: lv_primaryKey_1_0= 'PrimaryKey'
                     {
-                    lv_primaryKey_1_0=(Token)match(input,80,FOLLOW_100); 
+                    lv_primaryKey_1_0=(Token)match(input,79,FOLLOW_97); 
 
                     					newLeafNode(lv_primaryKey_1_0, grammarAccess.getAttributeAccess().getPrimaryKeyPrimaryKeyKeyword_1_0());
                     				
@@ -11586,21 +11457,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4519:3: ( (lv_notNull_2_0= 'NotNull' ) )?
-            int alt126=2;
-            int LA126_0 = input.LA(1);
+            // InternalAceGen.g:4464:3: ( (lv_notNull_2_0= 'NotNull' ) )?
+            int alt123=2;
+            int LA123_0 = input.LA(1);
 
-            if ( (LA126_0==31) ) {
-                alt126=1;
+            if ( (LA123_0==63) ) {
+                alt123=1;
             }
-            switch (alt126) {
+            switch (alt123) {
                 case 1 :
-                    // InternalAceGen.g:4520:4: (lv_notNull_2_0= 'NotNull' )
+                    // InternalAceGen.g:4465:4: (lv_notNull_2_0= 'NotNull' )
                     {
-                    // InternalAceGen.g:4520:4: (lv_notNull_2_0= 'NotNull' )
-                    // InternalAceGen.g:4521:5: lv_notNull_2_0= 'NotNull'
+                    // InternalAceGen.g:4465:4: (lv_notNull_2_0= 'NotNull' )
+                    // InternalAceGen.g:4466:5: lv_notNull_2_0= 'NotNull'
                     {
-                    lv_notNull_2_0=(Token)match(input,31,FOLLOW_23); 
+                    lv_notNull_2_0=(Token)match(input,63,FOLLOW_98); 
 
                     					newLeafNode(lv_notNull_2_0, grammarAccess.getAttributeAccess().getNotNullNotNullKeyword_2_0());
                     				
@@ -11619,21 +11490,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4533:3: ( (lv_list_3_0= 'List' ) )?
-            int alt127=2;
-            int LA127_0 = input.LA(1);
+            // InternalAceGen.g:4478:3: ( (lv_list_3_0= 'List' ) )?
+            int alt124=2;
+            int LA124_0 = input.LA(1);
 
-            if ( (LA127_0==32) ) {
-                alt127=1;
+            if ( (LA124_0==31) ) {
+                alt124=1;
             }
-            switch (alt127) {
+            switch (alt124) {
                 case 1 :
-                    // InternalAceGen.g:4534:4: (lv_list_3_0= 'List' )
+                    // InternalAceGen.g:4479:4: (lv_list_3_0= 'List' )
                     {
-                    // InternalAceGen.g:4534:4: (lv_list_3_0= 'List' )
-                    // InternalAceGen.g:4535:5: lv_list_3_0= 'List'
+                    // InternalAceGen.g:4479:4: (lv_list_3_0= 'List' )
+                    // InternalAceGen.g:4480:5: lv_list_3_0= 'List'
                     {
-                    lv_list_3_0=(Token)match(input,32,FOLLOW_24); 
+                    lv_list_3_0=(Token)match(input,31,FOLLOW_99); 
 
                     					newLeafNode(lv_list_3_0, grammarAccess.getAttributeAccess().getListListKeyword_3_0());
                     				
@@ -11652,31 +11523,31 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4547:3: ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) )
-            int alt128=2;
-            int LA128_0 = input.LA(1);
+            // InternalAceGen.g:4492:3: ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) )
+            int alt125=2;
+            int LA125_0 = input.LA(1);
 
-            if ( ((LA128_0>=87 && LA128_0<=92)) ) {
-                alt128=1;
+            if ( ((LA125_0>=86 && LA125_0<=91)) ) {
+                alt125=1;
             }
-            else if ( (LA128_0==RULE_ID) ) {
-                alt128=2;
+            else if ( (LA125_0==RULE_ID) ) {
+                alt125=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 128, 0, input);
+                    new NoViableAltException("", 125, 0, input);
 
                 throw nvae;
             }
-            switch (alt128) {
+            switch (alt125) {
                 case 1 :
-                    // InternalAceGen.g:4548:4: ( (lv_type_4_0= ruleType ) )
+                    // InternalAceGen.g:4493:4: ( (lv_type_4_0= ruleType ) )
                     {
-                    // InternalAceGen.g:4548:4: ( (lv_type_4_0= ruleType ) )
-                    // InternalAceGen.g:4549:5: (lv_type_4_0= ruleType )
+                    // InternalAceGen.g:4493:4: ( (lv_type_4_0= ruleType ) )
+                    // InternalAceGen.g:4494:5: (lv_type_4_0= ruleType )
                     {
-                    // InternalAceGen.g:4549:5: (lv_type_4_0= ruleType )
-                    // InternalAceGen.g:4550:6: lv_type_4_0= ruleType
+                    // InternalAceGen.g:4494:5: (lv_type_4_0= ruleType )
+                    // InternalAceGen.g:4495:6: lv_type_4_0= ruleType
                     {
 
                     						newCompositeNode(grammarAccess.getAttributeAccess().getTypeTypeParserRuleCall_4_0_0());
@@ -11707,13 +11578,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4568:4: ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:4513:4: ( ( ruleQualifiedName ) )
                     {
-                    // InternalAceGen.g:4568:4: ( ( ruleQualifiedName ) )
-                    // InternalAceGen.g:4569:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:4513:4: ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:4514:5: ( ruleQualifiedName )
                     {
-                    // InternalAceGen.g:4569:5: ( ruleQualifiedName )
-                    // InternalAceGen.g:4570:6: ruleQualifiedName
+                    // InternalAceGen.g:4514:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:4515:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -11743,13 +11614,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4585:3: ( (lv_name_6_0= RULE_ID ) )
-            // InternalAceGen.g:4586:4: (lv_name_6_0= RULE_ID )
+            // InternalAceGen.g:4530:3: ( (lv_name_6_0= RULE_ID ) )
+            // InternalAceGen.g:4531:4: (lv_name_6_0= RULE_ID )
             {
-            // InternalAceGen.g:4586:4: (lv_name_6_0= RULE_ID )
-            // InternalAceGen.g:4587:5: lv_name_6_0= RULE_ID
+            // InternalAceGen.g:4531:4: (lv_name_6_0= RULE_ID )
+            // InternalAceGen.g:4532:5: lv_name_6_0= RULE_ID
             {
-            lv_name_6_0=(Token)match(input,RULE_ID,FOLLOW_101); 
+            lv_name_6_0=(Token)match(input,RULE_ID,FOLLOW_100); 
 
             					newLeafNode(lv_name_6_0, grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_5_0());
             				
@@ -11769,26 +11640,26 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4603:3: (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )?
-            int alt129=2;
-            int LA129_0 = input.LA(1);
+            // InternalAceGen.g:4548:3: (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )?
+            int alt126=2;
+            int LA126_0 = input.LA(1);
 
-            if ( (LA129_0==81) ) {
-                alt129=1;
+            if ( (LA126_0==80) ) {
+                alt126=1;
             }
-            switch (alt129) {
+            switch (alt126) {
                 case 1 :
-                    // InternalAceGen.g:4604:4: otherlv_7= 'references' ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:4549:4: otherlv_7= 'references' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_7=(Token)match(input,81,FOLLOW_10); 
+                    otherlv_7=(Token)match(input,80,FOLLOW_10); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getAttributeAccess().getReferencesKeyword_6_0());
                     			
-                    // InternalAceGen.g:4608:4: ( ( ruleQualifiedName ) )
-                    // InternalAceGen.g:4609:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:4553:4: ( ( ruleQualifiedName ) )
+                    // InternalAceGen.g:4554:5: ( ruleQualifiedName )
                     {
-                    // InternalAceGen.g:4609:5: ( ruleQualifiedName )
-                    // InternalAceGen.g:4610:6: ruleQualifiedName
+                    // InternalAceGen.g:4554:5: ( ruleQualifiedName )
+                    // InternalAceGen.g:4555:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -11798,7 +11669,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     						newCompositeNode(grammarAccess.getAttributeAccess().getForeignKeyAttributeCrossReference_6_1_0());
                     					
-                    pushFollow(FOLLOW_102);
+                    pushFollow(FOLLOW_101);
                     ruleQualifiedName();
 
                     state._fsp--;
@@ -11818,21 +11689,21 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4625:3: ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
-            int alt130=2;
-            int LA130_0 = input.LA(1);
+            // InternalAceGen.g:4570:3: ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
+            int alt127=2;
+            int LA127_0 = input.LA(1);
 
-            if ( (LA130_0==43) ) {
-                alt130=1;
+            if ( (LA127_0==41) ) {
+                alt127=1;
             }
-            switch (alt130) {
+            switch (alt127) {
                 case 1 :
-                    // InternalAceGen.g:4626:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
+                    // InternalAceGen.g:4571:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
                     {
-                    // InternalAceGen.g:4626:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
-                    // InternalAceGen.g:4627:5: lv_nonDeterministic_9_0= 'nonDeterministic'
+                    // InternalAceGen.g:4571:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
+                    // InternalAceGen.g:4572:5: lv_nonDeterministic_9_0= 'nonDeterministic'
                     {
-                    lv_nonDeterministic_9_0=(Token)match(input,43,FOLLOW_2); 
+                    lv_nonDeterministic_9_0=(Token)match(input,41,FOLLOW_2); 
 
                     					newLeafNode(lv_nonDeterministic_9_0, grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0());
                     				
@@ -11874,7 +11745,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQualifiedName"
-    // InternalAceGen.g:4643:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
+    // InternalAceGen.g:4588:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
     public final String entryRuleQualifiedName() throws RecognitionException {
         String current = null;
 
@@ -11882,8 +11753,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4643:53: (iv_ruleQualifiedName= ruleQualifiedName EOF )
-            // InternalAceGen.g:4644:2: iv_ruleQualifiedName= ruleQualifiedName EOF
+            // InternalAceGen.g:4588:53: (iv_ruleQualifiedName= ruleQualifiedName EOF )
+            // InternalAceGen.g:4589:2: iv_ruleQualifiedName= ruleQualifiedName EOF
             {
              newCompositeNode(grammarAccess.getQualifiedNameRule()); 
             pushFollow(FOLLOW_1);
@@ -11910,7 +11781,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQualifiedName"
-    // InternalAceGen.g:4650:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
+    // InternalAceGen.g:4595:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleQualifiedName() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -11922,40 +11793,40 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4656:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
-            // InternalAceGen.g:4657:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalAceGen.g:4601:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
+            // InternalAceGen.g:4602:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
             {
-            // InternalAceGen.g:4657:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
-            // InternalAceGen.g:4658:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
+            // InternalAceGen.g:4602:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalAceGen.g:4603:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FOLLOW_103); 
+            this_ID_0=(Token)match(input,RULE_ID,FOLLOW_102); 
 
             			current.merge(this_ID_0);
             		
 
             			newLeafNode(this_ID_0, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_0());
             		
-            // InternalAceGen.g:4665:3: (kw= '.' this_ID_2= RULE_ID )*
-            loop131:
+            // InternalAceGen.g:4610:3: (kw= '.' this_ID_2= RULE_ID )*
+            loop128:
             do {
-                int alt131=2;
-                int LA131_0 = input.LA(1);
+                int alt128=2;
+                int LA128_0 = input.LA(1);
 
-                if ( (LA131_0==82) ) {
-                    alt131=1;
+                if ( (LA128_0==81) ) {
+                    alt128=1;
                 }
 
 
-                switch (alt131) {
+                switch (alt128) {
             	case 1 :
-            	    // InternalAceGen.g:4666:4: kw= '.' this_ID_2= RULE_ID
+            	    // InternalAceGen.g:4611:4: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,82,FOLLOW_10); 
+            	    kw=(Token)match(input,81,FOLLOW_10); 
 
             	    				current.merge(kw);
             	    				newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0());
             	    			
-            	    this_ID_2=(Token)match(input,RULE_ID,FOLLOW_103); 
+            	    this_ID_2=(Token)match(input,RULE_ID,FOLLOW_102); 
 
             	    				current.merge(this_ID_2);
             	    			
@@ -11967,7 +11838,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop131;
+            	    break loop128;
                 }
             } while (true);
 
@@ -11994,7 +11865,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWriteFunctionType"
-    // InternalAceGen.g:4683:1: entryRuleWriteFunctionType returns [String current=null] : iv_ruleWriteFunctionType= ruleWriteFunctionType EOF ;
+    // InternalAceGen.g:4628:1: entryRuleWriteFunctionType returns [String current=null] : iv_ruleWriteFunctionType= ruleWriteFunctionType EOF ;
     public final String entryRuleWriteFunctionType() throws RecognitionException {
         String current = null;
 
@@ -12002,8 +11873,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4683:57: (iv_ruleWriteFunctionType= ruleWriteFunctionType EOF )
-            // InternalAceGen.g:4684:2: iv_ruleWriteFunctionType= ruleWriteFunctionType EOF
+            // InternalAceGen.g:4628:57: (iv_ruleWriteFunctionType= ruleWriteFunctionType EOF )
+            // InternalAceGen.g:4629:2: iv_ruleWriteFunctionType= ruleWriteFunctionType EOF
             {
              newCompositeNode(grammarAccess.getWriteFunctionTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -12030,7 +11901,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWriteFunctionType"
-    // InternalAceGen.g:4690:1: ruleWriteFunctionType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' ) ;
+    // InternalAceGen.g:4635:1: ruleWriteFunctionType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' ) ;
     public final AntlrDatatypeRuleToken ruleWriteFunctionType() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -12040,39 +11911,39 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4696:2: ( (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' ) )
-            // InternalAceGen.g:4697:2: (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' )
+            // InternalAceGen.g:4641:2: ( (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' ) )
+            // InternalAceGen.g:4642:2: (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' )
             {
-            // InternalAceGen.g:4697:2: (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' )
-            int alt132=3;
+            // InternalAceGen.g:4642:2: (kw= 'POST' | kw= 'PUT' | kw= 'DELETE' )
+            int alt129=3;
             switch ( input.LA(1) ) {
+            case 82:
+                {
+                alt129=1;
+                }
+                break;
             case 83:
                 {
-                alt132=1;
+                alt129=2;
                 }
                 break;
             case 84:
                 {
-                alt132=2;
-                }
-                break;
-            case 85:
-                {
-                alt132=3;
+                alt129=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 132, 0, input);
+                    new NoViableAltException("", 129, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt132) {
+            switch (alt129) {
                 case 1 :
-                    // InternalAceGen.g:4698:3: kw= 'POST'
+                    // InternalAceGen.g:4643:3: kw= 'POST'
                     {
-                    kw=(Token)match(input,83,FOLLOW_2); 
+                    kw=(Token)match(input,82,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getWriteFunctionTypeAccess().getPOSTKeyword_0());
@@ -12081,9 +11952,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4704:3: kw= 'PUT'
+                    // InternalAceGen.g:4649:3: kw= 'PUT'
                     {
-                    kw=(Token)match(input,84,FOLLOW_2); 
+                    kw=(Token)match(input,83,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getWriteFunctionTypeAccess().getPUTKeyword_1());
@@ -12092,9 +11963,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:4710:3: kw= 'DELETE'
+                    // InternalAceGen.g:4655:3: kw= 'DELETE'
                     {
-                    kw=(Token)match(input,85,FOLLOW_2); 
+                    kw=(Token)match(input,84,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getWriteFunctionTypeAccess().getDELETEKeyword_2());
@@ -12125,7 +11996,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReadFunctionType"
-    // InternalAceGen.g:4719:1: entryRuleReadFunctionType returns [String current=null] : iv_ruleReadFunctionType= ruleReadFunctionType EOF ;
+    // InternalAceGen.g:4664:1: entryRuleReadFunctionType returns [String current=null] : iv_ruleReadFunctionType= ruleReadFunctionType EOF ;
     public final String entryRuleReadFunctionType() throws RecognitionException {
         String current = null;
 
@@ -12133,8 +12004,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4719:56: (iv_ruleReadFunctionType= ruleReadFunctionType EOF )
-            // InternalAceGen.g:4720:2: iv_ruleReadFunctionType= ruleReadFunctionType EOF
+            // InternalAceGen.g:4664:56: (iv_ruleReadFunctionType= ruleReadFunctionType EOF )
+            // InternalAceGen.g:4665:2: iv_ruleReadFunctionType= ruleReadFunctionType EOF
             {
              newCompositeNode(grammarAccess.getReadFunctionTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -12161,7 +12032,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReadFunctionType"
-    // InternalAceGen.g:4726:1: ruleReadFunctionType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'GET' ;
+    // InternalAceGen.g:4671:1: ruleReadFunctionType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'GET' ;
     public final AntlrDatatypeRuleToken ruleReadFunctionType() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -12171,10 +12042,10 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4732:2: (kw= 'GET' )
-            // InternalAceGen.g:4733:2: kw= 'GET'
+            // InternalAceGen.g:4677:2: (kw= 'GET' )
+            // InternalAceGen.g:4678:2: kw= 'GET'
             {
-            kw=(Token)match(input,86,FOLLOW_2); 
+            kw=(Token)match(input,85,FOLLOW_2); 
 
             		current.merge(kw);
             		newLeafNode(kw, grammarAccess.getReadFunctionTypeAccess().getGETKeyword());
@@ -12199,7 +12070,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleType"
-    // InternalAceGen.g:4741:1: entryRuleType returns [String current=null] : iv_ruleType= ruleType EOF ;
+    // InternalAceGen.g:4686:1: entryRuleType returns [String current=null] : iv_ruleType= ruleType EOF ;
     public final String entryRuleType() throws RecognitionException {
         String current = null;
 
@@ -12207,8 +12078,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4741:44: (iv_ruleType= ruleType EOF )
-            // InternalAceGen.g:4742:2: iv_ruleType= ruleType EOF
+            // InternalAceGen.g:4686:44: (iv_ruleType= ruleType EOF )
+            // InternalAceGen.g:4687:2: iv_ruleType= ruleType EOF
             {
              newCompositeNode(grammarAccess.getTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -12235,7 +12106,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleType"
-    // InternalAceGen.g:4748:1: ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' ) ;
+    // InternalAceGen.g:4693:1: ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' ) ;
     public final AntlrDatatypeRuleToken ruleType() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -12245,54 +12116,54 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4754:2: ( (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' ) )
-            // InternalAceGen.g:4755:2: (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' )
+            // InternalAceGen.g:4699:2: ( (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' ) )
+            // InternalAceGen.g:4700:2: (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' )
             {
-            // InternalAceGen.g:4755:2: (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' )
-            int alt133=6;
+            // InternalAceGen.g:4700:2: (kw= 'Integer' | kw= 'String' | kw= 'Float' | kw= 'Boolean' | kw= 'DateTime' | kw= 'Long' )
+            int alt130=6;
             switch ( input.LA(1) ) {
+            case 86:
+                {
+                alt130=1;
+                }
+                break;
             case 87:
                 {
-                alt133=1;
+                alt130=2;
                 }
                 break;
             case 88:
                 {
-                alt133=2;
+                alt130=3;
                 }
                 break;
             case 89:
                 {
-                alt133=3;
+                alt130=4;
                 }
                 break;
             case 90:
                 {
-                alt133=4;
+                alt130=5;
                 }
                 break;
             case 91:
                 {
-                alt133=5;
-                }
-                break;
-            case 92:
-                {
-                alt133=6;
+                alt130=6;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 133, 0, input);
+                    new NoViableAltException("", 130, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt133) {
+            switch (alt130) {
                 case 1 :
-                    // InternalAceGen.g:4756:3: kw= 'Integer'
+                    // InternalAceGen.g:4701:3: kw= 'Integer'
                     {
-                    kw=(Token)match(input,87,FOLLOW_2); 
+                    kw=(Token)match(input,86,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getIntegerKeyword_0());
@@ -12301,9 +12172,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4762:3: kw= 'String'
+                    // InternalAceGen.g:4707:3: kw= 'String'
                     {
-                    kw=(Token)match(input,88,FOLLOW_2); 
+                    kw=(Token)match(input,87,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getStringKeyword_1());
@@ -12312,9 +12183,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:4768:3: kw= 'Float'
+                    // InternalAceGen.g:4713:3: kw= 'Float'
                     {
-                    kw=(Token)match(input,89,FOLLOW_2); 
+                    kw=(Token)match(input,88,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getFloatKeyword_2());
@@ -12323,9 +12194,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalAceGen.g:4774:3: kw= 'Boolean'
+                    // InternalAceGen.g:4719:3: kw= 'Boolean'
                     {
-                    kw=(Token)match(input,90,FOLLOW_2); 
+                    kw=(Token)match(input,89,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getBooleanKeyword_3());
@@ -12334,9 +12205,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalAceGen.g:4780:3: kw= 'DateTime'
+                    // InternalAceGen.g:4725:3: kw= 'DateTime'
                     {
-                    kw=(Token)match(input,91,FOLLOW_2); 
+                    kw=(Token)match(input,90,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getDateTimeKeyword_4());
@@ -12345,9 +12216,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalAceGen.g:4786:3: kw= 'Long'
+                    // InternalAceGen.g:4731:3: kw= 'Long'
                     {
-                    kw=(Token)match(input,92,FOLLOW_2); 
+                    kw=(Token)match(input,91,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTypeAccess().getLongKeyword_5());
@@ -12378,7 +12249,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObject"
-    // InternalAceGen.g:4795:1: entryRuleJsonObject returns [EObject current=null] : iv_ruleJsonObject= ruleJsonObject EOF ;
+    // InternalAceGen.g:4740:1: entryRuleJsonObject returns [EObject current=null] : iv_ruleJsonObject= ruleJsonObject EOF ;
     public final EObject entryRuleJsonObject() throws RecognitionException {
         EObject current = null;
 
@@ -12386,8 +12257,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4795:51: (iv_ruleJsonObject= ruleJsonObject EOF )
-            // InternalAceGen.g:4796:2: iv_ruleJsonObject= ruleJsonObject EOF
+            // InternalAceGen.g:4740:51: (iv_ruleJsonObject= ruleJsonObject EOF )
+            // InternalAceGen.g:4741:2: iv_ruleJsonObject= ruleJsonObject EOF
             {
              newCompositeNode(grammarAccess.getJsonObjectRule()); 
             pushFollow(FOLLOW_1);
@@ -12414,7 +12285,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObject"
-    // InternalAceGen.g:4802:1: ruleJsonObject returns [EObject current=null] : (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) ) ;
+    // InternalAceGen.g:4747:1: ruleJsonObject returns [EObject current=null] : (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) ) ;
     public final EObject ruleJsonObject() throws RecognitionException {
         EObject current = null;
 
@@ -12428,28 +12299,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4808:2: ( (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) ) )
-            // InternalAceGen.g:4809:2: (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) )
+            // InternalAceGen.g:4753:2: ( (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) ) )
+            // InternalAceGen.g:4754:2: (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) )
             {
-            // InternalAceGen.g:4809:2: (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) )
-            int alt134=2;
-            int LA134_0 = input.LA(1);
+            // InternalAceGen.g:4754:2: (this_JsonObjectAce_0= ruleJsonObjectAce | (otherlv_1= 'json' this_StringType_2= ruleStringType ) )
+            int alt131=2;
+            int LA131_0 = input.LA(1);
 
-            if ( (LA134_0==15) ) {
-                alt134=1;
+            if ( (LA131_0==15) ) {
+                alt131=1;
             }
-            else if ( (LA134_0==93) ) {
-                alt134=2;
+            else if ( (LA131_0==92) ) {
+                alt131=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 134, 0, input);
+                    new NoViableAltException("", 131, 0, input);
 
                 throw nvae;
             }
-            switch (alt134) {
+            switch (alt131) {
                 case 1 :
-                    // InternalAceGen.g:4810:3: this_JsonObjectAce_0= ruleJsonObjectAce
+                    // InternalAceGen.g:4755:3: this_JsonObjectAce_0= ruleJsonObjectAce
                     {
 
                     			newCompositeNode(grammarAccess.getJsonObjectAccess().getJsonObjectAceParserRuleCall_0());
@@ -12467,12 +12338,12 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4819:3: (otherlv_1= 'json' this_StringType_2= ruleStringType )
+                    // InternalAceGen.g:4764:3: (otherlv_1= 'json' this_StringType_2= ruleStringType )
                     {
-                    // InternalAceGen.g:4819:3: (otherlv_1= 'json' this_StringType_2= ruleStringType )
-                    // InternalAceGen.g:4820:4: otherlv_1= 'json' this_StringType_2= ruleStringType
+                    // InternalAceGen.g:4764:3: (otherlv_1= 'json' this_StringType_2= ruleStringType )
+                    // InternalAceGen.g:4765:4: otherlv_1= 'json' this_StringType_2= ruleStringType
                     {
-                    otherlv_1=(Token)match(input,93,FOLLOW_39); 
+                    otherlv_1=(Token)match(input,92,FOLLOW_36); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getJsonObjectAccess().getJsonKeyword_1_0());
                     			
@@ -12517,7 +12388,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectAce"
-    // InternalAceGen.g:4837:1: entryRuleJsonObjectAce returns [EObject current=null] : iv_ruleJsonObjectAce= ruleJsonObjectAce EOF ;
+    // InternalAceGen.g:4782:1: entryRuleJsonObjectAce returns [EObject current=null] : iv_ruleJsonObjectAce= ruleJsonObjectAce EOF ;
     public final EObject entryRuleJsonObjectAce() throws RecognitionException {
         EObject current = null;
 
@@ -12525,8 +12396,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4837:54: (iv_ruleJsonObjectAce= ruleJsonObjectAce EOF )
-            // InternalAceGen.g:4838:2: iv_ruleJsonObjectAce= ruleJsonObjectAce EOF
+            // InternalAceGen.g:4782:54: (iv_ruleJsonObjectAce= ruleJsonObjectAce EOF )
+            // InternalAceGen.g:4783:2: iv_ruleJsonObjectAce= ruleJsonObjectAce EOF
             {
              newCompositeNode(grammarAccess.getJsonObjectAceRule()); 
             pushFollow(FOLLOW_1);
@@ -12553,7 +12424,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectAce"
-    // InternalAceGen.g:4844:1: ruleJsonObjectAce returns [EObject current=null] : ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' ) ;
+    // InternalAceGen.g:4789:1: ruleJsonObjectAce returns [EObject current=null] : ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' ) ;
     public final EObject ruleJsonObjectAce() throws RecognitionException {
         EObject current = null;
 
@@ -12569,14 +12440,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4850:2: ( ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' ) )
-            // InternalAceGen.g:4851:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' )
+            // InternalAceGen.g:4795:2: ( ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' ) )
+            // InternalAceGen.g:4796:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' )
             {
-            // InternalAceGen.g:4851:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' )
-            // InternalAceGen.g:4852:3: () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}'
+            // InternalAceGen.g:4796:2: ( () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}' )
+            // InternalAceGen.g:4797:3: () otherlv_1= '{' ( (lv_members_2_0= ruleJsonMember ) )? (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )* otherlv_5= '}'
             {
-            // InternalAceGen.g:4852:3: ()
-            // InternalAceGen.g:4853:4: 
+            // InternalAceGen.g:4797:3: ()
+            // InternalAceGen.g:4798:4: 
             {
 
             				current = forceCreateModelElement(
@@ -12586,28 +12457,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,15,FOLLOW_49); 
+            otherlv_1=(Token)match(input,15,FOLLOW_46); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonObjectAceAccess().getLeftCurlyBracketKeyword_1());
             		
-            // InternalAceGen.g:4863:3: ( (lv_members_2_0= ruleJsonMember ) )?
-            int alt135=2;
-            int LA135_0 = input.LA(1);
+            // InternalAceGen.g:4808:3: ( (lv_members_2_0= ruleJsonMember ) )?
+            int alt132=2;
+            int LA132_0 = input.LA(1);
 
-            if ( (LA135_0==RULE_ID) ) {
-                alt135=1;
+            if ( (LA132_0==RULE_ID) ) {
+                alt132=1;
             }
-            switch (alt135) {
+            switch (alt132) {
                 case 1 :
-                    // InternalAceGen.g:4864:4: (lv_members_2_0= ruleJsonMember )
+                    // InternalAceGen.g:4809:4: (lv_members_2_0= ruleJsonMember )
                     {
-                    // InternalAceGen.g:4864:4: (lv_members_2_0= ruleJsonMember )
-                    // InternalAceGen.g:4865:5: lv_members_2_0= ruleJsonMember
+                    // InternalAceGen.g:4809:4: (lv_members_2_0= ruleJsonMember )
+                    // InternalAceGen.g:4810:5: lv_members_2_0= ruleJsonMember
                     {
 
                     					newCompositeNode(grammarAccess.getJsonObjectAceAccess().getMembersJsonMemberParserRuleCall_2_0());
                     				
-                    pushFollow(FOLLOW_50);
+                    pushFollow(FOLLOW_47);
                     lv_members_2_0=ruleJsonMember();
 
                     state._fsp--;
@@ -12632,35 +12503,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4882:3: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )*
-            loop136:
+            // InternalAceGen.g:4827:3: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) ) )*
+            loop133:
             do {
-                int alt136=2;
-                int LA136_0 = input.LA(1);
+                int alt133=2;
+                int LA133_0 = input.LA(1);
 
-                if ( (LA136_0==20) ) {
-                    alt136=1;
+                if ( (LA133_0==20) ) {
+                    alt133=1;
                 }
 
 
-                switch (alt136) {
+                switch (alt133) {
             	case 1 :
-            	    // InternalAceGen.g:4883:4: otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) )
+            	    // InternalAceGen.g:4828:4: otherlv_3= ',' ( (lv_members_4_0= ruleJsonMember ) )
             	    {
             	    otherlv_3=(Token)match(input,20,FOLLOW_10); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getJsonObjectAceAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalAceGen.g:4887:4: ( (lv_members_4_0= ruleJsonMember ) )
-            	    // InternalAceGen.g:4888:5: (lv_members_4_0= ruleJsonMember )
+            	    // InternalAceGen.g:4832:4: ( (lv_members_4_0= ruleJsonMember ) )
+            	    // InternalAceGen.g:4833:5: (lv_members_4_0= ruleJsonMember )
             	    {
-            	    // InternalAceGen.g:4888:5: (lv_members_4_0= ruleJsonMember )
-            	    // InternalAceGen.g:4889:6: lv_members_4_0= ruleJsonMember
+            	    // InternalAceGen.g:4833:5: (lv_members_4_0= ruleJsonMember )
+            	    // InternalAceGen.g:4834:6: lv_members_4_0= ruleJsonMember
             	    {
 
             	    						newCompositeNode(grammarAccess.getJsonObjectAceAccess().getMembersJsonMemberParserRuleCall_3_1_0());
             	    					
-            	    pushFollow(FOLLOW_50);
+            	    pushFollow(FOLLOW_47);
             	    lv_members_4_0=ruleJsonMember();
 
             	    state._fsp--;
@@ -12687,7 +12558,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop136;
+            	    break loop133;
                 }
             } while (true);
 
@@ -12718,7 +12589,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonMember"
-    // InternalAceGen.g:4915:1: entryRuleJsonMember returns [EObject current=null] : iv_ruleJsonMember= ruleJsonMember EOF ;
+    // InternalAceGen.g:4860:1: entryRuleJsonMember returns [EObject current=null] : iv_ruleJsonMember= ruleJsonMember EOF ;
     public final EObject entryRuleJsonMember() throws RecognitionException {
         EObject current = null;
 
@@ -12726,8 +12597,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4915:51: (iv_ruleJsonMember= ruleJsonMember EOF )
-            // InternalAceGen.g:4916:2: iv_ruleJsonMember= ruleJsonMember EOF
+            // InternalAceGen.g:4860:51: (iv_ruleJsonMember= ruleJsonMember EOF )
+            // InternalAceGen.g:4861:2: iv_ruleJsonMember= ruleJsonMember EOF
             {
              newCompositeNode(grammarAccess.getJsonMemberRule()); 
             pushFollow(FOLLOW_1);
@@ -12754,7 +12625,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonMember"
-    // InternalAceGen.g:4922:1: ruleJsonMember returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
+    // InternalAceGen.g:4867:1: ruleJsonMember returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
     public final EObject ruleJsonMember() throws RecognitionException {
         EObject current = null;
 
@@ -12766,17 +12637,17 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4928:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
-            // InternalAceGen.g:4929:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalAceGen.g:4873:2: ( ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
+            // InternalAceGen.g:4874:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
             {
-            // InternalAceGen.g:4929:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
-            // InternalAceGen.g:4930:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalAceGen.g:4874:2: ( ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalAceGen.g:4875:3: ( ( ruleQualifiedName ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
             {
-            // InternalAceGen.g:4930:3: ( ( ruleQualifiedName ) )
-            // InternalAceGen.g:4931:4: ( ruleQualifiedName )
+            // InternalAceGen.g:4875:3: ( ( ruleQualifiedName ) )
+            // InternalAceGen.g:4876:4: ( ruleQualifiedName )
             {
-            // InternalAceGen.g:4931:4: ( ruleQualifiedName )
-            // InternalAceGen.g:4932:5: ruleQualifiedName
+            // InternalAceGen.g:4876:4: ( ruleQualifiedName )
+            // InternalAceGen.g:4877:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -12786,7 +12657,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             					newCompositeNode(grammarAccess.getJsonMemberAccess().getAttributeAttributeCrossReference_0_0());
             				
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_40);
             ruleQualifiedName();
 
             state._fsp--;
@@ -12800,15 +12671,15 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,44,FOLLOW_104); 
+            otherlv_1=(Token)match(input,42,FOLLOW_103); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonMemberAccess().getColonKeyword_1());
             		
-            // InternalAceGen.g:4950:3: ( (lv_value_2_0= ruleJsonValue ) )
-            // InternalAceGen.g:4951:4: (lv_value_2_0= ruleJsonValue )
+            // InternalAceGen.g:4895:3: ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalAceGen.g:4896:4: (lv_value_2_0= ruleJsonValue )
             {
-            // InternalAceGen.g:4951:4: (lv_value_2_0= ruleJsonValue )
-            // InternalAceGen.g:4952:5: lv_value_2_0= ruleJsonValue
+            // InternalAceGen.g:4896:4: (lv_value_2_0= ruleJsonValue )
+            // InternalAceGen.g:4897:5: lv_value_2_0= ruleJsonValue
             {
 
             					newCompositeNode(grammarAccess.getJsonMemberAccess().getValueJsonValueParserRuleCall_2_0());
@@ -12858,7 +12729,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonValue"
-    // InternalAceGen.g:4973:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
+    // InternalAceGen.g:4918:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
     public final EObject entryRuleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -12866,8 +12737,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:4973:50: (iv_ruleJsonValue= ruleJsonValue EOF )
-            // InternalAceGen.g:4974:2: iv_ruleJsonValue= ruleJsonValue EOF
+            // InternalAceGen.g:4918:50: (iv_ruleJsonValue= ruleJsonValue EOF )
+            // InternalAceGen.g:4919:2: iv_ruleJsonValue= ruleJsonValue EOF
             {
              newCompositeNode(grammarAccess.getJsonValueRule()); 
             pushFollow(FOLLOW_1);
@@ -12894,7 +12765,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonValue"
-    // InternalAceGen.g:4980:1: ruleJsonValue returns [EObject current=null] : (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime ) ;
+    // InternalAceGen.g:4925:1: ruleJsonValue returns [EObject current=null] : (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime ) ;
     public final EObject ruleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -12917,67 +12788,67 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4986:2: ( (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime ) )
-            // InternalAceGen.g:4987:2: (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime )
+            // InternalAceGen.g:4931:2: ( (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime ) )
+            // InternalAceGen.g:4932:2: (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime )
             {
-            // InternalAceGen.g:4987:2: (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime )
-            int alt137=7;
+            // InternalAceGen.g:4932:2: (this_JsonObject_0= ruleJsonObject | this_StringType_1= ruleStringType | this_JsonArray_2= ruleJsonArray | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime )
+            int alt134=7;
             switch ( input.LA(1) ) {
             case 15:
-            case 93:
+            case 92:
                 {
-                alt137=1;
+                alt134=1;
                 }
                 break;
             case RULE_STRING:
                 {
-                int LA137_2 = input.LA(2);
+                int LA134_2 = input.LA(2);
 
-                if ( (LA137_2==RULE_STRING) ) {
-                    alt137=7;
+                if ( (LA134_2==RULE_STRING) ) {
+                    alt134=7;
                 }
-                else if ( (LA137_2==EOF||LA137_2==16||LA137_2==20||LA137_2==49) ) {
-                    alt137=2;
+                else if ( (LA134_2==EOF||LA134_2==16||LA134_2==20||LA134_2==47) ) {
+                    alt134=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 137, 2, input);
+                        new NoViableAltException("", 134, 2, input);
 
                     throw nvae;
                 }
                 }
                 break;
-            case 48:
+            case 46:
                 {
-                alt137=3;
+                alt134=3;
                 }
                 break;
+            case 94:
             case 95:
-            case 96:
                 {
-                alt137=4;
+                alt134=4;
                 }
                 break;
-            case 76:
+            case 75:
                 {
-                alt137=5;
+                alt134=5;
                 }
                 break;
             case RULE_INT:
                 {
-                alt137=6;
+                alt134=6;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 137, 0, input);
+                    new NoViableAltException("", 134, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt137) {
+            switch (alt134) {
                 case 1 :
-                    // InternalAceGen.g:4988:3: this_JsonObject_0= ruleJsonObject
+                    // InternalAceGen.g:4933:3: this_JsonObject_0= ruleJsonObject
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonObjectParserRuleCall_0());
@@ -12995,7 +12866,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:4997:3: this_StringType_1= ruleStringType
+                    // InternalAceGen.g:4942:3: this_StringType_1= ruleStringType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getStringTypeParserRuleCall_1());
@@ -13013,7 +12884,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalAceGen.g:5006:3: this_JsonArray_2= ruleJsonArray
+                    // InternalAceGen.g:4951:3: this_JsonArray_2= ruleJsonArray
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonArrayParserRuleCall_2());
@@ -13031,7 +12902,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalAceGen.g:5015:3: this_BooleanType_3= ruleBooleanType
+                    // InternalAceGen.g:4960:3: this_BooleanType_3= ruleBooleanType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getBooleanTypeParserRuleCall_3());
@@ -13049,7 +12920,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalAceGen.g:5024:3: this_NullType_4= ruleNullType
+                    // InternalAceGen.g:4969:3: this_NullType_4= ruleNullType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getNullTypeParserRuleCall_4());
@@ -13067,7 +12938,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalAceGen.g:5033:3: this_LongType_5= ruleLongType
+                    // InternalAceGen.g:4978:3: this_LongType_5= ruleLongType
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getLongTypeParserRuleCall_5());
@@ -13085,7 +12956,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalAceGen.g:5042:3: this_JsonDateTime_6= ruleJsonDateTime
+                    // InternalAceGen.g:4987:3: this_JsonDateTime_6= ruleJsonDateTime
                     {
 
                     			newCompositeNode(grammarAccess.getJsonValueAccess().getJsonDateTimeParserRuleCall_6());
@@ -13125,7 +12996,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonArray"
-    // InternalAceGen.g:5054:1: entryRuleJsonArray returns [EObject current=null] : iv_ruleJsonArray= ruleJsonArray EOF ;
+    // InternalAceGen.g:4999:1: entryRuleJsonArray returns [EObject current=null] : iv_ruleJsonArray= ruleJsonArray EOF ;
     public final EObject entryRuleJsonArray() throws RecognitionException {
         EObject current = null;
 
@@ -13133,8 +13004,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5054:50: (iv_ruleJsonArray= ruleJsonArray EOF )
-            // InternalAceGen.g:5055:2: iv_ruleJsonArray= ruleJsonArray EOF
+            // InternalAceGen.g:4999:50: (iv_ruleJsonArray= ruleJsonArray EOF )
+            // InternalAceGen.g:5000:2: iv_ruleJsonArray= ruleJsonArray EOF
             {
              newCompositeNode(grammarAccess.getJsonArrayRule()); 
             pushFollow(FOLLOW_1);
@@ -13161,7 +13032,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonArray"
-    // InternalAceGen.g:5061:1: ruleJsonArray returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) ;
+    // InternalAceGen.g:5006:1: ruleJsonArray returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) ;
     public final EObject ruleJsonArray() throws RecognitionException {
         EObject current = null;
 
@@ -13177,14 +13048,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5067:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) )
-            // InternalAceGen.g:5068:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:5012:2: ( ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' ) )
+            // InternalAceGen.g:5013:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
             {
-            // InternalAceGen.g:5068:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
-            // InternalAceGen.g:5069:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']'
+            // InternalAceGen.g:5013:2: ( () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']' )
+            // InternalAceGen.g:5014:3: () otherlv_1= '[' ( (lv_values_2_0= ruleJsonValue ) )? (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )* otherlv_5= ']'
             {
-            // InternalAceGen.g:5069:3: ()
-            // InternalAceGen.g:5070:4: 
+            // InternalAceGen.g:5014:3: ()
+            // InternalAceGen.g:5015:4: 
             {
 
             				current = forceCreateModelElement(
@@ -13194,28 +13065,28 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,48,FOLLOW_105); 
+            otherlv_1=(Token)match(input,46,FOLLOW_104); 
 
             			newLeafNode(otherlv_1, grammarAccess.getJsonArrayAccess().getLeftSquareBracketKeyword_1());
             		
-            // InternalAceGen.g:5080:3: ( (lv_values_2_0= ruleJsonValue ) )?
-            int alt138=2;
-            int LA138_0 = input.LA(1);
+            // InternalAceGen.g:5025:3: ( (lv_values_2_0= ruleJsonValue ) )?
+            int alt135=2;
+            int LA135_0 = input.LA(1);
 
-            if ( ((LA138_0>=RULE_STRING && LA138_0<=RULE_INT)||LA138_0==15||LA138_0==48||LA138_0==76||LA138_0==93||(LA138_0>=95 && LA138_0<=96)) ) {
-                alt138=1;
+            if ( ((LA135_0>=RULE_STRING && LA135_0<=RULE_INT)||LA135_0==15||LA135_0==46||LA135_0==75||LA135_0==92||(LA135_0>=94 && LA135_0<=95)) ) {
+                alt135=1;
             }
-            switch (alt138) {
+            switch (alt135) {
                 case 1 :
-                    // InternalAceGen.g:5081:4: (lv_values_2_0= ruleJsonValue )
+                    // InternalAceGen.g:5026:4: (lv_values_2_0= ruleJsonValue )
                     {
-                    // InternalAceGen.g:5081:4: (lv_values_2_0= ruleJsonValue )
-                    // InternalAceGen.g:5082:5: lv_values_2_0= ruleJsonValue
+                    // InternalAceGen.g:5026:4: (lv_values_2_0= ruleJsonValue )
+                    // InternalAceGen.g:5027:5: lv_values_2_0= ruleJsonValue
                     {
 
                     					newCompositeNode(grammarAccess.getJsonArrayAccess().getValuesJsonValueParserRuleCall_2_0());
                     				
-                    pushFollow(FOLLOW_52);
+                    pushFollow(FOLLOW_49);
                     lv_values_2_0=ruleJsonValue();
 
                     state._fsp--;
@@ -13240,35 +13111,35 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:5099:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )*
-            loop139:
+            // InternalAceGen.g:5044:3: (otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) ) )*
+            loop136:
             do {
-                int alt139=2;
-                int LA139_0 = input.LA(1);
+                int alt136=2;
+                int LA136_0 = input.LA(1);
 
-                if ( (LA139_0==20) ) {
-                    alt139=1;
+                if ( (LA136_0==20) ) {
+                    alt136=1;
                 }
 
 
-                switch (alt139) {
+                switch (alt136) {
             	case 1 :
-            	    // InternalAceGen.g:5100:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) )
+            	    // InternalAceGen.g:5045:4: otherlv_3= ',' ( (lv_values_4_0= ruleJsonValue ) )
             	    {
-            	    otherlv_3=(Token)match(input,20,FOLLOW_104); 
+            	    otherlv_3=(Token)match(input,20,FOLLOW_103); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getJsonArrayAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalAceGen.g:5104:4: ( (lv_values_4_0= ruleJsonValue ) )
-            	    // InternalAceGen.g:5105:5: (lv_values_4_0= ruleJsonValue )
+            	    // InternalAceGen.g:5049:4: ( (lv_values_4_0= ruleJsonValue ) )
+            	    // InternalAceGen.g:5050:5: (lv_values_4_0= ruleJsonValue )
             	    {
-            	    // InternalAceGen.g:5105:5: (lv_values_4_0= ruleJsonValue )
-            	    // InternalAceGen.g:5106:6: lv_values_4_0= ruleJsonValue
+            	    // InternalAceGen.g:5050:5: (lv_values_4_0= ruleJsonValue )
+            	    // InternalAceGen.g:5051:6: lv_values_4_0= ruleJsonValue
             	    {
 
             	    						newCompositeNode(grammarAccess.getJsonArrayAccess().getValuesJsonValueParserRuleCall_3_1_0());
             	    					
-            	    pushFollow(FOLLOW_52);
+            	    pushFollow(FOLLOW_49);
             	    lv_values_4_0=ruleJsonValue();
 
             	    state._fsp--;
@@ -13295,11 +13166,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop139;
+            	    break loop136;
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,49,FOLLOW_2); 
+            otherlv_5=(Token)match(input,47,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getJsonArrayAccess().getRightSquareBracketKeyword_4());
             		
@@ -13326,7 +13197,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonDateTime"
-    // InternalAceGen.g:5132:1: entryRuleJsonDateTime returns [EObject current=null] : iv_ruleJsonDateTime= ruleJsonDateTime EOF ;
+    // InternalAceGen.g:5077:1: entryRuleJsonDateTime returns [EObject current=null] : iv_ruleJsonDateTime= ruleJsonDateTime EOF ;
     public final EObject entryRuleJsonDateTime() throws RecognitionException {
         EObject current = null;
 
@@ -13334,8 +13205,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5132:53: (iv_ruleJsonDateTime= ruleJsonDateTime EOF )
-            // InternalAceGen.g:5133:2: iv_ruleJsonDateTime= ruleJsonDateTime EOF
+            // InternalAceGen.g:5077:53: (iv_ruleJsonDateTime= ruleJsonDateTime EOF )
+            // InternalAceGen.g:5078:2: iv_ruleJsonDateTime= ruleJsonDateTime EOF
             {
              newCompositeNode(grammarAccess.getJsonDateTimeRule()); 
             pushFollow(FOLLOW_1);
@@ -13362,7 +13233,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonDateTime"
-    // InternalAceGen.g:5139:1: ruleJsonDateTime returns [EObject current=null] : ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) ) ;
+    // InternalAceGen.g:5084:1: ruleJsonDateTime returns [EObject current=null] : ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleJsonDateTime() throws RecognitionException {
         EObject current = null;
 
@@ -13373,19 +13244,19 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5145:2: ( ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) ) )
-            // InternalAceGen.g:5146:2: ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) )
+            // InternalAceGen.g:5090:2: ( ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) ) )
+            // InternalAceGen.g:5091:2: ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) )
             {
-            // InternalAceGen.g:5146:2: ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) )
-            // InternalAceGen.g:5147:3: ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) )
+            // InternalAceGen.g:5091:2: ( ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) ) )
+            // InternalAceGen.g:5092:3: ( (lv_dateTime_0_0= RULE_STRING ) ) ( (lv_pattern_1_0= RULE_STRING ) )
             {
-            // InternalAceGen.g:5147:3: ( (lv_dateTime_0_0= RULE_STRING ) )
-            // InternalAceGen.g:5148:4: (lv_dateTime_0_0= RULE_STRING )
+            // InternalAceGen.g:5092:3: ( (lv_dateTime_0_0= RULE_STRING ) )
+            // InternalAceGen.g:5093:4: (lv_dateTime_0_0= RULE_STRING )
             {
-            // InternalAceGen.g:5148:4: (lv_dateTime_0_0= RULE_STRING )
-            // InternalAceGen.g:5149:5: lv_dateTime_0_0= RULE_STRING
+            // InternalAceGen.g:5093:4: (lv_dateTime_0_0= RULE_STRING )
+            // InternalAceGen.g:5094:5: lv_dateTime_0_0= RULE_STRING
             {
-            lv_dateTime_0_0=(Token)match(input,RULE_STRING,FOLLOW_39); 
+            lv_dateTime_0_0=(Token)match(input,RULE_STRING,FOLLOW_36); 
 
             					newLeafNode(lv_dateTime_0_0, grammarAccess.getJsonDateTimeAccess().getDateTimeSTRINGTerminalRuleCall_0_0());
             				
@@ -13405,11 +13276,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:5165:3: ( (lv_pattern_1_0= RULE_STRING ) )
-            // InternalAceGen.g:5166:4: (lv_pattern_1_0= RULE_STRING )
+            // InternalAceGen.g:5110:3: ( (lv_pattern_1_0= RULE_STRING ) )
+            // InternalAceGen.g:5111:4: (lv_pattern_1_0= RULE_STRING )
             {
-            // InternalAceGen.g:5166:4: (lv_pattern_1_0= RULE_STRING )
-            // InternalAceGen.g:5167:5: lv_pattern_1_0= RULE_STRING
+            // InternalAceGen.g:5111:4: (lv_pattern_1_0= RULE_STRING )
+            // InternalAceGen.g:5112:5: lv_pattern_1_0= RULE_STRING
             {
             lv_pattern_1_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -13454,7 +13325,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringType"
-    // InternalAceGen.g:5187:1: entryRuleStringType returns [EObject current=null] : iv_ruleStringType= ruleStringType EOF ;
+    // InternalAceGen.g:5132:1: entryRuleStringType returns [EObject current=null] : iv_ruleStringType= ruleStringType EOF ;
     public final EObject entryRuleStringType() throws RecognitionException {
         EObject current = null;
 
@@ -13462,8 +13333,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5187:51: (iv_ruleStringType= ruleStringType EOF )
-            // InternalAceGen.g:5188:2: iv_ruleStringType= ruleStringType EOF
+            // InternalAceGen.g:5132:51: (iv_ruleStringType= ruleStringType EOF )
+            // InternalAceGen.g:5133:2: iv_ruleStringType= ruleStringType EOF
             {
              newCompositeNode(grammarAccess.getStringTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -13490,7 +13361,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringType"
-    // InternalAceGen.g:5194:1: ruleStringType returns [EObject current=null] : ( (lv_string_0_0= RULE_STRING ) ) ;
+    // InternalAceGen.g:5139:1: ruleStringType returns [EObject current=null] : ( (lv_string_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringType() throws RecognitionException {
         EObject current = null;
 
@@ -13500,14 +13371,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5200:2: ( ( (lv_string_0_0= RULE_STRING ) ) )
-            // InternalAceGen.g:5201:2: ( (lv_string_0_0= RULE_STRING ) )
+            // InternalAceGen.g:5145:2: ( ( (lv_string_0_0= RULE_STRING ) ) )
+            // InternalAceGen.g:5146:2: ( (lv_string_0_0= RULE_STRING ) )
             {
-            // InternalAceGen.g:5201:2: ( (lv_string_0_0= RULE_STRING ) )
-            // InternalAceGen.g:5202:3: (lv_string_0_0= RULE_STRING )
+            // InternalAceGen.g:5146:2: ( (lv_string_0_0= RULE_STRING ) )
+            // InternalAceGen.g:5147:3: (lv_string_0_0= RULE_STRING )
             {
-            // InternalAceGen.g:5202:3: (lv_string_0_0= RULE_STRING )
-            // InternalAceGen.g:5203:4: lv_string_0_0= RULE_STRING
+            // InternalAceGen.g:5147:3: (lv_string_0_0= RULE_STRING )
+            // InternalAceGen.g:5148:4: lv_string_0_0= RULE_STRING
             {
             lv_string_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -13549,7 +13420,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBooleanType"
-    // InternalAceGen.g:5222:1: entryRuleBooleanType returns [EObject current=null] : iv_ruleBooleanType= ruleBooleanType EOF ;
+    // InternalAceGen.g:5167:1: entryRuleBooleanType returns [EObject current=null] : iv_ruleBooleanType= ruleBooleanType EOF ;
     public final EObject entryRuleBooleanType() throws RecognitionException {
         EObject current = null;
 
@@ -13557,8 +13428,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5222:52: (iv_ruleBooleanType= ruleBooleanType EOF )
-            // InternalAceGen.g:5223:2: iv_ruleBooleanType= ruleBooleanType EOF
+            // InternalAceGen.g:5167:52: (iv_ruleBooleanType= ruleBooleanType EOF )
+            // InternalAceGen.g:5168:2: iv_ruleBooleanType= ruleBooleanType EOF
             {
              newCompositeNode(grammarAccess.getBooleanTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -13585,7 +13456,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBooleanType"
-    // InternalAceGen.g:5229:1: ruleBooleanType returns [EObject current=null] : ( (lv_boolean_0_0= ruleJsonBoolean ) ) ;
+    // InternalAceGen.g:5174:1: ruleBooleanType returns [EObject current=null] : ( (lv_boolean_0_0= ruleJsonBoolean ) ) ;
     public final EObject ruleBooleanType() throws RecognitionException {
         EObject current = null;
 
@@ -13596,14 +13467,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5235:2: ( ( (lv_boolean_0_0= ruleJsonBoolean ) ) )
-            // InternalAceGen.g:5236:2: ( (lv_boolean_0_0= ruleJsonBoolean ) )
+            // InternalAceGen.g:5180:2: ( ( (lv_boolean_0_0= ruleJsonBoolean ) ) )
+            // InternalAceGen.g:5181:2: ( (lv_boolean_0_0= ruleJsonBoolean ) )
             {
-            // InternalAceGen.g:5236:2: ( (lv_boolean_0_0= ruleJsonBoolean ) )
-            // InternalAceGen.g:5237:3: (lv_boolean_0_0= ruleJsonBoolean )
+            // InternalAceGen.g:5181:2: ( (lv_boolean_0_0= ruleJsonBoolean ) )
+            // InternalAceGen.g:5182:3: (lv_boolean_0_0= ruleJsonBoolean )
             {
-            // InternalAceGen.g:5237:3: (lv_boolean_0_0= ruleJsonBoolean )
-            // InternalAceGen.g:5238:4: lv_boolean_0_0= ruleJsonBoolean
+            // InternalAceGen.g:5182:3: (lv_boolean_0_0= ruleJsonBoolean )
+            // InternalAceGen.g:5183:4: lv_boolean_0_0= ruleJsonBoolean
             {
 
             				newCompositeNode(grammarAccess.getBooleanTypeAccess().getBooleanJsonBooleanParserRuleCall_0());
@@ -13650,7 +13521,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNullType"
-    // InternalAceGen.g:5258:1: entryRuleNullType returns [EObject current=null] : iv_ruleNullType= ruleNullType EOF ;
+    // InternalAceGen.g:5203:1: entryRuleNullType returns [EObject current=null] : iv_ruleNullType= ruleNullType EOF ;
     public final EObject entryRuleNullType() throws RecognitionException {
         EObject current = null;
 
@@ -13658,8 +13529,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5258:49: (iv_ruleNullType= ruleNullType EOF )
-            // InternalAceGen.g:5259:2: iv_ruleNullType= ruleNullType EOF
+            // InternalAceGen.g:5203:49: (iv_ruleNullType= ruleNullType EOF )
+            // InternalAceGen.g:5204:2: iv_ruleNullType= ruleNullType EOF
             {
              newCompositeNode(grammarAccess.getNullTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -13686,7 +13557,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNullType"
-    // InternalAceGen.g:5265:1: ruleNullType returns [EObject current=null] : ( (lv_null_0_0= 'null' ) ) ;
+    // InternalAceGen.g:5210:1: ruleNullType returns [EObject current=null] : ( (lv_null_0_0= 'null' ) ) ;
     public final EObject ruleNullType() throws RecognitionException {
         EObject current = null;
 
@@ -13696,16 +13567,16 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5271:2: ( ( (lv_null_0_0= 'null' ) ) )
-            // InternalAceGen.g:5272:2: ( (lv_null_0_0= 'null' ) )
+            // InternalAceGen.g:5216:2: ( ( (lv_null_0_0= 'null' ) ) )
+            // InternalAceGen.g:5217:2: ( (lv_null_0_0= 'null' ) )
             {
-            // InternalAceGen.g:5272:2: ( (lv_null_0_0= 'null' ) )
-            // InternalAceGen.g:5273:3: (lv_null_0_0= 'null' )
+            // InternalAceGen.g:5217:2: ( (lv_null_0_0= 'null' ) )
+            // InternalAceGen.g:5218:3: (lv_null_0_0= 'null' )
             {
-            // InternalAceGen.g:5273:3: (lv_null_0_0= 'null' )
-            // InternalAceGen.g:5274:4: lv_null_0_0= 'null'
+            // InternalAceGen.g:5218:3: (lv_null_0_0= 'null' )
+            // InternalAceGen.g:5219:4: lv_null_0_0= 'null'
             {
-            lv_null_0_0=(Token)match(input,76,FOLLOW_2); 
+            lv_null_0_0=(Token)match(input,75,FOLLOW_2); 
 
             				newLeafNode(lv_null_0_0, grammarAccess.getNullTypeAccess().getNullNullKeyword_0());
             			
@@ -13741,7 +13612,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleUndefinedType"
-    // InternalAceGen.g:5289:1: entryRuleUndefinedType returns [EObject current=null] : iv_ruleUndefinedType= ruleUndefinedType EOF ;
+    // InternalAceGen.g:5234:1: entryRuleUndefinedType returns [EObject current=null] : iv_ruleUndefinedType= ruleUndefinedType EOF ;
     public final EObject entryRuleUndefinedType() throws RecognitionException {
         EObject current = null;
 
@@ -13749,8 +13620,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5289:54: (iv_ruleUndefinedType= ruleUndefinedType EOF )
-            // InternalAceGen.g:5290:2: iv_ruleUndefinedType= ruleUndefinedType EOF
+            // InternalAceGen.g:5234:54: (iv_ruleUndefinedType= ruleUndefinedType EOF )
+            // InternalAceGen.g:5235:2: iv_ruleUndefinedType= ruleUndefinedType EOF
             {
              newCompositeNode(grammarAccess.getUndefinedTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -13777,7 +13648,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleUndefinedType"
-    // InternalAceGen.g:5296:1: ruleUndefinedType returns [EObject current=null] : ( (lv_undefined_0_0= 'undefined' ) ) ;
+    // InternalAceGen.g:5241:1: ruleUndefinedType returns [EObject current=null] : ( (lv_undefined_0_0= 'undefined' ) ) ;
     public final EObject ruleUndefinedType() throws RecognitionException {
         EObject current = null;
 
@@ -13787,16 +13658,16 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5302:2: ( ( (lv_undefined_0_0= 'undefined' ) ) )
-            // InternalAceGen.g:5303:2: ( (lv_undefined_0_0= 'undefined' ) )
+            // InternalAceGen.g:5247:2: ( ( (lv_undefined_0_0= 'undefined' ) ) )
+            // InternalAceGen.g:5248:2: ( (lv_undefined_0_0= 'undefined' ) )
             {
-            // InternalAceGen.g:5303:2: ( (lv_undefined_0_0= 'undefined' ) )
-            // InternalAceGen.g:5304:3: (lv_undefined_0_0= 'undefined' )
+            // InternalAceGen.g:5248:2: ( (lv_undefined_0_0= 'undefined' ) )
+            // InternalAceGen.g:5249:3: (lv_undefined_0_0= 'undefined' )
             {
-            // InternalAceGen.g:5304:3: (lv_undefined_0_0= 'undefined' )
-            // InternalAceGen.g:5305:4: lv_undefined_0_0= 'undefined'
+            // InternalAceGen.g:5249:3: (lv_undefined_0_0= 'undefined' )
+            // InternalAceGen.g:5250:4: lv_undefined_0_0= 'undefined'
             {
-            lv_undefined_0_0=(Token)match(input,94,FOLLOW_2); 
+            lv_undefined_0_0=(Token)match(input,93,FOLLOW_2); 
 
             				newLeafNode(lv_undefined_0_0, grammarAccess.getUndefinedTypeAccess().getUndefinedUndefinedKeyword_0());
             			
@@ -13832,7 +13703,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLongType"
-    // InternalAceGen.g:5320:1: entryRuleLongType returns [EObject current=null] : iv_ruleLongType= ruleLongType EOF ;
+    // InternalAceGen.g:5265:1: entryRuleLongType returns [EObject current=null] : iv_ruleLongType= ruleLongType EOF ;
     public final EObject entryRuleLongType() throws RecognitionException {
         EObject current = null;
 
@@ -13840,8 +13711,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5320:49: (iv_ruleLongType= ruleLongType EOF )
-            // InternalAceGen.g:5321:2: iv_ruleLongType= ruleLongType EOF
+            // InternalAceGen.g:5265:49: (iv_ruleLongType= ruleLongType EOF )
+            // InternalAceGen.g:5266:2: iv_ruleLongType= ruleLongType EOF
             {
              newCompositeNode(grammarAccess.getLongTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -13868,7 +13739,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLongType"
-    // InternalAceGen.g:5327:1: ruleLongType returns [EObject current=null] : ( (lv_long_0_0= RULE_INT ) ) ;
+    // InternalAceGen.g:5272:1: ruleLongType returns [EObject current=null] : ( (lv_long_0_0= RULE_INT ) ) ;
     public final EObject ruleLongType() throws RecognitionException {
         EObject current = null;
 
@@ -13878,14 +13749,14 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5333:2: ( ( (lv_long_0_0= RULE_INT ) ) )
-            // InternalAceGen.g:5334:2: ( (lv_long_0_0= RULE_INT ) )
+            // InternalAceGen.g:5278:2: ( ( (lv_long_0_0= RULE_INT ) ) )
+            // InternalAceGen.g:5279:2: ( (lv_long_0_0= RULE_INT ) )
             {
-            // InternalAceGen.g:5334:2: ( (lv_long_0_0= RULE_INT ) )
-            // InternalAceGen.g:5335:3: (lv_long_0_0= RULE_INT )
+            // InternalAceGen.g:5279:2: ( (lv_long_0_0= RULE_INT ) )
+            // InternalAceGen.g:5280:3: (lv_long_0_0= RULE_INT )
             {
-            // InternalAceGen.g:5335:3: (lv_long_0_0= RULE_INT )
-            // InternalAceGen.g:5336:4: lv_long_0_0= RULE_INT
+            // InternalAceGen.g:5280:3: (lv_long_0_0= RULE_INT )
+            // InternalAceGen.g:5281:4: lv_long_0_0= RULE_INT
             {
             lv_long_0_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
@@ -13927,7 +13798,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonBoolean"
-    // InternalAceGen.g:5355:1: entryRuleJsonBoolean returns [String current=null] : iv_ruleJsonBoolean= ruleJsonBoolean EOF ;
+    // InternalAceGen.g:5300:1: entryRuleJsonBoolean returns [String current=null] : iv_ruleJsonBoolean= ruleJsonBoolean EOF ;
     public final String entryRuleJsonBoolean() throws RecognitionException {
         String current = null;
 
@@ -13935,8 +13806,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5355:51: (iv_ruleJsonBoolean= ruleJsonBoolean EOF )
-            // InternalAceGen.g:5356:2: iv_ruleJsonBoolean= ruleJsonBoolean EOF
+            // InternalAceGen.g:5300:51: (iv_ruleJsonBoolean= ruleJsonBoolean EOF )
+            // InternalAceGen.g:5301:2: iv_ruleJsonBoolean= ruleJsonBoolean EOF
             {
              newCompositeNode(grammarAccess.getJsonBooleanRule()); 
             pushFollow(FOLLOW_1);
@@ -13963,7 +13834,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonBoolean"
-    // InternalAceGen.g:5362:1: ruleJsonBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
+    // InternalAceGen.g:5307:1: ruleJsonBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
     public final AntlrDatatypeRuleToken ruleJsonBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -13973,30 +13844,30 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5368:2: ( (kw= 'true' | kw= 'false' ) )
-            // InternalAceGen.g:5369:2: (kw= 'true' | kw= 'false' )
+            // InternalAceGen.g:5313:2: ( (kw= 'true' | kw= 'false' ) )
+            // InternalAceGen.g:5314:2: (kw= 'true' | kw= 'false' )
             {
-            // InternalAceGen.g:5369:2: (kw= 'true' | kw= 'false' )
-            int alt140=2;
-            int LA140_0 = input.LA(1);
+            // InternalAceGen.g:5314:2: (kw= 'true' | kw= 'false' )
+            int alt137=2;
+            int LA137_0 = input.LA(1);
 
-            if ( (LA140_0==95) ) {
-                alt140=1;
+            if ( (LA137_0==94) ) {
+                alt137=1;
             }
-            else if ( (LA140_0==96) ) {
-                alt140=2;
+            else if ( (LA137_0==95) ) {
+                alt137=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 140, 0, input);
+                    new NoViableAltException("", 137, 0, input);
 
                 throw nvae;
             }
-            switch (alt140) {
+            switch (alt137) {
                 case 1 :
-                    // InternalAceGen.g:5370:3: kw= 'true'
+                    // InternalAceGen.g:5315:3: kw= 'true'
                     {
-                    kw=(Token)match(input,95,FOLLOW_2); 
+                    kw=(Token)match(input,94,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getJsonBooleanAccess().getTrueKeyword_0());
@@ -14005,9 +13876,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:5376:3: kw= 'false'
+                    // InternalAceGen.g:5321:3: kw= 'false'
                     {
-                    kw=(Token)match(input,96,FOLLOW_2); 
+                    kw=(Token)match(input,95,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getJsonBooleanAccess().getFalseKeyword_1());
@@ -14038,7 +13909,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimitiveValue"
-    // InternalAceGen.g:5385:1: entryRulePrimitiveValue returns [EObject current=null] : iv_rulePrimitiveValue= rulePrimitiveValue EOF ;
+    // InternalAceGen.g:5330:1: entryRulePrimitiveValue returns [EObject current=null] : iv_rulePrimitiveValue= rulePrimitiveValue EOF ;
     public final EObject entryRulePrimitiveValue() throws RecognitionException {
         EObject current = null;
 
@@ -14046,8 +13917,8 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAceGen.g:5385:55: (iv_rulePrimitiveValue= rulePrimitiveValue EOF )
-            // InternalAceGen.g:5386:2: iv_rulePrimitiveValue= rulePrimitiveValue EOF
+            // InternalAceGen.g:5330:55: (iv_rulePrimitiveValue= rulePrimitiveValue EOF )
+            // InternalAceGen.g:5331:2: iv_rulePrimitiveValue= rulePrimitiveValue EOF
             {
              newCompositeNode(grammarAccess.getPrimitiveValueRule()); 
             pushFollow(FOLLOW_1);
@@ -14074,7 +13945,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimitiveValue"
-    // InternalAceGen.g:5392:1: rulePrimitiveValue returns [EObject current=null] : ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) ) ;
+    // InternalAceGen.g:5337:1: rulePrimitiveValue returns [EObject current=null] : ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) ) ;
     public final EObject rulePrimitiveValue() throws RecognitionException {
         EObject current = null;
 
@@ -14085,34 +13956,34 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:5398:2: ( ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) ) )
-            // InternalAceGen.g:5399:2: ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) )
+            // InternalAceGen.g:5343:2: ( ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) ) )
+            // InternalAceGen.g:5344:2: ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) )
             {
-            // InternalAceGen.g:5399:2: ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) )
-            int alt141=2;
-            int LA141_0 = input.LA(1);
+            // InternalAceGen.g:5344:2: ( ( (lv_string_0_0= RULE_STRING ) ) | ( (lv_long_1_0= RULE_INT ) ) )
+            int alt138=2;
+            int LA138_0 = input.LA(1);
 
-            if ( (LA141_0==RULE_STRING) ) {
-                alt141=1;
+            if ( (LA138_0==RULE_STRING) ) {
+                alt138=1;
             }
-            else if ( (LA141_0==RULE_INT) ) {
-                alt141=2;
+            else if ( (LA138_0==RULE_INT) ) {
+                alt138=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 141, 0, input);
+                    new NoViableAltException("", 138, 0, input);
 
                 throw nvae;
             }
-            switch (alt141) {
+            switch (alt138) {
                 case 1 :
-                    // InternalAceGen.g:5400:3: ( (lv_string_0_0= RULE_STRING ) )
+                    // InternalAceGen.g:5345:3: ( (lv_string_0_0= RULE_STRING ) )
                     {
-                    // InternalAceGen.g:5400:3: ( (lv_string_0_0= RULE_STRING ) )
-                    // InternalAceGen.g:5401:4: (lv_string_0_0= RULE_STRING )
+                    // InternalAceGen.g:5345:3: ( (lv_string_0_0= RULE_STRING ) )
+                    // InternalAceGen.g:5346:4: (lv_string_0_0= RULE_STRING )
                     {
-                    // InternalAceGen.g:5401:4: (lv_string_0_0= RULE_STRING )
-                    // InternalAceGen.g:5402:5: lv_string_0_0= RULE_STRING
+                    // InternalAceGen.g:5346:4: (lv_string_0_0= RULE_STRING )
+                    // InternalAceGen.g:5347:5: lv_string_0_0= RULE_STRING
                     {
                     lv_string_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -14138,13 +14009,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalAceGen.g:5419:3: ( (lv_long_1_0= RULE_INT ) )
+                    // InternalAceGen.g:5364:3: ( (lv_long_1_0= RULE_INT ) )
                     {
-                    // InternalAceGen.g:5419:3: ( (lv_long_1_0= RULE_INT ) )
-                    // InternalAceGen.g:5420:4: (lv_long_1_0= RULE_INT )
+                    // InternalAceGen.g:5364:3: ( (lv_long_1_0= RULE_INT ) )
+                    // InternalAceGen.g:5365:4: (lv_long_1_0= RULE_INT )
                     {
-                    // InternalAceGen.g:5420:4: (lv_long_1_0= RULE_INT )
-                    // InternalAceGen.g:5421:5: lv_long_1_0= RULE_INT
+                    // InternalAceGen.g:5365:4: (lv_long_1_0= RULE_INT )
+                    // InternalAceGen.g:5366:5: lv_long_1_0= RULE_INT
                     {
                     lv_long_1_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
@@ -14193,18 +14064,18 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     // Delegated rules
 
 
-    protected DFA52 dfa52 = new DFA52(this);
-    protected DFA68 dfa68 = new DFA68(this);
+    protected DFA49 dfa49 = new DFA49(this);
+    protected DFA65 dfa65 = new DFA65(this);
     static final String dfa_1s = "\12\uffff";
-    static final String dfa_2s = "\2\uffff\1\10\7\uffff";
+    static final String dfa_2s = "\2\uffff\1\11\7\uffff";
     static final String dfa_3s = "\1\5\1\uffff\1\4\7\uffff";
-    static final String dfa_4s = "\1\140\1\uffff\1\61\7\uffff";
-    static final String dfa_5s = "\1\uffff\1\1\1\uffff\1\3\1\4\1\5\1\6\1\10\1\2\1\7";
+    static final String dfa_4s = "\1\137\1\uffff\1\57\7\uffff";
+    static final String dfa_5s = "\1\uffff\1\1\1\uffff\1\3\1\4\1\5\1\6\1\10\1\7\1\2";
     static final String dfa_6s = "\12\uffff}>";
     static final String[] dfa_7s = {
-            "\1\2\1\6\10\uffff\1\1\40\uffff\1\3\33\uffff\1\5\21\uffff\1\7\2\4",
+            "\1\2\1\6\10\uffff\1\1\36\uffff\1\3\34\uffff\1\5\21\uffff\1\7\2\4",
             "",
-            "\1\10\1\11\12\uffff\1\10\3\uffff\1\10\31\uffff\1\10\2\uffff\1\10",
+            "\1\11\1\10\12\uffff\1\11\3\uffff\1\11\27\uffff\1\11\2\uffff\1\11",
             "",
             "",
             "",
@@ -14222,11 +14093,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     static final short[] dfa_6 = DFA.unpackEncodedString(dfa_6s);
     static final short[][] dfa_7 = unpackEncodedStringArray(dfa_7s);
 
-    class DFA52 extends DFA {
+    class DFA49 extends DFA {
 
-        public DFA52(BaseRecognizer recognizer) {
+        public DFA49(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 52;
+            this.decisionNumber = 49;
             this.eot = dfa_1;
             this.eof = dfa_2;
             this.min = dfa_3;
@@ -14236,22 +14107,22 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             this.transition = dfa_7;
         }
         public String getDescription() {
-            return "1860:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )";
+            return "1805:2: (this_JsonObjectClient_0= ruleJsonObjectClient | this_StringType_1= ruleStringType | this_JsonArrayClient_2= ruleJsonArrayClient | this_BooleanType_3= ruleBooleanType | this_NullType_4= ruleNullType | this_LongType_5= ruleLongType | this_JsonDateTime_6= ruleJsonDateTime | this_UndefinedType_7= ruleUndefinedType )";
         }
     }
     static final String dfa_8s = "\11\uffff";
-    static final String dfa_9s = "\1\4\1\72\1\4\1\73\1\4\1\123\1\73\2\uffff";
-    static final String dfa_10s = "\1\4\1\72\1\4\1\122\1\4\1\126\1\122\2\uffff";
+    static final String dfa_9s = "\1\4\1\70\1\4\1\71\1\4\1\122\1\71\2\uffff";
+    static final String dfa_10s = "\1\4\1\70\1\4\1\121\1\4\1\125\1\121\2\uffff";
     static final String dfa_11s = "\7\uffff\1\1\1\2";
     static final String dfa_12s = "\11\uffff}>";
     static final String[] dfa_13s = {
             "\1\1",
             "\1\2",
             "\1\3",
-            "\1\5\26\uffff\1\4",
+            "\1\5\27\uffff\1\4",
             "\1\6",
             "\3\7\1\10",
-            "\1\5\26\uffff\1\4",
+            "\1\5\27\uffff\1\4",
             "",
             ""
     };
@@ -14263,11 +14134,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     static final short[] dfa_12 = DFA.unpackEncodedString(dfa_12s);
     static final short[][] dfa_13 = unpackEncodedStringArray(dfa_13s);
 
-    class DFA68 extends DFA {
+    class DFA65 extends DFA {
 
-        public DFA68(BaseRecognizer recognizer) {
+        public DFA65(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 68;
+            this.decisionNumber = 65;
             this.eot = dfa_8;
             this.eof = dfa_8;
             this.min = dfa_9;
@@ -14277,7 +14148,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             this.transition = dfa_13;
         }
         public String getDescription() {
-            return "2269:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )";
+            return "2214:2: (this_HttpServerAceWrite_0= ruleHttpServerAceWrite | this_HttpServerAceRead_1= ruleHttpServerAceRead )";
         }
     }
  
@@ -14285,11 +14156,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0001000000000002L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000026002L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000064012L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000028002L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x00000001C0010010L,0x000000001F800000L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x00000000C0010010L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000020002L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000005C80002L});
@@ -14304,88 +14175,87 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000030200000L});
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000008000002L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000200010L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000100000010L,0x000000001F800000L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000010L,0x000000001F800000L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000E00008002L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000C00008002L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000800008002L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x00000001C0000010L,0x000000001F800000L});
-    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000003000000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000002000000010L});
-    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000004000000000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000600000000000L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000008000080002L});
-    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000010000010000L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x00000E0000010000L});
-    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x00000C0000010000L});
-    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000080000010000L});
-    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000000060L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000400000000012L});
-    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0001000000008060L,0x00000001C0001000L});
-    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000110010L});
-    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000110000L});
-    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0003000000108060L,0x00000001C0001000L});
-    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0002000000100000L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0038000000000010L});
-    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0030000000000010L});
-    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0020000000000010L});
-    public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x03C0000000022002L});
-    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0380000000022002L});
-    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0300000000022002L});
-    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0300000000020012L});
-    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0200000000020012L,0x0000000000000002L});
-    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000020012L,0x0000000000000004L});
-    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0400000000000000L});
-    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000000000L,0x0000000000380000L});
-    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0xF000000004000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0xE000000004000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0xC000000084000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x8000000084000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000084000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000004000012L});
-    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000080002L});
-    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
-    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0xF000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0xE000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0xC000000080000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x8000000080000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000080000012L,0x0000000000000001L});
-    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000010010L});
-    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000180010010L,0x000000001F818000L});
-    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000008002L,0x0000000000000008L});
-    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000108002L});
-    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000200060L});
-    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000042L});
-    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000000042L,0x0000000000000020L});
-    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000010000008000L,0x0000000020006400L});
-    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004400L});
-    public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000400L});
-    public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000400000000002L,0x0000000000000041L});
-    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000410000008000L,0x0000000020002040L});
-    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000400000000002L,0x0000000000000040L});
-    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000380L});
-    public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000008000L,0x0000000020001800L});
-    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000008002L,0x0000000020002000L});
-    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000008002L,0x0000000020000000L});
-    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000180000010L,0x000000001F810000L});
-    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000180000010L,0x000000001F800000L});
-    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000080000000002L,0x0000000000020000L});
-    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000080000000002L});
-    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000000002L,0x0000000000040000L});
-    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0001000000008060L,0x00000001A0001000L});
-    public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0003000000108060L,0x00000001A0001000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000300008002L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000200008002L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x00000000C0000010L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000800000010L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000180000000000L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000002000080002L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000002000000002L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000004000010000L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000038000010000L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000030000010000L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000020000010000L});
+    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000060L});
+    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000100000000012L});
+    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000400000008060L,0x00000000E0000800L});
+    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000110010L});
+    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000000110000L});
+    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000C00000108060L,0x00000000E0000800L});
+    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000800000100000L});
+    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x000E000000000010L});
+    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x000C000000000010L});
+    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0008000000000010L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x00F0000000022002L});
+    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x00E0000000022002L});
+    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x00C0000000022002L});
+    public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x00C0000000020012L});
+    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0080000000020012L,0x0000000000000001L});
+    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000020012L,0x0000000000000002L});
+    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000000L,0x00000000001C0000L});
+    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x7C00000004000002L});
+    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x7800000004000002L});
+    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0xF000000004000012L});
+    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0xE000000004000012L});
+    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0xC000000004000012L});
+    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000004000012L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000080002L});
+    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
+    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x7C00000000000002L});
+    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x7800000000000002L});
+    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0xF000000000000012L});
+    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0xE000000000000012L});
+    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0xC000000000000012L});
+    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000010010L});
+    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x8000000080010010L,0x000000000FC0C000L});
+    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000008002L,0x0000000000000004L});
+    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000108002L});
+    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000200060L});
+    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000042L,0x0000000000000010L});
+    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000004000008000L,0x0000000010003200L});
+    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000000002L,0x0000000000002200L});
+    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000200L});
+    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x4000100000000002L,0x0000000000000020L});
+    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000104000008000L,0x0000000010001020L});
+    public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000100000000002L,0x0000000000000020L});
+    public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000000000000L,0x00000000000001C0L});
+    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000000008000L,0x0000000010000C00L});
+    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000008002L,0x0000000010001000L});
+    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000008002L,0x0000000010000000L});
+    public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x8000000080000010L,0x000000000FC08000L});
+    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x8000000080000010L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000080000010L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000010L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000020000000002L,0x0000000000010000L});
+    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000020000000002L});
+    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
+    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000400000008060L,0x00000000D0000800L});
+    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000C00000108060L,0x00000000D0000800L});
 
 }

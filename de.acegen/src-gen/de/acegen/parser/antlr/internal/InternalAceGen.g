@@ -202,15 +202,15 @@ ruleHttpClient returns [EObject current=null]
 		(
 			(
 				(
-					lv_appStatePresent_3_0='appState'
+					lv_uiPresent_3_0='ui'
 					{
-						newLeafNode(lv_appStatePresent_3_0, grammarAccess.getHttpClientAccess().getAppStatePresentAppStateKeyword_2_0_0());
+						newLeafNode(lv_uiPresent_3_0, grammarAccess.getHttpClientAccess().getUiPresentUiKeyword_2_0_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getHttpClientRule());
 						}
-						setWithLastConsumed($current, "appStatePresent", lv_appStatePresent_3_0 != null, "appState");
+						setWithLastConsumed($current, "uiPresent", lv_uiPresent_3_0 != null, "ui");
 					}
 				)
 			)
@@ -222,17 +222,17 @@ ruleHttpClient returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getHttpClientAccess().getAppStateClientAttributeParserRuleCall_2_1_1_0());
+							newCompositeNode(grammarAccess.getHttpClientAccess().getUiClientAttributeParserRuleCall_2_1_1_0());
 						}
-						lv_appState_5_0=ruleClientAttribute
+						lv_ui_5_0=ruleClientAttribute
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getHttpClientRule());
 							}
 							add(
 								$current,
-								"appState",
-								lv_appState_5_0,
+								"ui",
+								lv_ui_5_0,
 								"de.acegen.AceGen.ClientAttribute");
 							afterParserOrEnumRuleCall();
 						}
@@ -836,56 +836,23 @@ ruleSingleClientAttribute returns [EObject current=null]
 	(
 		(
 			(
-				lv_notNull_0_0='NotNull'
+				lv_list_0_0='List'
 				{
-					newLeafNode(lv_notNull_0_0, grammarAccess.getSingleClientAttributeAccess().getNotNullNotNullKeyword_0_0());
+					newLeafNode(lv_list_0_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_0_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "notNull", lv_notNull_0_0 != null, "NotNull");
+					setWithLastConsumed($current, "list", lv_list_0_0 != null, "List");
 				}
 			)
 		)?
 		(
 			(
-				lv_list_1_0='List'
+				lv_name_1_0=RULE_ID
 				{
-					newLeafNode(lv_list_1_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-					}
-					setWithLastConsumed($current, "list", lv_list_1_0 != null, "List");
-				}
-			)
-		)?
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getTypeTypeParserRuleCall_2_0());
-				}
-				lv_type_2_0=ruleType
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getSingleClientAttributeRule());
-					}
-					set(
-						$current,
-						"type",
-						lv_type_2_0,
-						"de.acegen.AceGen.Type");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
-		(
-			(
-				lv_name_3_0=RULE_ID
-				{
-					newLeafNode(lv_name_3_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_3_0());
+					newLeafNode(lv_name_1_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
@@ -894,72 +861,50 @@ ruleSingleClientAttribute returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_3_0,
+						lv_name_1_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_4='serverModel'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getSingleClientAttributeAccess().getServerModelKeyword_4_0());
-			}
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
-						}
-					}
-					{
-						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getModelModelCrossReference_4_1_0());
-					}
-					ruleQualifiedName
-					{
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)?
-		(
-			(
-				lv_hash_6_0='location.hash'
+				lv_hash_2_0='location.hash'
 				{
-					newLeafNode(lv_hash_6_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_5_0());
+					newLeafNode(lv_hash_2_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_2_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "hash", lv_hash_6_0 != null, "location.hash");
+					setWithLastConsumed($current, "hash", lv_hash_2_0 != null, "location.hash");
 				}
 			)
 		)?
 		(
 			(
-				lv_storage_7_0='storage'
+				lv_storage_3_0='storage'
 				{
-					newLeafNode(lv_storage_7_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_6_0());
+					newLeafNode(lv_storage_3_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_3_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "storage", lv_storage_7_0 != null, "storage");
+					setWithLastConsumed($current, "storage", lv_storage_3_0 != null, "storage");
 				}
 			)
 		)?
 		(
-			otherlv_8='{'
+			otherlv_4='{'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_7_0());
+				newLeafNode(otherlv_4, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_7_1_0());
+						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_4_1_0());
 					}
-					lv_attributes_9_0=ruleClientAttribute
+					lv_attributes_5_0=ruleClientAttribute
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getSingleClientAttributeRule());
@@ -967,15 +912,15 @@ ruleSingleClientAttribute returns [EObject current=null]
 						add(
 							$current,
 							"attributes",
-							lv_attributes_9_0,
+							lv_attributes_5_0,
 							"de.acegen.AceGen.ClientAttribute");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_10='}'
+			otherlv_6='}'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_7_2());
+				newLeafNode(otherlv_6, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_4_2());
 			}
 		)?
 	)

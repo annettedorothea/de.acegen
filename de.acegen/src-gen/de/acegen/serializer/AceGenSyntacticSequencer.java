@@ -52,7 +52,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q;
 	protected AbstractElementAlias match_Scenario_GIVENKeyword_1_0_q;
 	protected AbstractElementAlias match_SelectByPrimaryKeys_CommaKeyword_3_0_q;
-	protected AbstractElementAlias match_SingleClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q;
+	protected AbstractElementAlias match_SingleClientAttribute___LeftCurlyBracketKeyword_4_0_RightCurlyBracketKeyword_4_2__q;
 	protected AbstractElementAlias match_ThenBlock_PersistenceKeyword_2_0_q;
 	protected AbstractElementAlias match_ThenBlock_VerificationsKeyword_3_0_q;
 	
@@ -89,7 +89,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_Project___HttpClientKeyword_1_0_0_or_HttpServerKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpClientKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getProjectAccess().getHttpServerKeyword_1_1_0()));
 		match_Scenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getScenarioAccess().getGIVENKeyword_1_0());
 		match_SelectByPrimaryKeys_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getSelectByPrimaryKeysAccess().getCommaKeyword_3_0());
-		match_SingleClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_7_2()));
+		match_SingleClientAttribute___LeftCurlyBracketKeyword_4_0_RightCurlyBracketKeyword_4_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_4_2()));
 		match_ThenBlock_PersistenceKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getPersistenceKeyword_2_0());
 		match_ThenBlock_VerificationsKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getThenBlockAccess().getVerificationsKeyword_3_0());
 	}
@@ -166,8 +166,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Scenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SelectByPrimaryKeys_CommaKeyword_3_0_q.equals(syntax))
 				emit_SelectByPrimaryKeys_CommaKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SingleClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q.equals(syntax))
-				emit_SingleClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SingleClientAttribute___LeftCurlyBracketKeyword_4_0_RightCurlyBracketKeyword_4_2__q.equals(syntax))
+				emit_SingleClientAttribute___LeftCurlyBracketKeyword_4_0_RightCurlyBracketKeyword_4_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ThenBlock_PersistenceKeyword_2_0_q.equals(syntax))
 				emit_ThenBlock_PersistenceKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ThenBlock_VerificationsKeyword_3_0_q.equals(syntax))
@@ -265,7 +265,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     name=QualifiedName (ambiguity) 'scenarios' scenarios+=ClientScenario
 	 *     name=QualifiedName (ambiguity) 'scenarios'? (rule end)
-	 *     name=QualifiedName (ambiguity) appStatePresent?='appState'
+	 *     name=QualifiedName (ambiguity) uiPresent?='ui'
 	 */
 	protected void emit_HttpClient_ACEKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -277,9 +277,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     aceOperations+=HttpClientAce (ambiguity) (rule end)
-	 *     appState+=ClientAttribute '}' (ambiguity) (rule end)
-	 *     appStatePresent?='appState' ('{' '}')? (ambiguity) (rule end)
 	 *     name=QualifiedName 'ACE'? (ambiguity) (rule end)
+	 *     ui+=ClientAttribute '}' (ambiguity) (rule end)
+	 *     uiPresent?='ui' ('{' '}')? (ambiguity) (rule end)
 	 */
 	protected void emit_HttpClient_ScenariosKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -290,8 +290,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     appStatePresent?='appState' (ambiguity) 'scenarios' scenarios+=ClientScenario
-	 *     appStatePresent?='appState' (ambiguity) 'scenarios'? (rule end)
+	 *     uiPresent?='ui' (ambiguity) 'scenarios' scenarios+=ClientScenario
+	 *     uiPresent?='ui' (ambiguity) 'scenarios'? (rule end)
 	 */
 	protected void emit_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -628,11 +628,10 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     hash?='location.hash' (ambiguity) (rule end)
-	 *     model=[Model|QualifiedName] (ambiguity) (rule end)
 	 *     name=ID (ambiguity) (rule end)
 	 *     storage?='storage' (ambiguity) (rule end)
 	 */
-	protected void emit_SingleClientAttribute___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SingleClientAttribute___LeftCurlyBracketKeyword_4_0_RightCurlyBracketKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

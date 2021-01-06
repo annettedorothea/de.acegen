@@ -123,22 +123,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT__ACE_OPERATIONS = 1;
 
   /**
-   * The feature id for the '<em><b>App State Present</b></em>' attribute.
+   * The feature id for the '<em><b>Ui Present</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__APP_STATE_PRESENT = 2;
+  int HTTP_CLIENT__UI_PRESENT = 2;
 
   /**
-   * The feature id for the '<em><b>App State</b></em>' containment reference list.
+   * The feature id for the '<em><b>Ui</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__APP_STATE = 3;
+  int HTTP_CLIENT__UI = 3;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -436,40 +436,13 @@ public interface AceGenPackage extends EPackage
   int SINGLE_CLIENT_ATTRIBUTE__NAME = CLIENT_ATTRIBUTE__NAME;
 
   /**
-   * The feature id for the '<em><b>Not Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__NOT_NULL = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>List</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__LIST = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__TYPE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Model</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__MODEL = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
+  int SINGLE_CLIENT_ATTRIBUTE__LIST = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Hash</b></em>' attribute.
@@ -478,7 +451,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__HASH = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
+  int SINGLE_CLIENT_ATTRIBUTE__HASH = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Storage</b></em>' attribute.
@@ -487,7 +460,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 5;
+  int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -496,7 +469,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 6;
+  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Single Client Attribute</em>' class.
@@ -505,7 +478,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 7;
+  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.GroupedClientAttributeImpl <em>Grouped Client Attribute</em>}' class.
@@ -2848,26 +2821,26 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClient_AceOperations();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isAppStatePresent <em>App State Present</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>App State Present</em>'.
-   * @see de.acegen.aceGen.HttpClient#isAppStatePresent()
+   * @return the meta object for the attribute '<em>Ui Present</em>'.
+   * @see de.acegen.aceGen.HttpClient#isUiPresent()
    * @see #getHttpClient()
    * @generated
    */
-  EAttribute getHttpClient_AppStatePresent();
+  EAttribute getHttpClient_UiPresent();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getUi <em>Ui</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>App State</em>'.
-   * @see de.acegen.aceGen.HttpClient#getAppState()
+   * @return the meta object for the containment reference list '<em>Ui</em>'.
+   * @see de.acegen.aceGen.HttpClient#getUi()
    * @see #getHttpClient()
    * @generated
    */
-  EReference getHttpClient_AppState();
+  EReference getHttpClient_Ui();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}'.
@@ -3127,17 +3100,6 @@ public interface AceGenPackage extends EPackage
   EClass getSingleClientAttribute();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isNotNull <em>Not Null</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Not Null</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#isNotNull()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EAttribute getSingleClientAttribute_NotNull();
-
-  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3147,28 +3109,6 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getSingleClientAttribute_List();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#getType()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EAttribute getSingleClientAttribute_Type();
-
-  /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.SingleClientAttribute#getModel <em>Model</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Model</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#getModel()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EReference getSingleClientAttribute_Model();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isHash <em>Hash</em>}'.
@@ -5141,20 +5081,20 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT__ACE_OPERATIONS = eINSTANCE.getHttpClient_AceOperations();
 
     /**
-     * The meta object literal for the '<em><b>App State Present</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Ui Present</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_CLIENT__APP_STATE_PRESENT = eINSTANCE.getHttpClient_AppStatePresent();
+    EAttribute HTTP_CLIENT__UI_PRESENT = eINSTANCE.getHttpClient_UiPresent();
 
     /**
-     * The meta object literal for the '<em><b>App State</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Ui</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference HTTP_CLIENT__APP_STATE = eINSTANCE.getHttpClient_AppState();
+    EReference HTTP_CLIENT__UI = eINSTANCE.getHttpClient_Ui();
 
     /**
      * The meta object literal for the '<em><b>Scenarios</b></em>' containment reference list feature.
@@ -5363,36 +5303,12 @@ public interface AceGenPackage extends EPackage
     EClass SINGLE_CLIENT_ATTRIBUTE = eINSTANCE.getSingleClientAttribute();
 
     /**
-     * The meta object literal for the '<em><b>Not Null</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__NOT_NULL = eINSTANCE.getSingleClientAttribute_NotNull();
-
-    /**
      * The meta object literal for the '<em><b>List</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute SINGLE_CLIENT_ATTRIBUTE__LIST = eINSTANCE.getSingleClientAttribute_List();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__TYPE = eINSTANCE.getSingleClientAttribute_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Model</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SINGLE_CLIENT_ATTRIBUTE__MODEL = eINSTANCE.getSingleClientAttribute_Model();
 
     /**
      * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.

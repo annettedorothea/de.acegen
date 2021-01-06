@@ -30,8 +30,10 @@ import de.acegen.templates.es6.ScenarioTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import de.acegen.generator.es6.ReactGenerator
 
 class Es6Generator {
+	
 	@Inject
 	ActionTemplate actionTemplate;
 
@@ -52,6 +54,9 @@ class Es6Generator {
 
 	@Inject
 	extension Es6Extension
+	
+	@Inject
+	ReactGenerator reactGenerator
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		for (ace : httpClient.aceOperations) {
@@ -110,10 +115,11 @@ class Es6Generator {
 		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateTriggerAction());
 		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
-		if (httpClient.appStatePresent && httpClient.getAppState !== null && httpClient.getAppState.size > 0) {
+		if (httpClient.uiPresent && httpClient.getUi !== null && httpClient.getUi.size > 0) {
 			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateAppState(httpClient.getAppState, ""));
+				aceTemplate.generateAppState(httpClient.getUi, ""));
 		}
+		reactGenerator.doGenerate(httpClient, fsa);
 		
 		for (scenario : httpClient.scenarios) {
 			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT,

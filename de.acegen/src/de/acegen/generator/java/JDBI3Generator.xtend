@@ -41,6 +41,8 @@ class JDBI3Generator {
 	extension ModelExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
+		fsa.generateFile('de/acegen/AbstractDao.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, jdbi3Dao.generateAbstractJdbiDao());
 		for (modelAce : httpServer.models) {
 			fsa.generateFile(httpServer.packageFolder + '/models/' + modelAce.modelMapper + '.java',
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, jdbi3Mapper.generate(modelAce, httpServer));

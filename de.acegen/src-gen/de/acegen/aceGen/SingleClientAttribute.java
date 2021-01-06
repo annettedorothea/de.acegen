@@ -14,10 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isNotNull <em>Not Null</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}</li>
- *   <li>{@link de.acegen.aceGen.SingleClientAttribute#getType <em>Type</em>}</li>
- *   <li>{@link de.acegen.aceGen.SingleClientAttribute#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isStorage <em>Storage</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#getAttributes <em>Attributes</em>}</li>
@@ -29,28 +26,6 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SingleClientAttribute extends ClientAttribute
 {
-  /**
-   * Returns the value of the '<em><b>Not Null</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Not Null</em>' attribute.
-   * @see #setNotNull(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getSingleClientAttribute_NotNull()
-   * @model
-   * @generated
-   */
-  boolean isNotNull();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.SingleClientAttribute#isNotNull <em>Not Null</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Not Null</em>' attribute.
-   * @see #isNotNull()
-   * @generated
-   */
-  void setNotNull(boolean value);
-
   /**
    * Returns the value of the '<em><b>List</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -72,50 +47,6 @@ public interface SingleClientAttribute extends ClientAttribute
    * @generated
    */
   void setList(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
-   * @see de.acegen.aceGen.AceGenPackage#getSingleClientAttribute_Type()
-   * @model
-   * @generated
-   */
-  String getType();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.SingleClientAttribute#getType <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
-   * @see #getType()
-   * @generated
-   */
-  void setType(String value);
-
-  /**
-   * Returns the value of the '<em><b>Model</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Model</em>' reference.
-   * @see #setModel(Model)
-   * @see de.acegen.aceGen.AceGenPackage#getSingleClientAttribute_Model()
-   * @model
-   * @generated
-   */
-  Model getModel();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.SingleClientAttribute#getModel <em>Model</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Model</em>' reference.
-   * @see #getModel()
-   * @generated
-   */
-  void setModel(Model value);
 
   /**
    * Returns the value of the '<em><b>Hash</b></em>' attribute.

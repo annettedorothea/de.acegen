@@ -13,8 +13,8 @@
     <genClasses ecoreClass="AceGen.ecore#//HttpClient">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/aceOperations"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/appStatePresent"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/appState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/uiPresent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/ui"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/scenarios"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientAce">
@@ -46,10 +46,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/name"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//SingleClientAttribute">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/notNull"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/list"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/type"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/storage"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/attributes"/>

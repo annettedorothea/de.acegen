@@ -35,8 +35,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isAppStatePresent <em>App State Present</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAppState <em>App State</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isUiPresent <em>Ui Present</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getUi <em>Ui</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -75,34 +75,34 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   protected EList<HttpClientAce> aceOperations;
 
   /**
-   * The default value of the '{@link #isAppStatePresent() <em>App State Present</em>}' attribute.
+   * The default value of the '{@link #isUiPresent() <em>Ui Present</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAppStatePresent()
+   * @see #isUiPresent()
    * @generated
    * @ordered
    */
-  protected static final boolean APP_STATE_PRESENT_EDEFAULT = false;
+  protected static final boolean UI_PRESENT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isAppStatePresent() <em>App State Present</em>}' attribute.
+   * The cached value of the '{@link #isUiPresent() <em>Ui Present</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isAppStatePresent()
+   * @see #isUiPresent()
    * @generated
    * @ordered
    */
-  protected boolean appStatePresent = APP_STATE_PRESENT_EDEFAULT;
+  protected boolean uiPresent = UI_PRESENT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getAppState() <em>App State</em>}' containment reference list.
+   * The cached value of the '{@link #getUi() <em>Ui</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAppState()
+   * @see #getUi()
    * @generated
    * @ordered
    */
-  protected EList<ClientAttribute> appState;
+  protected EList<ClientAttribute> ui;
 
   /**
    * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
@@ -181,9 +181,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public boolean isAppStatePresent()
+  public boolean isUiPresent()
   {
-    return appStatePresent;
+    return uiPresent;
   }
 
   /**
@@ -192,12 +192,12 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setAppStatePresent(boolean newAppStatePresent)
+  public void setUiPresent(boolean newUiPresent)
   {
-    boolean oldAppStatePresent = appStatePresent;
-    appStatePresent = newAppStatePresent;
+    boolean oldUiPresent = uiPresent;
+    uiPresent = newUiPresent;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT, oldAppStatePresent, appStatePresent));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__UI_PRESENT, oldUiPresent, uiPresent));
   }
 
   /**
@@ -206,13 +206,13 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public EList<ClientAttribute> getAppState()
+  public EList<ClientAttribute> getUi()
   {
-    if (appState == null)
+    if (ui == null)
     {
-      appState = new EObjectContainmentEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.HTTP_CLIENT__APP_STATE);
+      ui = new EObjectContainmentEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.HTTP_CLIENT__UI);
     }
-    return appState;
+    return ui;
   }
 
   /**
@@ -242,8 +242,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     {
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return ((InternalEList<?>)getAceOperations()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        return ((InternalEList<?>)getAppState()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_CLIENT__UI:
+        return ((InternalEList<?>)getUi()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
@@ -264,10 +264,10 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return getName();
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return getAceOperations();
-      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
-        return isAppStatePresent();
-      case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        return getAppState();
+      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
+        return isUiPresent();
+      case AceGenPackage.HTTP_CLIENT__UI:
+        return getUi();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return getScenarios();
     }
@@ -292,12 +292,12 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().clear();
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
-        setAppStatePresent((Boolean)newValue);
+      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
+        setUiPresent((Boolean)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        getAppState().clear();
-        getAppState().addAll((Collection<? extends ClientAttribute>)newValue);
+      case AceGenPackage.HTTP_CLIENT__UI:
+        getUi().clear();
+        getUi().addAll((Collection<? extends ClientAttribute>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -323,11 +323,11 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
-        setAppStatePresent(APP_STATE_PRESENT_EDEFAULT);
+      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
+        setUiPresent(UI_PRESENT_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        getAppState().clear();
+      case AceGenPackage.HTTP_CLIENT__UI:
+        getUi().clear();
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -350,10 +350,10 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return aceOperations != null && !aceOperations.isEmpty();
-      case AceGenPackage.HTTP_CLIENT__APP_STATE_PRESENT:
-        return appStatePresent != APP_STATE_PRESENT_EDEFAULT;
-      case AceGenPackage.HTTP_CLIENT__APP_STATE:
-        return appState != null && !appState.isEmpty();
+      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
+        return uiPresent != UI_PRESENT_EDEFAULT;
+      case AceGenPackage.HTTP_CLIENT__UI:
+        return ui != null && !ui.isEmpty();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return scenarios != null && !scenarios.isEmpty();
     }
@@ -373,8 +373,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", appStatePresent: ");
-    result.append(appStatePresent);
+    result.append(", uiPresent: ");
+    result.append(uiPresent);
     result.append(')');
     return result.toString();
   }

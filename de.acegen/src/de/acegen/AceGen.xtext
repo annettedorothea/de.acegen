@@ -26,8 +26,8 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName
 	('ACE' (aceOperations += HttpClientAce)*)?
-	(appStatePresent ?= 'appState' ('{'
-		appState += ClientAttribute*
+	(uiPresent ?= 'ui' ('{'
+		ui += ClientAttribute*
 	'}')? )?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
@@ -68,11 +68,8 @@ ClientAttribute:
 ;
 
 SingleClientAttribute:
-	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
-	(type = Type)?
 	name = ID 
-	('serverModel' model = [Model | QualifiedName])? 
 	hash ?= 'location.hash'? 
 	storage ?= 'storage'? 
 	('{'

@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClient#isAppStatePresent <em>App State Present</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClient#getAppState <em>App State</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#getUi <em>Ui</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -64,38 +64,38 @@ public interface HttpClient extends EObject
   EList<HttpClientAce> getAceOperations();
 
   /**
-   * Returns the value of the '<em><b>App State Present</b></em>' attribute.
+   * Returns the value of the '<em><b>Ui Present</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>App State Present</em>' attribute.
-   * @see #setAppStatePresent(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_AppStatePresent()
+   * @return the value of the '<em>Ui Present</em>' attribute.
+   * @see #setUiPresent(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_UiPresent()
    * @model
    * @generated
    */
-  boolean isAppStatePresent();
+  boolean isUiPresent();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isAppStatePresent <em>App State Present</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>App State Present</em>' attribute.
-   * @see #isAppStatePresent()
+   * @param value the new value of the '<em>Ui Present</em>' attribute.
+   * @see #isUiPresent()
    * @generated
    */
-  void setAppStatePresent(boolean value);
+  void setUiPresent(boolean value);
 
   /**
-   * Returns the value of the '<em><b>App State</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Ui</b></em>' containment reference list.
    * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>App State</em>' containment reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_AppState()
+   * @return the value of the '<em>Ui</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Ui()
    * @model containment="true"
    * @generated
    */
-  EList<ClientAttribute> getAppState();
+  EList<ClientAttribute> getUi();
 
   /**
    * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.

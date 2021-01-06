@@ -22,6 +22,7 @@ import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
+import de.acegen.generator.es6.ReactGenerator;
 import de.acegen.templates.es6.AceTemplate;
 import de.acegen.templates.es6.ActionTemplate;
 import de.acegen.templates.es6.CommandTemplate;
@@ -57,6 +58,9 @@ public class Es6Generator {
   @Inject
   @Extension
   private Es6Extension _es6Extension;
+  
+  @Inject
+  private ReactGenerator reactGenerator;
   
   public void doGenerate(final HttpClient httpClient, final IFileSystemAccess2 fsa) {
     EList<HttpClientAce> _aceOperations = httpClient.getAceOperations();
@@ -169,10 +173,11 @@ public class Es6Generator {
     fsa.generateFile("ace/TriggerAction.js", IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateTriggerAction());
     fsa.generateFile("ace/Timeline.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateTimeline());
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
-    if (((httpClient.isAppStatePresent() && (httpClient.getAppState() != null)) && (httpClient.getAppState().size() > 0))) {
+    if (((httpClient.isUiPresent() && (httpClient.getUi() != null)) && (httpClient.getUi().size() > 0))) {
       fsa.generateFile("ace/AppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.aceTemplate.generateAppState(httpClient.getAppState(), ""));
+        this.aceTemplate.generateAppState(httpClient.getUi(), ""));
     }
+    this.reactGenerator.doGenerate(httpClient, fsa);
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
       {

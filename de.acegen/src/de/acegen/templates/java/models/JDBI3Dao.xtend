@@ -35,12 +35,64 @@ class JDBI3Dao {
 	@Inject
 	extension CommonExtension
 	
+	def generateAbstractJdbiDao() '''
+		«copyright»
+		
+		package de.acegen;
+		
+		import java.util.List;
+		import java.util.Map;
+		import java.util.Optional;
+		
+		import org.jdbi.v3.core.mapper.RowMapper;
+		import org.jdbi.v3.core.statement.Query;
+		import org.jdbi.v3.core.statement.Update;
+				
+		@SuppressWarnings("all")
+		public class AbstractDao {
+			protected void update(PersistenceHandle handle, String sql, Map<String, Object> params) {
+				Update statement = handle.getHandle().createUpdate(sql);
+				for (String paramName : params.keySet()) {
+					Object value = params.get(paramName);
+					if (value instanceof List) {
+						statement.bindList(paramName, (List)value);
+					} else {
+						statement.bind(paramName, value);
+					}
+				}
+				statement.execute();
+			}
+		
+			protected <T> T selectOne(PersistenceHandle handle, String sql, Map<String, Object> params, RowMapper<T> mapper) {
+				Query query = handle.getHandle().createQuery(sql);
+				for (String paramName : params.keySet()) {
+					query.bind(paramName, params.get(paramName));
+				}
+				Optional<T> optional = query.map(mapper).findFirst();
+				return optional.isPresent() ? optional.get() : null;
+			}
+			
+			protected <T> List<T> selectList(PersistenceHandle handle, String sql, Map<String, Object> params, RowMapper<T> mapper) {
+				Query query = handle.getHandle().createQuery(sql);
+				for (String paramName : params.keySet()) {
+					query.bind(paramName, params.get(paramName));
+				}
+				return query.map(mapper).list();
+			}
+
+		}
+		
+		«sdg»
+		
+	'''
+
 	def generateAbstractJdbiDao(Model it, HttpServer httpServer) '''
 		«copyright»
 		
 		package «httpServer.name».models;
 		
 		import de.acegen.PersistenceHandle;
+		import de.acegen.AbstractDao;
 		import org.jdbi.v3.core.statement.Update;
 
 		import java.util.List;
@@ -48,7 +100,7 @@ class JDBI3Dao {
 		import java.util.Optional;
 		
 		@SuppressWarnings("all")
-		public class «abstractModelDao» {
+		public class «abstractModelDao» extends AbstractDao {
 			
 			public void insert(PersistenceHandle handle, «modelName» «modelParam») {
 				Update statement = handle.getHandle().createUpdate("INSERT INTO «table» («FOR attribute : attributes SEPARATOR ', '»«attribute.name.toLowerCase»«ENDFOR») VALUES («FOR attribute : attributes SEPARATOR ', '»«modelAttributeSqlValue(attribute)»«ENDFOR»)");
