@@ -72,7 +72,7 @@ class Es6Extension {
 		}
 	}
 
-	private def SingleClientAttribute findNextSingleClientAttributeParent(ClientAttribute it) {
+	def SingleClientAttribute findNextSingleClientAttributeParent(ClientAttribute it) {
 		var parent = eContainer;
 		while (parent !== null) {
 			if (parent instanceof SingleClientAttribute) {
@@ -81,6 +81,42 @@ class Es6Extension {
 			parent = parent.eContainer;
 		}
 		return null;
+	}
+
+	def SingleClientAttribute findNextNonListSingleClientAttributeParent(ClientAttribute it) {
+		var parentList = new ArrayList();
+		if (it instanceof SingleClientAttribute) {
+			val me = it as SingleClientAttribute
+			if (me.attributes.size > 0) {
+				parentList.add(me)
+			}
+		}
+		var parent = eContainer;
+		while (parent !== null) {
+			if (parent instanceof SingleClientAttribute) {
+				parentList.add(parent as SingleClientAttribute)
+			}
+			parent = parent.eContainer;
+		}
+		if (parentList.size === 0) {
+			return null;
+		}
+		var i = parentList.size-1;
+		while(i >= 0) {
+			if (parentList.get(i).isList) {
+				if (i+1 <= parentList.size-1) {
+					return parentList.get(i+1)
+				} else {
+					return null;
+				}
+			}
+			i--;
+		} 
+		if (parentList.get(0).isList) {
+			return null
+		} else {
+			parentList.get(0)
+		}
 	}
 
 	private def ClientAttribute findNextClientAttributeParent(ClientAttribute it) {

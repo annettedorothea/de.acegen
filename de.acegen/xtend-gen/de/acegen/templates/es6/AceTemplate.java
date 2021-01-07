@@ -1192,8 +1192,16 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("export let appState;");
     _builder.newLine();
-    _builder.append("import {setState} from \"../components/ContainerComponent\";");
     _builder.newLine();
+    _builder.append("import {setContainerState} from \"../components/ContainerComponent\";");
+    _builder.newLine();
+    {
+      for(final ClientAttribute attribute : attributes) {
+        String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, "");
+        _builder.append(_generateAppStateImportsRec);
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("export function getAppState() {");
     _builder.newLine();
@@ -1212,8 +1220,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     {
-      for(final ClientAttribute attribute : attributes) {
-        String _generateAppStateRec = this.generateAppStateRec(attribute);
+      for(final ClientAttribute attribute_1 : attributes) {
+        String _generateAppStateRec = this.generateAppStateRec(attribute_1);
         _builder.append(_generateAppStateRec);
         _builder.newLineIfNotEmpty();
       }
@@ -1525,8 +1533,9 @@ public class AceTemplate {
       }
     }
     _builder.append("\t");
-    _builder.append("setState(getAppState());");
-    _builder.newLine();
+    CharSequence _setState = this.setState(it);
+    _builder.append(_setState, "\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1536,7 +1545,7 @@ public class AceTemplate {
   private CharSequence mergeStateFunction(final SingleClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage()))) {
+      if ((((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage())) && (!it.isList()))) {
         _builder.append("export function merge_");
         String _functionName = this._es6Extension.functionName(it);
         _builder.append(_functionName);
@@ -1625,11 +1634,34 @@ public class AceTemplate {
           }
         }
         _builder.append("\t");
-        _builder.append("setState(getAppState());");
-        _builder.newLine();
+        CharSequence _setState = this.setState(it);
+        _builder.append(_setState, "\t");
+        _builder.newLineIfNotEmpty();
         _builder.append("}");
         _builder.newLine();
         _builder.newLine();
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence setState(final SingleClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    SingleClientAttribute parent = this._es6Extension.findNextNonListSingleClientAttributeParent(it);
+    _builder.newLineIfNotEmpty();
+    {
+      if ((parent == null)) {
+        _builder.append("setContainerState(getAppState());");
+        _builder.newLine();
+      } else {
+        _builder.append("set");
+        String _componentName = this._es6Extension.componentName(parent);
+        _builder.append(_componentName);
+        _builder.append("State(AppUtils.deepCopy(");
+        String _elementPath = this._es6Extension.elementPath(parent);
+        _builder.append(_elementPath);
+        _builder.append("));");
+        _builder.newLineIfNotEmpty();
       }
     }
     return _builder;
@@ -1703,6 +1735,88 @@ public class AceTemplate {
     return _builder.toString();
   }
   
+  protected String _generateAppStateImportsRec(final SingleClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    CharSequence _imports = this.imports(it, subFolder);
+    _builder.append(_imports);
+    _builder.newLineIfNotEmpty();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append(subFolder);
+    _builder_1.append("/");
+    String _firstLower = StringExtensions.toFirstLower(it.getName());
+    _builder_1.append(_firstLower);
+    CharSequence _childImports = this.childImports(it, _builder_1.toString());
+    _builder.append(_childImports);
+    _builder.newLineIfNotEmpty();
+    return _builder.toString();
+  }
+  
+  protected String _generateAppStateImportsRec(final GroupedClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((it.getAttributeGroup() == null) || (((Object[])Conversions.unwrapArray(it.getAttributeGroup(), Object.class)).length > 0))) {
+        {
+          EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
+          for(final ClientAttribute attribute : _attributeGroup) {
+            {
+              if ((attribute instanceof SingleClientAttribute)) {
+                CharSequence _imports = this.imports(((SingleClientAttribute)attribute), subFolder);
+                _builder.append(_imports);
+                _builder.newLineIfNotEmpty();
+                CharSequence _childImports = this.childImports(((SingleClientAttribute)attribute), subFolder);
+                _builder.append(_childImports);
+                _builder.newLineIfNotEmpty();
+              } else {
+                String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, subFolder);
+                _builder.append(_generateAppStateImportsRec);
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    return _builder.toString();
+  }
+  
+  private CharSequence imports(final SingleClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      int _size = it.getAttributes().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import {set");
+        String _componentName = this._es6Extension.componentName(it);
+        _builder.append(_componentName);
+        _builder.append("State} from \"../components");
+        _builder.append(subFolder);
+        _builder.append("/");
+        String _reactComponentName = this._es6Extension.reactComponentName(it);
+        _builder.append(_reactComponentName);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  private CharSequence childImports(final SingleClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
+        {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          for(final ClientAttribute attribute : _attributes) {
+            String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, subFolder);
+            _builder.append(_generateAppStateImportsRec);
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
   public String generateAppStateRec(final ClientAttribute it) {
     if (it instanceof GroupedClientAttribute) {
       return _generateAppStateRec((GroupedClientAttribute)it);
@@ -1711,6 +1825,17 @@ public class AceTemplate {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());
+    }
+  }
+  
+  public String generateAppStateImportsRec(final ClientAttribute it, final String subFolder) {
+    if (it instanceof GroupedClientAttribute) {
+      return _generateAppStateImportsRec((GroupedClientAttribute)it, subFolder);
+    } else if (it instanceof SingleClientAttribute) {
+      return _generateAppStateImportsRec((SingleClientAttribute)it, subFolder);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, subFolder).toString());
     }
   }
 }

@@ -147,7 +147,7 @@ public class Es6Extension {
     }
   }
   
-  private SingleClientAttribute findNextSingleClientAttributeParent(final ClientAttribute it) {
+  public SingleClientAttribute findNextSingleClientAttributeParent(final ClientAttribute it) {
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
@@ -158,6 +158,62 @@ public class Es6Extension {
       }
     }
     return null;
+  }
+  
+  public SingleClientAttribute findNextNonListSingleClientAttributeParent(final ClientAttribute it) {
+    SingleClientAttribute _xblockexpression = null;
+    {
+      ArrayList<SingleClientAttribute> parentList = new ArrayList<SingleClientAttribute>();
+      if ((it instanceof SingleClientAttribute)) {
+        final SingleClientAttribute me = ((SingleClientAttribute) it);
+        int _size = me.getAttributes().size();
+        boolean _greaterThan = (_size > 0);
+        if (_greaterThan) {
+          parentList.add(me);
+        }
+      }
+      EObject parent = it.eContainer();
+      while ((parent != null)) {
+        {
+          if ((parent instanceof SingleClientAttribute)) {
+            parentList.add(((SingleClientAttribute) parent));
+          }
+          parent = parent.eContainer();
+        }
+      }
+      int _size_1 = parentList.size();
+      boolean _tripleEquals = (_size_1 == 0);
+      if (_tripleEquals) {
+        return null;
+      }
+      int _size_2 = parentList.size();
+      int i = (_size_2 - 1);
+      while ((i >= 0)) {
+        {
+          boolean _isList = parentList.get(i).isList();
+          if (_isList) {
+            int _size_3 = parentList.size();
+            int _minus = (_size_3 - 1);
+            boolean _lessEqualsThan = ((i + 1) <= _minus);
+            if (_lessEqualsThan) {
+              return parentList.get((i + 1));
+            } else {
+              return null;
+            }
+          }
+          i--;
+        }
+      }
+      SingleClientAttribute _xifexpression = null;
+      boolean _isList = parentList.get(0).isList();
+      if (_isList) {
+        return null;
+      } else {
+        _xifexpression = parentList.get(0);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
   }
   
   private ClientAttribute findNextClientAttributeParent(final ClientAttribute it) {

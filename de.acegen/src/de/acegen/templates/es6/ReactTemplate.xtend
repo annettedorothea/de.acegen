@@ -19,11 +19,21 @@ class ReactTemplate {
 	def generateComponent(ClientAttribute it, String subFolder, String folderPrefix) '''
 		«copyright»
 
-		import React from 'react';
+		import React, {useState} from 'react';
 		import { uiElement } from "«folderPrefix»../../src/components«subFolder»/«componentName»";
 		
+		export const set«componentName»State = (newState) => {
+		    if (functions.setState) {
+		        functions.setState(newState);
+		    }
+		}
+		
+		let functions = {};
+		
 		export const «reactComponentName» = (props) => {
-		    return uiElement(props);
+		    const [state, setState] = useState();
+		    functions.setState = setState;
+		    return uiElement({...props, ...state});
 		}
 		
 		«sdg»
@@ -38,22 +48,20 @@ class ReactTemplate {
 		import { uiElement } from "../../src/components/Container";
 		import * as AppState from "../ace/AppState";
 		
-		export const setState = (newState) => {
-		    console.log("setState newState", newState);
-		    if (listeners.setMyState) {
-		        listeners.setMyState(newState);
+		export const setContainerState = (newState) => {
+		    if (functions.setState) {
+		        functions.setState(newState);
 		    }
 		}
 		
-		let listeners = {};
+		let functions = {};
 		
 		export const ContainerComponent = (props) => {
-		    const [state, setMyState] = useState(AppState.getAppState());
-		    listeners.setMyState = setMyState;
-		    console.log("ContainerComponent state", state);
-		    return uiElement(state);
+		    const [state, setState] = useState(AppState.getAppState());
+		    functions.setState = setState;
+		    return uiElement({...props, ...state});
 		}
-				
+		
 		«sdg»
 		
 	'''

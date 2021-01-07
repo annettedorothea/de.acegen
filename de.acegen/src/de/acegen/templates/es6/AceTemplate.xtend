@@ -493,7 +493,11 @@ class AceTemplate {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export let appState;
-		import {setState} from "../components/ContainerComponent";
+
+		import {setContainerState} from "../components/ContainerComponent";
+		«FOR attribute : attributes»
+			«attribute.generateAppStateImportsRec("")»
+		«ENDFOR»
 		
 		export function getAppState() {
 			return AppUtils.deepCopy(appState);
@@ -582,13 +586,13 @@ class AceTemplate {
 					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			«ENDIF»
-			setState(getAppState());
+			«setState»
 		}
 		
 	'''
 	
 	private def mergeStateFunction(SingleClientAttribute it) '''
-		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage» 
+		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage && !isList» 
 			export function merge_«functionName»(eventData) {
 				«FOR attr : allParentAttributes»
 					if (!«attr.elementPath») {
@@ -611,9 +615,18 @@ class AceTemplate {
 						}
 					«ENDIF»
 				«ENDFOR»
-				setState(getAppState());
+				«setState»
 			}
 			
+		«ENDIF»
+	'''
+	
+	private def setState(SingleClientAttribute it) '''
+		«var parent = findNextNonListSingleClientAttributeParent»
+		«IF parent === null»
+			setContainerState(getAppState());
+		«ELSE»
+			set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
 		«ENDIF»
 	'''
 	
@@ -646,6 +659,39 @@ class AceTemplate {
 			«ENDFOR»
 		«ENDIF»
 	'''
+	
+	def dispatch String generateAppStateImportsRec(SingleClientAttribute it, String subFolder) '''
+		«imports(subFolder)»
+		«childImports('''«subFolder»/«name.toFirstLower»''')»
+	'''
+	
+	def dispatch String generateAppStateImportsRec(GroupedClientAttribute it, String subFolder) '''
+		«IF attributeGroup === null || attributeGroup.length > 0»
+			«FOR attribute : attributeGroup»
+				«IF attribute instanceof SingleClientAttribute»
+					«attribute.imports(subFolder)»
+					«attribute.childImports(subFolder)»
+				«ELSE»
+					«attribute.generateAppStateImportsRec(subFolder)»
+				«ENDIF»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	private def imports(SingleClientAttribute it, String subFolder) '''
+		«IF attributes.size > 0»
+			import {set«componentName»State} from "../components«subFolder»/«reactComponentName»";
+		«ENDIF»
+	'''
+	
+	private def childImports(SingleClientAttribute it, String subFolder) '''
+		«IF attributes !== null && !isList && !isHash && !isStorage»
+			«FOR attribute : attributes»
+					«attribute.generateAppStateImportsRec(subFolder)»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
 	
 }	
 	
