@@ -493,6 +493,7 @@ class AceTemplate {
 		import AppUtils from "../../src/app/AppUtils";
 		
 		export let appState;
+		import {setState} from "../components/ContainerComponent";
 		
 		export function getAppState() {
 			return AppUtils.deepCopy(appState);
@@ -581,6 +582,7 @@ class AceTemplate {
 					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			«ENDIF»
+			setState(getAppState());
 		}
 		
 	'''
@@ -609,6 +611,7 @@ class AceTemplate {
 						}
 					«ENDIF»
 				«ENDFOR»
+				setState(getAppState());
 			}
 			
 		«ENDIF»

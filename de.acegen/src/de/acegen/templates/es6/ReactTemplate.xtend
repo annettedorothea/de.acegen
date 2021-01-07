@@ -33,13 +33,27 @@ class ReactTemplate {
 	def generateContainer() '''
 		«copyright»
 
-		import React from 'react';
-		import { uiElement } from "../../src/components/ContainerNew";
+
+		import React, {useState} from 'react';
+		import { uiElement } from "../../src/components/Container";
+		import * as AppState from "../ace/AppState";
 		
-		export const ContainerComponent = (props) => {
-		    return uiElement(props);
+		export const setState = (newState) => {
+		    console.log("setState newState", newState);
+		    if (listeners.setMyState) {
+		        listeners.setMyState(newState);
+		    }
 		}
 		
+		let listeners = {};
+		
+		export const ContainerComponent = (props) => {
+		    const [state, setMyState] = useState(AppState.getAppState());
+		    listeners.setMyState = setMyState;
+		    console.log("ContainerComponent state", state);
+		    return uiElement(state);
+		}
+				
 		«sdg»
 		
 	'''
@@ -65,22 +79,14 @@ class ReactTemplate {
 			«attribute.componentImports("")»
 		«ENDFOR»
 
-		function key() {
-		    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		    let result = '';
-		    for (let i = 10; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-		    return result;
-		}
-
 		const normalize = (options) => {
 		    if (options && options.class !== undefined) {
 		        options.className = options.class
 		        delete options.class;
 		    }
-		    if (!options) {
-		    	options = {};
+		    if (options) {
+		    	options.key = options.id;
 		    }
-		    options.key = options.id ? options.id : key();
 		    return options;
 		}
 		
@@ -198,7 +204,7 @@ class ReactTemplate {
 	def dispatch CharSequence components(SingleClientAttribute it) '''
 		«IF attributes.size > 0»
 			export const «reactTagName» = (options) => {
-			    return <«reactComponentName» {...normalize(options)} key={key()}/>
+			    return <«reactComponentName» {...normalize(options)}/>
 			}
 			«FOR attribute: attributes»
 				«components(attribute)»
@@ -208,7 +214,7 @@ class ReactTemplate {
 	
 	def dispatch CharSequence components(GroupedClientAttribute it) '''
 		export const «reactTagName» = (options) => {
-		    return <«reactComponentName» {...normalize(options)} key={key()}/>
+		    return <«reactComponentName» {...normalize(options)}/>
 		}
 		«IF attributeGroup.size > 0»
 			«FOR attribute: attributeGroup»

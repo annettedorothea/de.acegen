@@ -23,7 +23,7 @@ class ReactGenerator {
 				reactTemplate.generateReactHelper(httpClient));
 			fsa.generateFile('''components/ContainerComponent.js''', IFileSystemAccess2.DEFAULT_OUTPUT,
 				reactTemplate.generateContainer());
-			fsa.generateFile('''components/ContainerNew.js''', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+			fsa.generateFile('''components/Container.js''', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 				reactTemplate.generateComponentStruct(null, ""));
 			for (attribute : httpClient.getUi) {
 				doGenerate(attribute, fsa, "");

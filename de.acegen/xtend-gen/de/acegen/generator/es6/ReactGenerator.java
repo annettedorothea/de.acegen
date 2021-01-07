@@ -35,7 +35,7 @@ public class ReactGenerator {
       fsa.generateFile(_builder_1.toString(), IFileSystemAccess2.DEFAULT_OUTPUT, 
         this.reactTemplate.generateContainer());
       StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("components/ContainerNew.js");
+      _builder_2.append("components/Container.js");
       fsa.generateFile(_builder_2.toString(), ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
         this.reactTemplate.generateComponentStruct(null, ""));
       EList<ClientAttribute> _ui = httpClient.getUi();

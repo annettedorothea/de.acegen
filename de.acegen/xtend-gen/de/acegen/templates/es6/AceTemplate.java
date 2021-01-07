@@ -1192,6 +1192,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("export let appState;");
     _builder.newLine();
+    _builder.append("import {setState} from \"../components/ContainerComponent\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export function getAppState() {");
     _builder.newLine();
@@ -1522,6 +1524,9 @@ public class AceTemplate {
         }
       }
     }
+    _builder.append("\t");
+    _builder.append("setState(getAppState());");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1619,6 +1624,9 @@ public class AceTemplate {
             }
           }
         }
+        _builder.append("\t");
+        _builder.append("setState(getAppState());");
+        _builder.newLine();
         _builder.append("}");
         _builder.newLine();
         _builder.newLine();
