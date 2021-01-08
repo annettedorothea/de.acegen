@@ -23,7 +23,85 @@ public class ReactTemplate {
   @Extension
   private Es6Extension _es6Extension;
   
-  public CharSequence generateComponent(final ClientAttribute it, final String subFolder, final String folderPrefix) {
+  protected CharSequence _generateComponent(final SingleClientAttribute it, final String subFolder, final String folderPrefix) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("import React, {useState} from \'react\';");
+    _builder.newLine();
+    _builder.append("import { uiElement } from \"");
+    _builder.append(folderPrefix);
+    _builder.append("../../src/components");
+    _builder.append(subFolder);
+    _builder.append("/");
+    String _componentName = this._es6Extension.componentName(it);
+    _builder.append(_componentName);
+    _builder.append("\";");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      boolean _isList = it.isList();
+      boolean _not = (!_isList);
+      if (_not) {
+        _builder.append("export const set");
+        String _componentName_1 = this._es6Extension.componentName(it);
+        _builder.append(_componentName_1);
+        _builder.append("State = (newState) => {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("if (functions.setState) {");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("functions.setState(newState);");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("let functions = {};");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("export const ");
+    String _reactComponentName = this._es6Extension.reactComponentName(it);
+    _builder.append(_reactComponentName);
+    _builder.append(" = (props) => {");
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _isList_1 = it.isList();
+      boolean _not_1 = (!_isList_1);
+      if (_not_1) {
+        _builder.append("\t");
+        _builder.append("const [state, setState] = useState();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("functions.setState = setState;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("return uiElement({...props, ...state});");
+        _builder.newLine();
+      } else {
+        _builder.append("\t");
+        _builder.append("return uiElement({...props});");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  protected CharSequence _generateComponent(final GroupedClientAttribute it, final String subFolder, final String folderPrefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -536,6 +614,17 @@ public class ReactTemplate {
       }
     }
     return _builder;
+  }
+  
+  public CharSequence generateComponent(final ClientAttribute it, final String subFolder, final String folderPrefix) {
+    if (it instanceof GroupedClientAttribute) {
+      return _generateComponent((GroupedClientAttribute)it, subFolder, folderPrefix);
+    } else if (it instanceof SingleClientAttribute) {
+      return _generateComponent((SingleClientAttribute)it, subFolder, folderPrefix);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, subFolder, folderPrefix).toString());
+    }
   }
   
   public CharSequence componentImports(final ClientAttribute it, final String subFolder) {

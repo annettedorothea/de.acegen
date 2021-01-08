@@ -16,7 +16,37 @@ class ReactTemplate {
 	@Inject
 	extension Es6Extension
 	
-	def generateComponent(ClientAttribute it, String subFolder, String folderPrefix) '''
+	dispatch def generateComponent(SingleClientAttribute it, String subFolder, String folderPrefix) '''
+		«copyright»
+
+		import React, {useState} from 'react';
+		import { uiElement } from "«folderPrefix»../../src/components«subFolder»/«componentName»";
+		
+		«IF !list»
+			export const set«componentName»State = (newState) => {
+			    if (functions.setState) {
+			        functions.setState(newState);
+			    }
+			}
+			
+			let functions = {};
+		«ENDIF»
+		
+		export const «reactComponentName» = (props) => {
+			«IF !list»
+			    const [state, setState] = useState();
+			    functions.setState = setState;
+			    return uiElement({...props, ...state});
+			«ELSE»
+			    return uiElement({...props});
+			«ENDIF»
+		}
+		
+		«sdg»
+		
+	'''
+	
+	dispatch def generateComponent(GroupedClientAttribute it, String subFolder, String folderPrefix) '''
 		«copyright»
 
 		import React, {useState} from 'react';

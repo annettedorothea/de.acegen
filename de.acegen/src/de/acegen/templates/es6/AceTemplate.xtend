@@ -696,7 +696,7 @@ class AceTemplate {
 	'''
 	
 	private def imports(SingleClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0»
+		«IF attributes.size > 0 && !isList»
 			import {set«componentName»State} from "../components«subFolder»/«reactComponentName»";
 		«ENDIF»
 	'''

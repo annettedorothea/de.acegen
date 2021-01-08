@@ -1825,9 +1825,7 @@ public class AceTemplate {
   private CharSequence imports(final SingleClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      int _size = it.getAttributes().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((it.getAttributes().size() > 0) && (!it.isList()))) {
         _builder.append("import {set");
         String _componentName = this._es6Extension.componentName(it);
         _builder.append(_componentName);
