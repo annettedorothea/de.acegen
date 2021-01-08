@@ -29,9 +29,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_Count_CommaKeyword_3_0_q;
 	protected AbstractElementAlias match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q;
 	protected AbstractElementAlias match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q;
-	protected AbstractElementAlias match_HttpClient_ACEKeyword_1_0_q;
-	protected AbstractElementAlias match_HttpClient_ScenariosKeyword_3_0_q;
-	protected AbstractElementAlias match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q;
+	protected AbstractElementAlias match_HttpClient_ACEKeyword_2_0_q;
+	protected AbstractElementAlias match_HttpClient_ScenariosKeyword_4_0_q;
+	protected AbstractElementAlias match_HttpClient___LeftCurlyBracketKeyword_3_1_0_RightCurlyBracketKeyword_3_1_2__q;
 	protected AbstractElementAlias match_HttpServerAceRead_PathParamsKeyword_7_0_q;
 	protected AbstractElementAlias match_HttpServerAceRead_PayloadKeyword_9_0_q;
 	protected AbstractElementAlias match_HttpServerAceRead_QueryParamsKeyword_8_0_q;
@@ -66,9 +66,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_Count_CommaKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCountAccess().getCommaKeyword_3_0());
 		match_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_2_2()));
 		match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getTriggersKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getLeftParenthesisKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getHttpClientOutcomeAccess().getRightParenthesisKeyword_3_3()));
-		match_HttpClient_ACEKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_1_0());
-		match_HttpClient_ScenariosKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getScenariosKeyword_3_0());
-		match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_2_1_0()), new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getRightCurlyBracketKeyword_2_1_2()));
+		match_HttpClient_ACEKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getACEKeyword_2_0());
+		match_HttpClient_ScenariosKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getHttpClientAccess().getScenariosKeyword_4_0());
+		match_HttpClient___LeftCurlyBracketKeyword_3_1_0_RightCurlyBracketKeyword_3_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_3_1_0()), new TokenAlias(false, false, grammarAccess.getHttpClientAccess().getRightCurlyBracketKeyword_3_1_2()));
 		match_HttpServerAceRead_PathParamsKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPathParamsKeyword_7_0());
 		match_HttpServerAceRead_PayloadKeyword_9_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getPayloadKeyword_9_0());
 		match_HttpServerAceRead_QueryParamsKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getHttpServerAceReadAccess().getQueryParamsKeyword_8_0());
@@ -120,12 +120,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_HttpClientOutcome___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q.equals(syntax))
 				emit_HttpClientOutcome___TriggersKeyword_3_0_LeftParenthesisKeyword_3_1_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpClient_ACEKeyword_1_0_q.equals(syntax))
-				emit_HttpClient_ACEKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpClient_ScenariosKeyword_3_0_q.equals(syntax))
-				emit_HttpClient_ScenariosKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q.equals(syntax))
-				emit_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpClient_ACEKeyword_2_0_q.equals(syntax))
+				emit_HttpClient_ACEKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpClient_ScenariosKeyword_4_0_q.equals(syntax))
+				emit_HttpClient_ScenariosKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_HttpClient___LeftCurlyBracketKeyword_3_1_0_RightCurlyBracketKeyword_3_1_2__q.equals(syntax))
+				emit_HttpClient___LeftCurlyBracketKeyword_3_1_0_RightCurlyBracketKeyword_3_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerAceRead_PathParamsKeyword_7_0_q.equals(syntax))
 				emit_HttpServerAceRead_PathParamsKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HttpServerAceRead_PayloadKeyword_9_0_q.equals(syntax))
@@ -267,7 +267,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName (ambiguity) 'scenarios'? (rule end)
 	 *     name=QualifiedName (ambiguity) uiPresent?='ui'
 	 */
-	protected void emit_HttpClient_ACEKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpClient_ACEKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -281,7 +281,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ui+=ClientAttribute '}' (ambiguity) (rule end)
 	 *     uiPresent?='ui' ('{' '}')? (ambiguity) (rule end)
 	 */
-	protected void emit_HttpClient_ScenariosKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpClient_ScenariosKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -293,7 +293,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     uiPresent?='ui' (ambiguity) 'scenarios' scenarios+=ClientScenario
 	 *     uiPresent?='ui' (ambiguity) 'scenarios'? (rule end)
 	 */
-	protected void emit_HttpClient___LeftCurlyBracketKeyword_2_1_0_RightCurlyBracketKeyword_2_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_HttpClient___LeftCurlyBracketKeyword_3_1_0_RightCurlyBracketKeyword_3_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

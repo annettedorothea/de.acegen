@@ -83,7 +83,7 @@ class ScenarioTemplate {
 		    		ScenarioUtils.wait(«whenBlock.action.numberOfSyncCalls()», «whenBlock.action.numberOfAsyncCalls()»).should(() => {
 			            const appState = JSON.parse(localStorage.getItem('appState'))
 			            «FOR stateVerification: thenBlock.stateVerifications»
-			            	expect(appState.«stateVerification.stateRef.name», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
+			            	expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
 			            «ENDFOR»
 			            «FOR verification: thenBlock.verifications»
 			            	Verifications.«verification»();

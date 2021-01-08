@@ -21,6 +21,7 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.GroupedClientAttribute
+import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
@@ -175,33 +176,43 @@ class AceTemplate {
 		        return JSON.parse(JSON.stringify(object));
 		    }
 		
+		    static stateUpdated(appState) {
+			    if (Utils.settings && Utils.settings.mode === "dev") {
+			        localStorage.setItem("appState", JSON.stringify(appState));
+			    }
+		    }
+		
 		}
 
 		«sdg»
 		
 	'''
 	
-	def generateAppStub() '''
+	def generateAppStub(HttpClient httpClient) '''
 		«copyright»
 
 
 		import AppUtils from "./AppUtils";
 		
-		//import Container from "../web/Container";
-		
-		import React from "react";
-		import ReactDOM from "react-dom";
+		«IF httpClient.isReact16_8»
+			import {ContainerComponent} from "../../gen/components/ContainerComponent";
+			import React from "react";
+			import ReactDOM from "react-dom";
+		«ENDIF»
 		
 		export * from "../../gen/ace/Timeline";
 		export { dumpAppState } from "./AppUtils";
 		
 		AppUtils.createInitialAppState();
 		
-		/*export const container = ReactDOM.render(
-		    <Container/>,
-		    document.getElementById('root')
-		);*/
-		
+
+		«IF httpClient.isReact16_8»
+			ReactDOM.render(
+			    <ContainerComponent />,
+			    document.getElementById('root')
+			);
+		«ENDIF»
+				
 		window.onhashchange = () => {
 		};
 		
@@ -478,7 +489,7 @@ class AceTemplate {
 		            version: M[1]
 		        };
 		    }
-		
+		    
 		}
 		
 		«sdg»
@@ -487,7 +498,7 @@ class AceTemplate {
 		
 	'''
 	
-	def String generateAppState(List<ClientAttribute> attributes, String prefix) '''
+	def String generateAppState(List<ClientAttribute> attributes, String prefix, HttpClient httpClient) '''
 		«copyright»
 
 		import AppUtils from "../../src/app/AppUtils";
@@ -496,7 +507,7 @@ class AceTemplate {
 
 		import {setContainerState} from "../components/ContainerComponent";
 		«FOR attribute : attributes»
-			«attribute.generateAppStateImportsRec("")»
+			«attribute.generateAppStateImportsRec("", httpClient)»
 		«ENDFOR»
 		
 		export function getAppState() {
@@ -508,7 +519,7 @@ class AceTemplate {
 		}
 		
 		«FOR attribute : attributes»
-			«attribute.generateAppStateRec»
+			«attribute.generateAppStateRec(httpClient)»
 		«ENDFOR»
 	'''
 	
@@ -549,7 +560,7 @@ class AceTemplate {
 		
 	'''
 	
-	private def setStateFunction(SingleClientAttribute it) '''
+	private def setStateFunction(SingleClientAttribute it, HttpClient httpClient) '''
 		export function set_«functionName»(eventData) {
 			«IF isHash»
 				location.hash = eventData.«getName»;
@@ -586,12 +597,12 @@ class AceTemplate {
 					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			«ENDIF»
-			«setState»
+			«setState(httpClient)»
 		}
 		
 	'''
 	
-	private def mergeStateFunction(SingleClientAttribute it) '''
+	private def mergeStateFunction(SingleClientAttribute it, HttpClient httpClient) '''
 		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage && !isList» 
 			export function merge_«functionName»(eventData) {
 				«FOR attr : allParentAttributes»
@@ -615,64 +626,70 @@ class AceTemplate {
 						}
 					«ENDIF»
 				«ENDFOR»
-				«setState»
+				«setState(httpClient)»
 			}
 			
 		«ENDIF»
 	'''
 	
-	private def setState(SingleClientAttribute it) '''
-		«var parent = findNextNonListSingleClientAttributeParent»
-		«IF parent === null»
-			setContainerState(getAppState());
-		«ELSE»
-			set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
+	private def setState(SingleClientAttribute it, HttpClient httpClient) '''
+		const newAppState = getAppState();
+		«IF httpClient.isReact16_8»
+			«var parent = findNextNonListSingleClientAttributeParent»
+			«IF parent === null»
+				setContainerState(newAppState);
+			«ELSE»
+				set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
+			«ENDIF»
 		«ENDIF»
+		AppUtils.stateUpdated(newAppState);
 	'''
 	
-	private def childAttributes(SingleClientAttribute it) '''
+	private def childAttributes(SingleClientAttribute it, HttpClient httpClient) '''
 		«IF attributes !== null && !isList && !isHash && !isStorage»
 			«FOR attribute : attributes»
-				«attribute.generateAppStateRec»
+				«attribute.generateAppStateRec(httpClient)»
 			«ENDFOR»
 		«ENDIF»
 	'''
 	
-	def dispatch String generateAppStateRec(SingleClientAttribute it) '''
-		«getStateFunction»
-		«setStateFunction»
-		«mergeStateFunction»
-		«childAttributes»
+	def dispatch String generateAppStateRec(SingleClientAttribute it, HttpClient httpClient) '''
+		«getStateFunction()»
+		«setStateFunction(httpClient)»
+		«mergeStateFunction(httpClient)»
+		«childAttributes(httpClient)»
 	'''
 	
-	def dispatch String generateAppStateRec(GroupedClientAttribute it) '''
+	def dispatch String generateAppStateRec(GroupedClientAttribute it, HttpClient httpClient) '''
 		«IF attributeGroup === null || attributeGroup.length > 0»
 			«FOR attribute : attributeGroup»
 				«IF attribute instanceof SingleClientAttribute»
-					«attribute.getStateFunction»
-					«attribute.setStateFunction»
-					«attribute.mergeStateFunction»
-					«attribute.childAttributes»
+					«attribute.getStateFunction()»
+					«attribute.setStateFunction(httpClient)»
+					«attribute.mergeStateFunction(httpClient)»
+					«attribute.childAttributes(httpClient)»
 				«ELSE»
-					«attribute.generateAppStateRec»
+					«attribute.generateAppStateRec(httpClient)»
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
 	'''
 	
-	def dispatch String generateAppStateImportsRec(SingleClientAttribute it, String subFolder) '''
-		«imports(subFolder)»
-		«childImports('''«subFolder»/«name.toFirstLower»''')»
+	def dispatch String generateAppStateImportsRec(SingleClientAttribute it, String subFolder, HttpClient httpClient) '''
+		«IF httpClient.isReact16_8»
+			«imports(subFolder)»
+			«childImports('''«subFolder»/«name.toFirstLower»''', httpClient)»
+		«ENDIF»
 	'''
 	
-	def dispatch String generateAppStateImportsRec(GroupedClientAttribute it, String subFolder) '''
+	def dispatch String generateAppStateImportsRec(GroupedClientAttribute it, String subFolder, HttpClient httpClient) '''
 		«IF attributeGroup === null || attributeGroup.length > 0»
 			«FOR attribute : attributeGroup»
 				«IF attribute instanceof SingleClientAttribute»
 					«attribute.imports(subFolder)»
-					«attribute.childImports(subFolder)»
+					«attribute.childImports(subFolder, httpClient)»
 				«ELSE»
-					«attribute.generateAppStateImportsRec(subFolder)»
+					«attribute.generateAppStateImportsRec(subFolder, httpClient)»
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
@@ -684,10 +701,10 @@ class AceTemplate {
 		«ENDIF»
 	'''
 	
-	private def childImports(SingleClientAttribute it, String subFolder) '''
+	private def childImports(SingleClientAttribute it, String subFolder, HttpClient httpClient) '''
 		«IF attributes !== null && !isList && !isHash && !isStorage»
 			«FOR attribute : attributes»
-					«attribute.generateAppStateImportsRec(subFolder)»
+					«attribute.generateAppStateImportsRec(subFolder, httpClient)»
 			«ENDFOR»
 		«ENDIF»
 	'''

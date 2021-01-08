@@ -499,6 +499,14 @@ public class Es6Extension {
     return _builder.toString();
   }
   
+  protected String _stateRefPath(final GroupedClientAttribute it) {
+    return this.elementPathRec(it, "");
+  }
+  
+  protected String _stateRefPath(final SingleClientAttribute it) {
+    return this.elementPathRec(it, "");
+  }
+  
   public CharSequence valueFrom(final JsonValueClient it) {
     if (it instanceof JsonObjectClient) {
       return _valueFrom((JsonObjectClient)it);
@@ -537,6 +545,17 @@ public class Es6Extension {
       return _componentName((GroupedClientAttribute)it);
     } else if (it instanceof SingleClientAttribute) {
       return _componentName((SingleClientAttribute)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
+  }
+  
+  public String stateRefPath(final ClientAttribute it) {
+    if (it instanceof GroupedClientAttribute) {
+      return _stateRefPath((GroupedClientAttribute)it);
+    } else if (it instanceof SingleClientAttribute) {
+      return _stateRefPath((SingleClientAttribute)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

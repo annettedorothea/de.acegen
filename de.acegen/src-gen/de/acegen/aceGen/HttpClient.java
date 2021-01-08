@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}</li>
@@ -29,6 +30,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface HttpClient extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>React16 8</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>React16 8</em>' attribute.
+   * @see #setReact16_8(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_React16_8()
+   * @model
+   * @generated
+   */
+  boolean isReact16_8();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>React16 8</em>' attribute.
+   * @see #isReact16_8()
+   * @generated
+   */
+  void setReact16_8(boolean value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

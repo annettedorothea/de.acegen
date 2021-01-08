@@ -24,7 +24,8 @@ Project: {Project}
 ;
 
 HttpClient: 
-	name = QualifiedName
+	(react16_8 ?= 'React_16.8')? 
+	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
 	(uiPresent ?= 'ui' ('{'
 		ui += ClientAttribute*

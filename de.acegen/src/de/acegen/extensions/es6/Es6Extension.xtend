@@ -271,6 +271,14 @@ class Es6Extension {
 		return '''«name.toFirstUpper»'''
 	}
 
+	dispatch def String stateRefPath(GroupedClientAttribute it) {
+		return elementPathRec("")
+	}
+
+	dispatch def String stateRefPath(SingleClientAttribute it) {
+		return elementPathRec("")
+	}
+
 
 }
 /******* S.D.G. *******/

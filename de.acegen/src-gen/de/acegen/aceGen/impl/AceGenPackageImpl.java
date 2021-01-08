@@ -622,7 +622,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClient_Name()
+  public EAttribute getHttpClient_React16_8()
   {
     return (EAttribute)httpClientEClass.getEStructuralFeatures().get(0);
   }
@@ -633,9 +633,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getHttpClient_Name()
+  {
+    return (EAttribute)httpClientEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getHttpClient_AceOperations()
   {
-    return (EReference)httpClientEClass.getEStructuralFeatures().get(1);
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -646,7 +657,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EAttribute getHttpClient_UiPresent()
   {
-    return (EAttribute)httpClientEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)httpClientEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -657,7 +668,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpClient_Ui()
   {
-    return (EReference)httpClientEClass.getEStructuralFeatures().get(3);
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -668,7 +679,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpClient_Scenarios()
   {
-    return (EReference)httpClientEClass.getEStructuralFeatures().get(4);
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -2918,6 +2929,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(projectEClass, PROJECT__HTTP_SERVER);
 
     httpClientEClass = createEClass(HTTP_CLIENT);
+    createEAttribute(httpClientEClass, HTTP_CLIENT__REACT16_8);
     createEAttribute(httpClientEClass, HTTP_CLIENT__NAME);
     createEReference(httpClientEClass, HTTP_CLIENT__ACE_OPERATIONS);
     createEAttribute(httpClientEClass, HTTP_CLIENT__UI_PRESENT);
@@ -3246,6 +3258,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getProject_HttpServer(), this.getHttpServer(), null, "httpServer", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpClientEClass, HttpClient.class, "HttpClient", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHttpClient_React16_8(), ecorePackage.getEBoolean(), "react16_8", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClient_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClient_AceOperations(), this.getHttpClientAce(), null, "aceOperations", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClient_UiPresent(), ecorePackage.getEBoolean(), "uiPresent", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

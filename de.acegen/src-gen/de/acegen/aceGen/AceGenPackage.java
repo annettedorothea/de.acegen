@@ -105,13 +105,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT = 1;
 
   /**
+   * The feature id for the '<em><b>React16 8</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_CLIENT__REACT16_8 = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__NAME = 0;
+  int HTTP_CLIENT__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Ace Operations</b></em>' containment reference list.
@@ -120,7 +129,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__ACE_OPERATIONS = 1;
+  int HTTP_CLIENT__ACE_OPERATIONS = 2;
 
   /**
    * The feature id for the '<em><b>Ui Present</b></em>' attribute.
@@ -129,7 +138,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__UI_PRESENT = 2;
+  int HTTP_CLIENT__UI_PRESENT = 3;
 
   /**
    * The feature id for the '<em><b>Ui</b></em>' containment reference list.
@@ -138,7 +147,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__UI = 3;
+  int HTTP_CLIENT__UI = 4;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -147,7 +156,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__SCENARIOS = 4;
+  int HTTP_CLIENT__SCENARIOS = 5;
 
   /**
    * The number of structural features of the '<em>Http Client</em>' class.
@@ -156,7 +165,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_FEATURE_COUNT = 5;
+  int HTTP_CLIENT_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpClientAceImpl <em>Http Client Ace</em>}' class.
@@ -2799,6 +2808,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpClient();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>React16 8</em>'.
+   * @see de.acegen.aceGen.HttpClient#isReact16_8()
+   * @see #getHttpClient()
+   * @generated
+   */
+  EAttribute getHttpClient_React16_8();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5063,6 +5083,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_CLIENT = eINSTANCE.getHttpClient();
+
+    /**
+     * The meta object literal for the '<em><b>React16 8</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_CLIENT__REACT16_8 = eINSTANCE.getHttpClient_React16_8();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

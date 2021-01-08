@@ -292,11 +292,11 @@ public class ScenarioTemplate {
       for(final StateVerification stateVerification_1 : _stateVerifications_1) {
         _builder.append("\t            ");
         _builder.append("expect(appState.");
-        String _name_5 = stateVerification_1.getStateRef().getName();
-        _builder.append(_name_5, "\t            ");
+        String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
+        _builder.append(_stateRefPath, "\t            ");
         _builder.append(", \"");
-        String _name_6 = stateVerification_1.getName();
-        _builder.append(_name_6, "\t            ");
+        String _name_5 = stateVerification_1.getName();
+        _builder.append(_name_5, "\t            ");
         _builder.append("\").to.eql(");
         CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
         _builder.append(_valueFrom, "\t            ");

@@ -155,7 +155,7 @@ public class Es6Generator {
         this.actionTemplate.generateActionIds(httpClient));
     }
     fsa.generateFile("app/App.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-      this.aceTemplate.generateAppStub());
+      this.aceTemplate.generateAppStub(httpClient));
     fsa.generateFile("app/AppUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateAppUtilsStub());
     fsa.generateFile("ace/Action.js", IFileSystemAccess.DEFAULT_OUTPUT, this.actionTemplate.generateAction());
@@ -175,9 +175,12 @@ public class Es6Generator {
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
     if (((httpClient.isUiPresent() && (httpClient.getUi() != null)) && (httpClient.getUi().size() > 0))) {
       fsa.generateFile("ace/AppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.aceTemplate.generateAppState(httpClient.getUi(), ""));
+        this.aceTemplate.generateAppState(httpClient.getUi(), "", httpClient));
     }
-    this.reactGenerator.doGenerate(httpClient, fsa);
+    boolean _isReact16_8 = httpClient.isReact16_8();
+    if (_isReact16_8) {
+      this.reactGenerator.doGenerate(httpClient, fsa);
+    }
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
       {

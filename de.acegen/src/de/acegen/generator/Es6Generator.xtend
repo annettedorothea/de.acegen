@@ -97,7 +97,7 @@ class Es6Generator {
 				actionTemplate.generateActionIds(httpClient));
 		}
 		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-			aceTemplate.generateAppStub());
+			aceTemplate.generateAppStub(httpClient));
 		fsa.generateFile('app/AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppUtilsStub());
 		fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT, actionTemplate.generateAction());
@@ -117,9 +117,12 @@ class Es6Generator {
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
 		if (httpClient.uiPresent && httpClient.getUi !== null && httpClient.getUi.size > 0) {
 			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateAppState(httpClient.getUi, ""));
+				aceTemplate.generateAppState(httpClient.getUi, "", httpClient));
 		}
-		reactGenerator.doGenerate(httpClient, fsa);
+		
+		if (httpClient.isReact16_8) {
+			reactGenerator.doGenerate(httpClient, fsa);
+		}
 		
 		for (scenario : httpClient.scenarios) {
 			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT,
