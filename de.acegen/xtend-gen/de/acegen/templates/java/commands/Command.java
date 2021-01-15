@@ -136,10 +136,12 @@ public class Command {
       EList<HttpServerOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpServerOutcome outcome_1 : _outcomes_1) {
         {
-          final Function1<HttpServerViewFunction, Boolean> _function = (HttpServerViewFunction listenerFunction) -> {
-            EObject _eContainer = listenerFunction.eContainer();
-            boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
-            return Boolean.valueOf((!_isAfterCommit));
+          final Function1<HttpServerViewFunction, Boolean> _function = new Function1<HttpServerViewFunction, Boolean>() {
+            public Boolean apply(final HttpServerViewFunction listenerFunction) {
+              EObject _eContainer = listenerFunction.eContainer();
+              boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
+              return Boolean.valueOf((!_isAfterCommit));
+            }
           };
           int _size = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_1.getListeners(), _function));
           boolean _greaterThan = (_size > 0);
@@ -179,9 +181,11 @@ public class Command {
       EList<HttpServerOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpServerOutcome outcome_2 : _outcomes_2) {
         {
-          final Function1<HttpServerViewFunction, Boolean> _function_1 = (HttpServerViewFunction listenerFunction) -> {
-            EObject _eContainer = listenerFunction.eContainer();
-            return Boolean.valueOf(((HttpServerView) _eContainer).isAfterCommit());
+          final Function1<HttpServerViewFunction, Boolean> _function_1 = new Function1<HttpServerViewFunction, Boolean>() {
+            public Boolean apply(final HttpServerViewFunction listenerFunction) {
+              EObject _eContainer = listenerFunction.eContainer();
+              return Boolean.valueOf(((HttpServerView) _eContainer).isAfterCommit());
+            }
           };
           int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function_1));
           boolean _greaterThan_1 = (_size_1 > 0);

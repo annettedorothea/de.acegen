@@ -461,8 +461,10 @@ public class Data {
     _builder.append("java.util.Random random = new java.util.Random();");
     _builder.newLine();
     {
-      final Function1<Attribute, Boolean> _function = (Attribute a) -> {
-        return Boolean.valueOf(a.isList());
+      final Function1<Attribute, Boolean> _function = new Function1<Attribute, Boolean>() {
+        public Boolean apply(final Attribute a) {
+          return Boolean.valueOf(a.isList());
+        }
       };
       int _size = IterableExtensions.size(IterableExtensions.<Attribute>filter(this._modelExtension.allAttributes(it), _function));
       boolean _greaterThan_1 = (_size > 0);
