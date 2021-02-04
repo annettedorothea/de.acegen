@@ -117,7 +117,7 @@ class Command {
 			@Override
 			protected void executeCommand(PersistenceHandle readonlyHandle) {
 				«IF outcomes.size > 0»
-					this.commandData.add«outcomes.get(0).getName.toFirstUpper»Outcome();
+					this.add«outcomes.get(0).getName.toFirstUpper»Outcome();
 				«ENDIF»
 			}
 		

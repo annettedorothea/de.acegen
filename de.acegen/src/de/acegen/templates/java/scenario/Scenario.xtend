@@ -143,13 +143,15 @@ class Scenario {
 			
 			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
 				if (response.getStatusCode() == 500) {
-					LOG.error("THEN: status " + response.getStatusCode() + " failed: " + response.getStatusMessage());
-					assertFail(response.getStatusMessage());
+					String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
+					LOG.error("THEN: status " + response.getStatusCode() + " failed: " + statusMessage);
+					assertFail(statusMessage);
 				}
 				«IF thenBlock.statusCode !== 0»
 					if (response.getStatusCode() != «thenBlock.statusCode») {
-						LOG.error("THEN: status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + response.getStatusMessage());
-						assertFail(response.getStatusMessage());
+						String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
+						LOG.error("THEN: status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + statusMessage);
+						assertFail(statusMessage);
 					} else {
 						LOG.info("THEN: status «thenBlock.statusCode» passed");
 					}
@@ -268,7 +270,8 @@ class Scenario {
 			«givenRef.scenario.whenBlock.generateDataCreation»
 			HttpResponse<«IF givenRef.scenario.whenBlock.action.response.size > 0»«givenRef.scenario.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «givenRef.scenario.whenBlock.generateActionCalls(java)»
 			if (response_«index».getStatusCode() >= 400) {
-				String message = "GIVEN «givenRef.scenario.name» fails\n" + response_«index».getStatusMessage();
+				String statusMessage = response_«index».getStatusMessage() != null ? response_«index».getStatusMessage() : "";
+				String message = "GIVEN «givenRef.scenario.name» fails\n" + statusMessage;
 				LOG.error("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
 				assertFail(message);
 			}

@@ -302,7 +302,7 @@ public class Command {
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("\t\t");
-        _builder.append("this.commandData.add");
+        _builder.append("this.add");
         String _firstUpper = StringExtensions.toFirstUpper(it.getOutcomes().get(0).getName());
         _builder.append(_firstUpper, "\t\t");
         _builder.append("Outcome();");
