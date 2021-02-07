@@ -655,20 +655,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpClient_UiPresent()
+  public EReference getHttpClient_Container()
   {
-    return (EAttribute)httpClientEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHttpClient_Ui()
-  {
-    return (EReference)httpClientEClass.getEStructuralFeatures().get(4);
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -679,7 +668,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getHttpClient_Scenarios()
   {
-    return (EReference)httpClientEClass.getEStructuralFeatures().get(5);
+    return (EReference)httpClientEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -2932,8 +2921,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(httpClientEClass, HTTP_CLIENT__REACT16_8);
     createEAttribute(httpClientEClass, HTTP_CLIENT__NAME);
     createEReference(httpClientEClass, HTTP_CLIENT__ACE_OPERATIONS);
-    createEAttribute(httpClientEClass, HTTP_CLIENT__UI_PRESENT);
-    createEReference(httpClientEClass, HTTP_CLIENT__UI);
+    createEReference(httpClientEClass, HTTP_CLIENT__CONTAINER);
     createEReference(httpClientEClass, HTTP_CLIENT__SCENARIOS);
 
     httpClientAceEClass = createEClass(HTTP_CLIENT_ACE);
@@ -3261,8 +3249,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getHttpClient_React16_8(), ecorePackage.getEBoolean(), "react16_8", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpClient_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClient_AceOperations(), this.getHttpClientAce(), null, "aceOperations", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpClient_UiPresent(), ecorePackage.getEBoolean(), "uiPresent", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getHttpClient_Ui(), this.getClientAttribute(), null, "ui", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getHttpClient_Container(), this.getSingleClientAttribute(), null, "container", null, 0, 1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpClient_Scenarios(), this.getClientScenario(), null, "scenarios", null, 0, -1, HttpClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpClientAceEClass, HttpClientAce.class, "HttpClientAce", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

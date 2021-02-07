@@ -1,6 +1,5 @@
 package de.acegen.templates.es6
 
-import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
@@ -70,51 +69,100 @@ class ReactTemplate {
 		
 	'''
 	
-	def generateContainer() '''
+	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix) '''
 		«copyright»
 
-
-		import React, {useState} from 'react';
-		import { uiElement } from "../../src/components/Container";
-		import * as AppState from "../ace/AppState";
-		
-		export const setContainerState = (newState) => {
-		    if (functions.setState) {
-		        functions.setState(newState);
-		    }
-		}
-		
-		let functions = {};
-		
-		export const ContainerComponent = (props) => {
-		    const [state, setState] = useState(AppState.getAppState());
-		    functions.setState = setState;
-		    return uiElement({...props, ...state});
-		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateComponentStruct(ClientAttribute it, String folderPrefix) '''
-		«copyright»
-
-		import { div } from "«folderPrefix»../../gen/components/ReactHelper";
+		import { div, h1, label, input, table, tbody, ul, li, tr, td«FOR attribute: attributes.filter[a | a instanceof SingleClientAttribute && (a as SingleClientAttribute).attributes.size > 0 || a instanceof GroupedClientAttribute] BEFORE "," SEPARATOR ","» «attribute.reactTagName»«ENDFOR» } from "«folderPrefix»../../gen/components/ReactHelper";
 		
 		export function uiElement(attributes) {
-			return div("«it === null ? "container" : componentName»", {}, []);
+			«IF list»
+				return tr({class: ""}, [
+					«FOR attribute: attributes SEPARATOR ","»
+						«attribute.generateChild("td")»
+					«ENDFOR»
+				]);
+			«ELSE»
+				return div({}, [
+					h1({}, ["«name.toUpperCase»"])«IF attributes.size > 0»,«ENDIF»
+					«FOR attribute: attributes SEPARATOR ","»
+						«attribute.generateChild("div")»
+					«ENDFOR»
+				]);
+			«ENDIF»
 		}
 		
 		«sdg»
 		
 	'''
 	
+	def dispatch generateComponentStruct(GroupedClientAttribute it, String folderPrefix) '''
+		«copyright»
+
+		import { «FOR attribute: attributeGroup SEPARATOR ","» «attribute.reactTagName»«ENDFOR»} from "«folderPrefix»../../gen/components/ReactHelper";
+		
+		export function uiElement(attributes) {
+			«FOR attribute: attributeGroup»
+				if (attributes.is«attribute.name.toFirstUpper» === true) {
+					return «attribute.reactTagName»(attributes, []);
+				}
+			«ENDFOR»
+			return null;
+		}
+		
+		«sdg»
+		
+	'''
+	
+	def dispatch generateChild(SingleClientAttribute it, String enclosingTag) '''
+		«IF !storage && !hash»
+			«IF list»
+				«enclosingTag»({}, [
+					«IF attributes.size > 1»
+						table({class: ""}, [
+							tbody({}, [
+								attributes.«name.toFirstLower».map((item) => «reactTagName»(item))
+							])
+						])
+					«ELSE»
+						ul({class: ""}, [
+							attributes.«name.toFirstLower».map((item) => li({}, [item]))
+						])
+					«ENDIF»
+				])
+			«ELSEIF attributes.size === 0 && !storage && !hash»
+				«enclosingTag»({class: ""}, [
+					label({
+						class: "",
+						htmlFor: "«name»"
+					}, ["«name.toUpperCase»"]), 
+					input({
+						id: "«name»",
+						value: attributes.«name», 
+						class: "", 
+						onChange:(e) => console.log(e.target.value),
+						type: "text"
+					}), 
+					div({class: ""}, [attributes.«name»])
+				])
+			«ELSE»
+				«reactTagName»()
+			«ENDIF»
+		«ELSE»
+			// «storage ? "storage" : ""»«hash ? "hash" : ""» «name» 
+		«ENDIF»
+	'''
+	
+	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag) '''
+		«reactTagName»()
+	'''
+	
+
 	def generateReactHelper(HttpClient httpClient) '''
 		«copyright»
 
 		import React from 'react';
-		«FOR attribute: httpClient.ui»
-			«attribute.componentImports("")»
+		«FOR attribute: httpClient.container.attributes»
+			«attribute.componentImports("/" + httpClient.container.name.toFirstLower)»
 		«ENDFOR»
 
 		const normalize = (options) => {
@@ -122,7 +170,7 @@ class ReactTemplate {
 		        options.className = options.class
 		        delete options.class;
 		    }
-		    if (options) {
+		    if (options && options.id) {
 		    	options.key = options.id;
 		    }
 		    return options;
@@ -208,13 +256,29 @@ class ReactTemplate {
 		    return generic("pre", options, children);
 		}
 		
+		export const table = (options, children) => {
+		    return generic("table", options, children);
+		}
+		
+		export const tbody = (options, children) => {
+		    return generic("tbody", options, children);
+		}
+		
+		export const tr = (options, children) => {
+		    return generic("tr", options, children);
+		}
+		
+		export const td = (options, children) => {
+		    return generic("td", options, children);
+		}
+		
 		export const input = (options) => {
 		    return <input {...normalize(options)}/>
 		}
 		
 		
-		«FOR attribute: httpClient.ui»
-			«attribute.components»
+		«FOR attribute: httpClient.container.attributes»
+			«attribute.components(false)»
 		«ENDFOR»
 
 		«sdg»
@@ -239,24 +303,24 @@ class ReactTemplate {
 		«ENDIF»
 	'''
 	
-	def dispatch CharSequence components(SingleClientAttribute it) '''
-		«IF attributes.size > 0»
+	def dispatch CharSequence components(SingleClientAttribute it, boolean isGroupedChild) '''
+		«IF attributes.size > 0 || isGroupedChild»
 			export const «reactTagName» = (options) => {
 			    return <«reactComponentName» {...normalize(options)}/>
 			}
 			«FOR attribute: attributes»
-				«components(attribute)»
+				«components(attribute, false)»
 			«ENDFOR»
 		«ENDIF»
 	''' 
 	
-	def dispatch CharSequence components(GroupedClientAttribute it) '''
+	def dispatch CharSequence components(GroupedClientAttribute it, boolean isGroupedChild) '''
 		export const «reactTagName» = (options) => {
 		    return <«reactComponentName» {...normalize(options)}/>
 		}
 		«IF attributeGroup.size > 0»
 			«FOR attribute: attributeGroup»
-				«components(attribute)»
+				«components(attribute, true)»
 			«ENDFOR»
 		«ENDIF»
 	'''

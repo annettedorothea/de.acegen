@@ -87,13 +87,9 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cAceOperationsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cAceOperationsHttpClientAceParserRuleCall_2_1_0 = (RuleCall)cAceOperationsAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Assignment cUiPresentAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final Keyword cUiPresentUiKeyword_3_0_0 = (Keyword)cUiPresentAssignment_3_0.eContents().get(0);
-		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Assignment cUiAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
-		private final RuleCall cUiClientAttributeParserRuleCall_3_1_1_0 = (RuleCall)cUiAssignment_3_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
+		private final Keyword cUiKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cContainerAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cContainerSingleClientAttributeParserRuleCall_3_1_0 = (RuleCall)cContainerAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cScenariosKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cScenariosAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -101,15 +97,13 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//HttpClient:
 		//	react16_8?='React_16.8'?
-		//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (uiPresent?='ui' ('{'
-		//	ui+=ClientAttribute*
-		//	'}')?)? ('scenarios' scenarios+=ClientScenario*)?;
+		//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('ui' container=SingleClientAttribute)? ('scenarios'
+		//	scenarios+=ClientScenario*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//react16_8?='React_16.8'?
-		//name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (uiPresent?='ui' ('{'
-		//ui+=ClientAttribute*
-		//'}')?)? ('scenarios' scenarios+=ClientScenario*)?
+		//name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('ui' container=SingleClientAttribute)? ('scenarios'
+		//scenarios+=ClientScenario*)?
 		public Group getGroup() { return cGroup; }
 		
 		//react16_8?='React_16.8'?
@@ -136,33 +130,17 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//HttpClientAce
 		public RuleCall getAceOperationsHttpClientAceParserRuleCall_2_1_0() { return cAceOperationsHttpClientAceParserRuleCall_2_1_0; }
 		
-		//(uiPresent?='ui' ('{'
-		//ui+=ClientAttribute*
-		//'}')?)?
+		//('ui' container=SingleClientAttribute)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//uiPresent?='ui'
-		public Assignment getUiPresentAssignment_3_0() { return cUiPresentAssignment_3_0; }
-		
 		//'ui'
-		public Keyword getUiPresentUiKeyword_3_0_0() { return cUiPresentUiKeyword_3_0_0; }
+		public Keyword getUiKeyword_3_0() { return cUiKeyword_3_0; }
 		
-		//('{'
-		//ui+=ClientAttribute*
-		//'}')?
-		public Group getGroup_3_1() { return cGroup_3_1; }
+		//container=SingleClientAttribute
+		public Assignment getContainerAssignment_3_1() { return cContainerAssignment_3_1; }
 		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3_1_0() { return cLeftCurlyBracketKeyword_3_1_0; }
-		
-		//ui+=ClientAttribute*
-		public Assignment getUiAssignment_3_1_1() { return cUiAssignment_3_1_1; }
-		
-		//ClientAttribute
-		public RuleCall getUiClientAttributeParserRuleCall_3_1_1_0() { return cUiClientAttributeParserRuleCall_3_1_1_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_3_1_2() { return cRightCurlyBracketKeyword_3_1_2; }
+		//SingleClientAttribute
+		public RuleCall getContainerSingleClientAttributeParserRuleCall_3_1_0() { return cContainerSingleClientAttributeParserRuleCall_3_1_0; }
 		
 		//('scenarios' scenarios+=ClientScenario*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -3524,9 +3502,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//HttpClient:
 	//	react16_8?='React_16.8'?
-	//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? (uiPresent?='ui' ('{'
-	//	ui+=ClientAttribute*
-	//	'}')?)? ('scenarios' scenarios+=ClientScenario*)?;
+	//	name=QualifiedName ('ACE' aceOperations+=HttpClientAce*)? ('ui' container=SingleClientAttribute)? ('scenarios'
+	//	scenarios+=ClientScenario*)?;
 	public HttpClientElements getHttpClientAccess() {
 		return pHttpClient;
 	}

@@ -4,10 +4,10 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
+import de.acegen.aceGen.SingleClientAttribute;
 
 import java.util.Collection;
 
@@ -36,8 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isReact16_8 <em>React16 8</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isUiPresent <em>Ui Present</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getUi <em>Ui</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -96,34 +95,14 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   protected EList<HttpClientAce> aceOperations;
 
   /**
-   * The default value of the '{@link #isUiPresent() <em>Ui Present</em>}' attribute.
+   * The cached value of the '{@link #getContainer() <em>Container</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isUiPresent()
+   * @see #getContainer()
    * @generated
    * @ordered
    */
-  protected static final boolean UI_PRESENT_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isUiPresent() <em>Ui Present</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isUiPresent()
-   * @generated
-   * @ordered
-   */
-  protected boolean uiPresent = UI_PRESENT_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getUi() <em>Ui</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getUi()
-   * @generated
-   * @ordered
-   */
-  protected EList<ClientAttribute> ui;
+  protected SingleClientAttribute container;
 
   /**
    * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
@@ -227,9 +206,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public boolean isUiPresent()
+  public SingleClientAttribute getContainer()
   {
-    return uiPresent;
+    return container;
   }
 
   /**
@@ -237,13 +216,16 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void setUiPresent(boolean newUiPresent)
+  public NotificationChain basicSetContainer(SingleClientAttribute newContainer, NotificationChain msgs)
   {
-    boolean oldUiPresent = uiPresent;
-    uiPresent = newUiPresent;
+    SingleClientAttribute oldContainer = container;
+    container = newContainer;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__UI_PRESENT, oldUiPresent, uiPresent));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__CONTAINER, oldContainer, newContainer);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -252,13 +234,20 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public EList<ClientAttribute> getUi()
+  public void setContainer(SingleClientAttribute newContainer)
   {
-    if (ui == null)
+    if (newContainer != container)
     {
-      ui = new EObjectContainmentEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.HTTP_CLIENT__UI);
+      NotificationChain msgs = null;
+      if (container != null)
+        msgs = ((InternalEObject)container).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.HTTP_CLIENT__CONTAINER, null, msgs);
+      if (newContainer != null)
+        msgs = ((InternalEObject)newContainer).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.HTTP_CLIENT__CONTAINER, null, msgs);
+      msgs = basicSetContainer(newContainer, msgs);
+      if (msgs != null) msgs.dispatch();
     }
-    return ui;
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__CONTAINER, newContainer, newContainer));
   }
 
   /**
@@ -288,8 +277,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     {
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return ((InternalEList<?>)getAceOperations()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.HTTP_CLIENT__UI:
-        return ((InternalEList<?>)getUi()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_CLIENT__CONTAINER:
+        return basicSetContainer(null, msgs);
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
@@ -312,10 +301,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return getName();
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return getAceOperations();
-      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
-        return isUiPresent();
-      case AceGenPackage.HTTP_CLIENT__UI:
-        return getUi();
+      case AceGenPackage.HTTP_CLIENT__CONTAINER:
+        return getContainer();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return getScenarios();
     }
@@ -343,12 +330,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         getAceOperations().clear();
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
-        setUiPresent((Boolean)newValue);
-        return;
-      case AceGenPackage.HTTP_CLIENT__UI:
-        getUi().clear();
-        getUi().addAll((Collection<? extends ClientAttribute>)newValue);
+      case AceGenPackage.HTTP_CLIENT__CONTAINER:
+        setContainer((SingleClientAttribute)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -377,11 +360,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
-        setUiPresent(UI_PRESENT_EDEFAULT);
-        return;
-      case AceGenPackage.HTTP_CLIENT__UI:
-        getUi().clear();
+      case AceGenPackage.HTTP_CLIENT__CONTAINER:
+        setContainer((SingleClientAttribute)null);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -406,10 +386,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return aceOperations != null && !aceOperations.isEmpty();
-      case AceGenPackage.HTTP_CLIENT__UI_PRESENT:
-        return uiPresent != UI_PRESENT_EDEFAULT;
-      case AceGenPackage.HTTP_CLIENT__UI:
-        return ui != null && !ui.isEmpty();
+      case AceGenPackage.HTTP_CLIENT__CONTAINER:
+        return container != null;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return scenarios != null && !scenarios.isEmpty();
     }
@@ -431,8 +409,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     result.append(react16_8);
     result.append(", name: ");
     result.append(name);
-    result.append(", uiPresent: ");
-    result.append(uiPresent);
     result.append(')');
     return result.toString();
   }

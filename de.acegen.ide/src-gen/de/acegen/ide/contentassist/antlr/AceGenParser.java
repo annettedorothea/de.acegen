@@ -52,7 +52,6 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpClientAccess().getGroup(), "rule__HttpClient__Group__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup_2(), "rule__HttpClient__Group_2__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup_3(), "rule__HttpClient__Group_3__0");
-			builder.put(grammarAccess.getHttpClientAccess().getGroup_3_1(), "rule__HttpClient__Group_3_1__0");
 			builder.put(grammarAccess.getHttpClientAccess().getGroup_4(), "rule__HttpClient__Group_4__0");
 			builder.put(grammarAccess.getHttpClientAceAccess().getGroup(), "rule__HttpClientAce__Group__0");
 			builder.put(grammarAccess.getHttpClientAceAccess().getGroup_2(), "rule__HttpClientAce__Group_2__0");
@@ -164,8 +163,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpClientAccess().getReact16_8Assignment_0(), "rule__HttpClient__React16_8Assignment_0");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_1(), "rule__HttpClient__NameAssignment_1");
 			builder.put(grammarAccess.getHttpClientAccess().getAceOperationsAssignment_2_1(), "rule__HttpClient__AceOperationsAssignment_2_1");
-			builder.put(grammarAccess.getHttpClientAccess().getUiPresentAssignment_3_0(), "rule__HttpClient__UiPresentAssignment_3_0");
-			builder.put(grammarAccess.getHttpClientAccess().getUiAssignment_3_1_1(), "rule__HttpClient__UiAssignment_3_1_1");
+			builder.put(grammarAccess.getHttpClientAccess().getContainerAssignment_3_1(), "rule__HttpClient__ContainerAssignment_3_1");
 			builder.put(grammarAccess.getHttpClientAccess().getScenariosAssignment_4_1(), "rule__HttpClient__ScenariosAssignment_4_1");
 			builder.put(grammarAccess.getHttpClientAceAccess().getAsyncAssignment_0(), "rule__HttpClientAce__AsyncAssignment_0");
 			builder.put(grammarAccess.getHttpClientAceAccess().getNameAssignment_1(), "rule__HttpClientAce__NameAssignment_1");

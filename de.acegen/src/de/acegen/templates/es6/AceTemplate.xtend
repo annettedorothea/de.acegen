@@ -25,6 +25,7 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
+import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
 
@@ -35,6 +36,9 @@ class AceTemplate {
 	
 	@Inject
 	extension CommonExtension
+	
+	ArrayList<String> imports = new ArrayList<String>;
+	
 	
 	def generateAppUtilsStub() '''
 		«copyright»
@@ -505,10 +509,13 @@ class AceTemplate {
 		
 		export let appState;
 
-		import {setContainerState} from "../components/ContainerComponent";
-		«FOR attribute : attributes»
-			«attribute.generateAppStateImportsRec("", httpClient)»
-		«ENDFOR»
+		«IF httpClient.isReact16_8»
+			import { set«httpClient.container.componentName»State } from "../components/«httpClient.container.reactComponentName»";
+			«clearImports»
+			«FOR attribute : attributes»
+				«attribute.generateAppStateImportsRec("/" +  httpClient.container.name.toFirstLower, httpClient)»
+			«ENDFOR»
+		«ENDIF»
 		
 		export function getAppState() {
 			return AppUtils.deepCopy(appState);
@@ -639,7 +646,11 @@ class AceTemplate {
 			«IF parent === null»
 				setContainerState(newAppState);
 			«ELSE»
-				set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
+				«IF it.name === parent.name && parent.eContainer instanceof GroupedClientAttribute»
+					set«(parent.eContainer as GroupedClientAttribute).componentName»State(AppUtils.deepCopy(«elementPath»));
+				«ELSE»
+					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
+				«ENDIF»
 			«ENDIF»
 		«ENDIF»
 		AppUtils.stateUpdated(newAppState);
@@ -676,38 +687,44 @@ class AceTemplate {
 	'''
 	
 	def dispatch String generateAppStateImportsRec(SingleClientAttribute it, String subFolder, HttpClient httpClient) '''
-		«IF httpClient.isReact16_8»
+		«IF attributes.size > 0»
 			«imports(subFolder)»
-			«childImports('''«subFolder»/«name.toFirstLower»''', httpClient)»
+			«FOR attribute : attributes»
+				«attribute.generateAppStateImportsRec(subFolder + "/" + name, httpClient)»
+			«ENDFOR»
 		«ENDIF»
 	'''
 	
 	def dispatch String generateAppStateImportsRec(GroupedClientAttribute it, String subFolder, HttpClient httpClient) '''
-		«IF attributeGroup === null || attributeGroup.length > 0»
+		«IF attributeGroup.length > 0»
 			«FOR attribute : attributeGroup»
-				«IF attribute instanceof SingleClientAttribute»
-					«attribute.imports(subFolder)»
-					«attribute.childImports(subFolder, httpClient)»
-				«ELSE»
-					«attribute.generateAppStateImportsRec(subFolder, httpClient)»
-				«ENDIF»
+				«imports(subFolder)»
+				«attribute.generateAppStateImportsRec(subFolder + "/" + name, httpClient)»
 			«ENDFOR»
 		«ENDIF»
 	'''
 	
 	private def imports(SingleClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0 && !isList»
-			import {set«componentName»State} from "../components«subFolder»/«reactComponentName»";
+		«IF attributes.size > 0 && !isList && !imports.contains(componentName)»
+			import { set«componentName»State } from "../components«subFolder»/«reactComponentName»";
+			«addImport(componentName)»
 		«ENDIF»
 	'''
 	
-	private def childImports(SingleClientAttribute it, String subFolder, HttpClient httpClient) '''
-		«IF attributes !== null && !isList && !isHash && !isStorage»
-			«FOR attribute : attributes»
-					«attribute.generateAppStateImportsRec(subFolder, httpClient)»
-			«ENDFOR»
+	private def imports(GroupedClientAttribute it, String subFolder) '''
+		«IF attributeGroup.size > 0 && !imports.contains(componentName)»
+			import { set«componentName»State } from "../components«subFolder»/«reactComponentName»";
+			«addImport(componentName)»
 		«ENDIF»
 	'''
+	
+	private def void addImport(String componentName) {
+		imports.add(componentName)
+	}
+	
+	private def void clearImports() {
+		imports.clear
+	}
 	
 	
 }	

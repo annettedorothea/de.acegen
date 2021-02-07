@@ -132,22 +132,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT__ACE_OPERATIONS = 2;
 
   /**
-   * The feature id for the '<em><b>Ui Present</b></em>' attribute.
+   * The feature id for the '<em><b>Container</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__UI_PRESENT = 3;
-
-  /**
-   * The feature id for the '<em><b>Ui</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HTTP_CLIENT__UI = 4;
+  int HTTP_CLIENT__CONTAINER = 3;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -156,7 +147,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__SCENARIOS = 5;
+  int HTTP_CLIENT__SCENARIOS = 4;
 
   /**
    * The number of structural features of the '<em>Http Client</em>' class.
@@ -165,7 +156,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_FEATURE_COUNT = 6;
+  int HTTP_CLIENT_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpClientAceImpl <em>Http Client Ace</em>}' class.
@@ -2841,26 +2832,15 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClient_AceOperations();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Ui Present</em>'.
-   * @see de.acegen.aceGen.HttpClient#isUiPresent()
+   * @return the meta object for the containment reference '<em>Container</em>'.
+   * @see de.acegen.aceGen.HttpClient#getContainer()
    * @see #getHttpClient()
    * @generated
    */
-  EAttribute getHttpClient_UiPresent();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getUi <em>Ui</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Ui</em>'.
-   * @see de.acegen.aceGen.HttpClient#getUi()
-   * @see #getHttpClient()
-   * @generated
-   */
-  EReference getHttpClient_Ui();
+  EReference getHttpClient_Container();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}'.
@@ -5109,20 +5089,12 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT__ACE_OPERATIONS = eINSTANCE.getHttpClient_AceOperations();
 
     /**
-     * The meta object literal for the '<em><b>Ui Present</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Container</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_CLIENT__UI_PRESENT = eINSTANCE.getHttpClient_UiPresent();
-
-    /**
-     * The meta object literal for the '<em><b>Ui</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HTTP_CLIENT__UI = eINSTANCE.getHttpClient_Ui();
+    EReference HTTP_CLIENT__CONTAINER = eINSTANCE.getHttpClient_Container();
 
     /**
      * The meta object literal for the '<em><b>Scenarios</b></em>' containment reference list feature.

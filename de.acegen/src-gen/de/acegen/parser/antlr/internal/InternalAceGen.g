@@ -214,61 +214,41 @@ ruleHttpClient returns [EObject current=null]
 			)*
 		)?
 		(
+			otherlv_4='ui'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getHttpClientAccess().getUiKeyword_3_0());
+			}
 			(
 				(
-					lv_uiPresent_4_0='ui'
 					{
-						newLeafNode(lv_uiPresent_4_0, grammarAccess.getHttpClientAccess().getUiPresentUiKeyword_3_0_0());
+						newCompositeNode(grammarAccess.getHttpClientAccess().getContainerSingleClientAttributeParserRuleCall_3_1_0());
 					}
+					lv_container_5_0=ruleSingleClientAttribute
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getHttpClientRule());
+							$current = createModelElementForParent(grammarAccess.getHttpClientRule());
 						}
-						setWithLastConsumed($current, "uiPresent", lv_uiPresent_4_0 != null, "ui");
+						set(
+							$current,
+							"container",
+							lv_container_5_0,
+							"de.acegen.AceGen.SingleClientAttribute");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			(
-				otherlv_5='{'
-				{
-					newLeafNode(otherlv_5, grammarAccess.getHttpClientAccess().getLeftCurlyBracketKeyword_3_1_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getHttpClientAccess().getUiClientAttributeParserRuleCall_3_1_1_0());
-						}
-						lv_ui_6_0=ruleClientAttribute
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getHttpClientRule());
-							}
-							add(
-								$current,
-								"ui",
-								lv_ui_6_0,
-								"de.acegen.AceGen.ClientAttribute");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)*
-				otherlv_7='}'
-				{
-					newLeafNode(otherlv_7, grammarAccess.getHttpClientAccess().getRightCurlyBracketKeyword_3_1_2());
-				}
-			)?
 		)?
 		(
-			otherlv_8='scenarios'
+			otherlv_6='scenarios'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getHttpClientAccess().getScenariosKeyword_4_0());
+				newLeafNode(otherlv_6, grammarAccess.getHttpClientAccess().getScenariosKeyword_4_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getHttpClientAccess().getScenariosClientScenarioParserRuleCall_4_1_0());
 					}
-					lv_scenarios_9_0=ruleClientScenario
+					lv_scenarios_7_0=ruleClientScenario
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpClientRule());
@@ -276,7 +256,7 @@ ruleHttpClient returns [EObject current=null]
 						add(
 							$current,
 							"scenarios",
-							lv_scenarios_9_0,
+							lv_scenarios_7_0,
 							"de.acegen.AceGen.ClientScenario");
 						afterParserOrEnumRuleCall();
 					}

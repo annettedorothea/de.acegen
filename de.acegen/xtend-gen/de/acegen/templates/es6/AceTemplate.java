@@ -21,6 +21,7 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
@@ -40,6 +41,8 @@ public class AceTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
+  
+  private ArrayList<String> imports = new ArrayList<String>();
   
   public CharSequence generateAppUtilsStub() {
     StringConcatenation _builder = new StringConcatenation();
@@ -1222,13 +1225,28 @@ public class AceTemplate {
     _builder.append("export let appState;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import {setContainerState} from \"../components/ContainerComponent\";");
-    _builder.newLine();
     {
-      for(final ClientAttribute attribute : attributes) {
-        String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, "", httpClient);
-        _builder.append(_generateAppStateImportsRec);
+      boolean _isReact16_8 = httpClient.isReact16_8();
+      if (_isReact16_8) {
+        _builder.append("import { set");
+        String _componentName = this._es6Extension.componentName(httpClient.getContainer());
+        _builder.append(_componentName);
+        _builder.append("State } from \"../components/");
+        String _reactComponentName = this._es6Extension.reactComponentName(httpClient.getContainer());
+        _builder.append(_reactComponentName);
+        _builder.append("\";");
         _builder.newLineIfNotEmpty();
+        this.clearImports();
+        _builder.newLineIfNotEmpty();
+        {
+          for(final ClientAttribute attribute : attributes) {
+            String _firstLower = StringExtensions.toFirstLower(httpClient.getContainer().getName());
+            String _plus = ("/" + _firstLower);
+            String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, _plus, httpClient);
+            _builder.append(_generateAppStateImportsRec);
+            _builder.newLineIfNotEmpty();
+          }
+        }
       }
     }
     _builder.newLine();
@@ -1688,14 +1706,28 @@ public class AceTemplate {
             _builder.append("setContainerState(newAppState);");
             _builder.newLine();
           } else {
-            _builder.append("set");
-            String _componentName = this._es6Extension.componentName(parent);
-            _builder.append(_componentName);
-            _builder.append("State(AppUtils.deepCopy(");
-            String _elementPath = this._es6Extension.elementPath(parent);
-            _builder.append(_elementPath);
-            _builder.append("));");
-            _builder.newLineIfNotEmpty();
+            {
+              if (((it.getName() == parent.getName()) && (parent.eContainer() instanceof GroupedClientAttribute))) {
+                _builder.append("set");
+                EObject _eContainer = parent.eContainer();
+                String _componentName = this._es6Extension.componentName(((GroupedClientAttribute) _eContainer));
+                _builder.append(_componentName);
+                _builder.append("State(AppUtils.deepCopy(");
+                String _elementPath = this._es6Extension.elementPath(it);
+                _builder.append(_elementPath);
+                _builder.append("));");
+                _builder.newLineIfNotEmpty();
+              } else {
+                _builder.append("set");
+                String _componentName_1 = this._es6Extension.componentName(parent);
+                _builder.append(_componentName_1);
+                _builder.append("State(AppUtils.deepCopy(");
+                String _elementPath_1 = this._es6Extension.elementPath(parent);
+                _builder.append(_elementPath_1);
+                _builder.append("));");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }
@@ -1776,19 +1808,22 @@ public class AceTemplate {
   protected String _generateAppStateImportsRec(final SingleClientAttribute it, final String subFolder, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      boolean _isReact16_8 = httpClient.isReact16_8();
-      if (_isReact16_8) {
+      int _size = it.getAttributes().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
         CharSequence _imports = this.imports(it, subFolder);
         _builder.append(_imports);
         _builder.newLineIfNotEmpty();
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append(subFolder);
-        _builder_1.append("/");
-        String _firstLower = StringExtensions.toFirstLower(it.getName());
-        _builder_1.append(_firstLower);
-        CharSequence _childImports = this.childImports(it, _builder_1.toString(), httpClient);
-        _builder.append(_childImports);
-        _builder.newLineIfNotEmpty();
+        {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          for(final ClientAttribute attribute : _attributes) {
+            String _name = it.getName();
+            String _plus = ((subFolder + "/") + _name);
+            String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, _plus, httpClient);
+            _builder.append(_generateAppStateImportsRec);
+            _builder.newLineIfNotEmpty();
+          }
+        }
       }
     }
     return _builder.toString();
@@ -1797,24 +1832,20 @@ public class AceTemplate {
   protected String _generateAppStateImportsRec(final GroupedClientAttribute it, final String subFolder, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((it.getAttributeGroup() == null) || (((Object[])Conversions.unwrapArray(it.getAttributeGroup(), Object.class)).length > 0))) {
+      int _length = ((Object[])Conversions.unwrapArray(it.getAttributeGroup(), Object.class)).length;
+      boolean _greaterThan = (_length > 0);
+      if (_greaterThan) {
         {
           EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
           for(final ClientAttribute attribute : _attributeGroup) {
-            {
-              if ((attribute instanceof SingleClientAttribute)) {
-                CharSequence _imports = this.imports(((SingleClientAttribute)attribute), subFolder);
-                _builder.append(_imports);
-                _builder.newLineIfNotEmpty();
-                CharSequence _childImports = this.childImports(((SingleClientAttribute)attribute), subFolder, httpClient);
-                _builder.append(_childImports);
-                _builder.newLineIfNotEmpty();
-              } else {
-                String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, subFolder, httpClient);
-                _builder.append(_generateAppStateImportsRec);
-                _builder.newLineIfNotEmpty();
-              }
-            }
+            CharSequence _imports = this.imports(it, subFolder);
+            _builder.append(_imports);
+            _builder.newLineIfNotEmpty();
+            String _name = it.getName();
+            String _plus = ((subFolder + "/") + _name);
+            String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, _plus, httpClient);
+            _builder.append(_generateAppStateImportsRec);
+            _builder.newLineIfNotEmpty();
           }
         }
       }
@@ -1825,37 +1856,51 @@ public class AceTemplate {
   private CharSequence imports(final SingleClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((it.getAttributes().size() > 0) && (!it.isList()))) {
-        _builder.append("import {set");
+      if ((((it.getAttributes().size() > 0) && (!it.isList())) && (!this.imports.contains(this._es6Extension.componentName(it))))) {
+        _builder.append("import { set");
         String _componentName = this._es6Extension.componentName(it);
         _builder.append(_componentName);
-        _builder.append("State} from \"../components");
+        _builder.append("State } from \"../components");
         _builder.append(subFolder);
         _builder.append("/");
         String _reactComponentName = this._es6Extension.reactComponentName(it);
         _builder.append(_reactComponentName);
         _builder.append("\";");
         _builder.newLineIfNotEmpty();
+        this.addImport(this._es6Extension.componentName(it));
+        _builder.newLineIfNotEmpty();
       }
     }
     return _builder;
   }
   
-  private CharSequence childImports(final SingleClientAttribute it, final String subFolder, final HttpClient httpClient) {
+  private CharSequence imports(final GroupedClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((((it.getAttributes() != null) && (!it.isList())) && (!it.isHash())) && (!it.isStorage()))) {
-        {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          for(final ClientAttribute attribute : _attributes) {
-            String _generateAppStateImportsRec = this.generateAppStateImportsRec(attribute, subFolder, httpClient);
-            _builder.append(_generateAppStateImportsRec);
-            _builder.newLineIfNotEmpty();
-          }
-        }
+      if (((it.getAttributeGroup().size() > 0) && (!this.imports.contains(this._es6Extension.componentName(it))))) {
+        _builder.append("import { set");
+        String _componentName = this._es6Extension.componentName(it);
+        _builder.append(_componentName);
+        _builder.append("State } from \"../components");
+        _builder.append(subFolder);
+        _builder.append("/");
+        String _reactComponentName = this._es6Extension.reactComponentName(it);
+        _builder.append(_reactComponentName);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+        this.addImport(this._es6Extension.componentName(it));
+        _builder.newLineIfNotEmpty();
       }
     }
     return _builder;
+  }
+  
+  private void addImport(final String componentName) {
+    this.imports.add(componentName);
+  }
+  
+  private void clearImports() {
+    this.imports.clear();
   }
   
   public String generateAppStateRec(final ClientAttribute it, final HttpClient httpClient) {

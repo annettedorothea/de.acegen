@@ -19,8 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClient#getUi <em>Ui</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -87,38 +86,26 @@ public interface HttpClient extends EObject
   EList<HttpClientAce> getAceOperations();
 
   /**
-   * Returns the value of the '<em><b>Ui Present</b></em>' attribute.
+   * Returns the value of the '<em><b>Container</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Ui Present</em>' attribute.
-   * @see #setUiPresent(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_UiPresent()
-   * @model
-   * @generated
-   */
-  boolean isUiPresent();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isUiPresent <em>Ui Present</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Ui Present</em>' attribute.
-   * @see #isUiPresent()
-   * @generated
-   */
-  void setUiPresent(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Ui</b></em>' containment reference list.
-   * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Ui</em>' containment reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Ui()
+   * @return the value of the '<em>Container</em>' containment reference.
+   * @see #setContainer(SingleClientAttribute)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Container()
    * @model containment="true"
    * @generated
    */
-  EList<ClientAttribute> getUi();
+  SingleClientAttribute getContainer();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Container</em>' containment reference.
+   * @see #getContainer()
+   * @generated
+   */
+  void setContainer(SingleClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.

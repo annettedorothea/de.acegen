@@ -173,9 +173,9 @@ public class Es6Generator {
     fsa.generateFile("ace/TriggerAction.js", IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateTriggerAction());
     fsa.generateFile("ace/Timeline.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateTimeline());
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
-    if (((httpClient.isUiPresent() && (httpClient.getUi() != null)) && (httpClient.getUi().size() > 0))) {
+    if (((httpClient.getContainer() != null) && (httpClient.getContainer().getAttributes().size() > 0))) {
       fsa.generateFile("ace/AppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.aceTemplate.generateAppState(httpClient.getUi(), "", httpClient));
+        this.aceTemplate.generateAppState(httpClient.getContainer().getAttributes(), "", httpClient));
     }
     boolean _isReact16_8 = httpClient.isReact16_8();
     if (_isReact16_8) {

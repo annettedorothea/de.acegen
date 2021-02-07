@@ -27,9 +27,7 @@ HttpClient:
 	(react16_8 ?= 'React_16.8')? 
 	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
-	(uiPresent ?= 'ui' ('{'
-		ui += ClientAttribute*
-	'}')? )?
+	('ui' container = SingleClientAttribute)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
