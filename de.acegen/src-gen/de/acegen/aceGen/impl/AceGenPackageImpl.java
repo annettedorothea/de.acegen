@@ -963,9 +963,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getSingleClientAttribute_PassOn()
+  {
+    return (EAttribute)singleClientAttributeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getSingleClientAttribute_Attributes()
   {
-    return (EReference)singleClientAttributeEClass.getEStructuralFeatures().get(3);
+    return (EReference)singleClientAttributeEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -2956,6 +2967,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(singleClientAttributeEClass, SINGLE_CLIENT_ATTRIBUTE__LIST);
     createEAttribute(singleClientAttributeEClass, SINGLE_CLIENT_ATTRIBUTE__HASH);
     createEAttribute(singleClientAttributeEClass, SINGLE_CLIENT_ATTRIBUTE__STORAGE);
+    createEAttribute(singleClientAttributeEClass, SINGLE_CLIENT_ATTRIBUTE__PASS_ON);
     createEReference(singleClientAttributeEClass, SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES);
 
     groupedClientAttributeEClass = createEClass(GROUPED_CLIENT_ATTRIBUTE);
@@ -3284,6 +3296,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getSingleClientAttribute_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, SingleClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSingleClientAttribute_Hash(), ecorePackage.getEBoolean(), "hash", null, 0, 1, SingleClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSingleClientAttribute_Storage(), ecorePackage.getEBoolean(), "storage", null, 0, 1, SingleClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSingleClientAttribute_PassOn(), ecorePackage.getEBoolean(), "passOn", null, 0, 1, SingleClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSingleClientAttribute_Attributes(), this.getClientAttribute(), null, "attributes", null, 0, -1, SingleClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(groupedClientAttributeEClass, GroupedClientAttribute.class, "GroupedClientAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

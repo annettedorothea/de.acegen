@@ -68,7 +68,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHttpClientStateFunctionAccess().getGroup(), "rule__HttpClientStateFunction__Group__0");
 			builder.put(grammarAccess.getClientAttributeAccess().getGroup_1(), "rule__ClientAttribute__Group_1__0");
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup(), "rule__SingleClientAttribute__Group__0");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup_4(), "rule__SingleClientAttribute__Group_4__0");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getGroup_5(), "rule__SingleClientAttribute__Group_5__0");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getGroup(), "rule__GroupedClientAttribute__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup(), "rule__ClientScenario__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup_1(), "rule__ClientScenario__Group_1__0");
@@ -186,7 +186,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getNameAssignment_1(), "rule__SingleClientAttribute__NameAssignment_1");
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getHashAssignment_2(), "rule__SingleClientAttribute__HashAssignment_2");
 			builder.put(grammarAccess.getSingleClientAttributeAccess().getStorageAssignment_3(), "rule__SingleClientAttribute__StorageAssignment_3");
-			builder.put(grammarAccess.getSingleClientAttributeAccess().getAttributesAssignment_4_1(), "rule__SingleClientAttribute__AttributesAssignment_4_1");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getPassOnAssignment_4(), "rule__SingleClientAttribute__PassOnAssignment_4");
+			builder.put(grammarAccess.getSingleClientAttributeAccess().getAttributesAssignment_5_1(), "rule__SingleClientAttribute__AttributesAssignment_5_1");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getNameAssignment_0(), "rule__GroupedClientAttribute__NameAssignment_0");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupAssignment_2(), "rule__GroupedClientAttribute__AttributeGroupAssignment_2");
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getAttributeGroupAssignment_3(), "rule__GroupedClientAttribute__AttributeGroupAssignment_3");

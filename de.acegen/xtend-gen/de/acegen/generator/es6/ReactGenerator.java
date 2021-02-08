@@ -7,7 +7,9 @@ import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.es6.ReactTemplate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -32,11 +34,13 @@ public class ReactGenerator {
       _builder.append("components/ReactHelper.js");
       fsa.generateFile(_builder.toString(), IFileSystemAccess2.DEFAULT_OUTPUT, 
         this.reactTemplate.generateReactHelper(httpClient));
-      this.doGenerate(httpClient.getContainer(), fsa, "", false);
+      SingleClientAttribute _container_1 = httpClient.getContainer();
+      ArrayList<SingleClientAttribute> _arrayList = new ArrayList<SingleClientAttribute>();
+      this.doGenerate(_container_1, fsa, "", false, _arrayList);
     }
   }
   
-  protected void _doGenerate(final SingleClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild) {
+  protected void _doGenerate(final SingleClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild, final List<SingleClientAttribute> passOnAttributes) {
     if (((it.getAttributes().size() > 0) || isGroupedChild)) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("components");
@@ -55,7 +59,7 @@ public class ReactGenerator {
       _builder_1.append(_componentName);
       _builder_1.append(".js");
       fsa.generateFile(_builder_1.toString(), ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-        this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
+        this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder), passOnAttributes));
       StringConcatenation _builder_2 = new StringConcatenation();
       _builder_2.append(subFolder);
       _builder_2.append("/");
@@ -64,12 +68,12 @@ public class ReactGenerator {
       final String nextSubFolder = _builder_2.toString();
       EList<ClientAttribute> _attributes = it.getAttributes();
       for (final ClientAttribute attribute : _attributes) {
-        this.doGenerate(attribute, fsa, nextSubFolder, false);
+        this.doGenerate(attribute, fsa, nextSubFolder, false, passOnAttributes);
       }
     }
   }
   
-  protected void _doGenerate(final GroupedClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild) {
+  protected void _doGenerate(final GroupedClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild, final List<SingleClientAttribute> passOnAttributes) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("components");
     _builder.append(subFolder);
@@ -87,7 +91,7 @@ public class ReactGenerator {
     _builder_1.append(_componentName);
     _builder_1.append(".js");
     fsa.generateFile(_builder_1.toString(), ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-      this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
+      this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder), passOnAttributes));
     StringConcatenation _builder_2 = new StringConcatenation();
     _builder_2.append(subFolder);
     _builder_2.append("/");
@@ -96,7 +100,7 @@ public class ReactGenerator {
     final String nextSubFolder = _builder_2.toString();
     EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
     for (final ClientAttribute attribute : _attributeGroup) {
-      this.doGenerate(attribute, fsa, nextSubFolder, true);
+      this.doGenerate(attribute, fsa, nextSubFolder, true, passOnAttributes);
     }
   }
   
@@ -111,16 +115,16 @@ public class ReactGenerator {
     return folderPrefix;
   }
   
-  public void doGenerate(final ClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild) {
+  public void doGenerate(final ClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild, final List<SingleClientAttribute> passOnAttributes) {
     if (it instanceof GroupedClientAttribute) {
-      _doGenerate((GroupedClientAttribute)it, fsa, subFolder, isGroupedChild);
+      _doGenerate((GroupedClientAttribute)it, fsa, subFolder, isGroupedChild, passOnAttributes);
       return;
     } else if (it instanceof SingleClientAttribute) {
-      _doGenerate((SingleClientAttribute)it, fsa, subFolder, isGroupedChild);
+      _doGenerate((SingleClientAttribute)it, fsa, subFolder, isGroupedChild, passOnAttributes);
       return;
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, fsa, subFolder, isGroupedChild).toString());
+        Arrays.<Object>asList(it, fsa, subFolder, isGroupedChild, passOnAttributes).toString());
     }
   }
 }

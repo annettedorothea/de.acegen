@@ -71,6 +71,7 @@ SingleClientAttribute:
 	name = ID 
 	hash ?= 'location.hash'? 
 	storage ?= 'storage'? 
+	passOn ?= 'passOn'? 
 	('{'
 		attributes += ClientAttribute*
 	'}')?

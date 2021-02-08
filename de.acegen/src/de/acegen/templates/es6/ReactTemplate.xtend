@@ -6,6 +6,8 @@ import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
+import java.util.List
+import de.acegen.aceGen.ClientAttribute
 
 class ReactTemplate {
 	
@@ -69,8 +71,10 @@ class ReactTemplate {
 		
 	'''
 	
-	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix) '''
+	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix, List<SingleClientAttribute> passOnAttributes) '''
 		«copyright»
+		
+		«addPassOnAttributes(passOnAttributes, attributes)»
 
 		import { div, h1, label, input, table, tbody, ul, li, tr, td«FOR attribute: attributes.filter[a | a instanceof SingleClientAttribute && (a as SingleClientAttribute).attributes.size > 0 || a instanceof GroupedClientAttribute] BEFORE "," SEPARATOR ","» «attribute.reactTagName»«ENDFOR» } from "«folderPrefix»../../gen/components/ReactHelper";
 		
@@ -78,14 +82,14 @@ class ReactTemplate {
 			«IF list»
 				return tr({class: ""}, [
 					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("td")»
+						«attribute.generateChild("td", passOnAttributes)»
 					«ENDFOR»
 				]);
 			«ELSE»
 				return div({}, [
 					h1({}, ["«name.toUpperCase»"])«IF attributes.size > 0»,«ENDIF»
 					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("div")»
+						«attribute.generateChild("div", passOnAttributes)»
 					«ENDFOR»
 				]);
 			«ENDIF»
@@ -95,7 +99,17 @@ class ReactTemplate {
 		
 	'''
 	
-	def dispatch generateComponentStruct(GroupedClientAttribute it, String folderPrefix) '''
+	def private addPassOnAttributes(List<SingleClientAttribute> passOnAttributes, List<ClientAttribute> attributes) {
+		for(attribute: attributes) {
+			if (attribute instanceof SingleClientAttribute) {
+				if (attribute.passOn) {
+					passOnAttributes.add(attribute)
+				}
+			}
+		}
+	}
+	
+	def dispatch generateComponentStruct(GroupedClientAttribute it, String folderPrefix, List<SingleClientAttribute> passOnAttributes) '''
 		«copyright»
 
 		import { «FOR attribute: attributeGroup SEPARATOR ","» «attribute.reactTagName»«ENDFOR»} from "«folderPrefix»../../gen/components/ReactHelper";
@@ -103,7 +117,7 @@ class ReactTemplate {
 		export function uiElement(attributes) {
 			«FOR attribute: attributeGroup»
 				if (attributes.is«attribute.name.toFirstUpper» === true) {
-					return «attribute.reactTagName»(attributes, []);
+					return «attribute.reactTagName»(attributes);
 				}
 			«ENDFOR»
 			return null;
@@ -113,14 +127,14 @@ class ReactTemplate {
 		
 	'''
 	
-	def dispatch generateChild(SingleClientAttribute it, String enclosingTag) '''
+	def dispatch generateChild(SingleClientAttribute it, String enclosingTag, List<SingleClientAttribute> passOnAttributes) '''
 		«IF !storage && !hash»
 			«IF list»
 				«enclosingTag»({}, [
 					«IF attributes.size > 1»
 						table({class: ""}, [
 							tbody({}, [
-								attributes.«name.toFirstLower».map((item) => «reactTagName»(item))
+								attributes.«name.toFirstLower».map((item) => «reactTagCall("item", passOnAttributes)»)
 							])
 						])
 					«ELSE»
@@ -145,17 +159,18 @@ class ReactTemplate {
 					div({class: ""}, [attributes.«name»])
 				])
 			«ELSE»
-				«reactTagName»()
+				«reactTagCall("attributes", passOnAttributes)»
 			«ENDIF»
 		«ELSE»
 			// «storage ? "storage" : ""»«hash ? "hash" : ""» «name» 
 		«ENDIF»
 	'''
 	
-	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag) '''
-		«reactTagName»()
+	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag, List<SingleClientAttribute> passOnAttributes) '''
+		«reactTagCall("attributes", passOnAttributes)»
 	'''
 	
+	def reactTagCall(ClientAttribute it, String props, List<SingleClientAttribute> passOnAttributes) '''«IF passOnAttributes.size === 0»«reactTagName»(«props»)«ELSE»«reactTagName»({ ...«props».mainView«FOR attribute: passOnAttributes BEFORE "," SEPARATOR ","» «attribute.name.toFirstLower»: «props».«attribute.name.toFirstLower»«ENDFOR» })«ENDIF»'''
 
 	def generateReactHelper(HttpClient httpClient) '''
 		«copyright»
@@ -270,6 +285,10 @@ class ReactTemplate {
 		
 		export const td = (options, children) => {
 		    return generic("td", options, children);
+		}
+		
+		export const i = (options, children) => {
+		    return generic("i", options, children);
 		}
 		
 		export const input = (options) => {

@@ -49,6 +49,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/storage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/passOn"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/attributes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//GroupedClientAttribute">

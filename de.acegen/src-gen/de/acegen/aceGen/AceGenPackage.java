@@ -463,13 +463,22 @@ public interface AceGenPackage extends EPackage
   int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Pass On</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SINGLE_CLIENT_ATTRIBUTE__PASS_ON = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
+  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Single Client Attribute</em>' class.
@@ -478,7 +487,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
+  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.GroupedClientAttributeImpl <em>Grouped Client Attribute</em>}' class.
@@ -3133,6 +3142,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getSingleClientAttribute_Storage();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isPassOn <em>Pass On</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pass On</em>'.
+   * @see de.acegen.aceGen.SingleClientAttribute#isPassOn()
+   * @see #getSingleClientAttribute()
+   * @generated
+   */
+  EAttribute getSingleClientAttribute_PassOn();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.SingleClientAttribute#getAttributes <em>Attributes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5325,6 +5345,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute SINGLE_CLIENT_ATTRIBUTE__STORAGE = eINSTANCE.getSingleClientAttribute_Storage();
+
+    /**
+     * The meta object literal for the '<em><b>Pass On</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SINGLE_CLIENT_ATTRIBUTE__PASS_ON = eINSTANCE.getSingleClientAttribute_PassOn();
 
     /**
      * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.

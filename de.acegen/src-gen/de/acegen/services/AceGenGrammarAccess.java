@@ -526,17 +526,20 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cHashLocationHashKeyword_2_0 = (Keyword)cHashAssignment_2.eContents().get(0);
 		private final Assignment cStorageAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cStorageStorageKeyword_3_0 = (Keyword)cStorageAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLeftCurlyBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cAttributesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cAttributesClientAttributeParserRuleCall_4_1_0 = (RuleCall)cAttributesAssignment_4_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Assignment cPassOnAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cPassOnPassOnKeyword_4_0 = (Keyword)cPassOnAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLeftCurlyBracketKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cAttributesAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cAttributesClientAttributeParserRuleCall_5_1_0 = (RuleCall)cAttributesAssignment_5_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
 		//SingleClientAttribute:
 		//	list?='List'?
 		//	name=ID
 		//	hash?='location.hash'?
-		//	storage?='storage'? ('{'
+		//	storage?='storage'?
+		//	passOn?='passOn'? ('{'
 		//	attributes+=ClientAttribute*
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
@@ -544,7 +547,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//list?='List'?
 		//name=ID
 		//hash?='location.hash'?
-		//storage?='storage'? ('{'
+		//storage?='storage'?
+		//passOn?='passOn'? ('{'
 		//attributes+=ClientAttribute*
 		//'}')?
 		public Group getGroup() { return cGroup; }
@@ -573,22 +577,28 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'storage'
 		public Keyword getStorageStorageKeyword_3_0() { return cStorageStorageKeyword_3_0; }
 		
+		//passOn?='passOn'?
+		public Assignment getPassOnAssignment_4() { return cPassOnAssignment_4; }
+		
+		//'passOn'
+		public Keyword getPassOnPassOnKeyword_4_0() { return cPassOnPassOnKeyword_4_0; }
+		
 		//('{'
 		//attributes+=ClientAttribute*
 		//'}')?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_5() { return cGroup_5; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_4_0() { return cLeftCurlyBracketKeyword_4_0; }
+		public Keyword getLeftCurlyBracketKeyword_5_0() { return cLeftCurlyBracketKeyword_5_0; }
 		
 		//attributes+=ClientAttribute*
-		public Assignment getAttributesAssignment_4_1() { return cAttributesAssignment_4_1; }
+		public Assignment getAttributesAssignment_5_1() { return cAttributesAssignment_5_1; }
 		
 		//ClientAttribute
-		public RuleCall getAttributesClientAttributeParserRuleCall_4_1_0() { return cAttributesClientAttributeParserRuleCall_4_1_0; }
+		public RuleCall getAttributesClientAttributeParserRuleCall_5_1_0() { return cAttributesClientAttributeParserRuleCall_5_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4_2() { return cRightCurlyBracketKeyword_4_2; }
+		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
 	}
 	public class GroupedClientAttributeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.GroupedClientAttribute");
@@ -3590,7 +3600,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//	list?='List'?
 	//	name=ID
 	//	hash?='location.hash'?
-	//	storage?='storage'? ('{'
+	//	storage?='storage'?
+	//	passOn?='passOn'? ('{'
 	//	attributes+=ClientAttribute*
 	//	'}')?;
 	public SingleClientAttributeElements getSingleClientAttributeAccess() {
