@@ -1,6 +1,5 @@
 package de.acegen.templates.es6
 
-import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute

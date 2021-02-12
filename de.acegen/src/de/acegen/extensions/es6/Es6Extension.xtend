@@ -205,18 +205,16 @@ class Es6Extension {
 		if (async || serverCall !== null) {
 			number = 1
 		}
-		var triggeredAsyncCalls = 0;
 		for (outcome : outcomes) {
 			if (outcome.triggerdAceOperations.size > 0) {
 				for (triggered : outcome.triggerdAceOperations) {
-					val n = numberOfAsyncCalls(triggered.aceOperation)
-					if (n > triggeredAsyncCalls) {
-						triggeredAsyncCalls = n;
+					if (triggered.aceOperation.async || triggered.aceOperation.serverCall !== null) {
+						number = 2
 					}
 				}
 			}
 		}
-		return number + triggeredAsyncCalls;
+		return number;
 	}
 
 	def int numberOfSyncCalls(HttpClientAce it) {
@@ -224,18 +222,16 @@ class Es6Extension {
 		if (!async && serverCall === null) {
 			number = 1
 		}
-		var triggeredSyncCalls = 0;
 		for (outcome : outcomes) {
 			if (outcome.triggerdAceOperations.size > 0) {
 				for (triggered : outcome.triggerdAceOperations) {
-					val n = numberOfSyncCalls(triggered.aceOperation)
-					if (n > triggeredSyncCalls) {
-						triggeredSyncCalls = n;
+					if (!triggered.aceOperation.async && triggered.aceOperation.serverCall === null) {
+						number = 2
 					}
 				}
 			}
 		}
-		return number + triggeredSyncCalls;
+		return number;
 	}
 	
 	dispatch def String reactComponentName(SingleClientAttribute it) {

@@ -387,7 +387,6 @@ public class Es6Extension {
     if ((it.isAsync() || (it.getServerCall() != null))) {
       number = 1;
     }
-    int triggeredAsyncCalls = 0;
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
       int _size = outcome.getTriggerdAceOperations().size();
@@ -395,16 +394,13 @@ public class Es6Extension {
       if (_greaterThan) {
         EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
         for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
-          {
-            final int n = this.numberOfAsyncCalls(triggered.getAceOperation());
-            if ((n > triggeredAsyncCalls)) {
-              triggeredAsyncCalls = n;
-            }
+          if ((triggered.getAceOperation().isAsync() || (triggered.getAceOperation().getServerCall() != null))) {
+            number = 2;
           }
         }
       }
     }
-    return (number + triggeredAsyncCalls);
+    return number;
   }
   
   public int numberOfSyncCalls(final HttpClientAce it) {
@@ -412,7 +408,6 @@ public class Es6Extension {
     if (((!it.isAsync()) && (it.getServerCall() == null))) {
       number = 1;
     }
-    int triggeredSyncCalls = 0;
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
       int _size = outcome.getTriggerdAceOperations().size();
@@ -420,16 +415,13 @@ public class Es6Extension {
       if (_greaterThan) {
         EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
         for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
-          {
-            final int n = this.numberOfSyncCalls(triggered.getAceOperation());
-            if ((n > triggeredSyncCalls)) {
-              triggeredSyncCalls = n;
-            }
+          if (((!triggered.getAceOperation().isAsync()) && (triggered.getAceOperation().getServerCall() == null))) {
+            number = 2;
           }
         }
       }
     }
-    return (number + triggeredSyncCalls);
+    return number;
   }
   
   protected String _reactComponentName(final SingleClientAttribute it) {
