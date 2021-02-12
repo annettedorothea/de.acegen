@@ -4,9 +4,9 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateFunction;
+import de.acegen.aceGen.TriggerdAceOperation;
 
 import java.util.Collection;
 
@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -35,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getListeners <em>Listeners</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getAceOperations <em>Ace Operations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getTriggerdAceOperations <em>Triggerd Ace Operations</em>}</li>
  * </ul>
  *
  * @generated
@@ -73,14 +72,14 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
   protected EList<HttpClientStateFunction> listeners;
 
   /**
-   * The cached value of the '{@link #getAceOperations() <em>Ace Operations</em>}' reference list.
+   * The cached value of the '{@link #getTriggerdAceOperations() <em>Triggerd Ace Operations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAceOperations()
+   * @see #getTriggerdAceOperations()
    * @generated
    * @ordered
    */
-  protected EList<HttpClientAce> aceOperations;
+  protected EList<TriggerdAceOperation> triggerdAceOperations;
 
   /**
    * <!-- begin-user-doc -->
@@ -149,13 +148,13 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public EList<HttpClientAce> getAceOperations()
+  public EList<TriggerdAceOperation> getTriggerdAceOperations()
   {
-    if (aceOperations == null)
+    if (triggerdAceOperations == null)
     {
-      aceOperations = new EObjectResolvingEList<HttpClientAce>(HttpClientAce.class, this, AceGenPackage.HTTP_CLIENT_OUTCOME__ACE_OPERATIONS);
+      triggerdAceOperations = new EObjectContainmentEList<TriggerdAceOperation>(TriggerdAceOperation.class, this, AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS);
     }
-    return aceOperations;
+    return triggerdAceOperations;
   }
 
   /**
@@ -170,6 +169,8 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
     {
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return ((InternalEList<?>)getListeners()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
+        return ((InternalEList<?>)getTriggerdAceOperations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -188,8 +189,8 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return getName();
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return getListeners();
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__ACE_OPERATIONS:
-        return getAceOperations();
+      case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
+        return getTriggerdAceOperations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -212,9 +213,9 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
         getListeners().clear();
         getListeners().addAll((Collection<? extends HttpClientStateFunction>)newValue);
         return;
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__ACE_OPERATIONS:
-        getAceOperations().clear();
-        getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
+      case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
+        getTriggerdAceOperations().clear();
+        getTriggerdAceOperations().addAll((Collection<? extends TriggerdAceOperation>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,8 +237,8 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         getListeners().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__ACE_OPERATIONS:
-        getAceOperations().clear();
+      case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
+        getTriggerdAceOperations().clear();
         return;
     }
     super.eUnset(featureID);
@@ -257,8 +258,8 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return listeners != null && !listeners.isEmpty();
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__ACE_OPERATIONS:
-        return aceOperations != null && !aceOperations.isEmpty();
+      case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
+        return triggerdAceOperations != null && !triggerdAceOperations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

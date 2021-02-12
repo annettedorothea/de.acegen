@@ -33,9 +33,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isReact16_8 <em>React16 8</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isReact16_8 <em>React16 8</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
@@ -44,26 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpClientImpl extends MinimalEObjectImpl.Container implements HttpClient
 {
-  /**
-   * The default value of the '{@link #isReact16_8() <em>React16 8</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isReact16_8()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean REACT16_8_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isReact16_8() <em>React16 8</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isReact16_8()
-   * @generated
-   * @ordered
-   */
-  protected boolean react16_8 = REACT16_8_EDEFAULT;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -93,6 +73,26 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @ordered
    */
   protected EList<HttpClientAce> aceOperations;
+
+  /**
+   * The default value of the '{@link #isReact16_8() <em>React16 8</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isReact16_8()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean REACT16_8_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isReact16_8() <em>React16 8</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isReact16_8()
+   * @generated
+   * @ordered
+   */
+  protected boolean react16_8 = REACT16_8_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getContainer() <em>Container</em>}' containment reference.
@@ -141,31 +141,6 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public boolean isReact16_8()
-  {
-    return react16_8;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setReact16_8(boolean newReact16_8)
-  {
-    boolean oldReact16_8 = react16_8;
-    react16_8 = newReact16_8;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__REACT16_8, oldReact16_8, react16_8));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public String getName()
   {
     return name;
@@ -198,6 +173,31 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
       aceOperations = new EObjectContainmentEList<HttpClientAce>(HttpClientAce.class, this, AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS);
     }
     return aceOperations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isReact16_8()
+  {
+    return react16_8;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setReact16_8(boolean newReact16_8)
+  {
+    boolean oldReact16_8 = react16_8;
+    react16_8 = newReact16_8;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__REACT16_8, oldReact16_8, react16_8));
   }
 
   /**
@@ -295,12 +295,12 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT__REACT16_8:
-        return isReact16_8();
       case AceGenPackage.HTTP_CLIENT__NAME:
         return getName();
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return getAceOperations();
+      case AceGenPackage.HTTP_CLIENT__REACT16_8:
+        return isReact16_8();
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         return getContainer();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
@@ -320,15 +320,15 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT__REACT16_8:
-        setReact16_8((Boolean)newValue);
-        return;
       case AceGenPackage.HTTP_CLIENT__NAME:
         setName((String)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
         getAceOperations().addAll((Collection<? extends HttpClientAce>)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT__REACT16_8:
+        setReact16_8((Boolean)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         setContainer((SingleClientAttribute)newValue);
@@ -351,14 +351,14 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT__REACT16_8:
-        setReact16_8(REACT16_8_EDEFAULT);
-        return;
       case AceGenPackage.HTTP_CLIENT__NAME:
         setName(NAME_EDEFAULT);
         return;
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         getAceOperations().clear();
+        return;
+      case AceGenPackage.HTTP_CLIENT__REACT16_8:
+        setReact16_8(REACT16_8_EDEFAULT);
         return;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         setContainer((SingleClientAttribute)null);
@@ -380,12 +380,12 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_CLIENT__REACT16_8:
-        return react16_8 != REACT16_8_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT__ACE_OPERATIONS:
         return aceOperations != null && !aceOperations.isEmpty();
+      case AceGenPackage.HTTP_CLIENT__REACT16_8:
+        return react16_8 != REACT16_8_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         return container != null;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
@@ -405,10 +405,10 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (react16_8: ");
-    result.append(react16_8);
-    result.append(", name: ");
+    result.append(" (name: ");
     result.append(name);
+    result.append(", react16_8: ");
+    result.append(react16_8);
     result.append(')');
     return result.toString();
   }

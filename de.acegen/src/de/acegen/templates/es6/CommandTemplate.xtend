@@ -40,7 +40,7 @@ class CommandTemplate {
 		«copyright»
 
 		import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
-		«IF triggeredAceOperations.size > 0»
+		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../../gen/ace/TriggerAction";
 		«ENDIF»
 		import Utils from "../../ace/Utils";
@@ -53,7 +53,7 @@ class CommandTemplate {
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
 			«ENDIF»
 		«ENDFOR»
-		«FOR aceOperation : triggeredAceOperations»
+		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
@@ -76,13 +76,17 @@ class CommandTemplate {
 				let promises = [];
 			    
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (this.commandData.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								promises.push(new «eventName(outcome)»(this.commandData).publish());
 							«ENDIF»
-							«FOR aceOperation : outcome.aceOperations»
-								promises.push(new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish());
+							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+								«IF triggerdAceOperation.delay == 0»
+									promises.push(new TriggerAction(new «triggerdAceOperation.aceOperation.actionName»(«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish());
+								«ELSE»
+									promises.push(new TriggerAction(new «triggerdAceOperation.aceOperation.actionName»(«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publishWithDelay(«triggerdAceOperation.delay»));
+								«ENDIF»
 							«ENDFOR»
 						}
 					«ENDIF»
@@ -104,8 +108,8 @@ class CommandTemplate {
 								this.commandData.«attribute.name» = data.«attribute.name»;
 							«ENDFOR»
 							this.handleResponse(resolve, reject);
-						}, (error) => {
-							this.commandData.error = error;
+						}, (message) => {
+							this.commandData.message = message;
 							this.handleError(resolve, reject);
 						});
 				    });
@@ -123,7 +127,7 @@ class CommandTemplate {
 		«copyright»
 
 		import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-		«IF triggeredAceOperations.size > 0»
+		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../../gen/ace/TriggerAction";
 		«ENDIF»
 		«IF refs.size > 0»
@@ -134,7 +138,7 @@ class CommandTemplate {
 				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
 			«ENDIF»
 		«ENDFOR»
-		«FOR aceOperation : triggeredAceOperations»
+		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
@@ -155,13 +159,17 @@ class CommandTemplate {
 
 		    publishEvents() {
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0 || outcome.aceOperations.size > 0»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (this.commandData.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new «eventName(outcome)»(this.commandData).publish();
 							«ENDIF»
-							«FOR aceOperation : outcome.aceOperations»
-								new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish();
+							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+								«IF triggerdAceOperation.delay == 0»
+									new TriggerAction(new «triggerdAceOperation.aceOperation.actionName»(«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publish();
+								«ELSE»
+									new TriggerAction(new «triggerdAceOperation.aceOperation.actionName»(«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»this.commandData.«inputParam.name»«ENDFOR»)).publishWithDelay(«triggerdAceOperation.delay»);
+								«ENDIF»
 							«ENDFOR»
 						}
 					«ENDIF»
@@ -200,7 +208,7 @@ class CommandTemplate {
 		    	resolve();
 		    }
 		    handleError(resolve, reject) {
-		    	reject(this.commandData.error);
+		    	reject(this.commandData.message);
 		    }
 		«ELSE»
 			execute() {

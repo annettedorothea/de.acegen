@@ -33,6 +33,7 @@ import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StringType;
+import de.acegen.aceGen.TriggerdAceOperation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -389,13 +390,13 @@ public class Es6Extension {
     int triggeredAsyncCalls = 0;
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getAceOperations().size();
+      int _size = outcome.getTriggerdAceOperations().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
-        for (final HttpClientAce triggered : _aceOperations) {
+        EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
+        for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
           {
-            final int n = this.numberOfAsyncCalls(triggered);
+            final int n = this.numberOfAsyncCalls(triggered.getAceOperation());
             if ((n > triggeredAsyncCalls)) {
               triggeredAsyncCalls = n;
             }
@@ -414,13 +415,13 @@ public class Es6Extension {
     int triggeredSyncCalls = 0;
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getAceOperations().size();
+      int _size = outcome.getTriggerdAceOperations().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
-        for (final HttpClientAce triggered : _aceOperations) {
+        EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
+        for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
           {
-            final int n = this.numberOfSyncCalls(triggered);
+            final int n = this.numberOfSyncCalls(triggered.getAceOperation());
             if ((n > triggeredSyncCalls)) {
               triggeredSyncCalls = n;
             }

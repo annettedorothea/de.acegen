@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isPassOn <em>Pass On</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
@@ -100,26 +99,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
    * @ordered
    */
   protected boolean storage = STORAGE_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #isPassOn() <em>Pass On</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isPassOn()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean PASS_ON_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isPassOn() <em>Pass On</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isPassOn()
-   * @generated
-   * @ordered
-   */
-  protected boolean passOn = PASS_ON_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
@@ -233,31 +212,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
    * @generated
    */
   @Override
-  public boolean isPassOn()
-  {
-    return passOn;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setPassOn(boolean newPassOn)
-  {
-    boolean oldPassOn = passOn;
-    passOn = newPassOn;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__PASS_ON, oldPassOn, passOn));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<ClientAttribute> getAttributes()
   {
     if (attributes == null)
@@ -299,8 +253,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
         return isHash();
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__STORAGE:
         return isStorage();
-      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__PASS_ON:
-        return isPassOn();
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES:
         return getAttributes();
     }
@@ -326,9 +278,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
         return;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__STORAGE:
         setStorage((Boolean)newValue);
-        return;
-      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__PASS_ON:
-        setPassOn((Boolean)newValue);
         return;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
@@ -357,9 +306,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__STORAGE:
         setStorage(STORAGE_EDEFAULT);
         return;
-      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__PASS_ON:
-        setPassOn(PASS_ON_EDEFAULT);
-        return;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
         return;
@@ -383,8 +329,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
         return hash != HASH_EDEFAULT;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__STORAGE:
         return storage != STORAGE_EDEFAULT;
-      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__PASS_ON:
-        return passOn != PASS_ON_EDEFAULT;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
     }
@@ -408,8 +352,6 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
     result.append(hash);
     result.append(", storage: ");
     result.append(storage);
-    result.append(", passOn: ");
-    result.append(passOn);
     result.append(')');
     return result.toString();
   }

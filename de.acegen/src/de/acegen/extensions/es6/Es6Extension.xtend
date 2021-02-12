@@ -207,9 +207,9 @@ class Es6Extension {
 		}
 		var triggeredAsyncCalls = 0;
 		for (outcome : outcomes) {
-			if (outcome.aceOperations.size > 0) {
-				for (triggered : outcome.aceOperations) {
-					val n = numberOfAsyncCalls(triggered)
+			if (outcome.triggerdAceOperations.size > 0) {
+				for (triggered : outcome.triggerdAceOperations) {
+					val n = numberOfAsyncCalls(triggered.aceOperation)
 					if (n > triggeredAsyncCalls) {
 						triggeredAsyncCalls = n;
 					}
@@ -226,9 +226,9 @@ class Es6Extension {
 		}
 		var triggeredSyncCalls = 0;
 		for (outcome : outcomes) {
-			if (outcome.aceOperations.size > 0) {
-				for (triggered : outcome.aceOperations) {
-					val n = numberOfSyncCalls(triggered)
+			if (outcome.triggerdAceOperations.size > 0) {
+				for (triggered : outcome.triggerdAceOperations) {
+					val n = numberOfSyncCalls(triggered.aceOperation)
 					if (n > triggeredSyncCalls) {
 						triggeredSyncCalls = n;
 					}

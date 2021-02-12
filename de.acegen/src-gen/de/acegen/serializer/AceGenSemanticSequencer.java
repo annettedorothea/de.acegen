@@ -56,6 +56,7 @@ import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
+import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
@@ -237,6 +238,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.THEN_BLOCK:
 				sequence_ThenBlock(context, (ThenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.TRIGGERD_ACE_OPERATION:
+				sequence_TriggerdAceOperation(context, (TriggerdAceOperation) semanticObject); 
 				return; 
 			case AceGenPackage.UNDEFINED_TYPE:
 				sequence_UndefinedType(context, (UndefinedType) semanticObject); 
@@ -536,7 +540,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientOutcome returns HttpClientOutcome
 	 *
 	 * Constraint:
-	 *     (name=ID listeners+=HttpClientStateFunction* aceOperations+=[HttpClientAce|QualifiedName]*)
+	 *     (name=ID listeners+=HttpClientStateFunction* triggerdAceOperations+=TriggerdAceOperation*)
 	 */
 	protected void sequence_HttpClientOutcome(ISerializationContext context, HttpClientOutcome semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -569,7 +573,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (react16_8?='React_16.8'? name=QualifiedName aceOperations+=HttpClientAce* container=SingleClientAttribute? scenarios+=ClientScenario*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* (react16_8?='React_16.8'? container=SingleClientAttribute)? scenarios+=ClientScenario*)
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1026,14 +1030,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SingleClientAttribute returns SingleClientAttribute
 	 *
 	 * Constraint:
-	 *     (
-	 *         list?='List'? 
-	 *         name=ID 
-	 *         hash?='location.hash'? 
-	 *         storage?='storage'? 
-	 *         passOn?='passOn'? 
-	 *         attributes+=ClientAttribute*
-	 *     )
+	 *     (list?='List'? name=ID hash?='location.hash'? storage?='storage'? attributes+=ClientAttribute*)
 	 */
 	protected void sequence_SingleClientAttribute(ISerializationContext context, SingleClientAttribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1093,6 +1090,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (statusCode=INT response=DataDefinition? persistenceVerifications+=PersistenceVerification* verifications+=Verification*)
 	 */
 	protected void sequence_ThenBlock(ISerializationContext context, ThenBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TriggerdAceOperation returns TriggerdAceOperation
+	 *
+	 * Constraint:
+	 *     (delay=INT? aceOperation=[HttpClientAce|QualifiedName])
+	 */
+	protected void sequence_TriggerdAceOperation(ISerializationContext context, TriggerdAceOperation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

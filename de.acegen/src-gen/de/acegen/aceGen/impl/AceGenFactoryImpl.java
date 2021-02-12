@@ -71,6 +71,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.FROM_APP_STATE_REF: return createFromAppStateRef();
       case AceGenPackage.INPUT: return createInput();
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
+      case AceGenPackage.TRIGGERD_ACE_OPERATION: return createTriggerdAceOperation();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
       case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE: return createSingleClientAttribute();
@@ -201,6 +202,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     HttpClientOutcomeImpl httpClientOutcome = new HttpClientOutcomeImpl();
     return httpClientOutcome;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public TriggerdAceOperation createTriggerdAceOperation()
+  {
+    TriggerdAceOperationImpl triggerdAceOperation = new TriggerdAceOperationImpl();
+    return triggerdAceOperation;
   }
 
   /**

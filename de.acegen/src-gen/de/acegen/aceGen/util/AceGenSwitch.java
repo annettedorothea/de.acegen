@@ -115,6 +115,13 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AceGenPackage.TRIGGERD_ACE_OPERATION:
+      {
+        TriggerdAceOperation triggerdAceOperation = (TriggerdAceOperation)theEObject;
+        T result = caseTriggerdAceOperation(triggerdAceOperation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION:
       {
         HttpClientStateFunction httpClientStateFunction = (HttpClientStateFunction)theEObject;
@@ -623,6 +630,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHttpClientOutcome(HttpClientOutcome object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Triggerd Ace Operation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Triggerd Ace Operation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTriggerdAceOperation(TriggerdAceOperation object)
   {
     return null;
   }

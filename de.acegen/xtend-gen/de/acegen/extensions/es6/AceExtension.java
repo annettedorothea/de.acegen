@@ -19,6 +19,7 @@ import com.google.common.base.Objects;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
+import de.acegen.aceGen.TriggerdAceOperation;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
@@ -97,16 +98,16 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public List<HttpClientAce> triggeredAceOperations(final HttpClientAce it) {
+  public List<HttpClientAce> aggregatedTriggeredAceOperations(final HttpClientAce it) {
     ArrayList<HttpClientAce> list = new ArrayList<HttpClientAce>();
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
-      for (final HttpClientAce aceOperation : _aceOperations) {
-        boolean _contains = list.contains(aceOperation);
+      EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
+      for (final TriggerdAceOperation triggerdAceOperation : _triggerdAceOperations) {
+        boolean _contains = list.contains(triggerdAceOperation.getAceOperation());
         boolean _not = (!_contains);
         if (_not) {
-          list.add(aceOperation);
+          list.add(triggerdAceOperation.getAceOperation());
         }
       }
     }

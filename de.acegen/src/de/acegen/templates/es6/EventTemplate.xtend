@@ -139,6 +139,13 @@ class EventTemplate {
 			    this.notifyListeners();
 			}
 			
+			publishWithDelay(delayInMillis) {
+		    	setTimeout(() => {
+					ACEController.addItemToTimeLine({event: this});
+					this.notifyListeners();
+				}, delayInMillis);
+			}
+
 			replay() {
 			}
 			

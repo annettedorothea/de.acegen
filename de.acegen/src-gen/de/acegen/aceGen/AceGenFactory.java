@@ -78,6 +78,15 @@ public interface AceGenFactory extends EFactory
   HttpClientOutcome createHttpClientOutcome();
 
   /**
+   * Returns a new object of class '<em>Triggerd Ace Operation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Triggerd Ace Operation</em>'.
+   * @generated
+   */
+  TriggerdAceOperation createTriggerdAceOperation();
+
+  /**
    * Returns a new object of class '<em>Http Client State Function</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -106,6 +106,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientOutcomeAdapter();
       }
       @Override
+      public Adapter caseTriggerdAceOperation(TriggerdAceOperation object)
+      {
+        return createTriggerdAceOperationAdapter();
+      }
+      @Override
       public Adapter caseHttpClientStateFunction(HttpClientStateFunction object)
       {
         return createHttpClientStateFunctionAdapter();
@@ -488,6 +493,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHttpClientOutcomeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.TriggerdAceOperation <em>Triggerd Ace Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.TriggerdAceOperation
+   * @generated
+   */
+  public Adapter createTriggerdAceOperationAdapter()
   {
     return null;
   }

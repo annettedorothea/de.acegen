@@ -11,9 +11,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Project/httpServer"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClient">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/react16_8"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/aceOperations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClient/react16_8"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/container"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClient/scenarios"/>
     </genClasses>
@@ -36,7 +36,11 @@
     <genClasses ecoreClass="AceGen.ecore#//HttpClientOutcome">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientOutcome/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientOutcome/listeners"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientOutcome/aceOperations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpClientOutcome/triggerdAceOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//TriggerdAceOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//TriggerdAceOperation/delay"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//TriggerdAceOperation/aceOperation"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientStateFunction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpClientStateFunction/stateFunctionType"/>
@@ -49,7 +53,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/storage"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/passOn"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SingleClientAttribute/attributes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//GroupedClientAttribute">

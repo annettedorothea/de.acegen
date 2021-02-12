@@ -17,7 +17,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isStorage <em>Storage</em>}</li>
- *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isPassOn <em>Pass On</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
@@ -92,28 +91,6 @@ public interface SingleClientAttribute extends ClientAttribute
    * @generated
    */
   void setStorage(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Pass On</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Pass On</em>' attribute.
-   * @see #setPassOn(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getSingleClientAttribute_PassOn()
-   * @model
-   * @generated
-   */
-  boolean isPassOn();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.SingleClientAttribute#isPassOn <em>Pass On</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Pass On</em>' attribute.
-   * @see #isPassOn()
-   * @generated
-   */
-  void setPassOn(boolean value);
 
   /**
    * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.

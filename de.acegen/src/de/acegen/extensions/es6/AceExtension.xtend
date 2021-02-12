@@ -43,12 +43,12 @@ class AceExtension {
 
 	def String commandName(HttpClientAce it) '''«getName.toFirstUpper»Command'''
 
-	def List<HttpClientAce> triggeredAceOperations(HttpClientAce it) {
+	def List<HttpClientAce> aggregatedTriggeredAceOperations(HttpClientAce it) {
 		var list = new ArrayList<HttpClientAce>();
 		for (outcome : outcomes) {
-			for (aceOperation : outcome.aceOperations) {
-				if (!list.contains(aceOperation)) {
-					list.add(aceOperation);
+			for (triggerdAceOperation : outcome.triggerdAceOperations) {
+				if (!list.contains(triggerdAceOperation.aceOperation)) {
+					list.add(triggerdAceOperation.aceOperation);
 				}
 			}
 		}

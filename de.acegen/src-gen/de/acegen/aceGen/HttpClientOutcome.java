@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getListeners <em>Listeners</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getAceOperations <em>Ace Operations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getTriggerdAceOperations <em>Triggerd Ace Operations</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getHttpClientOutcome()
@@ -62,15 +62,15 @@ public interface HttpClientOutcome extends EObject
   EList<HttpClientStateFunction> getListeners();
 
   /**
-   * Returns the value of the '<em><b>Ace Operations</b></em>' reference list.
-   * The list contents are of type {@link de.acegen.aceGen.HttpClientAce}.
+   * Returns the value of the '<em><b>Triggerd Ace Operations</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.TriggerdAceOperation}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Ace Operations</em>' reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClientOutcome_AceOperations()
-   * @model
+   * @return the value of the '<em>Triggerd Ace Operations</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientOutcome_TriggerdAceOperations()
+   * @model containment="true"
    * @generated
    */
-  EList<HttpClientAce> getAceOperations();
+  EList<TriggerdAceOperation> getTriggerdAceOperations();
 
 } // HttpClientOutcome

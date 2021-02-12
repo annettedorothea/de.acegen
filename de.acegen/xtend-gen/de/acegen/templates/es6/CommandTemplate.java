@@ -24,6 +24,7 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Input;
+import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -58,7 +59,7 @@ public class CommandTemplate {
     _builder.append("import AsynchronousCommand from \"../../../gen/ace/AsynchronousCommand\";");
     _builder.newLine();
     {
-      int _size = this._aceExtension.triggeredAceOperations(it).size();
+      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
@@ -100,8 +101,8 @@ public class CommandTemplate {
       }
     }
     {
-      List<HttpClientAce> _triggeredAceOperations = this._aceExtension.triggeredAceOperations(it);
-      for(final HttpClientAce aceOperation : _triggeredAceOperations) {
+      List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
+      for(final HttpClientAce aceOperation : _aggregatedTriggeredAceOperations) {
         _builder.append("import ");
         String _actionName = this._aceExtension.actionName(aceOperation);
         _builder.append(_actionName);
@@ -196,7 +197,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
         {
-          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
+          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t");
             _builder.append("if (this.commandData.outcomes.includes(\"");
             String _name_4 = outcome_2.getName();
@@ -217,30 +218,62 @@ public class CommandTemplate {
               }
             }
             {
-              EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
-              for(final HttpClientAce aceOperation_1 : _aceOperations) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("promises.push(new TriggerAction(new ");
-                String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
-                _builder.append(_actionName_2, "\t\t\t");
-                _builder.append("(");
+              EList<TriggerdAceOperation> _triggerdAceOperations = outcome_2.getTriggerdAceOperations();
+              for(final TriggerdAceOperation triggerdAceOperation : _triggerdAceOperations) {
                 {
-                  EList<Input> _input = aceOperation_1.getInput();
-                  boolean _hasElements = false;
-                  for(final Input inputParam : _input) {
-                    if (!_hasElements) {
-                      _hasElements = true;
-                    } else {
-                      _builder.appendImmediate(", ", "\t\t\t");
+                  int _delay = triggerdAceOperation.getDelay();
+                  boolean _equals = (_delay == 0);
+                  if (_equals) {
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("promises.push(new TriggerAction(new ");
+                    String _actionName_2 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
+                    _builder.append(_actionName_2, "\t\t\t");
+                    _builder.append("(");
+                    {
+                      EList<Input> _input = triggerdAceOperation.getAceOperation().getInput();
+                      boolean _hasElements = false;
+                      for(final Input inputParam : _input) {
+                        if (!_hasElements) {
+                          _hasElements = true;
+                        } else {
+                          _builder.appendImmediate(", ", "\t\t\t");
+                        }
+                        _builder.append("this.commandData.");
+                        String _name_5 = inputParam.getName();
+                        _builder.append(_name_5, "\t\t\t");
+                      }
                     }
-                    _builder.append("this.commandData.");
-                    String _name_5 = inputParam.getName();
-                    _builder.append(_name_5, "\t\t\t");
+                    _builder.append(")).publish());");
+                    _builder.newLineIfNotEmpty();
+                  } else {
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("promises.push(new TriggerAction(new ");
+                    String _actionName_3 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
+                    _builder.append(_actionName_3, "\t\t\t");
+                    _builder.append("(");
+                    {
+                      EList<Input> _input_1 = triggerdAceOperation.getAceOperation().getInput();
+                      boolean _hasElements_1 = false;
+                      for(final Input inputParam_1 : _input_1) {
+                        if (!_hasElements_1) {
+                          _hasElements_1 = true;
+                        } else {
+                          _builder.appendImmediate(", ", "\t\t\t");
+                        }
+                        _builder.append("this.commandData.");
+                        String _name_6 = inputParam_1.getName();
+                        _builder.append(_name_6, "\t\t\t");
+                      }
+                    }
+                    _builder.append(")).publishWithDelay(");
+                    int _delay_1 = triggerdAceOperation.getDelay();
+                    _builder.append(_delay_1, "\t\t\t");
+                    _builder.append("));");
+                    _builder.newLineIfNotEmpty();
                   }
                 }
-                _builder.append(")).publish());");
-                _builder.newLineIfNotEmpty();
               }
             }
             _builder.append("\t\t");
@@ -280,18 +313,18 @@ public class CommandTemplate {
             _builder.append("\t");
             {
               EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
-              boolean _hasElements_1 = false;
+              boolean _hasElements_2 = false;
               for(final AttributeParamRef payload : _payload) {
-                if (!_hasElements_1) {
-                  _hasElements_1 = true;
+                if (!_hasElements_2) {
+                  _hasElements_2 = true;
                 } else {
                   _builder.appendImmediate(",\n", "\t    \t\t");
                 }
-                String _name_6 = payload.getAttribute().getName();
-                _builder.append(_name_6, "\t    \t\t");
-                _builder.append(" : this.commandData.");
                 String _name_7 = payload.getAttribute().getName();
                 _builder.append(_name_7, "\t    \t\t");
+                _builder.append(" : this.commandData.");
+                String _name_8 = payload.getAttribute().getName();
+                _builder.append(_name_8, "\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
@@ -313,19 +346,19 @@ public class CommandTemplate {
         _builder.append(_httpUrl, "\t\t\t");
         {
           EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
-          boolean _hasElements_2 = false;
+          boolean _hasElements_3 = false;
           for(final AttributeParamRef queryParam : _queryParams) {
-            if (!_hasElements_2) {
-              _hasElements_2 = true;
+            if (!_hasElements_3) {
+              _hasElements_3 = true;
               _builder.append("?", "\t\t\t");
             } else {
               _builder.appendImmediate("&", "\t\t\t");
             }
-            String _name_8 = queryParam.getAttribute().getName();
-            _builder.append(_name_8, "\t\t\t");
-            _builder.append("=${this.commandData.");
             String _name_9 = queryParam.getAttribute().getName();
             _builder.append(_name_9, "\t\t\t");
+            _builder.append("=${this.commandData.");
+            String _name_10 = queryParam.getAttribute().getName();
+            _builder.append(_name_10, "\t\t\t");
             _builder.append("}");
           }
         }
@@ -359,11 +392,11 @@ public class CommandTemplate {
             _builder.append("\t");
             _builder.append("\t\t\t");
             _builder.append("this.commandData.");
-            String _name_10 = attribute.getName();
-            _builder.append(_name_10, "\t\t\t\t");
-            _builder.append(" = data.");
             String _name_11 = attribute.getName();
             _builder.append(_name_11, "\t\t\t\t");
+            _builder.append(" = data.");
+            String _name_12 = attribute.getName();
+            _builder.append(_name_12, "\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
@@ -374,11 +407,11 @@ public class CommandTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t\t");
-        _builder.append("}, (error) => {");
+        _builder.append("}, (message) => {");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t\t\t");
-        _builder.append("this.commandData.error = error;");
+        _builder.append("this.commandData.message = message;");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t\t\t");
@@ -418,7 +451,7 @@ public class CommandTemplate {
     _builder.append("import SynchronousCommand from \"../../../gen/ace/SynchronousCommand\";");
     _builder.newLine();
     {
-      int _size = this._aceExtension.triggeredAceOperations(it).size();
+      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
@@ -456,8 +489,8 @@ public class CommandTemplate {
       }
     }
     {
-      List<HttpClientAce> _triggeredAceOperations = this._aceExtension.triggeredAceOperations(it);
-      for(final HttpClientAce aceOperation : _triggeredAceOperations) {
+      List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
+      for(final HttpClientAce aceOperation : _aggregatedTriggeredAceOperations) {
         _builder.append("import ");
         String _actionName = this._aceExtension.actionName(aceOperation);
         _builder.append(_actionName);
@@ -547,7 +580,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpClientOutcome outcome_2 : _outcomes_2) {
         {
-          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getAceOperations().size() > 0))) {
+          if (((outcome_2.getListeners().size() > 0) || (outcome_2.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t");
             _builder.append("if (this.commandData.outcomes.includes(\"");
             String _name_4 = outcome_2.getName();
@@ -568,30 +601,62 @@ public class CommandTemplate {
               }
             }
             {
-              EList<HttpClientAce> _aceOperations = outcome_2.getAceOperations();
-              for(final HttpClientAce aceOperation_1 : _aceOperations) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("new TriggerAction(new ");
-                String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
-                _builder.append(_actionName_2, "\t\t\t");
-                _builder.append("(");
+              EList<TriggerdAceOperation> _triggerdAceOperations = outcome_2.getTriggerdAceOperations();
+              for(final TriggerdAceOperation triggerdAceOperation : _triggerdAceOperations) {
                 {
-                  EList<Input> _input = aceOperation_1.getInput();
-                  boolean _hasElements = false;
-                  for(final Input inputParam : _input) {
-                    if (!_hasElements) {
-                      _hasElements = true;
-                    } else {
-                      _builder.appendImmediate(", ", "\t\t\t");
+                  int _delay = triggerdAceOperation.getDelay();
+                  boolean _equals = (_delay == 0);
+                  if (_equals) {
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("new TriggerAction(new ");
+                    String _actionName_2 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
+                    _builder.append(_actionName_2, "\t\t\t");
+                    _builder.append("(");
+                    {
+                      EList<Input> _input = triggerdAceOperation.getAceOperation().getInput();
+                      boolean _hasElements = false;
+                      for(final Input inputParam : _input) {
+                        if (!_hasElements) {
+                          _hasElements = true;
+                        } else {
+                          _builder.appendImmediate(", ", "\t\t\t");
+                        }
+                        _builder.append("this.commandData.");
+                        String _name_5 = inputParam.getName();
+                        _builder.append(_name_5, "\t\t\t");
+                      }
                     }
-                    _builder.append("this.commandData.");
-                    String _name_5 = inputParam.getName();
-                    _builder.append(_name_5, "\t\t\t");
+                    _builder.append(")).publish();");
+                    _builder.newLineIfNotEmpty();
+                  } else {
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("new TriggerAction(new ");
+                    String _actionName_3 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
+                    _builder.append(_actionName_3, "\t\t\t");
+                    _builder.append("(");
+                    {
+                      EList<Input> _input_1 = triggerdAceOperation.getAceOperation().getInput();
+                      boolean _hasElements_1 = false;
+                      for(final Input inputParam_1 : _input_1) {
+                        if (!_hasElements_1) {
+                          _hasElements_1 = true;
+                        } else {
+                          _builder.appendImmediate(", ", "\t\t\t");
+                        }
+                        _builder.append("this.commandData.");
+                        String _name_6 = inputParam_1.getName();
+                        _builder.append(_name_6, "\t\t\t");
+                      }
+                    }
+                    _builder.append(")).publishWithDelay(");
+                    int _delay_1 = triggerdAceOperation.getDelay();
+                    _builder.append(_delay_1, "\t\t\t");
+                    _builder.append(");");
+                    _builder.newLineIfNotEmpty();
                   }
                 }
-                _builder.append(")).publish();");
-                _builder.newLineIfNotEmpty();
               }
             }
             _builder.append("\t\t");
@@ -735,7 +800,7 @@ public class CommandTemplate {
         _builder.append("handleError(resolve, reject) {");
         _builder.newLine();
         _builder.append("    \t");
-        _builder.append("reject(this.commandData.error);");
+        _builder.append("reject(this.commandData.message);");
         _builder.newLine();
         _builder.append("    ");
         _builder.append("}");

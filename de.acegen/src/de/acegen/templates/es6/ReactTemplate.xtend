@@ -1,13 +1,12 @@
 package de.acegen.templates.es6
 
+import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
-import java.util.List
-import de.acegen.aceGen.ClientAttribute
 
 class ReactTemplate {
 	
@@ -71,25 +70,23 @@ class ReactTemplate {
 		
 	'''
 	
-	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix, List<SingleClientAttribute> passOnAttributes) '''
+	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix) '''
 		«copyright»
 		
-		«addPassOnAttributes(passOnAttributes, attributes)»
-
 		import { div, h1, label, input, table, tbody, ul, li, tr, td«FOR attribute: attributes.filter[a | a instanceof SingleClientAttribute && (a as SingleClientAttribute).attributes.size > 0 || a instanceof GroupedClientAttribute] BEFORE "," SEPARATOR ","» «attribute.reactTagName»«ENDFOR» } from "«folderPrefix»../../gen/components/ReactHelper";
 		
 		export function uiElement(attributes) {
 			«IF list»
 				return tr({class: ""}, [
 					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("td", passOnAttributes)»
+						«attribute.generateChild("td")»
 					«ENDFOR»
 				]);
 			«ELSE»
 				return div({}, [
 					h1({}, ["«name.toUpperCase»"])«IF attributes.size > 0»,«ENDIF»
 					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("div", passOnAttributes)»
+						«attribute.generateChild("div")»
 					«ENDFOR»
 				]);
 			«ENDIF»
@@ -99,17 +96,7 @@ class ReactTemplate {
 		
 	'''
 	
-	def private addPassOnAttributes(List<SingleClientAttribute> passOnAttributes, List<ClientAttribute> attributes) {
-		for(attribute: attributes) {
-			if (attribute instanceof SingleClientAttribute) {
-				if (attribute.passOn) {
-					passOnAttributes.add(attribute)
-				}
-			}
-		}
-	}
-	
-	def dispatch generateComponentStruct(GroupedClientAttribute it, String folderPrefix, List<SingleClientAttribute> passOnAttributes) '''
+	def dispatch generateComponentStruct(GroupedClientAttribute it, String folderPrefix) '''
 		«copyright»
 
 		import { «FOR attribute: attributeGroup SEPARATOR ","» «attribute.reactTagName»«ENDFOR»} from "«folderPrefix»../../gen/components/ReactHelper";
@@ -127,19 +114,19 @@ class ReactTemplate {
 		
 	'''
 	
-	def dispatch generateChild(SingleClientAttribute it, String enclosingTag, List<SingleClientAttribute> passOnAttributes) '''
+	def dispatch generateChild(SingleClientAttribute it, String enclosingTag) '''
 		«IF !storage && !hash»
 			«IF list»
 				«enclosingTag»({}, [
 					«IF attributes.size > 1»
 						table({class: ""}, [
 							tbody({}, [
-								attributes.«name.toFirstLower».map((item) => «reactTagCall("item", passOnAttributes)»)
+								attributes.«name.toFirstLower» ? attributes.«name.toFirstLower».map((item) => «reactTagName()»(item)) : []
 							])
 						])
 					«ELSE»
 						ul({class: ""}, [
-							attributes.«name.toFirstLower».map((item) => li({}, [item]))
+							attributes.«name.toFirstLower» ? attributes.«name.toFirstLower».map((item) => li({}, [item])) : []
 						])
 					«ENDIF»
 				])
@@ -159,19 +146,17 @@ class ReactTemplate {
 					div({class: ""}, [attributes.«name»])
 				])
 			«ELSE»
-				«reactTagCall("attributes", passOnAttributes)»
+				«reactTagName()»()
 			«ENDIF»
 		«ELSE»
 			// «storage ? "storage" : ""»«hash ? "hash" : ""» «name» 
 		«ENDIF»
 	'''
 	
-	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag, List<SingleClientAttribute> passOnAttributes) '''
-		«reactTagCall("attributes", passOnAttributes)»
+	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag) '''
+		«reactTagName()»()
 	'''
 	
-	def reactTagCall(ClientAttribute it, String props, List<SingleClientAttribute> passOnAttributes) '''«IF passOnAttributes.size === 0»«reactTagName»(«props»)«ELSE»«reactTagName»({ ...«props».mainView«FOR attribute: passOnAttributes BEFORE "," SEPARATOR ","» «attribute.name.toFirstLower»: «props».«attribute.name.toFirstLower»«ENDFOR» })«ENDIF»'''
-
 	def generateReactHelper(HttpClient httpClient) '''
 		«copyright»
 

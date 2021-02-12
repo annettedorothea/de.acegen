@@ -24,16 +24,15 @@ Project: {Project}
 ;
 
 HttpClient: 
-	(react16_8 ?= 'React_16.8')? 
 	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('ui' container = SingleClientAttribute)?
+	('ui' (react16_8 ?= 'React_16.8')?  container = SingleClientAttribute)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
 HttpClientAce: 
 	(async ?= 'async')? name = ID  
-		('(' input += Input (',' input += Input)* ')' )?  
+		('(' input += Input (',' input += Input)* ')' )?
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
@@ -51,7 +50,11 @@ Input:
 HttpClientOutcome:
 	'on' name = ID 
 	('(' listeners += HttpClientStateFunction* ')')? 
-	('triggers' '(' (aceOperations += [HttpClientAce | QualifiedName])* ')')? 
+	('triggers' '(' (triggerdAceOperations += TriggerdAceOperation)* ')')? 
+;
+
+TriggerdAceOperation:
+	('delayInMillis' delay = INT)? aceOperation = [HttpClientAce | QualifiedName]
 ;
 
 HttpClientStateFunction:
@@ -71,7 +74,6 @@ SingleClientAttribute:
 	name = ID 
 	hash ?= 'location.hash'? 
 	storage ?= 'storage'? 
-	passOn ?= 'passOn'? 
 	('{'
 		attributes += ClientAttribute*
 	'}')?

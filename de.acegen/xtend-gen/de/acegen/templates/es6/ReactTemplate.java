@@ -7,7 +7,6 @@ import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import java.util.Arrays;
-import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -166,13 +165,10 @@ public class ReactTemplate {
     return _builder;
   }
   
-  protected CharSequence _generateComponentStruct(final SingleClientAttribute it, final String folderPrefix, final List<SingleClientAttribute> passOnAttributes) {
+  protected CharSequence _generateComponentStruct(final SingleClientAttribute it, final String folderPrefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    this.addPassOnAttributes(passOnAttributes, it.getAttributes());
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import { div, h1, label, input, table, tbody, ul, li, tr, td");
@@ -220,7 +216,7 @@ public class ReactTemplate {
             }
             _builder.append("\t");
             _builder.append("\t");
-            CharSequence _generateChild = this.generateChild(attribute_1, "td", passOnAttributes);
+            CharSequence _generateChild = this.generateChild(attribute_1, "td");
             _builder.append(_generateChild, "\t\t");
             _builder.newLineIfNotEmpty();
           }
@@ -257,7 +253,7 @@ public class ReactTemplate {
             }
             _builder.append("\t");
             _builder.append("\t");
-            CharSequence _generateChild_1 = this.generateChild(attribute_2, "div", passOnAttributes);
+            CharSequence _generateChild_1 = this.generateChild(attribute_2, "div");
             _builder.append(_generateChild_1, "\t\t");
             _builder.newLineIfNotEmpty();
           }
@@ -277,18 +273,7 @@ public class ReactTemplate {
     return _builder;
   }
   
-  private void addPassOnAttributes(final List<SingleClientAttribute> passOnAttributes, final List<ClientAttribute> attributes) {
-    for (final ClientAttribute attribute : attributes) {
-      if ((attribute instanceof SingleClientAttribute)) {
-        boolean _isPassOn = ((SingleClientAttribute)attribute).isPassOn();
-        if (_isPassOn) {
-          passOnAttributes.add(((SingleClientAttribute)attribute));
-        }
-      }
-    }
-  }
-  
-  protected CharSequence _generateComponentStruct(final GroupedClientAttribute it, final String folderPrefix, final List<SingleClientAttribute> passOnAttributes) {
+  protected CharSequence _generateComponentStruct(final GroupedClientAttribute it, final String folderPrefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -350,7 +335,7 @@ public class ReactTemplate {
     return _builder;
   }
   
-  protected CharSequence _generateChild(final SingleClientAttribute it, final String enclosingTag, final List<SingleClientAttribute> passOnAttributes) {
+  protected CharSequence _generateChild(final SingleClientAttribute it, final String enclosingTag) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((!it.isStorage()) && (!it.isHash()))) {
@@ -376,10 +361,13 @@ public class ReactTemplate {
                 _builder.append("attributes.");
                 String _firstLower = StringExtensions.toFirstLower(it.getName());
                 _builder.append(_firstLower, "\t\t\t");
+                _builder.append(" ? attributes.");
+                String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
+                _builder.append(_firstLower_1, "\t\t\t");
                 _builder.append(".map((item) => ");
-                CharSequence _reactTagCall = this.reactTagCall(it, "item", passOnAttributes);
-                _builder.append(_reactTagCall, "\t\t\t");
-                _builder.append(")");
+                String _reactTagName = this._es6Extension.reactTagName(it);
+                _builder.append(_reactTagName, "\t\t\t");
+                _builder.append("(item)) : []");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
@@ -395,9 +383,12 @@ public class ReactTemplate {
                 _builder.append("\t");
                 _builder.append("\t");
                 _builder.append("attributes.");
-                String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
-                _builder.append(_firstLower_1, "\t\t");
-                _builder.append(".map((item) => li({}, [item]))");
+                String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
+                _builder.append(_firstLower_2, "\t\t");
+                _builder.append(" ? attributes.");
+                String _firstLower_3 = StringExtensions.toFirstLower(it.getName());
+                _builder.append(_firstLower_3, "\t\t");
+                _builder.append(".map((item) => li({}, [item])) : []");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("])");
@@ -465,8 +456,9 @@ public class ReactTemplate {
               _builder.append("])");
               _builder.newLine();
             } else {
-              CharSequence _reactTagCall_1 = this.reactTagCall(it, "attributes", passOnAttributes);
-              _builder.append(_reactTagCall_1);
+              String _reactTagName_1 = this._es6Extension.reactTagName(it);
+              _builder.append(_reactTagName_1);
+              _builder.append("()");
               _builder.newLineIfNotEmpty();
             }
           }
@@ -499,53 +491,12 @@ public class ReactTemplate {
     return _builder;
   }
   
-  protected CharSequence _generateChild(final GroupedClientAttribute it, final String enclosingTag, final List<SingleClientAttribute> passOnAttributes) {
+  protected CharSequence _generateChild(final GroupedClientAttribute it, final String enclosingTag) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence _reactTagCall = this.reactTagCall(it, "attributes", passOnAttributes);
-    _builder.append(_reactTagCall);
+    String _reactTagName = this._es6Extension.reactTagName(it);
+    _builder.append(_reactTagName);
+    _builder.append("()");
     _builder.newLineIfNotEmpty();
-    return _builder;
-  }
-  
-  public CharSequence reactTagCall(final ClientAttribute it, final String props, final List<SingleClientAttribute> passOnAttributes) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      int _size = passOnAttributes.size();
-      boolean _tripleEquals = (_size == 0);
-      if (_tripleEquals) {
-        String _reactTagName = this._es6Extension.reactTagName(it);
-        _builder.append(_reactTagName);
-        _builder.append("(");
-        _builder.append(props);
-        _builder.append(")");
-      } else {
-        String _reactTagName_1 = this._es6Extension.reactTagName(it);
-        _builder.append(_reactTagName_1);
-        _builder.append("({ ...");
-        _builder.append(props);
-        _builder.append(".mainView");
-        {
-          boolean _hasElements = false;
-          for(final SingleClientAttribute attribute : passOnAttributes) {
-            if (!_hasElements) {
-              _hasElements = true;
-              _builder.append(",");
-            } else {
-              _builder.appendImmediate(",", "");
-            }
-            _builder.append(" ");
-            String _firstLower = StringExtensions.toFirstLower(attribute.getName());
-            _builder.append(_firstLower);
-            _builder.append(": ");
-            _builder.append(props);
-            _builder.append(".");
-            String _firstLower_1 = StringExtensions.toFirstLower(attribute.getName());
-            _builder.append(_firstLower_1);
-          }
-        }
-        _builder.append(" })");
-      }
-    }
     return _builder;
   }
   
@@ -967,25 +918,25 @@ public class ReactTemplate {
     }
   }
   
-  public CharSequence generateComponentStruct(final ClientAttribute it, final String folderPrefix, final List<SingleClientAttribute> passOnAttributes) {
+  public CharSequence generateComponentStruct(final ClientAttribute it, final String folderPrefix) {
     if (it instanceof GroupedClientAttribute) {
-      return _generateComponentStruct((GroupedClientAttribute)it, folderPrefix, passOnAttributes);
+      return _generateComponentStruct((GroupedClientAttribute)it, folderPrefix);
     } else if (it instanceof SingleClientAttribute) {
-      return _generateComponentStruct((SingleClientAttribute)it, folderPrefix, passOnAttributes);
+      return _generateComponentStruct((SingleClientAttribute)it, folderPrefix);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, folderPrefix, passOnAttributes).toString());
+        Arrays.<Object>asList(it, folderPrefix).toString());
     }
   }
   
-  public CharSequence generateChild(final ClientAttribute it, final String enclosingTag, final List<SingleClientAttribute> passOnAttributes) {
+  public CharSequence generateChild(final ClientAttribute it, final String enclosingTag) {
     if (it instanceof GroupedClientAttribute) {
-      return _generateChild((GroupedClientAttribute)it, enclosingTag, passOnAttributes);
+      return _generateChild((GroupedClientAttribute)it, enclosingTag);
     } else if (it instanceof SingleClientAttribute) {
-      return _generateChild((SingleClientAttribute)it, enclosingTag, passOnAttributes);
+      return _generateChild((SingleClientAttribute)it, enclosingTag);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, enclosingTag, passOnAttributes).toString());
+        Arrays.<Object>asList(it, enclosingTag).toString());
     }
   }
   
