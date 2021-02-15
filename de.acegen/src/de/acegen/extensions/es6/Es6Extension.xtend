@@ -173,6 +173,13 @@ class Es6Extension {
 		return getLong()
 	}
 
+	def primitiveParamFrom(PrimitiveValue it) {
+		if (string !== null) {
+			return '''«string»''';
+		}
+		return getLong()
+	}
+
 	def dispatch CharSequence valueFrom(
 		JsonObjectClient it) '''
 		«IF it !== null && members !== null && members.size > 0»

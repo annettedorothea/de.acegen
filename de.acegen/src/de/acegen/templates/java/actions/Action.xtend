@@ -410,7 +410,7 @@ class Action {
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.nonDeterministic»
-					Object «attribute.name»Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
+					String «attribute.name»Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
 					if («attribute.name»Object != null) {
 						try {
 							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;

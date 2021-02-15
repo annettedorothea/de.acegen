@@ -130,7 +130,7 @@ class ScenarioTemplate {
 					AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=«nonDeterministicValue.uuid»&system-time=${new Date('«nonDeterministicValue.serverSystemTime»').toISOString()}`)
 				«ENDIF»
 				«IF nonDeterministicValue.attribute !== null»
-					AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=«nonDeterministicValue.uuid»&key=«nonDeterministicValue.attribute.name.toFirstLower»&value=«nonDeterministicValue.value.primitiveValueFrom»`);
+					AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=«nonDeterministicValue.uuid»&key=«nonDeterministicValue.attribute.name.toFirstLower»&value=«nonDeterministicValue.value.primitiveParamFrom»`);
 				«ENDIF»
 			«ENDFOR»
 			localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));

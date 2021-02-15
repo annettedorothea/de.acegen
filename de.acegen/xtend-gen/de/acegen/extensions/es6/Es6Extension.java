@@ -297,6 +297,18 @@ public class Es6Extension {
     return Integer.valueOf(it.getLong());
   }
   
+  public Object primitiveParamFrom(final PrimitiveValue it) {
+    String _string = it.getString();
+    boolean _tripleNotEquals = (_string != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      String _string_1 = it.getString();
+      _builder.append(_string_1);
+      return _builder.toString();
+    }
+    return Integer.valueOf(it.getLong());
+  }
+  
   protected CharSequence _valueFrom(final JsonObjectClient it) {
     StringConcatenation _builder = new StringConcatenation();
     {

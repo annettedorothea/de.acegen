@@ -936,7 +936,7 @@ public class Action {
           boolean _isNonDeterministic = attribute.isNonDeterministic();
           if (_isNonDeterministic) {
             _builder.append("\t");
-            _builder.append("Object ");
+            _builder.append("String ");
             String _name = attribute.getName();
             _builder.append(_name, "\t");
             _builder.append("Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), \"");

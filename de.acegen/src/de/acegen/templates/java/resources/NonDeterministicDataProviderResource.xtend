@@ -59,8 +59,8 @@ class NonDeterministicDataProviderResource {
 		
 			@PUT
 			@Path("/value")
-			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key, String json) {
-				NonDeterministicDataProvider.put(uuid, key, json);
+			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key,  @QueryParam("value") String value) {
+				NonDeterministicDataProvider.put(uuid, key, value);
 				return Response.ok().build();
 			}
 		

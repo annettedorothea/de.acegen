@@ -448,8 +448,8 @@ public class ScenarioTemplate {
                 String _firstLower = StringExtensions.toFirstLower(nonDeterministicValue.getAttribute().getName());
                 _builder.append(_firstLower);
                 _builder.append("&value=");
-                Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(nonDeterministicValue.getValue());
-                _builder.append(_primitiveValueFrom);
+                Object _primitiveParamFrom = this._es6Extension.primitiveParamFrom(nonDeterministicValue.getValue());
+                _builder.append(_primitiveParamFrom);
                 _builder.append("`);");
                 _builder.newLineIfNotEmpty();
               }

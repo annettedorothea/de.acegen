@@ -93,10 +93,10 @@ public class NonDeterministicDataProviderResource {
     _builder.append("@Path(\"/value\")");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public Response putValue(@QueryParam(\"uuid\") String uuid, @QueryParam(\"key\") String key, String json) {");
+    _builder.append("public Response putValue(@QueryParam(\"uuid\") String uuid, @QueryParam(\"key\") String key,  @QueryParam(\"value\") String value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("NonDeterministicDataProvider.put(uuid, key, json);");
+    _builder.append("NonDeterministicDataProvider.put(uuid, key, value);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Response.ok().build();");
