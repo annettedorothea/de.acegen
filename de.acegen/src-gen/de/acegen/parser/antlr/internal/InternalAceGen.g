@@ -1146,17 +1146,41 @@ ruleClientScenario returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
-		otherlv_5='THEN'
+		)?
+		(
+			otherlv_5='delayInMillis'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getClientScenarioAccess().getDelayInMillisKeyword_4_0());
+			}
+			(
+				(
+					lv_delayInMillis_6_0=RULE_INT
+					{
+						newLeafNode(lv_delayInMillis_6_0, grammarAccess.getClientScenarioAccess().getDelayInMillisINTTerminalRuleCall_4_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientScenarioRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"delayInMillis",
+							lv_delayInMillis_6_0,
+							"org.eclipse.xtext.common.Terminals.INT");
+					}
+				)
+			)
+		)?
+		otherlv_7='THEN'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getClientScenarioAccess().getTHENKeyword_4());
+			newLeafNode(otherlv_7, grammarAccess.getClientScenarioAccess().getTHENKeyword_5());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getClientScenarioAccess().getThenBlockClientThenBlockParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getClientScenarioAccess().getThenBlockClientThenBlockParserRuleCall_6_0());
 				}
-				lv_thenBlock_6_0=ruleClientThenBlock
+				lv_thenBlock_8_0=ruleClientThenBlock
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
@@ -1164,7 +1188,7 @@ ruleClientScenario returns [EObject current=null]
 					set(
 						$current,
 						"thenBlock",
-						lv_thenBlock_6_0,
+						lv_thenBlock_8_0,
 						"de.acegen.AceGen.ClientThenBlock");
 					afterParserOrEnumRuleCall();
 				}

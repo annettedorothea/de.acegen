@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getGivenRefs <em>Given Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getWhenBlock <em>When Block</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getDelayInMillis <em>Delay In Millis</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getThenBlock <em>Then Block</em>}</li>
  * </ul>
  *
@@ -82,6 +83,26 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected ClientWhenBlock whenBlock;
+
+  /**
+   * The default value of the '{@link #getDelayInMillis() <em>Delay In Millis</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDelayInMillis()
+   * @generated
+   * @ordered
+   */
+  protected static final int DELAY_IN_MILLIS_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getDelayInMillis() <em>Delay In Millis</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDelayInMillis()
+   * @generated
+   * @ordered
+   */
+  protected int delayInMillis = DELAY_IN_MILLIS_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getThenBlock() <em>Then Block</em>}' containment reference.
@@ -210,6 +231,31 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
+  public int getDelayInMillis()
+  {
+    return delayInMillis;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setDelayInMillis(int newDelayInMillis)
+  {
+    int oldDelayInMillis = delayInMillis;
+    delayInMillis = newDelayInMillis;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS, oldDelayInMillis, delayInMillis));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public ClientThenBlock getThenBlock()
   {
     return thenBlock;
@@ -290,6 +336,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return getGivenRefs();
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         return getWhenBlock();
+      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
+        return getDelayInMillis();
       case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
         return getThenBlock();
     }
@@ -317,6 +365,9 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         setWhenBlock((ClientWhenBlock)newValue);
         return;
+      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
+        setDelayInMillis((Integer)newValue);
+        return;
       case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
         setThenBlock((ClientThenBlock)newValue);
         return;
@@ -343,6 +394,9 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         setWhenBlock((ClientWhenBlock)null);
         return;
+      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
+        setDelayInMillis(DELAY_IN_MILLIS_EDEFAULT);
+        return;
       case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
         setThenBlock((ClientThenBlock)null);
         return;
@@ -366,6 +420,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return givenRefs != null && !givenRefs.isEmpty();
       case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
         return whenBlock != null;
+      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
+        return delayInMillis != DELAY_IN_MILLIS_EDEFAULT;
       case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
         return thenBlock != null;
     }
@@ -385,6 +441,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", delayInMillis: ");
+    result.append(delayInMillis);
     result.append(')');
     return result.toString();
   }

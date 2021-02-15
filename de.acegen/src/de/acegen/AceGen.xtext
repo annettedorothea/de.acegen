@@ -86,7 +86,7 @@ GroupedClientAttribute:
 ClientScenario:
 	name = ID
 	('GIVEN' (givenRefs += ClientGivenRef)* )? 
-	'WHEN' whenBlock = ClientWhenBlock
+	'WHEN' (whenBlock = ClientWhenBlock)? ('delayInMillis' delayInMillis = INT)?
 	'THEN' thenBlock = ClientThenBlock
 ;
 

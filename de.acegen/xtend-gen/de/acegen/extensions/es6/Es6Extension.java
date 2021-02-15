@@ -19,6 +19,7 @@ import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
+import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
@@ -252,26 +253,26 @@ public class Es6Extension {
   
   public List<HttpClient> allReferencedHttpClients(final ClientScenario it) {
     ArrayList<HttpClient> list = new ArrayList<HttpClient>();
-    EObject _eContainer = it.getWhenBlock().getAction().eContainer();
-    HttpClient httpClient = ((HttpClient) _eContainer);
-    boolean _contains = list.contains(httpClient);
-    boolean _not = (!_contains);
-    if (_not) {
-      list.add(httpClient);
+    this.allReferencedHttpClientsRec(it, list);
+    return list;
+  }
+  
+  public void allReferencedHttpClientsRec(final ClientScenario it, final ArrayList<HttpClient> list) {
+    ClientWhenBlock _whenBlock = it.getWhenBlock();
+    boolean _tripleNotEquals = (_whenBlock != null);
+    if (_tripleNotEquals) {
+      EObject _eContainer = it.getWhenBlock().getAction().eContainer();
+      HttpClient httpClient = ((HttpClient) _eContainer);
+      boolean _contains = list.contains(httpClient);
+      boolean _not = (!_contains);
+      if (_not) {
+        list.add(httpClient);
+      }
     }
     EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
     for (final ClientGivenRef givenRef : _givenRefs) {
-      {
-        EObject _eContainer_1 = givenRef.getScenario().getWhenBlock().getAction().eContainer();
-        httpClient = ((HttpClient) _eContainer_1);
-        boolean _contains_1 = list.contains(httpClient);
-        boolean _not_1 = (!_contains_1);
-        if (_not_1) {
-          list.add(httpClient);
-        }
-      }
+      this.allReferencedHttpClientsRec(givenRef.getScenario(), list);
     }
-    return list;
   }
   
   public CharSequence actionIdName(final HttpClient it) {

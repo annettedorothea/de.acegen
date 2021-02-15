@@ -74,6 +74,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getGroupedClientAttributeAccess().getGroup(), "rule__GroupedClientAttribute__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup(), "rule__ClientScenario__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup_1(), "rule__ClientScenario__Group_1__0");
+			builder.put(grammarAccess.getClientScenarioAccess().getGroup_4(), "rule__ClientScenario__Group_4__0");
 			builder.put(grammarAccess.getClientWhenBlockAccess().getGroup(), "rule__ClientWhenBlock__Group__0");
 			builder.put(grammarAccess.getClientWhenBlockAccess().getGroup_1(), "rule__ClientWhenBlock__Group_1__0");
 			builder.put(grammarAccess.getClientWhenBlockAccess().getGroup_1_1(), "rule__ClientWhenBlock__Group_1_1__0");
@@ -197,7 +198,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientScenarioAccess().getNameAssignment_0(), "rule__ClientScenario__NameAssignment_0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGivenRefsAssignment_1_1(), "rule__ClientScenario__GivenRefsAssignment_1_1");
 			builder.put(grammarAccess.getClientScenarioAccess().getWhenBlockAssignment_3(), "rule__ClientScenario__WhenBlockAssignment_3");
-			builder.put(grammarAccess.getClientScenarioAccess().getThenBlockAssignment_5(), "rule__ClientScenario__ThenBlockAssignment_5");
+			builder.put(grammarAccess.getClientScenarioAccess().getDelayInMillisAssignment_4_1(), "rule__ClientScenario__DelayInMillisAssignment_4_1");
+			builder.put(grammarAccess.getClientScenarioAccess().getThenBlockAssignment_6(), "rule__ClientScenario__ThenBlockAssignment_6");
 			builder.put(grammarAccess.getClientGivenRefAccess().getScenarioAssignment(), "rule__ClientGivenRef__ScenarioAssignment");
 			builder.put(grammarAccess.getClientWhenBlockAccess().getActionAssignment_0(), "rule__ClientWhenBlock__ActionAssignment_0");
 			builder.put(grammarAccess.getClientWhenBlockAccess().getInputValuesAssignment_1_1_0(), "rule__ClientWhenBlock__InputValuesAssignment_1_1_0");

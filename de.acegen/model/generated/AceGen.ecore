@@ -71,6 +71,7 @@
         eType="#//ClientGivenRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//ClientWhenBlock"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delayInMillis" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ClientThenBlock"
         containment="true"/>
   </eClassifiers>

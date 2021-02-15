@@ -1081,9 +1081,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getClientScenario_DelayInMillis()
+  {
+    return (EAttribute)clientScenarioEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getClientScenario_ThenBlock()
   {
-    return (EReference)clientScenarioEClass.getEStructuralFeatures().get(3);
+    return (EReference)clientScenarioEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -3010,6 +3021,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(clientScenarioEClass, CLIENT_SCENARIO__NAME);
     createEReference(clientScenarioEClass, CLIENT_SCENARIO__GIVEN_REFS);
     createEReference(clientScenarioEClass, CLIENT_SCENARIO__WHEN_BLOCK);
+    createEAttribute(clientScenarioEClass, CLIENT_SCENARIO__DELAY_IN_MILLIS);
     createEReference(clientScenarioEClass, CLIENT_SCENARIO__THEN_BLOCK);
 
     clientGivenRefEClass = createEClass(CLIENT_GIVEN_REF);
@@ -3342,6 +3354,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getClientScenario_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientScenario_GivenRefs(), this.getClientGivenRef(), null, "givenRefs", null, 0, -1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientScenario_WhenBlock(), this.getClientWhenBlock(), null, "whenBlock", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientScenario_DelayInMillis(), ecorePackage.getEInt(), "delayInMillis", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientScenario_ThenBlock(), this.getClientThenBlock(), null, "thenBlock", null, 0, 1, ClientScenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(clientGivenRefEClass, ClientGivenRef.class, "ClientGivenRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

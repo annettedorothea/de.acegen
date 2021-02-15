@@ -177,6 +177,8 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'GIVEN'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) 'WHEN' 'THEN' thenBlock=ClientThenBlock
+	 *     name=ID (ambiguity) 'WHEN' 'delayInMillis' delayInMillis=INT
 	 *     name=ID (ambiguity) 'WHEN' whenBlock=ClientWhenBlock
 	 */
 	protected void emit_ClientScenario_GIVENKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

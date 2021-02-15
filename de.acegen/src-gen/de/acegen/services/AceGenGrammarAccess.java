@@ -678,18 +678,22 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWHENKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cWhenBlockAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cWhenBlockClientWhenBlockParserRuleCall_3_0 = (RuleCall)cWhenBlockAssignment_3.eContents().get(0);
-		private final Keyword cTHENKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cThenBlockAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cThenBlockClientThenBlockParserRuleCall_5_0 = (RuleCall)cThenBlockAssignment_5.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cDelayInMillisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cDelayInMillisAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cDelayInMillisINTTerminalRuleCall_4_1_0 = (RuleCall)cDelayInMillisAssignment_4_1.eContents().get(0);
+		private final Keyword cTHENKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cThenBlockAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cThenBlockClientThenBlockParserRuleCall_6_0 = (RuleCall)cThenBlockAssignment_6.eContents().get(0);
 		
 		//ClientScenario:
 		//	name=ID ('GIVEN' givenRefs+=ClientGivenRef*)?
-		//	'WHEN' whenBlock=ClientWhenBlock
+		//	'WHEN' whenBlock=ClientWhenBlock? ('delayInMillis' delayInMillis=INT)?
 		//	'THEN' thenBlock=ClientThenBlock;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//name=ID ('GIVEN' givenRefs+=ClientGivenRef*)?
-		//'WHEN' whenBlock=ClientWhenBlock
+		//'WHEN' whenBlock=ClientWhenBlock? ('delayInMillis' delayInMillis=INT)?
 		//'THEN' thenBlock=ClientThenBlock
 		public Group getGroup() { return cGroup; }
 		
@@ -714,20 +718,32 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'WHEN'
 		public Keyword getWHENKeyword_2() { return cWHENKeyword_2; }
 		
-		//whenBlock=ClientWhenBlock
+		//whenBlock=ClientWhenBlock?
 		public Assignment getWhenBlockAssignment_3() { return cWhenBlockAssignment_3; }
 		
 		//ClientWhenBlock
 		public RuleCall getWhenBlockClientWhenBlockParserRuleCall_3_0() { return cWhenBlockClientWhenBlockParserRuleCall_3_0; }
 		
+		//('delayInMillis' delayInMillis=INT)?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'delayInMillis'
+		public Keyword getDelayInMillisKeyword_4_0() { return cDelayInMillisKeyword_4_0; }
+		
+		//delayInMillis=INT
+		public Assignment getDelayInMillisAssignment_4_1() { return cDelayInMillisAssignment_4_1; }
+		
+		//INT
+		public RuleCall getDelayInMillisINTTerminalRuleCall_4_1_0() { return cDelayInMillisINTTerminalRuleCall_4_1_0; }
+		
 		//'THEN'
-		public Keyword getTHENKeyword_4() { return cTHENKeyword_4; }
+		public Keyword getTHENKeyword_5() { return cTHENKeyword_5; }
 		
 		//thenBlock=ClientThenBlock
-		public Assignment getThenBlockAssignment_5() { return cThenBlockAssignment_5; }
+		public Assignment getThenBlockAssignment_6() { return cThenBlockAssignment_6; }
 		
 		//ClientThenBlock
-		public RuleCall getThenBlockClientThenBlockParserRuleCall_5_0() { return cThenBlockClientThenBlockParserRuleCall_5_0; }
+		public RuleCall getThenBlockClientThenBlockParserRuleCall_6_0() { return cThenBlockClientThenBlockParserRuleCall_6_0; }
 	}
 	public class ClientGivenRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ClientGivenRef");
@@ -3657,7 +3673,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//ClientScenario:
 	//	name=ID ('GIVEN' givenRefs+=ClientGivenRef*)?
-	//	'WHEN' whenBlock=ClientWhenBlock
+	//	'WHEN' whenBlock=ClientWhenBlock? ('delayInMillis' delayInMillis=INT)?
 	//	'THEN' thenBlock=ClientThenBlock;
 	public ClientScenarioElements getClientScenarioAccess() {
 		return pClientScenario;

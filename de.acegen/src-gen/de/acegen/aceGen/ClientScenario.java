@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientScenario#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientScenario#getGivenRefs <em>Given Refs</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientScenario#getWhenBlock <em>When Block</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientScenario#getDelayInMillis <em>Delay In Millis</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientScenario#getThenBlock <em>Then Block</em>}</li>
  * </ul>
  *
@@ -83,6 +84,28 @@ public interface ClientScenario extends EObject
    * @generated
    */
   void setWhenBlock(ClientWhenBlock value);
+
+  /**
+   * Returns the value of the '<em><b>Delay In Millis</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Delay In Millis</em>' attribute.
+   * @see #setDelayInMillis(int)
+   * @see de.acegen.aceGen.AceGenPackage#getClientScenario_DelayInMillis()
+   * @model
+   * @generated
+   */
+  int getDelayInMillis();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientScenario#getDelayInMillis <em>Delay In Millis</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Delay In Millis</em>' attribute.
+   * @see #getDelayInMillis()
+   * @generated
+   */
+  void setDelayInMillis(int value);
 
   /**
    * Returns the value of the '<em><b>Then Block</b></em>' containment reference.

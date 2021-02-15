@@ -386,7 +386,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientScenario returns ClientScenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenRefs+=ClientGivenRef* whenBlock=ClientWhenBlock thenBlock=ClientThenBlock)
+	 *     (name=ID givenRefs+=ClientGivenRef* whenBlock=ClientWhenBlock? delayInMillis=INT? thenBlock=ClientThenBlock)
 	 */
 	protected void sequence_ClientScenario(ISerializationContext context, ClientScenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

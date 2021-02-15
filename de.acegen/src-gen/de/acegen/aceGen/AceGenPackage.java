@@ -592,13 +592,22 @@ public interface AceGenPackage extends EPackage
   int CLIENT_SCENARIO__WHEN_BLOCK = 2;
 
   /**
+   * The feature id for the '<em><b>Delay In Millis</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_SCENARIO__DELAY_IN_MILLIS = 3;
+
+  /**
    * The feature id for the '<em><b>Then Block</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_SCENARIO__THEN_BLOCK = 3;
+  int CLIENT_SCENARIO__THEN_BLOCK = 4;
 
   /**
    * The number of structural features of the '<em>Client Scenario</em>' class.
@@ -607,7 +616,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_SCENARIO_FEATURE_COUNT = 4;
+  int CLIENT_SCENARIO_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ClientGivenRefImpl <em>Client Given Ref</em>}' class.
@@ -3277,6 +3286,17 @@ public interface AceGenPackage extends EPackage
   EReference getClientScenario_WhenBlock();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientScenario#getDelayInMillis <em>Delay In Millis</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Delay In Millis</em>'.
+   * @see de.acegen.aceGen.ClientScenario#getDelayInMillis()
+   * @see #getClientScenario()
+   * @generated
+   */
+  EAttribute getClientScenario_DelayInMillis();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.ClientScenario#getThenBlock <em>Then Block</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5480,6 +5500,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference CLIENT_SCENARIO__WHEN_BLOCK = eINSTANCE.getClientScenario_WhenBlock();
+
+    /**
+     * The meta object literal for the '<em><b>Delay In Millis</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_SCENARIO__DELAY_IN_MILLIS = eINSTANCE.getClientScenario_DelayInMillis();
 
     /**
      * The meta object literal for the '<em><b>Then Block</b></em>' containment reference feature.

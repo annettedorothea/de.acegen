@@ -148,17 +148,20 @@ class Es6Extension {
 	
 	def List<HttpClient> allReferencedHttpClients(ClientScenario it) {
 		var list = new ArrayList<HttpClient>();
-		var httpClient = whenBlock.action.eContainer as HttpClient
-		if (!list.contains(httpClient)) {
-			list.add(httpClient)
-		}
-		for(ClientGivenRef givenRef: givenRefs) {
-			httpClient = givenRef.scenario.whenBlock.action.eContainer as HttpClient
+		allReferencedHttpClientsRec(list);
+		return list;
+	}
+	
+	def void allReferencedHttpClientsRec(ClientScenario it, ArrayList<HttpClient> list) {
+		if (whenBlock !== null) {
+			var httpClient = whenBlock.action.eContainer as HttpClient
 			if (!list.contains(httpClient)) {
 				list.add(httpClient)
 			}
 		}
-		return list;
+		for(ClientGivenRef givenRef: givenRefs) {
+			givenRef.scenario.allReferencedHttpClientsRec(list);
+		}
 	}
 	
 	def actionIdName(HttpClient it) '''«name.toFirstUpper»ActionIds'''
