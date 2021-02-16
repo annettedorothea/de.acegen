@@ -1215,33 +1215,10 @@ public class Scenario {
                 _builder.append("this.callNonDeterministicDataProviderPutValue(uuid, \"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
-                _builder.append("\", ");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t\t\t");
-                _builder.append("objectMapper.readValue(\"");
-                CharSequence _valueFrom = this._attributeExtension.valueFrom(attributeDefinition.getValue());
-                _builder.append(_valueFrom, "\t\t\t");
-                _builder.append("\", ");
-                {
-                  Model _model = attributeDefinition.getAttribute().getModel();
-                  boolean _tripleNotEquals_1 = (_model != null);
-                  if (_tripleNotEquals_1) {
-                    _builder.append(" ");
-                    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(attributeDefinition.getAttribute().getModel());
-                    _builder.append(_dataNameWithPackage, "\t\t\t");
-                    _builder.append(".class)");
-                  } else {
-                    String _type = attributeDefinition.getAttribute().getType();
-                    boolean _tripleNotEquals_2 = (_type != null);
-                    if (_tripleNotEquals_2) {
-                      _builder.append(" ");
-                      String _javaType = this._attributeExtension.javaType(attributeDefinition.getAttribute());
-                      _builder.append(_javaType, "\t\t\t");
-                      _builder.append(".class)");
-                    }
-                  }
-                }
-                _builder.append(");");
+                _builder.append("\",\t\"");
+                CharSequence _nonDeterministicValueFrom = this._attributeExtension.nonDeterministicValueFrom(attributeDefinition.getValue());
+                _builder.append(_nonDeterministicValueFrom);
+                _builder.append("\");");
                 _builder.newLineIfNotEmpty();
               }
             }

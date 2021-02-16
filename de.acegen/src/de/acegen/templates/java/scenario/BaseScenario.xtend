@@ -335,8 +335,8 @@ class BaseScenario {
 			}
 		
 			@Override
-			protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, Object data) {
-				return this.httpPut("/test/non-deterministic/value?uuid=" + uuid + "&key=" + key, data, null, null,
+			protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, String value) {
+				return this.httpPut("/test/non-deterministic/value?uuid=" + uuid + "&key=" + key + "&value=" + value, null, null, null,
 						Object.class);
 			}
 		
@@ -434,7 +434,7 @@ class BaseScenario {
 			protected abstract boolean prerequisite(String scenarioName);
 			
 			protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutValue(
-						String uuid, String key, Object data);
+						String uuid, String key, String data);
 						
 			protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutSystemTime(
 						String uuid, LocalDateTime dateTime);

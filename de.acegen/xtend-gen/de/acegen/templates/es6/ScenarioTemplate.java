@@ -344,7 +344,7 @@ public class ScenarioTemplate {
             _builder.append("        ");
             _builder.append("Verifications.");
             _builder.append(verification_1, "        ");
-            _builder.append("();");
+            _builder.append("(testId);");
             _builder.newLineIfNotEmpty();
           }
         }
@@ -495,7 +495,7 @@ public class ScenarioTemplate {
       for(final String verification : _verifications) {
         _builder.append("export function ");
         _builder.append(verification);
-        _builder.append("() {");
+        _builder.append("(testId) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("assert.fail(\"");

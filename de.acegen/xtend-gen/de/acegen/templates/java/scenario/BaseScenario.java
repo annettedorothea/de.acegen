@@ -818,10 +818,10 @@ public class BaseScenario {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, Object data) {");
+    _builder.append("protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, String value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return this.httpPut(\"/test/non-deterministic/value?uuid=\" + uuid + \"&key=\" + key, data, null, null,");
+    _builder.append("return this.httpPut(\"/test/non-deterministic/value?uuid=\" + uuid + \"&key=\" + key + \"&value=\" + value, null, null, null,");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("Object.class);");
@@ -1043,7 +1043,7 @@ public class BaseScenario {
     _builder.append("protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutValue(");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("String uuid, String key, Object data);");
+    _builder.append("String uuid, String key, String data);");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.newLine();

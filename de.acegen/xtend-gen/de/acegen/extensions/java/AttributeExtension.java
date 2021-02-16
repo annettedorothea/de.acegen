@@ -847,6 +847,41 @@ public class AttributeExtension {
     return null;
   }
   
+  protected CharSequence _nonDeterministicValueFrom(final JsonObjectAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("null");
+    return _builder;
+  }
+  
+  protected CharSequence _nonDeterministicValueFrom(final String it) {
+    return this.valueFromString(it);
+  }
+  
+  protected CharSequence _nonDeterministicValueFrom(final JsonValue it) {
+    if ((it instanceof StringType)) {
+      StringConcatenation _builder = new StringConcatenation();
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
+      _builder.append(_valueFromString);
+      return _builder;
+    } else {
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
+      } else {
+        if ((it instanceof NullType)) {
+          return "null";
+        } else {
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
   public CharSequence valueFromString(final String it) {
     String returnString = it;
     boolean _contains = it.contains("${random}");
@@ -972,6 +1007,19 @@ public class AttributeExtension {
       return _valueFrom((JsonValue)it);
     } else if (it instanceof String) {
       return _valueFrom((String)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
+  }
+  
+  public CharSequence nonDeterministicValueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _nonDeterministicValueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonValue) {
+      return _nonDeterministicValueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _nonDeterministicValueFrom((String)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

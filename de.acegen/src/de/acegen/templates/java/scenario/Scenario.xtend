@@ -374,8 +374,7 @@ class Scenario {
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
 			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
 				«IF attributeDefinition.attribute.nonDeterministic»
-					this.callNonDeterministicDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»", 
-								objectMapper.readValue("«attributeDefinition.value.valueFrom»", «IF attributeDefinition.attribute.model !== null» «attributeDefinition.attribute.model.dataNameWithPackage».class)«ELSEIF attributeDefinition.attribute.type !== null» «attributeDefinition.attribute.javaType».class)«ENDIF»);
+					this.callNonDeterministicDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.nonDeterministicValueFrom»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»

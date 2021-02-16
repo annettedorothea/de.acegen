@@ -97,7 +97,7 @@ class ScenarioTemplate {
 					        	expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
 					        «ENDFOR»
 					        «FOR verification: thenBlock.verifications»
-					        	Verifications.«verification»();
+					        	Verifications.«verification»(testId);
 					        «ENDFOR»
 						})
 					})
@@ -160,7 +160,7 @@ class ScenarioTemplate {
 		«copyright»
 		
 		«FOR verification: thenBlock.verifications»
-			export function «verification»() {
+			export function «verification»(testId) {
 				assert.fail("«verification» not implemented");
 			}
 		«ENDFOR»

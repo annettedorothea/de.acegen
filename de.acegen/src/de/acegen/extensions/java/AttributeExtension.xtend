@@ -251,6 +251,25 @@ class AttributeExtension {
 		}
 	}
 
+	def dispatch CharSequence nonDeterministicValueFrom(
+		JsonObjectAce it) '''null'''
+
+	def dispatch CharSequence nonDeterministicValueFrom(String it) {
+		return valueFromString
+	}
+
+	def dispatch CharSequence nonDeterministicValueFrom(JsonValue it) {
+		if (it instanceof StringType) {
+			return '''«string.valueFromString»''';
+		} else if (it instanceof BooleanType) {
+			return boolean;
+		} else if (it instanceof NullType) {
+			return "null";
+		} else if (it instanceof LongType) {
+			return '''«long»''';
+		}
+	}
+
 	def CharSequence valueFromString(String it) {
 		var returnString = it;
 		if (it.contains("${random}")) {
