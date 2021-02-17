@@ -648,6 +648,7 @@ class AceTemplate {
 			«ELSE»
 				«IF it.name === parent.name && parent.eContainer instanceof GroupedClientAttribute»
 					set«(parent.eContainer as GroupedClientAttribute).componentName»State(AppUtils.deepCopy(«elementPath»));
+					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
 				«ELSE»
 					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
 				«ENDIF»

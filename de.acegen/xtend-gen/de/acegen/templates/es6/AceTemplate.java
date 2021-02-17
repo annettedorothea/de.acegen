@@ -1717,13 +1717,21 @@ public class AceTemplate {
                 _builder.append(_elementPath);
                 _builder.append("));");
                 _builder.newLineIfNotEmpty();
-              } else {
                 _builder.append("set");
                 String _componentName_1 = this._es6Extension.componentName(parent);
                 _builder.append(_componentName_1);
                 _builder.append("State(AppUtils.deepCopy(");
                 String _elementPath_1 = this._es6Extension.elementPath(parent);
                 _builder.append(_elementPath_1);
+                _builder.append("));");
+                _builder.newLineIfNotEmpty();
+              } else {
+                _builder.append("set");
+                String _componentName_2 = this._es6Extension.componentName(parent);
+                _builder.append(_componentName_2);
+                _builder.append("State(AppUtils.deepCopy(");
+                String _elementPath_2 = this._es6Extension.elementPath(parent);
+                _builder.append(_elementPath_2);
                 _builder.append("));");
                 _builder.newLineIfNotEmpty();
               }
