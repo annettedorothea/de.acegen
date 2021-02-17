@@ -473,13 +473,22 @@ public interface AceGenPackage extends EPackage
   int SINGLE_CLIENT_ATTRIBUTE__NAME = CLIENT_ATTRIBUTE__NAME;
 
   /**
+   * The feature id for the '<em><b>No Component</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>List</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__LIST = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
+  int SINGLE_CLIENT_ATTRIBUTE__LIST = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Hash</b></em>' attribute.
@@ -488,7 +497,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__HASH = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
+  int SINGLE_CLIENT_ATTRIBUTE__HASH = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Storage</b></em>' attribute.
@@ -497,7 +506,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
+  int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -506,7 +515,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
+  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Single Client Attribute</em>' class.
@@ -515,7 +524,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
+  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.GroupedClientAttributeImpl <em>Grouped Client Attribute</em>}' class.
@@ -3178,6 +3187,17 @@ public interface AceGenPackage extends EPackage
   EClass getSingleClientAttribute();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isNoComponent <em>No Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>No Component</em>'.
+   * @see de.acegen.aceGen.SingleClientAttribute#isNoComponent()
+   * @see #getSingleClientAttribute()
+   * @generated
+   */
+  EAttribute getSingleClientAttribute_NoComponent();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5416,6 +5436,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass SINGLE_CLIENT_ATTRIBUTE = eINSTANCE.getSingleClientAttribute();
+
+    /**
+     * The meta object literal for the '<em><b>No Component</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT = eINSTANCE.getSingleClientAttribute_NoComponent();
 
     /**
      * The meta object literal for the '<em><b>List</b></em>' attribute feature.

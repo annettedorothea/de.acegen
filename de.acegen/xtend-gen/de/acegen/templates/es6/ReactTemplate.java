@@ -728,6 +728,14 @@ public class ReactTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("export const thead = (options, children) => {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("return generic(\"thead\", options, children);");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export const tr = (options, children) => {");
     _builder.newLine();
     _builder.append("    ");
@@ -740,6 +748,14 @@ public class ReactTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("return generic(\"td\", options, children);");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("export const th = (options, children) => {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("return generic(\"th\", options, children);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -796,9 +812,7 @@ public class ReactTemplate {
   protected CharSequence _componentImports(final SingleClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      int _size = it.getAttributes().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((it.getAttributes().size() > 0) && (!it.isNoComponent()))) {
         _builder.append("import { ");
         String _reactComponentName = this._es6Extension.reactComponentName(it);
         _builder.append(_reactComponentName);

@@ -650,12 +650,22 @@ class AceTemplate {
 					set«(parent.eContainer as GroupedClientAttribute).componentName»State(AppUtils.deepCopy(«elementPath»));
 					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
 				«ELSE»
-					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
+					set«findComponentParent(parent).componentName»State(AppUtils.deepCopy(«findComponentParent(parent).elementPath»));
 				«ENDIF»
 			«ENDIF»
 		«ENDIF»
 		AppUtils.stateUpdated(newAppState);
 	'''
+	
+	private def ClientAttribute findComponentParent(SingleClientAttribute it) {
+		if (!noComponent) {
+			return it
+		}
+		if (eContainer instanceof GroupedClientAttribute) {
+			return eContainer as GroupedClientAttribute
+		}
+		return findComponentParent(eContainer as SingleClientAttribute)
+	}
 	
 	private def childAttributes(SingleClientAttribute it, HttpClient httpClient) '''
 		«IF attributes !== null && !isList && !isHash && !isStorage»
@@ -706,7 +716,7 @@ class AceTemplate {
 	'''
 	
 	private def imports(SingleClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0 && !isList && !imports.contains(componentName)»
+		«IF attributes.size > 0 && !isList && !imports.contains(componentName) && !noComponent»
 			import { set«componentName»State } from "../components«subFolder»/«reactComponentName»";
 			«addImport(componentName)»
 		«ENDIF»

@@ -37,7 +37,7 @@ public class ReactGenerator {
   }
   
   protected void _doGenerate(final SingleClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild) {
-    if (((it.getAttributes().size() > 0) || isGroupedChild)) {
+    if (((!it.isNoComponent()) && ((it.getAttributes().size() > 0) || isGroupedChild))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("components");
       _builder.append(subFolder);
@@ -54,7 +54,8 @@ public class ReactGenerator {
       String _componentName = this._es6Extension.componentName(it);
       _builder_1.append(_componentName);
       _builder_1.append(".js");
-      fsa.generateFile(_builder_1.toString(), ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
+      fsa.generateFile(_builder_1.toString(), 
+        ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
         this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
       StringConcatenation _builder_2 = new StringConcatenation();
       _builder_2.append(subFolder);
@@ -86,7 +87,8 @@ public class ReactGenerator {
     String _componentName = this._es6Extension.componentName(it);
     _builder_1.append(_componentName);
     _builder_1.append(".js");
-    fsa.generateFile(_builder_1.toString(), ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
+    fsa.generateFile(_builder_1.toString(), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
     StringConcatenation _builder_2 = new StringConcatenation();
     _builder_2.append(subFolder);

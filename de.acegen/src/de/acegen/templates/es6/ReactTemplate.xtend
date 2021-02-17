@@ -263,12 +263,20 @@ class ReactTemplate {
 		    return generic("tbody", options, children);
 		}
 		
+		export const thead = (options, children) => {
+		    return generic("thead", options, children);
+		}
+		
 		export const tr = (options, children) => {
 		    return generic("tr", options, children);
 		}
 		
 		export const td = (options, children) => {
 		    return generic("td", options, children);
+		}
+		
+		export const th = (options, children) => {
+		    return generic("th", options, children);
 		}
 		
 		export const i = (options, children) => {
@@ -297,7 +305,7 @@ class ReactTemplate {
 	'''
 	
 	def dispatch CharSequence componentImports(SingleClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0»
+		«IF attributes.size > 0 && !noComponent»
 			import { «reactComponentName» } from ".«subFolder»/«reactComponentName»";
 			«FOR attribute: attributes»
 				«componentImports(attribute, '''«subFolder»/«name.toFirstLower»''')»

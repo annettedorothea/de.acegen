@@ -70,6 +70,7 @@ ClientAttribute:
 ;
 
 SingleClientAttribute:
+	noComponent ?= 'noComponent'? 
 	list ?= 'List'? 
 	name = ID 
 	hash ?= 'location.hash'? 

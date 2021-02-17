@@ -50,6 +50,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/name"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//SingleClientAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/noComponent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/hash"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SingleClientAttribute/storage"/>

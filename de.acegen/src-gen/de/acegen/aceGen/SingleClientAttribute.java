@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.SingleClientAttribute#isStorage <em>Storage</em>}</li>
@@ -26,6 +27,28 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SingleClientAttribute extends ClientAttribute
 {
+  /**
+   * Returns the value of the '<em><b>No Component</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>No Component</em>' attribute.
+   * @see #setNoComponent(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getSingleClientAttribute_NoComponent()
+   * @model
+   * @generated
+   */
+  boolean isNoComponent();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.SingleClientAttribute#isNoComponent <em>No Component</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>No Component</em>' attribute.
+   * @see #isNoComponent()
+   * @generated
+   */
+  void setNoComponent(boolean value);
+
   /**
    * Returns the value of the '<em><b>List</b></em>' attribute.
    * <!-- begin-user-doc -->

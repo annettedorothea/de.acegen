@@ -16,7 +16,7 @@ class ReactGenerator {
 
 	@Inject
 	extension Es6Extension
-	
+
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		if (httpClient.container !== null) {
 			fsa.generateFile('''components/ReactHelper.js''', IFileSystemAccess2.DEFAULT_OUTPUT,
@@ -25,11 +25,13 @@ class ReactGenerator {
 		}
 	}
 
-	def dispatch void doGenerate(SingleClientAttribute it, IFileSystemAccess2 fsa, String subFolder, boolean isGroupedChild) {
-		if (attributes.size > 0 || isGroupedChild) {
+	def dispatch void doGenerate(SingleClientAttribute it, IFileSystemAccess2 fsa, String subFolder,
+		boolean isGroupedChild) {
+		if (!noComponent && (attributes.size > 0 || isGroupedChild)) {
 			fsa.generateFile('''components«subFolder»/«reactComponentName».js''', IFileSystemAccess2.DEFAULT_OUTPUT,
 				reactTemplate.generateComponent(it, subFolder, folderPrefix(subFolder)));
-			fsa.generateFile('''components«subFolder»/«componentName».js''', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+			fsa.generateFile('''components«subFolder»/«componentName».js''',
+				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 				reactTemplate.generateComponentStruct(it, folderPrefix(subFolder)));
 			val nextSubFolder = '''«subFolder»/«name.toFirstLower»'''
 			for (attribute : attributes) {
@@ -37,22 +39,24 @@ class ReactGenerator {
 			}
 		}
 	}
-	
-	def dispatch void doGenerate(GroupedClientAttribute it, IFileSystemAccess2 fsa, String subFolder, boolean isGroupedChild) {
+
+	def dispatch void doGenerate(GroupedClientAttribute it, IFileSystemAccess2 fsa, String subFolder,
+		boolean isGroupedChild) {
 		fsa.generateFile('''components«subFolder»/«reactComponentName».js''', IFileSystemAccess2.DEFAULT_OUTPUT,
 			reactTemplate.generateComponent(it, subFolder, folderPrefix(subFolder)));
-		fsa.generateFile('''components«subFolder»/«componentName».js''', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+		fsa.generateFile('''components«subFolder»/«componentName».js''',
+			ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			reactTemplate.generateComponentStruct(it, folderPrefix(subFolder)));
 		val nextSubFolder = '''«subFolder»/«name.toFirstLower»'''
 		for (attribute : attributeGroup) {
 			doGenerate(attribute, fsa, nextSubFolder, true);
 		}
 	}
-	
+
 	def private String folderPrefix(String subFolder) {
 		val count = subFolder.split("/").length - 1;
 		var folderPrefix = "";
-		for (var i=0; i<count; i++) {
+		for (var i = 0; i < count; i++) {
 			folderPrefix += "../";
 		}
 		return folderPrefix;

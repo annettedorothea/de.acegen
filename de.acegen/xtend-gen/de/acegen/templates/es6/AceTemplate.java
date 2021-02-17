@@ -1727,10 +1727,10 @@ public class AceTemplate {
                 _builder.newLineIfNotEmpty();
               } else {
                 _builder.append("set");
-                String _componentName_2 = this._es6Extension.componentName(parent);
+                String _componentName_2 = this._es6Extension.componentName(this.findComponentParent(parent));
                 _builder.append(_componentName_2);
                 _builder.append("State(AppUtils.deepCopy(");
-                String _elementPath_2 = this._es6Extension.elementPath(parent);
+                String _elementPath_2 = this._es6Extension.elementPath(this.findComponentParent(parent));
                 _builder.append(_elementPath_2);
                 _builder.append("));");
                 _builder.newLineIfNotEmpty();
@@ -1743,6 +1743,21 @@ public class AceTemplate {
     _builder.append("AppUtils.stateUpdated(newAppState);");
     _builder.newLine();
     return _builder;
+  }
+  
+  private ClientAttribute findComponentParent(final SingleClientAttribute it) {
+    boolean _isNoComponent = it.isNoComponent();
+    boolean _not = (!_isNoComponent);
+    if (_not) {
+      return it;
+    }
+    EObject _eContainer = it.eContainer();
+    if ((_eContainer instanceof GroupedClientAttribute)) {
+      EObject _eContainer_1 = it.eContainer();
+      return ((GroupedClientAttribute) _eContainer_1);
+    }
+    EObject _eContainer_2 = it.eContainer();
+    return this.findComponentParent(((SingleClientAttribute) _eContainer_2));
   }
   
   private CharSequence childAttributes(final SingleClientAttribute it, final HttpClient httpClient) {
@@ -1864,7 +1879,7 @@ public class AceTemplate {
   private CharSequence imports(final SingleClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if ((((it.getAttributes().size() > 0) && (!it.isList())) && (!this.imports.contains(this._es6Extension.componentName(it))))) {
+      if (((((it.getAttributes().size() > 0) && (!it.isList())) && (!this.imports.contains(this._es6Extension.componentName(it)))) && (!it.isNoComponent()))) {
         _builder.append("import { set");
         String _componentName = this._es6Extension.componentName(it);
         _builder.append(_componentName);

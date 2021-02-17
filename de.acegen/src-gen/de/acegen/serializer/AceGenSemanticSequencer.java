@@ -1030,7 +1030,14 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SingleClientAttribute returns SingleClientAttribute
 	 *
 	 * Constraint:
-	 *     (list?='List'? name=ID hash?='location.hash'? storage?='storage'? attributes+=ClientAttribute*)
+	 *     (
+	 *         noComponent?='noComponent'? 
+	 *         list?='List'? 
+	 *         name=ID 
+	 *         hash?='location.hash'? 
+	 *         storage?='storage'? 
+	 *         attributes+=ClientAttribute*
+	 *     )
 	 */
 	protected void sequence_SingleClientAttribute(ISerializationContext context, SingleClientAttribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

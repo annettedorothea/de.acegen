@@ -892,23 +892,37 @@ ruleSingleClientAttribute returns [EObject current=null]
 	(
 		(
 			(
-				lv_list_0_0='List'
+				lv_noComponent_0_0='noComponent'
 				{
-					newLeafNode(lv_list_0_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_0_0());
+					newLeafNode(lv_noComponent_0_0, grammarAccess.getSingleClientAttributeAccess().getNoComponentNoComponentKeyword_0_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "list", lv_list_0_0 != null, "List");
+					setWithLastConsumed($current, "noComponent", lv_noComponent_0_0 != null, "noComponent");
 				}
 			)
 		)?
 		(
 			(
-				lv_name_1_0=RULE_ID
+				lv_list_1_0='List'
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_1_0());
+					newLeafNode(lv_list_1_0, grammarAccess.getSingleClientAttributeAccess().getListListKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
+					}
+					setWithLastConsumed($current, "list", lv_list_1_0 != null, "List");
+				}
+			)
+		)?
+		(
+			(
+				lv_name_2_0=RULE_ID
+				{
+					newLeafNode(lv_name_2_0, grammarAccess.getSingleClientAttributeAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -917,50 +931,50 @@ ruleSingleClientAttribute returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_1_0,
+						lv_name_2_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
 			(
-				lv_hash_2_0='location.hash'
+				lv_hash_3_0='location.hash'
 				{
-					newLeafNode(lv_hash_2_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_2_0());
+					newLeafNode(lv_hash_3_0, grammarAccess.getSingleClientAttributeAccess().getHashLocationHashKeyword_3_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "hash", lv_hash_2_0 != null, "location.hash");
+					setWithLastConsumed($current, "hash", lv_hash_3_0 != null, "location.hash");
 				}
 			)
 		)?
 		(
 			(
-				lv_storage_3_0='storage'
+				lv_storage_4_0='storage'
 				{
-					newLeafNode(lv_storage_3_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_3_0());
+					newLeafNode(lv_storage_4_0, grammarAccess.getSingleClientAttributeAccess().getStorageStorageKeyword_4_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getSingleClientAttributeRule());
 					}
-					setWithLastConsumed($current, "storage", lv_storage_3_0 != null, "storage");
+					setWithLastConsumed($current, "storage", lv_storage_4_0 != null, "storage");
 				}
 			)
 		)?
 		(
-			otherlv_4='{'
+			otherlv_5='{'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_4_0());
+				newLeafNode(otherlv_5, grammarAccess.getSingleClientAttributeAccess().getLeftCurlyBracketKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getSingleClientAttributeAccess().getAttributesClientAttributeParserRuleCall_5_1_0());
 					}
-					lv_attributes_5_0=ruleClientAttribute
+					lv_attributes_6_0=ruleClientAttribute
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getSingleClientAttributeRule());
@@ -968,15 +982,15 @@ ruleSingleClientAttribute returns [EObject current=null]
 						add(
 							$current,
 							"attributes",
-							lv_attributes_5_0,
+							lv_attributes_6_0,
 							"de.acegen.AceGen.ClientAttribute");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_6='}'
+			otherlv_7='}'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_4_2());
+				newLeafNode(otherlv_7, grammarAccess.getSingleClientAttributeAccess().getRightCurlyBracketKeyword_5_2());
 			}
 		)?
 	)

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isHash <em>Hash</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.SingleClientAttributeImpl#isStorage <em>Storage</em>}</li>
@@ -40,6 +41,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SingleClientAttributeImpl extends ClientAttributeImpl implements SingleClientAttribute
 {
+  /**
+   * The default value of the '{@link #isNoComponent() <em>No Component</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNoComponent()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NO_COMPONENT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNoComponent() <em>No Component</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNoComponent()
+   * @generated
+   * @ordered
+   */
+  protected boolean noComponent = NO_COMPONENT_EDEFAULT;
+
   /**
    * The default value of the '{@link #isList() <em>List</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -129,6 +150,31 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.SINGLE_CLIENT_ATTRIBUTE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isNoComponent()
+  {
+    return noComponent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNoComponent(boolean newNoComponent)
+  {
+    boolean oldNoComponent = noComponent;
+    noComponent = newNoComponent;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT, oldNoComponent, noComponent));
   }
 
   /**
@@ -247,6 +293,8 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
   {
     switch (featureID)
     {
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT:
+        return isNoComponent();
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__LIST:
         return isList();
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__HASH:
@@ -270,6 +318,9 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
   {
     switch (featureID)
     {
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT:
+        setNoComponent((Boolean)newValue);
+        return;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__LIST:
         setList((Boolean)newValue);
         return;
@@ -297,6 +348,9 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
   {
     switch (featureID)
     {
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT:
+        setNoComponent(NO_COMPONENT_EDEFAULT);
+        return;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__LIST:
         setList(LIST_EDEFAULT);
         return;
@@ -323,6 +377,8 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
   {
     switch (featureID)
     {
+      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT:
+        return noComponent != NO_COMPONENT_EDEFAULT;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__LIST:
         return list != LIST_EDEFAULT;
       case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE__HASH:
@@ -346,7 +402,9 @@ public class SingleClientAttributeImpl extends ClientAttributeImpl implements Si
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (list: ");
+    result.append(" (noComponent: ");
+    result.append(noComponent);
+    result.append(", list: ");
     result.append(list);
     result.append(", hash: ");
     result.append(hash);
