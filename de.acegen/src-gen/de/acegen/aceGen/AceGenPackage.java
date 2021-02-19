@@ -371,13 +371,22 @@ public interface AceGenPackage extends EPackage
   int TRIGGERD_ACE_OPERATION__DELAY = 0;
 
   /**
+   * The feature id for the '<em><b>Take Latest</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRIGGERD_ACE_OPERATION__TAKE_LATEST = 1;
+
+  /**
    * The feature id for the '<em><b>Ace Operation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRIGGERD_ACE_OPERATION__ACE_OPERATION = 1;
+  int TRIGGERD_ACE_OPERATION__ACE_OPERATION = 2;
 
   /**
    * The number of structural features of the '<em>Triggerd Ace Operation</em>' class.
@@ -386,7 +395,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRIGGERD_ACE_OPERATION_FEATURE_COUNT = 2;
+  int TRIGGERD_ACE_OPERATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpClientStateFunctionImpl <em>Http Client State Function</em>}' class.
@@ -3113,6 +3122,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getTriggerdAceOperation_Delay();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.TriggerdAceOperation#isTakeLatest <em>Take Latest</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Take Latest</em>'.
+   * @see de.acegen.aceGen.TriggerdAceOperation#isTakeLatest()
+   * @see #getTriggerdAceOperation()
+   * @generated
+   */
+  EAttribute getTriggerdAceOperation_TakeLatest();
+
+  /**
    * Returns the meta object for the reference '{@link de.acegen.aceGen.TriggerdAceOperation#getAceOperation <em>Ace Operation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5374,6 +5394,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute TRIGGERD_ACE_OPERATION__DELAY = eINSTANCE.getTriggerdAceOperation_Delay();
+
+    /**
+     * The meta object literal for the '<em><b>Take Latest</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRIGGERD_ACE_OPERATION__TAKE_LATEST = eINSTANCE.getTriggerdAceOperation_TakeLatest();
 
     /**
      * The meta object literal for the '<em><b>Ace Operation</b></em>' reference feature.

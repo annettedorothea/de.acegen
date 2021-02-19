@@ -1106,7 +1106,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     TriggerdAceOperation returns TriggerdAceOperation
 	 *
 	 * Constraint:
-	 *     (delay=INT? aceOperation=[HttpClientAce|QualifiedName])
+	 *     ((delay=INT takeLatest?='takeLatest'?)? aceOperation=[HttpClientAce|QualifiedName])
 	 */
 	protected void sequence_TriggerdAceOperation(ISerializationContext context, TriggerdAceOperation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -40,6 +40,7 @@
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//TriggerdAceOperation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//TriggerdAceOperation/delay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//TriggerdAceOperation/takeLatest"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//TriggerdAceOperation/aceOperation"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpClientStateFunction">

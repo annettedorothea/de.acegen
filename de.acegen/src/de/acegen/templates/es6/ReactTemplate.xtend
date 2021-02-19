@@ -291,6 +291,14 @@ class ReactTemplate {
 		    return generic("option", options, children);
 		}
 		
+		export const img = (options, children) => {
+		    return generic("img", options, children);
+		}
+		
+		export const textarea = (options) => {
+		    return generic("textarea", options);
+		}
+		
 		export const input = (options) => {
 		    return <input {...normalize(options)}/>
 		}

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.TriggerdAceOperation#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.acegen.aceGen.TriggerdAceOperation#isTakeLatest <em>Take Latest</em>}</li>
  *   <li>{@link de.acegen.aceGen.TriggerdAceOperation#getAceOperation <em>Ace Operation</em>}</li>
  * </ul>
  *
@@ -45,6 +46,28 @@ public interface TriggerdAceOperation extends EObject
    * @generated
    */
   void setDelay(int value);
+
+  /**
+   * Returns the value of the '<em><b>Take Latest</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Take Latest</em>' attribute.
+   * @see #setTakeLatest(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getTriggerdAceOperation_TakeLatest()
+   * @model
+   * @generated
+   */
+  boolean isTakeLatest();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.TriggerdAceOperation#isTakeLatest <em>Take Latest</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Take Latest</em>' attribute.
+   * @see #isTakeLatest()
+   * @generated
+   */
+  void setTakeLatest(boolean value);
 
   /**
    * Returns the value of the '<em><b>Ace Operation</b></em>' reference.

@@ -244,6 +244,7 @@ class AceTemplate {
 		        ACEController.factories = {};
 		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
 		        ACEController.actionQueue = [];
+		        ACEController.delayedActions = {};
 		    }
 		
 		    static registerListener(eventName, listener) {

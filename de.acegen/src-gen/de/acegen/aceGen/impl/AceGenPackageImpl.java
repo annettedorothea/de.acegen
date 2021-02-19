@@ -894,9 +894,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getTriggerdAceOperation_TakeLatest()
+  {
+    return (EAttribute)triggerdAceOperationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getTriggerdAceOperation_AceOperation()
   {
-    return (EReference)triggerdAceOperationEClass.getEStructuralFeatures().get(1);
+    return (EReference)triggerdAceOperationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3010,6 +3021,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     triggerdAceOperationEClass = createEClass(TRIGGERD_ACE_OPERATION);
     createEAttribute(triggerdAceOperationEClass, TRIGGERD_ACE_OPERATION__DELAY);
+    createEAttribute(triggerdAceOperationEClass, TRIGGERD_ACE_OPERATION__TAKE_LATEST);
     createEReference(triggerdAceOperationEClass, TRIGGERD_ACE_OPERATION__ACE_OPERATION);
 
     httpClientStateFunctionEClass = createEClass(HTTP_CLIENT_STATE_FUNCTION);
@@ -3344,6 +3356,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
 
     initEClass(triggerdAceOperationEClass, TriggerdAceOperation.class, "TriggerdAceOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getTriggerdAceOperation_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, TriggerdAceOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTriggerdAceOperation_TakeLatest(), ecorePackage.getEBoolean(), "takeLatest", null, 0, 1, TriggerdAceOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTriggerdAceOperation_AceOperation(), this.getHttpClientAce(), null, "aceOperation", null, 0, 1, TriggerdAceOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpClientStateFunctionEClass, HttpClientStateFunction.class, "HttpClientStateFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

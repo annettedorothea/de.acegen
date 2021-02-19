@@ -54,7 +54,7 @@ HttpClientOutcome:
 ;
 
 TriggerdAceOperation:
-	('delayInMillis' delay = INT)? aceOperation = [HttpClientAce | QualifiedName]
+	('delayInMillis' delay = INT takeLatest ?= 'takeLatest'? ) ? aceOperation = [HttpClientAce | QualifiedName]
 ;
 
 HttpClientStateFunction:

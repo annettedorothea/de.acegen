@@ -728,6 +728,20 @@ ruleTriggerdAceOperation returns [EObject current=null]
 					}
 				)
 			)
+			(
+				(
+					lv_takeLatest_2_0='takeLatest'
+					{
+						newLeafNode(lv_takeLatest_2_0, grammarAccess.getTriggerdAceOperationAccess().getTakeLatestTakeLatestKeyword_0_2_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTriggerdAceOperationRule());
+						}
+						setWithLastConsumed($current, "takeLatest", lv_takeLatest_2_0 != null, "takeLatest");
+					}
+				)
+			)?
 		)?
 		(
 			(

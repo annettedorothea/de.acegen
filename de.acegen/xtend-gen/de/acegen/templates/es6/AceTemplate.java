@@ -540,6 +540,9 @@ public class AceTemplate {
     _builder.append("        ");
     _builder.append("ACEController.actionQueue = [];");
     _builder.newLine();
+    _builder.append("        ");
+    _builder.append("ACEController.delayedActions = {};");
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();

@@ -439,18 +439,20 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cDelayInMillisKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
 		private final Assignment cDelayAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cDelayINTTerminalRuleCall_0_1_0 = (RuleCall)cDelayAssignment_0_1.eContents().get(0);
+		private final Assignment cTakeLatestAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final Keyword cTakeLatestTakeLatestKeyword_0_2_0 = (Keyword)cTakeLatestAssignment_0_2.eContents().get(0);
 		private final Assignment cAceOperationAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cAceOperationHttpClientAceCrossReference_1_0 = (CrossReference)cAceOperationAssignment_1.eContents().get(0);
 		private final RuleCall cAceOperationHttpClientAceQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cAceOperationHttpClientAceCrossReference_1_0.eContents().get(1);
 		
 		//TriggerdAceOperation:
-		//	('delayInMillis' delay=INT)? aceOperation=[HttpClientAce|QualifiedName];
+		//	('delayInMillis' delay=INT takeLatest?='takeLatest'?)? aceOperation=[HttpClientAce|QualifiedName];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('delayInMillis' delay=INT)? aceOperation=[HttpClientAce|QualifiedName]
+		//('delayInMillis' delay=INT takeLatest?='takeLatest'?)? aceOperation=[HttpClientAce|QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
-		//('delayInMillis' delay=INT)?
+		//('delayInMillis' delay=INT takeLatest?='takeLatest'?)?
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'delayInMillis'
@@ -461,6 +463,12 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_0_1_0() { return cDelayINTTerminalRuleCall_0_1_0; }
+		
+		//takeLatest?='takeLatest'?
+		public Assignment getTakeLatestAssignment_0_2() { return cTakeLatestAssignment_0_2; }
+		
+		//'takeLatest'
+		public Keyword getTakeLatestTakeLatestKeyword_0_2_0() { return cTakeLatestTakeLatestKeyword_0_2_0; }
 		
 		//aceOperation=[HttpClientAce|QualifiedName]
 		public Assignment getAceOperationAssignment_1() { return cAceOperationAssignment_1; }
@@ -3617,7 +3625,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//TriggerdAceOperation:
-	//	('delayInMillis' delay=INT)? aceOperation=[HttpClientAce|QualifiedName];
+	//	('delayInMillis' delay=INT takeLatest?='takeLatest'?)? aceOperation=[HttpClientAce|QualifiedName];
 	public TriggerdAceOperationElements getTriggerdAceOperationAccess() {
 		return pTriggerdAceOperation;
 	}

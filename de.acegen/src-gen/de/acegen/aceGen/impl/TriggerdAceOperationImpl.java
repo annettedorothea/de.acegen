@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.TriggerdAceOperationImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.TriggerdAceOperationImpl#isTakeLatest <em>Take Latest</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.TriggerdAceOperationImpl#getAceOperation <em>Ace Operation</em>}</li>
  * </ul>
  *
@@ -50,6 +51,26 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
    * @ordered
    */
   protected int delay = DELAY_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isTakeLatest() <em>Take Latest</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTakeLatest()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean TAKE_LATEST_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isTakeLatest() <em>Take Latest</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTakeLatest()
+   * @generated
+   * @ordered
+   */
+  protected boolean takeLatest = TAKE_LATEST_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAceOperation() <em>Ace Operation</em>}' reference.
@@ -113,6 +134,31 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
    * @generated
    */
   @Override
+  public boolean isTakeLatest()
+  {
+    return takeLatest;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setTakeLatest(boolean newTakeLatest)
+  {
+    boolean oldTakeLatest = takeLatest;
+    takeLatest = newTakeLatest;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.TRIGGERD_ACE_OPERATION__TAKE_LATEST, oldTakeLatest, takeLatest));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public HttpClientAce getAceOperation()
   {
     if (aceOperation != null && aceOperation.eIsProxy())
@@ -164,6 +210,8 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
     {
       case AceGenPackage.TRIGGERD_ACE_OPERATION__DELAY:
         return getDelay();
+      case AceGenPackage.TRIGGERD_ACE_OPERATION__TAKE_LATEST:
+        return isTakeLatest();
       case AceGenPackage.TRIGGERD_ACE_OPERATION__ACE_OPERATION:
         if (resolve) return getAceOperation();
         return basicGetAceOperation();
@@ -183,6 +231,9 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
     {
       case AceGenPackage.TRIGGERD_ACE_OPERATION__DELAY:
         setDelay((Integer)newValue);
+        return;
+      case AceGenPackage.TRIGGERD_ACE_OPERATION__TAKE_LATEST:
+        setTakeLatest((Boolean)newValue);
         return;
       case AceGenPackage.TRIGGERD_ACE_OPERATION__ACE_OPERATION:
         setAceOperation((HttpClientAce)newValue);
@@ -204,6 +255,9 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
       case AceGenPackage.TRIGGERD_ACE_OPERATION__DELAY:
         setDelay(DELAY_EDEFAULT);
         return;
+      case AceGenPackage.TRIGGERD_ACE_OPERATION__TAKE_LATEST:
+        setTakeLatest(TAKE_LATEST_EDEFAULT);
+        return;
       case AceGenPackage.TRIGGERD_ACE_OPERATION__ACE_OPERATION:
         setAceOperation((HttpClientAce)null);
         return;
@@ -223,6 +277,8 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
     {
       case AceGenPackage.TRIGGERD_ACE_OPERATION__DELAY:
         return delay != DELAY_EDEFAULT;
+      case AceGenPackage.TRIGGERD_ACE_OPERATION__TAKE_LATEST:
+        return takeLatest != TAKE_LATEST_EDEFAULT;
       case AceGenPackage.TRIGGERD_ACE_OPERATION__ACE_OPERATION:
         return aceOperation != null;
     }
@@ -242,6 +298,8 @@ public class TriggerdAceOperationImpl extends MinimalEObjectImpl.Container imple
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (delay: ");
     result.append(delay);
+    result.append(", takeLatest: ");
+    result.append(takeLatest);
     result.append(')');
     return result.toString();
   }
