@@ -577,6 +577,14 @@ public class ReactTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("export const iframe = (options) => {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("return generic(\"iframe\", options);");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export const input = (options) => {");
     _builder.newLine();
     _builder.append("    ");
