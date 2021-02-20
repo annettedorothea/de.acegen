@@ -171,7 +171,7 @@ public class ReactTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import { div, h1, label, input, table, tbody, ul, li, tr, td");
+    _builder.append("import { pre");
     {
       final Function1<ClientAttribute, Boolean> _function = new Function1<ClientAttribute, Boolean>() {
         public Boolean apply(final ClientAttribute a) {
@@ -199,70 +199,12 @@ public class ReactTemplate {
     _builder.newLine();
     _builder.append("export function uiElement(attributes) {");
     _builder.newLine();
-    {
-      boolean _isList = it.isList();
-      if (_isList) {
-        _builder.append("\t");
-        _builder.append("return tr({class: \"\"}, [");
-        _builder.newLine();
-        {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          boolean _hasElements_1 = false;
-          for(final ClientAttribute attribute_1 : _attributes) {
-            if (!_hasElements_1) {
-              _hasElements_1 = true;
-            } else {
-              _builder.appendImmediate(",", "\t\t");
-            }
-            _builder.append("\t");
-            _builder.append("\t");
-            CharSequence _generateChild = this.generateChild(attribute_1, "td");
-            _builder.append(_generateChild, "\t\t");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("\t");
-        _builder.append("]);");
-        _builder.newLine();
-      } else {
-        _builder.append("\t");
-        _builder.append("return div({}, [");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("h1({}, [\"");
-        String _upperCase = it.getName().toUpperCase();
-        _builder.append(_upperCase, "\t\t");
-        _builder.append("\"])");
-        {
-          int _size = it.getAttributes().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
-            _builder.append(",");
-          }
-        }
-        _builder.newLineIfNotEmpty();
-        {
-          EList<ClientAttribute> _attributes_1 = it.getAttributes();
-          boolean _hasElements_2 = false;
-          for(final ClientAttribute attribute_2 : _attributes_1) {
-            if (!_hasElements_2) {
-              _hasElements_2 = true;
-            } else {
-              _builder.appendImmediate(",", "\t\t");
-            }
-            _builder.append("\t");
-            _builder.append("\t");
-            CharSequence _generateChild_1 = this.generateChild(attribute_2, "div");
-            _builder.append(_generateChild_1, "\t\t");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("\t");
-        _builder.append("]);");
-        _builder.newLine();
-      }
-    }
+    _builder.append("\t");
+    _builder.append("const json = JSON.stringify(attributes, null, \'\\t\');");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("return pre({}, [json]);");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -332,171 +274,6 @@ public class ReactTemplate {
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    return _builder;
-  }
-  
-  protected CharSequence _generateChild(final SingleClientAttribute it, final String enclosingTag) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((!it.isStorage()) && (!it.isHash()))) {
-        {
-          boolean _isList = it.isList();
-          if (_isList) {
-            _builder.append(enclosingTag);
-            _builder.append("({}, [");
-            _builder.newLineIfNotEmpty();
-            {
-              int _size = it.getAttributes().size();
-              boolean _greaterThan = (_size > 1);
-              if (_greaterThan) {
-                _builder.append("\t");
-                _builder.append("table({class: \"\"}, [");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("tbody({}, [");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t\t");
-                _builder.append("attributes.");
-                String _firstLower = StringExtensions.toFirstLower(it.getName());
-                _builder.append(_firstLower, "\t\t\t");
-                _builder.append(" ? attributes.");
-                String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
-                _builder.append(_firstLower_1, "\t\t\t");
-                _builder.append(".map((item) => ");
-                String _reactTagName = this._es6Extension.reactTagName(it);
-                _builder.append(_reactTagName, "\t\t\t");
-                _builder.append("(item)) : []");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("])");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("])");
-                _builder.newLine();
-              } else {
-                _builder.append("\t");
-                _builder.append("ul({class: \"\"}, [");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("attributes.");
-                String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
-                _builder.append(_firstLower_2, "\t\t");
-                _builder.append(" ? attributes.");
-                String _firstLower_3 = StringExtensions.toFirstLower(it.getName());
-                _builder.append(_firstLower_3, "\t\t");
-                _builder.append(".map((item) => li({}, [item])) : []");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("])");
-                _builder.newLine();
-              }
-            }
-            _builder.append("])");
-            _builder.newLine();
-          } else {
-            if ((((it.getAttributes().size() == 0) && (!it.isStorage())) && (!it.isHash()))) {
-              _builder.append(enclosingTag);
-              _builder.append("({class: \"\"}, [");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("label({");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("class: \"\",");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("htmlFor: \"");
-              String _name = it.getName();
-              _builder.append(_name, "\t\t");
-              _builder.append("\"");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("}, [\"");
-              String _upperCase = it.getName().toUpperCase();
-              _builder.append(_upperCase, "\t");
-              _builder.append("\"]), ");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("input({");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("id: \"");
-              String _name_1 = it.getName();
-              _builder.append(_name_1, "\t\t");
-              _builder.append("\",");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t");
-              _builder.append("value: attributes.");
-              String _name_2 = it.getName();
-              _builder.append(_name_2, "\t\t");
-              _builder.append(", ");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t");
-              _builder.append("class: \"\", ");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("onChange:(e) => console.log(e.target.value),");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("type: \"text\"");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("}), ");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("div({class: \"\"}, [attributes.");
-              String _name_3 = it.getName();
-              _builder.append(_name_3, "\t");
-              _builder.append("])");
-              _builder.newLineIfNotEmpty();
-              _builder.append("])");
-              _builder.newLine();
-            } else {
-              String _reactTagName_1 = this._es6Extension.reactTagName(it);
-              _builder.append(_reactTagName_1);
-              _builder.append("()");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-      } else {
-        _builder.append("// ");
-        String _xifexpression = null;
-        boolean _isStorage = it.isStorage();
-        if (_isStorage) {
-          _xifexpression = "storage";
-        } else {
-          _xifexpression = "";
-        }
-        _builder.append(_xifexpression);
-        String _xifexpression_1 = null;
-        boolean _isHash = it.isHash();
-        if (_isHash) {
-          _xifexpression_1 = "hash";
-        } else {
-          _xifexpression_1 = "";
-        }
-        _builder.append(_xifexpression_1);
-        _builder.append(" ");
-        String _name_4 = it.getName();
-        _builder.append(_name_4);
-        _builder.append(" ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  protected CharSequence _generateChild(final GroupedClientAttribute it, final String enclosingTag) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _reactTagName = this._es6Extension.reactTagName(it);
-    _builder.append(_reactTagName);
-    _builder.append("()");
-    _builder.newLineIfNotEmpty();
     return _builder;
   }
   
@@ -972,17 +749,6 @@ public class ReactTemplate {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it, folderPrefix).toString());
-    }
-  }
-  
-  public CharSequence generateChild(final ClientAttribute it, final String enclosingTag) {
-    if (it instanceof GroupedClientAttribute) {
-      return _generateChild((GroupedClientAttribute)it, enclosingTag);
-    } else if (it instanceof SingleClientAttribute) {
-      return _generateChild((SingleClientAttribute)it, enclosingTag);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, enclosingTag).toString());
     }
   }
   

@@ -72,23 +72,11 @@ class ReactTemplate {
 	def dispatch generateComponentStruct(SingleClientAttribute it, String folderPrefix) '''
 		«copyright»
 		
-		import { div, h1, label, input, table, tbody, ul, li, tr, td«FOR attribute: attributes.filter[a | a instanceof SingleClientAttribute && (a as SingleClientAttribute).attributes.size > 0 || a instanceof GroupedClientAttribute] BEFORE "," SEPARATOR ","» «attribute.reactTagName»«ENDFOR» } from "«folderPrefix»../../gen/components/ReactHelper";
+		import { pre«FOR attribute: attributes.filter[a | a instanceof SingleClientAttribute && (a as SingleClientAttribute).attributes.size > 0 || a instanceof GroupedClientAttribute] BEFORE "," SEPARATOR ","» «attribute.reactTagName»«ENDFOR» } from "«folderPrefix»../../gen/components/ReactHelper";
 		
 		export function uiElement(attributes) {
-			«IF list»
-				return tr({class: ""}, [
-					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("td")»
-					«ENDFOR»
-				]);
-			«ELSE»
-				return div({}, [
-					h1({}, ["«name.toUpperCase»"])«IF attributes.size > 0»,«ENDIF»
-					«FOR attribute: attributes SEPARATOR ","»
-						«attribute.generateChild("div")»
-					«ENDFOR»
-				]);
-			«ENDIF»
+			const json = JSON.stringify(attributes, null, '\t');
+			return pre({}, [json]);
 		}
 		
 		«sdg»
@@ -111,49 +99,6 @@ class ReactTemplate {
 		
 		«sdg»
 		
-	'''
-	
-	def dispatch generateChild(SingleClientAttribute it, String enclosingTag) '''
-		«IF !storage && !hash»
-			«IF list»
-				«enclosingTag»({}, [
-					«IF attributes.size > 1»
-						table({class: ""}, [
-							tbody({}, [
-								attributes.«name.toFirstLower» ? attributes.«name.toFirstLower».map((item) => «reactTagName()»(item)) : []
-							])
-						])
-					«ELSE»
-						ul({class: ""}, [
-							attributes.«name.toFirstLower» ? attributes.«name.toFirstLower».map((item) => li({}, [item])) : []
-						])
-					«ENDIF»
-				])
-			«ELSEIF attributes.size === 0 && !storage && !hash»
-				«enclosingTag»({class: ""}, [
-					label({
-						class: "",
-						htmlFor: "«name»"
-					}, ["«name.toUpperCase»"]), 
-					input({
-						id: "«name»",
-						value: attributes.«name», 
-						class: "", 
-						onChange:(e) => console.log(e.target.value),
-						type: "text"
-					}), 
-					div({class: ""}, [attributes.«name»])
-				])
-			«ELSE»
-				«reactTagName()»()
-			«ENDIF»
-		«ELSE»
-			// «storage ? "storage" : ""»«hash ? "hash" : ""» «name» 
-		«ENDIF»
-	'''
-	
-	def dispatch generateChild(GroupedClientAttribute it, String enclosingTag) '''
-		«reactTagName()»()
 	'''
 	
 	def generateReactHelper(HttpClient httpClient) '''
