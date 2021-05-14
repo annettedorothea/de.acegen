@@ -201,16 +201,13 @@ class ActionTemplate {
 		        return new Promise((resolve, reject) => {
 		            ACEController.addItemToTimeLine({action: this});
 		        	this.preCall();
-		            AppUtils.renderNewState();
 		            this.initActionData();
 		            let command = this.getCommand();
 		            command.executeCommand().then(() => {
 					    this.postCall();
-					    AppUtils.renderNewState();
 					    resolve();
 					}, (error) => {
 					    this.postCall();
-					    AppUtils.renderNewState();
 					    reject(error);
 					});
 		        });
@@ -249,7 +246,6 @@ class ActionTemplate {
 		        this.initActionData();
 			    let command = this.getCommand();
 			    command.executeCommand();
-			    AppUtils.renderNewState();
 		    }
 		}
 		

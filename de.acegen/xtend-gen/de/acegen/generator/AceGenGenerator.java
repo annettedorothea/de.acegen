@@ -18,8 +18,6 @@ package de.acegen.generator;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Project;
-import de.acegen.generator.Es6Generator;
-import de.acegen.generator.JavaGenerator;
 import javax.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -40,6 +38,7 @@ public class AceGenGenerator extends AbstractGenerator {
   @Inject
   private JavaGenerator javaGenerator;
   
+  @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
       EObject _get = resource.getContents().get(0);

@@ -93,12 +93,10 @@ class EventTemplate {
 		    publish() {
 				ACEController.addItemToTimeLine({event: this});
 		        this.notifyListeners();
-		        AppUtils.renderNewState();
 		    }
 		
 		    replay() {
 		        this.notifyListeners();
-		        AppUtils.renderNewState();
 		    }
 
 		    notifyListeners() {

@@ -47,7 +47,6 @@ import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
-import de.acegen.scoping.AbstractAceGenScopeProvider;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -72,6 +71,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   @Extension
   private ModelExtension _modelExtension;
   
+  @Override
   public IScope getScope(final EObject context, final EReference reference) {
     if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
       final ClientWhenBlock clientWhenBlock = ((ClientWhenBlock) context);
@@ -113,22 +113,18 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       boolean _equals = reference.getName().equals("listeners");
       if (_equals) {
         final IScope scope = super.getScope(context, reference);
-        final Predicate<IEObjectDescription> _function = new Predicate<IEObjectDescription>() {
-          public boolean apply(final IEObjectDescription it) {
-            EObject _eObjectOrProxy = it.getEObjectOrProxy();
-            return ((HttpServerViewFunction) _eObjectOrProxy).getModel().equals(aceModel);
-          }
+        final Predicate<IEObjectDescription> _function = (IEObjectDescription it) -> {
+          EObject _eObjectOrProxy = it.getEObjectOrProxy();
+          return ((HttpServerViewFunction) _eObjectOrProxy).getModel().equals(aceModel);
         };
         return new FilteringScope(scope, _function);
       } else {
         boolean _equals_1 = reference.getName().equals("aceOperations");
         if (_equals_1) {
           final IScope scope_1 = super.getScope(context, reference);
-          final Predicate<IEObjectDescription> _function_1 = new Predicate<IEObjectDescription>() {
-            public boolean apply(final IEObjectDescription it) {
-              EObject _eObjectOrProxy = it.getEObjectOrProxy();
-              return ((HttpServerAceWrite) _eObjectOrProxy).getModel().equals(aceModel);
-            }
+          final Predicate<IEObjectDescription> _function_1 = (IEObjectDescription it) -> {
+            EObject _eObjectOrProxy = it.getEObjectOrProxy();
+            return ((HttpServerAceWrite) _eObjectOrProxy).getModel().equals(aceModel);
           };
           return new FilteringScope(scope_1, _function_1);
         }
@@ -153,12 +149,10 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
     if ((context instanceof Model)) {
       final Model aceModel_1 = ((Model) context);
       final IScope scope_3 = super.getScope(context, reference);
-      final Predicate<IEObjectDescription> _function_2 = new Predicate<IEObjectDescription>() {
-        public boolean apply(final IEObjectDescription it) {
-          EObject _eObjectOrProxy = it.getEObjectOrProxy();
-          boolean _equals = ((Model) _eObjectOrProxy).equals(aceModel_1);
-          return (!_equals);
-        }
+      final Predicate<IEObjectDescription> _function_2 = (IEObjectDescription it) -> {
+        EObject _eObjectOrProxy = it.getEObjectOrProxy();
+        boolean _equals_2 = ((Model) _eObjectOrProxy).equals(aceModel_1);
+        return (!_equals_2);
       };
       return new FilteringScope(scope_3, _function_2);
     }

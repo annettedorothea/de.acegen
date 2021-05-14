@@ -3,8 +3,6 @@
  */
 package de.acegen.ide;
 
-import de.acegen.ide.AbstractAceGenIdeModule;
-
 /**
  * Use this class to register ide components.
  */

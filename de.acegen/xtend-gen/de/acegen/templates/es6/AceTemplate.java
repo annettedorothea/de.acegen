@@ -61,7 +61,7 @@ public class AceTemplate {
     _builder.append("export function dumpAppState() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("console.log(AppState.getAppState());");
+    _builder.append("console.info(AppState.getAppState());");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -116,16 +116,6 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("AppState.setInitialAppState(initialAppState);");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("static renderNewState() {");
-    _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("// render AppState.getAppState()");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -848,7 +838,7 @@ public class AceTemplate {
     _builder.append("static finishReplay() {");
     _builder.newLine();
     _builder.append("\t    ");
-    _builder.append("console.log(\"replay finished\");");
+    _builder.append("console.info(\"replay finished\");");
     _builder.newLine();
     _builder.append("\t    ");
     _builder.append("ACEController.timeline = [];");
@@ -927,7 +917,7 @@ public class AceTemplate {
     _builder.append("Utils.saveTimeline(description, creator).then((id) => {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("console.log(`saved timeline with id ${id}`);");
+    _builder.append("console.info(`saved timeline with id ${id}`);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("});");
@@ -938,7 +928,7 @@ public class AceTemplate {
     _builder.append("export function dumpTimeline() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("console.log(ACEController.timeline);");
+    _builder.append("console.info(ACEController.timeline);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

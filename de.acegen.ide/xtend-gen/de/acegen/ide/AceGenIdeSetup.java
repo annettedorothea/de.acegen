@@ -7,7 +7,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.acegen.AceGenRuntimeModule;
 import de.acegen.AceGenStandaloneSetup;
-import de.acegen.ide.AceGenIdeModule;
 import org.eclipse.xtext.util.Modules2;
 
 /**
@@ -15,6 +14,7 @@ import org.eclipse.xtext.util.Modules2;
  */
 @SuppressWarnings("all")
 public class AceGenIdeSetup extends AceGenStandaloneSetup {
+  @Override
   public Injector createInjector() {
     AceGenRuntimeModule _aceGenRuntimeModule = new AceGenRuntimeModule();
     AceGenIdeModule _aceGenIdeModule = new AceGenIdeModule();

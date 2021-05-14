@@ -19,8 +19,6 @@ class ReactGenerator {
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		if (httpClient.container !== null) {
-			fsa.generateFile('''components/ReactHelper.js''', IFileSystemAccess2.DEFAULT_OUTPUT,
-				reactTemplate.generateReactHelper(httpClient));
 			doGenerate(httpClient.container, fsa, "", false);
 		}
 	}

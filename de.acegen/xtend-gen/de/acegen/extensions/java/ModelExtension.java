@@ -18,7 +18,6 @@ package de.acegen.extensions.java;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
-import de.acegen.extensions.java.AttributeExtension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

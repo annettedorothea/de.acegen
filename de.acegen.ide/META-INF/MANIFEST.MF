@@ -3,13 +3,13 @@ Automatic-Module-Name: de.acegen.ide
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen.ide
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 1.1.0
+Bundle-Version: 1.2.2
 Bundle-SymbolicName: de.acegen.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.acegen,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Bundle-RequiredExecutionEnvironment: JavaSE-15
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.acegen.ide.contentassist.antlr,
  de.acegen.ide.contentassist.antlr.internal

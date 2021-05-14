@@ -1267,11 +1267,9 @@ public class Scenario {
         _builder.newLineIfNotEmpty();
         _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
         {
-          final Function1<JsonMember, Boolean> _function = new Function1<JsonMember, Boolean>() {
-            public Boolean apply(final JsonMember it) {
-              boolean _isNonDeterministic = it.getAttribute().isNonDeterministic();
-              return Boolean.valueOf((!_isNonDeterministic));
-            }
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1334,22 +1332,18 @@ public class Scenario {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
     {
-      if ((((it != null) && (it.getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getMembers(), new Function1<JsonMember, Boolean>() {
-        public Boolean apply(final JsonMember it) {
-          boolean _isNonDeterministic = it.getAttribute().isNonDeterministic();
-          return Boolean.valueOf((!_isNonDeterministic));
-        }
-      })) > 0))) {
+      if ((((it != null) && (it.getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getMembers(), ((Function1<JsonMember, Boolean>) (JsonMember it_1) -> {
+        boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+        return Boolean.valueOf((!_isNonDeterministic));
+      }))) > 0))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\"");
         {
-          final Function1<JsonMember, Boolean> _function = new Function1<JsonMember, Boolean>() {
-            public Boolean apply(final JsonMember it) {
-              boolean _isNonDeterministic = it.getAttribute().isNonDeterministic();
-              return Boolean.valueOf((!_isNonDeterministic));
-            }
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1419,11 +1413,9 @@ public class Scenario {
         _builder.append(_uuid, "\t");
         _builder.append("\\\"");
         {
-          final Function1<JsonMember, Boolean> _function = new Function1<JsonMember, Boolean>() {
-            public Boolean apply(final JsonMember it) {
-              boolean _isNonDeterministic = it.getAttribute().isNonDeterministic();
-              return Boolean.valueOf((!_isNonDeterministic));
-            }
+          final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
+            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
+            return Boolean.valueOf((!_isNonDeterministic));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;

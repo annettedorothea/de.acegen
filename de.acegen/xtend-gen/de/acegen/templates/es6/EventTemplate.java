@@ -178,9 +178,6 @@ public class EventTemplate {
     _builder.append("        ");
     _builder.append("this.notifyListeners();");
     _builder.newLine();
-    _builder.append("        ");
-    _builder.append("AppUtils.renderNewState();");
-    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
@@ -190,9 +187,6 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.notifyListeners();");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("AppUtils.renderNewState();");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");

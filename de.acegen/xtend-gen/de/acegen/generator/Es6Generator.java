@@ -21,7 +21,6 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
-import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.generator.es6.ReactGenerator;
 import de.acegen.templates.es6.AceTemplate;
 import de.acegen.templates.es6.ActionTemplate;

@@ -28,10 +28,6 @@ public class ReactGenerator {
     SingleClientAttribute _container = httpClient.getContainer();
     boolean _tripleNotEquals = (_container != null);
     if (_tripleNotEquals) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("components/ReactHelper.js");
-      fsa.generateFile(_builder.toString(), IFileSystemAccess2.DEFAULT_OUTPUT, 
-        this.reactTemplate.generateReactHelper(httpClient));
       this.doGenerate(httpClient.getContainer(), fsa, "", false);
     }
   }

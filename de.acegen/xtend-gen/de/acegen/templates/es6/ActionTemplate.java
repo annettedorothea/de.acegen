@@ -553,9 +553,6 @@ public class ActionTemplate {
     _builder.append("this.preCall();");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("AppUtils.renderNewState();");
-    _builder.newLine();
-    _builder.append("            ");
     _builder.append("this.initActionData();");
     _builder.newLine();
     _builder.append("            ");
@@ -568,9 +565,6 @@ public class ActionTemplate {
     _builder.append("this.postCall();");
     _builder.newLine();
     _builder.append("\t\t\t    ");
-    _builder.append("AppUtils.renderNewState();");
-    _builder.newLine();
-    _builder.append("\t\t\t    ");
     _builder.append("resolve();");
     _builder.newLine();
     _builder.append("\t\t\t");
@@ -578,9 +572,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("this.postCall();");
-    _builder.newLine();
-    _builder.append("\t\t\t    ");
-    _builder.append("AppUtils.renderNewState();");
     _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("reject(error);");
@@ -667,9 +658,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("\t    ");
     _builder.append("command.executeCommand();");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("AppUtils.renderNewState();");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");

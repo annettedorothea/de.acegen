@@ -49,7 +49,7 @@ class AceTemplate {
 		import Utils from "../../gen/ace/Utils";
 		
 		export function dumpAppState() {
-		    console.log(AppState.getAppState());
+		    console.info(AppState.getAppState());
 		}
 
 		export default class AppUtils {
@@ -72,10 +72,6 @@ class AceTemplate {
 		        const initialAppState = {
 		        };
 		        AppState.setInitialAppState(initialAppState);
-		    }
-		
-		    static renderNewState() {
-		    	// render AppState.getAppState()
 		    }
 		
 		    static createHeaders(authorize) {
@@ -354,7 +350,7 @@ class AceTemplate {
 			}
 			
 			static finishReplay() {
-			    console.log("replay finished");
+			    console.info("replay finished");
 			    ACEController.timeline = [];
 			    ACEController.actionQueue = [];
 			    AppUtils.createInitialAppState();
@@ -391,12 +387,12 @@ class AceTemplate {
 		
 		export function saveTimeline(description, creator) {
 		    Utils.saveTimeline(description, creator).then((id) => {
-		        console.log(`saved timeline with id ${id}`);
+		        console.info(`saved timeline with id ${id}`);
 		    });
 		}
 		
 		export function dumpTimeline() {
-		    console.log(ACEController.timeline);
+		    console.info(ACEController.timeline);
 		}
 		
 		

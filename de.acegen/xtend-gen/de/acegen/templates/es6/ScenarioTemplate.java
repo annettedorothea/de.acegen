@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -83,17 +82,6 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  public String getIdentation(final int number) {
-    String string = "";
-    for (int i = 0; (i < number); i++) {
-      String _string = string;
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("\t");
-      string = (_string + _builder);
-    }
-    return string;
-  }
-  
   public CharSequence generateScenario(final ClientScenario it, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -152,89 +140,48 @@ public class ScenarioTemplate {
     _builder.append("    \t");
     _builder.append("let nonDeterministicValue;");
     _builder.newLine();
-    _builder.append("    \t");
-    int index = (-1);
-    _builder.newLineIfNotEmpty();
     {
       ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
       for(final ClientGivenRef givenRef : _allGivenItems) {
         _builder.append("\t\t");
-        int _plusPlus = index++;
-        String _identation = this.getIdentation(_plusPlus);
-        _builder.append(_identation, "\t\t");
         CharSequence _initNonDeterministicData = this.initNonDeterministicData(givenRef.getScenario().getWhenBlock());
         _builder.append(_initNonDeterministicData, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        _builder.append("\t");
-        String _identation_1 = this.getIdentation(index);
-        _builder.append(_identation_1, "\t\t\t");
         _builder.append("ScenarioUtils.getCypressFor(");
         EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
         CharSequence _actionIdName_2 = this._es6Extension.actionIdName(((HttpClient) _eContainer));
-        _builder.append(_actionIdName_2, "\t\t\t");
+        _builder.append(_actionIdName_2, "\t\t");
         _builder.append(".");
         String _firstLower = StringExtensions.toFirstLower(givenRef.getScenario().getWhenBlock().getAction().getName());
-        _builder.append(_firstLower, "\t\t\t");
-        _builder.append(", ");
+        _builder.append(_firstLower, "\t\t");
         {
           EList<InputValue> _inputValues = givenRef.getScenario().getWhenBlock().getInputValues();
           boolean _hasElements = false;
           for(final InputValue arg : _inputValues) {
             if (!_hasElements) {
               _hasElements = true;
-              _builder.append("[", "\t\t\t");
+              _builder.append(", [", "\t\t");
             } else {
-              _builder.appendImmediate(",", "\t\t\t");
+              _builder.appendImmediate(",", "\t\t");
             }
             Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(arg.getValue());
-            _builder.append(_primitiveValueFrom, "\t\t\t");
+            _builder.append(_primitiveValueFrom, "\t\t");
           }
           if (_hasElements) {
-            _builder.append("]", "\t\t\t");
+            _builder.append("]", "\t\t");
           }
         }
-        _builder.append(").should(() => {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("\t\t");
-        int _plusPlus_1 = index++;
-        String _identation_2 = this.getIdentation(_plusPlus_1);
-        _builder.append(_identation_2, "\t\t\t\t");
-        _builder.append("ScenarioUtils.wait(");
-        int _numberOfSyncCalls = this._es6Extension.numberOfSyncCalls(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_numberOfSyncCalls, "\t\t\t\t");
-        _builder.append(", ");
-        int _numberOfAsyncCalls = this._es6Extension.numberOfAsyncCalls(givenRef.getScenario().getWhenBlock().getAction());
-        _builder.append(_numberOfAsyncCalls, "\t\t\t\t");
-        _builder.append(").should(() => {");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("    \t");
-    int _length = ((Object[])Conversions.unwrapArray(this.allGivenItems(it), Object.class)).length;
-    int index1 = (_length * 2);
-    _builder.newLineIfNotEmpty();
-    {
-      ArrayList<ClientGivenRef> _allGivenItems_1 = this.allGivenItems(it);
-      for(final ClientGivenRef givenRef_1 : _allGivenItems_1) {
-        _builder.append("\t\t");
-        int _minusMinus = index1--;
-        String _identation_3 = this.getIdentation(_minusMinus);
-        _builder.append(_identation_3, "\t\t");
-        _builder.append("});");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        int _minusMinus_1 = index1--;
-        String _identation_4 = this.getIdentation(_minusMinus_1);
-        _builder.append(_identation_4, "\t\t");
-        _builder.append("});");
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
     }
     _builder.append("    ");
     _builder.append("})");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("// Hallo?!?!?");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("it(\'");
@@ -270,70 +217,83 @@ public class ScenarioTemplate {
       ClientWhenBlock _whenBlock = it.getWhenBlock();
       boolean _tripleNotEquals = (_whenBlock != null);
       if (_tripleNotEquals) {
+        _builder.append("\t\t");
         {
           if (((it.getWhenBlock().getNonDeterministicValues() != null) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
             _builder.append("let nonDeterministicValues;");
-            _builder.newLine();
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("let nonDeterministicValue;");
             _builder.newLine();
           }
         }
+        _builder.append("\t\t");
         CharSequence _initNonDeterministicData_1 = this.initNonDeterministicData(it.getWhenBlock());
-        _builder.append(_initNonDeterministicData_1);
+        _builder.append(_initNonDeterministicData_1, "\t\t");
         _builder.newLineIfNotEmpty();
-        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//");
+        int _delayInMillis = it.getDelayInMillis();
+        _builder.append(_delayInMillis, "\t\t");
+        _builder.newLineIfNotEmpty();
+        {
+          int _delayInMillis_1 = it.getDelayInMillis();
+          boolean _greaterThan_1 = (_delayInMillis_1 > 0);
+          if (_greaterThan_1) {
+            _builder.append("\t\t");
+            _builder.append("ScenarioUtils.waitInMillis(");
+            int _delayInMillis_2 = it.getDelayInMillis();
+            _builder.append(_delayInMillis_2, "\t\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t\t");
         _builder.append("ScenarioUtils.getCypressFor(");
         EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
         CharSequence _actionIdName_3 = this._es6Extension.actionIdName(((HttpClient) _eContainer_1));
-        _builder.append(_actionIdName_3);
+        _builder.append(_actionIdName_3, "\t\t");
         _builder.append(".");
         String _firstLower_1 = StringExtensions.toFirstLower(it.getWhenBlock().getAction().getName());
-        _builder.append(_firstLower_1);
-        _builder.append(", ");
+        _builder.append(_firstLower_1, "\t\t");
         {
           EList<InputValue> _inputValues_1 = it.getWhenBlock().getInputValues();
           boolean _hasElements_3 = false;
           for(final InputValue arg_1 : _inputValues_1) {
             if (!_hasElements_3) {
               _hasElements_3 = true;
-              _builder.append("[");
+              _builder.append(", [", "\t\t");
             } else {
-              _builder.appendImmediate(",", "");
+              _builder.appendImmediate(",", "\t\t");
             }
             Object _primitiveValueFrom_1 = this._es6Extension.primitiveValueFrom(arg_1.getValue());
-            _builder.append(_primitiveValueFrom_1);
+            _builder.append(_primitiveValueFrom_1, "\t\t");
           }
           if (_hasElements_3) {
-            _builder.append("]");
+            _builder.append("]", "\t\t");
           }
         }
         _builder.append(").should(() => {");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("ScenarioUtils.wait(");
-        int _numberOfSyncCalls_1 = this._es6Extension.numberOfSyncCalls(it.getWhenBlock().getAction());
-        _builder.append(_numberOfSyncCalls_1, "\t");
-        _builder.append(", ");
-        int _numberOfAsyncCalls_1 = this._es6Extension.numberOfAsyncCalls(it.getWhenBlock().getAction());
-        _builder.append(_numberOfAsyncCalls_1, "\t");
-        _builder.append(").should(() => {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("        ");
         _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
         _builder.newLine();
         {
           EList<StateVerification> _stateVerifications_1 = it.getThenBlock().getStateVerifications();
           for(final StateVerification stateVerification_1 : _stateVerifications_1) {
-            _builder.append("        ");
+            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("expect(appState.");
             String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
-            _builder.append(_stateRefPath, "        ");
+            _builder.append(_stateRefPath, "\t\t\t");
             _builder.append(", \"");
             String _name_5 = stateVerification_1.getName();
-            _builder.append(_name_5, "        ");
+            _builder.append(_name_5, "\t\t\t");
             _builder.append("\").to.eql(");
             CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
-            _builder.append(_valueFrom, "        ");
+            _builder.append(_valueFrom, "\t\t\t");
             _builder.append(")");
             _builder.newLineIfNotEmpty();
           }
@@ -341,30 +301,21 @@ public class ScenarioTemplate {
         {
           EList<String> _verifications_1 = it.getThenBlock().getVerifications();
           for(final String verification_1 : _verifications_1) {
-            _builder.append("        ");
+            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("Verifications.");
-            _builder.append(verification_1, "        ");
+            _builder.append(verification_1, "\t\t\t");
             _builder.append("(testId);");
             _builder.newLineIfNotEmpty();
           }
         }
-        _builder.append("\t");
-        _builder.append("})");
-        _builder.newLine();
-        _builder.append("})");
-        _builder.newLine();
-      }
-    }
-    {
-      int _delayInMillis = it.getDelayInMillis();
-      boolean _greaterThan_1 = (_delayInMillis > 0);
-      if (_greaterThan_1) {
         _builder.append("\t\t");
-        _builder.append("ScenarioUtils.waitInMillis(");
-        int _delayInMillis_1 = it.getDelayInMillis();
-        _builder.append(_delayInMillis_1, "\t\t");
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
+        _builder.append("});");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t");
+        _builder.append("// ELSE");
+        _builder.newLine();
       }
     }
     _builder.append("    ");

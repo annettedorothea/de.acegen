@@ -45,4 +45,10 @@
    <feature url="features/de.acegen.feature_1.0.4.jar" id="de.acegen.feature" version="1.0.4"/>
    <feature url="features/de.acegen.feature_1.0.5.jar" id="de.acegen.feature" version="1.0.5"/>
    <feature url="features/de.acegen.feature_1.1.0.jar" id="de.acegen.feature" version="1.1.0"/>
+   <feature url="features/de.acegen.feature_1.2.0.jar" id="de.acegen.feature" version="1.2.0"/>
+   <feature url="features/de.acegen.feature_1.2.1.jar" id="de.acegen.feature" version="1.2.1"/>
+   <feature url="features/de.acegen.feature_1.2.2.jar" id="de.acegen.feature" version="1.2.2">
+      <category name="de.acegen"/>
+   </feature>
+   <category-def name="de.acegen" label="AceGen"/>
 </site>
