@@ -174,14 +174,23 @@ public class ScenarioTemplate {
         }
         _builder.append(");");
         _builder.newLineIfNotEmpty();
+        {
+          int _delayInMillis = givenRef.getScenario().getDelayInMillis();
+          boolean _greaterThan_1 = (_delayInMillis > 0);
+          if (_greaterThan_1) {
+            _builder.append("\t\t");
+            _builder.append("ScenarioUtils.waitInMillis(");
+            int _delayInMillis_1 = it.getDelayInMillis();
+            _builder.append(_delayInMillis_1, "\t\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
       }
     }
     _builder.append("    ");
     _builder.append("})");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("// Hallo?!?!?");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("it(\'");
@@ -219,7 +228,7 @@ public class ScenarioTemplate {
       if (_tripleNotEquals) {
         _builder.append("\t\t");
         {
-          if (((it.getWhenBlock().getNonDeterministicValues() != null) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
+          if ((((it.getWhenBlock() != null) && (it.getWhenBlock().getNonDeterministicValues() != null)) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
             _builder.append("let nonDeterministicValues;");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
@@ -232,23 +241,6 @@ public class ScenarioTemplate {
         CharSequence _initNonDeterministicData_1 = this.initNonDeterministicData(it.getWhenBlock());
         _builder.append(_initNonDeterministicData_1, "\t\t");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("//");
-        int _delayInMillis = it.getDelayInMillis();
-        _builder.append(_delayInMillis, "\t\t");
-        _builder.newLineIfNotEmpty();
-        {
-          int _delayInMillis_1 = it.getDelayInMillis();
-          boolean _greaterThan_1 = (_delayInMillis_1 > 0);
-          if (_greaterThan_1) {
-            _builder.append("\t\t");
-            _builder.append("ScenarioUtils.waitInMillis(");
-            int _delayInMillis_2 = it.getDelayInMillis();
-            _builder.append(_delayInMillis_2, "\t\t");
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
-          }
-        }
         _builder.append("\t\t");
         _builder.append("ScenarioUtils.getCypressFor(");
         EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
@@ -276,46 +268,143 @@ public class ScenarioTemplate {
         }
         _builder.append(").should(() => {");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
-        _builder.newLine();
         {
-          EList<StateVerification> _stateVerifications_1 = it.getThenBlock().getStateVerifications();
-          for(final StateVerification stateVerification_1 : _stateVerifications_1) {
+          int _delayInMillis_2 = it.getDelayInMillis();
+          boolean _greaterThan_2 = (_delayInMillis_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("expect(appState.");
-            String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
-            _builder.append(_stateRefPath, "\t\t\t");
-            _builder.append(", \"");
-            String _name_5 = stateVerification_1.getName();
-            _builder.append(_name_5, "\t\t\t");
-            _builder.append("\").to.eql(");
-            CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
-            _builder.append(_valueFrom, "\t\t\t");
-            _builder.append(")");
+            _builder.append("ScenarioUtils.waitInMillis(");
+            int _delayInMillis_3 = it.getDelayInMillis();
+            _builder.append(_delayInMillis_3, "\t\t\t");
+            _builder.append(").should(() => {");
             _builder.newLineIfNotEmpty();
-          }
-        }
-        {
-          EList<String> _verifications_1 = it.getThenBlock().getVerifications();
-          for(final String verification_1 : _verifications_1) {
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("Verifications.");
-            _builder.append(verification_1, "\t\t\t");
-            _builder.append("(testId);");
-            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
+            _builder.newLine();
+            {
+              EList<StateVerification> _stateVerifications_1 = it.getThenBlock().getStateVerifications();
+              for(final StateVerification stateVerification_1 : _stateVerifications_1) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("expect(appState.");
+                String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
+                _builder.append(_stateRefPath, "\t\t\t\t");
+                _builder.append(", \"");
+                String _name_5 = stateVerification_1.getName();
+                _builder.append(_name_5, "\t\t\t\t");
+                _builder.append("\").to.eql(");
+                CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
+                _builder.append(_valueFrom, "\t\t\t\t");
+                _builder.append(")");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            {
+              EList<String> _verifications_1 = it.getThenBlock().getVerifications();
+              for(final String verification_1 : _verifications_1) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("Verifications.");
+                _builder.append(verification_1, "\t\t\t\t");
+                _builder.append("(testId);");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("});");
+            _builder.newLine();
+          } else {
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
+            _builder.newLine();
+            {
+              EList<StateVerification> _stateVerifications_2 = it.getThenBlock().getStateVerifications();
+              for(final StateVerification stateVerification_2 : _stateVerifications_2) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("expect(appState.");
+                String _stateRefPath_1 = this._es6Extension.stateRefPath(stateVerification_2.getStateRef());
+                _builder.append(_stateRefPath_1, "\t\t\t");
+                _builder.append(", \"");
+                String _name_6 = stateVerification_2.getName();
+                _builder.append(_name_6, "\t\t\t");
+                _builder.append("\").to.eql(");
+                CharSequence _valueFrom_1 = this._es6Extension.valueFrom(stateVerification_2.getValue());
+                _builder.append(_valueFrom_1, "\t\t\t");
+                _builder.append(")");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            {
+              EList<String> _verifications_2 = it.getThenBlock().getVerifications();
+              for(final String verification_2 : _verifications_2) {
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("Verifications.");
+                _builder.append(verification_2, "\t\t\t");
+                _builder.append("(testId);");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
         _builder.append("\t\t");
         _builder.append("});");
         _builder.newLine();
       } else {
-        _builder.append("\t\t");
-        _builder.append("// ELSE");
-        _builder.newLine();
+        int _delayInMillis_4 = it.getDelayInMillis();
+        boolean _greaterThan_3 = (_delayInMillis_4 > 0);
+        if (_greaterThan_3) {
+          _builder.append("\t\t");
+          _builder.append("ScenarioUtils.waitInMillis(");
+          int _delayInMillis_5 = it.getDelayInMillis();
+          _builder.append(_delayInMillis_5, "\t\t");
+          _builder.append(").should(() => {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("\t");
+          _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
+          _builder.newLine();
+          {
+            EList<StateVerification> _stateVerifications_3 = it.getThenBlock().getStateVerifications();
+            for(final StateVerification stateVerification_3 : _stateVerifications_3) {
+              _builder.append("\t\t");
+              _builder.append("\t");
+              _builder.append("expect(appState.");
+              String _stateRefPath_2 = this._es6Extension.stateRefPath(stateVerification_3.getStateRef());
+              _builder.append(_stateRefPath_2, "\t\t\t");
+              _builder.append(", \"");
+              String _name_7 = stateVerification_3.getName();
+              _builder.append(_name_7, "\t\t\t");
+              _builder.append("\").to.eql(");
+              CharSequence _valueFrom_2 = this._es6Extension.valueFrom(stateVerification_3.getValue());
+              _builder.append(_valueFrom_2, "\t\t\t");
+              _builder.append(")");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          {
+            EList<String> _verifications_3 = it.getThenBlock().getVerifications();
+            for(final String verification_3 : _verifications_3) {
+              _builder.append("\t\t");
+              _builder.append("\t");
+              _builder.append("Verifications.");
+              _builder.append(verification_3, "\t\t\t");
+              _builder.append("(testId);");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          _builder.append("\t\t");
+          _builder.append("});");
+          _builder.newLine();
+        }
       }
     }
     _builder.append("    ");

@@ -64,21 +64,41 @@ class ScenarioTemplate {
 				«FOR givenRef: allGivenItems»
 					«givenRef.scenario.whenBlock.initNonDeterministicData»
 					ScenarioUtils.getCypressFor(«(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
+					«IF givenRef.scenario.delayInMillis > 0»
+						ScenarioUtils.waitInMillis(«delayInMillis»);
+					«ENDIF»
 				«ENDFOR»
 		    })
 		
-					// Hallo?!?!?
 		    it('«FOR stateVerification: thenBlock.stateVerifications SEPARATOR " "»«stateVerification.name»«ENDFOR» «FOR verification: thenBlock.verifications SEPARATOR " "»«verification»«ENDFOR»', () => {
 				«IF whenBlock !== null»
-					«IF whenBlock.nonDeterministicValues !== null && whenBlock.nonDeterministicValues.size > 0»let nonDeterministicValues;
+					«IF whenBlock !== null && whenBlock.nonDeterministicValues !== null && whenBlock.nonDeterministicValues.size > 0»let nonDeterministicValues;
 						let nonDeterministicValue;
 					«ENDIF»
 					«whenBlock.initNonDeterministicData»
-					//«delayInMillis»
-					«IF delayInMillis > 0»
-						ScenarioUtils.waitInMillis(«delayInMillis»);
-					«ENDIF»
 					ScenarioUtils.getCypressFor(«(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»).should(() => {
+						«IF delayInMillis > 0»
+							ScenarioUtils.waitInMillis(«delayInMillis»).should(() => {
+								const appState = JSON.parse(localStorage.getItem('appState'))
+								«FOR stateVerification: thenBlock.stateVerifications»
+									expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
+								«ENDFOR»
+								«FOR verification: thenBlock.verifications»
+									Verifications.«verification»(testId);
+						        «ENDFOR»
+							});
+						«ELSE»
+							const appState = JSON.parse(localStorage.getItem('appState'))
+							«FOR stateVerification: thenBlock.stateVerifications»
+								expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
+							«ENDFOR»
+							«FOR verification: thenBlock.verifications»
+								Verifications.«verification»(testId);
+					        «ENDFOR»
+						«ENDIF»
+					});
+				«ELSEIF delayInMillis > 0»
+					ScenarioUtils.waitInMillis(«delayInMillis»).should(() => {
 						const appState = JSON.parse(localStorage.getItem('appState'))
 						«FOR stateVerification: thenBlock.stateVerifications»
 							expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
@@ -87,8 +107,6 @@ class ScenarioTemplate {
 							Verifications.«verification»(testId);
 				        «ENDFOR»
 					});
-				«ELSE»
-					// ELSE
 				«ENDIF»
 		    })
 		})
