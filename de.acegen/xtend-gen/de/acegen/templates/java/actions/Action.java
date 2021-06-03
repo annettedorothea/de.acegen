@@ -151,8 +151,11 @@ public class Action {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public ICommand getCommand() {");
-    _builder.newLine();
+    _builder.append("public ICommand<");
+    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_1, "\t");
+    _builder.append("> getCommand() {");
+    _builder.newLineIfNotEmpty();
     {
       int _size_1 = it.getOutcomes().size();
       boolean _greaterThan_1 = (_size_1 > 0);
@@ -161,7 +164,7 @@ public class Action {
         _builder.append("return new ");
         String _commandName = this._aceExtension.commandName(it);
         _builder.append(_commandName, "\t\t");
-        _builder.append("(this.actionData, daoProvider, viewProvider, this.appConfiguration);");
+        _builder.append("(daoProvider, viewProvider, this.appConfiguration);");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("\t\t");
@@ -179,6 +182,22 @@ public class Action {
     _builder.append(_initActionDataFromNonDeterministicDataProvider, "\t");
     _builder.append("\t\t");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_2, "\t");
+    _builder.append(" initActionData(");
+    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_3, "\t");
+    _builder.append(" data) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return data;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -274,13 +293,35 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);");
-    _builder.newLine();
+    _builder.append("protected abstract ");
+    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_1, "\t");
+    _builder.append(" loadDataForGetRequest(");
+    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_2, "\t");
+    _builder.append(" data, PersistenceHandle readonlyHandle);");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     CharSequence _initActionDataFromNonDeterministicDataProvider = this.initActionDataFromNonDeterministicDataProvider(it);
     _builder.append(_initActionDataFromNonDeterministicDataProvider, "\t");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_3, "\t");
+    _builder.append(" initActionData(");
+    String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_4, "\t");
+    _builder.append(" data) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return data;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -317,6 +358,13 @@ public class Action {
       if (_equals) {
         _builder.append("import de.acegen.PersistenceHandle;");
         _builder.newLine();
+      }
+    }
+    {
+      if (((this._modelExtension.allNonDeterministicAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
+        String _dataImport = this._modelExtension.dataImport(it.getModel());
+        _builder.append(_dataImport);
+        _builder.newLineIfNotEmpty();
       }
     }
     _builder.newLine();
@@ -365,8 +413,14 @@ public class Action {
         _builder.append("@Override");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {");
-        _builder.newLine();
+        _builder.append("protected ");
+        String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType, "\t");
+        _builder.append(" loadDataForGetRequest(");
+        String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_1, "\t");
+        _builder.append(" data, PersistenceHandle readonlyHandle) {");
+        _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
@@ -381,7 +435,7 @@ public class Action {
           for(final Attribute attribute : _attributes) {
             _builder.append("\t");
             _builder.append("\t");
-            _builder.append("this.actionData.");
+            _builder.append("data.");
             StringConcatenation _builder_1 = new StringConcatenation();
             _builder_1.append("testData.");
             String _terCall = this._attributeExtension.getterCall(attribute);
@@ -393,34 +447,51 @@ public class Action {
           }
         }
         _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("return data;");
+        _builder.newLine();
+        _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
       }
     }
     _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public void initActionData() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("// init not replayable data here");
-    _builder.newLine();
     {
-      List<Attribute> _allNonDeterministicAttributes = this._modelExtension.allNonDeterministicAttributes(it.getModel());
-      for(final Attribute attribute_1 : _allNonDeterministicAttributes) {
-        _builder.append("\t\t");
-        _builder.append("// ");
-        String _name_1 = attribute_1.getName();
-        _builder.append(_name_1, "\t\t");
+      int _size = this._modelExtension.allNonDeterministicAttributes(it.getModel()).size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("\t");
+        _builder.append("public ");
+        String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_2, "\t");
+        _builder.append(" initActionData(");
+        String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
+        _builder.append(_dataParamType_3, "\t");
+        _builder.append(" data) {");
         _builder.newLineIfNotEmpty();
+        {
+          List<Attribute> _allNonDeterministicAttributes = this._modelExtension.allNonDeterministicAttributes(it.getModel());
+          for(final Attribute attribute_1 : _allNonDeterministicAttributes) {
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("// ");
+            String _name_1 = attribute_1.getName();
+            _builder.append(_name_1, "\t\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("return data;");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        _builder.newLine();
       }
     }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
-    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();
@@ -443,9 +514,6 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected T actionData;");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("protected String actionName;");
     _builder.newLine();
     _builder.newLine();
@@ -464,30 +532,10 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void setActionData(T actionData) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("this.actionData = actionData;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("public String getActionName() {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return this.actionName;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public T getActionData() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return this.actionData;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -581,16 +629,16 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);");
+    _builder.append("protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void initActionDataFromNonDeterministicDataProvider();");
+    _builder.append("protected abstract T initActionDataFromNonDeterministicDataProvider(T data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void apply() {");
+    _builder.append("public T apply(T data) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
@@ -602,19 +650,19 @@ public class Action {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
+    _builder.append("if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("LOG.warn(\"duplicate request {} {} \", actionName, this.actionData.getUuid());");
+    _builder.append("LOG.warn(\"duplicate request {} {} \", actionName, data.getUuid());");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("return;");
+    _builder.append("return data;");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -627,27 +675,30 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
+    _builder.append("data.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("this.initActionData();");
+    _builder.append("data = this.initActionData(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("initActionDataFromNonDeterministicDataProvider();");
+    _builder.append("data = initActionDataFromNonDeterministicDataProvider(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());");
+    _builder.append("data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.commitTransaction();");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return data;");
     _builder.newLine();
     _builder.append("\t\t");
     CharSequence _catchFinallyBlock = this.catchFinallyBlock();
@@ -734,15 +785,15 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract void initActionDataFromNonDeterministicDataProvider();");
+    _builder.append("protected abstract T initActionDataFromNonDeterministicDataProvider(T data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract ICommand getCommand();");
+    _builder.append("protected abstract ICommand<T> getCommand();");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void apply() {");
+    _builder.append("public T apply(T data) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);");
@@ -754,16 +805,16 @@ public class Action {
     _builder.append("try {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {");
+    _builder.append("if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("LOG.warn(\"duplicate request {} {} \", actionName, this.actionData.getUuid());");
+    _builder.append("LOG.warn(\"duplicate request {} {} \", actionName, data.getUuid());");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("databaseHandle.rollbackTransaction();");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("return;");
+    _builder.append("return data;");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -775,16 +826,16 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("this.actionData.setSystemTime(LocalDateTime.now());");
+    _builder.append("data.setSystemTime(LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("this.initActionData();");
+    _builder.append("data = this.initActionData(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("initActionDataFromNonDeterministicDataProvider();");
+    _builder.append("data = initActionDataFromNonDeterministicDataProvider(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -792,19 +843,22 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("ICommand command = this.getCommand();");
+    _builder.append("ICommand<T> command = this.getCommand();");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());");
+    _builder.append("data = command.execute(data, databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
+    _builder.append("command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("databaseHandle.commitTransaction();");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("command.publishAfterCommitEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
+    _builder.append("command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return data;");
     _builder.newLine();
     _builder.append("\t\t");
     CharSequence _catchFinallyBlock = this.catchFinallyBlock();
@@ -867,23 +921,13 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("void setActionData(T actionData);");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("IDataContainer getActionData();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
     _builder.append("    ");
-    _builder.append("void apply();");
+    _builder.append("T apply(T data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("void initActionData();");
+    _builder.append("T initActionData(T data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
@@ -915,16 +959,22 @@ public class Action {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@Override");
     _builder.newLine();
-    _builder.append("protected void initActionDataFromNonDeterministicDataProvider() {");
-    _builder.newLine();
+    _builder.append("protected ");
+    String _dataParamType = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType);
+    _builder.append(" initActionDataFromNonDeterministicDataProvider(");
+    String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_1);
+    _builder.append(" data) {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(this.actionData.getUuid());");
+    _builder.append("LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(data.getUuid());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("if (systemTime != null) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("this.actionData.setSystemTime(systemTime);");
+    _builder.append("data.setSystemTime(systemTime);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -939,7 +989,7 @@ public class Action {
             _builder.append("String ");
             String _name = attribute.getName();
             _builder.append(_name, "\t");
-            _builder.append("Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), \"");
+            _builder.append("Object = NonDeterministicDataProvider.consumeValue(data.getUuid(), \"");
             String _name_1 = attribute.getName();
             _builder.append(_name_1, "\t");
             _builder.append("\");");
@@ -971,7 +1021,7 @@ public class Action {
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t\t");
-            _builder.append("this.actionData.");
+            _builder.append("data.");
             String _setterCall = this._attributeExtension.setterCall(attribute, attribute.getName());
             _builder.append(_setterCall, "\t\t\t");
             _builder.append(";");
@@ -1011,6 +1061,9 @@ public class Action {
         }
       }
     }
+    _builder.append("\t");
+    _builder.append("return data;");
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     return _builder;
@@ -1021,7 +1074,7 @@ public class Action {
     _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());");
+    _builder.append("daoProvider.getAceDao().addActionToTimeline(this.getActionName(), data, databaseHandle.getTimelineHandle());");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -1033,7 +1086,7 @@ public class Action {
     _builder.append("if (appConfiguration.getConfig().writeError()) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());");
+    _builder.append("daoProvider.getAceDao().addExceptionToTimeline(data.getUuid(), x, databaseHandle.getTimelineHandle());");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

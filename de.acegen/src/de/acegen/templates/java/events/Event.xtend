@@ -50,8 +50,8 @@ class Event {
 		
 		public class «eventName(outcome)» extends Event<«getModel.dataParamType»> {
 		
-			public «eventName(outcome)»(«getModel.dataParamType» eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				super("«java.getName».events.«eventName(outcome)»", eventData, daoProvider, viewProvider, appConfiguration);
+			public «eventName(outcome)»(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+				super("«java.getName».events.«eventName(outcome)»", daoProvider, viewProvider, appConfiguration);
 			}
 		
 		}
@@ -67,61 +67,55 @@ class Event {
 		
 		import java.util.List;
 		
-		public abstract class Event<T extends IDataContainer> implements IEvent {
+		public abstract class Event<T extends IDataContainer> implements IEvent<T> {
 		
-			private T eventData;
 			private String eventName;
 			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
 			private CustomAppConfiguration appConfiguration;
 		
-			public Event(String eventName, T eventData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public Event(String eventName, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super();
-				this.eventData = eventData;
 				this.eventName = eventName;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
 				this.appConfiguration = appConfiguration;
 			}
 		
-			public void notifyListeners(PersistenceHandle handle) {
+			public void notifyListeners(T data, PersistenceHandle handle) {
 				List<EventConsumer> consumerList = viewProvider.getConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (EventConsumer consumer : consumerList) {
-						consumer.consumeEvent(this.eventData, handle);
+						consumer.consumeEvent(data, handle);
 					}
 				}
 			}
 		
-			public void notifyAfterCommitListeners(PersistenceHandle handle) {
+			public void notifyAfterCommitListeners(T data, PersistenceHandle handle) {
 				List<EventConsumer> consumerList = viewProvider.getAfterCommitConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (EventConsumer consumer : consumerList) {
-						consumer.consumeEvent(this.eventData, handle);
+						consumer.consumeEvent(data, handle);
 					}
 				}
-			}
-		
-			public IDataContainer getEventData() {
-				return eventData;
 			}
 		
 			public String getEventName() {
 				return eventName;
 			}
 		
-			public void publish(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publish(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
-					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
+					daoProvider.getAceDao().addEventToTimeline(this.getEventName(), data, timelineHandle);
 				}
-				this.notifyListeners(handle);
+				this.notifyListeners(data, handle);
 			}
 		
-			public void publishAfterCommit(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publishAfterCommit(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
-					daoProvider.getAceDao().addEventToTimeline(this, timelineHandle);
+					daoProvider.getAceDao().addEventToTimeline(this.getEventName(), data, timelineHandle);
 				}
-				this.notifyAfterCommitListeners(handle);
+				this.notifyAfterCommitListeners(data, handle);
 			}
 		
 		}
@@ -135,20 +129,19 @@ class Event {
 		
 		package de.acegen;
 		
-		public interface IEvent {
+		public interface IEvent<T extends IDataContainer> {
 		
 			String getEventName();
 			
-			IDataContainer getEventData();
-			
-			void publish(PersistenceHandle handle, PersistenceHandle timelineHandle);
+			void publish(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 
-			void publishAfterCommit(PersistenceHandle handle, PersistenceHandle timelineHandle);
+			void publishAfterCommit(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 			
-			void notifyListeners(PersistenceHandle handle);
-
-			void notifyAfterCommitListeners(PersistenceHandle handle);
-		
+			void notifyListeners(T data, PersistenceHandle handle);
+			
+			void notifyAfterCommitListeners(T data, PersistenceHandle handle);
+			
+			
 		}
 		
 		«sdg»

@@ -206,42 +206,20 @@ class Dao {
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public void addActionToTimeline(IAction<? extends IDataContainer> action, PersistenceHandle timelineHandle) {
-				try {
-					String json = mapper.writeValueAsString(action.getActionData());
-					addItemToTimeline("action", action.getActionName(), json,
-							action.getActionData().getUuid(), timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addActionToTimeline(String actionName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("action", actionName, data, timelineHandle);
 			}
 		
-			public void addCommandToTimeline(ICommand command, PersistenceHandle timelineHandle) {
-				try {
-					addItemToTimeline("command", command.getCommandName(),
-							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
-							timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addCommandToTimeline(String commandName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("command", commandName, data, timelineHandle);
 			}
 		
-			public void addEventToTimeline(IEvent event, PersistenceHandle timelineHandle) {
-				try {
-					addItemToTimeline("event", event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							event.getEventData().getUuid(), timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("event", eventName, data, timelineHandle);
 			}
 		
-			public void addPreparingEventToTimeline(IEvent event, String uuid, PersistenceHandle timelineHandle) {
-				try {
-					addItemToTimeline("preparing event", event.getEventName(),
-							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addPreparingEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("preparing event", eventName, data, timelineHandle);
 			}
 		
 			public void addExceptionToTimeline(String uuid, Throwable x, PersistenceHandle timelineHandle) {
@@ -249,9 +227,14 @@ class Dao {
 						x.getMessage() != null ? x.getMessage() : "", uuid);
 			}
 		
-			private void addItemToTimeline(String type, String name, String json, String uuid,
+			private void addItemToTimeline(String type, String name, IDataContainer data,
 					PersistenceHandle timelineHandle) {
-				this.insertIntoTimeline(timelineHandle, type, name, json, uuid);
+				try {
+					String json = mapper.writeValueAsString(data);
+					this.insertIntoTimeline(timelineHandle, type, name, json, data.getUuid());
+				} catch (JsonProcessingException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		
 		}

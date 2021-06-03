@@ -60,7 +60,7 @@ class AttributeExtension {
 			«ENDIF»
 			if (StringUtils.isNotBlank(«attribute.name»)) {
 				try {
-					actionData.«attribute.setterCall(attribute.resourceParam)»;
+					data.«attribute.setterCall(attribute.resourceParam)»;
 				} catch (Exception x) {
 					LOG.warn("failed to parse dateTime «attribute.name» - {}", «attribute.name»);
 				}
@@ -72,11 +72,11 @@ class AttributeExtension {
 				}
 			«ENDIF»
 			«IF "Integer".equals(attribute.type)»
-				actionData.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+				data.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
 			«ELSEIF "String".equals(attribute.type)»
-				actionData.«attribute.setterCall(attribute.resourceParam)»;
+				data.«attribute.setterCall(attribute.resourceParam)»;
 			«ELSE»
-				actionData.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+				data.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
 			«ENDIF»
 		«ENDIF»
 	'''
@@ -93,7 +93,7 @@ class AttributeExtension {
 				}
 			«ENDIF»
 		«ENDIF»
-		actionData.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
+		data.«attribute.setterCall('''payload.«attribute.getterCall»''')»;
 	'''
 
 	def String getterCall(Attribute it) {

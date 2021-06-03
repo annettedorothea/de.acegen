@@ -25,7 +25,7 @@ import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
-class EventFactory {
+class EventReplayService {
 
 	@Inject
 	extension AceExtension
@@ -36,19 +36,14 @@ class EventFactory {
 	@Inject
 	extension CommonExtension
 	
-	def generateEventFactory() '''
+	def generateEventReplayService() '''
 		«copyright»
 		
 		package de.acegen;
 		
-		public class EventFactory {
-			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				//delegate to package EventFactory
-				return null;
-			}
-			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				//delegate to package EventFactory
-				return null;
+		public class EventReplayService {
+			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+				//delegate to package EventReplayService
 			}
 		}
 		
@@ -56,7 +51,7 @@ class EventFactory {
 		
 	'''
 
-	def generateEventFactory(HttpServer it) '''
+	def generateEventReplayService(HttpServer it) '''
 		«copyright»
 		
 		package «name».events;
@@ -69,6 +64,7 @@ class EventFactory {
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		import de.acegen.IDataContainer;
 		import de.acegen.CustomAppConfiguration;
+		import de.acegen.PersistenceHandle;
 		
 		import java.io.IOException;
 		
@@ -76,37 +72,27 @@ class EventFactory {
 		import org.slf4j.LoggerFactory;
 		
 		@SuppressWarnings("all")
-		public class EventFactory {
+		public class EventReplayService {
 			
 			private static ObjectMapper mapper = new ObjectMapper();
-			private static final Logger LOG = LoggerFactory.getLogger(EventFactory.class);
+			private static final Logger LOG = LoggerFactory.getLogger(EventReplayService.class);
 		
 			static {
 				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			}
 		
-			public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				«IF eventCount > 0»
 					try {
 						«FOR ace : aceOperations»
 							«ace.createEvent(it)»
 						«ENDFOR»
 					} catch (IOException e) {
-						LOG.error("failed to create event {} with data {}", eventClass, json, e);
+						LOG.error("failed to replay event {} with data {}", eventClass, json, e);
 					}
 				«ENDIF»
-		
-				return null;
 			}
 		
-			public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				«FOR ace : aceOperations»
-					«ace.createEventFromData(it)»
-
-				«ENDFOR»
-		
-				return null;
-			}
 		}
 		
 		«sdg»
@@ -132,26 +118,15 @@ class EventFactory {
 				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
 					«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
 					data.migrateLegacyData(json);
-					«eventName(outcome)» event = new «eventName(outcome)»(data, daoProvider, viewProvider, appConfiguration);
-					return event;
+					«eventName(outcome)» event = new «eventName(outcome)»(daoProvider, viewProvider, appConfiguration);
+					event.notifyListeners(data, handle);
+					event.notifyAfterCommitListeners(data, handle);
 				}
 			«ENDIF»
 		«ENDFOR»
 	'''
 	
 	private def dispatch createEvent(HttpServerAceRead it, HttpServer java) ''''''
-	
-	private def dispatch createEventFromData(HttpServerAceWrite it, HttpServer java) '''
-		«FOR outcome : outcomes»
-			«IF outcome.listeners.size > 0»
-				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
-					return new «eventName(outcome)»((«getModel.dataName»)data, daoProvider, viewProvider, appConfiguration);
-				}
-			«ENDIF»
-		«ENDFOR»
-	'''
-	
-	private def dispatch createEventFromData(HttpServerAceRead it, HttpServer java) ''''''
 	
 	
 }

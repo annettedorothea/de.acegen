@@ -353,7 +353,7 @@ public class Resource {
     _builder.append("\t\t\t");
     String _dataInterfaceNameWithPackage = this._modelExtension.dataInterfaceNameWithPackage(it.getModel());
     _builder.append(_dataInterfaceNameWithPackage, "\t\t\t");
-    _builder.append(" actionData = new ");
+    _builder.append(" data = new ");
     String _dataName = this._modelExtension.dataName(it.getModel());
     _builder.append(_dataName, "\t\t\t");
     _builder.append("(uuid);");
@@ -394,7 +394,7 @@ public class Resource {
               boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_2);
               if (_containsAttribute) {
                 _builder.append("\t\t\t");
-                _builder.append("actionData.");
+                _builder.append("data.");
                 StringConcatenation _builder_1 = new StringConcatenation();
                 String _firstLower_2 = StringExtensions.toFirstLower(authUser.getName());
                 _builder_1.append(_firstLower_2);
@@ -422,10 +422,7 @@ public class Resource {
     _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    _builder.append("action.setActionData(actionData);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("action.apply();");
+    _builder.append("data = action.apply(data);");
     _builder.newLine();
     {
       int _size_2 = it.getResponse().size();
@@ -435,7 +432,7 @@ public class Resource {
         _builder.append("return Response.ok(new ");
         String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it);
         _builder.append(_responseDataNameWithPackage, "\t\t\t");
-        _builder.append("(action.getActionData())).build();");
+        _builder.append("(data)).build();");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("\t\t\t");

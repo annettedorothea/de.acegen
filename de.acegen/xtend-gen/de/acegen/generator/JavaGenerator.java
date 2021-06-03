@@ -43,7 +43,7 @@ import de.acegen.templates.java.commands.Command;
 import de.acegen.templates.java.data.Data;
 import de.acegen.templates.java.events.Event;
 import de.acegen.templates.java.events.EventConsumer;
-import de.acegen.templates.java.events.EventFactory;
+import de.acegen.templates.java.events.EventReplayService;
 import de.acegen.templates.java.models.Dao;
 import de.acegen.templates.java.models.DaoProvider;
 import de.acegen.templates.java.models.Model;
@@ -103,7 +103,7 @@ public class JavaGenerator {
   private Event event;
   
   @Inject
-  private EventFactory eventFactory;
+  private EventReplayService eventReplayService;
   
   @Inject
   private View view;
@@ -324,9 +324,9 @@ public class JavaGenerator {
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
       String _packageFolder = this._javaExtension.packageFolder(httpServer);
-      String _plus = (_packageFolder + "/events/EventFactory.java");
+      String _plus = (_packageFolder + "/events/EventReplayService.java");
       fsa.generateFile(_plus, 
-        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventFactory.generateEventFactory(httpServer));
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventReplayService.generateEventReplayService(httpServer));
     }
     int _size_1 = httpServer.getAceOperations().size();
     boolean _greaterThan_1 = (_size_1 > 0);
@@ -336,8 +336,8 @@ public class JavaGenerator {
       fsa.generateFile(_plus_1, 
         ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceDataFactory.generateAceDataFactory(httpServer));
     }
-    fsa.generateFile("de/acegen/EventFactory.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-      this.eventFactory.generateEventFactory());
+    fsa.generateFile("de/acegen/EventReplayService.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
+      this.eventReplayService.generateEventReplayService());
     fsa.generateFile("de/acegen/AceOperation.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.aceOperation.generate());
     fsa.generateFile("de/acegen/ServerInfo.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 

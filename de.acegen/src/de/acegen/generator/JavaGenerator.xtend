@@ -44,7 +44,6 @@ import de.acegen.templates.java.commands.Command
 import de.acegen.templates.java.data.Data
 import de.acegen.templates.java.events.Event
 import de.acegen.templates.java.events.EventConsumer
-import de.acegen.templates.java.events.EventFactory
 import de.acegen.templates.java.models.Dao
 import de.acegen.templates.java.models.DaoProvider
 import de.acegen.templates.java.models.Model
@@ -55,6 +54,7 @@ import de.acegen.templates.java.views.View
 import de.acegen.templates.java.views.ViewProvider
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import de.acegen.templates.java.events.EventReplayService
 
 class JavaGenerator {
 
@@ -101,7 +101,7 @@ class JavaGenerator {
 	Event event;
 
 	@Inject
-	EventFactory eventFactory;
+	EventReplayService eventReplayService;
 
 	@Inject
 	View view;
@@ -219,8 +219,8 @@ class JavaGenerator {
 		}
 
 		if (httpServer.aceOperations.size > 0) {
-			fsa.generateFile(httpServer.packageFolder + "/events/EventFactory.java",
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventFactory.generateEventFactory(httpServer));
+			fsa.generateFile(httpServer.packageFolder + "/events/EventReplayService.java",
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventReplayService.generateEventReplayService(httpServer));
 		}
 
 		if (httpServer.aceOperations.size > 0) {
@@ -228,8 +228,8 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceDataFactory.generateAceDataFactory(httpServer));
 		}
 
-		fsa.generateFile("de/acegen/EventFactory.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-			eventFactory.generateEventFactory());
+		fsa.generateFile("de/acegen/EventReplayService.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+			eventReplayService.generateEventReplayService());
 
 		fsa.generateFile("de/acegen/AceOperation.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceOperation.generate());

@@ -83,17 +83,12 @@ class DropwizardEventReplayCommand {
 		
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
-						IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);
-						if (event != null) {
-							event.notifyListeners(databaseHandle.getHandle());
-							i++;
-							if (i%1000 == 0) {
-								LOG.info("published " + i + " events");
-							}
-							LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
-						} else {
-							LOG.info("event " + nextEvent.getName() + " was not replayed");
+						EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, daoProvider, viewProvider, configuration);
+						i++;
+						if (i%1000 == 0) {
+							LOG.info("published " + i + " events");
 						}
+						LOG.info("published " + nextEvent.getUuid() + " - " + nextEvent.getName());
 					}
 		
 					databaseHandle.commitTransaction();

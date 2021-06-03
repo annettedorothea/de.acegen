@@ -51,33 +51,33 @@ class Command {
 		
 		public abstract class «abstractCommandName» extends Command<«getModel.dataParamType»> {
 		
-			public «abstractCommandName»(«getModel.dataParamType» commandParam, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				super("«java.getName».commands.«commandName»", commandParam, daoProvider, viewProvider, appConfiguration);
+			public «abstractCommandName»(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+				super("«java.getName».commands.«commandName»", daoProvider, viewProvider, appConfiguration);
 			}
 		
 			«FOR outcome : outcomes»
-				protected void add«outcome.getName.toFirstUpper»Outcome() {
-					this.commandData.addOutcome("«outcome.getName»");
+				protected void add«outcome.getName.toFirstUpper»Outcome(«getModel.dataParamType» data) {
+					data.addOutcome("«outcome.getName»");
 				}
 
 			«ENDFOR»
 			@Override
-			public void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publishEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
-						if (this.commandData.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publish(handle, timelineHandle);
+						if (data.hasOutcome("«outcome.getName»")){
+							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publish(data, handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
 			}
 			
 			@Override
-			public void publishAfterCommitEvents(PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publishAfterCommitEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
-						if (this.commandData.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(this.commandData, daoProvider, viewProvider, appConfiguration).publishAfterCommit(handle, timelineHandle);
+						if (data.hasOutcome("«outcome.getName»")){
+							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data, handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -109,16 +109,17 @@ class Command {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«commandName».class);
 		
-			public «commandName»(«getModel.dataParamType» commandData, IDaoProvider daoProvider, ViewProvider viewProvider, 
+			public «commandName»(IDaoProvider daoProvider, ViewProvider viewProvider, 
 					CustomAppConfiguration appConfiguration) {
-				super(commandData, daoProvider, viewProvider, appConfiguration);
+				super(daoProvider, viewProvider, appConfiguration);
 			}
 		
 			@Override
-			protected void executeCommand(PersistenceHandle readonlyHandle) {
+			protected «model.dataParamType» executeCommand(«model.dataParamType» data, PersistenceHandle readonlyHandle) {
 				«IF outcomes.size > 0»
-					this.add«outcomes.get(0).getName.toFirstUpper»Outcome();
+					this.add«outcomes.get(0).getName.toFirstUpper»Outcome(data);
 				«ENDIF»
+				return data;
 			}
 		
 		}
@@ -135,18 +136,16 @@ class Command {
 		
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		
-		public abstract class Command<T extends IDataContainer> implements ICommand {
+		public abstract class Command<T extends IDataContainer> implements ICommand<T> {
 		
-			protected T commandData;
 			private String commandName;
 			protected ObjectMapper mapper;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
 			protected CustomAppConfiguration appConfiguration;
 		
-			public Command(String commandName, T commandData, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public Command(String commandName, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
 				super();
-				this.commandData = commandData;
 				this.commandName = commandName;
 				mapper = new ObjectMapper();
 				this.daoProvider = daoProvider;
@@ -154,22 +153,13 @@ class Command {
 				this.appConfiguration = appConfiguration;
 			}
 		
-			protected abstract void executeCommand(PersistenceHandle readonlyHandle);
+			protected abstract T executeCommand(T data, PersistenceHandle readonlyHandle);
 		
-			public void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
+			public T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
-					daoProvider.getAceDao().addCommandToTimeline(this, timelineHandle);
+					daoProvider.getAceDao().addCommandToTimeline(this.getCommandName(), data, timelineHandle);
 				}
-				this.executeCommand(readonlyHandle);
-			}
-		
-			public IDataContainer getCommandData() {
-				return commandData;
-			}
-			
-			@SuppressWarnings("unchecked")
-			public void setCommandData(IDataContainer data) {
-				commandData = (T)data;
+				return this.executeCommand(data, readonlyHandle);
 			}
 		
 			public String getCommandName() {
@@ -195,19 +185,15 @@ class Command {
 		
 		package de.acegen;
 		
-		public interface ICommand {
+		public interface ICommand<T extends IDataContainer> {
 		
 			String getCommandName();
 
-			IDataContainer getCommandData();
-			
-			void setCommandData(IDataContainer data);
-
-			void execute(PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
+			T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
 		
-			void publishEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);
+			void publishEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 
-			void publishAfterCommitEvents(PersistenceHandle handle, PersistenceHandle timelineHandle);
+			void publishAfterCommitEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 
 		}
 		

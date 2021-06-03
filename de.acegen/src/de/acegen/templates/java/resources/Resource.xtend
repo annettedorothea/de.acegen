@@ -141,7 +141,7 @@ class Resource {
 					uuid = UUID.randomUUID().toString();
 				}
 				try {
-					«getModel.dataInterfaceNameWithPackage» actionData = new «getModel.dataName»(uuid);
+					«getModel.dataInterfaceNameWithPackage» data = new «getModel.dataName»(uuid);
 					«FOR paramRef : queryParams»
 						«paramRef.initActionData»
 					«ENDFOR»
@@ -154,16 +154,15 @@ class Resource {
 					«IF isAuthorize && authUser !== null»
 						«FOR param : getModel.allAttributes»
 								«IF authUser.attributes.containsAttribute(param)»
-									actionData.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+									data.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
 								«ENDIF»
 						«ENDFOR»
 					«ENDIF»
 					
 					«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
-					action.setActionData(actionData);
-					action.apply();
+					data = action.apply(data);
 					«IF response.size > 0»
-						return Response.ok(new «responseDataNameWithPackage»(action.getActionData())).build();
+						return Response.ok(new «responseDataNameWithPackage»(data)).build();
 					«ELSE»
 						return ok();
 					«ENDIF»

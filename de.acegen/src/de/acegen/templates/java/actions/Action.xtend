@@ -71,7 +71,7 @@ class Action {
 		«ENDIF»
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends WriteAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends WriteAction<«model.dataParamType»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
@@ -81,15 +81,19 @@ class Action {
 			}
 		
 			@Override
-			public ICommand getCommand() {
+			public ICommand<«model.dataParamType»> getCommand() {
 				«IF outcomes.size > 0»
-					return new «commandName»(this.actionData, daoProvider, viewProvider, this.appConfiguration);
+					return new «commandName»(daoProvider, viewProvider, this.appConfiguration);
 				«ELSE»
 					return null;
 				«ENDIF»
 			}
 			
 			«initActionDataFromNonDeterministicDataProvider»		
+
+			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+				return data;
+			}
 
 		}
 		
@@ -132,9 +136,13 @@ class Action {
 				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
-			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			protected abstract «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle);
 		
 			«initActionDataFromNonDeterministicDataProvider»
+
+			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+				return data;
+			}
 
 		}
 		
@@ -154,6 +162,9 @@ class Action {
 		«IF getType.equals("GET")»
 			import de.acegen.PersistenceHandle;
 		«ENDIF»
+		«IF model.allNonDeterministicAttributes.size > 0 || getType.equals("GET")»
+			«getModel.dataImport»
+		«ENDIF»
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
@@ -170,23 +181,25 @@ class Action {
 		
 			«IF getType.equals("GET")»
 				@Override
-				protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {
+				protected «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle) {
 					«getModel.interfaceWithPackage» testData = «getModel.dataNameWithPackage».generateTestData();
 					«FOR attribute: it.model.attributes»
-						this.actionData.«attribute.setterCall('''testData.«attribute.getterCall»''')»;
+						data.«attribute.setterCall('''testData.«attribute.getterCall»''')»;
 					«ENDFOR»
+					return data;
 				}
 			«ENDIF»
 			
-			public void initActionData() {
-				// init not replayable data here
-				«FOR attribute: model.allNonDeterministicAttributes»
-					// «attribute.name»
-				«ENDFOR»
-			}
+			«IF model.allNonDeterministicAttributes.size > 0»
+				public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+					«FOR attribute: model.allNonDeterministicAttributes»
+						// «attribute.name»
+					«ENDFOR»
+					return data;
+				}
+			«ENDIF»
 		
 		}
-		
 		
 		«sdg»
 		
@@ -199,7 +212,6 @@ class Action {
 		
 		public abstract class Action<T extends IDataContainer> implements IAction<T> {
 		
-			protected T actionData;
 			protected String actionName;
 		
 			public Action(String actionName) {
@@ -207,16 +219,8 @@ class Action {
 				this.actionName = actionName;
 			}
 			
-			public void setActionData(T actionData) {
-				this.actionData = actionData;
-			}
-		
 			public String getActionName() {
 				return this.actionName;
-			}
-		
-			public T getActionData() {
-				return this.actionData;
 			}
 		
 			protected void throwSecurityException() {
@@ -258,31 +262,32 @@ class Action {
 				this.daoProvider = daoProvider;
 			}
 		
-			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);
 			
-			protected abstract void initActionDataFromNonDeterministicDataProvider();
+			protected abstract T initActionDataFromNonDeterministicDataProvider(T data);
 
-			public void apply() {
+			public T apply(T data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
+					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
 						databaseHandle.rollbackTransaction();
-						LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
+						LOG.warn("duplicate request {} {} ", actionName, data.getUuid());
 						databaseHandle.rollbackTransaction();
-						return;
+						return data;
 					}
 					
 					«addActionToTimeline»
 
-					this.actionData.setSystemTime(LocalDateTime.now());
-					this.initActionData();
+					data.setSystemTime(LocalDateTime.now());
+					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNonDeterministicDataProvider();
+						data = initActionDataFromNonDeterministicDataProvider(data);
 					}
-					this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
+					data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());
 					
 					databaseHandle.commitTransaction();
+					return data;
 				«catchFinallyBlock»
 				
 			}
@@ -321,33 +326,34 @@ class Action {
 				this.viewProvider = viewProvider;
 			}
 		
-			protected abstract void initActionDataFromNonDeterministicDataProvider();
+			protected abstract T initActionDataFromNonDeterministicDataProvider(T data);
 
-			protected abstract ICommand getCommand();
+			protected abstract ICommand<T> getCommand();
 		
-			public void apply() {
+			public T apply(T data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
-						LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
+					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
+						LOG.warn("duplicate request {} {} ", actionName, data.getUuid());
 						databaseHandle.rollbackTransaction();
-						return;
+						return data;
 					}
 
 					«addActionToTimeline»
 
-					this.actionData.setSystemTime(LocalDateTime.now());
-					this.initActionData();
+					data.setSystemTime(LocalDateTime.now());
+					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNonDeterministicDataProvider();
+						data = initActionDataFromNonDeterministicDataProvider(data);
 					}
 					
-					ICommand command = this.getCommand();
-					command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
-					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
+					ICommand<T> command = this.getCommand();
+					data = command.execute(data, databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
+					command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
-					command.publishAfterCommitEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
+					command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
+					return data;
 				«catchFinallyBlock»
 			}
 		
@@ -381,13 +387,9 @@ class Action {
 		
 			String getActionName();
 			
-			void setActionData(T actionData);
-			
-			IDataContainer getActionData();
-			
-		    void apply();
+		    T apply(T data);
 		    
-		    void initActionData();
+		    T initActionData(T data);
 		    
 		}
 		
@@ -403,18 +405,18 @@ class Action {
 	
 	private def initActionDataFromNonDeterministicDataProvider(HttpServerAce it) '''
 		@Override
-		protected void initActionDataFromNonDeterministicDataProvider() {
-			LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(this.actionData.getUuid());
+		protected «model.dataParamType» initActionDataFromNonDeterministicDataProvider(«model.dataParamType» data) {
+			LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(data.getUuid());
 			if (systemTime != null) {
-				this.actionData.setSystemTime(systemTime);
+				data.setSystemTime(systemTime);
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.nonDeterministic»
-					String «attribute.name»Object = NonDeterministicDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
+					String «attribute.name»Object = NonDeterministicDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
 					if («attribute.name»Object != null) {
 						try {
 							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
-							this.actionData.«attribute.setterCall(attribute.name)»;
+							data.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
 							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.", «attribute.name»Object);
 						}
@@ -423,18 +425,19 @@ class Action {
 					}
 				«ENDIF»
 			«ENDFOR»
+			return data;
 		}
 	'''
 	
 	private def addActionToTimeline() '''
 		if (appConfiguration.getConfig().writeTimeline()) {
-			daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addActionToTimeline(this.getActionName(), data, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
 	private def addExceptionToTimeline() '''
 		if (appConfiguration.getConfig().writeError()) {
-			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addExceptionToTimeline(data.getUuid(), x, databaseHandle.getTimelineHandle());
 		}
 	'''
 	

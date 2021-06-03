@@ -30,7 +30,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
-public class EventFactory {
+public class EventReplayService {
   @Inject
   @Extension
   private AceExtension _aceExtension;
@@ -43,7 +43,7 @@ public class EventFactory {
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generateEventFactory() {
+  public CharSequence generateEventReplayService() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -52,28 +52,13 @@ public class EventFactory {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("public class EventFactory {");
+    _builder.append("public class EventReplayService {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
+    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("//delegate to package EventFactory");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//delegate to package EventFactory");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
+    _builder.append("//delegate to package EventReplayService");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -88,7 +73,7 @@ public class EventFactory {
     return _builder;
   }
   
-  public CharSequence generateEventFactory(final HttpServer it) {
+  public CharSequence generateEventReplayService(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -119,6 +104,8 @@ public class EventFactory {
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
+    _builder.append("import de.acegen.PersistenceHandle;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import java.io.IOException;");
     _builder.newLine();
@@ -130,7 +117,7 @@ public class EventFactory {
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
-    _builder.append("public class EventFactory {");
+    _builder.append("public class EventReplayService {");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -138,7 +125,7 @@ public class EventFactory {
     _builder.append("private static ObjectMapper mapper = new ObjectMapper();");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private static final Logger LOG = LoggerFactory.getLogger(EventFactory.class);");
+    _builder.append("private static final Logger LOG = LoggerFactory.getLogger(EventReplayService.class);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -152,7 +139,7 @@ public class EventFactory {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, String json, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
+    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLine();
     {
       int _eventCount = this.eventCount(it);
@@ -176,40 +163,16 @@ public class EventFactory {
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("\t");
-        _builder.append("LOG.error(\"failed to create event {} with data {}\", eventClass, json, e);");
+        _builder.append("LOG.error(\"failed to replay event {} with data {}\", eventClass, json, e);");
         _builder.newLine();
         _builder.append("\t\t");
         _builder.append("}");
         _builder.newLine();
       }
     }
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public static IEvent createEvent(String eventClass, IDataContainer data, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
-    _builder.newLine();
-    {
-      EList<HttpServerAce> _aceOperations_1 = it.getAceOperations();
-      for(final HttpServerAce ace_1 : _aceOperations_1) {
-        _builder.append("\t\t");
-        CharSequence _createEventFromData = this.createEventFromData(ace_1, it);
-        _builder.append(_createEventFromData, "\t\t");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -272,10 +235,13 @@ public class EventFactory {
             _builder.append(" event = new ");
             String _eventName_2 = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName_2, "\t");
-            _builder.append("(data, daoProvider, viewProvider, appConfiguration);");
+            _builder.append("(daoProvider, viewProvider, appConfiguration);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("return event;");
+            _builder.append("event.notifyListeners(data, handle);");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("event.notifyAfterCommitListeners(data, handle);");
             _builder.newLine();
             _builder.append("}");
             _builder.newLine();
@@ -291,62 +257,11 @@ public class EventFactory {
     return _builder;
   }
   
-  private CharSequence _createEventFromData(final HttpServerAceWrite it, final HttpServer java) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<HttpServerOutcome> _outcomes = it.getOutcomes();
-      for(final HttpServerOutcome outcome : _outcomes) {
-        {
-          int _size = outcome.getListeners().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
-            _builder.append("if (eventClass.equals(\"");
-            String _name = java.getName();
-            _builder.append(_name);
-            _builder.append(".events.");
-            String _eventName = this._aceExtension.eventName(it, outcome);
-            _builder.append(_eventName);
-            _builder.append("\")) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("return new ");
-            String _eventName_1 = this._aceExtension.eventName(it, outcome);
-            _builder.append(_eventName_1, "\t");
-            _builder.append("((");
-            String _dataName = this._modelExtension.dataName(it.getModel());
-            _builder.append(_dataName, "\t");
-            _builder.append(")data, daoProvider, viewProvider, appConfiguration);");
-            _builder.newLineIfNotEmpty();
-            _builder.append("}");
-            _builder.newLine();
-          }
-        }
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence _createEventFromData(final HttpServerAceRead it, final HttpServer java) {
-    StringConcatenation _builder = new StringConcatenation();
-    return _builder;
-  }
-  
   private CharSequence createEvent(final HttpServerAce it, final HttpServer java) {
     if (it instanceof HttpServerAceRead) {
       return _createEvent((HttpServerAceRead)it, java);
     } else if (it instanceof HttpServerAceWrite) {
       return _createEvent((HttpServerAceWrite)it, java);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, java).toString());
-    }
-  }
-  
-  private CharSequence createEventFromData(final HttpServerAce it, final HttpServer java) {
-    if (it instanceof HttpServerAceRead) {
-      return _createEventFromData((HttpServerAceRead)it, java);
-    } else if (it instanceof HttpServerAceWrite) {
-      return _createEventFromData((HttpServerAceWrite)it, java);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it, java).toString());

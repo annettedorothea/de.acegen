@@ -115,7 +115,7 @@ public class AttributeExtension {
         _builder.append("try {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("actionData.");
+        _builder.append("data.");
         String _setterCall = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall, "\t\t");
         _builder.append(";");
@@ -162,7 +162,7 @@ public class AttributeExtension {
         {
           boolean _equals = "Integer".equals(it.getAttribute().getType());
           if (_equals) {
-            _builder.append("actionData.");
+            _builder.append("data.");
             String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType(), "Int");
             _builder.append(_setterCall_1);
             _builder.append(";");
@@ -170,13 +170,13 @@ public class AttributeExtension {
           } else {
             boolean _equals_1 = "String".equals(it.getAttribute().getType());
             if (_equals_1) {
-              _builder.append("actionData.");
+              _builder.append("data.");
               String _setterCall_2 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
               _builder.append(_setterCall_2);
               _builder.append(";");
               _builder.newLineIfNotEmpty();
             } else {
-              _builder.append("actionData.");
+              _builder.append("data.");
               String _setterCall_3 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType());
               _builder.append(_setterCall_3);
               _builder.append(";");
@@ -230,7 +230,7 @@ public class AttributeExtension {
         }
       }
     }
-    _builder.append("actionData.");
+    _builder.append("data.");
     Attribute _attribute = it.getAttribute();
     StringConcatenation _builder_1 = new StringConcatenation();
     _builder_1.append("payload.");
