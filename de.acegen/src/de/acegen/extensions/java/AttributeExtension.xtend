@@ -190,6 +190,29 @@ class AttributeExtension {
 
 	def String assign(Attribute it) '''this.«name» = «name»;'''
 
+	def String deepCopy(Attribute it) '''
+		«IF !list»
+			«IF type !== null»
+				copy.«setterCall('''this.«getterCall»''')»;
+			«ELSEIF model !== null»
+				copy.«setterCall('''this.«getterCall».deepCopy()''')»;
+			«ENDIF»
+		«ELSE»
+			«IF type !== null»
+				List<«type»> «name»Copy = new ArrayList<«type»>();
+				for(«type» item: this.«getterCall») {
+					«name»Copy.add(item);
+				}
+			«ELSEIF model !== null»
+				List<«model.interfaceWithPackage»> «name»Copy = new ArrayList<«model.interfaceWithPackage»>();
+				for(«model.interfaceWithPackage» item: this.«getterCall») {
+					«name»Copy.add(item.deepCopy());
+				}
+			«ENDIF»
+			copy.«setterCall('''«name»Copy''')»;
+		«ENDIF»
+	'''
+
 	def String getter(Attribute it, boolean jsonProperty) '''
 		«IF jsonProperty»
 			@JsonProperty

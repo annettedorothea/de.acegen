@@ -123,6 +123,11 @@ public class Data {
     }
     _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    String _dataInterfaceName_2 = this._modelExtension.dataInterfaceName(it);
+    _builder.append(_dataInterfaceName_2, "\t");
+    _builder.append(" deepCopy();");
+    _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -332,6 +337,36 @@ public class Data {
       }
     }
     _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _dataInterfaceName_1 = this._modelExtension.dataInterfaceName(it);
+    _builder.append(_dataInterfaceName_1, "\t");
+    _builder.append(" deepCopy() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _dataInterfaceName_2 = this._modelExtension.dataInterfaceName(it);
+    _builder.append(_dataInterfaceName_2, "\t\t");
+    _builder.append(" copy = new ");
+    String _dataName = this._modelExtension.dataName(it);
+    _builder.append(_dataName, "\t\t");
+    _builder.append("(this.getUuid());");
+    _builder.newLineIfNotEmpty();
+    {
+      List<Attribute> _allAttributes_5 = this._modelExtension.allAttributes(it);
+      for(final Attribute attribute_5 : _allAttributes_5) {
+        _builder.append("\t\t");
+        String _deepCopy = this._attributeExtension.deepCopy(attribute_5);
+        _builder.append(_deepCopy, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("return copy;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

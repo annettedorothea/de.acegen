@@ -52,6 +52,7 @@ class Model {
 				
 			«ENDFOR»
 			
+			«modelName» deepCopy();
 		}
 		
 		
@@ -102,6 +103,14 @@ class Model {
 				«attribute.setter»
 				
 			«ENDFOR»
+
+			public «modelName» deepCopy() {
+				«modelName» copy = new «modelClassName»();
+				«FOR attribute : allAttributes»
+					«attribute.deepCopy»
+				«ENDFOR»
+				return copy;
+			}
 
 		}
 		

@@ -62,6 +62,7 @@ class Data {
 				
 			«ENDFOR»
 			
+			«dataInterfaceName» deepCopy();
 		}
 		
 		«sdg»
@@ -135,6 +136,14 @@ class Data {
 				}
 			«ENDFOR»
 			
+			public «dataInterfaceName» deepCopy() {
+				«dataInterfaceName» copy = new «dataName»(this.getUuid());
+				«FOR attribute : allAttributes»
+					«attribute.deepCopy»
+				«ENDFOR»
+				return copy;
+			}
+
 		}
 		
 		«sdg»

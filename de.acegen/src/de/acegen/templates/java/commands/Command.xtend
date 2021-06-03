@@ -66,7 +66,7 @@ class Command {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publish(data, handle, timelineHandle);
+							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -77,7 +77,7 @@ class Command {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data, handle, timelineHandle);
+							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»

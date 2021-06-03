@@ -109,6 +109,11 @@ public class Model {
     }
     _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" deepCopy();");
+    _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -239,6 +244,36 @@ public class Model {
         _builder.newLine();
       }
     }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" deepCopy() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _modelName_2 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_2, "\t\t");
+    _builder.append(" copy = new ");
+    String _modelClassName_3 = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName_3, "\t\t");
+    _builder.append("();");
+    _builder.newLineIfNotEmpty();
+    {
+      List<Attribute> _allAttributes_4 = this._modelExtension.allAttributes(it);
+      for(final Attribute attribute_4 : _allAttributes_4) {
+        _builder.append("\t\t");
+        String _deepCopy = this._attributeExtension.deepCopy(attribute_4);
+        _builder.append(_deepCopy, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("return copy;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

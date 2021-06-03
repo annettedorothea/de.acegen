@@ -602,6 +602,120 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
+  public String deepCopy(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isList = it.isList();
+      boolean _not = (!_isList);
+      if (_not) {
+        {
+          String _type = it.getType();
+          boolean _tripleNotEquals = (_type != null);
+          if (_tripleNotEquals) {
+            _builder.append("copy.");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("this.");
+            String _terCall = this.getterCall(it);
+            _builder_1.append(_terCall);
+            String _setterCall = this.setterCall(it, _builder_1.toString());
+            _builder.append(_setterCall);
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          } else {
+            Model _model = it.getModel();
+            boolean _tripleNotEquals_1 = (_model != null);
+            if (_tripleNotEquals_1) {
+              _builder.append("copy.");
+              StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("this.");
+              String _terCall_1 = this.getterCall(it);
+              _builder_2.append(_terCall_1);
+              _builder_2.append(".deepCopy()");
+              String _setterCall_1 = this.setterCall(it, _builder_2.toString());
+              _builder.append(_setterCall_1);
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      } else {
+        {
+          String _type_1 = it.getType();
+          boolean _tripleNotEquals_2 = (_type_1 != null);
+          if (_tripleNotEquals_2) {
+            _builder.append("List<");
+            String _type_2 = it.getType();
+            _builder.append(_type_2);
+            _builder.append("> ");
+            String _name = it.getName();
+            _builder.append(_name);
+            _builder.append("Copy = new ArrayList<");
+            String _type_3 = it.getType();
+            _builder.append(_type_3);
+            _builder.append(">();");
+            _builder.newLineIfNotEmpty();
+            _builder.append("for(");
+            String _type_4 = it.getType();
+            _builder.append(_type_4);
+            _builder.append(" item: this.");
+            String _terCall_2 = this.getterCall(it);
+            _builder.append(_terCall_2);
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _name_1 = it.getName();
+            _builder.append(_name_1, "\t");
+            _builder.append("Copy.add(item);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            Model _model_1 = it.getModel();
+            boolean _tripleNotEquals_3 = (_model_1 != null);
+            if (_tripleNotEquals_3) {
+              _builder.append("List<");
+              String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage);
+              _builder.append("> ");
+              String _name_2 = it.getName();
+              _builder.append(_name_2);
+              _builder.append("Copy = new ArrayList<");
+              String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage_1);
+              _builder.append(">();");
+              _builder.newLineIfNotEmpty();
+              _builder.append("for(");
+              String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage_2);
+              _builder.append(" item: this.");
+              String _terCall_3 = this.getterCall(it);
+              _builder.append(_terCall_3);
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              String _name_3 = it.getName();
+              _builder.append(_name_3, "\t");
+              _builder.append("Copy.add(item.deepCopy());");
+              _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+        }
+        _builder.append("copy.");
+        StringConcatenation _builder_3 = new StringConcatenation();
+        String _name_4 = it.getName();
+        _builder_3.append(_name_4);
+        _builder_3.append("Copy");
+        String _setterCall_2 = this.setterCall(it, _builder_3.toString());
+        _builder.append(_setterCall_2);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
   public String getter(final Attribute it, final boolean jsonProperty) {
     StringConcatenation _builder = new StringConcatenation();
     {

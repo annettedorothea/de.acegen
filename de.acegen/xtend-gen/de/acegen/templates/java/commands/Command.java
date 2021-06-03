@@ -158,7 +158,7 @@ public class Command {
             _builder.append("new ");
             String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
             _builder.append(_eventNameWithPackage, "\t\t\t");
-            _builder.append("(daoProvider, viewProvider, appConfiguration).publish(data, handle, timelineHandle);");
+            _builder.append("(daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
@@ -203,7 +203,7 @@ public class Command {
             _builder.append("new ");
             String _eventNameWithPackage_1 = this._aceExtension.eventNameWithPackage(it, outcome_2);
             _builder.append(_eventNameWithPackage_1, "\t\t\t");
-            _builder.append("(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data, handle, timelineHandle);");
+            _builder.append("(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
