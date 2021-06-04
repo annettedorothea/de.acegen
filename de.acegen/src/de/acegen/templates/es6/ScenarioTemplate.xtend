@@ -2,6 +2,7 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
+import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
@@ -21,21 +22,29 @@ class ScenarioTemplate {
 	def generateScenarioUtils() '''
 		«copyright»
 
-		export function getCypressFor(action, args) {
-			throw "getCypressFor not implemented";
-		}
-		
-		export function wait(numberOfSyncCalls, numberOfAsyncCalls) {
-			return cy.wait(numberOfSyncCalls * 5 + numberOfAsyncCalls * 100);
-		}
-		
-		export function testId() {
-		    let d = new Date().getTime();
-		    return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
-		        let r = (d + Math.random() * 16) % 16 | 0;
-		        d = Math.floor(d / 16);
-		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-		    });
+		module.exports = {
+			invokeAction: async function(driver, action, args) {
+				throw "invokeAction not implemented";
+			},
+			
+			waitInMillis: async function(millis) {
+				return new Promise(function(resolve){
+					setTimeout(resolve,millis);
+				});
+			},
+			
+			getAppState: async function(driver) {
+				return await driver.executeScript('return appName.getAppState()');
+			},
+			
+			generateTestId: function() {
+			    let d = new Date().getTime();
+			    return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
+			        let r = (d + Math.random() * 16) % 16 | 0;
+			        d = Math.floor(d / 16);
+			        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+			    });
+			}
 		}
 		
 		«sdg»
@@ -46,75 +55,73 @@ class ScenarioTemplate {
 	def generateScenario(ClientScenario it, HttpClient httpClient) '''
 		«copyright»
 		
-		import * as ScenarioUtils from "../../../acegen/src/ScenarioUtils";
-		import AppUtils from "../../../../es6/src/app/AppUtils";
+		const ScenarioUtils = require("../../src/ScenarioUtils");
 		«FOR referencedHttpClient: allReferencedHttpClients»
-			import * as «referencedHttpClient.actionIdName» from "../../../acegen/gen/«referencedHttpClient.name»/«referencedHttpClient.actionIdName»";
+			const «referencedHttpClient.actionIdName»  = require("../../gen/actionIds/«referencedHttpClient.name»/«referencedHttpClient.actionIdName»");
 		«ENDFOR»
 		«IF thenBlock.verifications.size > 0»
-			import * as Verifications from "../../../acegen/src/«httpClient.name»/«name»Verifications";
+			const Verifications = require("../../src/«httpClient.name»/«name»Verifications");
 		«ENDIF»
+		const { Builder } = require('selenium-webdriver');
+		require('chromedriver');
+		require('geckodriver');
 		
-		const testId = ScenarioUtils.testId();
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000;
+
+		const testId = ScenarioUtils.generateTestId();
 		
-		context('«name»', () => {
-		    beforeEach(() => {
+		const driver = new Builder()
+		    .forBrowser('firefox')
+		    .build();
+		    
+		describe("«name»", function () {
+		    beforeEach(async function () {
 		    	let nonDeterministicValues;
 		    	let nonDeterministicValue;
 				«FOR givenRef: allGivenItems»
 					«givenRef.scenario.whenBlock.initNonDeterministicData»
-					ScenarioUtils.getCypressFor(«(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
+					await ScenarioUtils.invokeAction(driver, «(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
 					«IF givenRef.scenario.delayInMillis > 0»
-						ScenarioUtils.waitInMillis(«delayInMillis»);
+						await ScenarioUtils.waitInMillis(«delayInMillis»);
 					«ENDIF»
 				«ENDFOR»
-		    })
+		    });
+		    afterEach(async function () {
+		        await driver.quit();
+		    });
 		
-		    it('«FOR stateVerification: thenBlock.stateVerifications SEPARATOR " "»«stateVerification.name»«ENDFOR» «FOR verification: thenBlock.verifications SEPARATOR " "»«verification»«ENDFOR»', () => {
+		    it("«FOR stateVerification: thenBlock.stateVerifications SEPARATOR " "»«stateVerification.name»«ENDFOR» «FOR verification: thenBlock.verifications SEPARATOR " "»«verification»«ENDFOR»", async function () {
 				«IF whenBlock !== null»
-					«IF whenBlock !== null && whenBlock.nonDeterministicValues !== null && whenBlock.nonDeterministicValues.size > 0»let nonDeterministicValues;
+					«IF whenBlock !== null && whenBlock.nonDeterministicValues !== null && whenBlock.nonDeterministicValues.size > 0»
 						let nonDeterministicValue;
 					«ENDIF»
 					«whenBlock.initNonDeterministicData»
-					ScenarioUtils.getCypressFor(«(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»).should(() => {
-						«IF delayInMillis > 0»
-							ScenarioUtils.waitInMillis(«delayInMillis»).should(() => {
-								const appState = JSON.parse(localStorage.getItem('appState'))
-								«FOR stateVerification: thenBlock.stateVerifications»
-									expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
-								«ENDFOR»
-								«FOR verification: thenBlock.verifications»
-									Verifications.«verification»(testId);
-						        «ENDFOR»
-							});
-						«ELSE»
-							const appState = JSON.parse(localStorage.getItem('appState'))
-							«FOR stateVerification: thenBlock.stateVerifications»
-								expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
-							«ENDFOR»
-							«FOR verification: thenBlock.verifications»
-								Verifications.«verification»(testId);
-					        «ENDFOR»
-						«ENDIF»
-					});
+					await ScenarioUtils.invokeAction(driver, «(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
+					«IF delayInMillis > 0»
+						await ScenarioUtils.waitInMillis(«delayInMillis»);
+					«ENDIF»
 				«ELSEIF delayInMillis > 0»
-					ScenarioUtils.waitInMillis(«delayInMillis»).should(() => {
-						const appState = JSON.parse(localStorage.getItem('appState'))
-						«FOR stateVerification: thenBlock.stateVerifications»
-							expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").to.eql(«stateVerification.value.valueFrom»)
-						«ENDFOR»
-						«FOR verification: thenBlock.verifications»
-							Verifications.«verification»(testId);
-				        «ENDFOR»
-					});
+					await ScenarioUtils.waitInMillis(«delayInMillis»);
 				«ENDIF»
-		    })
-		})
+				«thenBlock.verification»
+			});
+		});
+		
 		
 		
 		«sdg»
 		
 		
+	'''
+	
+	private def verification(ClientThenBlock it) '''
+		const appState = await ScenarioUtils.getAppState(driver);
+		«FOR stateVerification: stateVerifications»
+			expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").toEqual(«stateVerification.value.valueFrom»)
+		«ENDFOR»
+		«FOR verification: verifications»
+			Verifications.«verification»(driver, testId);
+        «ENDFOR»
 	'''
 	
 	private def initNonDeterministicData(ClientWhenBlock it) '''
@@ -162,11 +169,13 @@ class ScenarioTemplate {
 	def generateVerifications(ClientScenario it) '''
 		«copyright»
 		
-		«FOR verification: thenBlock.verifications»
-			export function «verification»(testId) {
-				assert.fail("«verification» not implemented");
-			}
-		«ENDFOR»
+		module.exports = {
+			«FOR verification: thenBlock.verifications SEPARATOR ","»
+				«verification»: function(driver, testId) {
+					fail("«verification» not implemented");
+				}
+			«ENDFOR»
+		}
 		
 		«sdg»
 	'''

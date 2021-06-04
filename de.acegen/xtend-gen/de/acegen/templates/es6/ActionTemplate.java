@@ -350,23 +350,34 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("module.exports = {");
+    _builder.newLine();
     {
       EList<HttpClientAce> _aceOperations = it.getAceOperations();
+      boolean _hasElements = false;
       for(final HttpClientAce aceOperation : _aceOperations) {
-        _builder.append("export let ");
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(",", "\t");
+        }
+        _builder.append("\t");
         String _firstLower = StringExtensions.toFirstLower(aceOperation.getName());
-        _builder.append(_firstLower);
-        _builder.append(" = \"");
+        _builder.append(_firstLower, "\t");
+        _builder.append(" : \"");
         String _packageFolder = this._es6Extension.packageFolder(it);
-        _builder.append(_packageFolder);
+        _builder.append(_packageFolder, "\t");
         _builder.append("_");
         String _firstLower_1 = StringExtensions.toFirstLower(aceOperation.getName());
-        _builder.append(_firstLower_1);
-        _builder.append("\";");
+        _builder.append(_firstLower_1, "\t");
+        _builder.append("\"");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
         _builder.newLine();
       }
     }
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();

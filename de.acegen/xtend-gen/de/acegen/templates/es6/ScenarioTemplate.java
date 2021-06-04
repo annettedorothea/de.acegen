@@ -3,6 +3,7 @@ package de.acegen.templates.es6;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
+import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
@@ -35,41 +36,70 @@ public class ScenarioTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("export function getCypressFor(action, args) {");
+    _builder.append("module.exports = {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("throw \"getCypressFor not implemented\";");
+    _builder.append("invokeAction: async function(driver, action, args) {");
     _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("export function wait(numberOfSyncCalls, numberOfAsyncCalls) {");
+    _builder.append("\t\t");
+    _builder.append("throw \"invokeAction not implemented\";");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("return cy.wait(numberOfSyncCalls * 5 + numberOfAsyncCalls * 100);");
+    _builder.append("},");
     _builder.newLine();
-    _builder.append("}");
+    _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("waitInMillis: async function(millis) {");
     _builder.newLine();
-    _builder.append("export function testId() {");
+    _builder.append("\t\t");
+    _builder.append("return new Promise(function(resolve){");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("\t\t\t");
+    _builder.append("setTimeout(resolve,millis);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("getAppState: async function(driver) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return await driver.executeScript(\'return appName.getAppState()\');");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("generateTestId: function() {");
+    _builder.newLine();
+    _builder.append("\t    ");
     _builder.append("let d = new Date().getTime();");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("\t    ");
     _builder.append("return \'xxxxxxxx\'.replace(/[xy]/g, function (c) {");
     _builder.newLine();
-    _builder.append("        ");
+    _builder.append("\t        ");
     _builder.append("let r = (d + Math.random() * 16) % 16 | 0;");
     _builder.newLine();
-    _builder.append("        ");
+    _builder.append("\t        ");
     _builder.append("d = Math.floor(d / 16);");
     _builder.newLine();
-    _builder.append("        ");
+    _builder.append("\t        ");
     _builder.append("return (c === \'x\' ? r : (r & 0x3 | 0x8)).toString(16);");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("\t    ");
     _builder.append("});");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -88,23 +118,21 @@ public class ScenarioTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import * as ScenarioUtils from \"../../../acegen/src/ScenarioUtils\";");
-    _builder.newLine();
-    _builder.append("import AppUtils from \"../../../../es6/src/app/AppUtils\";");
+    _builder.append("const ScenarioUtils = require(\"../../src/ScenarioUtils\");");
     _builder.newLine();
     {
       List<HttpClient> _allReferencedHttpClients = this._es6Extension.allReferencedHttpClients(it);
       for(final HttpClient referencedHttpClient : _allReferencedHttpClients) {
-        _builder.append("import * as ");
+        _builder.append("const ");
         CharSequence _actionIdName = this._es6Extension.actionIdName(referencedHttpClient);
         _builder.append(_actionIdName);
-        _builder.append(" from \"../../../acegen/gen/");
+        _builder.append("  = require(\"../../gen/actionIds/");
         String _name = referencedHttpClient.getName();
         _builder.append(_name);
         _builder.append("/");
         CharSequence _actionIdName_1 = this._es6Extension.actionIdName(referencedHttpClient);
         _builder.append(_actionIdName_1);
-        _builder.append("\";");
+        _builder.append("\");");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -112,27 +140,46 @@ public class ScenarioTemplate {
       int _size = it.getThenBlock().getVerifications().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        _builder.append("import * as Verifications from \"../../../acegen/src/");
+        _builder.append("const Verifications = require(\"../../src/");
         String _name_1 = httpClient.getName();
         _builder.append(_name_1);
         _builder.append("/");
         String _name_2 = it.getName();
         _builder.append(_name_2);
-        _builder.append("Verifications\";");
+        _builder.append("Verifications\");");
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("const { Builder } = require(\'selenium-webdriver\');");
     _builder.newLine();
-    _builder.append("const testId = ScenarioUtils.testId();");
+    _builder.append("require(\'chromedriver\');");
+    _builder.newLine();
+    _builder.append("require(\'geckodriver\');");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("context(\'");
+    _builder.append("jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("const testId = ScenarioUtils.generateTestId();");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("const driver = new Builder()");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append(".forBrowser(\'firefox\')");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append(".build();");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.newLine();
+    _builder.append("describe(\"");
     String _name_3 = it.getName();
     _builder.append(_name_3);
-    _builder.append("\', () => {");
+    _builder.append("\", function () {");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
-    _builder.append("beforeEach(() => {");
+    _builder.append("beforeEach(async function () {");
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("let nonDeterministicValues;");
@@ -148,7 +195,7 @@ public class ScenarioTemplate {
         _builder.append(_initNonDeterministicData, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        _builder.append("ScenarioUtils.getCypressFor(");
+        _builder.append("await ScenarioUtils.invokeAction(driver, ");
         EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
         CharSequence _actionIdName_2 = this._es6Extension.actionIdName(((HttpClient) _eContainer));
         _builder.append(_actionIdName_2, "\t\t");
@@ -179,7 +226,7 @@ public class ScenarioTemplate {
           boolean _greaterThan_1 = (_delayInMillis > 0);
           if (_greaterThan_1) {
             _builder.append("\t\t");
-            _builder.append("ScenarioUtils.waitInMillis(");
+            _builder.append("await ScenarioUtils.waitInMillis(");
             int _delayInMillis_1 = it.getDelayInMillis();
             _builder.append(_delayInMillis_1, "\t\t");
             _builder.append(");");
@@ -189,11 +236,20 @@ public class ScenarioTemplate {
       }
     }
     _builder.append("    ");
-    _builder.append("})");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("afterEach(async function () {");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("await driver.quit();");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("});");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("it(\'");
+    _builder.append("it(\"");
     {
       EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
       boolean _hasElements_1 = false;
@@ -220,19 +276,15 @@ public class ScenarioTemplate {
         _builder.append(verification, "    ");
       }
     }
-    _builder.append("\', () => {");
+    _builder.append("\", async function () {");
     _builder.newLineIfNotEmpty();
     {
       ClientWhenBlock _whenBlock = it.getWhenBlock();
       boolean _tripleNotEquals = (_whenBlock != null);
       if (_tripleNotEquals) {
-        _builder.append("\t\t");
         {
           if ((((it.getWhenBlock() != null) && (it.getWhenBlock().getNonDeterministicValues() != null)) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
-            _builder.append("let nonDeterministicValues;");
-            _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
-            _builder.append("\t");
             _builder.append("let nonDeterministicValue;");
             _builder.newLine();
           }
@@ -242,7 +294,7 @@ public class ScenarioTemplate {
         _builder.append(_initNonDeterministicData_1, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
-        _builder.append("ScenarioUtils.getCypressFor(");
+        _builder.append("await ScenarioUtils.invokeAction(driver, ");
         EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
         CharSequence _actionIdName_3 = this._es6Extension.actionIdName(((HttpClient) _eContainer_1));
         _builder.append(_actionIdName_3, "\t\t");
@@ -266,151 +318,42 @@ public class ScenarioTemplate {
             _builder.append("]", "\t\t");
           }
         }
-        _builder.append(").should(() => {");
+        _builder.append(");");
         _builder.newLineIfNotEmpty();
         {
           int _delayInMillis_2 = it.getDelayInMillis();
           boolean _greaterThan_2 = (_delayInMillis_2 > 0);
           if (_greaterThan_2) {
             _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("ScenarioUtils.waitInMillis(");
+            _builder.append("await ScenarioUtils.waitInMillis(");
             int _delayInMillis_3 = it.getDelayInMillis();
-            _builder.append(_delayInMillis_3, "\t\t\t");
-            _builder.append(").should(() => {");
+            _builder.append(_delayInMillis_3, "\t\t");
+            _builder.append(");");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
-            _builder.newLine();
-            {
-              EList<StateVerification> _stateVerifications_1 = it.getThenBlock().getStateVerifications();
-              for(final StateVerification stateVerification_1 : _stateVerifications_1) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("expect(appState.");
-                String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
-                _builder.append(_stateRefPath, "\t\t\t\t");
-                _builder.append(", \"");
-                String _name_5 = stateVerification_1.getName();
-                _builder.append(_name_5, "\t\t\t\t");
-                _builder.append("\").to.eql(");
-                CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
-                _builder.append(_valueFrom, "\t\t\t\t");
-                _builder.append(")");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-            {
-              EList<String> _verifications_1 = it.getThenBlock().getVerifications();
-              for(final String verification_1 : _verifications_1) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("\t");
-                _builder.append("Verifications.");
-                _builder.append(verification_1, "\t\t\t\t");
-                _builder.append("(testId);");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("});");
-            _builder.newLine();
-          } else {
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
-            _builder.newLine();
-            {
-              EList<StateVerification> _stateVerifications_2 = it.getThenBlock().getStateVerifications();
-              for(final StateVerification stateVerification_2 : _stateVerifications_2) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("expect(appState.");
-                String _stateRefPath_1 = this._es6Extension.stateRefPath(stateVerification_2.getStateRef());
-                _builder.append(_stateRefPath_1, "\t\t\t");
-                _builder.append(", \"");
-                String _name_6 = stateVerification_2.getName();
-                _builder.append(_name_6, "\t\t\t");
-                _builder.append("\").to.eql(");
-                CharSequence _valueFrom_1 = this._es6Extension.valueFrom(stateVerification_2.getValue());
-                _builder.append(_valueFrom_1, "\t\t\t");
-                _builder.append(")");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-            {
-              EList<String> _verifications_2 = it.getThenBlock().getVerifications();
-              for(final String verification_2 : _verifications_2) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("Verifications.");
-                _builder.append(verification_2, "\t\t\t");
-                _builder.append("(testId);");
-                _builder.newLineIfNotEmpty();
-              }
-            }
           }
         }
-        _builder.append("\t\t");
-        _builder.append("});");
-        _builder.newLine();
       } else {
         int _delayInMillis_4 = it.getDelayInMillis();
         boolean _greaterThan_3 = (_delayInMillis_4 > 0);
         if (_greaterThan_3) {
           _builder.append("\t\t");
-          _builder.append("ScenarioUtils.waitInMillis(");
+          _builder.append("await ScenarioUtils.waitInMillis(");
           int _delayInMillis_5 = it.getDelayInMillis();
           _builder.append(_delayInMillis_5, "\t\t");
-          _builder.append(").should(() => {");
+          _builder.append(");");
           _builder.newLineIfNotEmpty();
-          _builder.append("\t\t");
-          _builder.append("\t");
-          _builder.append("const appState = JSON.parse(localStorage.getItem(\'appState\'))");
-          _builder.newLine();
-          {
-            EList<StateVerification> _stateVerifications_3 = it.getThenBlock().getStateVerifications();
-            for(final StateVerification stateVerification_3 : _stateVerifications_3) {
-              _builder.append("\t\t");
-              _builder.append("\t");
-              _builder.append("expect(appState.");
-              String _stateRefPath_2 = this._es6Extension.stateRefPath(stateVerification_3.getStateRef());
-              _builder.append(_stateRefPath_2, "\t\t\t");
-              _builder.append(", \"");
-              String _name_7 = stateVerification_3.getName();
-              _builder.append(_name_7, "\t\t\t");
-              _builder.append("\").to.eql(");
-              CharSequence _valueFrom_2 = this._es6Extension.valueFrom(stateVerification_3.getValue());
-              _builder.append(_valueFrom_2, "\t\t\t");
-              _builder.append(")");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-          {
-            EList<String> _verifications_3 = it.getThenBlock().getVerifications();
-            for(final String verification_3 : _verifications_3) {
-              _builder.append("\t\t");
-              _builder.append("\t");
-              _builder.append("Verifications.");
-              _builder.append(verification_3, "\t\t\t");
-              _builder.append("(testId);");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-          _builder.append("\t\t");
-          _builder.append("});");
-          _builder.newLine();
         }
       }
     }
-    _builder.append("    ");
-    _builder.append("})");
+    _builder.append("\t\t");
+    CharSequence _verification = this.verification(it.getThenBlock());
+    _builder.append(_verification, "\t\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("});");
     _builder.newLine();
-    _builder.append("})");
+    _builder.append("});");
+    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     _builder.newLine();
@@ -419,6 +362,38 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence verification(final ClientThenBlock it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("const appState = await ScenarioUtils.getAppState(driver);");
+    _builder.newLine();
+    {
+      EList<StateVerification> _stateVerifications = it.getStateVerifications();
+      for(final StateVerification stateVerification : _stateVerifications) {
+        _builder.append("expect(appState.");
+        String _stateRefPath = this._es6Extension.stateRefPath(stateVerification.getStateRef());
+        _builder.append(_stateRefPath);
+        _builder.append(", \"");
+        String _name = stateVerification.getName();
+        _builder.append(_name);
+        _builder.append("\").toEqual(");
+        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
+        _builder.append(_valueFrom);
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<String> _verifications = it.getVerifications();
+      for(final String verification : _verifications) {
+        _builder.append("Verifications.");
+        _builder.append(verification);
+        _builder.append("(driver, testId);");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     return _builder;
   }
   
@@ -530,22 +505,34 @@ public class ScenarioTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("module.exports = {");
+    _builder.newLine();
     {
       EList<String> _verifications = it.getThenBlock().getVerifications();
+      boolean _hasElements = false;
       for(final String verification : _verifications) {
-        _builder.append("export function ");
-        _builder.append(verification);
-        _builder.append("(testId) {");
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(",", "\t");
+        }
+        _builder.append("\t");
+        _builder.append(verification, "\t");
+        _builder.append(": function(driver, testId) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("assert.fail(\"");
-        _builder.append(verification, "\t");
+        _builder.append("\t");
+        _builder.append("fail(\"");
+        _builder.append(verification, "\t\t");
         _builder.append(" not implemented\");");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
       }
     }
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();
     _builder.append(_sdg);

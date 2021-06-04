@@ -146,11 +146,12 @@ public class Es6Generator {
       fsa.generateFile(_plus_2, IFileSystemAccess.DEFAULT_OUTPUT, 
         this.actionTemplate.generateActionFunctionExports(httpClient));
       String _name_3 = httpClient.getName();
-      String _plus_3 = (_name_3 + "/");
+      String _plus_3 = ("actionIds/" + _name_3);
+      String _plus_4 = (_plus_3 + "/");
       CharSequence _actionIdName = this._es6Extension.actionIdName(httpClient);
-      String _plus_4 = (_plus_3 + _actionIdName);
-      String _plus_5 = (_plus_4 + ".js");
-      fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      String _plus_5 = (_plus_4 + _actionIdName);
+      String _plus_6 = (_plus_5 + ".js");
+      fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.actionTemplate.generateActionIds(httpClient));
     }
     fsa.generateFile("app/App.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
@@ -184,21 +185,21 @@ public class Es6Generator {
     for (final ClientScenario scenario : _scenarios) {
       {
         String _name_4 = httpClient.getName();
-        String _plus_6 = (_name_4 + "/");
+        String _plus_7 = (_name_4 + "/");
         String _name_5 = scenario.getName();
-        String _plus_7 = (_plus_6 + _name_5);
-        String _plus_8 = (_plus_7 + ".js");
-        fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_INTEGRATION_OUTPUT, 
+        String _plus_8 = (_plus_7 + _name_5);
+        String _plus_9 = (_plus_8 + ".scenario.js");
+        fsa.generateFile(_plus_9, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
           this.scenarioTemplate.generateScenario(scenario, httpClient));
         int _size_1 = scenario.getThenBlock().getVerifications().size();
         boolean _greaterThan_1 = (_size_1 > 0);
         if (_greaterThan_1) {
           String _name_6 = httpClient.getName();
-          String _plus_9 = (_name_6 + "/");
+          String _plus_10 = (_name_6 + "/");
           String _name_7 = scenario.getName();
-          String _plus_10 = (_plus_9 + _name_7);
-          String _plus_11 = (_plus_10 + "Verifications.js");
-          fsa.generateFile(_plus_11, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, 
+          String _plus_11 = (_plus_10 + _name_7);
+          String _plus_12 = (_plus_11 + "Verifications.js");
+          fsa.generateFile(_plus_12, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, 
             this.scenarioTemplate.generateVerifications(scenario));
         }
       }

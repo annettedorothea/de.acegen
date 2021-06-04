@@ -119,10 +119,12 @@ class ActionTemplate {
 	def generateActionIds(HttpClient it) '''
 		«copyright»
 
-		«FOR aceOperation : aceOperations»
-			export let «aceOperation.getName.toFirstLower» = "«packageFolder»_«aceOperation.getName.toFirstLower»";
-			
-		«ENDFOR»
+		module.exports = {
+			«FOR aceOperation : aceOperations SEPARATOR ","»
+				«aceOperation.getName.toFirstLower» : "«packageFolder»_«aceOperation.getName.toFirstLower»"
+				
+			«ENDFOR»
+		}
 		
 		
 		«sdg»
