@@ -39,6 +39,16 @@ public class ScenarioTemplate {
     _builder.append("module.exports = {");
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("tearDown: async function(driver) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("await driver.quit();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("invokeAction: async function(driver, action, args) {");
     _builder.newLine();
     _builder.append("\t\t");
@@ -99,7 +109,42 @@ public class ScenarioTemplate {
     _builder.append("});");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("}");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("addNonDeterministicValueClient: async function(driver, value) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("const jsonValue = JSON.stringify(value);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("await driver.executeScript(`Anfelisa.addNonDeterministicValueClient(\'${jsonValue}\')`);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("addNonDeterministicValueServer: async function(driver, uuid, key, value) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("await driver.executeScript(`Anfelisa.addNonDeterministicValueServer(\"${uuid}\", \"${key}\", \"${value}\")`);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("},");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("defaultTimeout: 30 * 1000,");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("browserName: \"firefox\"");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -152,40 +197,39 @@ public class ScenarioTemplate {
     }
     _builder.append("const { Builder } = require(\'selenium-webdriver\');");
     _builder.newLine();
-    _builder.append("require(\'chromedriver\');");
     _builder.newLine();
-    _builder.append("require(\'geckodriver\');");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000;");
+    _builder.append("jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("const testId = ScenarioUtils.generateTestId();");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("const driver = new Builder()");
+    _builder.append("let driver;");
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append(".forBrowser(\'firefox\')");
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append(".build();");
+    _builder.append("let appState;");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
     _builder.append("describe(\"");
-    String _name_3 = it.getName();
+    String _name_3 = httpClient.getName();
     _builder.append(_name_3);
+    _builder.append(".");
+    String _name_4 = it.getName();
+    _builder.append(_name_4);
     _builder.append("\", function () {");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
-    _builder.append("beforeEach(async function () {");
+    _builder.append("beforeAll(async function () {");
     _builder.newLine();
     _builder.append("    \t");
-    _builder.append("let nonDeterministicValues;");
+    _builder.append("driver = new Builder()");
     _builder.newLine();
-    _builder.append("    \t");
-    _builder.append("let nonDeterministicValue;");
+    _builder.append("    \t\t\t    ");
+    _builder.append(".forBrowser(ScenarioUtils.browserName)");
+    _builder.newLine();
+    _builder.append("    \t\t\t    ");
+    _builder.append(".build();");
     _builder.newLine();
     {
       ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
@@ -227,7 +271,7 @@ public class ScenarioTemplate {
           if (_greaterThan_1) {
             _builder.append("\t\t");
             _builder.append("await ScenarioUtils.waitInMillis(");
-            int _delayInMillis_1 = it.getDelayInMillis();
+            int _delayInMillis_1 = givenRef.getScenario().getDelayInMillis();
             _builder.append(_delayInMillis_1, "\t\t");
             _builder.append(");");
             _builder.newLineIfNotEmpty();
@@ -235,60 +279,11 @@ public class ScenarioTemplate {
         }
       }
     }
-    _builder.append("    ");
-    _builder.append("});");
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append("afterEach(async function () {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("await driver.quit();");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("it(\"");
-    {
-      EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
-      boolean _hasElements_1 = false;
-      for(final StateVerification stateVerification : _stateVerifications) {
-        if (!_hasElements_1) {
-          _hasElements_1 = true;
-        } else {
-          _builder.appendImmediate(" ", "    ");
-        }
-        String _name_4 = stateVerification.getName();
-        _builder.append(_name_4, "    ");
-      }
-    }
-    _builder.append(" ");
-    {
-      EList<String> _verifications = it.getThenBlock().getVerifications();
-      boolean _hasElements_2 = false;
-      for(final String verification : _verifications) {
-        if (!_hasElements_2) {
-          _hasElements_2 = true;
-        } else {
-          _builder.appendImmediate(" ", "    ");
-        }
-        _builder.append(verification, "    ");
-      }
-    }
-    _builder.append("\", async function () {");
-    _builder.newLineIfNotEmpty();
     {
       ClientWhenBlock _whenBlock = it.getWhenBlock();
       boolean _tripleNotEquals = (_whenBlock != null);
       if (_tripleNotEquals) {
-        {
-          if ((((it.getWhenBlock() != null) && (it.getWhenBlock().getNonDeterministicValues() != null)) && (it.getWhenBlock().getNonDeterministicValues().size() > 0))) {
-            _builder.append("\t\t");
-            _builder.append("let nonDeterministicValue;");
-            _builder.newLine();
-          }
-        }
         _builder.append("\t\t");
         CharSequence _initNonDeterministicData_1 = this.initNonDeterministicData(it.getWhenBlock());
         _builder.append(_initNonDeterministicData_1, "\t\t");
@@ -303,10 +298,10 @@ public class ScenarioTemplate {
         _builder.append(_firstLower_1, "\t\t");
         {
           EList<InputValue> _inputValues_1 = it.getWhenBlock().getInputValues();
-          boolean _hasElements_3 = false;
+          boolean _hasElements_1 = false;
           for(final InputValue arg_1 : _inputValues_1) {
-            if (!_hasElements_3) {
-              _hasElements_3 = true;
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
               _builder.append(", [", "\t\t");
             } else {
               _builder.appendImmediate(",", "\t\t");
@@ -314,7 +309,7 @@ public class ScenarioTemplate {
             Object _primitiveValueFrom_1 = this._es6Extension.primitiveValueFrom(arg_1.getValue());
             _builder.append(_primitiveValueFrom_1, "\t\t");
           }
-          if (_hasElements_3) {
+          if (_hasElements_1) {
             _builder.append("]", "\t\t");
           }
         }
@@ -346,11 +341,74 @@ public class ScenarioTemplate {
       }
     }
     _builder.append("\t\t");
-    CharSequence _verification = this.verification(it.getThenBlock());
-    _builder.append(_verification, "\t\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("appState = await ScenarioUtils.getAppState(driver);");
+    _builder.newLine();
+    _builder.append("    ");
     _builder.append("});");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("afterAll(async function () {");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("await ScenarioUtils.tearDown(driver);");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.newLine();
+    {
+      EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
+      for(final StateVerification stateVerification : _stateVerifications) {
+        _builder.append("\t");
+        _builder.append("it(\"");
+        String _name_5 = stateVerification.getName();
+        _builder.append(_name_5, "\t");
+        _builder.append("\", async () => {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("expect(appState.");
+        String _stateRefPath = this._es6Extension.stateRefPath(stateVerification.getStateRef());
+        _builder.append(_stateRefPath, "\t\t");
+        _builder.append(", \"");
+        String _name_6 = stateVerification.getName();
+        _builder.append(_name_6, "\t\t");
+        _builder.append("\").toEqual(");
+        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
+        _builder.append(_valueFrom, "\t\t");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("});");
+        _builder.newLine();
+      }
+    }
+    _builder.append("    ");
+    _builder.newLine();
+    {
+      EList<String> _verifications = it.getThenBlock().getVerifications();
+      for(final String verification : _verifications) {
+        _builder.append("\t");
+        _builder.append("it(\"");
+        _builder.append(verification, "\t");
+        _builder.append("\", async () => {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("await Verifications.");
+        _builder.append(verification, "\t\t");
+        _builder.append("(driver, testId);");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("});");
+        _builder.newLine();
+      }
+    }
+    _builder.append("    ");
     _builder.newLine();
     _builder.append("});");
     _builder.newLine();
@@ -388,7 +446,7 @@ public class ScenarioTemplate {
     {
       EList<String> _verifications = it.getVerifications();
       for(final String verification : _verifications) {
-        _builder.append("Verifications.");
+        _builder.append("await Verifications.");
         _builder.append(verification);
         _builder.append("(driver, testId);");
         _builder.newLineIfNotEmpty();
@@ -401,24 +459,21 @@ public class ScenarioTemplate {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getNonDeterministicValues() != null) && (it.getNonDeterministicValues().size() > 0))) {
-        _builder.append("nonDeterministicValues = JSON.parse(localStorage.getItem(\'nonDeterministicValues\'));");
-        _builder.newLine();
-        _builder.append("if (!nonDeterministicValues) {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("nonDeterministicValues = [];");
-        _builder.newLine();
-        _builder.append("}");
-        _builder.newLine();
         {
           EList<NonDeterministicValue> _nonDeterministicValues = it.getNonDeterministicValues();
           for(final NonDeterministicValue nonDeterministicValue : _nonDeterministicValues) {
-            _builder.append("nonDeterministicValue = {");
+            _builder.append("await ScenarioUtils.addNonDeterministicValueClient(");
             _builder.newLine();
             _builder.append("\t");
+            _builder.append("driver,");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("{");
+            _builder.newLine();
+            _builder.append("\t\t");
             _builder.append("uuid: `");
             String _uuid = nonDeterministicValue.getUuid();
-            _builder.append(_uuid, "\t");
+            _builder.append(_uuid, "\t\t");
             _builder.append("`");
             {
               String _clientSystemTime = nonDeterministicValue.getClientSystemTime();
@@ -426,29 +481,30 @@ public class ScenarioTemplate {
               if (_tripleNotEquals) {
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();
-                _builder.append("\t");
+                _builder.append("\t\t");
                 _builder.append("clientSystemTime: `");
                 String _clientSystemTime_1 = nonDeterministicValue.getClientSystemTime();
-                _builder.append(_clientSystemTime_1, "\t");
+                _builder.append(_clientSystemTime_1, "\t\t");
                 _builder.append("`");
               }
             }
             _builder.newLineIfNotEmpty();
-            _builder.append("};");
+            _builder.append("\t");
+            _builder.append("}");
             _builder.newLine();
-            _builder.append("nonDeterministicValues.push(nonDeterministicValue);");
+            _builder.append(");");
             _builder.newLine();
             {
               String _serverSystemTime = nonDeterministicValue.getServerSystemTime();
               boolean _tripleNotEquals_1 = (_serverSystemTime != null);
               if (_tripleNotEquals_1) {
-                _builder.append("AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=");
+                _builder.append("await ScenarioUtils.addNonDeterministicValueServer(driver, `");
                 String _uuid_1 = nonDeterministicValue.getUuid();
                 _builder.append(_uuid_1);
-                _builder.append("&system-time=${new Date(\'");
+                _builder.append("`, \"system-time\", new Date(\'");
                 String _serverSystemTime_1 = nonDeterministicValue.getServerSystemTime();
                 _builder.append(_serverSystemTime_1);
-                _builder.append("\').toISOString()}`)");
+                _builder.append("\').toISOString());");
                 _builder.newLineIfNotEmpty();
               }
             }
@@ -456,13 +512,13 @@ public class ScenarioTemplate {
               Attribute _attribute = nonDeterministicValue.getAttribute();
               boolean _tripleNotEquals_2 = (_attribute != null);
               if (_tripleNotEquals_2) {
-                _builder.append("AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=");
+                _builder.append("await ScenarioUtils.addNonDeterministicValueServer(driver, `");
                 String _uuid_2 = nonDeterministicValue.getUuid();
                 _builder.append(_uuid_2);
-                _builder.append("&key=");
+                _builder.append("`, \"");
                 String _firstLower = StringExtensions.toFirstLower(nonDeterministicValue.getAttribute().getName());
                 _builder.append(_firstLower);
-                _builder.append("&value=");
+                _builder.append("\", `");
                 Object _primitiveParamFrom = this._es6Extension.primitiveParamFrom(nonDeterministicValue.getValue());
                 _builder.append(_primitiveParamFrom);
                 _builder.append("`);");
@@ -471,8 +527,6 @@ public class ScenarioTemplate {
             }
           }
         }
-        _builder.append("localStorage.setItem(\'nonDeterministicValues\', JSON.stringify(nonDeterministicValues));");
-        _builder.newLine();
       }
     }
     return _builder;
@@ -518,7 +572,7 @@ public class ScenarioTemplate {
         }
         _builder.append("\t");
         _builder.append(verification, "\t");
-        _builder.append(": function(driver, testId) {");
+        _builder.append(": async function(driver, testId) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");

@@ -23,6 +23,10 @@ class ScenarioTemplate {
 		«copyright»
 
 		module.exports = {
+			tearDown: async function(driver) {
+				await driver.quit();
+			},
+
 			invokeAction: async function(driver, action, args) {
 				throw "invokeAction not implemented";
 			},
@@ -44,7 +48,21 @@ class ScenarioTemplate {
 			        d = Math.floor(d / 16);
 			        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
 			    });
-			}
+			},
+				
+			addNonDeterministicValueClient: async function(driver, value) {
+				const jsonValue = JSON.stringify(value);
+				await driver.executeScript(`Anfelisa.addNonDeterministicValueClient('${jsonValue}')`);
+			},
+		
+			addNonDeterministicValueServer: async function(driver, uuid, key, value) {
+				await driver.executeScript(`Anfelisa.addNonDeterministicValueServer("${uuid}", "${key}", "${value}")`);
+			},
+
+			defaultTimeout: 30 * 1000,
+			
+			browserName: "firefox"
+			
 		}
 		
 		«sdg»
@@ -63,38 +81,29 @@ class ScenarioTemplate {
 			const Verifications = require("../../src/«httpClient.name»/«name»Verifications");
 		«ENDIF»
 		const { Builder } = require('selenium-webdriver');
-		require('chromedriver');
-		require('geckodriver');
 		
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000;
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
 		const testId = ScenarioUtils.generateTestId();
 		
-		const driver = new Builder()
-		    .forBrowser('firefox')
-		    .build();
+		let driver;
+		
+		let appState;
 		    
-		describe("«name»", function () {
-		    beforeEach(async function () {
-		    	let nonDeterministicValues;
-		    	let nonDeterministicValue;
+		describe("«httpClient.name».«name»", function () {
+		    beforeAll(async function () {
+		    	driver = new Builder()
+		    			    .forBrowser(ScenarioUtils.browserName)
+		    			    .build();
 				«FOR givenRef: allGivenItems»
 					«givenRef.scenario.whenBlock.initNonDeterministicData»
 					await ScenarioUtils.invokeAction(driver, «(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
 					«IF givenRef.scenario.delayInMillis > 0»
-						await ScenarioUtils.waitInMillis(«delayInMillis»);
+						await ScenarioUtils.waitInMillis(«givenRef.scenario.delayInMillis»);
 					«ENDIF»
 				«ENDFOR»
-		    });
-		    afterEach(async function () {
-		        await driver.quit();
-		    });
-		
-		    it("«FOR stateVerification: thenBlock.stateVerifications SEPARATOR " "»«stateVerification.name»«ENDFOR» «FOR verification: thenBlock.verifications SEPARATOR " "»«verification»«ENDFOR»", async function () {
+
 				«IF whenBlock !== null»
-					«IF whenBlock !== null && whenBlock.nonDeterministicValues !== null && whenBlock.nonDeterministicValues.size > 0»
-						let nonDeterministicValue;
-					«ENDIF»
 					«whenBlock.initNonDeterministicData»
 					await ScenarioUtils.invokeAction(driver, «(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
 					«IF delayInMillis > 0»
@@ -103,8 +112,26 @@ class ScenarioTemplate {
 				«ELSEIF delayInMillis > 0»
 					await ScenarioUtils.waitInMillis(«delayInMillis»);
 				«ENDIF»
-				«thenBlock.verification»
-			});
+				
+				appState = await ScenarioUtils.getAppState(driver);
+		    });
+
+		    afterAll(async function () {
+		        await ScenarioUtils.tearDown(driver);
+		    });
+		    
+			«FOR stateVerification: thenBlock.stateVerifications»
+				it("«stateVerification.name»", async () => {
+					expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").toEqual(«stateVerification.value.valueFrom»)
+				});
+			«ENDFOR»
+		    
+			«FOR verification: thenBlock.verifications»
+				it("«verification»", async () => {
+					await Verifications.«verification»(driver, testId);
+				});
+	        «ENDFOR»
+		    
 		});
 		
 		
@@ -120,30 +147,27 @@ class ScenarioTemplate {
 			expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").toEqual(«stateVerification.value.valueFrom»)
 		«ENDFOR»
 		«FOR verification: verifications»
-			Verifications.«verification»(driver, testId);
+			await Verifications.«verification»(driver, testId);
         «ENDFOR»
 	'''
 	
 	private def initNonDeterministicData(ClientWhenBlock it) '''
 		«IF nonDeterministicValues !== null && nonDeterministicValues.size > 0»
-			nonDeterministicValues = JSON.parse(localStorage.getItem('nonDeterministicValues'));
-			if (!nonDeterministicValues) {
-				nonDeterministicValues = [];
-			}
 			«FOR nonDeterministicValue: nonDeterministicValues»
-				nonDeterministicValue = {
-					uuid: `«nonDeterministicValue.uuid»`«IF nonDeterministicValue.clientSystemTime !== null»,
-					clientSystemTime: `«nonDeterministicValue.clientSystemTime»`«ENDIF»
-				};
-				nonDeterministicValues.push(nonDeterministicValue);
+				await ScenarioUtils.addNonDeterministicValueClient(
+					driver,
+					{
+						uuid: `«nonDeterministicValue.uuid»`«IF nonDeterministicValue.clientSystemTime !== null»,
+						clientSystemTime: `«nonDeterministicValue.clientSystemTime»`«ENDIF»
+					}
+				);
 				«IF nonDeterministicValue.serverSystemTime !== null»
-					AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=«nonDeterministicValue.uuid»&system-time=${new Date('«nonDeterministicValue.serverSystemTime»').toISOString()}`)
+					await ScenarioUtils.addNonDeterministicValueServer(driver, `«nonDeterministicValue.uuid»`, "system-time", new Date('«nonDeterministicValue.serverSystemTime»').toISOString());
 				«ENDIF»
 				«IF nonDeterministicValue.attribute !== null»
-					AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=«nonDeterministicValue.uuid»&key=«nonDeterministicValue.attribute.name.toFirstLower»&value=«nonDeterministicValue.value.primitiveParamFrom»`);
+					await ScenarioUtils.addNonDeterministicValueServer(driver, `«nonDeterministicValue.uuid»`, "«nonDeterministicValue.attribute.name.toFirstLower»", `«nonDeterministicValue.value.primitiveParamFrom»`);
 				«ENDIF»
 			«ENDFOR»
-			localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
 		«ENDIF»
 	'''
 
@@ -171,7 +195,7 @@ class ScenarioTemplate {
 		
 		module.exports = {
 			«FOR verification: thenBlock.verifications SEPARATOR ","»
-				«verification»: function(driver, testId) {
+				«verification»: async function(driver, testId) {
 					fail("«verification» not implemented");
 				}
 			«ENDFOR»
