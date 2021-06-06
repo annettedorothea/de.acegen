@@ -2,7 +2,6 @@ package de.acegen.templates.es6
 
 import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
-import de.acegen.aceGen.ClientThenBlock
 import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.CommonExtension
@@ -139,16 +138,6 @@ class ScenarioTemplate {
 		«sdg»
 		
 		
-	'''
-	
-	private def verification(ClientThenBlock it) '''
-		const appState = await ScenarioUtils.getAppState(driver);
-		«FOR stateVerification: stateVerifications»
-			expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").toEqual(«stateVerification.value.valueFrom»)
-		«ENDFOR»
-		«FOR verification: verifications»
-			await Verifications.«verification»(driver, testId);
-        «ENDFOR»
 	'''
 	
 	private def initNonDeterministicData(ClientWhenBlock it) '''

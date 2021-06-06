@@ -3,7 +3,6 @@ package de.acegen.templates.es6;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
-import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
@@ -420,38 +419,6 @@ public class ScenarioTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
-    return _builder;
-  }
-  
-  private CharSequence verification(final ClientThenBlock it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("const appState = await ScenarioUtils.getAppState(driver);");
-    _builder.newLine();
-    {
-      EList<StateVerification> _stateVerifications = it.getStateVerifications();
-      for(final StateVerification stateVerification : _stateVerifications) {
-        _builder.append("expect(appState.");
-        String _stateRefPath = this._es6Extension.stateRefPath(stateVerification.getStateRef());
-        _builder.append(_stateRefPath);
-        _builder.append(", \"");
-        String _name = stateVerification.getName();
-        _builder.append(_name);
-        _builder.append("\").toEqual(");
-        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
-        _builder.append(_valueFrom);
-        _builder.append(")");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    {
-      EList<String> _verifications = it.getVerifications();
-      for(final String verification : _verifications) {
-        _builder.append("await Verifications.");
-        _builder.append(verification);
-        _builder.append("(driver, testId);");
-        _builder.newLineIfNotEmpty();
-      }
-    }
     return _builder;
   }
   
