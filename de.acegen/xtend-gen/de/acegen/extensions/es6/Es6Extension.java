@@ -35,6 +35,7 @@ import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.TriggerdAceOperation;
+import de.acegen.aceGen.UndefinedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -365,28 +366,34 @@ public class Es6Extension {
             _builder_1.append(_long);
             return _builder_1;
           } else {
-            if ((it instanceof JsonArrayClient)) {
+            if ((it instanceof UndefinedType)) {
               StringConcatenation _builder_2 = new StringConcatenation();
-              _builder_2.append("[");
-              _builder_2.newLine();
-              _builder_2.append("\t");
-              {
-                EList<JsonValueClient> _values = ((JsonArrayClient) it).getValues();
-                boolean _hasElements = false;
-                for(final JsonValueClient value : _values) {
-                  if (!_hasElements) {
-                    _hasElements = true;
-                  } else {
-                    _builder_2.appendImmediate(",", "\t");
-                  }
-                  CharSequence _valueFrom = this.valueFrom(value);
-                  _builder_2.append(_valueFrom, "\t");
-                }
-              }
-              _builder_2.newLineIfNotEmpty();
-              _builder_2.append("]");
-              _builder_2.newLine();
+              _builder_2.append("undefined");
               return _builder_2;
+            } else {
+              if ((it instanceof JsonArrayClient)) {
+                StringConcatenation _builder_3 = new StringConcatenation();
+                _builder_3.append("[");
+                _builder_3.newLine();
+                _builder_3.append("\t");
+                {
+                  EList<JsonValueClient> _values = ((JsonArrayClient) it).getValues();
+                  boolean _hasElements = false;
+                  for(final JsonValueClient value : _values) {
+                    if (!_hasElements) {
+                      _hasElements = true;
+                    } else {
+                      _builder_3.appendImmediate(",", "\t");
+                    }
+                    CharSequence _valueFrom = this.valueFrom(value);
+                    _builder_3.append(_valueFrom, "\t");
+                  }
+                }
+                _builder_3.newLineIfNotEmpty();
+                _builder_3.append("]");
+                _builder_3.newLine();
+                return _builder_3;
+              }
             }
           }
         }

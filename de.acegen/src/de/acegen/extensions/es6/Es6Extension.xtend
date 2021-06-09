@@ -37,6 +37,7 @@ import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.aceGen.StringType
 import java.util.ArrayList
 import java.util.List
+import de.acegen.aceGen.UndefinedType
 
 class Es6Extension {
 	def String packageFolder(HttpClient it) '''«getName.replace('.', '/')»'''
@@ -200,6 +201,8 @@ class Es6Extension {
 			return "null";
 		} else if (it instanceof LongType) {
 			return '''«long»''';
+		} else if (it instanceof UndefinedType) {
+			return '''undefined''';
 		} else if (it instanceof JsonArrayClient) {
 			return 
 				'''
