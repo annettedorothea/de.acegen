@@ -277,9 +277,9 @@ class Action {
 						return data;
 					}
 					
+					data.setSystemTime(LocalDateTime.now());
 					«addActionToTimeline»
 
-					data.setSystemTime(LocalDateTime.now());
 					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
 						data = initActionDataFromNonDeterministicDataProvider(data);
@@ -340,9 +340,9 @@ class Action {
 						return data;
 					}
 
+					data.setSystemTime(LocalDateTime.now());
 					«addActionToTimeline»
 
-					data.setSystemTime(LocalDateTime.now());
 					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
 						data = initActionDataFromNonDeterministicDataProvider(data);

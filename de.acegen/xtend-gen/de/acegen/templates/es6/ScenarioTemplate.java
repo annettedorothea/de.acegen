@@ -119,7 +119,7 @@ public class ScenarioTemplate {
     _builder.append("const jsonValue = JSON.stringify(value);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("await driver.executeScript(`Anfelisa.addNonDeterministicValueClient(\'${jsonValue}\')`);");
+    _builder.append("await driver.executeScript(`appName.addNonDeterministicValueClient(\'${jsonValue}\')`);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("},");
@@ -129,7 +129,7 @@ public class ScenarioTemplate {
     _builder.append("addNonDeterministicValueServer: async function(driver, uuid, key, value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("await driver.executeScript(`Anfelisa.addNonDeterministicValueServer(\"${uuid}\", \"${key}\", \"${value}\")`);");
+    _builder.append("await driver.executeScript(`appName.addNonDeterministicValueServer(\"${uuid}\", \"${key}\", \"${value}\")`);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("},");

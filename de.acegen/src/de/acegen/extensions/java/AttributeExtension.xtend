@@ -128,7 +128,7 @@ class AttributeExtension {
 
 	def String mapperInit(Attribute it) {
 		if (type !== null) {
-			return '''«IF isList»null«ELSEIF type.equals("DateTime")»r.getTimestamp("«name»") != null ? r.getTimestamp("«name»").toLocalDateTime() : null«ELSEIF type.equals("Integer")»r.getObject("«name»") != null ? r.getInt("«name»") : null«ELSEIF type.equals("Serial")»r.getInt("«name»")«ELSE»r.get«javaType»("«name»")«ENDIF»'''
+			return '''«IF isList»null«ELSEIF type == 'DateTime'»this.mapToDateTime(r, "«name»")«ELSE»this.mapTo«javaType»(r, "«name»")«ENDIF»'''
 		}
 		if (model !== null) {
 			return '''null''';

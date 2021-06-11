@@ -110,6 +110,8 @@ public class Resource {
     _builder.newLine();
     _builder.append("import de.acegen.NonDeterministicDataProvider;");
     _builder.newLine();
+    _builder.append("import de.acegen.Config;");
+    _builder.newLine();
     _builder.newLine();
     {
       boolean _isAuthorize = it.isAuthorize();
@@ -447,6 +449,15 @@ public class Resource {
     _builder.append("LOG.error(\"bad request due to {} \", x.getMessage());");
     _builder.newLine();
     _builder.append("\t\t\t");
+    _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("x.printStackTrace();");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.append("return badRequest(x.getMessage());");
     _builder.newLine();
     _builder.append("\t\t");
@@ -454,6 +465,15 @@ public class Resource {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("LOG.error(\"unauthorized due to {} \", x.getMessage());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("x.printStackTrace();");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("return unauthorized(\"authorization needed for ");
@@ -466,6 +486,15 @@ public class Resource {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("LOG.error(\"internal server error due to {} \", x.getMessage());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("x.printStackTrace();");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("return internalServerError(x);");

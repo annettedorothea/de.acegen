@@ -51,11 +51,11 @@ class ScenarioTemplate {
 				
 			addNonDeterministicValueClient: async function(driver, value) {
 				const jsonValue = JSON.stringify(value);
-				await driver.executeScript(`Anfelisa.addNonDeterministicValueClient('${jsonValue}')`);
+				await driver.executeScript(`appName.addNonDeterministicValueClient('${jsonValue}')`);
 			},
 		
 			addNonDeterministicValueServer: async function(driver, uuid, key, value) {
-				await driver.executeScript(`Anfelisa.addNonDeterministicValueServer("${uuid}", "${key}", "${value}")`);
+				await driver.executeScript(`appName.addNonDeterministicValueServer("${uuid}", "${key}", "${value}")`);
 			},
 
 			defaultTimeout: 30 * 1000,

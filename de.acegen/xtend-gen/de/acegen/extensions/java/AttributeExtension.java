@@ -15,6 +15,7 @@
  */
 package de.acegen.extensions.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.BooleanType;
@@ -372,42 +373,21 @@ public class AttributeExtension {
         if (_isList) {
           _builder.append("null");
         } else {
-          boolean _equals = it.getType().equals("DateTime");
+          String _type_1 = it.getType();
+          boolean _equals = Objects.equal(_type_1, "DateTime");
           if (_equals) {
-            _builder.append("r.getTimestamp(\"");
+            _builder.append("this.mapToDateTime(r, \"");
             String _name = it.getName();
             _builder.append(_name);
-            _builder.append("\") != null ? r.getTimestamp(\"");
+            _builder.append("\")");
+          } else {
+            _builder.append("this.mapTo");
+            String _javaType = this.javaType(it);
+            _builder.append(_javaType);
+            _builder.append("(r, \"");
             String _name_1 = it.getName();
             _builder.append(_name_1);
-            _builder.append("\").toLocalDateTime() : null");
-          } else {
-            boolean _equals_1 = it.getType().equals("Integer");
-            if (_equals_1) {
-              _builder.append("r.getObject(\"");
-              String _name_2 = it.getName();
-              _builder.append(_name_2);
-              _builder.append("\") != null ? r.getInt(\"");
-              String _name_3 = it.getName();
-              _builder.append(_name_3);
-              _builder.append("\") : null");
-            } else {
-              boolean _equals_2 = it.getType().equals("Serial");
-              if (_equals_2) {
-                _builder.append("r.getInt(\"");
-                String _name_4 = it.getName();
-                _builder.append(_name_4);
-                _builder.append("\")");
-              } else {
-                _builder.append("r.get");
-                String _javaType = this.javaType(it);
-                _builder.append(_javaType);
-                _builder.append("(\"");
-                String _name_5 = it.getName();
-                _builder.append(_name_5);
-                _builder.append("\")");
-              }
-            }
+            _builder.append("\")");
           }
         }
       }

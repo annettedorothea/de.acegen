@@ -141,6 +141,7 @@ class Data {
 				«FOR attribute : allAttributes»
 					«attribute.deepCopy»
 				«ENDFOR»
+				copy.setSystemTime(this.getSystemTime());
 				return copy;
 			}
 

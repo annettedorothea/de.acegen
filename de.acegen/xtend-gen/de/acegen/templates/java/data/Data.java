@@ -362,6 +362,9 @@ public class Data {
       }
     }
     _builder.append("\t\t");
+    _builder.append("copy.setSystemTime(this.getSystemTime());");
+    _builder.newLine();
+    _builder.append("\t\t");
     _builder.append("return copy;");
     _builder.newLine();
     _builder.append("\t");
