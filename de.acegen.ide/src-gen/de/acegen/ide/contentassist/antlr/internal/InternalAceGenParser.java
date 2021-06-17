@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'group'", "'{'", "'}'", "'WHEN'", "'THEN'", "'GIVEN'", "'nonDeterministicValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'nonDeterministic'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'React_16.8'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'authorize'", "'NotNull'", "'afterCommit'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'group'", "'{'", "'}'", "'WHEN'", "'THEN'", "'GIVEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'React_16.8'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'authorize'", "'NotNull'", "'afterCommit'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -1312,20 +1312,20 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleClientWhenBlock"
 
 
-    // $ANTLR start "entryRuleNonDeterministicValue"
-    // InternalAceGen.g:428:1: entryRuleNonDeterministicValue : ruleNonDeterministicValue EOF ;
-    public final void entryRuleNonDeterministicValue() throws RecognitionException {
+    // $ANTLR start "entryRuleSquishyValue"
+    // InternalAceGen.g:428:1: entryRuleSquishyValue : ruleSquishyValue EOF ;
+    public final void entryRuleSquishyValue() throws RecognitionException {
         try {
-            // InternalAceGen.g:429:1: ( ruleNonDeterministicValue EOF )
-            // InternalAceGen.g:430:1: ruleNonDeterministicValue EOF
+            // InternalAceGen.g:429:1: ( ruleSquishyValue EOF )
+            // InternalAceGen.g:430:1: ruleSquishyValue EOF
             {
-             before(grammarAccess.getNonDeterministicValueRule()); 
+             before(grammarAccess.getSquishyValueRule()); 
             pushFollow(FOLLOW_1);
-            ruleNonDeterministicValue();
+            ruleSquishyValue();
 
             state._fsp--;
 
-             after(grammarAccess.getNonDeterministicValueRule()); 
+             after(grammarAccess.getSquishyValueRule()); 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -1339,35 +1339,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleNonDeterministicValue"
+    // $ANTLR end "entryRuleSquishyValue"
 
 
-    // $ANTLR start "ruleNonDeterministicValue"
-    // InternalAceGen.g:437:1: ruleNonDeterministicValue : ( ( rule__NonDeterministicValue__Group__0 ) ) ;
-    public final void ruleNonDeterministicValue() throws RecognitionException {
+    // $ANTLR start "ruleSquishyValue"
+    // InternalAceGen.g:437:1: ruleSquishyValue : ( ( rule__SquishyValue__Group__0 ) ) ;
+    public final void ruleSquishyValue() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:441:2: ( ( ( rule__NonDeterministicValue__Group__0 ) ) )
-            // InternalAceGen.g:442:2: ( ( rule__NonDeterministicValue__Group__0 ) )
+            // InternalAceGen.g:441:2: ( ( ( rule__SquishyValue__Group__0 ) ) )
+            // InternalAceGen.g:442:2: ( ( rule__SquishyValue__Group__0 ) )
             {
-            // InternalAceGen.g:442:2: ( ( rule__NonDeterministicValue__Group__0 ) )
-            // InternalAceGen.g:443:3: ( rule__NonDeterministicValue__Group__0 )
+            // InternalAceGen.g:442:2: ( ( rule__SquishyValue__Group__0 ) )
+            // InternalAceGen.g:443:3: ( rule__SquishyValue__Group__0 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getGroup()); 
-            // InternalAceGen.g:444:3: ( rule__NonDeterministicValue__Group__0 )
-            // InternalAceGen.g:444:4: rule__NonDeterministicValue__Group__0
+             before(grammarAccess.getSquishyValueAccess().getGroup()); 
+            // InternalAceGen.g:444:3: ( rule__SquishyValue__Group__0 )
+            // InternalAceGen.g:444:4: rule__SquishyValue__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group__0();
+            rule__SquishyValue__Group__0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getGroup()); 
+             after(grammarAccess.getSquishyValueAccess().getGroup()); 
 
             }
 
@@ -1386,7 +1386,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleNonDeterministicValue"
+    // $ANTLR end "ruleSquishyValue"
 
 
     // $ANTLR start "entryRuleInputValue"
@@ -15523,21 +15523,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClientWhenBlock__Group_2__0__Impl"
-    // InternalAceGen.g:4887:1: rule__ClientWhenBlock__Group_2__0__Impl : ( 'nonDeterministicValues' ) ;
+    // InternalAceGen.g:4887:1: rule__ClientWhenBlock__Group_2__0__Impl : ( 'squishyValues' ) ;
     public final void rule__ClientWhenBlock__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:4891:1: ( ( 'nonDeterministicValues' ) )
-            // InternalAceGen.g:4892:1: ( 'nonDeterministicValues' )
+            // InternalAceGen.g:4891:1: ( ( 'squishyValues' ) )
+            // InternalAceGen.g:4892:1: ( 'squishyValues' )
             {
-            // InternalAceGen.g:4892:1: ( 'nonDeterministicValues' )
-            // InternalAceGen.g:4893:2: 'nonDeterministicValues'
+            // InternalAceGen.g:4892:1: ( 'squishyValues' )
+            // InternalAceGen.g:4893:2: 'squishyValues'
             {
-             before(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesKeyword_2_0()); 
+             before(grammarAccess.getClientWhenBlockAccess().getSquishyValuesKeyword_2_0()); 
             match(input,46,FOLLOW_2); 
-             after(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesKeyword_2_0()); 
+             after(grammarAccess.getClientWhenBlockAccess().getSquishyValuesKeyword_2_0()); 
 
             }
 
@@ -15598,31 +15598,31 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClientWhenBlock__Group_2__1__Impl"
-    // InternalAceGen.g:4914:1: rule__ClientWhenBlock__Group_2__1__Impl : ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 ) ) ;
+    // InternalAceGen.g:4914:1: rule__ClientWhenBlock__Group_2__1__Impl : ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 ) ) ;
     public final void rule__ClientWhenBlock__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:4918:1: ( ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 ) ) )
-            // InternalAceGen.g:4919:1: ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 ) )
+            // InternalAceGen.g:4918:1: ( ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 ) ) )
+            // InternalAceGen.g:4919:1: ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 ) )
             {
-            // InternalAceGen.g:4919:1: ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 ) )
-            // InternalAceGen.g:4920:2: ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 )
+            // InternalAceGen.g:4919:1: ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 ) )
+            // InternalAceGen.g:4920:2: ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 )
             {
-             before(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesAssignment_2_1()); 
-            // InternalAceGen.g:4921:2: ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 )
-            // InternalAceGen.g:4921:3: rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1
+             before(grammarAccess.getClientWhenBlockAccess().getSquishyValuesAssignment_2_1()); 
+            // InternalAceGen.g:4921:2: ( rule__ClientWhenBlock__SquishyValuesAssignment_2_1 )
+            // InternalAceGen.g:4921:3: rule__ClientWhenBlock__SquishyValuesAssignment_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1();
+            rule__ClientWhenBlock__SquishyValuesAssignment_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesAssignment_2_1()); 
+             after(grammarAccess.getClientWhenBlockAccess().getSquishyValuesAssignment_2_1()); 
 
             }
 
@@ -15851,31 +15851,31 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ClientWhenBlock__Group_2_2__1__Impl"
-    // InternalAceGen.g:4994:1: rule__ClientWhenBlock__Group_2_2__1__Impl : ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 ) ) ;
+    // InternalAceGen.g:4994:1: rule__ClientWhenBlock__Group_2_2__1__Impl : ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 ) ) ;
     public final void rule__ClientWhenBlock__Group_2_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:4998:1: ( ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 ) ) )
-            // InternalAceGen.g:4999:1: ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 ) )
+            // InternalAceGen.g:4998:1: ( ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 ) ) )
+            // InternalAceGen.g:4999:1: ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 ) )
             {
-            // InternalAceGen.g:4999:1: ( ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 ) )
-            // InternalAceGen.g:5000:2: ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 )
+            // InternalAceGen.g:4999:1: ( ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 ) )
+            // InternalAceGen.g:5000:2: ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 )
             {
-             before(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesAssignment_2_2_1()); 
-            // InternalAceGen.g:5001:2: ( rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 )
-            // InternalAceGen.g:5001:3: rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1
+             before(grammarAccess.getClientWhenBlockAccess().getSquishyValuesAssignment_2_2_1()); 
+            // InternalAceGen.g:5001:2: ( rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 )
+            // InternalAceGen.g:5001:3: rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1();
+            rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesAssignment_2_2_1()); 
+             after(grammarAccess.getClientWhenBlockAccess().getSquishyValuesAssignment_2_2_1()); 
 
             }
 
@@ -15897,23 +15897,23 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ClientWhenBlock__Group_2_2__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__0"
-    // InternalAceGen.g:5010:1: rule__NonDeterministicValue__Group__0 : rule__NonDeterministicValue__Group__0__Impl rule__NonDeterministicValue__Group__1 ;
-    public final void rule__NonDeterministicValue__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__0"
+    // InternalAceGen.g:5010:1: rule__SquishyValue__Group__0 : rule__SquishyValue__Group__0__Impl rule__SquishyValue__Group__1 ;
+    public final void rule__SquishyValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5014:1: ( rule__NonDeterministicValue__Group__0__Impl rule__NonDeterministicValue__Group__1 )
-            // InternalAceGen.g:5015:2: rule__NonDeterministicValue__Group__0__Impl rule__NonDeterministicValue__Group__1
+            // InternalAceGen.g:5014:1: ( rule__SquishyValue__Group__0__Impl rule__SquishyValue__Group__1 )
+            // InternalAceGen.g:5015:2: rule__SquishyValue__Group__0__Impl rule__SquishyValue__Group__1
             {
             pushFollow(FOLLOW_28);
-            rule__NonDeterministicValue__Group__0__Impl();
+            rule__SquishyValue__Group__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group__1();
+            rule__SquishyValue__Group__1();
 
             state._fsp--;
 
@@ -15932,12 +15932,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__0"
+    // $ANTLR end "rule__SquishyValue__Group__0"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__0__Impl"
-    // InternalAceGen.g:5022:1: rule__NonDeterministicValue__Group__0__Impl : ( () ) ;
-    public final void rule__NonDeterministicValue__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__0__Impl"
+    // InternalAceGen.g:5022:1: rule__SquishyValue__Group__0__Impl : ( () ) ;
+    public final void rule__SquishyValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -15948,13 +15948,13 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5027:1: ( () )
             // InternalAceGen.g:5028:2: ()
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getNonDeterministicValueAction_0()); 
+             before(grammarAccess.getSquishyValueAccess().getSquishyValueAction_0()); 
             // InternalAceGen.g:5029:2: ()
             // InternalAceGen.g:5029:3: 
             {
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getNonDeterministicValueAction_0()); 
+             after(grammarAccess.getSquishyValueAccess().getSquishyValueAction_0()); 
 
             }
 
@@ -15969,26 +15969,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__0__Impl"
+    // $ANTLR end "rule__SquishyValue__Group__0__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__1"
-    // InternalAceGen.g:5037:1: rule__NonDeterministicValue__Group__1 : rule__NonDeterministicValue__Group__1__Impl rule__NonDeterministicValue__Group__2 ;
-    public final void rule__NonDeterministicValue__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__1"
+    // InternalAceGen.g:5037:1: rule__SquishyValue__Group__1 : rule__SquishyValue__Group__1__Impl rule__SquishyValue__Group__2 ;
+    public final void rule__SquishyValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5041:1: ( rule__NonDeterministicValue__Group__1__Impl rule__NonDeterministicValue__Group__2 )
-            // InternalAceGen.g:5042:2: rule__NonDeterministicValue__Group__1__Impl rule__NonDeterministicValue__Group__2
+            // InternalAceGen.g:5041:1: ( rule__SquishyValue__Group__1__Impl rule__SquishyValue__Group__2 )
+            // InternalAceGen.g:5042:2: rule__SquishyValue__Group__1__Impl rule__SquishyValue__Group__2
             {
             pushFollow(FOLLOW_36);
-            rule__NonDeterministicValue__Group__1__Impl();
+            rule__SquishyValue__Group__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group__2();
+            rule__SquishyValue__Group__2();
 
             state._fsp--;
 
@@ -16007,12 +16007,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__1"
+    // $ANTLR end "rule__SquishyValue__Group__1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__1__Impl"
-    // InternalAceGen.g:5049:1: rule__NonDeterministicValue__Group__1__Impl : ( '{' ) ;
-    public final void rule__NonDeterministicValue__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__1__Impl"
+    // InternalAceGen.g:5049:1: rule__SquishyValue__Group__1__Impl : ( '{' ) ;
+    public final void rule__SquishyValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -16023,9 +16023,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5054:1: ( '{' )
             // InternalAceGen.g:5055:2: '{'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getLeftCurlyBracketKeyword_1()); 
+             before(grammarAccess.getSquishyValueAccess().getLeftCurlyBracketKeyword_1()); 
             match(input,41,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getLeftCurlyBracketKeyword_1()); 
+             after(grammarAccess.getSquishyValueAccess().getLeftCurlyBracketKeyword_1()); 
 
             }
 
@@ -16044,26 +16044,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__1__Impl"
+    // $ANTLR end "rule__SquishyValue__Group__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__2"
-    // InternalAceGen.g:5064:1: rule__NonDeterministicValue__Group__2 : rule__NonDeterministicValue__Group__2__Impl rule__NonDeterministicValue__Group__3 ;
-    public final void rule__NonDeterministicValue__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__2"
+    // InternalAceGen.g:5064:1: rule__SquishyValue__Group__2 : rule__SquishyValue__Group__2__Impl rule__SquishyValue__Group__3 ;
+    public final void rule__SquishyValue__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5068:1: ( rule__NonDeterministicValue__Group__2__Impl rule__NonDeterministicValue__Group__3 )
-            // InternalAceGen.g:5069:2: rule__NonDeterministicValue__Group__2__Impl rule__NonDeterministicValue__Group__3
+            // InternalAceGen.g:5068:1: ( rule__SquishyValue__Group__2__Impl rule__SquishyValue__Group__3 )
+            // InternalAceGen.g:5069:2: rule__SquishyValue__Group__2__Impl rule__SquishyValue__Group__3
             {
             pushFollow(FOLLOW_36);
-            rule__NonDeterministicValue__Group__2__Impl();
+            rule__SquishyValue__Group__2__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group__3();
+            rule__SquishyValue__Group__3();
 
             state._fsp--;
 
@@ -16082,24 +16082,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__2"
+    // $ANTLR end "rule__SquishyValue__Group__2"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__2__Impl"
-    // InternalAceGen.g:5076:1: rule__NonDeterministicValue__Group__2__Impl : ( ( rule__NonDeterministicValue__Group_2__0 )? ) ;
-    public final void rule__NonDeterministicValue__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__2__Impl"
+    // InternalAceGen.g:5076:1: rule__SquishyValue__Group__2__Impl : ( ( rule__SquishyValue__Group_2__0 )? ) ;
+    public final void rule__SquishyValue__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5080:1: ( ( ( rule__NonDeterministicValue__Group_2__0 )? ) )
-            // InternalAceGen.g:5081:1: ( ( rule__NonDeterministicValue__Group_2__0 )? )
+            // InternalAceGen.g:5080:1: ( ( ( rule__SquishyValue__Group_2__0 )? ) )
+            // InternalAceGen.g:5081:1: ( ( rule__SquishyValue__Group_2__0 )? )
             {
-            // InternalAceGen.g:5081:1: ( ( rule__NonDeterministicValue__Group_2__0 )? )
-            // InternalAceGen.g:5082:2: ( rule__NonDeterministicValue__Group_2__0 )?
+            // InternalAceGen.g:5081:1: ( ( rule__SquishyValue__Group_2__0 )? )
+            // InternalAceGen.g:5082:2: ( rule__SquishyValue__Group_2__0 )?
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getGroup_2()); 
-            // InternalAceGen.g:5083:2: ( rule__NonDeterministicValue__Group_2__0 )?
+             before(grammarAccess.getSquishyValueAccess().getGroup_2()); 
+            // InternalAceGen.g:5083:2: ( rule__SquishyValue__Group_2__0 )?
             int alt56=2;
             int LA56_0 = input.LA(1);
 
@@ -16108,10 +16108,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt56) {
                 case 1 :
-                    // InternalAceGen.g:5083:3: rule__NonDeterministicValue__Group_2__0
+                    // InternalAceGen.g:5083:3: rule__SquishyValue__Group_2__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__NonDeterministicValue__Group_2__0();
+                    rule__SquishyValue__Group_2__0();
 
                     state._fsp--;
 
@@ -16121,7 +16121,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getGroup_2()); 
+             after(grammarAccess.getSquishyValueAccess().getGroup_2()); 
 
             }
 
@@ -16140,21 +16140,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__2__Impl"
+    // $ANTLR end "rule__SquishyValue__Group__2__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__3"
-    // InternalAceGen.g:5091:1: rule__NonDeterministicValue__Group__3 : rule__NonDeterministicValue__Group__3__Impl ;
-    public final void rule__NonDeterministicValue__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__3"
+    // InternalAceGen.g:5091:1: rule__SquishyValue__Group__3 : rule__SquishyValue__Group__3__Impl ;
+    public final void rule__SquishyValue__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5095:1: ( rule__NonDeterministicValue__Group__3__Impl )
-            // InternalAceGen.g:5096:2: rule__NonDeterministicValue__Group__3__Impl
+            // InternalAceGen.g:5095:1: ( rule__SquishyValue__Group__3__Impl )
+            // InternalAceGen.g:5096:2: rule__SquishyValue__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group__3__Impl();
+            rule__SquishyValue__Group__3__Impl();
 
             state._fsp--;
 
@@ -16173,12 +16173,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__3"
+    // $ANTLR end "rule__SquishyValue__Group__3"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group__3__Impl"
-    // InternalAceGen.g:5102:1: rule__NonDeterministicValue__Group__3__Impl : ( '}' ) ;
-    public final void rule__NonDeterministicValue__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group__3__Impl"
+    // InternalAceGen.g:5102:1: rule__SquishyValue__Group__3__Impl : ( '}' ) ;
+    public final void rule__SquishyValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -16189,9 +16189,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5107:1: ( '}' )
             // InternalAceGen.g:5108:2: '}'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getRightCurlyBracketKeyword_3()); 
+             before(grammarAccess.getSquishyValueAccess().getRightCurlyBracketKeyword_3()); 
             match(input,42,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getRightCurlyBracketKeyword_3()); 
+             after(grammarAccess.getSquishyValueAccess().getRightCurlyBracketKeyword_3()); 
 
             }
 
@@ -16210,26 +16210,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group__3__Impl"
+    // $ANTLR end "rule__SquishyValue__Group__3__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__0"
-    // InternalAceGen.g:5118:1: rule__NonDeterministicValue__Group_2__0 : rule__NonDeterministicValue__Group_2__0__Impl rule__NonDeterministicValue__Group_2__1 ;
-    public final void rule__NonDeterministicValue__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__0"
+    // InternalAceGen.g:5118:1: rule__SquishyValue__Group_2__0 : rule__SquishyValue__Group_2__0__Impl rule__SquishyValue__Group_2__1 ;
+    public final void rule__SquishyValue__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5122:1: ( rule__NonDeterministicValue__Group_2__0__Impl rule__NonDeterministicValue__Group_2__1 )
-            // InternalAceGen.g:5123:2: rule__NonDeterministicValue__Group_2__0__Impl rule__NonDeterministicValue__Group_2__1
+            // InternalAceGen.g:5122:1: ( rule__SquishyValue__Group_2__0__Impl rule__SquishyValue__Group_2__1 )
+            // InternalAceGen.g:5123:2: rule__SquishyValue__Group_2__0__Impl rule__SquishyValue__Group_2__1
             {
             pushFollow(FOLLOW_37);
-            rule__NonDeterministicValue__Group_2__0__Impl();
+            rule__SquishyValue__Group_2__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2__1();
+            rule__SquishyValue__Group_2__1();
 
             state._fsp--;
 
@@ -16248,12 +16248,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__0"
+    // $ANTLR end "rule__SquishyValue__Group_2__0"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__0__Impl"
-    // InternalAceGen.g:5130:1: rule__NonDeterministicValue__Group_2__0__Impl : ( 'uuid' ) ;
-    public final void rule__NonDeterministicValue__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__0__Impl"
+    // InternalAceGen.g:5130:1: rule__SquishyValue__Group_2__0__Impl : ( 'uuid' ) ;
+    public final void rule__SquishyValue__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -16264,9 +16264,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5135:1: ( 'uuid' )
             // InternalAceGen.g:5136:2: 'uuid'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getUuidKeyword_2_0()); 
+             before(grammarAccess.getSquishyValueAccess().getUuidKeyword_2_0()); 
             match(input,47,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getUuidKeyword_2_0()); 
+             after(grammarAccess.getSquishyValueAccess().getUuidKeyword_2_0()); 
 
             }
 
@@ -16285,26 +16285,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__0__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2__0__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__1"
-    // InternalAceGen.g:5145:1: rule__NonDeterministicValue__Group_2__1 : rule__NonDeterministicValue__Group_2__1__Impl rule__NonDeterministicValue__Group_2__2 ;
-    public final void rule__NonDeterministicValue__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__1"
+    // InternalAceGen.g:5145:1: rule__SquishyValue__Group_2__1 : rule__SquishyValue__Group_2__1__Impl rule__SquishyValue__Group_2__2 ;
+    public final void rule__SquishyValue__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5149:1: ( rule__NonDeterministicValue__Group_2__1__Impl rule__NonDeterministicValue__Group_2__2 )
-            // InternalAceGen.g:5150:2: rule__NonDeterministicValue__Group_2__1__Impl rule__NonDeterministicValue__Group_2__2
+            // InternalAceGen.g:5149:1: ( rule__SquishyValue__Group_2__1__Impl rule__SquishyValue__Group_2__2 )
+            // InternalAceGen.g:5150:2: rule__SquishyValue__Group_2__1__Impl rule__SquishyValue__Group_2__2
             {
             pushFollow(FOLLOW_38);
-            rule__NonDeterministicValue__Group_2__1__Impl();
+            rule__SquishyValue__Group_2__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2__2();
+            rule__SquishyValue__Group_2__2();
 
             state._fsp--;
 
@@ -16323,35 +16323,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__1"
+    // $ANTLR end "rule__SquishyValue__Group_2__1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__1__Impl"
-    // InternalAceGen.g:5157:1: rule__NonDeterministicValue__Group_2__1__Impl : ( ( rule__NonDeterministicValue__UuidAssignment_2_1 ) ) ;
-    public final void rule__NonDeterministicValue__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__1__Impl"
+    // InternalAceGen.g:5157:1: rule__SquishyValue__Group_2__1__Impl : ( ( rule__SquishyValue__UuidAssignment_2_1 ) ) ;
+    public final void rule__SquishyValue__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5161:1: ( ( ( rule__NonDeterministicValue__UuidAssignment_2_1 ) ) )
-            // InternalAceGen.g:5162:1: ( ( rule__NonDeterministicValue__UuidAssignment_2_1 ) )
+            // InternalAceGen.g:5161:1: ( ( ( rule__SquishyValue__UuidAssignment_2_1 ) ) )
+            // InternalAceGen.g:5162:1: ( ( rule__SquishyValue__UuidAssignment_2_1 ) )
             {
-            // InternalAceGen.g:5162:1: ( ( rule__NonDeterministicValue__UuidAssignment_2_1 ) )
-            // InternalAceGen.g:5163:2: ( rule__NonDeterministicValue__UuidAssignment_2_1 )
+            // InternalAceGen.g:5162:1: ( ( rule__SquishyValue__UuidAssignment_2_1 ) )
+            // InternalAceGen.g:5163:2: ( rule__SquishyValue__UuidAssignment_2_1 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getUuidAssignment_2_1()); 
-            // InternalAceGen.g:5164:2: ( rule__NonDeterministicValue__UuidAssignment_2_1 )
-            // InternalAceGen.g:5164:3: rule__NonDeterministicValue__UuidAssignment_2_1
+             before(grammarAccess.getSquishyValueAccess().getUuidAssignment_2_1()); 
+            // InternalAceGen.g:5164:2: ( rule__SquishyValue__UuidAssignment_2_1 )
+            // InternalAceGen.g:5164:3: rule__SquishyValue__UuidAssignment_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__UuidAssignment_2_1();
+            rule__SquishyValue__UuidAssignment_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getUuidAssignment_2_1()); 
+             after(grammarAccess.getSquishyValueAccess().getUuidAssignment_2_1()); 
 
             }
 
@@ -16370,26 +16370,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__1__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__2"
-    // InternalAceGen.g:5172:1: rule__NonDeterministicValue__Group_2__2 : rule__NonDeterministicValue__Group_2__2__Impl rule__NonDeterministicValue__Group_2__3 ;
-    public final void rule__NonDeterministicValue__Group_2__2() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__2"
+    // InternalAceGen.g:5172:1: rule__SquishyValue__Group_2__2 : rule__SquishyValue__Group_2__2__Impl rule__SquishyValue__Group_2__3 ;
+    public final void rule__SquishyValue__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5176:1: ( rule__NonDeterministicValue__Group_2__2__Impl rule__NonDeterministicValue__Group_2__3 )
-            // InternalAceGen.g:5177:2: rule__NonDeterministicValue__Group_2__2__Impl rule__NonDeterministicValue__Group_2__3
+            // InternalAceGen.g:5176:1: ( rule__SquishyValue__Group_2__2__Impl rule__SquishyValue__Group_2__3 )
+            // InternalAceGen.g:5177:2: rule__SquishyValue__Group_2__2__Impl rule__SquishyValue__Group_2__3
             {
             pushFollow(FOLLOW_38);
-            rule__NonDeterministicValue__Group_2__2__Impl();
+            rule__SquishyValue__Group_2__2__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2__3();
+            rule__SquishyValue__Group_2__3();
 
             state._fsp--;
 
@@ -16408,24 +16408,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__2"
+    // $ANTLR end "rule__SquishyValue__Group_2__2"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__2__Impl"
-    // InternalAceGen.g:5184:1: rule__NonDeterministicValue__Group_2__2__Impl : ( ( rule__NonDeterministicValue__Group_2_2__0 )? ) ;
-    public final void rule__NonDeterministicValue__Group_2__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__2__Impl"
+    // InternalAceGen.g:5184:1: rule__SquishyValue__Group_2__2__Impl : ( ( rule__SquishyValue__Group_2_2__0 )? ) ;
+    public final void rule__SquishyValue__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5188:1: ( ( ( rule__NonDeterministicValue__Group_2_2__0 )? ) )
-            // InternalAceGen.g:5189:1: ( ( rule__NonDeterministicValue__Group_2_2__0 )? )
+            // InternalAceGen.g:5188:1: ( ( ( rule__SquishyValue__Group_2_2__0 )? ) )
+            // InternalAceGen.g:5189:1: ( ( rule__SquishyValue__Group_2_2__0 )? )
             {
-            // InternalAceGen.g:5189:1: ( ( rule__NonDeterministicValue__Group_2_2__0 )? )
-            // InternalAceGen.g:5190:2: ( rule__NonDeterministicValue__Group_2_2__0 )?
+            // InternalAceGen.g:5189:1: ( ( rule__SquishyValue__Group_2_2__0 )? )
+            // InternalAceGen.g:5190:2: ( rule__SquishyValue__Group_2_2__0 )?
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getGroup_2_2()); 
-            // InternalAceGen.g:5191:2: ( rule__NonDeterministicValue__Group_2_2__0 )?
+             before(grammarAccess.getSquishyValueAccess().getGroup_2_2()); 
+            // InternalAceGen.g:5191:2: ( rule__SquishyValue__Group_2_2__0 )?
             int alt57=2;
             int LA57_0 = input.LA(1);
 
@@ -16434,10 +16434,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt57) {
                 case 1 :
-                    // InternalAceGen.g:5191:3: rule__NonDeterministicValue__Group_2_2__0
+                    // InternalAceGen.g:5191:3: rule__SquishyValue__Group_2_2__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__NonDeterministicValue__Group_2_2__0();
+                    rule__SquishyValue__Group_2_2__0();
 
                     state._fsp--;
 
@@ -16447,7 +16447,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getGroup_2_2()); 
+             after(grammarAccess.getSquishyValueAccess().getGroup_2_2()); 
 
             }
 
@@ -16466,26 +16466,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__2__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2__2__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__3"
-    // InternalAceGen.g:5199:1: rule__NonDeterministicValue__Group_2__3 : rule__NonDeterministicValue__Group_2__3__Impl rule__NonDeterministicValue__Group_2__4 ;
-    public final void rule__NonDeterministicValue__Group_2__3() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__3"
+    // InternalAceGen.g:5199:1: rule__SquishyValue__Group_2__3 : rule__SquishyValue__Group_2__3__Impl rule__SquishyValue__Group_2__4 ;
+    public final void rule__SquishyValue__Group_2__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5203:1: ( rule__NonDeterministicValue__Group_2__3__Impl rule__NonDeterministicValue__Group_2__4 )
-            // InternalAceGen.g:5204:2: rule__NonDeterministicValue__Group_2__3__Impl rule__NonDeterministicValue__Group_2__4
+            // InternalAceGen.g:5203:1: ( rule__SquishyValue__Group_2__3__Impl rule__SquishyValue__Group_2__4 )
+            // InternalAceGen.g:5204:2: rule__SquishyValue__Group_2__3__Impl rule__SquishyValue__Group_2__4
             {
             pushFollow(FOLLOW_38);
-            rule__NonDeterministicValue__Group_2__3__Impl();
+            rule__SquishyValue__Group_2__3__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2__4();
+            rule__SquishyValue__Group_2__4();
 
             state._fsp--;
 
@@ -16504,24 +16504,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__3"
+    // $ANTLR end "rule__SquishyValue__Group_2__3"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__3__Impl"
-    // InternalAceGen.g:5211:1: rule__NonDeterministicValue__Group_2__3__Impl : ( ( rule__NonDeterministicValue__Group_2_3__0 )? ) ;
-    public final void rule__NonDeterministicValue__Group_2__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__3__Impl"
+    // InternalAceGen.g:5211:1: rule__SquishyValue__Group_2__3__Impl : ( ( rule__SquishyValue__Group_2_3__0 )? ) ;
+    public final void rule__SquishyValue__Group_2__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5215:1: ( ( ( rule__NonDeterministicValue__Group_2_3__0 )? ) )
-            // InternalAceGen.g:5216:1: ( ( rule__NonDeterministicValue__Group_2_3__0 )? )
+            // InternalAceGen.g:5215:1: ( ( ( rule__SquishyValue__Group_2_3__0 )? ) )
+            // InternalAceGen.g:5216:1: ( ( rule__SquishyValue__Group_2_3__0 )? )
             {
-            // InternalAceGen.g:5216:1: ( ( rule__NonDeterministicValue__Group_2_3__0 )? )
-            // InternalAceGen.g:5217:2: ( rule__NonDeterministicValue__Group_2_3__0 )?
+            // InternalAceGen.g:5216:1: ( ( rule__SquishyValue__Group_2_3__0 )? )
+            // InternalAceGen.g:5217:2: ( rule__SquishyValue__Group_2_3__0 )?
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getGroup_2_3()); 
-            // InternalAceGen.g:5218:2: ( rule__NonDeterministicValue__Group_2_3__0 )?
+             before(grammarAccess.getSquishyValueAccess().getGroup_2_3()); 
+            // InternalAceGen.g:5218:2: ( rule__SquishyValue__Group_2_3__0 )?
             int alt58=2;
             int LA58_0 = input.LA(1);
 
@@ -16530,10 +16530,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt58) {
                 case 1 :
-                    // InternalAceGen.g:5218:3: rule__NonDeterministicValue__Group_2_3__0
+                    // InternalAceGen.g:5218:3: rule__SquishyValue__Group_2_3__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__NonDeterministicValue__Group_2_3__0();
+                    rule__SquishyValue__Group_2_3__0();
 
                     state._fsp--;
 
@@ -16543,7 +16543,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getGroup_2_3()); 
+             after(grammarAccess.getSquishyValueAccess().getGroup_2_3()); 
 
             }
 
@@ -16562,21 +16562,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__3__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2__3__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__4"
-    // InternalAceGen.g:5226:1: rule__NonDeterministicValue__Group_2__4 : rule__NonDeterministicValue__Group_2__4__Impl ;
-    public final void rule__NonDeterministicValue__Group_2__4() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__4"
+    // InternalAceGen.g:5226:1: rule__SquishyValue__Group_2__4 : rule__SquishyValue__Group_2__4__Impl ;
+    public final void rule__SquishyValue__Group_2__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5230:1: ( rule__NonDeterministicValue__Group_2__4__Impl )
-            // InternalAceGen.g:5231:2: rule__NonDeterministicValue__Group_2__4__Impl
+            // InternalAceGen.g:5230:1: ( rule__SquishyValue__Group_2__4__Impl )
+            // InternalAceGen.g:5231:2: rule__SquishyValue__Group_2__4__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2__4__Impl();
+            rule__SquishyValue__Group_2__4__Impl();
 
             state._fsp--;
 
@@ -16595,24 +16595,24 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__4"
+    // $ANTLR end "rule__SquishyValue__Group_2__4"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2__4__Impl"
-    // InternalAceGen.g:5237:1: rule__NonDeterministicValue__Group_2__4__Impl : ( ( rule__NonDeterministicValue__Group_2_4__0 )? ) ;
-    public final void rule__NonDeterministicValue__Group_2__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2__4__Impl"
+    // InternalAceGen.g:5237:1: rule__SquishyValue__Group_2__4__Impl : ( ( rule__SquishyValue__Group_2_4__0 )? ) ;
+    public final void rule__SquishyValue__Group_2__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5241:1: ( ( ( rule__NonDeterministicValue__Group_2_4__0 )? ) )
-            // InternalAceGen.g:5242:1: ( ( rule__NonDeterministicValue__Group_2_4__0 )? )
+            // InternalAceGen.g:5241:1: ( ( ( rule__SquishyValue__Group_2_4__0 )? ) )
+            // InternalAceGen.g:5242:1: ( ( rule__SquishyValue__Group_2_4__0 )? )
             {
-            // InternalAceGen.g:5242:1: ( ( rule__NonDeterministicValue__Group_2_4__0 )? )
-            // InternalAceGen.g:5243:2: ( rule__NonDeterministicValue__Group_2_4__0 )?
+            // InternalAceGen.g:5242:1: ( ( rule__SquishyValue__Group_2_4__0 )? )
+            // InternalAceGen.g:5243:2: ( rule__SquishyValue__Group_2_4__0 )?
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getGroup_2_4()); 
-            // InternalAceGen.g:5244:2: ( rule__NonDeterministicValue__Group_2_4__0 )?
+             before(grammarAccess.getSquishyValueAccess().getGroup_2_4()); 
+            // InternalAceGen.g:5244:2: ( rule__SquishyValue__Group_2_4__0 )?
             int alt59=2;
             int LA59_0 = input.LA(1);
 
@@ -16621,10 +16621,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt59) {
                 case 1 :
-                    // InternalAceGen.g:5244:3: rule__NonDeterministicValue__Group_2_4__0
+                    // InternalAceGen.g:5244:3: rule__SquishyValue__Group_2_4__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__NonDeterministicValue__Group_2_4__0();
+                    rule__SquishyValue__Group_2_4__0();
 
                     state._fsp--;
 
@@ -16634,7 +16634,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getGroup_2_4()); 
+             after(grammarAccess.getSquishyValueAccess().getGroup_2_4()); 
 
             }
 
@@ -16653,26 +16653,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2__4__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2__4__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_2__0"
-    // InternalAceGen.g:5253:1: rule__NonDeterministicValue__Group_2_2__0 : rule__NonDeterministicValue__Group_2_2__0__Impl rule__NonDeterministicValue__Group_2_2__1 ;
-    public final void rule__NonDeterministicValue__Group_2_2__0() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_2__0"
+    // InternalAceGen.g:5253:1: rule__SquishyValue__Group_2_2__0 : rule__SquishyValue__Group_2_2__0__Impl rule__SquishyValue__Group_2_2__1 ;
+    public final void rule__SquishyValue__Group_2_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5257:1: ( rule__NonDeterministicValue__Group_2_2__0__Impl rule__NonDeterministicValue__Group_2_2__1 )
-            // InternalAceGen.g:5258:2: rule__NonDeterministicValue__Group_2_2__0__Impl rule__NonDeterministicValue__Group_2_2__1
+            // InternalAceGen.g:5257:1: ( rule__SquishyValue__Group_2_2__0__Impl rule__SquishyValue__Group_2_2__1 )
+            // InternalAceGen.g:5258:2: rule__SquishyValue__Group_2_2__0__Impl rule__SquishyValue__Group_2_2__1
             {
             pushFollow(FOLLOW_37);
-            rule__NonDeterministicValue__Group_2_2__0__Impl();
+            rule__SquishyValue__Group_2_2__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_2__1();
+            rule__SquishyValue__Group_2_2__1();
 
             state._fsp--;
 
@@ -16691,12 +16691,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_2__0"
+    // $ANTLR end "rule__SquishyValue__Group_2_2__0"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_2__0__Impl"
-    // InternalAceGen.g:5265:1: rule__NonDeterministicValue__Group_2_2__0__Impl : ( 'clientSystemTime' ) ;
-    public final void rule__NonDeterministicValue__Group_2_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_2__0__Impl"
+    // InternalAceGen.g:5265:1: rule__SquishyValue__Group_2_2__0__Impl : ( 'clientSystemTime' ) ;
+    public final void rule__SquishyValue__Group_2_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -16707,9 +16707,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5270:1: ( 'clientSystemTime' )
             // InternalAceGen.g:5271:2: 'clientSystemTime'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeKeyword_2_2_0()); 
+             before(grammarAccess.getSquishyValueAccess().getClientSystemTimeKeyword_2_2_0()); 
             match(input,48,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeKeyword_2_2_0()); 
+             after(grammarAccess.getSquishyValueAccess().getClientSystemTimeKeyword_2_2_0()); 
 
             }
 
@@ -16728,21 +16728,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_2__0__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_2__0__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_2__1"
-    // InternalAceGen.g:5280:1: rule__NonDeterministicValue__Group_2_2__1 : rule__NonDeterministicValue__Group_2_2__1__Impl ;
-    public final void rule__NonDeterministicValue__Group_2_2__1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_2__1"
+    // InternalAceGen.g:5280:1: rule__SquishyValue__Group_2_2__1 : rule__SquishyValue__Group_2_2__1__Impl ;
+    public final void rule__SquishyValue__Group_2_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5284:1: ( rule__NonDeterministicValue__Group_2_2__1__Impl )
-            // InternalAceGen.g:5285:2: rule__NonDeterministicValue__Group_2_2__1__Impl
+            // InternalAceGen.g:5284:1: ( rule__SquishyValue__Group_2_2__1__Impl )
+            // InternalAceGen.g:5285:2: rule__SquishyValue__Group_2_2__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_2__1__Impl();
+            rule__SquishyValue__Group_2_2__1__Impl();
 
             state._fsp--;
 
@@ -16761,35 +16761,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_2__1"
+    // $ANTLR end "rule__SquishyValue__Group_2_2__1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_2__1__Impl"
-    // InternalAceGen.g:5291:1: rule__NonDeterministicValue__Group_2_2__1__Impl : ( ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 ) ) ;
-    public final void rule__NonDeterministicValue__Group_2_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_2__1__Impl"
+    // InternalAceGen.g:5291:1: rule__SquishyValue__Group_2_2__1__Impl : ( ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 ) ) ;
+    public final void rule__SquishyValue__Group_2_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5295:1: ( ( ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 ) ) )
-            // InternalAceGen.g:5296:1: ( ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 ) )
+            // InternalAceGen.g:5295:1: ( ( ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 ) ) )
+            // InternalAceGen.g:5296:1: ( ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 ) )
             {
-            // InternalAceGen.g:5296:1: ( ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 ) )
-            // InternalAceGen.g:5297:2: ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 )
+            // InternalAceGen.g:5296:1: ( ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 ) )
+            // InternalAceGen.g:5297:2: ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeAssignment_2_2_1()); 
-            // InternalAceGen.g:5298:2: ( rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 )
-            // InternalAceGen.g:5298:3: rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1
+             before(grammarAccess.getSquishyValueAccess().getClientSystemTimeAssignment_2_2_1()); 
+            // InternalAceGen.g:5298:2: ( rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 )
+            // InternalAceGen.g:5298:3: rule__SquishyValue__ClientSystemTimeAssignment_2_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1();
+            rule__SquishyValue__ClientSystemTimeAssignment_2_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeAssignment_2_2_1()); 
+             after(grammarAccess.getSquishyValueAccess().getClientSystemTimeAssignment_2_2_1()); 
 
             }
 
@@ -16808,26 +16808,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_2__1__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_2__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_3__0"
-    // InternalAceGen.g:5307:1: rule__NonDeterministicValue__Group_2_3__0 : rule__NonDeterministicValue__Group_2_3__0__Impl rule__NonDeterministicValue__Group_2_3__1 ;
-    public final void rule__NonDeterministicValue__Group_2_3__0() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_3__0"
+    // InternalAceGen.g:5307:1: rule__SquishyValue__Group_2_3__0 : rule__SquishyValue__Group_2_3__0__Impl rule__SquishyValue__Group_2_3__1 ;
+    public final void rule__SquishyValue__Group_2_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5311:1: ( rule__NonDeterministicValue__Group_2_3__0__Impl rule__NonDeterministicValue__Group_2_3__1 )
-            // InternalAceGen.g:5312:2: rule__NonDeterministicValue__Group_2_3__0__Impl rule__NonDeterministicValue__Group_2_3__1
+            // InternalAceGen.g:5311:1: ( rule__SquishyValue__Group_2_3__0__Impl rule__SquishyValue__Group_2_3__1 )
+            // InternalAceGen.g:5312:2: rule__SquishyValue__Group_2_3__0__Impl rule__SquishyValue__Group_2_3__1
             {
             pushFollow(FOLLOW_37);
-            rule__NonDeterministicValue__Group_2_3__0__Impl();
+            rule__SquishyValue__Group_2_3__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_3__1();
+            rule__SquishyValue__Group_2_3__1();
 
             state._fsp--;
 
@@ -16846,12 +16846,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_3__0"
+    // $ANTLR end "rule__SquishyValue__Group_2_3__0"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_3__0__Impl"
-    // InternalAceGen.g:5319:1: rule__NonDeterministicValue__Group_2_3__0__Impl : ( 'serverSystemTime' ) ;
-    public final void rule__NonDeterministicValue__Group_2_3__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_3__0__Impl"
+    // InternalAceGen.g:5319:1: rule__SquishyValue__Group_2_3__0__Impl : ( 'serverSystemTime' ) ;
+    public final void rule__SquishyValue__Group_2_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -16862,9 +16862,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5324:1: ( 'serverSystemTime' )
             // InternalAceGen.g:5325:2: 'serverSystemTime'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeKeyword_2_3_0()); 
+             before(grammarAccess.getSquishyValueAccess().getServerSystemTimeKeyword_2_3_0()); 
             match(input,49,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeKeyword_2_3_0()); 
+             after(grammarAccess.getSquishyValueAccess().getServerSystemTimeKeyword_2_3_0()); 
 
             }
 
@@ -16883,21 +16883,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_3__0__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_3__0__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_3__1"
-    // InternalAceGen.g:5334:1: rule__NonDeterministicValue__Group_2_3__1 : rule__NonDeterministicValue__Group_2_3__1__Impl ;
-    public final void rule__NonDeterministicValue__Group_2_3__1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_3__1"
+    // InternalAceGen.g:5334:1: rule__SquishyValue__Group_2_3__1 : rule__SquishyValue__Group_2_3__1__Impl ;
+    public final void rule__SquishyValue__Group_2_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5338:1: ( rule__NonDeterministicValue__Group_2_3__1__Impl )
-            // InternalAceGen.g:5339:2: rule__NonDeterministicValue__Group_2_3__1__Impl
+            // InternalAceGen.g:5338:1: ( rule__SquishyValue__Group_2_3__1__Impl )
+            // InternalAceGen.g:5339:2: rule__SquishyValue__Group_2_3__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_3__1__Impl();
+            rule__SquishyValue__Group_2_3__1__Impl();
 
             state._fsp--;
 
@@ -16916,35 +16916,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_3__1"
+    // $ANTLR end "rule__SquishyValue__Group_2_3__1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_3__1__Impl"
-    // InternalAceGen.g:5345:1: rule__NonDeterministicValue__Group_2_3__1__Impl : ( ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 ) ) ;
-    public final void rule__NonDeterministicValue__Group_2_3__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_3__1__Impl"
+    // InternalAceGen.g:5345:1: rule__SquishyValue__Group_2_3__1__Impl : ( ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 ) ) ;
+    public final void rule__SquishyValue__Group_2_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5349:1: ( ( ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 ) ) )
-            // InternalAceGen.g:5350:1: ( ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 ) )
+            // InternalAceGen.g:5349:1: ( ( ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 ) ) )
+            // InternalAceGen.g:5350:1: ( ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 ) )
             {
-            // InternalAceGen.g:5350:1: ( ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 ) )
-            // InternalAceGen.g:5351:2: ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 )
+            // InternalAceGen.g:5350:1: ( ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 ) )
+            // InternalAceGen.g:5351:2: ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeAssignment_2_3_1()); 
-            // InternalAceGen.g:5352:2: ( rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 )
-            // InternalAceGen.g:5352:3: rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1
+             before(grammarAccess.getSquishyValueAccess().getServerSystemTimeAssignment_2_3_1()); 
+            // InternalAceGen.g:5352:2: ( rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 )
+            // InternalAceGen.g:5352:3: rule__SquishyValue__ServerSystemTimeAssignment_2_3_1
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1();
+            rule__SquishyValue__ServerSystemTimeAssignment_2_3_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeAssignment_2_3_1()); 
+             after(grammarAccess.getSquishyValueAccess().getServerSystemTimeAssignment_2_3_1()); 
 
             }
 
@@ -16963,26 +16963,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_3__1__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_3__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__0"
-    // InternalAceGen.g:5361:1: rule__NonDeterministicValue__Group_2_4__0 : rule__NonDeterministicValue__Group_2_4__0__Impl rule__NonDeterministicValue__Group_2_4__1 ;
-    public final void rule__NonDeterministicValue__Group_2_4__0() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__0"
+    // InternalAceGen.g:5361:1: rule__SquishyValue__Group_2_4__0 : rule__SquishyValue__Group_2_4__0__Impl rule__SquishyValue__Group_2_4__1 ;
+    public final void rule__SquishyValue__Group_2_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5365:1: ( rule__NonDeterministicValue__Group_2_4__0__Impl rule__NonDeterministicValue__Group_2_4__1 )
-            // InternalAceGen.g:5366:2: rule__NonDeterministicValue__Group_2_4__0__Impl rule__NonDeterministicValue__Group_2_4__1
+            // InternalAceGen.g:5365:1: ( rule__SquishyValue__Group_2_4__0__Impl rule__SquishyValue__Group_2_4__1 )
+            // InternalAceGen.g:5366:2: rule__SquishyValue__Group_2_4__0__Impl rule__SquishyValue__Group_2_4__1
             {
             pushFollow(FOLLOW_4);
-            rule__NonDeterministicValue__Group_2_4__0__Impl();
+            rule__SquishyValue__Group_2_4__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_4__1();
+            rule__SquishyValue__Group_2_4__1();
 
             state._fsp--;
 
@@ -17001,25 +17001,25 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__0"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__0"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__0__Impl"
-    // InternalAceGen.g:5373:1: rule__NonDeterministicValue__Group_2_4__0__Impl : ( 'nonDeterministic' ) ;
-    public final void rule__NonDeterministicValue__Group_2_4__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__0__Impl"
+    // InternalAceGen.g:5373:1: rule__SquishyValue__Group_2_4__0__Impl : ( 'squishy' ) ;
+    public final void rule__SquishyValue__Group_2_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5377:1: ( ( 'nonDeterministic' ) )
-            // InternalAceGen.g:5378:1: ( 'nonDeterministic' )
+            // InternalAceGen.g:5377:1: ( ( 'squishy' ) )
+            // InternalAceGen.g:5378:1: ( 'squishy' )
             {
-            // InternalAceGen.g:5378:1: ( 'nonDeterministic' )
-            // InternalAceGen.g:5379:2: 'nonDeterministic'
+            // InternalAceGen.g:5378:1: ( 'squishy' )
+            // InternalAceGen.g:5379:2: 'squishy'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getNonDeterministicKeyword_2_4_0()); 
+             before(grammarAccess.getSquishyValueAccess().getSquishyKeyword_2_4_0()); 
             match(input,50,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getNonDeterministicKeyword_2_4_0()); 
+             after(grammarAccess.getSquishyValueAccess().getSquishyKeyword_2_4_0()); 
 
             }
 
@@ -17038,26 +17038,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__0__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__0__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__1"
-    // InternalAceGen.g:5388:1: rule__NonDeterministicValue__Group_2_4__1 : rule__NonDeterministicValue__Group_2_4__1__Impl rule__NonDeterministicValue__Group_2_4__2 ;
-    public final void rule__NonDeterministicValue__Group_2_4__1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__1"
+    // InternalAceGen.g:5388:1: rule__SquishyValue__Group_2_4__1 : rule__SquishyValue__Group_2_4__1__Impl rule__SquishyValue__Group_2_4__2 ;
+    public final void rule__SquishyValue__Group_2_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5392:1: ( rule__NonDeterministicValue__Group_2_4__1__Impl rule__NonDeterministicValue__Group_2_4__2 )
-            // InternalAceGen.g:5393:2: rule__NonDeterministicValue__Group_2_4__1__Impl rule__NonDeterministicValue__Group_2_4__2
+            // InternalAceGen.g:5392:1: ( rule__SquishyValue__Group_2_4__1__Impl rule__SquishyValue__Group_2_4__2 )
+            // InternalAceGen.g:5393:2: rule__SquishyValue__Group_2_4__1__Impl rule__SquishyValue__Group_2_4__2
             {
             pushFollow(FOLLOW_39);
-            rule__NonDeterministicValue__Group_2_4__1__Impl();
+            rule__SquishyValue__Group_2_4__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_4__2();
+            rule__SquishyValue__Group_2_4__2();
 
             state._fsp--;
 
@@ -17076,35 +17076,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__1"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__1__Impl"
-    // InternalAceGen.g:5400:1: rule__NonDeterministicValue__Group_2_4__1__Impl : ( ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 ) ) ;
-    public final void rule__NonDeterministicValue__Group_2_4__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__1__Impl"
+    // InternalAceGen.g:5400:1: rule__SquishyValue__Group_2_4__1__Impl : ( ( rule__SquishyValue__AttributeAssignment_2_4_1 ) ) ;
+    public final void rule__SquishyValue__Group_2_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5404:1: ( ( ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 ) ) )
-            // InternalAceGen.g:5405:1: ( ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 ) )
+            // InternalAceGen.g:5404:1: ( ( ( rule__SquishyValue__AttributeAssignment_2_4_1 ) ) )
+            // InternalAceGen.g:5405:1: ( ( rule__SquishyValue__AttributeAssignment_2_4_1 ) )
             {
-            // InternalAceGen.g:5405:1: ( ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 ) )
-            // InternalAceGen.g:5406:2: ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 )
+            // InternalAceGen.g:5405:1: ( ( rule__SquishyValue__AttributeAssignment_2_4_1 ) )
+            // InternalAceGen.g:5406:2: ( rule__SquishyValue__AttributeAssignment_2_4_1 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getAttributeAssignment_2_4_1()); 
-            // InternalAceGen.g:5407:2: ( rule__NonDeterministicValue__AttributeAssignment_2_4_1 )
-            // InternalAceGen.g:5407:3: rule__NonDeterministicValue__AttributeAssignment_2_4_1
+             before(grammarAccess.getSquishyValueAccess().getAttributeAssignment_2_4_1()); 
+            // InternalAceGen.g:5407:2: ( rule__SquishyValue__AttributeAssignment_2_4_1 )
+            // InternalAceGen.g:5407:3: rule__SquishyValue__AttributeAssignment_2_4_1
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__AttributeAssignment_2_4_1();
+            rule__SquishyValue__AttributeAssignment_2_4_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getAttributeAssignment_2_4_1()); 
+             after(grammarAccess.getSquishyValueAccess().getAttributeAssignment_2_4_1()); 
 
             }
 
@@ -17123,26 +17123,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__1__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__1__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__2"
-    // InternalAceGen.g:5415:1: rule__NonDeterministicValue__Group_2_4__2 : rule__NonDeterministicValue__Group_2_4__2__Impl rule__NonDeterministicValue__Group_2_4__3 ;
-    public final void rule__NonDeterministicValue__Group_2_4__2() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__2"
+    // InternalAceGen.g:5415:1: rule__SquishyValue__Group_2_4__2 : rule__SquishyValue__Group_2_4__2__Impl rule__SquishyValue__Group_2_4__3 ;
+    public final void rule__SquishyValue__Group_2_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5419:1: ( rule__NonDeterministicValue__Group_2_4__2__Impl rule__NonDeterministicValue__Group_2_4__3 )
-            // InternalAceGen.g:5420:2: rule__NonDeterministicValue__Group_2_4__2__Impl rule__NonDeterministicValue__Group_2_4__3
+            // InternalAceGen.g:5419:1: ( rule__SquishyValue__Group_2_4__2__Impl rule__SquishyValue__Group_2_4__3 )
+            // InternalAceGen.g:5420:2: rule__SquishyValue__Group_2_4__2__Impl rule__SquishyValue__Group_2_4__3
             {
             pushFollow(FOLLOW_40);
-            rule__NonDeterministicValue__Group_2_4__2__Impl();
+            rule__SquishyValue__Group_2_4__2__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_4__3();
+            rule__SquishyValue__Group_2_4__3();
 
             state._fsp--;
 
@@ -17161,12 +17161,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__2"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__2"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__2__Impl"
-    // InternalAceGen.g:5427:1: rule__NonDeterministicValue__Group_2_4__2__Impl : ( ':' ) ;
-    public final void rule__NonDeterministicValue__Group_2_4__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__2__Impl"
+    // InternalAceGen.g:5427:1: rule__SquishyValue__Group_2_4__2__Impl : ( ':' ) ;
+    public final void rule__SquishyValue__Group_2_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -17177,9 +17177,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:5432:1: ( ':' )
             // InternalAceGen.g:5433:2: ':'
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getColonKeyword_2_4_2()); 
+             before(grammarAccess.getSquishyValueAccess().getColonKeyword_2_4_2()); 
             match(input,51,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getColonKeyword_2_4_2()); 
+             after(grammarAccess.getSquishyValueAccess().getColonKeyword_2_4_2()); 
 
             }
 
@@ -17198,21 +17198,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__2__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__2__Impl"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__3"
-    // InternalAceGen.g:5442:1: rule__NonDeterministicValue__Group_2_4__3 : rule__NonDeterministicValue__Group_2_4__3__Impl ;
-    public final void rule__NonDeterministicValue__Group_2_4__3() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__3"
+    // InternalAceGen.g:5442:1: rule__SquishyValue__Group_2_4__3 : rule__SquishyValue__Group_2_4__3__Impl ;
+    public final void rule__SquishyValue__Group_2_4__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5446:1: ( rule__NonDeterministicValue__Group_2_4__3__Impl )
-            // InternalAceGen.g:5447:2: rule__NonDeterministicValue__Group_2_4__3__Impl
+            // InternalAceGen.g:5446:1: ( rule__SquishyValue__Group_2_4__3__Impl )
+            // InternalAceGen.g:5447:2: rule__SquishyValue__Group_2_4__3__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__Group_2_4__3__Impl();
+            rule__SquishyValue__Group_2_4__3__Impl();
 
             state._fsp--;
 
@@ -17231,35 +17231,35 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__3"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__3"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__Group_2_4__3__Impl"
-    // InternalAceGen.g:5453:1: rule__NonDeterministicValue__Group_2_4__3__Impl : ( ( rule__NonDeterministicValue__ValueAssignment_2_4_3 ) ) ;
-    public final void rule__NonDeterministicValue__Group_2_4__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__Group_2_4__3__Impl"
+    // InternalAceGen.g:5453:1: rule__SquishyValue__Group_2_4__3__Impl : ( ( rule__SquishyValue__ValueAssignment_2_4_3 ) ) ;
+    public final void rule__SquishyValue__Group_2_4__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:5457:1: ( ( ( rule__NonDeterministicValue__ValueAssignment_2_4_3 ) ) )
-            // InternalAceGen.g:5458:1: ( ( rule__NonDeterministicValue__ValueAssignment_2_4_3 ) )
+            // InternalAceGen.g:5457:1: ( ( ( rule__SquishyValue__ValueAssignment_2_4_3 ) ) )
+            // InternalAceGen.g:5458:1: ( ( rule__SquishyValue__ValueAssignment_2_4_3 ) )
             {
-            // InternalAceGen.g:5458:1: ( ( rule__NonDeterministicValue__ValueAssignment_2_4_3 ) )
-            // InternalAceGen.g:5459:2: ( rule__NonDeterministicValue__ValueAssignment_2_4_3 )
+            // InternalAceGen.g:5458:1: ( ( rule__SquishyValue__ValueAssignment_2_4_3 ) )
+            // InternalAceGen.g:5459:2: ( rule__SquishyValue__ValueAssignment_2_4_3 )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getValueAssignment_2_4_3()); 
-            // InternalAceGen.g:5460:2: ( rule__NonDeterministicValue__ValueAssignment_2_4_3 )
-            // InternalAceGen.g:5460:3: rule__NonDeterministicValue__ValueAssignment_2_4_3
+             before(grammarAccess.getSquishyValueAccess().getValueAssignment_2_4_3()); 
+            // InternalAceGen.g:5460:2: ( rule__SquishyValue__ValueAssignment_2_4_3 )
+            // InternalAceGen.g:5460:3: rule__SquishyValue__ValueAssignment_2_4_3
             {
             pushFollow(FOLLOW_2);
-            rule__NonDeterministicValue__ValueAssignment_2_4_3();
+            rule__SquishyValue__ValueAssignment_2_4_3();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getValueAssignment_2_4_3()); 
+             after(grammarAccess.getSquishyValueAccess().getValueAssignment_2_4_3()); 
 
             }
 
@@ -17278,7 +17278,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__Group_2_4__3__Impl"
+    // $ANTLR end "rule__SquishyValue__Group_2_4__3__Impl"
 
 
     // $ANTLR start "rule__InputValue__Group__0"
@@ -35988,20 +35988,20 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Attribute__Group__7__Impl"
-    // InternalAceGen.g:11393:1: rule__Attribute__Group__7__Impl : ( ( rule__Attribute__NonDeterministicAssignment_7 )? ) ;
+    // InternalAceGen.g:11393:1: rule__Attribute__Group__7__Impl : ( ( rule__Attribute__SquishyAssignment_7 )? ) ;
     public final void rule__Attribute__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:11397:1: ( ( ( rule__Attribute__NonDeterministicAssignment_7 )? ) )
-            // InternalAceGen.g:11398:1: ( ( rule__Attribute__NonDeterministicAssignment_7 )? )
+            // InternalAceGen.g:11397:1: ( ( ( rule__Attribute__SquishyAssignment_7 )? ) )
+            // InternalAceGen.g:11398:1: ( ( rule__Attribute__SquishyAssignment_7 )? )
             {
-            // InternalAceGen.g:11398:1: ( ( rule__Attribute__NonDeterministicAssignment_7 )? )
-            // InternalAceGen.g:11399:2: ( rule__Attribute__NonDeterministicAssignment_7 )?
+            // InternalAceGen.g:11398:1: ( ( rule__Attribute__SquishyAssignment_7 )? )
+            // InternalAceGen.g:11399:2: ( rule__Attribute__SquishyAssignment_7 )?
             {
-             before(grammarAccess.getAttributeAccess().getNonDeterministicAssignment_7()); 
-            // InternalAceGen.g:11400:2: ( rule__Attribute__NonDeterministicAssignment_7 )?
+             before(grammarAccess.getAttributeAccess().getSquishyAssignment_7()); 
+            // InternalAceGen.g:11400:2: ( rule__Attribute__SquishyAssignment_7 )?
             int alt138=2;
             int LA138_0 = input.LA(1);
 
@@ -36010,10 +36010,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt138) {
                 case 1 :
-                    // InternalAceGen.g:11400:3: rule__Attribute__NonDeterministicAssignment_7
+                    // InternalAceGen.g:11400:3: rule__Attribute__SquishyAssignment_7
                     {
                     pushFollow(FOLLOW_2);
-                    rule__Attribute__NonDeterministicAssignment_7();
+                    rule__Attribute__SquishyAssignment_7();
 
                     state._fsp--;
 
@@ -36023,7 +36023,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getAttributeAccess().getNonDeterministicAssignment_7()); 
+             after(grammarAccess.getAttributeAccess().getSquishyAssignment_7()); 
 
             }
 
@@ -40113,26 +40113,26 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ClientWhenBlock__InputValuesAssignment_1_1_1_1"
 
 
-    // $ANTLR start "rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1"
-    // InternalAceGen.g:12869:1: rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1 : ( ruleNonDeterministicValue ) ;
-    public final void rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__ClientWhenBlock__SquishyValuesAssignment_2_1"
+    // InternalAceGen.g:12869:1: rule__ClientWhenBlock__SquishyValuesAssignment_2_1 : ( ruleSquishyValue ) ;
+    public final void rule__ClientWhenBlock__SquishyValuesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:12873:1: ( ( ruleNonDeterministicValue ) )
-            // InternalAceGen.g:12874:2: ( ruleNonDeterministicValue )
+            // InternalAceGen.g:12873:1: ( ( ruleSquishyValue ) )
+            // InternalAceGen.g:12874:2: ( ruleSquishyValue )
             {
-            // InternalAceGen.g:12874:2: ( ruleNonDeterministicValue )
-            // InternalAceGen.g:12875:3: ruleNonDeterministicValue
+            // InternalAceGen.g:12874:2: ( ruleSquishyValue )
+            // InternalAceGen.g:12875:3: ruleSquishyValue
             {
-             before(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0()); 
+             before(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
-            ruleNonDeterministicValue();
+            ruleSquishyValue();
 
             state._fsp--;
 
-             after(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0()); 
+             after(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_1_0()); 
 
             }
 
@@ -40151,29 +40151,29 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_1"
+    // $ANTLR end "rule__ClientWhenBlock__SquishyValuesAssignment_2_1"
 
 
-    // $ANTLR start "rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1"
-    // InternalAceGen.g:12884:1: rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1 : ( ruleNonDeterministicValue ) ;
-    public final void rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1() throws RecognitionException {
+    // $ANTLR start "rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1"
+    // InternalAceGen.g:12884:1: rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1 : ( ruleSquishyValue ) ;
+    public final void rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:12888:1: ( ( ruleNonDeterministicValue ) )
-            // InternalAceGen.g:12889:2: ( ruleNonDeterministicValue )
+            // InternalAceGen.g:12888:1: ( ( ruleSquishyValue ) )
+            // InternalAceGen.g:12889:2: ( ruleSquishyValue )
             {
-            // InternalAceGen.g:12889:2: ( ruleNonDeterministicValue )
-            // InternalAceGen.g:12890:3: ruleNonDeterministicValue
+            // InternalAceGen.g:12889:2: ( ruleSquishyValue )
+            // InternalAceGen.g:12890:3: ruleSquishyValue
             {
-             before(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0()); 
+             before(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_2_1_0()); 
             pushFollow(FOLLOW_2);
-            ruleNonDeterministicValue();
+            ruleSquishyValue();
 
             state._fsp--;
 
-             after(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0()); 
+             after(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_2_1_0()); 
 
             }
 
@@ -40192,12 +40192,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ClientWhenBlock__NonDeterministicValuesAssignment_2_2_1"
+    // $ANTLR end "rule__ClientWhenBlock__SquishyValuesAssignment_2_2_1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__UuidAssignment_2_1"
-    // InternalAceGen.g:12899:1: rule__NonDeterministicValue__UuidAssignment_2_1 : ( RULE_STRING ) ;
-    public final void rule__NonDeterministicValue__UuidAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__UuidAssignment_2_1"
+    // InternalAceGen.g:12899:1: rule__SquishyValue__UuidAssignment_2_1 : ( RULE_STRING ) ;
+    public final void rule__SquishyValue__UuidAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -40208,9 +40208,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:12904:2: ( RULE_STRING )
             // InternalAceGen.g:12905:3: RULE_STRING
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0()); 
+             before(grammarAccess.getSquishyValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0()); 
+             after(grammarAccess.getSquishyValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0()); 
 
             }
 
@@ -40229,12 +40229,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__UuidAssignment_2_1"
+    // $ANTLR end "rule__SquishyValue__UuidAssignment_2_1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1"
-    // InternalAceGen.g:12914:1: rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1 : ( RULE_STRING ) ;
-    public final void rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__ClientSystemTimeAssignment_2_2_1"
+    // InternalAceGen.g:12914:1: rule__SquishyValue__ClientSystemTimeAssignment_2_2_1 : ( RULE_STRING ) ;
+    public final void rule__SquishyValue__ClientSystemTimeAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -40245,9 +40245,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:12919:2: ( RULE_STRING )
             // InternalAceGen.g:12920:3: RULE_STRING
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0()); 
+             before(grammarAccess.getSquishyValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0()); 
+             after(grammarAccess.getSquishyValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0()); 
 
             }
 
@@ -40266,12 +40266,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__ClientSystemTimeAssignment_2_2_1"
+    // $ANTLR end "rule__SquishyValue__ClientSystemTimeAssignment_2_2_1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1"
-    // InternalAceGen.g:12929:1: rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1 : ( RULE_STRING ) ;
-    public final void rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__ServerSystemTimeAssignment_2_3_1"
+    // InternalAceGen.g:12929:1: rule__SquishyValue__ServerSystemTimeAssignment_2_3_1 : ( RULE_STRING ) ;
+    public final void rule__SquishyValue__ServerSystemTimeAssignment_2_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -40282,9 +40282,9 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:12934:2: ( RULE_STRING )
             // InternalAceGen.g:12935:3: RULE_STRING
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0()); 
+             before(grammarAccess.getSquishyValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
-             after(grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0()); 
+             after(grammarAccess.getSquishyValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0()); 
 
             }
 
@@ -40303,12 +40303,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__ServerSystemTimeAssignment_2_3_1"
+    // $ANTLR end "rule__SquishyValue__ServerSystemTimeAssignment_2_3_1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__AttributeAssignment_2_4_1"
-    // InternalAceGen.g:12944:1: rule__NonDeterministicValue__AttributeAssignment_2_4_1 : ( ( ruleQualifiedName ) ) ;
-    public final void rule__NonDeterministicValue__AttributeAssignment_2_4_1() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__AttributeAssignment_2_4_1"
+    // InternalAceGen.g:12944:1: rule__SquishyValue__AttributeAssignment_2_4_1 : ( ( ruleQualifiedName ) ) ;
+    public final void rule__SquishyValue__AttributeAssignment_2_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -40319,21 +40319,21 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:12949:2: ( ( ruleQualifiedName ) )
             // InternalAceGen.g:12950:3: ( ruleQualifiedName )
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeCrossReference_2_4_1_0()); 
+             before(grammarAccess.getSquishyValueAccess().getAttributeAttributeCrossReference_2_4_1_0()); 
             // InternalAceGen.g:12951:3: ( ruleQualifiedName )
             // InternalAceGen.g:12952:4: ruleQualifiedName
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1()); 
+             before(grammarAccess.getSquishyValueAccess().getAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1()); 
             pushFollow(FOLLOW_2);
             ruleQualifiedName();
 
             state._fsp--;
 
-             after(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1()); 
+             after(grammarAccess.getSquishyValueAccess().getAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1()); 
 
             }
 
-             after(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeCrossReference_2_4_1_0()); 
+             after(grammarAccess.getSquishyValueAccess().getAttributeAttributeCrossReference_2_4_1_0()); 
 
             }
 
@@ -40352,12 +40352,12 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__AttributeAssignment_2_4_1"
+    // $ANTLR end "rule__SquishyValue__AttributeAssignment_2_4_1"
 
 
-    // $ANTLR start "rule__NonDeterministicValue__ValueAssignment_2_4_3"
-    // InternalAceGen.g:12963:1: rule__NonDeterministicValue__ValueAssignment_2_4_3 : ( rulePrimitiveValue ) ;
-    public final void rule__NonDeterministicValue__ValueAssignment_2_4_3() throws RecognitionException {
+    // $ANTLR start "rule__SquishyValue__ValueAssignment_2_4_3"
+    // InternalAceGen.g:12963:1: rule__SquishyValue__ValueAssignment_2_4_3 : ( rulePrimitiveValue ) ;
+    public final void rule__SquishyValue__ValueAssignment_2_4_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -40368,13 +40368,13 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             // InternalAceGen.g:12968:2: ( rulePrimitiveValue )
             // InternalAceGen.g:12969:3: rulePrimitiveValue
             {
-             before(grammarAccess.getNonDeterministicValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0()); 
+             before(grammarAccess.getSquishyValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0()); 
             pushFollow(FOLLOW_2);
             rulePrimitiveValue();
 
             state._fsp--;
 
-             after(grammarAccess.getNonDeterministicValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0()); 
+             after(grammarAccess.getSquishyValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0()); 
 
             }
 
@@ -40393,7 +40393,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__NonDeterministicValue__ValueAssignment_2_4_3"
+    // $ANTLR end "rule__SquishyValue__ValueAssignment_2_4_3"
 
 
     // $ANTLR start "rule__InputValue__InputAssignment_0"
@@ -45018,30 +45018,30 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Attribute__ForeignKeyAssignment_6_1"
 
 
-    // $ANTLR start "rule__Attribute__NonDeterministicAssignment_7"
-    // InternalAceGen.g:14768:1: rule__Attribute__NonDeterministicAssignment_7 : ( ( 'nonDeterministic' ) ) ;
-    public final void rule__Attribute__NonDeterministicAssignment_7() throws RecognitionException {
+    // $ANTLR start "rule__Attribute__SquishyAssignment_7"
+    // InternalAceGen.g:14768:1: rule__Attribute__SquishyAssignment_7 : ( ( 'squishy' ) ) ;
+    public final void rule__Attribute__SquishyAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:14772:1: ( ( ( 'nonDeterministic' ) ) )
-            // InternalAceGen.g:14773:2: ( ( 'nonDeterministic' ) )
+            // InternalAceGen.g:14772:1: ( ( ( 'squishy' ) ) )
+            // InternalAceGen.g:14773:2: ( ( 'squishy' ) )
             {
-            // InternalAceGen.g:14773:2: ( ( 'nonDeterministic' ) )
-            // InternalAceGen.g:14774:3: ( 'nonDeterministic' )
+            // InternalAceGen.g:14773:2: ( ( 'squishy' ) )
+            // InternalAceGen.g:14774:3: ( 'squishy' )
             {
-             before(grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0()); 
-            // InternalAceGen.g:14775:3: ( 'nonDeterministic' )
-            // InternalAceGen.g:14776:4: 'nonDeterministic'
+             before(grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0()); 
+            // InternalAceGen.g:14775:3: ( 'squishy' )
+            // InternalAceGen.g:14776:4: 'squishy'
             {
-             before(grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0()); 
+             before(grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0()); 
             match(input,50,FOLLOW_2); 
-             after(grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0()); 
+             after(grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0()); 
 
             }
 
-             after(grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0()); 
+             after(grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0()); 
 
             }
 
@@ -45060,7 +45060,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Attribute__NonDeterministicAssignment_7"
+    // $ANTLR end "rule__Attribute__SquishyAssignment_7"
 
 
     // $ANTLR start "rule__JsonObjectAce__MembersAssignment_2"
