@@ -73,14 +73,14 @@
     <genClasses ecoreClass="AceGen.ecore#//ClientWhenBlock">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/action"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/inputValues"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/nonDeterministicValues"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/squishyValues"/>
     </genClasses>
-    <genClasses ecoreClass="AceGen.ecore#//NonDeterministicValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/uuid"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/clientSystemTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//NonDeterministicValue/serverSystemTime"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//NonDeterministicValue/attribute"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//NonDeterministicValue/value"/>
+    <genClasses ecoreClass="AceGen.ecore#//SquishyValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SquishyValue/uuid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SquishyValue/clientSystemTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//SquishyValue/serverSystemTime"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//SquishyValue/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//SquishyValue/value"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//InputValue">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//InputValue/input"/>
@@ -242,7 +242,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//Attribute/foreignKey"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/nonDeterministic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Attribute/squishy"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonObject"/>
     <genClasses ecoreClass="AceGen.ecore#//JsonObjectAce">

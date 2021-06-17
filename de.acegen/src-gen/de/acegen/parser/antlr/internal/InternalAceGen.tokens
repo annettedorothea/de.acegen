@@ -56,8 +56,6 @@
 'merge'=30
 'models'=59
 'noComponent'=32
-'nonDeterministic'=45
-'nonDeterministicValues'=41
 'notNull'=78
 'null'=79
 'on'=25
@@ -74,6 +72,8 @@
 'serverSystemTime'=44
 'set'=29
 'shouldBe'=49
+'squishy'=45
+'squishyValues'=41
 'storage'=35
 'systemTime'=80
 'takeLatest'=28

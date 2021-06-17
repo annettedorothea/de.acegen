@@ -7,7 +7,7 @@ import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.InputValue;
-import de.acegen.aceGen.NonDeterministicValue;
+import de.acegen.aceGen.SquishyValue;
 
 import java.util.Collection;
 
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getInputValues <em>Input Values</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getNonDeterministicValues <em>Non Deterministic Values</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientWhenBlockImpl#getSquishyValues <em>Squishy Values</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,14 +63,14 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
   protected EList<InputValue> inputValues;
 
   /**
-   * The cached value of the '{@link #getNonDeterministicValues() <em>Non Deterministic Values</em>}' containment reference list.
+   * The cached value of the '{@link #getSquishyValues() <em>Squishy Values</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNonDeterministicValues()
+   * @see #getSquishyValues()
    * @generated
    * @ordered
    */
-  protected EList<NonDeterministicValue> nonDeterministicValues;
+  protected EList<SquishyValue> squishyValues;
 
   /**
    * <!-- begin-user-doc -->
@@ -159,13 +159,13 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public EList<NonDeterministicValue> getNonDeterministicValues()
+  public EList<SquishyValue> getSquishyValues()
   {
-    if (nonDeterministicValues == null)
+    if (squishyValues == null)
     {
-      nonDeterministicValues = new EObjectContainmentEList<NonDeterministicValue>(NonDeterministicValue.class, this, AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES);
+      squishyValues = new EObjectContainmentEList<SquishyValue>(SquishyValue.class, this, AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES);
     }
-    return nonDeterministicValues;
+    return squishyValues;
   }
 
   /**
@@ -180,8 +180,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
     {
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return ((InternalEList<?>)getInputValues()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
-        return ((InternalEList<?>)getNonDeterministicValues()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES:
+        return ((InternalEList<?>)getSquishyValues()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -201,8 +201,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return basicGetAction();
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return getInputValues();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
-        return getNonDeterministicValues();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES:
+        return getSquishyValues();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -225,9 +225,9 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         getInputValues().clear();
         getInputValues().addAll((Collection<? extends InputValue>)newValue);
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
-        getNonDeterministicValues().clear();
-        getNonDeterministicValues().addAll((Collection<? extends NonDeterministicValue>)newValue);
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES:
+        getSquishyValues().clear();
+        getSquishyValues().addAll((Collection<? extends SquishyValue>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -249,8 +249,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         getInputValues().clear();
         return;
-      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
-        getNonDeterministicValues().clear();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES:
+        getSquishyValues().clear();
         return;
     }
     super.eUnset(featureID);
@@ -270,8 +270,8 @@ public class ClientWhenBlockImpl extends MinimalEObjectImpl.Container implements
         return action != null;
       case AceGenPackage.CLIENT_WHEN_BLOCK__INPUT_VALUES:
         return inputValues != null && !inputValues.isEmpty();
-      case AceGenPackage.CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES:
-        return nonDeterministicValues != null && !nonDeterministicValues.isEmpty();
+      case AceGenPackage.CLIENT_WHEN_BLOCK__SQUISHY_VALUES:
+        return squishyValues != null && !squishyValues.isEmpty();
     }
     return super.eIsSet(featureID);
   }

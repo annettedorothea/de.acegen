@@ -1210,8 +1210,8 @@ public class Scenario {
           EList<JsonMember> _members = ((JsonObjectAce) _data).getMembers();
           for(final JsonMember attributeDefinition : _members) {
             {
-              boolean _isNonDeterministic = attributeDefinition.getAttribute().isNonDeterministic();
-              if (_isNonDeterministic) {
+              boolean _isSquishy = attributeDefinition.getAttribute().isSquishy();
+              if (_isSquishy) {
                 _builder.append("this.callNonDeterministicDataProviderPutValue(uuid, \"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
@@ -1268,8 +1268,8 @@ public class Scenario {
         _builder.append("\"\\\"uuid\\\" : \\\"\" + uuid + \"\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
-            return Boolean.valueOf((!_isNonDeterministic));
+            boolean _isSquishy = it_1.getAttribute().isSquishy();
+            return Boolean.valueOf((!_isSquishy));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1333,8 +1333,8 @@ public class Scenario {
     _builder.append("objectMapper.readValue(\"");
     {
       if ((((it != null) && (it.getMembers() != null)) && (IterableExtensions.size(IterableExtensions.<JsonMember>filter(it.getMembers(), ((Function1<JsonMember, Boolean>) (JsonMember it_1) -> {
-        boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
-        return Boolean.valueOf((!_isNonDeterministic));
+        boolean _isSquishy = it_1.getAttribute().isSquishy();
+        return Boolean.valueOf((!_isSquishy));
       }))) > 0))) {
         _builder.append("{\" +");
         _builder.newLineIfNotEmpty();
@@ -1342,8 +1342,8 @@ public class Scenario {
         _builder.append("\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
-            return Boolean.valueOf((!_isNonDeterministic));
+            boolean _isSquishy = it_1.getAttribute().isSquishy();
+            return Boolean.valueOf((!_isSquishy));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;
@@ -1414,8 +1414,8 @@ public class Scenario {
         _builder.append("\\\"");
         {
           final Function1<JsonMember, Boolean> _function = (JsonMember it_1) -> {
-            boolean _isNonDeterministic = it_1.getAttribute().isNonDeterministic();
-            return Boolean.valueOf((!_isNonDeterministic));
+            boolean _isSquishy = it_1.getAttribute().isSquishy();
+            return Boolean.valueOf((!_isSquishy));
           };
           Iterable<JsonMember> _filter = IterableExtensions.<JsonMember>filter(it.getMembers(), _function);
           boolean _hasElements = false;

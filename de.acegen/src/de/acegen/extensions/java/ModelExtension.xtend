@@ -91,7 +91,7 @@ class ModelExtension {
 		var allAttributes = new ArrayList<Attribute>()
 		allAttributesRec(allAttributes)
 		for (attribute : allAttributes) {
-			if (attribute.nonDeterministic) {
+			if (attribute.squishy) {
 				list.add(attribute);
 			}
 		}

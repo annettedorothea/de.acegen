@@ -202,8 +202,8 @@ public class ModelExtension {
     ArrayList<Attribute> allAttributes = new ArrayList<Attribute>();
     this.allAttributesRec(it, allAttributes);
     for (final Attribute attribute : allAttributes) {
-      boolean _isNonDeterministic = attribute.isNonDeterministic();
-      if (_isNonDeterministic) {
+      boolean _isSquishy = attribute.isSquishy();
+      if (_isSquishy) {
         list.add(attribute);
       }
     }

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getAction <em>Action</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getInputValues <em>Input Values</em>}</li>
- *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getNonDeterministicValues <em>Non Deterministic Values</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientWhenBlock#getSquishyValues <em>Squishy Values</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock()
@@ -62,15 +62,15 @@ public interface ClientWhenBlock extends EObject
   EList<InputValue> getInputValues();
 
   /**
-   * Returns the value of the '<em><b>Non Deterministic Values</b></em>' containment reference list.
-   * The list contents are of type {@link de.acegen.aceGen.NonDeterministicValue}.
+   * Returns the value of the '<em><b>Squishy Values</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.SquishyValue}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Non Deterministic Values</em>' containment reference list.
-   * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock_NonDeterministicValues()
+   * @return the value of the '<em>Squishy Values</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getClientWhenBlock_SquishyValues()
    * @model containment="true"
    * @generated
    */
-  EList<NonDeterministicValue> getNonDeterministicValues();
+  EList<SquishyValue> getSquishyValues();
 
 } // ClientWhenBlock

@@ -214,7 +214,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'nonDeterministicValues' nonDeterministicValues+=NonDeterministicValue
+	 *     action=[HttpClientAce|QualifiedName] (ambiguity) 'squishyValues' squishyValues+=SquishyValue
 	 *     action=[HttpClientAce|QualifiedName] (ambiguity) (rule end)
 	 */
 	protected void emit_ClientWhenBlock___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

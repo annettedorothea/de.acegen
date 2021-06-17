@@ -983,8 +983,8 @@ public class Action {
       List<Attribute> _allAttributes = this._modelExtension.allAttributes(it.getModel());
       for(final Attribute attribute : _allAttributes) {
         {
-          boolean _isNonDeterministic = attribute.isNonDeterministic();
-          if (_isNonDeterministic) {
+          boolean _isSquishy = attribute.isSquishy();
+          if (_isSquishy) {
             _builder.append("\t");
             _builder.append("String ");
             String _name = attribute.getName();

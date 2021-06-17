@@ -130,7 +130,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         }
       }
     }
-    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.NON_DETERMINISTIC_VALUE__ATTRIBUTE))) {
+    if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.SQUISHY_VALUE__ATTRIBUTE))) {
       final IScope scope_2 = super.getScope(context, reference);
       final ArrayList<Attribute> filtered = new ArrayList<Attribute>();
       Iterable<IEObjectDescription> _allElements = scope_2.getAllElements();
@@ -138,8 +138,8 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         {
           EObject _resolve = EcoreUtil2.resolve(element.getEObjectOrProxy(), context);
           final Attribute attribute = ((Attribute) _resolve);
-          boolean _isNonDeterministic = attribute.isNonDeterministic();
-          if (_isNonDeterministic) {
+          boolean _isSquishy = attribute.isSquishy();
+          if (_isSquishy) {
             filtered.add(attribute);
           }
         }

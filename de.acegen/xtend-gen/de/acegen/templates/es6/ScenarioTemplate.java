@@ -6,7 +6,7 @@ import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
-import de.acegen.aceGen.NonDeterministicValue;
+import de.acegen.aceGen.SquishyValue;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -425,10 +425,10 @@ public class ScenarioTemplate {
   private CharSequence initNonDeterministicData(final ClientWhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((it.getNonDeterministicValues() != null) && (it.getNonDeterministicValues().size() > 0))) {
+      if (((it.getSquishyValues() != null) && (it.getSquishyValues().size() > 0))) {
         {
-          EList<NonDeterministicValue> _nonDeterministicValues = it.getNonDeterministicValues();
-          for(final NonDeterministicValue nonDeterministicValue : _nonDeterministicValues) {
+          EList<SquishyValue> _squishyValues = it.getSquishyValues();
+          for(final SquishyValue nonDeterministicValue : _squishyValues) {
             _builder.append("await ScenarioUtils.addNonDeterministicValueClient(");
             _builder.newLine();
             _builder.append("\t");

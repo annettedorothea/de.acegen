@@ -173,10 +173,10 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.NON_DETERMINISTIC_VALUE:
+      case AceGenPackage.SQUISHY_VALUE:
       {
-        NonDeterministicValue nonDeterministicValue = (NonDeterministicValue)theEObject;
-        T result = caseNonDeterministicValue(nonDeterministicValue);
+        SquishyValue squishyValue = (SquishyValue)theEObject;
+        T result = caseSquishyValue(squishyValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -763,17 +763,17 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Non Deterministic Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Squishy Value</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Non Deterministic Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Squishy Value</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseNonDeterministicValue(NonDeterministicValue object)
+  public T caseSquishyValue(SquishyValue object)
   {
     return null;
   }

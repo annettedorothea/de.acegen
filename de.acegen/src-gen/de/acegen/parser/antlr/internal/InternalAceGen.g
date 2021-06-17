@@ -1347,25 +1347,25 @@ ruleClientWhenBlock returns [EObject current=null]
 			}
 		)?
 		(
-			otherlv_6='nonDeterministicValues'
+			otherlv_6='squishyValues'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesKeyword_2_0());
+				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getSquishyValuesKeyword_2_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_1_0());
 					}
-					lv_nonDeterministicValues_7_0=ruleNonDeterministicValue
+					lv_squishyValues_7_0=ruleSquishyValue
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getClientWhenBlockRule());
 						}
 						add(
 							$current,
-							"nonDeterministicValues",
-							lv_nonDeterministicValues_7_0,
-							"de.acegen.AceGen.NonDeterministicValue");
+							"squishyValues",
+							lv_squishyValues_7_0,
+							"de.acegen.AceGen.SquishyValue");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1378,18 +1378,18 @@ ruleClientWhenBlock returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0());
+							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_2_1_0());
 						}
-						lv_nonDeterministicValues_9_0=ruleNonDeterministicValue
+						lv_squishyValues_9_0=ruleSquishyValue
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getClientWhenBlockRule());
 							}
 							add(
 								$current,
-								"nonDeterministicValues",
-								lv_nonDeterministicValues_9_0,
-								"de.acegen.AceGen.NonDeterministicValue");
+								"squishyValues",
+								lv_squishyValues_9_0,
+								"de.acegen.AceGen.SquishyValue");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -1399,15 +1399,15 @@ ruleClientWhenBlock returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleNonDeterministicValue
-entryRuleNonDeterministicValue returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getNonDeterministicValueRule()); }
-	iv_ruleNonDeterministicValue=ruleNonDeterministicValue
-	{ $current=$iv_ruleNonDeterministicValue.current; }
+// Entry rule entryRuleSquishyValue
+entryRuleSquishyValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSquishyValueRule()); }
+	iv_ruleSquishyValue=ruleSquishyValue
+	{ $current=$iv_ruleSquishyValue.current; }
 	EOF;
 
-// Rule NonDeterministicValue
-ruleNonDeterministicValue returns [EObject current=null]
+// Rule SquishyValue
+ruleSquishyValue returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -1418,28 +1418,28 @@ ruleNonDeterministicValue returns [EObject current=null]
 		(
 			{
 				$current = forceCreateModelElement(
-					grammarAccess.getNonDeterministicValueAccess().getNonDeterministicValueAction_0(),
+					grammarAccess.getSquishyValueAccess().getSquishyValueAction_0(),
 					$current);
 			}
 		)
 		otherlv_1='{'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getNonDeterministicValueAccess().getLeftCurlyBracketKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getSquishyValueAccess().getLeftCurlyBracketKeyword_1());
 		}
 		(
 			otherlv_2='uuid'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getNonDeterministicValueAccess().getUuidKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getSquishyValueAccess().getUuidKeyword_2_0());
 			}
 			(
 				(
 					lv_uuid_3_0=RULE_STRING
 					{
-						newLeafNode(lv_uuid_3_0, grammarAccess.getNonDeterministicValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
+						newLeafNode(lv_uuid_3_0, grammarAccess.getSquishyValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+							$current = createModelElement(grammarAccess.getSquishyValueRule());
 						}
 						setWithLastConsumed(
 							$current,
@@ -1452,17 +1452,17 @@ ruleNonDeterministicValue returns [EObject current=null]
 			(
 				otherlv_4='clientSystemTime'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeKeyword_2_2_0());
+					newLeafNode(otherlv_4, grammarAccess.getSquishyValueAccess().getClientSystemTimeKeyword_2_2_0());
 				}
 				(
 					(
 						lv_clientSystemTime_5_0=RULE_STRING
 						{
-							newLeafNode(lv_clientSystemTime_5_0, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0());
+							newLeafNode(lv_clientSystemTime_5_0, grammarAccess.getSquishyValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+								$current = createModelElement(grammarAccess.getSquishyValueRule());
 							}
 							setWithLastConsumed(
 								$current,
@@ -1476,17 +1476,17 @@ ruleNonDeterministicValue returns [EObject current=null]
 			(
 				otherlv_6='serverSystemTime'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeKeyword_2_3_0());
+					newLeafNode(otherlv_6, grammarAccess.getSquishyValueAccess().getServerSystemTimeKeyword_2_3_0());
 				}
 				(
 					(
 						lv_serverSystemTime_7_0=RULE_STRING
 						{
-							newLeafNode(lv_serverSystemTime_7_0, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0());
+							newLeafNode(lv_serverSystemTime_7_0, grammarAccess.getSquishyValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+								$current = createModelElement(grammarAccess.getSquishyValueRule());
 							}
 							setWithLastConsumed(
 								$current,
@@ -1498,19 +1498,19 @@ ruleNonDeterministicValue returns [EObject current=null]
 				)
 			)?
 			(
-				otherlv_8='nonDeterministic'
+				otherlv_8='squishy'
 				{
-					newLeafNode(otherlv_8, grammarAccess.getNonDeterministicValueAccess().getNonDeterministicKeyword_2_4_0());
+					newLeafNode(otherlv_8, grammarAccess.getSquishyValueAccess().getSquishyKeyword_2_4_0());
 				}
 				(
 					(
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+								$current = createModelElement(grammarAccess.getSquishyValueRule());
 							}
 						}
 						{
-							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeCrossReference_2_4_1_0());
+							newCompositeNode(grammarAccess.getSquishyValueAccess().getAttributeAttributeCrossReference_2_4_1_0());
 						}
 						ruleQualifiedName
 						{
@@ -1520,17 +1520,17 @@ ruleNonDeterministicValue returns [EObject current=null]
 				)
 				otherlv_10=':'
 				{
-					newLeafNode(otherlv_10, grammarAccess.getNonDeterministicValueAccess().getColonKeyword_2_4_2());
+					newLeafNode(otherlv_10, grammarAccess.getSquishyValueAccess().getColonKeyword_2_4_2());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0());
+							newCompositeNode(grammarAccess.getSquishyValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0());
 						}
 						lv_value_11_0=rulePrimitiveValue
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getNonDeterministicValueRule());
+								$current = createModelElementForParent(grammarAccess.getSquishyValueRule());
 							}
 							set(
 								$current,
@@ -1545,7 +1545,7 @@ ruleNonDeterministicValue returns [EObject current=null]
 		)?
 		otherlv_12='}'
 		{
-			newLeafNode(otherlv_12, grammarAccess.getNonDeterministicValueAccess().getRightCurlyBracketKeyword_3());
+			newLeafNode(otherlv_12, grammarAccess.getSquishyValueAccess().getRightCurlyBracketKeyword_3());
 		}
 	)
 ;
@@ -4677,15 +4677,15 @@ ruleAttribute returns [EObject current=null]
 		)?
 		(
 			(
-				lv_nonDeterministic_9_0='nonDeterministic'
+				lv_squishy_9_0='squishy'
 				{
-					newLeafNode(lv_nonDeterministic_9_0, grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0());
+					newLeafNode(lv_squishy_9_0, grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getAttributeRule());
 					}
-					setWithLastConsumed($current, "nonDeterministic", lv_nonDeterministic_9_0 != null, "nonDeterministic");
+					setWithLastConsumed($current, "squishy", lv_squishy_9_0 != null, "squishy");
 				}
 			)
 		)?

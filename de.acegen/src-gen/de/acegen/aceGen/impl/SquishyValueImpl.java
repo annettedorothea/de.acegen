@@ -5,8 +5,8 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.Attribute;
-import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.SquishyValue;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,22 +19,22 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Non Deterministic Value</b></em>'.
+ * An implementation of the model object '<em><b>Squishy Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.NonDeterministicValueImpl#getUuid <em>Uuid</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.NonDeterministicValueImpl#getClientSystemTime <em>Client System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.NonDeterministicValueImpl#getServerSystemTime <em>Server System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.NonDeterministicValueImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.NonDeterministicValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SquishyValueImpl#getUuid <em>Uuid</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SquishyValueImpl#getClientSystemTime <em>Client System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SquishyValueImpl#getServerSystemTime <em>Server System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SquishyValueImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.SquishyValueImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container implements NonDeterministicValue
+public class SquishyValueImpl extends MinimalEObjectImpl.Container implements SquishyValue
 {
   /**
    * The default value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
@@ -121,7 +121,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
    * <!-- end-user-doc -->
    * @generated
    */
-  protected NonDeterministicValueImpl()
+  protected SquishyValueImpl()
   {
     super();
   }
@@ -134,7 +134,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.NON_DETERMINISTIC_VALUE;
+    return AceGenPackage.Literals.SQUISHY_VALUE;
   }
 
   /**
@@ -159,7 +159,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     String oldUuid = uuid;
     uuid = newUuid;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__UUID, oldUuid, uuid));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__UUID, oldUuid, uuid));
   }
 
   /**
@@ -184,7 +184,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     String oldClientSystemTime = clientSystemTime;
     clientSystemTime = newClientSystemTime;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME, oldClientSystemTime, clientSystemTime));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__CLIENT_SYSTEM_TIME, oldClientSystemTime, clientSystemTime));
   }
 
   /**
@@ -209,7 +209,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     String oldServerSystemTime = serverSystemTime;
     serverSystemTime = newServerSystemTime;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME, oldServerSystemTime, serverSystemTime));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__SERVER_SYSTEM_TIME, oldServerSystemTime, serverSystemTime));
   }
 
   /**
@@ -227,7 +227,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
       if (attribute != oldAttribute)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE, oldAttribute, attribute));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.SQUISHY_VALUE__ATTRIBUTE, oldAttribute, attribute));
       }
     }
     return attribute;
@@ -254,7 +254,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     Attribute oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE, oldAttribute, attribute));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__ATTRIBUTE, oldAttribute, attribute));
   }
 
   /**
@@ -279,7 +279,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -297,14 +297,14 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.SQUISHY_VALUE__VALUE, null, msgs);
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.SQUISHY_VALUE__VALUE, null, msgs);
       msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.SQUISHY_VALUE__VALUE, newValue, newValue));
   }
 
   /**
@@ -317,7 +317,7 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   {
     switch (featureID)
     {
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE:
+      case AceGenPackage.SQUISHY_VALUE__VALUE:
         return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -333,16 +333,16 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   {
     switch (featureID)
     {
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__UUID:
+      case AceGenPackage.SQUISHY_VALUE__UUID:
         return getUuid();
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__CLIENT_SYSTEM_TIME:
         return getClientSystemTime();
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__SERVER_SYSTEM_TIME:
         return getServerSystemTime();
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE:
+      case AceGenPackage.SQUISHY_VALUE__ATTRIBUTE:
         if (resolve) return getAttribute();
         return basicGetAttribute();
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE:
+      case AceGenPackage.SQUISHY_VALUE__VALUE:
         return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -358,19 +358,19 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   {
     switch (featureID)
     {
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__UUID:
+      case AceGenPackage.SQUISHY_VALUE__UUID:
         setUuid((String)newValue);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__CLIENT_SYSTEM_TIME:
         setClientSystemTime((String)newValue);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__SERVER_SYSTEM_TIME:
         setServerSystemTime((String)newValue);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE:
+      case AceGenPackage.SQUISHY_VALUE__ATTRIBUTE:
         setAttribute((Attribute)newValue);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE:
+      case AceGenPackage.SQUISHY_VALUE__VALUE:
         setValue((PrimitiveValue)newValue);
         return;
     }
@@ -387,19 +387,19 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   {
     switch (featureID)
     {
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__UUID:
+      case AceGenPackage.SQUISHY_VALUE__UUID:
         setUuid(UUID_EDEFAULT);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__CLIENT_SYSTEM_TIME:
         setClientSystemTime(CLIENT_SYSTEM_TIME_EDEFAULT);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__SERVER_SYSTEM_TIME:
         setServerSystemTime(SERVER_SYSTEM_TIME_EDEFAULT);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE:
+      case AceGenPackage.SQUISHY_VALUE__ATTRIBUTE:
         setAttribute((Attribute)null);
         return;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE:
+      case AceGenPackage.SQUISHY_VALUE__VALUE:
         setValue((PrimitiveValue)null);
         return;
     }
@@ -416,15 +416,15 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
   {
     switch (featureID)
     {
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__UUID:
+      case AceGenPackage.SQUISHY_VALUE__UUID:
         return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__CLIENT_SYSTEM_TIME:
         return CLIENT_SYSTEM_TIME_EDEFAULT == null ? clientSystemTime != null : !CLIENT_SYSTEM_TIME_EDEFAULT.equals(clientSystemTime);
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME:
+      case AceGenPackage.SQUISHY_VALUE__SERVER_SYSTEM_TIME:
         return SERVER_SYSTEM_TIME_EDEFAULT == null ? serverSystemTime != null : !SERVER_SYSTEM_TIME_EDEFAULT.equals(serverSystemTime);
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__ATTRIBUTE:
+      case AceGenPackage.SQUISHY_VALUE__ATTRIBUTE:
         return attribute != null;
-      case AceGenPackage.NON_DETERMINISTIC_VALUE__VALUE:
+      case AceGenPackage.SQUISHY_VALUE__VALUE:
         return value != null;
     }
     return super.eIsSet(featureID);
@@ -451,4 +451,4 @@ public class NonDeterministicValueImpl extends MinimalEObjectImpl.Container impl
     return result.toString();
   }
 
-} //NonDeterministicValueImpl
+} //SquishyValueImpl

@@ -150,13 +150,13 @@ public interface AceGenFactory extends EFactory
   ClientWhenBlock createClientWhenBlock();
 
   /**
-   * Returns a new object of class '<em>Non Deterministic Value</em>'.
+   * Returns a new object of class '<em>Squishy Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Non Deterministic Value</em>'.
+   * @return a new object of class '<em>Squishy Value</em>'.
    * @generated
    */
-  NonDeterministicValue createNonDeterministicValue();
+  SquishyValue createSquishyValue();
 
   /**
    * Returns a new object of class '<em>Input Value</em>'.

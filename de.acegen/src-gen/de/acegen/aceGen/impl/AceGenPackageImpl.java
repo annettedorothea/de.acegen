@@ -49,7 +49,6 @@ import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.JsonValueClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PersistenceVerificationExpression;
@@ -60,6 +59,7 @@ import de.acegen.aceGen.SelectByExpectation;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.SingleClientAttribute;
+import de.acegen.aceGen.SquishyValue;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
@@ -186,7 +186,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass nonDeterministicValueEClass = null;
+  private EClass squishyValueEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1180,7 +1180,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientWhenBlock_NonDeterministicValues()
+  public EReference getClientWhenBlock_SquishyValues()
   {
     return (EReference)clientWhenBlockEClass.getEStructuralFeatures().get(2);
   }
@@ -1191,9 +1191,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EClass getNonDeterministicValue()
+  public EClass getSquishyValue()
   {
-    return nonDeterministicValueEClass;
+    return squishyValueEClass;
   }
 
   /**
@@ -1202,9 +1202,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getNonDeterministicValue_Uuid()
+  public EAttribute getSquishyValue_Uuid()
   {
-    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)squishyValueEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1213,9 +1213,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getNonDeterministicValue_ClientSystemTime()
+  public EAttribute getSquishyValue_ClientSystemTime()
   {
-    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)squishyValueEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1224,9 +1224,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getNonDeterministicValue_ServerSystemTime()
+  public EAttribute getSquishyValue_ServerSystemTime()
   {
-    return (EAttribute)nonDeterministicValueEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)squishyValueEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1235,9 +1235,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getNonDeterministicValue_Attribute()
+  public EReference getSquishyValue_Attribute()
   {
-    return (EReference)nonDeterministicValueEClass.getEStructuralFeatures().get(3);
+    return (EReference)squishyValueEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1246,9 +1246,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getNonDeterministicValue_Value()
+  public EReference getSquishyValue_Value()
   {
-    return (EReference)nonDeterministicValueEClass.getEStructuralFeatures().get(4);
+    return (EReference)squishyValueEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -2676,7 +2676,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getAttribute_NonDeterministic()
+  public EAttribute getAttribute_Squishy()
   {
     return (EAttribute)attributeEClass.getEStructuralFeatures().get(8);
   }
@@ -3054,14 +3054,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     clientWhenBlockEClass = createEClass(CLIENT_WHEN_BLOCK);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__ACTION);
     createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__INPUT_VALUES);
-    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES);
+    createEReference(clientWhenBlockEClass, CLIENT_WHEN_BLOCK__SQUISHY_VALUES);
 
-    nonDeterministicValueEClass = createEClass(NON_DETERMINISTIC_VALUE);
-    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__UUID);
-    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME);
-    createEAttribute(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME);
-    createEReference(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__ATTRIBUTE);
-    createEReference(nonDeterministicValueEClass, NON_DETERMINISTIC_VALUE__VALUE);
+    squishyValueEClass = createEClass(SQUISHY_VALUE);
+    createEAttribute(squishyValueEClass, SQUISHY_VALUE__UUID);
+    createEAttribute(squishyValueEClass, SQUISHY_VALUE__CLIENT_SYSTEM_TIME);
+    createEAttribute(squishyValueEClass, SQUISHY_VALUE__SERVER_SYSTEM_TIME);
+    createEReference(squishyValueEClass, SQUISHY_VALUE__ATTRIBUTE);
+    createEReference(squishyValueEClass, SQUISHY_VALUE__VALUE);
 
     inputValueEClass = createEClass(INPUT_VALUE);
     createEReference(inputValueEClass, INPUT_VALUE__INPUT);
@@ -3226,7 +3226,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(attributeEClass, ATTRIBUTE__MODEL);
     createEAttribute(attributeEClass, ATTRIBUTE__NAME);
     createEReference(attributeEClass, ATTRIBUTE__FOREIGN_KEY);
-    createEAttribute(attributeEClass, ATTRIBUTE__NON_DETERMINISTIC);
+    createEAttribute(attributeEClass, ATTRIBUTE__SQUISHY);
 
     jsonObjectEClass = createEClass(JSON_OBJECT);
 
@@ -3389,14 +3389,14 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(clientWhenBlockEClass, ClientWhenBlock.class, "ClientWhenBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClientWhenBlock_Action(), this.getHttpClientAce(), null, "action", null, 0, 1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientWhenBlock_InputValues(), this.getInputValue(), null, "inputValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClientWhenBlock_NonDeterministicValues(), this.getNonDeterministicValue(), null, "nonDeterministicValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClientWhenBlock_SquishyValues(), this.getSquishyValue(), null, "squishyValues", null, 0, -1, ClientWhenBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(nonDeterministicValueEClass, NonDeterministicValue.class, "NonDeterministicValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNonDeterministicValue_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNonDeterministicValue_ClientSystemTime(), ecorePackage.getEString(), "clientSystemTime", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNonDeterministicValue_ServerSystemTime(), ecorePackage.getEString(), "serverSystemTime", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNonDeterministicValue_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNonDeterministicValue_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, NonDeterministicValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(squishyValueEClass, SquishyValue.class, "SquishyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSquishyValue_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, SquishyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSquishyValue_ClientSystemTime(), ecorePackage.getEString(), "clientSystemTime", null, 0, 1, SquishyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSquishyValue_ServerSystemTime(), ecorePackage.getEString(), "serverSystemTime", null, 0, 1, SquishyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSquishyValue_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, SquishyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSquishyValue_Value(), this.getPrimitiveValue(), null, "value", null, 0, 1, SquishyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputValueEClass, InputValue.class, "InputValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInputValue_Input(), this.getInput(), null, "input", null, 0, 1, InputValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3561,7 +3561,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getAttribute_Model(), this.getModel(), null, "model", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttribute_ForeignKey(), this.getAttribute(), null, "foreignKey", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAttribute_NonDeterministic(), ecorePackage.getEBoolean(), "nonDeterministic", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAttribute_Squishy(), ecorePackage.getEBoolean(), "squishy", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(jsonObjectEClass, JsonObject.class, "JsonObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

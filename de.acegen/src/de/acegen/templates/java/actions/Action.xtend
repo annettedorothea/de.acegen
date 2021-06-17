@@ -411,7 +411,7 @@ class Action {
 				data.setSystemTime(systemTime);
 			}
 			«FOR attribute : getModel.allAttributes»
-				«IF attribute.nonDeterministic»
+				«IF attribute.squishy»
 					String «attribute.name»Object = NonDeterministicDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
 					if («attribute.name»Object != null) {
 						try {

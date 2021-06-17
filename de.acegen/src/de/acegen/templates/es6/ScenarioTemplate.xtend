@@ -141,8 +141,8 @@ class ScenarioTemplate {
 	'''
 	
 	private def initNonDeterministicData(ClientWhenBlock it) '''
-		«IF nonDeterministicValues !== null && nonDeterministicValues.size > 0»
-			«FOR nonDeterministicValue: nonDeterministicValues»
+		«IF squishyValues !== null && squishyValues.size > 0»
+			«FOR nonDeterministicValue: squishyValues»
 				await ScenarioUtils.addNonDeterministicValueClient(
 					driver,
 					{

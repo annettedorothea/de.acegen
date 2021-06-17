@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'React_16.8'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'set'", "'merge'", "'group'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'{'", "'}'", "'GIVEN'", "'WHEN'", "'THEN'", "'nonDeterministicValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'nonDeterministic'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'afterCommit'", "'persistent'", "'extends'", "'x'", "'excludeGIVEN'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'json'", "'undefined'", "'true'", "'false'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'React_16.8'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'set'", "'merge'", "'group'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'{'", "'}'", "'GIVEN'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'afterCommit'", "'persistent'", "'extends'", "'x'", "'excludeGIVEN'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'json'", "'undefined'", "'true'", "'false'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -3293,7 +3293,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClientWhenBlock"
-    // InternalAceGen.g:1269:1: ruleClientWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) ;
+    // InternalAceGen.g:1269:1: ruleClientWhenBlock returns [EObject current=null] : ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )? ) ;
     public final EObject ruleClientWhenBlock() throws RecognitionException {
         EObject current = null;
 
@@ -3306,20 +3306,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
         EObject lv_inputValues_4_0 = null;
 
-        EObject lv_nonDeterministicValues_7_0 = null;
+        EObject lv_squishyValues_7_0 = null;
 
-        EObject lv_nonDeterministicValues_9_0 = null;
+        EObject lv_squishyValues_9_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAceGen.g:1275:2: ( ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? ) )
-            // InternalAceGen.g:1276:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
+            // InternalAceGen.g:1275:2: ( ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )? ) )
+            // InternalAceGen.g:1276:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )? )
             {
-            // InternalAceGen.g:1276:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )? )
-            // InternalAceGen.g:1277:3: ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
+            // InternalAceGen.g:1276:2: ( ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )? )
+            // InternalAceGen.g:1277:3: ( ( ruleQualifiedName ) ) (otherlv_1= '(' ( ( (lv_inputValues_2_0= ruleInputValue ) ) (otherlv_3= ',' ( (lv_inputValues_4_0= ruleInputValue ) ) )* )? otherlv_5= ')' )? (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )?
             {
             // InternalAceGen.g:1277:3: ( ( ruleQualifiedName ) )
             // InternalAceGen.g:1278:4: ( ruleQualifiedName )
@@ -3481,7 +3481,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:1349:3: (otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )* )?
+            // InternalAceGen.g:1349:3: (otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )* )?
             int alt42=2;
             int LA42_0 = input.LA(1);
 
@@ -3490,23 +3490,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt42) {
                 case 1 :
-                    // InternalAceGen.g:1350:4: otherlv_6= 'nonDeterministicValues' ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) ) (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
+                    // InternalAceGen.g:1350:4: otherlv_6= 'squishyValues' ( (lv_squishyValues_7_0= ruleSquishyValue ) ) (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )*
                     {
                     otherlv_6=(Token)match(input,41,FOLLOW_29); 
 
-                    				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesKeyword_2_0());
+                    				newLeafNode(otherlv_6, grammarAccess.getClientWhenBlockAccess().getSquishyValuesKeyword_2_0());
                     			
-                    // InternalAceGen.g:1354:4: ( (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue ) )
-                    // InternalAceGen.g:1355:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
+                    // InternalAceGen.g:1354:4: ( (lv_squishyValues_7_0= ruleSquishyValue ) )
+                    // InternalAceGen.g:1355:5: (lv_squishyValues_7_0= ruleSquishyValue )
                     {
-                    // InternalAceGen.g:1355:5: (lv_nonDeterministicValues_7_0= ruleNonDeterministicValue )
-                    // InternalAceGen.g:1356:6: lv_nonDeterministicValues_7_0= ruleNonDeterministicValue
+                    // InternalAceGen.g:1355:5: (lv_squishyValues_7_0= ruleSquishyValue )
+                    // InternalAceGen.g:1356:6: lv_squishyValues_7_0= ruleSquishyValue
                     {
 
-                    						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0());
+                    						newCompositeNode(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_1_0());
                     					
                     pushFollow(FOLLOW_40);
-                    lv_nonDeterministicValues_7_0=ruleNonDeterministicValue();
+                    lv_squishyValues_7_0=ruleSquishyValue();
 
                     state._fsp--;
 
@@ -3516,9 +3516,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     						}
                     						add(
                     							current,
-                    							"nonDeterministicValues",
-                    							lv_nonDeterministicValues_7_0,
-                    							"de.acegen.AceGen.NonDeterministicValue");
+                    							"squishyValues",
+                    							lv_squishyValues_7_0,
+                    							"de.acegen.AceGen.SquishyValue");
                     						afterParserOrEnumRuleCall();
                     					
 
@@ -3527,7 +3527,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1373:4: (otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) ) )*
+                    // InternalAceGen.g:1373:4: (otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) ) )*
                     loop41:
                     do {
                         int alt41=2;
@@ -3540,23 +3540,23 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                         switch (alt41) {
                     	case 1 :
-                    	    // InternalAceGen.g:1374:5: otherlv_8= ',' ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
+                    	    // InternalAceGen.g:1374:5: otherlv_8= ',' ( (lv_squishyValues_9_0= ruleSquishyValue ) )
                     	    {
                     	    otherlv_8=(Token)match(input,19,FOLLOW_29); 
 
                     	    					newLeafNode(otherlv_8, grammarAccess.getClientWhenBlockAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalAceGen.g:1378:5: ( (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue ) )
-                    	    // InternalAceGen.g:1379:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
+                    	    // InternalAceGen.g:1378:5: ( (lv_squishyValues_9_0= ruleSquishyValue ) )
+                    	    // InternalAceGen.g:1379:6: (lv_squishyValues_9_0= ruleSquishyValue )
                     	    {
-                    	    // InternalAceGen.g:1379:6: (lv_nonDeterministicValues_9_0= ruleNonDeterministicValue )
-                    	    // InternalAceGen.g:1380:7: lv_nonDeterministicValues_9_0= ruleNonDeterministicValue
+                    	    // InternalAceGen.g:1379:6: (lv_squishyValues_9_0= ruleSquishyValue )
+                    	    // InternalAceGen.g:1380:7: lv_squishyValues_9_0= ruleSquishyValue
                     	    {
 
-                    	    							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0());
+                    	    							newCompositeNode(grammarAccess.getClientWhenBlockAccess().getSquishyValuesSquishyValueParserRuleCall_2_2_1_0());
                     	    						
                     	    pushFollow(FOLLOW_40);
-                    	    lv_nonDeterministicValues_9_0=ruleNonDeterministicValue();
+                    	    lv_squishyValues_9_0=ruleSquishyValue();
 
                     	    state._fsp--;
 
@@ -3566,9 +3566,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     	    							}
                     	    							add(
                     	    								current,
-                    	    								"nonDeterministicValues",
-                    	    								lv_nonDeterministicValues_9_0,
-                    	    								"de.acegen.AceGen.NonDeterministicValue");
+                    	    								"squishyValues",
+                    	    								lv_squishyValues_9_0,
+                    	    								"de.acegen.AceGen.SquishyValue");
                     	    							afterParserOrEnumRuleCall();
                     	    						
 
@@ -3614,25 +3614,25 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleClientWhenBlock"
 
 
-    // $ANTLR start "entryRuleNonDeterministicValue"
-    // InternalAceGen.g:1403:1: entryRuleNonDeterministicValue returns [EObject current=null] : iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF ;
-    public final EObject entryRuleNonDeterministicValue() throws RecognitionException {
+    // $ANTLR start "entryRuleSquishyValue"
+    // InternalAceGen.g:1403:1: entryRuleSquishyValue returns [EObject current=null] : iv_ruleSquishyValue= ruleSquishyValue EOF ;
+    public final EObject entryRuleSquishyValue() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleNonDeterministicValue = null;
+        EObject iv_ruleSquishyValue = null;
 
 
         try {
-            // InternalAceGen.g:1403:62: (iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF )
-            // InternalAceGen.g:1404:2: iv_ruleNonDeterministicValue= ruleNonDeterministicValue EOF
+            // InternalAceGen.g:1403:53: (iv_ruleSquishyValue= ruleSquishyValue EOF )
+            // InternalAceGen.g:1404:2: iv_ruleSquishyValue= ruleSquishyValue EOF
             {
-             newCompositeNode(grammarAccess.getNonDeterministicValueRule()); 
+             newCompositeNode(grammarAccess.getSquishyValueRule()); 
             pushFollow(FOLLOW_1);
-            iv_ruleNonDeterministicValue=ruleNonDeterministicValue();
+            iv_ruleSquishyValue=ruleSquishyValue();
 
             state._fsp--;
 
-             current =iv_ruleNonDeterministicValue; 
+             current =iv_ruleSquishyValue; 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -3647,12 +3647,12 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleNonDeterministicValue"
+    // $ANTLR end "entryRuleSquishyValue"
 
 
-    // $ANTLR start "ruleNonDeterministicValue"
-    // InternalAceGen.g:1410:1: ruleNonDeterministicValue returns [EObject current=null] : ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) ;
-    public final EObject ruleNonDeterministicValue() throws RecognitionException {
+    // $ANTLR start "ruleSquishyValue"
+    // InternalAceGen.g:1410:1: ruleSquishyValue returns [EObject current=null] : ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) ;
+    public final EObject ruleSquishyValue() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -3672,18 +3672,18 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:1416:2: ( ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) )
-            // InternalAceGen.g:1417:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
+            // InternalAceGen.g:1416:2: ( ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' ) )
+            // InternalAceGen.g:1417:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
             {
-            // InternalAceGen.g:1417:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
-            // InternalAceGen.g:1418:3: () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}'
+            // InternalAceGen.g:1417:2: ( () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}' )
+            // InternalAceGen.g:1418:3: () otherlv_1= '{' (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )? otherlv_12= '}'
             {
             // InternalAceGen.g:1418:3: ()
             // InternalAceGen.g:1419:4: 
             {
 
             				current = forceCreateModelElement(
-            					grammarAccess.getNonDeterministicValueAccess().getNonDeterministicValueAction_0(),
+            					grammarAccess.getSquishyValueAccess().getSquishyValueAction_0(),
             					current);
             			
 
@@ -3691,9 +3691,9 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             otherlv_1=(Token)match(input,36,FOLLOW_41); 
 
-            			newLeafNode(otherlv_1, grammarAccess.getNonDeterministicValueAccess().getLeftCurlyBracketKeyword_1());
+            			newLeafNode(otherlv_1, grammarAccess.getSquishyValueAccess().getLeftCurlyBracketKeyword_1());
             		
-            // InternalAceGen.g:1429:3: (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )?
+            // InternalAceGen.g:1429:3: (otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )? )?
             int alt46=2;
             int LA46_0 = input.LA(1);
 
@@ -3702,11 +3702,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt46) {
                 case 1 :
-                    // InternalAceGen.g:1430:4: otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
+                    // InternalAceGen.g:1430:4: otherlv_2= 'uuid' ( (lv_uuid_3_0= RULE_STRING ) ) (otherlv_4= 'clientSystemTime' ( (lv_clientSystemTime_5_0= RULE_STRING ) ) )? (otherlv_6= 'serverSystemTime' ( (lv_serverSystemTime_7_0= RULE_STRING ) ) )? (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
                     {
                     otherlv_2=(Token)match(input,42,FOLLOW_42); 
 
-                    				newLeafNode(otherlv_2, grammarAccess.getNonDeterministicValueAccess().getUuidKeyword_2_0());
+                    				newLeafNode(otherlv_2, grammarAccess.getSquishyValueAccess().getUuidKeyword_2_0());
                     			
                     // InternalAceGen.g:1434:4: ( (lv_uuid_3_0= RULE_STRING ) )
                     // InternalAceGen.g:1435:5: (lv_uuid_3_0= RULE_STRING )
@@ -3716,11 +3716,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     {
                     lv_uuid_3_0=(Token)match(input,RULE_STRING,FOLLOW_43); 
 
-                    						newLeafNode(lv_uuid_3_0, grammarAccess.getNonDeterministicValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
+                    						newLeafNode(lv_uuid_3_0, grammarAccess.getSquishyValueAccess().getUuidSTRINGTerminalRuleCall_2_1_0());
                     					
 
                     						if (current==null) {
-                    							current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+                    							current = createModelElement(grammarAccess.getSquishyValueRule());
                     						}
                     						setWithLastConsumed(
                     							current,
@@ -3747,7 +3747,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             {
                             otherlv_4=(Token)match(input,43,FOLLOW_42); 
 
-                            					newLeafNode(otherlv_4, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeKeyword_2_2_0());
+                            					newLeafNode(otherlv_4, grammarAccess.getSquishyValueAccess().getClientSystemTimeKeyword_2_2_0());
                             				
                             // InternalAceGen.g:1457:5: ( (lv_clientSystemTime_5_0= RULE_STRING ) )
                             // InternalAceGen.g:1458:6: (lv_clientSystemTime_5_0= RULE_STRING )
@@ -3757,11 +3757,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             {
                             lv_clientSystemTime_5_0=(Token)match(input,RULE_STRING,FOLLOW_44); 
 
-                            							newLeafNode(lv_clientSystemTime_5_0, grammarAccess.getNonDeterministicValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0());
+                            							newLeafNode(lv_clientSystemTime_5_0, grammarAccess.getSquishyValueAccess().getClientSystemTimeSTRINGTerminalRuleCall_2_2_1_0());
                             						
 
                             							if (current==null) {
-                            								current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+                            								current = createModelElement(grammarAccess.getSquishyValueRule());
                             							}
                             							setWithLastConsumed(
                             								current,
@@ -3794,7 +3794,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             {
                             otherlv_6=(Token)match(input,44,FOLLOW_42); 
 
-                            					newLeafNode(otherlv_6, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeKeyword_2_3_0());
+                            					newLeafNode(otherlv_6, grammarAccess.getSquishyValueAccess().getServerSystemTimeKeyword_2_3_0());
                             				
                             // InternalAceGen.g:1481:5: ( (lv_serverSystemTime_7_0= RULE_STRING ) )
                             // InternalAceGen.g:1482:6: (lv_serverSystemTime_7_0= RULE_STRING )
@@ -3804,11 +3804,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             {
                             lv_serverSystemTime_7_0=(Token)match(input,RULE_STRING,FOLLOW_45); 
 
-                            							newLeafNode(lv_serverSystemTime_7_0, grammarAccess.getNonDeterministicValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0());
+                            							newLeafNode(lv_serverSystemTime_7_0, grammarAccess.getSquishyValueAccess().getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0());
                             						
 
                             							if (current==null) {
-                            								current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+                            								current = createModelElement(grammarAccess.getSquishyValueRule());
                             							}
                             							setWithLastConsumed(
                             								current,
@@ -3828,7 +3828,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalAceGen.g:1500:4: (otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
+                    // InternalAceGen.g:1500:4: (otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) ) )?
                     int alt45=2;
                     int LA45_0 = input.LA(1);
 
@@ -3837,11 +3837,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt45) {
                         case 1 :
-                            // InternalAceGen.g:1501:5: otherlv_8= 'nonDeterministic' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) )
+                            // InternalAceGen.g:1501:5: otherlv_8= 'squishy' ( ( ruleQualifiedName ) ) otherlv_10= ':' ( (lv_value_11_0= rulePrimitiveValue ) )
                             {
                             otherlv_8=(Token)match(input,45,FOLLOW_9); 
 
-                            					newLeafNode(otherlv_8, grammarAccess.getNonDeterministicValueAccess().getNonDeterministicKeyword_2_4_0());
+                            					newLeafNode(otherlv_8, grammarAccess.getSquishyValueAccess().getSquishyKeyword_2_4_0());
                             				
                             // InternalAceGen.g:1505:5: ( ( ruleQualifiedName ) )
                             // InternalAceGen.g:1506:6: ( ruleQualifiedName )
@@ -3851,11 +3851,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             {
 
                             							if (current==null) {
-                            								current = createModelElement(grammarAccess.getNonDeterministicValueRule());
+                            								current = createModelElement(grammarAccess.getSquishyValueRule());
                             							}
                             						
 
-                            							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getAttributeAttributeCrossReference_2_4_1_0());
+                            							newCompositeNode(grammarAccess.getSquishyValueAccess().getAttributeAttributeCrossReference_2_4_1_0());
                             						
                             pushFollow(FOLLOW_46);
                             ruleQualifiedName();
@@ -3873,7 +3873,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
                             otherlv_10=(Token)match(input,46,FOLLOW_47); 
 
-                            					newLeafNode(otherlv_10, grammarAccess.getNonDeterministicValueAccess().getColonKeyword_2_4_2());
+                            					newLeafNode(otherlv_10, grammarAccess.getSquishyValueAccess().getColonKeyword_2_4_2());
                             				
                             // InternalAceGen.g:1525:5: ( (lv_value_11_0= rulePrimitiveValue ) )
                             // InternalAceGen.g:1526:6: (lv_value_11_0= rulePrimitiveValue )
@@ -3882,7 +3882,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
                             // InternalAceGen.g:1527:7: lv_value_11_0= rulePrimitiveValue
                             {
 
-                            							newCompositeNode(grammarAccess.getNonDeterministicValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0());
+                            							newCompositeNode(grammarAccess.getSquishyValueAccess().getValuePrimitiveValueParserRuleCall_2_4_3_0());
                             						
                             pushFollow(FOLLOW_48);
                             lv_value_11_0=rulePrimitiveValue();
@@ -3891,7 +3891,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
                             							if (current==null) {
-                            								current = createModelElementForParent(grammarAccess.getNonDeterministicValueRule());
+                            								current = createModelElementForParent(grammarAccess.getSquishyValueRule());
                             							}
                             							set(
                             								current,
@@ -3920,7 +3920,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             otherlv_12=(Token)match(input,37,FOLLOW_2); 
 
-            			newLeafNode(otherlv_12, grammarAccess.getNonDeterministicValueAccess().getRightCurlyBracketKeyword_3());
+            			newLeafNode(otherlv_12, grammarAccess.getSquishyValueAccess().getRightCurlyBracketKeyword_3());
             		
 
             }
@@ -3941,7 +3941,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleNonDeterministicValue"
+    // $ANTLR end "ruleSquishyValue"
 
 
     // $ANTLR start "entryRuleInputValue"
@@ -11626,7 +11626,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAttribute"
-    // InternalAceGen.g:4536:1: ruleAttribute returns [EObject current=null] : ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) ;
+    // InternalAceGen.g:4536:1: ruleAttribute returns [EObject current=null] : ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_squishy_9_0= 'squishy' ) )? ) ;
     public final EObject ruleAttribute() throws RecognitionException {
         EObject current = null;
 
@@ -11636,7 +11636,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         Token lv_list_3_0=null;
         Token lv_name_6_0=null;
         Token otherlv_7=null;
-        Token lv_nonDeterministic_9_0=null;
+        Token lv_squishy_9_0=null;
         AntlrDatatypeRuleToken lv_type_4_0 = null;
 
 
@@ -11644,11 +11644,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:4542:2: ( ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? ) )
-            // InternalAceGen.g:4543:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
+            // InternalAceGen.g:4542:2: ( ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_squishy_9_0= 'squishy' ) )? ) )
+            // InternalAceGen.g:4543:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_squishy_9_0= 'squishy' ) )? )
             {
-            // InternalAceGen.g:4543:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )? )
-            // InternalAceGen.g:4544:3: ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
+            // InternalAceGen.g:4543:2: ( ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_squishy_9_0= 'squishy' ) )? )
+            // InternalAceGen.g:4544:3: ( (lv_unique_0_0= 'Unique' ) )? ( (lv_primaryKey_1_0= 'PrimaryKey' ) )? ( (lv_notNull_2_0= 'NotNull' ) )? ( (lv_list_3_0= 'List' ) )? ( ( (lv_type_4_0= ruleType ) ) | ( ( ruleQualifiedName ) ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= 'references' ( ( ruleQualifiedName ) ) )? ( (lv_squishy_9_0= 'squishy' ) )?
             {
             // InternalAceGen.g:4544:3: ( (lv_unique_0_0= 'Unique' ) )?
             int alt125=2;
@@ -11948,7 +11948,7 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalAceGen.g:4678:3: ( (lv_nonDeterministic_9_0= 'nonDeterministic' ) )?
+            // InternalAceGen.g:4678:3: ( (lv_squishy_9_0= 'squishy' ) )?
             int alt131=2;
             int LA131_0 = input.LA(1);
 
@@ -11957,20 +11957,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt131) {
                 case 1 :
-                    // InternalAceGen.g:4679:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
+                    // InternalAceGen.g:4679:4: (lv_squishy_9_0= 'squishy' )
                     {
-                    // InternalAceGen.g:4679:4: (lv_nonDeterministic_9_0= 'nonDeterministic' )
-                    // InternalAceGen.g:4680:5: lv_nonDeterministic_9_0= 'nonDeterministic'
+                    // InternalAceGen.g:4679:4: (lv_squishy_9_0= 'squishy' )
+                    // InternalAceGen.g:4680:5: lv_squishy_9_0= 'squishy'
                     {
-                    lv_nonDeterministic_9_0=(Token)match(input,45,FOLLOW_2); 
+                    lv_squishy_9_0=(Token)match(input,45,FOLLOW_2); 
 
-                    					newLeafNode(lv_nonDeterministic_9_0, grammarAccess.getAttributeAccess().getNonDeterministicNonDeterministicKeyword_7_0());
+                    					newLeafNode(lv_squishy_9_0, grammarAccess.getAttributeAccess().getSquishySquishyKeyword_7_0());
                     				
 
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getAttributeRule());
                     					}
-                    					setWithLastConsumed(current, "nonDeterministic", lv_nonDeterministic_9_0 != null, "nonDeterministic");
+                    					setWithLastConsumed(current, "squishy", lv_squishy_9_0 != null, "squishy");
                     				
 
                     }

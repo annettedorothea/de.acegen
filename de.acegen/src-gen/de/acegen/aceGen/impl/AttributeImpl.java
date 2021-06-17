@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#getForeignKey <em>Foreign Key</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isNonDeterministic <em>Non Deterministic</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.AttributeImpl#isSquishy <em>Squishy</em>}</li>
  * </ul>
  *
  * @generated
@@ -179,24 +179,24 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
   protected Attribute foreignKey;
 
   /**
-   * The default value of the '{@link #isNonDeterministic() <em>Non Deterministic</em>}' attribute.
+   * The default value of the '{@link #isSquishy() <em>Squishy</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNonDeterministic()
+   * @see #isSquishy()
    * @generated
    * @ordered
    */
-  protected static final boolean NON_DETERMINISTIC_EDEFAULT = false;
+  protected static final boolean SQUISHY_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isNonDeterministic() <em>Non Deterministic</em>}' attribute.
+   * The cached value of the '{@link #isSquishy() <em>Squishy</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isNonDeterministic()
+   * @see #isSquishy()
    * @generated
    * @ordered
    */
-  protected boolean nonDeterministic = NON_DETERMINISTIC_EDEFAULT;
+  protected boolean squishy = SQUISHY_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -465,9 +465,9 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public boolean isNonDeterministic()
+  public boolean isSquishy()
   {
-    return nonDeterministic;
+    return squishy;
   }
 
   /**
@@ -476,12 +476,12 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
    * @generated
    */
   @Override
-  public void setNonDeterministic(boolean newNonDeterministic)
+  public void setSquishy(boolean newSquishy)
   {
-    boolean oldNonDeterministic = nonDeterministic;
-    nonDeterministic = newNonDeterministic;
+    boolean oldSquishy = squishy;
+    squishy = newSquishy;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC, oldNonDeterministic, nonDeterministic));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.ATTRIBUTE__SQUISHY, oldSquishy, squishy));
   }
 
   /**
@@ -512,8 +512,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         if (resolve) return getForeignKey();
         return basicGetForeignKey();
-      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
-        return isNonDeterministic();
+      case AceGenPackage.ATTRIBUTE__SQUISHY:
+        return isSquishy();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -552,8 +552,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)newValue);
         return;
-      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
-        setNonDeterministic((Boolean)newValue);
+      case AceGenPackage.ATTRIBUTE__SQUISHY:
+        setSquishy((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -593,8 +593,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         setForeignKey((Attribute)null);
         return;
-      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
-        setNonDeterministic(NON_DETERMINISTIC_EDEFAULT);
+      case AceGenPackage.ATTRIBUTE__SQUISHY:
+        setSquishy(SQUISHY_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -626,8 +626,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.ATTRIBUTE__FOREIGN_KEY:
         return foreignKey != null;
-      case AceGenPackage.ATTRIBUTE__NON_DETERMINISTIC:
-        return nonDeterministic != NON_DETERMINISTIC_EDEFAULT;
+      case AceGenPackage.ATTRIBUTE__SQUISHY:
+        return squishy != SQUISHY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -655,8 +655,8 @@ public class AttributeImpl extends MinimalEObjectImpl.Container implements Attri
     result.append(type);
     result.append(", name: ");
     result.append(name);
-    result.append(", nonDeterministic: ");
-    result.append(nonDeterministic);
+    result.append(", squishy: ");
+    result.append(squishy);
     result.append(')');
     return result.toString();
   }

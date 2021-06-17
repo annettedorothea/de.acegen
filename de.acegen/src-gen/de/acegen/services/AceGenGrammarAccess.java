@@ -828,24 +828,24 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cInputValuesInputValueParserRuleCall_1_1_1_1_0 = (RuleCall)cInputValuesAssignment_1_1_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cNonDeterministicValuesKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cNonDeterministicValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0 = (RuleCall)cNonDeterministicValuesAssignment_2_1.eContents().get(0);
+		private final Keyword cSquishyValuesKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cSquishyValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cSquishyValuesSquishyValueParserRuleCall_2_1_0 = (RuleCall)cSquishyValuesAssignment_2_1.eContents().get(0);
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cNonDeterministicValuesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0 = (RuleCall)cNonDeterministicValuesAssignment_2_2_1.eContents().get(0);
+		private final Assignment cSquishyValuesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cSquishyValuesSquishyValueParserRuleCall_2_2_1_0 = (RuleCall)cSquishyValuesAssignment_2_2_1.eContents().get(0);
 		
 		//ClientWhenBlock:
 		//    action = [HttpClientAce|QualifiedName]
 		//    ('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
-		//    ('nonDeterministicValues' nonDeterministicValues += NonDeterministicValue (',' nonDeterministicValues += NonDeterministicValue)*)?
+		//    ('squishyValues' squishyValues += SquishyValue (',' squishyValues += SquishyValue)*)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//action = [HttpClientAce|QualifiedName]
 		//('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
-		//('nonDeterministicValues' nonDeterministicValues += NonDeterministicValue (',' nonDeterministicValues += NonDeterministicValue)*)?
+		//('squishyValues' squishyValues += SquishyValue (',' squishyValues += SquishyValue)*)?
 		public Group getGroup() { return cGroup; }
 		
 		//action = [HttpClientAce|QualifiedName]
@@ -887,34 +887,34 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//')'
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 		
-		//('nonDeterministicValues' nonDeterministicValues += NonDeterministicValue (',' nonDeterministicValues += NonDeterministicValue)*)?
+		//('squishyValues' squishyValues += SquishyValue (',' squishyValues += SquishyValue)*)?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'nonDeterministicValues'
-		public Keyword getNonDeterministicValuesKeyword_2_0() { return cNonDeterministicValuesKeyword_2_0; }
+		//'squishyValues'
+		public Keyword getSquishyValuesKeyword_2_0() { return cSquishyValuesKeyword_2_0; }
 		
-		//nonDeterministicValues += NonDeterministicValue
-		public Assignment getNonDeterministicValuesAssignment_2_1() { return cNonDeterministicValuesAssignment_2_1; }
+		//squishyValues += SquishyValue
+		public Assignment getSquishyValuesAssignment_2_1() { return cSquishyValuesAssignment_2_1; }
 		
-		//NonDeterministicValue
-		public RuleCall getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0() { return cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_1_0; }
+		//SquishyValue
+		public RuleCall getSquishyValuesSquishyValueParserRuleCall_2_1_0() { return cSquishyValuesSquishyValueParserRuleCall_2_1_0; }
 		
-		//(',' nonDeterministicValues += NonDeterministicValue)*
+		//(',' squishyValues += SquishyValue)*
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
 		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 		
-		//nonDeterministicValues += NonDeterministicValue
-		public Assignment getNonDeterministicValuesAssignment_2_2_1() { return cNonDeterministicValuesAssignment_2_2_1; }
+		//squishyValues += SquishyValue
+		public Assignment getSquishyValuesAssignment_2_2_1() { return cSquishyValuesAssignment_2_2_1; }
 		
-		//NonDeterministicValue
-		public RuleCall getNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0() { return cNonDeterministicValuesNonDeterministicValueParserRuleCall_2_2_1_0; }
+		//SquishyValue
+		public RuleCall getSquishyValuesSquishyValueParserRuleCall_2_2_1_0() { return cSquishyValuesSquishyValueParserRuleCall_2_2_1_0; }
 	}
-	public class NonDeterministicValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.NonDeterministicValue");
+	public class SquishyValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.SquishyValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cNonDeterministicValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cSquishyValueAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cUuidKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
@@ -929,7 +929,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cServerSystemTimeAssignment_2_3_1 = (Assignment)cGroup_2_3.eContents().get(1);
 		private final RuleCall cServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0 = (RuleCall)cServerSystemTimeAssignment_2_3_1.eContents().get(0);
 		private final Group cGroup_2_4 = (Group)cGroup_2.eContents().get(4);
-		private final Keyword cNonDeterministicKeyword_2_4_0 = (Keyword)cGroup_2_4.eContents().get(0);
+		private final Keyword cSquishyKeyword_2_4_0 = (Keyword)cGroup_2_4.eContents().get(0);
 		private final Assignment cAttributeAssignment_2_4_1 = (Assignment)cGroup_2_4.eContents().get(1);
 		private final CrossReference cAttributeAttributeCrossReference_2_4_1_0 = (CrossReference)cAttributeAssignment_2_4_1.eContents().get(0);
 		private final RuleCall cAttributeAttributeQualifiedNameParserRuleCall_2_4_1_0_1 = (RuleCall)cAttributeAttributeCrossReference_2_4_1_0.eContents().get(1);
@@ -938,26 +938,26 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cValuePrimitiveValueParserRuleCall_2_4_3_0 = (RuleCall)cValueAssignment_2_4_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//NonDeterministicValue:
-		//    {NonDeterministicValue} '{'
+		//SquishyValue:
+		//    {SquishyValue} '{'
 		//        ('uuid' uuid = STRING
 		//        ('clientSystemTime' clientSystemTime = STRING)?
 		//        ('serverSystemTime' serverSystemTime = STRING)?
-		//        ('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
+		//        ('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
 		//    '}'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{NonDeterministicValue} '{'
+		//{SquishyValue} '{'
 		//    ('uuid' uuid = STRING
 		//    ('clientSystemTime' clientSystemTime = STRING)?
 		//    ('serverSystemTime' serverSystemTime = STRING)?
-		//    ('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
+		//    ('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
 		//'}'
 		public Group getGroup() { return cGroup; }
 		
-		//{NonDeterministicValue}
-		public Action getNonDeterministicValueAction_0() { return cNonDeterministicValueAction_0; }
+		//{SquishyValue}
+		public Action getSquishyValueAction_0() { return cSquishyValueAction_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
@@ -965,7 +965,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//('uuid' uuid = STRING
 		//('clientSystemTime' clientSystemTime = STRING)?
 		//('serverSystemTime' serverSystemTime = STRING)?
-		//('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
+		//('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'uuid'
@@ -1001,11 +1001,11 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//STRING
 		public RuleCall getServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0() { return cServerSystemTimeSTRINGTerminalRuleCall_2_3_1_0; }
 		
-		//('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?
+		//('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?
 		public Group getGroup_2_4() { return cGroup_2_4; }
 		
-		//'nonDeterministic'
-		public Keyword getNonDeterministicKeyword_2_4_0() { return cNonDeterministicKeyword_2_4_0; }
+		//'squishy'
+		public Keyword getSquishyKeyword_2_4_0() { return cSquishyKeyword_2_4_0; }
 		
 		//attribute = [Attribute | QualifiedName]
 		public Assignment getAttributeAssignment_2_4_1() { return cAttributeAssignment_2_4_1; }
@@ -2959,8 +2959,8 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cForeignKeyAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final CrossReference cForeignKeyAttributeCrossReference_6_1_0 = (CrossReference)cForeignKeyAssignment_6_1.eContents().get(0);
 		private final RuleCall cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1 = (RuleCall)cForeignKeyAttributeCrossReference_6_1_0.eContents().get(1);
-		private final Assignment cNonDeterministicAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final Keyword cNonDeterministicNonDeterministicKeyword_7_0 = (Keyword)cNonDeterministicAssignment_7.eContents().get(0);
+		private final Assignment cSquishyAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final Keyword cSquishySquishyKeyword_7_0 = (Keyword)cSquishyAssignment_7.eContents().get(0);
 		
 		//Attribute:
 		//    unique ?= 'Unique'?
@@ -2970,7 +2970,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    (type = Type | model = [Model | QualifiedName])
 		//    name = ID
 		//    ('references' foreignKey = [Attribute | QualifiedName])?
-		//    nonDeterministic ?= 'nonDeterministic'?
+		//    squishy ?= 'squishy'?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -2981,7 +2981,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//(type = Type | model = [Model | QualifiedName])
 		//name = ID
 		//('references' foreignKey = [Attribute | QualifiedName])?
-		//nonDeterministic ?= 'nonDeterministic'?
+		//squishy ?= 'squishy'?
 		public Group getGroup() { return cGroup; }
 		
 		//unique ?= 'Unique'?
@@ -3047,11 +3047,11 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//QualifiedName
 		public RuleCall getForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1() { return cForeignKeyAttributeQualifiedNameParserRuleCall_6_1_0_1; }
 		
-		//nonDeterministic ?= 'nonDeterministic'?
-		public Assignment getNonDeterministicAssignment_7() { return cNonDeterministicAssignment_7; }
+		//squishy ?= 'squishy'?
+		public Assignment getSquishyAssignment_7() { return cSquishyAssignment_7; }
 		
-		//'nonDeterministic'
-		public Keyword getNonDeterministicNonDeterministicKeyword_7_0() { return cNonDeterministicNonDeterministicKeyword_7_0; }
+		//'squishy'
+		public Keyword getSquishySquishyKeyword_7_0() { return cSquishySquishyKeyword_7_0; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.QualifiedName");
@@ -3525,7 +3525,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final ClientScenarioElements pClientScenario;
 	private final ClientGivenRefElements pClientGivenRef;
 	private final ClientWhenBlockElements pClientWhenBlock;
-	private final NonDeterministicValueElements pNonDeterministicValue;
+	private final SquishyValueElements pSquishyValue;
 	private final InputValueElements pInputValue;
 	private final ClientThenBlockElements pClientThenBlock;
 	private final StateVerificationElements pStateVerification;
@@ -3603,7 +3603,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pClientScenario = new ClientScenarioElements();
 		this.pClientGivenRef = new ClientGivenRefElements();
 		this.pClientWhenBlock = new ClientWhenBlockElements();
-		this.pNonDeterministicValue = new NonDeterministicValueElements();
+		this.pSquishyValue = new SquishyValueElements();
 		this.pInputValue = new InputValueElements();
 		this.pClientThenBlock = new ClientThenBlockElements();
 		this.pStateVerification = new StateVerificationElements();
@@ -3862,7 +3862,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//ClientWhenBlock:
 	//    action = [HttpClientAce|QualifiedName]
 	//    ('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
-	//    ('nonDeterministicValues' nonDeterministicValues += NonDeterministicValue (',' nonDeterministicValues += NonDeterministicValue)*)?
+	//    ('squishyValues' squishyValues += SquishyValue (',' squishyValues += SquishyValue)*)?
 	//;
 	public ClientWhenBlockElements getClientWhenBlockAccess() {
 		return pClientWhenBlock;
@@ -3872,20 +3872,20 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		return getClientWhenBlockAccess().getRule();
 	}
 	
-	//NonDeterministicValue:
-	//    {NonDeterministicValue} '{'
+	//SquishyValue:
+	//    {SquishyValue} '{'
 	//        ('uuid' uuid = STRING
 	//        ('clientSystemTime' clientSystemTime = STRING)?
 	//        ('serverSystemTime' serverSystemTime = STRING)?
-	//        ('nonDeterministic' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
+	//        ('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
 	//    '}'
 	//;
-	public NonDeterministicValueElements getNonDeterministicValueAccess() {
-		return pNonDeterministicValue;
+	public SquishyValueElements getSquishyValueAccess() {
+		return pSquishyValue;
 	}
 	
-	public ParserRule getNonDeterministicValueRule() {
-		return getNonDeterministicValueAccess().getRule();
+	public ParserRule getSquishyValueRule() {
+		return getSquishyValueAccess().getRule();
 	}
 	
 	//InputValue:
@@ -4316,7 +4316,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    (type = Type | model = [Model | QualifiedName])
 	//    name = ID
 	//    ('references' foreignKey = [Attribute | QualifiedName])?
-	//    nonDeterministic ?= 'nonDeterministic'?
+	//    squishy ?= 'squishy'?
 	//;
 	public AttributeElements getAttributeAccess() {
 		return pAttribute;

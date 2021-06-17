@@ -84,10 +84,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpClientAce"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1"
         eType="#//InputValue" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nonDeterministicValues"
-        upperBound="-1" eType="#//NonDeterministicValue" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="squishyValues" upperBound="-1"
+        eType="#//SquishyValue" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NonDeterministicValue">
+  <eClassifiers xsi:type="ecore:EClass" name="SquishyValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -296,7 +296,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nonDeterministic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="squishy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JsonObject" eSuperTypes="#//JsonValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="JsonObjectAce" eSuperTypes="#//JsonObject">

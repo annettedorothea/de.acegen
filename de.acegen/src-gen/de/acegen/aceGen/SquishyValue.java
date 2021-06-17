@@ -7,25 +7,25 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Non Deterministic Value</b></em>'.
+ * A representation of the model object '<em><b>Squishy Value</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.NonDeterministicValue#getUuid <em>Uuid</em>}</li>
- *   <li>{@link de.acegen.aceGen.NonDeterministicValue#getClientSystemTime <em>Client System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.NonDeterministicValue#getServerSystemTime <em>Server System Time</em>}</li>
- *   <li>{@link de.acegen.aceGen.NonDeterministicValue#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link de.acegen.aceGen.NonDeterministicValue#getValue <em>Value</em>}</li>
+ *   <li>{@link de.acegen.aceGen.SquishyValue#getUuid <em>Uuid</em>}</li>
+ *   <li>{@link de.acegen.aceGen.SquishyValue#getClientSystemTime <em>Client System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.SquishyValue#getServerSystemTime <em>Server System Time</em>}</li>
+ *   <li>{@link de.acegen.aceGen.SquishyValue#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.acegen.aceGen.SquishyValue#getValue <em>Value</em>}</li>
  * </ul>
  *
- * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue()
+ * @see de.acegen.aceGen.AceGenPackage#getSquishyValue()
  * @model
  * @generated
  */
-public interface NonDeterministicValue extends EObject
+public interface SquishyValue extends EObject
 {
   /**
    * Returns the value of the '<em><b>Uuid</b></em>' attribute.
@@ -33,14 +33,14 @@ public interface NonDeterministicValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Uuid</em>' attribute.
    * @see #setUuid(String)
-   * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue_Uuid()
+   * @see de.acegen.aceGen.AceGenPackage#getSquishyValue_Uuid()
    * @model
    * @generated
    */
   String getUuid();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NonDeterministicValue#getUuid <em>Uuid</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.SquishyValue#getUuid <em>Uuid</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Uuid</em>' attribute.
@@ -55,14 +55,14 @@ public interface NonDeterministicValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Client System Time</em>' attribute.
    * @see #setClientSystemTime(String)
-   * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue_ClientSystemTime()
+   * @see de.acegen.aceGen.AceGenPackage#getSquishyValue_ClientSystemTime()
    * @model
    * @generated
    */
   String getClientSystemTime();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NonDeterministicValue#getClientSystemTime <em>Client System Time</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.SquishyValue#getClientSystemTime <em>Client System Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Client System Time</em>' attribute.
@@ -77,14 +77,14 @@ public interface NonDeterministicValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Server System Time</em>' attribute.
    * @see #setServerSystemTime(String)
-   * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue_ServerSystemTime()
+   * @see de.acegen.aceGen.AceGenPackage#getSquishyValue_ServerSystemTime()
    * @model
    * @generated
    */
   String getServerSystemTime();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NonDeterministicValue#getServerSystemTime <em>Server System Time</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.SquishyValue#getServerSystemTime <em>Server System Time</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Server System Time</em>' attribute.
@@ -99,14 +99,14 @@ public interface NonDeterministicValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute</em>' reference.
    * @see #setAttribute(Attribute)
-   * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue_Attribute()
+   * @see de.acegen.aceGen.AceGenPackage#getSquishyValue_Attribute()
    * @model
    * @generated
    */
   Attribute getAttribute();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NonDeterministicValue#getAttribute <em>Attribute</em>}' reference.
+   * Sets the value of the '{@link de.acegen.aceGen.SquishyValue#getAttribute <em>Attribute</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Attribute</em>' reference.
@@ -121,14 +121,14 @@ public interface NonDeterministicValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
    * @see #setValue(PrimitiveValue)
-   * @see de.acegen.aceGen.AceGenPackage#getNonDeterministicValue_Value()
+   * @see de.acegen.aceGen.AceGenPackage#getSquishyValue_Value()
    * @model containment="true"
    * @generated
    */
   PrimitiveValue getValue();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.NonDeterministicValue#getValue <em>Value</em>}' containment reference.
+   * Sets the value of the '{@link de.acegen.aceGen.SquishyValue#getValue <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Value</em>' containment reference.
@@ -137,4 +137,4 @@ public interface NonDeterministicValue extends EObject
    */
   void setValue(PrimitiveValue value);
 
-} // NonDeterministicValue
+} // SquishyValue

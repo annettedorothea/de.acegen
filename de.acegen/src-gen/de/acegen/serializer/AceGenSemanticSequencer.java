@@ -43,7 +43,6 @@ import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonObjectClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
-import de.acegen.aceGen.NonDeterministicValue;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PersistenceVerification;
 import de.acegen.aceGen.PrimitiveValue;
@@ -53,6 +52,7 @@ import de.acegen.aceGen.SelectByExpectation;
 import de.acegen.aceGen.SelectByPrimaryKeys;
 import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.SingleClientAttribute;
+import de.acegen.aceGen.SquishyValue;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
@@ -200,9 +200,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case AceGenPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
 				return; 
-			case AceGenPackage.NON_DETERMINISTIC_VALUE:
-				sequence_NonDeterministicValue(context, (NonDeterministicValue) semanticObject); 
-				return; 
 			case AceGenPackage.NULL_TYPE:
 				sequence_NullType(context, (NullType) semanticObject); 
 				return; 
@@ -229,6 +226,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE:
 				sequence_SingleClientAttribute(context, (SingleClientAttribute) semanticObject); 
+				return; 
+			case AceGenPackage.SQUISHY_VALUE:
+				sequence_SquishyValue(context, (SquishyValue) semanticObject); 
 				return; 
 			case AceGenPackage.STATE_VERIFICATION:
 				sequence_StateVerification(context, (StateVerification) semanticObject); 
@@ -302,7 +302,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (type=Type | model=[Model|QualifiedName]) 
 	 *         name=ID 
 	 *         foreignKey=[Attribute|QualifiedName]? 
-	 *         nonDeterministic?='nonDeterministic'?
+	 *         squishy?='squishy'?
 	 *     )
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
@@ -413,7 +413,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         action=[HttpClientAce|QualifiedName] 
 	 *         (inputValues+=InputValue inputValues+=InputValue*)? 
-	 *         (nonDeterministicValues+=NonDeterministicValue nonDeterministicValues+=NonDeterministicValue*)?
+	 *         (squishyValues+=SquishyValue squishyValues+=SquishyValue*)?
 	 *     )
 	 */
 	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
@@ -887,18 +887,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     NonDeterministicValue returns NonDeterministicValue
-	 *
-	 * Constraint:
-	 *     (uuid=STRING clientSystemTime=STRING? serverSystemTime=STRING? (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?)?
-	 */
-	protected void sequence_NonDeterministicValue(ISerializationContext context, NonDeterministicValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     JsonValueClient returns NullType
 	 *     JsonValue returns NullType
 	 *     NullType returns NullType
@@ -1040,6 +1028,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_SingleClientAttribute(ISerializationContext context, SingleClientAttribute semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SquishyValue returns SquishyValue
+	 *
+	 * Constraint:
+	 *     (uuid=STRING clientSystemTime=STRING? serverSystemTime=STRING? (attribute=[Attribute|QualifiedName] value=PrimitiveValue)?)?
+	 */
+	protected void sequence_SquishyValue(ISerializationContext context, SquishyValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

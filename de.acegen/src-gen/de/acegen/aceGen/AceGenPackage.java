@@ -693,13 +693,13 @@ public interface AceGenPackage extends EPackage
   int CLIENT_WHEN_BLOCK__INPUT_VALUES = 1;
 
   /**
-   * The feature id for the '<em><b>Non Deterministic Values</b></em>' containment reference list.
+   * The feature id for the '<em><b>Squishy Values</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES = 2;
+  int CLIENT_WHEN_BLOCK__SQUISHY_VALUES = 2;
 
   /**
    * The number of structural features of the '<em>Client When Block</em>' class.
@@ -711,14 +711,14 @@ public interface AceGenPackage extends EPackage
   int CLIENT_WHEN_BLOCK_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.NonDeterministicValueImpl <em>Non Deterministic Value</em>}' class.
+   * The meta object id for the '{@link de.acegen.aceGen.impl.SquishyValueImpl <em>Squishy Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.NonDeterministicValueImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNonDeterministicValue()
+   * @see de.acegen.aceGen.impl.SquishyValueImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSquishyValue()
    * @generated
    */
-  int NON_DETERMINISTIC_VALUE = 14;
+  int SQUISHY_VALUE = 14;
 
   /**
    * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -727,7 +727,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE__UUID = 0;
+  int SQUISHY_VALUE__UUID = 0;
 
   /**
    * The feature id for the '<em><b>Client System Time</b></em>' attribute.
@@ -736,7 +736,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME = 1;
+  int SQUISHY_VALUE__CLIENT_SYSTEM_TIME = 1;
 
   /**
    * The feature id for the '<em><b>Server System Time</b></em>' attribute.
@@ -745,7 +745,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME = 2;
+  int SQUISHY_VALUE__SERVER_SYSTEM_TIME = 2;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' reference.
@@ -754,7 +754,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE__ATTRIBUTE = 3;
+  int SQUISHY_VALUE__ATTRIBUTE = 3;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -763,16 +763,16 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE__VALUE = 4;
+  int SQUISHY_VALUE__VALUE = 4;
 
   /**
-   * The number of structural features of the '<em>Non Deterministic Value</em>' class.
+   * The number of structural features of the '<em>Squishy Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NON_DETERMINISTIC_VALUE_FEATURE_COUNT = 5;
+  int SQUISHY_VALUE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.InputValueImpl <em>Input Value</em>}' class.
@@ -2457,13 +2457,13 @@ public interface AceGenPackage extends EPackage
   int ATTRIBUTE__FOREIGN_KEY = 7;
 
   /**
-   * The feature id for the '<em><b>Non Deterministic</b></em>' attribute.
+   * The feature id for the '<em><b>Squishy</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__NON_DETERMINISTIC = 8;
+  int ATTRIBUTE__SQUISHY = 8;
 
   /**
    * The number of structural features of the '<em>Attribute</em>' class.
@@ -3401,80 +3401,80 @@ public interface AceGenPackage extends EPackage
   EReference getClientWhenBlock_InputValues();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientWhenBlock#getNonDeterministicValues <em>Non Deterministic Values</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientWhenBlock#getSquishyValues <em>Squishy Values</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Non Deterministic Values</em>'.
-   * @see de.acegen.aceGen.ClientWhenBlock#getNonDeterministicValues()
+   * @return the meta object for the containment reference list '<em>Squishy Values</em>'.
+   * @see de.acegen.aceGen.ClientWhenBlock#getSquishyValues()
    * @see #getClientWhenBlock()
    * @generated
    */
-  EReference getClientWhenBlock_NonDeterministicValues();
+  EReference getClientWhenBlock_SquishyValues();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.NonDeterministicValue <em>Non Deterministic Value</em>}'.
+   * Returns the meta object for class '{@link de.acegen.aceGen.SquishyValue <em>Squishy Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Non Deterministic Value</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue
+   * @return the meta object for class '<em>Squishy Value</em>'.
+   * @see de.acegen.aceGen.SquishyValue
    * @generated
    */
-  EClass getNonDeterministicValue();
+  EClass getSquishyValue();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getUuid <em>Uuid</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SquishyValue#getUuid <em>Uuid</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Uuid</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue#getUuid()
-   * @see #getNonDeterministicValue()
+   * @see de.acegen.aceGen.SquishyValue#getUuid()
+   * @see #getSquishyValue()
    * @generated
    */
-  EAttribute getNonDeterministicValue_Uuid();
+  EAttribute getSquishyValue_Uuid();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getClientSystemTime <em>Client System Time</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SquishyValue#getClientSystemTime <em>Client System Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Client System Time</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue#getClientSystemTime()
-   * @see #getNonDeterministicValue()
+   * @see de.acegen.aceGen.SquishyValue#getClientSystemTime()
+   * @see #getSquishyValue()
    * @generated
    */
-  EAttribute getNonDeterministicValue_ClientSystemTime();
+  EAttribute getSquishyValue_ClientSystemTime();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.NonDeterministicValue#getServerSystemTime <em>Server System Time</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SquishyValue#getServerSystemTime <em>Server System Time</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Server System Time</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue#getServerSystemTime()
-   * @see #getNonDeterministicValue()
+   * @see de.acegen.aceGen.SquishyValue#getServerSystemTime()
+   * @see #getSquishyValue()
    * @generated
    */
-  EAttribute getNonDeterministicValue_ServerSystemTime();
+  EAttribute getSquishyValue_ServerSystemTime();
 
   /**
-   * Returns the meta object for the reference '{@link de.acegen.aceGen.NonDeterministicValue#getAttribute <em>Attribute</em>}'.
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.SquishyValue#getAttribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Attribute</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue#getAttribute()
-   * @see #getNonDeterministicValue()
+   * @see de.acegen.aceGen.SquishyValue#getAttribute()
+   * @see #getSquishyValue()
    * @generated
    */
-  EReference getNonDeterministicValue_Attribute();
+  EReference getSquishyValue_Attribute();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.NonDeterministicValue#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.acegen.aceGen.SquishyValue#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.acegen.aceGen.NonDeterministicValue#getValue()
-   * @see #getNonDeterministicValue()
+   * @see de.acegen.aceGen.SquishyValue#getValue()
+   * @see #getSquishyValue()
    * @generated
    */
-  EReference getNonDeterministicValue_Value();
+  EReference getSquishyValue_Value();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.InputValue <em>Input Value</em>}'.
@@ -4861,15 +4861,15 @@ public interface AceGenPackage extends EPackage
   EReference getAttribute_ForeignKey();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isNonDeterministic <em>Non Deterministic</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Attribute#isSquishy <em>Squishy</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Non Deterministic</em>'.
-   * @see de.acegen.aceGen.Attribute#isNonDeterministic()
+   * @return the meta object for the attribute '<em>Squishy</em>'.
+   * @see de.acegen.aceGen.Attribute#isSquishy()
    * @see #getAttribute()
    * @generated
    */
-  EAttribute getAttribute_NonDeterministic();
+  EAttribute getAttribute_Squishy();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.JsonObject <em>Json Object</em>}'.
@@ -5618,22 +5618,22 @@ public interface AceGenPackage extends EPackage
     EReference CLIENT_WHEN_BLOCK__INPUT_VALUES = eINSTANCE.getClientWhenBlock_InputValues();
 
     /**
-     * The meta object literal for the '<em><b>Non Deterministic Values</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Squishy Values</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CLIENT_WHEN_BLOCK__NON_DETERMINISTIC_VALUES = eINSTANCE.getClientWhenBlock_NonDeterministicValues();
+    EReference CLIENT_WHEN_BLOCK__SQUISHY_VALUES = eINSTANCE.getClientWhenBlock_SquishyValues();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.NonDeterministicValueImpl <em>Non Deterministic Value</em>}' class.
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.SquishyValueImpl <em>Squishy Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.NonDeterministicValueImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getNonDeterministicValue()
+     * @see de.acegen.aceGen.impl.SquishyValueImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSquishyValue()
      * @generated
      */
-    EClass NON_DETERMINISTIC_VALUE = eINSTANCE.getNonDeterministicValue();
+    EClass SQUISHY_VALUE = eINSTANCE.getSquishyValue();
 
     /**
      * The meta object literal for the '<em><b>Uuid</b></em>' attribute feature.
@@ -5641,7 +5641,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute NON_DETERMINISTIC_VALUE__UUID = eINSTANCE.getNonDeterministicValue_Uuid();
+    EAttribute SQUISHY_VALUE__UUID = eINSTANCE.getSquishyValue_Uuid();
 
     /**
      * The meta object literal for the '<em><b>Client System Time</b></em>' attribute feature.
@@ -5649,7 +5649,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute NON_DETERMINISTIC_VALUE__CLIENT_SYSTEM_TIME = eINSTANCE.getNonDeterministicValue_ClientSystemTime();
+    EAttribute SQUISHY_VALUE__CLIENT_SYSTEM_TIME = eINSTANCE.getSquishyValue_ClientSystemTime();
 
     /**
      * The meta object literal for the '<em><b>Server System Time</b></em>' attribute feature.
@@ -5657,7 +5657,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute NON_DETERMINISTIC_VALUE__SERVER_SYSTEM_TIME = eINSTANCE.getNonDeterministicValue_ServerSystemTime();
+    EAttribute SQUISHY_VALUE__SERVER_SYSTEM_TIME = eINSTANCE.getSquishyValue_ServerSystemTime();
 
     /**
      * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
@@ -5665,7 +5665,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference NON_DETERMINISTIC_VALUE__ATTRIBUTE = eINSTANCE.getNonDeterministicValue_Attribute();
+    EReference SQUISHY_VALUE__ATTRIBUTE = eINSTANCE.getSquishyValue_Attribute();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
@@ -5673,7 +5673,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference NON_DETERMINISTIC_VALUE__VALUE = eINSTANCE.getNonDeterministicValue_Value();
+    EReference SQUISHY_VALUE__VALUE = eINSTANCE.getSquishyValue_Value();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.InputValueImpl <em>Input Value</em>}' class.
@@ -6778,12 +6778,12 @@ public interface AceGenPackage extends EPackage
     EReference ATTRIBUTE__FOREIGN_KEY = eINSTANCE.getAttribute_ForeignKey();
 
     /**
-     * The meta object literal for the '<em><b>Non Deterministic</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Squishy</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE__NON_DETERMINISTIC = eINSTANCE.getAttribute_NonDeterministic();
+    EAttribute ATTRIBUTE__SQUISHY = eINSTANCE.getAttribute_Squishy();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.JsonObjectImpl <em>Json Object</em>}' class.

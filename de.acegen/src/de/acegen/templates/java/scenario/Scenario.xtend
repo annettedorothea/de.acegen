@@ -373,7 +373,7 @@ class Scenario {
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
 			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
-				«IF attributeDefinition.attribute.nonDeterministic»
+				«IF attributeDefinition.attribute.squishy»
 					this.callNonDeterministicDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.nonDeterministicValueFrom»");
 				«ENDIF»
 			«ENDFOR»
@@ -389,7 +389,7 @@ class Scenario {
 
 	private dispatch def objectMapperCall(JsonObjectAce it, Model model) '''
  		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
- 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.nonDeterministic] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
+ 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.squishy] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 
 	private dispatch def objectMapperCall(StringType it, Model model) '''
@@ -402,8 +402,8 @@ class Scenario {
 		«model.dataNameWithPackage».class)'''
 
 	private dispatch def objectMapperCallPayload(JsonObjectAce it, HttpServerAce action) '''
- 		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.nonDeterministic].size > 0»{" +
- 			"«FOR member : it.members.filter[!attribute.nonDeterministic] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+ 		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.squishy].size > 0»{" +
+ 			"«FOR member : it.members.filter[!attribute.squishy] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«action.payloadDataNameWithPackage».class)'''
 	
 	private dispatch def objectMapperCallPayload(StringType it, HttpServerAce action) '''
@@ -416,7 +416,7 @@ class Scenario {
 	
 	private dispatch def objectMapperCallExpectedData(JsonObjectAce it, Model model) '''
 		objectMapper.readValue("«IF it !== null && members !== null»{" +
-			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.nonDeterministic] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
+			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.squishy] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
 		«model.dataNameWithPackage».class)'''
 	
 	private dispatch def objectMapperCallExpectedData(StringType it, Model model) '''

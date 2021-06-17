@@ -113,12 +113,12 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				return new FilteringScope(scope, [(getEObjectOrProxy as HttpServerAceWrite).getModel.equals(aceModel)])
 			}
 		}
-		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.NON_DETERMINISTIC_VALUE__ATTRIBUTE) {
+		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.SQUISHY_VALUE__ATTRIBUTE) {
 			val scope = super.getScope(context, reference)
 			val filtered = new ArrayList<Attribute>();
 			for(element: scope.allElements) {
 				val attribute = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Attribute
-				if (attribute.nonDeterministic) {
+				if (attribute.squishy) {
 					filtered.add(attribute)
 				}
 			}
