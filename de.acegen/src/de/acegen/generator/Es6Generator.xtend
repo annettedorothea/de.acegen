@@ -79,18 +79,10 @@ class Es6Generator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 					commandTemplate.generateSynchronousInitialCommandFile(ace, httpClient));
 			}
-			for (outcome : ace.outcomes) {
-				if (outcome.listeners.size > 0) {
-					fsa.generateFile(httpClient.getName + '/events/' + ace.eventName(outcome) + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateAbstractEventFile(ace, outcome, httpClient));
-				}
-			}
 		}
 		if (httpClient.aceOperations.size > 0) {
 			fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
 				eventTemplate.generateEventListenerRegistration(httpClient));
-			fsa.generateFile(httpClient.getName + '/EventFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				eventTemplate.generateEventFactoryRegistration(httpClient));
 			fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
 				actionTemplate.generateActionFunctionExports(httpClient));
 			fsa.generateFile('actionIds/' + httpClient.getName + '/' + httpClient.actionIdName + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,

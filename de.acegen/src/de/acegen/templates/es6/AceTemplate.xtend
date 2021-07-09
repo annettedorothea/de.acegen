@@ -45,9 +45,8 @@ class AceTemplate {
 		import * as Utils from "../../gen/ace/Utils";
 		
 
-		export function initEventListenersAndFactories() {
+		export function initEventListeners() {
 		    //EventListenerRegistration.init();
-		    //EventFactoryRegistration.init();
 		}
 		
 		export function startApp() {
@@ -186,6 +185,7 @@ class AceTemplate {
 
 		import * as AppUtils from "../../src/app/AppUtils";
 		import * as AppState from "../ace/AppState";
+		import * as ACEController from "../ace/ACEController";
 		
 		export * from "../ace/Timeline";
 
@@ -194,9 +194,12 @@ class AceTemplate {
 		}
 
 		AppUtils.createInitialAppState();
-		AppUtils.initEventListenersAndFactories();
-		AppUtils.renderApp();
+		ACEController.addItemToTimeLine({
+			appState: AppState.getAppState()
+		});
+		AppUtils.initEventListeners();
 		AppUtils.startApp();
+		AppUtils.renderApp();
 		
 		// for Selenium tests
 		export function getAppState() {
@@ -231,138 +234,117 @@ class AceTemplate {
 	'''
 	
 	def generateACEController() '''
-		«copyright»
+	«copyright»
+	
+	import * as AppUtils from "../../src/app/AppUtils";
+	import * as Utils from "./Utils";
+	import * as AppState from "./AppState";
+	
+	export let timeline = [];
+	export let listeners = {};
+	export let delayedActions = {};
+	
+	let actionQueue = [];
 
-		import * as AppUtils from "../../src/app/AppUtils";
-		import * as Utils from "./Utils";
-		import * as AppState from "./AppState";
-		
-		export let timeline = [];
-		export let listeners = {};
-		let factories = {};
-		let actionQueue = [];
-		export let delayedActions = {};
-	
-	    export function registerListener(eventName, listener) {
-	        if (!eventName.trim()) {
-	            throw new Error('cannot register listener for empty eventName');
-	        }
-	        if (!listener) {
-	            throw new Error('cannot register undefined listener for event ' + eventName);
-	        }
-	        let listenersForEventName;
-	        if (listeners[eventName] === undefined) {
-	            listeners[eventName] = [];
-	        }
-	        listenersForEventName = listeners[eventName];
-	        listenersForEventName.push(listener);
+	export function registerListener(eventName, listener) {
+	    if (!eventName.trim()) {
+	        throw new Error('cannot register listener for empty eventName');
 	    }
-	
-	    export function registerFactory(eventName, factory) {
-	        if (!eventName.trim()) {
-	            throw new Error('cannot register factory for empty eventName');
-	        }
-	        if (!factory) {
-	            throw new Error('cannot register undefined factory for event ' + eventName);
-	        }
-	        factories[eventName] = factory;
+	    if (!listener) {
+	        throw new Error('cannot register undefined listener for event ' + eventName);
 	    }
+	    let listenersForEventName;
+	    if (listeners[eventName] === undefined) {
+	        listeners[eventName] = [];
+	    }
+	    listenersForEventName = listeners[eventName];
+	    listenersForEventName.push(listener);
+	}
 	
-	    export function addItemToTimeLine(item) {
-	    	if (Utils.settings && Utils.settings.timelineSize > 0) {
-			    timeline.push(AppUtils.deepCopy(item));
-				if (timeline.length > Utils.settings.timelineSize) {
-				    timeline.shift();
-				    while (timeline.length > 0 && timeline.length > 0 && !timeline[0].appState) {
-				        timeline.shift();
-				    }
+	export function addItemToTimeLine(item) {
+		if (Utils.settings && Utils.settings.timelineSize > 0) {
+		    timeline.push(AppUtils.deepCopy(item));
+			if (timeline.length > Utils.settings.timelineSize) {
+			    timeline.shift();
+			    while (timeline.length > 0 && timeline.length > 0 && !timeline[0].appState) {
+			        timeline.shift();
+			    }
+			}
+		}
+	}
+	
+	export function addActionToQueue(action) {
+		actionQueue.push(action);
+	    applyNextActions();
+	}
+
+	function applyNextActions() {
+	    let nextAction = actionQueue.shift();
+	    if (nextAction) {
+			if (nextAction.action.asynchronous) {
+	            nextAction.action.applyAction(nextAction.data).then(() => {
+			    	applyNextActions();
+			    }, (error) => {
+			        AppUtils.displayUnexpectedError(error);
+			    	applyNextActions();
+			    });
+			} else {
+				try {
+	                nextAction.action.applyAction(nextAction.data);
+			    	applyNextActions();
+				} catch(error) {
+			        AppUtils.displayUnexpectedError(error);
+			    	applyNextActions();
 				}
 			}
 	    }
+	}
 	
-	    export function addActionToQueue(action) {
-			actionQueue.push(action);
-		    applyNextActions();
-	    }
+	export function startReplay(timeline, pauseInMillis) {
+	    AppUtils.startReplay();
 	
-	    function applyNextActions() {
-	        let action = actionQueue.shift();
-	        if (action) {
-		    	addItemToTimeLine({appState: AppState.getAppState()});
-				if (action.asynchronous) {
-				    action.applyAction().then(() => {
-				    	callApplyNextActions();
-				    }, (error) => {
-				        AppUtils.displayUnexpectedError(error);
-				    	callApplyNextActions();
-				    });
-				} else {
-					try {
-						action.applyAction();
-				    	callApplyNextActions();
-					} catch(error) {
-				        AppUtils.displayUnexpectedError(error);
-				    	callApplyNextActions();
-					}
-				}
+	    let events = [];
+		
+		let appStateWasSet = false;
+	    for (let i = 0; i < timeline.length; i++) {
+	        let item = timeline[i];
+	        if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
+	            events.push({
+	            	event: new Event(item.event.eventName),
+	            	data: item.event.data
+	            });
 	        }
-	    }
-	    
-	    function callApplyNextActions() {
-			applyNextActions();
-	    }
-	
-	    function triggerAction(action) {
-	        addActionToQueue(action);
+			if (item.appState && !appStateWasSet) {
+			    AppState.setInitialAppState(item.appState);
+			    appStateWasSet = true;
+			}
 	    }
 	
-	    export function startReplay(timeline, pauseInMillis) {
-		    AppUtils.startReplay();
-
-	        let events = [];
-			
-			let appStateWasSet = false;
-	        for (let i = 0; i < timeline.length; i++) {
-	            let item = timeline[i];
-	            if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
-	                const eventData = item.event.eventData;
-	                let event = factories[item.event.eventName](eventData);
-	                events.push(event);
-	            }
-				if (item.appState && !appStateWasSet) {
-				    AppState.setInitialAppState(item.appState);
-				    appStateWasSet = true;
-				}
-	            
-	        }
+		setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
+	}
 	
-			setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
+	function replayNextEvent(events, pauseInMillis) {
+	    let nextEvent = events.shift();
+	    if (nextEvent) {
+	    	nextEvent.event.replay(nextEvent.data);
+	    	setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
+	    } else {
+	        setTimeout(() => finishReplay(), pauseInMillis);
 	    }
-	    
-	    function replayNextEvent(events, pauseInMillis) {
-	        let event = events.shift();
-	        if (event) {
-	        	event.replay();
-	        	setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
-		    } else {
-		        setTimeout(() => finishReplay(), pauseInMillis);
-		    }
-		}
-		
-		function finishReplay() {
-		    console.info("replay finished");
-		    timeline = [];
-		    actionQueue = [];
-		    AppUtils.createInitialAppState();
-		    AppUtils.startApp();
-		}
-		
-		registerListener('TriggerAction', triggerAction);
-		
-		
-		«sdg»
-		
-		
+	}
+	
+	function finishReplay() {
+	    console.info("replay finished");
+	    timeline = [];
+	    actionQueue = [];
+	    AppUtils.createInitialAppState();
+	    AppUtils.startApp();
+	}
+	
+	
+	«sdg»
+	
+	
 	'''
 	
 	def generateTimeline() '''

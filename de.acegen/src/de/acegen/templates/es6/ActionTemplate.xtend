@@ -49,8 +49,8 @@ class ActionTemplate {
 		
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam.name»«ENDFOR») {
-		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam.name»«ENDFOR»}, '«es6.getName».«actionName»');
+		    constructor() {
+		        super('«es6.getName».«actionName»');
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
@@ -58,7 +58,7 @@ class ActionTemplate {
 				
 			«IF outcomes.size > 0»
 				getCommand() {
-					return new «commandName»(this.actionData);
+					return new «commandName»();
 				}
 			«ENDIF»
 		
@@ -86,8 +86,7 @@ class ActionTemplate {
 		
 		export default class «actionName» extends «abstractActionName» {
 		
-		    initActionData() {
-		    	//add not replayable data to action data in order to freeze for replay (e.g. time or date)
+		    initActionData(data) {
 		    }
 		
 		}
@@ -106,7 +105,7 @@ class ActionTemplate {
 		
 		«FOR aceOperation : aceOperations»
 			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR») {
-			    new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR»).apply();
+			    new «aceOperation.actionName»().apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
 			}
 			
 		«ENDFOR»
@@ -134,51 +133,55 @@ class ActionTemplate {
 	def generateAction() '''
 		«copyright»
 
+
 		import * as ACEController from "./ACEController";
 		import * as AppUtils from "../../src/app/AppUtils";
 		import * as Utils from "./Utils";
+		import * as AppState from "./AppState";
 		
 		export default class Action {
-		    constructor(actionData, actionName) {
+		
+		    constructor(actionName) {
 		        this.actionName = actionName;
-		        if (actionData === undefined) {
-		            actionData = {};
-		        }
-		        this.actionData = AppUtils.deepCopy(actionData);
+		    }
+		
+		    apply(data) {
+				ACEController.addItemToTimeLine({
+				    appState: AppState.getAppState()
+				});
+		        ACEController.addItemToTimeLine({
+		            action: {
+		                actionName: this.actionName,
+		                data
+		            }
+		        });
 		        if (Utils.settings.mode === "dev") {
-		        	let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
-		        	if (nonDeterministicValues) {
-		        		const nonDeterministicValue = nonDeterministicValues.shift();
-		        		if (nonDeterministicValue) {
-			        		this.actionData.uuid = nonDeterministicValue.uuid;
-			        		this.actionData.clientSystemTime = nonDeterministicValue.clientSystemTime;
-			        	}
-		        		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
-		        	}
-		        	if (!this.actionData.uuid) {
-		        		this.actionData.uuid = AppUtils.createUUID();
-		        	}
-		        	if (!this.actionData.clientSystemTime) {
-						this.actionData.clientSystemTime = new Date();
-					}
-				} else {
-					this.actionData.uuid = AppUtils.createUUID();
-					this.actionData.clientSystemTime = new Date();
-				}
-		    }
-		
-		    initActionData() {
-		    }
-		
-		    getCommand() {
-		        throw "no command defined for " + this.actionName;
-		    }
-		
-		    apply() {
-		        ACEController.addActionToQueue(this);
+		            let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
+		            if (nonDeterministicValues) {
+		                const nonDeterministicValue = nonDeterministicValues.shift();
+		                if (nonDeterministicValue) {
+		                    data.uuid = nonDeterministicValue.uuid;
+		                    data.clientSystemTime = nonDeterministicValue.clientSystemTime;
+		                }
+		                localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
+		            }
+		            if (!data.uuid) {
+		                data.uuid = AppUtils.createUUID();
+		            }
+		            if (!data.clientSystemTime) {
+		                data.clientSystemTime = new Date();
+		            }
+		        } else {
+		            data.uuid = AppUtils.createUUID();
+		            data.clientSystemTime = new Date();
+		        }
+		        ACEController.addActionToQueue({
+		            action: this,
+		            data
+		        });
 		    }
 		}
-		
+
 		
 		«sdg»
 		
@@ -188,40 +191,39 @@ class ActionTemplate {
 	def generateAsynchronousAction() '''
 		«copyright»
 
-		import * as ACEController from "./ACEController";
+
 		import Action from "./Action";
 		
 		export default class AsynchronousAction extends Action {
 		
-		    constructor(actionData, actionName) {
-		    	super(actionData, actionName);
-		    	this.asynchronous = true;
+		    constructor(actionName) {
+		        super(actionName);
+		        this.asynchronous = true;
 		    }
-
-		    applyAction() {
+		
+		    applyAction(data) {
 		        return new Promise((resolve, reject) => {
-		            ACEController.addItemToTimeLine({action: this});
-		        	this.preCall();
-		            this.initActionData();
+		            this.preCall();
+		            this.initActionData(data);
 		            let command = this.getCommand();
-		            command.executeCommand().then(() => {
-					    this.postCall();
-					    resolve();
-					}, (error) => {
-					    this.postCall();
-					    reject(error);
-					});
+		            command.executeCommand(data).then(() => {
+		                this.postCall();
+		                resolve();
+		            }, (error) => {
+		                this.postCall();
+		                reject(error);
+		            });
 		        });
 		    }
-		    
+		
 		    preCall() {
 		    }
-		    
+		
 		    postCall() {
 		    }
-		    
-		}
 		
+		}
+
 		
 		«sdg»
 		
@@ -231,24 +233,23 @@ class ActionTemplate {
 	def generateSynchronousAction() '''
 		«copyright»
 
-		import * as ACEController from "./ACEController";
 		import Action from "./Action";
 		
 		export default class SynchronousAction extends Action {
 		
-		    constructor(actionData, actionName) {
-		    	super(actionData, actionName);
+		    constructor(actionName) {
+		    	super(actionName);
 		    	this.asynchronous = false;
 		    }
 		
-		    applyAction() {
-			    ACEController.addItemToTimeLine({action: this});
-		        this.initActionData();
+		    applyAction(data) {
+		        this.initActionData(data);
 			    let command = this.getCommand();
-			    command.executeCommand();
+			    command.executeCommand(data);
 		    }
 		}
 		
+
 		
 		«sdg»
 		

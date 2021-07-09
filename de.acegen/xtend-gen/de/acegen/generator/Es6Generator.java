@@ -18,7 +18,6 @@ package de.acegen.generator;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.es6.ReactGenerator;
@@ -114,20 +113,6 @@ public class Es6Generator {
             ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
             this.commandTemplate.generateSynchronousInitialCommandFile(ace, httpClient));
         }
-        EList<HttpClientOutcome> _outcomes = ace.getOutcomes();
-        for (final HttpClientOutcome outcome : _outcomes) {
-          int _size = outcome.getListeners().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
-            String _name_6 = httpClient.getName();
-            String _plus_18 = (_name_6 + "/events/");
-            String _eventName = this._aceExtension.eventName(ace, outcome);
-            String _plus_19 = (_plus_18 + _eventName);
-            String _plus_20 = (_plus_19 + ".js");
-            fsa.generateFile(_plus_20, 
-              IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateAbstractEventFile(ace, outcome, httpClient));
-          }
-        }
       }
     }
     int _size = httpClient.getAceOperations().size();
@@ -138,20 +123,16 @@ public class Es6Generator {
       fsa.generateFile(_plus, IFileSystemAccess.DEFAULT_OUTPUT, 
         this.eventTemplate.generateEventListenerRegistration(httpClient));
       String _name_1 = httpClient.getName();
-      String _plus_1 = (_name_1 + "/EventFactoryRegistration.js");
+      String _plus_1 = (_name_1 + "/ActionFunctions.js");
       fsa.generateFile(_plus_1, IFileSystemAccess.DEFAULT_OUTPUT, 
-        this.eventTemplate.generateEventFactoryRegistration(httpClient));
-      String _name_2 = httpClient.getName();
-      String _plus_2 = (_name_2 + "/ActionFunctions.js");
-      fsa.generateFile(_plus_2, IFileSystemAccess.DEFAULT_OUTPUT, 
         this.actionTemplate.generateActionFunctionExports(httpClient));
-      String _name_3 = httpClient.getName();
-      String _plus_3 = ("actionIds/" + _name_3);
-      String _plus_4 = (_plus_3 + "/");
+      String _name_2 = httpClient.getName();
+      String _plus_2 = ("actionIds/" + _name_2);
+      String _plus_3 = (_plus_2 + "/");
       CharSequence _actionIdName = this._es6Extension.actionIdName(httpClient);
-      String _plus_5 = (_plus_4 + _actionIdName);
-      String _plus_6 = (_plus_5 + ".js");
-      fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+      String _plus_4 = (_plus_3 + _actionIdName);
+      String _plus_5 = (_plus_4 + ".js");
+      fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.actionTemplate.generateActionIds(httpClient));
     }
     fsa.generateFile("app/App.js", IFileSystemAccess.DEFAULT_OUTPUT, 
@@ -184,22 +165,22 @@ public class Es6Generator {
     EList<ClientScenario> _scenarios = httpClient.getScenarios();
     for (final ClientScenario scenario : _scenarios) {
       {
-        String _name_4 = httpClient.getName();
-        String _plus_7 = (_name_4 + "/");
-        String _name_5 = scenario.getName();
-        String _plus_8 = (_plus_7 + _name_5);
-        String _plus_9 = (_plus_8 + ".scenario.js");
-        fsa.generateFile(_plus_9, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
+        String _name_3 = httpClient.getName();
+        String _plus_6 = (_name_3 + "/");
+        String _name_4 = scenario.getName();
+        String _plus_7 = (_plus_6 + _name_4);
+        String _plus_8 = (_plus_7 + ".scenario.js");
+        fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
           this.scenarioTemplate.generateScenario(scenario, httpClient));
         int _size_1 = scenario.getThenBlock().getVerifications().size();
         boolean _greaterThan_1 = (_size_1 > 0);
         if (_greaterThan_1) {
-          String _name_6 = httpClient.getName();
-          String _plus_10 = (_name_6 + "/");
-          String _name_7 = scenario.getName();
-          String _plus_11 = (_plus_10 + _name_7);
-          String _plus_12 = (_plus_11 + "Verifications.js");
-          fsa.generateFile(_plus_12, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, 
+          String _name_5 = httpClient.getName();
+          String _plus_9 = (_name_5 + "/");
+          String _name_6 = scenario.getName();
+          String _plus_10 = (_plus_9 + _name_6);
+          String _plus_11 = (_plus_10 + "Verifications.js");
+          fsa.generateFile(_plus_11, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, 
             this.scenarioTemplate.generateVerifications(scenario));
         }
       }

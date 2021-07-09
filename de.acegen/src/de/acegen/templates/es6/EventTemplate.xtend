@@ -20,8 +20,6 @@
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClient
-import de.acegen.aceGen.HttpClientAce
-import de.acegen.aceGen.HttpClientOutcome
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
@@ -38,21 +36,6 @@ class EventTemplate {
 	@Inject
 	extension CommonExtension
 	
-	def generateAbstractEventFile(HttpClientAce it, HttpClientOutcome outcome, HttpClient es6) '''
-		«copyright»
-
-		import Event from "../../../gen/ace/Event";
-		
-		export default class «eventName(outcome)» extends Event {
-		    constructor(eventData) {
-		        super(eventData, '«es6.getName».«eventName(outcome)»');
-		    }
-		}
-		
-		
-		«sdg»
-		
-	'''
 	def generateEventListenerRegistration(HttpClient it) '''
 		«copyright»
 
@@ -81,32 +64,34 @@ class EventTemplate {
 	def generateEvent() '''
 		«copyright»
 
-		import * as AppUtils from "../../src/app/AppUtils";
 		import * as ACEController from "./ACEController";
 		
 		export default class Event {
-		    constructor(eventData, eventName) {
+		    constructor(eventName) {
 		        this.eventName = eventName;
-		        this.eventData = AppUtils.deepCopy(eventData);
 		    }
 		
-		    publish() {
-				ACEController.addItemToTimeLine({event: this});
-		        this.notifyListeners();
+		    publish(data) {
+				ACEController.addItemToTimeLine({
+		            event: {
+		                eventName: this.eventName,
+		                data
+		            }});
+		        this.notifyListeners(data);
 		    }
 		
-		    replay() {
-		        this.notifyListeners();
+		    replay(data) {
+		        this.notifyListeners(data);
 		    }
-
-		    notifyListeners() {
+		
+		    notifyListeners(data) {
 		        let i, listener;
 		        if (this.eventName !== undefined) {
 		            const listenersForEvent = ACEController.listeners[this.eventName];
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
-							listener(AppUtils.deepCopy(this.eventData));
+							listener(data);
 		                }
 		            }
 		        }
@@ -123,55 +108,39 @@ class EventTemplate {
 	def generateTriggerAction() '''
 		«copyright»
 
-		import Event from "./Event";
 		import * as ACEController from "./ACEController";
 		
-		export default class TriggerAction extends Event {
-		    constructor(action) {
-		        super(action, 'TriggerAction');
-		        this.eventData = action;
-		    }
+		export default class TriggerAction {
 		
-			publish() {
-			    ACEController.addItemToTimeLine({event: this});
-			    this.notifyListeners();
+			publish(action, data) {
+				ACEController.addItemToTimeLine({
+		            event: {
+		                eventName: 'TriggerAction',
+		                action: {
+		                	actionName: action.actionName,
+		                	data
+		                }
+		            }});
+		        action.apply(data);
 			}
 			
-			publishWithDelay(delayInMillis) {
+			publishWithDelay(action, data, delayInMillis) {
 		    	setTimeout(() => {
-					ACEController.addItemToTimeLine({event: this});
-					this.notifyListeners();
+		    		this.publish(action, data);
 				}, delayInMillis);
 			}
 
-			publishWithDelayTakeLatest(delayInMillis) {
-				const existingTimeout = ACEController.delayedActions[this.eventData.actionName];
+			publishWithDelayTakeLatest(action, data, delayInMillis) {
+				const existingTimeout = ACEController.delayedActions[action.actionName];
 				if (existingTimeout) {
 					clearTimeout(existingTimeout);
 				}
-				ACEController.delayedActions[this.eventData.actionName] = setTimeout(() => {
-					ACEController.delayedActions[this.eventData.actionName] = undefined;
-					ACEController.addItemToTimeLine({event: this});
-					this.notifyListeners();
+				ACEController.delayedActions[action.actionName] = setTimeout(() => {
+					ACEController.delayedActions[action.actionName] = undefined;
+		    		this.publish(action, data);
 				}, delayInMillis);
 			}
 
-			replay() {
-			}
-			
-			notifyListeners() {
-				let i, listener;
-				if (this.eventName !== undefined) {
-					const listenersForEvent = ACEController.listeners[this.eventName];
-					if (listenersForEvent !== undefined) {
-						for (i = 0; i < listenersForEvent.length; i += 1) {
-							listener = listenersForEvent[i];
-							listener(this.eventData);
-						}
-					}
-				}
-			}
-
 		}
 		
 		
@@ -179,40 +148,7 @@ class EventTemplate {
 		
 		
 	'''
-	
 
-	def generateEventFactoryRegistration(HttpClient it) '''
-		«copyright»
-
-		import * as ACEController from "../ace/ACEController";
-		«FOR aceOperation : aceOperations»
-			«FOR outcome : aceOperation.outcomes»
-				«IF outcome.listeners.size > 0»
-					import «aceOperation.eventName(outcome)» from "./events/«aceOperation.eventName(outcome)»";
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		
-		export default class EventFactoryRegistration«projectName» {
-		
-			static init() {
-				«FOR aceOperation : aceOperations»
-					«FOR outcome : aceOperation.outcomes»
-						«IF outcome.listeners.size > 0»
-							ACEController.registerFactory('«getName».«aceOperation.eventName(outcome)»', 
-								(eventData) => new «aceOperation.eventName(outcome)»(eventData));
-						«ENDIF»
-					«ENDFOR»
-				«ENDFOR»
-			}
-		
-		}
-		
-		
-		«sdg»
-		
-	'''
-	
 }
 	
 	

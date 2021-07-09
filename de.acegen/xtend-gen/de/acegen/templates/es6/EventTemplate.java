@@ -41,46 +41,6 @@ public class EventTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generateAbstractEventFile(final HttpClientAce it, final HttpClientOutcome outcome, final HttpClient es6) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import Event from \"../../../gen/ace/Event\";");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("export default class ");
-    String _eventName = this._aceExtension.eventName(it, outcome);
-    _builder.append(_eventName);
-    _builder.append(" extends Event {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("    ");
-    _builder.append("constructor(eventData) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("super(eventData, \'");
-    String _name = es6.getName();
-    _builder.append(_name, "        ");
-    _builder.append(".");
-    String _eventName_1 = this._aceExtension.eventName(it, outcome);
-    _builder.append(_eventName_1, "        ");
-    _builder.append("\');");
-    _builder.newLineIfNotEmpty();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence generateEventListenerRegistration(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -149,51 +109,58 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
-    _builder.newLine();
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Event {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("constructor(eventData, eventName) {");
+    _builder.append("constructor(eventName) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.eventName = eventName;");
     _builder.newLine();
-    _builder.append("        ");
-    _builder.append("this.eventData = AppUtils.deepCopy(eventData);");
-    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("publish() {");
+    _builder.append("publish(data) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("ACEController.addItemToTimeLine({event: this});");
+    _builder.append("ACEController.addItemToTimeLine({");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("event: {");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("eventName: this.eventName,");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("data");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("}});");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("this.notifyListeners();");
+    _builder.append("this.notifyListeners(data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("replay() {");
+    _builder.append("replay(data) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("this.notifyListeners();");
+    _builder.append("this.notifyListeners(data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("notifyListeners() {");
+    _builder.append("notifyListeners(data) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("let i, listener;");
@@ -214,7 +181,7 @@ public class EventTemplate {
     _builder.append("listener = listenersForEvent[i];");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("listener(AppUtils.deepCopy(this.eventData));");
+    _builder.append("listener(data);");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("}");
@@ -247,34 +214,41 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import Event from \"./Event\";");
-    _builder.newLine();
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export default class TriggerAction extends Event {");
+    _builder.append("export default class TriggerAction {");
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append("constructor(action) {");
     _builder.newLine();
-    _builder.append("        ");
-    _builder.append("super(action, \'TriggerAction\');");
+    _builder.append("\t");
+    _builder.append("publish(action, data) {");
     _builder.newLine();
-    _builder.append("        ");
-    _builder.append("this.eventData = action;");
+    _builder.append("\t\t");
+    _builder.append("ACEController.addItemToTimeLine({");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("            ");
+    _builder.append("event: {");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("eventName: \'TriggerAction\',");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("action: {");
+    _builder.newLine();
+    _builder.append("                \t");
+    _builder.append("actionName: action.actionName,");
+    _builder.newLine();
+    _builder.append("                \t");
+    _builder.append("data");
+    _builder.newLine();
+    _builder.append("                ");
     _builder.append("}");
     _builder.newLine();
+    _builder.append("            ");
+    _builder.append("}});");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("publish() {");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("ACEController.addItemToTimeLine({event: this});");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("this.notifyListeners();");
+    _builder.append("        ");
+    _builder.append("action.apply(data);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -282,16 +256,13 @@ public class EventTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("publishWithDelay(delayInMillis) {");
+    _builder.append("publishWithDelay(action, data, delayInMillis) {");
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("setTimeout(() => {");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("ACEController.addItemToTimeLine({event: this});");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("this.notifyListeners();");
+    _builder.append("    \t\t");
+    _builder.append("this.publish(action, data);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}, delayInMillis);");
@@ -301,10 +272,10 @@ public class EventTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("publishWithDelayTakeLatest(delayInMillis) {");
+    _builder.append("publishWithDelayTakeLatest(action, data, delayInMillis) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("const existingTimeout = ACEController.delayedActions[this.eventData.actionName];");
+    _builder.append("const existingTimeout = ACEController.delayedActions[action.actionName];");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("if (existingTimeout) {");
@@ -316,16 +287,13 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("ACEController.delayedActions[this.eventData.actionName] = setTimeout(() => {");
+    _builder.append("ACEController.delayedActions[action.actionName] = setTimeout(() => {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("ACEController.delayedActions[this.eventData.actionName] = undefined;");
+    _builder.append("ACEController.delayedActions[action.actionName] = undefined;");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("ACEController.addItemToTimeLine({event: this});");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("this.notifyListeners();");
+    _builder.append("    \t\t");
+    _builder.append("this.publish(action, data);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}, delayInMillis);");
@@ -334,51 +302,6 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("replay() {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("notifyListeners() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("let i, listener;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (this.eventName !== undefined) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("const listenersForEvent = ACEController.listeners[this.eventName];");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("if (listenersForEvent !== undefined) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("for (i = 0; i < listenersForEvent.length; i += 1) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("listener = listenersForEvent[i];");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("listener(this.eventData);");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -387,95 +310,6 @@ public class EventTemplate {
     _builder.append(_sdg);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  public CharSequence generateEventFactoryRegistration(final HttpClient it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import * as ACEController from \"../ace/ACEController\";");
-    _builder.newLine();
-    {
-      EList<HttpClientAce> _aceOperations = it.getAceOperations();
-      for(final HttpClientAce aceOperation : _aceOperations) {
-        {
-          EList<HttpClientOutcome> _outcomes = aceOperation.getOutcomes();
-          for(final HttpClientOutcome outcome : _outcomes) {
-            {
-              int _size = outcome.getListeners().size();
-              boolean _greaterThan = (_size > 0);
-              if (_greaterThan) {
-                _builder.append("import ");
-                String _eventName = this._aceExtension.eventName(aceOperation, outcome);
-                _builder.append(_eventName);
-                _builder.append(" from \"./events/");
-                String _eventName_1 = this._aceExtension.eventName(aceOperation, outcome);
-                _builder.append(_eventName_1);
-                _builder.append("\";");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-          }
-        }
-      }
-    }
-    _builder.newLine();
-    _builder.append("export default class EventFactoryRegistration");
-    String _projectName = this._es6Extension.projectName(it);
-    _builder.append(_projectName);
-    _builder.append(" {");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("static init() {");
-    _builder.newLine();
-    {
-      EList<HttpClientAce> _aceOperations_1 = it.getAceOperations();
-      for(final HttpClientAce aceOperation_1 : _aceOperations_1) {
-        {
-          EList<HttpClientOutcome> _outcomes_1 = aceOperation_1.getOutcomes();
-          for(final HttpClientOutcome outcome_1 : _outcomes_1) {
-            {
-              int _size_1 = outcome_1.getListeners().size();
-              boolean _greaterThan_1 = (_size_1 > 0);
-              if (_greaterThan_1) {
-                _builder.append("\t\t");
-                _builder.append("ACEController.registerFactory(\'");
-                String _name = it.getName();
-                _builder.append(_name, "\t\t");
-                _builder.append(".");
-                String _eventName_2 = this._aceExtension.eventName(aceOperation_1, outcome_1);
-                _builder.append(_eventName_2, "\t\t");
-                _builder.append("\', ");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("(eventData) => new ");
-                String _eventName_3 = this._aceExtension.eventName(aceOperation_1, outcome_1);
-                _builder.append(_eventName_3, "\t\t\t");
-                _builder.append("(eventData));");
-                _builder.newLineIfNotEmpty();
-              }
-            }
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
   }
