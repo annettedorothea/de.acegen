@@ -5,14 +5,14 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.es6.Es6Extension
 import de.acegen.generator.ACEOutputConfigurationProvider
-import de.acegen.templates.es6.ReactTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import de.acegen.templates.es6.JsxTemplate
 
 class ReactGenerator {
 
 	@Inject
-	ReactTemplate reactTemplate;
+	JsxTemplate reactTemplate;
 
 	@Inject
 	extension Es6Extension
@@ -26,8 +26,6 @@ class ReactGenerator {
 	def dispatch void doGenerate(SingleClientAttribute it, IFileSystemAccess2 fsa, String subFolder,
 		boolean isGroupedChild) {
 		if (!noComponent && (attributes.size > 0 || isGroupedChild)) {
-			fsa.generateFile('''components«subFolder»/«reactComponentName».js''', IFileSystemAccess2.DEFAULT_OUTPUT,
-				reactTemplate.generateComponent(it, subFolder, folderPrefix(subFolder)));
 			fsa.generateFile('''components«subFolder»/«componentName».js''',
 				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 				reactTemplate.generateComponentStruct(it, folderPrefix(subFolder)));
@@ -40,8 +38,6 @@ class ReactGenerator {
 
 	def dispatch void doGenerate(GroupedClientAttribute it, IFileSystemAccess2 fsa, String subFolder,
 		boolean isGroupedChild) {
-		fsa.generateFile('''components«subFolder»/«reactComponentName».js''', IFileSystemAccess2.DEFAULT_OUTPUT,
-			reactTemplate.generateComponent(it, subFolder, folderPrefix(subFolder)));
 		fsa.generateFile('''components«subFolder»/«componentName».js''',
 			ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			reactTemplate.generateComponentStruct(it, folderPrefix(subFolder)));

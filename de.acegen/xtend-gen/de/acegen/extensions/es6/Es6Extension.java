@@ -444,52 +444,6 @@ public class Es6Extension {
     return number;
   }
   
-  protected String _reactComponentName(final SingleClientAttribute it) {
-    boolean _isList = it.isList();
-    if (_isList) {
-      StringConcatenation _builder = new StringConcatenation();
-      String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-      _builder.append(_firstUpper);
-      _builder.append("ItemComponent");
-      return _builder.toString();
-    }
-    StringConcatenation _builder_1 = new StringConcatenation();
-    String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
-    _builder_1.append(_firstUpper_1);
-    _builder_1.append("Component");
-    return _builder_1.toString();
-  }
-  
-  protected String _reactComponentName(final GroupedClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("Component");
-    return _builder.toString();
-  }
-  
-  protected String _reactTagName(final SingleClientAttribute it) {
-    boolean _isList = it.isList();
-    if (_isList) {
-      StringConcatenation _builder = new StringConcatenation();
-      String _firstLower = StringExtensions.toFirstLower(it.getName());
-      _builder.append(_firstLower);
-      _builder.append("Item");
-      return _builder.toString();
-    }
-    StringConcatenation _builder_1 = new StringConcatenation();
-    String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
-    _builder_1.append(_firstLower_1);
-    return _builder_1.toString();
-  }
-  
-  protected String _reactTagName(final GroupedClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _firstLower = StringExtensions.toFirstLower(it.getName());
-    _builder.append(_firstLower);
-    return _builder.toString();
-  }
-  
   protected String _componentName(final SingleClientAttribute it) {
     boolean _isList = it.isList();
     if (_isList) {
@@ -512,6 +466,46 @@ public class Es6Extension {
     return _builder.toString();
   }
   
+  protected String _importComponent(final SingleClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((it.getAttributes().size() > 0) && (!it.isNoComponent()))) {
+        _builder.append("import { ");
+        String _componentName = this.componentName(it);
+        _builder.append(_componentName);
+        _builder.append(" } from \".");
+        _builder.append(subFolder);
+        _builder.append("/");
+        String _componentName_1 = this.componentName(it);
+        _builder.append(_componentName_1);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
+  protected String _importComponent(final GroupedClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      int _size = it.getAttributeGroup().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("import { ");
+        String _componentName = this.componentName(it);
+        _builder.append(_componentName);
+        _builder.append(" } from \".");
+        _builder.append(subFolder);
+        _builder.append("/");
+        String _componentName_1 = this.componentName(it);
+        _builder.append(_componentName_1);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
   protected String _stateRefPath(final GroupedClientAttribute it) {
     return this.elementPathRec(it, "");
   }
@@ -531,28 +525,6 @@ public class Es6Extension {
     }
   }
   
-  public String reactComponentName(final ClientAttribute it) {
-    if (it instanceof GroupedClientAttribute) {
-      return _reactComponentName((GroupedClientAttribute)it);
-    } else if (it instanceof SingleClientAttribute) {
-      return _reactComponentName((SingleClientAttribute)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
-  }
-  
-  public String reactTagName(final ClientAttribute it) {
-    if (it instanceof GroupedClientAttribute) {
-      return _reactTagName((GroupedClientAttribute)it);
-    } else if (it instanceof SingleClientAttribute) {
-      return _reactTagName((SingleClientAttribute)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
-  }
-  
   public String componentName(final ClientAttribute it) {
     if (it instanceof GroupedClientAttribute) {
       return _componentName((GroupedClientAttribute)it);
@@ -561,6 +533,17 @@ public class Es6Extension {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());
+    }
+  }
+  
+  public String importComponent(final ClientAttribute it, final String subFolder) {
+    if (it instanceof GroupedClientAttribute) {
+      return _importComponent((GroupedClientAttribute)it, subFolder);
+    } else if (it instanceof SingleClientAttribute) {
+      return _importComponent((SingleClientAttribute)it, subFolder);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it, subFolder).toString());
     }
   }
   

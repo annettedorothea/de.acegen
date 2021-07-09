@@ -43,8 +43,8 @@ class CommandTemplate {
 		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../../gen/ace/TriggerAction";
 		«ENDIF»
-		import Utils from "../../ace/Utils";
-		import AppUtils from "../../../src/app/AppUtils";
+		import * as Utils from "../../ace/Utils";
+		import * as AppUtils from "../../../src/app/AppUtils";
 		«IF refs.size > 0»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
@@ -250,7 +250,7 @@ class CommandTemplate {
 	def generateCommand() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
+		import * as AppUtils from "../../src/app/AppUtils";
 		
 		export default class Command {
 		    constructor(commandData, commandName) {
@@ -276,7 +276,7 @@ class CommandTemplate {
 	def generateAsynchronousCommand() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		import Command from "./Command";
 		
 		export default class AsynchronousCommand extends Command {
@@ -313,7 +313,7 @@ class CommandTemplate {
 	def generateSynchronousCommand() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		import Command from "./Command";
 		
 		export default class SynchronousCommand extends Command {

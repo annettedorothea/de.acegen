@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'group'", "'{'", "'}'", "'WHEN'", "'THEN'", "'GIVEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'React_16.8'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'authorize'", "'NotNull'", "'afterCommit'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loadingFlag'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'group'", "'{'", "'}'", "'WHEN'", "'THEN'", "'GIVEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'shouldBe'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'location.hash'", "'storage'", "'Java'", "'Dropwizard'", "'JDBI3'", "'Liquibase'", "'authorize'", "'NotNull'", "'afterCommit'", "'persistent'", "'excludeGIVEN'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -8152,20 +8152,20 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpClient__Group_2__1__Impl"
-    // InternalAceGen.g:2538:1: rule__HttpClient__Group_2__1__Impl : ( ( rule__HttpClient__React16_8Assignment_2_1 )? ) ;
+    // InternalAceGen.g:2538:1: rule__HttpClient__Group_2__1__Impl : ( ( rule__HttpClient__JsxAssignment_2_1 )? ) ;
     public final void rule__HttpClient__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:2542:1: ( ( ( rule__HttpClient__React16_8Assignment_2_1 )? ) )
-            // InternalAceGen.g:2543:1: ( ( rule__HttpClient__React16_8Assignment_2_1 )? )
+            // InternalAceGen.g:2542:1: ( ( ( rule__HttpClient__JsxAssignment_2_1 )? ) )
+            // InternalAceGen.g:2543:1: ( ( rule__HttpClient__JsxAssignment_2_1 )? )
             {
-            // InternalAceGen.g:2543:1: ( ( rule__HttpClient__React16_8Assignment_2_1 )? )
-            // InternalAceGen.g:2544:2: ( rule__HttpClient__React16_8Assignment_2_1 )?
+            // InternalAceGen.g:2543:1: ( ( rule__HttpClient__JsxAssignment_2_1 )? )
+            // InternalAceGen.g:2544:2: ( rule__HttpClient__JsxAssignment_2_1 )?
             {
-             before(grammarAccess.getHttpClientAccess().getReact16_8Assignment_2_1()); 
-            // InternalAceGen.g:2545:2: ( rule__HttpClient__React16_8Assignment_2_1 )?
+             before(grammarAccess.getHttpClientAccess().getJsxAssignment_2_1()); 
+            // InternalAceGen.g:2545:2: ( rule__HttpClient__JsxAssignment_2_1 )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -8174,10 +8174,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt23) {
                 case 1 :
-                    // InternalAceGen.g:2545:3: rule__HttpClient__React16_8Assignment_2_1
+                    // InternalAceGen.g:2545:3: rule__HttpClient__JsxAssignment_2_1
                     {
                     pushFollow(FOLLOW_2);
-                    rule__HttpClient__React16_8Assignment_2_1();
+                    rule__HttpClient__JsxAssignment_2_1();
 
                     state._fsp--;
 
@@ -8187,7 +8187,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getHttpClientAccess().getReact16_8Assignment_2_1()); 
+             after(grammarAccess.getHttpClientAccess().getJsxAssignment_2_1()); 
 
             }
 
@@ -38384,30 +38384,30 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__HttpClient__AceOperationsAssignment_1_1"
 
 
-    // $ANTLR start "rule__HttpClient__React16_8Assignment_2_1"
-    // InternalAceGen.g:12198:1: rule__HttpClient__React16_8Assignment_2_1 : ( ( 'React_16.8' ) ) ;
-    public final void rule__HttpClient__React16_8Assignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__HttpClient__JsxAssignment_2_1"
+    // InternalAceGen.g:12198:1: rule__HttpClient__JsxAssignment_2_1 : ( ( 'JSX' ) ) ;
+    public final void rule__HttpClient__JsxAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:12202:1: ( ( ( 'React_16.8' ) ) )
-            // InternalAceGen.g:12203:2: ( ( 'React_16.8' ) )
+            // InternalAceGen.g:12202:1: ( ( ( 'JSX' ) ) )
+            // InternalAceGen.g:12203:2: ( ( 'JSX' ) )
             {
-            // InternalAceGen.g:12203:2: ( ( 'React_16.8' ) )
-            // InternalAceGen.g:12204:3: ( 'React_16.8' )
+            // InternalAceGen.g:12203:2: ( ( 'JSX' ) )
+            // InternalAceGen.g:12204:3: ( 'JSX' )
             {
-             before(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); 
-            // InternalAceGen.g:12205:3: ( 'React_16.8' )
-            // InternalAceGen.g:12206:4: 'React_16.8'
+             before(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); 
+            // InternalAceGen.g:12205:3: ( 'JSX' )
+            // InternalAceGen.g:12206:4: 'JSX'
             {
-             before(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); 
+             before(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); 
             match(input,79,FOLLOW_2); 
-             after(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); 
+             after(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); 
 
             }
 
-             after(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); 
+             after(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); 
 
             }
 
@@ -38426,7 +38426,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__HttpClient__React16_8Assignment_2_1"
+    // $ANTLR end "rule__HttpClient__JsxAssignment_2_1"
 
 
     // $ANTLR start "rule__HttpClient__ContainerAssignment_2_2"

@@ -573,7 +573,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* (react16_8?='React_16.8'? container=SingleClientAttribute)? scenarios+=ClientScenario*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* (jsx?='JSX'? container=SingleClientAttribute)? scenarios+=ClientScenario*)
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

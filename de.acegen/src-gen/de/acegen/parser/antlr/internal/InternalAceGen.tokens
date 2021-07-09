@@ -18,6 +18,7 @@
 'HttpServer'=12
 'Integer'=90
 'JDBI3'=54
+'JSX'=15
 'Java'=52
 'Liquibase'=55
 'List'=33
@@ -26,7 +27,6 @@
 'POST'=86
 'PUT'=87
 'PrimaryKey'=83
-'React_16.8'=15
 'String'=91
 'THEN'=40
 'Unique'=82

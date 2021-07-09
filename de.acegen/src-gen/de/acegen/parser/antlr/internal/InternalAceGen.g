@@ -206,15 +206,15 @@ ruleHttpClient returns [EObject current=null]
 			}
 			(
 				(
-					lv_react16_8_4_0='React_16.8'
+					lv_jsx_4_0='JSX'
 					{
-						newLeafNode(lv_react16_8_4_0, grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0());
+						newLeafNode(lv_jsx_4_0, grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getHttpClientRule());
 						}
-						setWithLastConsumed($current, "react16_8", lv_react16_8_4_0 != null, "React_16.8");
+						setWithLastConsumed($current, "jsx", lv_jsx_4_0 != null, "JSX");
 					}
 				)
 			)?

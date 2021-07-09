@@ -134,9 +134,9 @@ class ActionTemplate {
 	def generateAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
-		import AppUtils from "../../src/app/AppUtils";
-		import Utils from "./Utils";
+		import * as ACEController from "./ACEController";
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as Utils from "./Utils";
 		
 		export default class Action {
 		    constructor(actionData, actionName) {
@@ -155,10 +155,10 @@ class ActionTemplate {
 			        	}
 		        		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
 		        	}
-		        	if (this.actionData.uuid === null) {
+		        	if (!this.actionData.uuid) {
 		        		this.actionData.uuid = AppUtils.createUUID();
 		        	}
-		        	if (this.actionData.clientSystemTime === null) {
+		        	if (!this.actionData.clientSystemTime) {
 						this.actionData.clientSystemTime = new Date();
 					}
 				} else {
@@ -188,9 +188,8 @@ class ActionTemplate {
 	def generateAsynchronousAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		import Action from "./Action";
-		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class AsynchronousAction extends Action {
 		
@@ -232,9 +231,8 @@ class ActionTemplate {
 	def generateSynchronousAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		import Action from "./Action";
-		import AppUtils from "../../src/app/AppUtils";
 		
 		export default class SynchronousAction extends Action {
 		

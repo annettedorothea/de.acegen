@@ -26,7 +26,7 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('ui' (react16_8 ?= 'React_16.8')?  container = SingleClientAttribute)?
+	('ui' (jsx ?= 'JSX')?  container = SingleClientAttribute)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
 

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClient#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
- *   <li>{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#isJsx <em>Jsx</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
@@ -64,26 +64,26 @@ public interface HttpClient extends EObject
   EList<HttpClientAce> getAceOperations();
 
   /**
-   * Returns the value of the '<em><b>React16 8</b></em>' attribute.
+   * Returns the value of the '<em><b>Jsx</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>React16 8</em>' attribute.
-   * @see #setReact16_8(boolean)
-   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_React16_8()
+   * @return the value of the '<em>Jsx</em>' attribute.
+   * @see #setJsx(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Jsx()
    * @model
    * @generated
    */
-  boolean isReact16_8();
+  boolean isJsx();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.HttpClient#isJsx <em>Jsx</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>React16 8</em>' attribute.
-   * @see #isReact16_8()
+   * @param value the new value of the '<em>Jsx</em>' attribute.
+   * @see #isJsx()
    * @generated
    */
-  void setReact16_8(boolean value);
+  void setJsx(boolean value);
 
   /**
    * Returns the value of the '<em><b>Container</b></em>' containment reference.

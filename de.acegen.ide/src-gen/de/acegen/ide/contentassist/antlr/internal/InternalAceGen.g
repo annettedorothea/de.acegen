@@ -2541,9 +2541,9 @@ rule__HttpClient__Group_2__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getHttpClientAccess().getReact16_8Assignment_2_1()); }
-	(rule__HttpClient__React16_8Assignment_2_1)?
-	{ after(grammarAccess.getHttpClientAccess().getReact16_8Assignment_2_1()); }
+	{ before(grammarAccess.getHttpClientAccess().getJsxAssignment_2_1()); }
+	(rule__HttpClient__JsxAssignment_2_1)?
+	{ after(grammarAccess.getHttpClientAccess().getJsxAssignment_2_1()); }
 )
 ;
 finally {
@@ -12195,19 +12195,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__HttpClient__React16_8Assignment_2_1
+rule__HttpClient__JsxAssignment_2_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); }
+		{ before(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); }
 		(
-			{ before(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); }
-			'React_16.8'
-			{ after(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); }
+			{ before(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); }
+			'JSX'
+			{ after(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); }
 		)
-		{ after(grammarAccess.getHttpClientAccess().getReact16_8React_168Keyword_2_1_0()); }
+		{ after(grammarAccess.getHttpClientAccess().getJsxJSXKeyword_2_1_0()); }
 	)
 ;
 finally {

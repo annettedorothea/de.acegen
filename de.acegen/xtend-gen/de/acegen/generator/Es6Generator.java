@@ -154,8 +154,8 @@ public class Es6Generator {
       fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.actionTemplate.generateActionIds(httpClient));
     }
-    fsa.generateFile("app/App.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-      this.aceTemplate.generateAppStub(httpClient));
+    fsa.generateFile("app/App.js", IFileSystemAccess.DEFAULT_OUTPUT, 
+      this.aceTemplate.generateApp(httpClient));
     fsa.generateFile("app/AppUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateAppUtilsStub());
     fsa.generateFile("ace/Action.js", IFileSystemAccess.DEFAULT_OUTPUT, this.actionTemplate.generateAction());
@@ -177,8 +177,8 @@ public class Es6Generator {
       fsa.generateFile("ace/AppState.js", IFileSystemAccess.DEFAULT_OUTPUT, 
         this.aceTemplate.generateAppState(httpClient.getContainer().getAttributes(), "", httpClient));
     }
-    boolean _isReact16_8 = httpClient.isReact16_8();
-    if (_isReact16_8) {
+    boolean _isJsx = httpClient.isJsx();
+    if (_isJsx) {
       this.reactGenerator.doGenerate(httpClient, fsa);
     }
     EList<ClientScenario> _scenarios = httpClient.getScenarios();

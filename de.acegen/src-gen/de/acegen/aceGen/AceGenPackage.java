@@ -123,13 +123,13 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT__ACE_OPERATIONS = 1;
 
   /**
-   * The feature id for the '<em><b>React16 8</b></em>' attribute.
+   * The feature id for the '<em><b>Jsx</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__REACT16_8 = 2;
+  int HTTP_CLIENT__JSX = 2;
 
   /**
    * The feature id for the '<em><b>Container</b></em>' containment reference.
@@ -2885,15 +2885,15 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClient_AceOperations();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isReact16_8 <em>React16 8</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpClient#isJsx <em>Jsx</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>React16 8</em>'.
-   * @see de.acegen.aceGen.HttpClient#isReact16_8()
+   * @return the meta object for the attribute '<em>Jsx</em>'.
+   * @see de.acegen.aceGen.HttpClient#isJsx()
    * @see #getHttpClient()
    * @generated
    */
-  EAttribute getHttpClient_React16_8();
+  EAttribute getHttpClient_Jsx();
 
   /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}'.
@@ -5210,12 +5210,12 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT__ACE_OPERATIONS = eINSTANCE.getHttpClient_AceOperations();
 
     /**
-     * The meta object literal for the '<em><b>React16 8</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Jsx</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_CLIENT__REACT16_8 = eINSTANCE.getHttpClient_React16_8();
+    EAttribute HTTP_CLIENT__JSX = eINSTANCE.getHttpClient_Jsx();
 
     /**
      * The meta object literal for the '<em><b>Container</b></em>' containment reference feature.

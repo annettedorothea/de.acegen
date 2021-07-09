@@ -66,9 +66,9 @@ public class CommandTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("import Utils from \"../../ace/Utils\";");
+    _builder.append("import * as Utils from \"../../ace/Utils\";");
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
     {
       int _size_1 = it.getRefs().size();
@@ -952,7 +952,7 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Command {");
@@ -1007,7 +1007,7 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import Command from \"./Command\";");
     _builder.newLine();
@@ -1092,7 +1092,7 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import Command from \"./Command\";");
     _builder.newLine();

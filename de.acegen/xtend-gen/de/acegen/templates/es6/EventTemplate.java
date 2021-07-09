@@ -87,7 +87,7 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"../ace/ACEController\";");
+    _builder.append("import * as ACEController from \"../ace/ACEController\";");
     _builder.newLine();
     _builder.append("import * as AppState from \"../ace/AppState\";");
     _builder.newLine();
@@ -149,9 +149,9 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Event {");
@@ -249,7 +249,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import Event from \"./Event\";");
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class TriggerAction extends Event {");
@@ -316,7 +316,7 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("const timeout = setTimeout(() => {");
+    _builder.append("ACEController.delayedActions[this.eventData.actionName] = setTimeout(() => {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("ACEController.delayedActions[this.eventData.actionName] = undefined;");
@@ -329,9 +329,6 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}, delayInMillis);");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("ACEController.delayedActions[this.eventData.actionName] = timeout;");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -400,7 +397,7 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"../ace/ACEController\";");
+    _builder.append("import * as ACEController from \"../ace/ACEController\";");
     _builder.newLine();
     {
       EList<HttpClientAce> _aceOperations = it.getAceOperations();

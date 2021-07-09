@@ -247,28 +247,6 @@ class Es6Extension {
 		return number;
 	}
 	
-	dispatch def String reactComponentName(SingleClientAttribute it) {
-		if (isList) {
-			return '''«name.toFirstUpper»ItemComponent'''
-		}
-		return '''«name.toFirstUpper»Component'''
-	}
-
-	dispatch def String reactComponentName(GroupedClientAttribute it) {
-		return '''«name.toFirstUpper»Component'''
-	}
-
-	dispatch def String reactTagName(SingleClientAttribute it) {
-		if (isList) {
-			return '''«name.toFirstLower»Item'''
-		}
-		return '''«name.toFirstLower»'''
-	}
-
-	dispatch def String reactTagName(GroupedClientAttribute it) {
-		return '''«name.toFirstLower»'''
-	}
-
 	dispatch def String componentName(SingleClientAttribute it) {
 		if (isList) {
 			return '''«name.toFirstUpper»Item'''
@@ -279,6 +257,18 @@ class Es6Extension {
 	dispatch def String componentName(GroupedClientAttribute it) {
 		return '''«name.toFirstUpper»'''
 	}
+
+	dispatch def String importComponent(SingleClientAttribute it, String subFolder) '''
+		«IF attributes.size > 0 && !noComponent»
+			import { «componentName» } from ".«subFolder»/«componentName»";
+		«ENDIF»
+	'''
+
+	dispatch def String importComponent(GroupedClientAttribute it, String subFolder) '''
+		«IF attributeGroup.size > 0»
+			import { «componentName» } from ".«subFolder»/«componentName»";
+		«ENDIF»
+	'''
 
 	dispatch def String stateRefPath(GroupedClientAttribute it) {
 		return elementPathRec("")

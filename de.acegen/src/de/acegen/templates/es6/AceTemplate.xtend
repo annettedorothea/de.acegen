@@ -25,7 +25,6 @@ import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.Es6Extension
-import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
 
@@ -37,153 +36,168 @@ class AceTemplate {
 	@Inject
 	extension CommonExtension
 	
-	ArrayList<String> imports = new ArrayList<String>;
-	
-	
 	def generateAppUtilsStub() '''
 		«copyright»
 		
 		
 		import * as App from "./App";
 		import * as AppState from "../../gen/ace/AppState";
-		import Utils from "../../gen/ace/Utils";
+		import * as Utils from "../../gen/ace/Utils";
 		
+
+		export function initEventListenersAndFactories() {
+		    //EventListenerRegistration.init();
+		    //EventFactoryRegistration.init();
+		}
+		
+		export function startApp() {
+		    Utils.loadSettings().then(() => {
+		    });
+		}
+		
+		export function startReplay() {
+		}
+		
+		export function createInitialAppState() {
+		    const initialAppState = {
+		    };
+		    AppState.setInitialAppState(initialAppState);
+		}
+		
+		function createHeaders(authorize) {
+		    const headers = new Headers();
+		    headers.append("Content-Type", "application/json");
+		    headers.append("Accept", "application/json");
+		    if (authorize === true) {
+		        let authorization = basicAuth();
+		        if (authorization !== undefined) {
+		            headers.append("Authorization", authorization);
+		        }
+		    }
+		    return headers;
+		}
+		
+		function addUuidToUrl(url, uuid) {
+		    if (uuid) {
+		        if (url.indexOf("?") < 0) {
+		            url += "?uuid=" + uuid;
+		        } else {
+		            url += "&uuid=" + uuid;
+		        }
+		    }
+		    return url;
+		}
+		
+		function httpRequest(methodType, url, uuid, authorize, data) {
+		    return new Promise((resolve, reject) => {
+		        const options = {
+		            method: methodType,
+		            headers: createHeaders(authorize),
+		            mode: 'cors',
+		            cache: 'no-cache'
+		        };
+		        if (data && methodType !== "GET") {
+		            options.body = JSON.stringify(data);
+		        }
+		        url = addUuidToUrl(url, uuid);
+		        const request = new Request(url, options);
+		
+		        fetch(request).then(function (response) {
+		            response.text().then((text) => {
+		                if (response.status >= 300) {
+		                    const error = {
+		                        code: response.status,
+		                        text: response.statusText,
+		                        key: text
+		                    };
+		                    reject(error);
+		                } else {
+		                    let data = {};
+		                    if (text.length > 0) {
+		                        data = JSON.parse(text);
+		                    }
+		                    resolve(data);
+		                }
+		            });
+		        }).catch(function (error) {
+		            const status = {
+		                code: error.name,
+		                text: error.message
+		            };
+		            reject(status);
+		        });
+		    });
+		}
+		
+		export function httpGet(url, uuid, authorize) {
+		    return httpRequest("GET", url, uuid, authorize, null);
+		}
+		
+		export function httpPost(url, uuid, authorize, data) {
+		    return httpRequest("POST", url, uuid, authorize, data);
+		}
+		
+		export function httpPut(url, uuid, authorize, data) {
+		    return httpRequest("PUT", url, uuid, authorize, data);
+		}
+		
+		export function httpDelete(url, uuid, authorize, data) {
+		    return httpRequest("DELETE", url, uuid, authorize, data);
+		}
+		
+		function basicAuth() {
+		    return "<your authorization>";
+		}
+		
+		export function createUUID() {
+		    let d = new Date().getTime();
+		    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		        let r = (d + Math.random() * 16) % 16 | 0;
+		        d = Math.floor(d / 16);
+		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+		    });
+		}
+		
+		export function displayUnexpectedError(error) {
+		    console.error("unexpected error ", error);
+		}
+		
+		export function deepCopy(object) {
+		    return JSON.parse(JSON.stringify(object));
+		}
+		
+		export function stateUpdated(appState) {
+		    if (Utils.settings && Utils.settings.mode === "dev") {
+		        localStorage.setItem("appState", JSON.stringify(appState));
+		    }
+		    // re-render app
+		}
+		
+		export function renderApp() {
+		}
+		
+		«sdg»
+		
+	'''
+	
+	def generateApp(HttpClient httpClient) '''
+		«copyright»
+
+
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as AppState from "../ace/AppState";
+		
+		export * from "../ace/Timeline";
+
 		export function dumpAppState() {
 		    console.info(AppState.getAppState());
 		}
 
-		export default class AppUtils {
+		AppUtils.createInitialAppState();
+		AppUtils.initEventListenersAndFactories();
+		AppUtils.renderApp();
+		AppUtils.startApp();
 		
-		    static initEventListenersAndActionFactories() {
-		        //EventListenerRegistration.init();
-		        //EventFactoryRegistration.init();
-		    }
-		
-		    static startApp() {
-		        Utils.loadSettings().then(() => {
-		        	// call init action
-		        });
-		    }
-		
-		    static startReplay() {
-		    }
-		
-		    static createInitialAppState() {
-		        const initialAppState = {
-		        };
-		        AppState.setInitialAppState(initialAppState);
-		    }
-		
-		    static createHeaders(authorize) {
-		        const headers = new Headers();
-		        headers.append("Content-Type", "application/json");
-		        headers.append("Accept", "application/json");
-		        if (authorize === true) {
-		            let authorization = AppUtils.basicAuth();
-		            if (authorization !== undefined) {
-		                headers.append("Authorization", authorization);
-		            }
-		        }
-		        return headers;
-		    }
-		
-		    static addUuidToUrl(url, uuid) {
-		        if (uuid) {
-		            if (url.indexOf("?") < 0) {
-		                url += "?uuid=" + uuid;
-		            } else {
-		                url += "&uuid=" + uuid;
-		            }
-		        }
-		        return url;
-		    }
-		
-		    static httpRequest(methodType, url, uuid, authorize, data) {
-		        return new Promise((resolve, reject) => {
-		            const options = {
-		                method: methodType,
-		                headers: AppUtils.createHeaders(authorize),
-		                mode: 'cors',
-		                cache: 'no-cache'
-		            };
-		            if (data && methodType !== "GET") {
-		                options.body = JSON.stringify(data);
-		            }
-		            url = AppUtils.addUuidToUrl(url, uuid);
-		            const request = new Request(url, options);
-		
-		            fetch(request).then(function (response) {
-		                response.text().then((text) => {
-		                    if (response.status >= 300) {
-		                        const error = {
-		                            code: response.status,
-		                            text: response.statusText,
-		                            key: text
-		                        };
-		                        reject(error);
-		                    } else {
-		                        let data = {};
-		                        if (text.length > 0) {
-		                            data = JSON.parse(text);
-		                        }
-		                        resolve(data);
-		                    }
-		                });
-		            }).catch(function (error) {
-		                const status = {
-		                    code: error.name,
-		                    text: error.message
-		                };
-		                reject(status);
-		            });
-		        });
-		    }
-		
-		    static httpGet(url, uuid, authorize) {
-		        return AppUtils.httpRequest("GET", url, uuid, authorize, null);
-		    }
-		
-		    static httpPost(url, uuid, authorize, data) {
-		        return AppUtils.httpRequest("POST", url, uuid, authorize, data);
-		    }
-		
-		    static httpPut(url, uuid, authorize, data) {
-		        return AppUtils.httpRequest("PUT", url, uuid, authorize, data);
-		    }
-		
-		    static httpDelete(url, uuid, authorize, data) {
-		        return AppUtils.httpRequest("DELETE", url, uuid, authorize, data);
-		    }
-		
-		    static basicAuth() {
-		        return "<your authorization>";
-		    }
-		
-		    static createUUID() {
-		        let d = new Date().getTime();
-		        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-		            let r = (d + Math.random() * 16) % 16 | 0;
-		            d = Math.floor(d / 16);
-		            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-		        });
-		    }
-		
-		    static displayUnexpectedError(error) {
-		        console.error("unexpected error ", error);
-		    }
-		
-		    static deepCopy(object) {
-		        return JSON.parse(JSON.stringify(object));
-		    }
-		
-		    static stateUpdated(appState) {
-			    if (Utils.settings && Utils.settings.mode === "dev") {
-			        localStorage.setItem("appState", JSON.stringify(appState));
-			    }
-		    }
-		    
-		}
-
 		// for Selenium tests
 		export function getAppState() {
 		    return AppState.getAppState();
@@ -198,56 +212,17 @@ class AceTemplate {
 		    localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
 		}
 		
-		export function addNonDeterministicValueServer(uuid, key, value) {
+		export async function addNonDeterministicValueServer(uuid, key, value) {
 			if (key === "system-time") {
-			    AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${uuid}&system-time=${value}`);
+			    await AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${uuid}&system-time=${value}`);
 			} else {
-			    AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=${uuid}&key=${key}&value=${value}`);
+			    await AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=${uuid}&key=${key}&value=${value}`);
 			}
 		}
 		
-		export function getValueFromLocalStorage(key) {
+		export async function getValueFromLocalStorage(key) {
 		    return localStorage.getItem(key);
 		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateAppStub(HttpClient httpClient) '''
-		«copyright»
-
-
-		import AppUtils from "./AppUtils";
-		
-		«IF httpClient.isReact16_8»
-			import {ContainerComponent} from "../../gen/components/ContainerComponent";
-			import React from "react";
-			import ReactDOM from "react-dom";
-		«ENDIF»
-		
-		export * from "../../gen/ace/Timeline";
-		export { dumpAppState } from "./AppUtils";
-		export {getAppState} from "./AppUtils";
-		export {addNonDeterministicValueClient} from "./AppUtils";
-		export {addNonDeterministicValueServer} from "./AppUtils";
-		export {getValueFromLocalStorage} from "./AppUtils";
-		
-		AppUtils.createInitialAppState();
-		
-
-		«IF httpClient.isReact16_8»
-			ReactDOM.render(
-			    <ContainerComponent />,
-			    document.getElementById('root')
-			);
-		«ENDIF»
-				
-		window.onhashchange = () => {
-		};
-		
-		AppUtils.initEventListenersAndEventFactories();
-		AppUtils.startApp();
 		
 		
 		«sdg»
@@ -258,139 +233,131 @@ class AceTemplate {
 	def generateACEController() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
-		import Utils from "./Utils";
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as Utils from "./Utils";
 		import * as AppState from "./AppState";
 		
-		export default class ACEController {
-		
-		    static init() {
-		        ACEController.timeline = [];
-		        ACEController.listeners = {};
-		        ACEController.factories = {};
-		        ACEController.registerListener('TriggerAction', ACEController.triggerAction);
-		        ACEController.actionQueue = [];
-		        ACEController.delayedActions = {};
-		    }
-		
-		    static registerListener(eventName, listener) {
-		        if (!eventName.trim()) {
-		            throw new Error('cannot register listener for empty eventName');
-		        }
-		        if (!listener) {
-		            throw new Error('cannot register undefined listener for event ' + eventName);
-		        }
-		        let listenersForEventName;
-		        if (ACEController.listeners[eventName] === undefined) {
-		            ACEController.listeners[eventName] = [];
-		        }
-		        listenersForEventName = ACEController.listeners[eventName];
-		        listenersForEventName.push(listener);
-		    }
-		
-		    static registerFactory(eventName, factory) {
-		        if (!eventName.trim()) {
-		            throw new Error('cannot register factory for empty eventName');
-		        }
-		        if (!factory) {
-		            throw new Error('cannot register undefined factory for event ' + eventName);
-		        }
-		        ACEController.factories[eventName] = factory;
-		    }
-		
-		    static addItemToTimeLine(item) {
-		    	if (Utils.settings && Utils.settings.timelineSize > 0) {
-				    ACEController.timeline.push(AppUtils.deepCopy(item));
-					if (ACEController.timeline.length > Utils.settings.timelineSize) {
-					    ACEController.timeline.shift();
-					    while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
-					        ACEController.timeline.shift();
-					    }
+		export let timeline = [];
+		export let listeners = {};
+		let factories = {};
+		let actionQueue = [];
+		export let delayedActions = {};
+	
+	    export function registerListener(eventName, listener) {
+	        if (!eventName.trim()) {
+	            throw new Error('cannot register listener for empty eventName');
+	        }
+	        if (!listener) {
+	            throw new Error('cannot register undefined listener for event ' + eventName);
+	        }
+	        let listenersForEventName;
+	        if (listeners[eventName] === undefined) {
+	            listeners[eventName] = [];
+	        }
+	        listenersForEventName = listeners[eventName];
+	        listenersForEventName.push(listener);
+	    }
+	
+	    export function registerFactory(eventName, factory) {
+	        if (!eventName.trim()) {
+	            throw new Error('cannot register factory for empty eventName');
+	        }
+	        if (!factory) {
+	            throw new Error('cannot register undefined factory for event ' + eventName);
+	        }
+	        factories[eventName] = factory;
+	    }
+	
+	    export function addItemToTimeLine(item) {
+	    	if (Utils.settings && Utils.settings.timelineSize > 0) {
+			    timeline.push(AppUtils.deepCopy(item));
+				if (timeline.length > Utils.settings.timelineSize) {
+				    timeline.shift();
+				    while (timeline.length > 0 && timeline.length > 0 && !timeline[0].appState) {
+				        timeline.shift();
+				    }
+				}
+			}
+	    }
+	
+	    export function addActionToQueue(action) {
+			actionQueue.push(action);
+		    applyNextActions();
+	    }
+	
+	    function applyNextActions() {
+	        let action = actionQueue.shift();
+	        if (action) {
+		    	addItemToTimeLine({appState: AppState.getAppState()});
+				if (action.asynchronous) {
+				    action.applyAction().then(() => {
+				    	callApplyNextActions();
+				    }, (error) => {
+				        AppUtils.displayUnexpectedError(error);
+				    	callApplyNextActions();
+				    });
+				} else {
+					try {
+						action.applyAction();
+				    	callApplyNextActions();
+					} catch(error) {
+				        AppUtils.displayUnexpectedError(error);
+				    	callApplyNextActions();
 					}
 				}
-		    }
-		
-		    static addActionToQueue(action) {
-				ACEController.actionQueue.push(action);
-			    ACEController.applyNextActions();
-		    }
-		
-		    static applyNextActions() {
-		        let action = ACEController.actionQueue.shift();
-		        if (action) {
-			    	ACEController.addItemToTimeLine({appState: AppState.getAppState()});
-					if (action.asynchronous) {
-					    action.applyAction().then(() => {
-					    	ACEController.callApplyNextActions();
-					    }, (error) => {
-					        AppUtils.displayUnexpectedError(error);
-					    	ACEController.callApplyNextActions();
-					    });
-					} else {
-						try {
-							action.applyAction();
-					    	ACEController.callApplyNextActions();
-						} catch(error) {
-					        AppUtils.displayUnexpectedError(error);
-					    	ACEController.callApplyNextActions();
-						}
-					}
-		        }
-		    }
-		    
-		    static callApplyNextActions() {
-				ACEController.applyNextActions();
-		    }
-		
-		    static triggerAction(action) {
-		        ACEController.addActionToQueue(action);
-		    }
-		
-		    static startReplay(timeline, pauseInMillis) {
-			    AppUtils.startReplay();
+	        }
+	    }
+	    
+	    function callApplyNextActions() {
+			applyNextActions();
+	    }
+	
+	    function triggerAction(action) {
+	        addActionToQueue(action);
+	    }
+	
+	    export function startReplay(timeline, pauseInMillis) {
+		    AppUtils.startReplay();
 
-		        let events = [];
-				
-				let appStateWasSet = false;
-		        for (let i = 0; i < timeline.length; i++) {
-		            let item = timeline[i];
-		            if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
-		                const eventData = item.event.eventData;
-		                let event = ACEController.factories[item.event.eventName](eventData);
-		                events.push(event);
-		            }
-					if (item.appState && !appStateWasSet) {
-					    AppState.setInitialAppState(item.appState);
-					    appStateWasSet = true;
-					}
-		            
-		        }
-		
-				setTimeout(() => ACEController.replayNextEvent(events, pauseInMillis), pauseInMillis);
-		    }
-		    
-		    static replayNextEvent(events, pauseInMillis) {
-		        let event = events.shift();
-		        if (event) {
-		        	event.replay();
-		        	setTimeout(() => ACEController.replayNextEvent(events, pauseInMillis), pauseInMillis);
-			    } else {
-			        setTimeout(() => ACEController.finishReplay(), pauseInMillis);
-			    }
-			}
+	        let events = [];
 			
-			static finishReplay() {
-			    console.info("replay finished");
-			    ACEController.timeline = [];
-			    ACEController.actionQueue = [];
-			    AppUtils.createInitialAppState();
-			    AppUtils.startApp();
-			}
-		
-		
+			let appStateWasSet = false;
+	        for (let i = 0; i < timeline.length; i++) {
+	            let item = timeline[i];
+	            if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
+	                const eventData = item.event.eventData;
+	                let event = factories[item.event.eventName](eventData);
+	                events.push(event);
+	            }
+				if (item.appState && !appStateWasSet) {
+				    AppState.setInitialAppState(item.appState);
+				    appStateWasSet = true;
+				}
+	            
+	        }
+	
+			setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
+	    }
+	    
+	    function replayNextEvent(events, pauseInMillis) {
+	        let event = events.shift();
+	        if (event) {
+	        	event.replay();
+	        	setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
+		    } else {
+		        setTimeout(() => finishReplay(), pauseInMillis);
+		    }
 		}
 		
-		ACEController.init();
+		function finishReplay() {
+		    console.info("replay finished");
+		    timeline = [];
+		    actionQueue = [];
+		    AppUtils.createInitialAppState();
+		    AppUtils.startApp();
+		}
+		
+		registerListener('TriggerAction', triggerAction);
 		
 		
 		«sdg»
@@ -401,9 +368,9 @@ class AceTemplate {
 	def generateTimeline() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
-		import ACEController from "./ACEController";
-		import Utils from "./Utils";
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as ACEController from "./ACEController";
+		import * as Utils from "./Utils";
 		
 		export function replayTimeline(timelineId, pauseInMillis = 100) {
 			if (pauseInMillis < 100) {
@@ -434,94 +401,93 @@ class AceTemplate {
 	def generateUtils() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
-		import ACEController from "./ACEController";
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as ACEController from "./ACEController";
 		
-		export default class Utils {
+		export let settings;
 		
-		    static getServerInfo() {
-		        return AppUtils.httpGet(Utils.settings.rootPath + '/server/info');
-		    }
-		    
-			static loadSettings() {
-			    return AppUtils.httpRequest("GET", "settings.json").then((settings) => {
-			        Utils.settings = settings;
-			        if (!Utils.settings.clientVersion) {
-			            Utils.settings.clientVersion = "";
-			        }
-			        if (!Utils.settings.aceScenariosApiKey) {
-			            Utils.settings.aceScenariosApiKey = "";
-			        }
-			        if (!Utils.settings.aceScenariosBaseUrl) {
-			            Utils.settings.aceScenariosBaseUrl = "";
-			        }
-			        if (!Utils.settings.rootPath) {
-			            Utils.settings.rootPath = "";
-			        }
-			        if (!Utils.settings.timelineSize) {
-			            Utils.settings.timelineSize = 0;
-			        }
-					if (!Utils.settings.mode) {
-					    Utils.settings.mode = "live";
-					}
-			        if (Utils.settings.rootPath.startsWith("/")) {
-			            Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
-			        }
-			        if (Utils.settings.rootPath.endsWith("/")) {
-			            Utils.settings.rootPath = Utils.settings.rootPath.substring(0, Utils.settings.rootPath.length - 1);
-			        }
-			    });
-			}
+		function getServerInfo() {
+		    return AppUtils.httpGet(settings.rootPath + '/server/info');
+		}
 		
-		    static saveTimeline(description, creator) {
-		        return Utils.getServerInfo().then((serverInfo) => {
-		            const browser = Utils.getBrowserInfo();
-		            const uuid = AppUtils.createUUID();
-		            const data = {
-		                description,
-		                timeline: JSON.stringify(ACEController.timeline),
-		                creator,
-		                clientVersion: Utils.settings.clientVersion,
-		                device: browser.name + " " + browser.version,
-		                apiKey: Utils.settings.aceScenariosApiKey,
-		                serverVersion: serverInfo.serverVersion
-		            };
-		            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
-		                return new Promise((resolve) => {
-		                    resolve(uuid);
-		                });
+		export function loadSettings() {
+		    return AppUtils.httpGet("settings.json").then((loadedSettings) => {
+		        settings = loadedSettings;
+		        if (!settings.clientVersion) {
+		            settings.clientVersion = "";
+		        }
+		        if (!settings.aceScenariosApiKey) {
+		            settings.aceScenariosApiKey = "";
+		        }
+		        if (!settings.aceScenariosBaseUrl) {
+		            settings.aceScenariosBaseUrl = "";
+		        }
+		        if (!settings.rootPath) {
+		            settings.rootPath = "";
+		        }
+		        if (!settings.timelineSize) {
+		            settings.timelineSize = 0;
+		        }
+				if (!settings.mode) {
+				    settings.mode = "live";
+				}
+		        if (settings.rootPath.startsWith("/")) {
+		            settings.rootPath = settings.rootPath.substring(1);
+		        }
+		        if (settings.rootPath.endsWith("/")) {
+		            settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);
+		        }
+		    });
+		}
+		
+		export function saveTimeline(description, creator) {
+		    return getServerInfo().then((serverInfo) => {
+		        const browser = getBrowserInfo();
+		        const uuid = AppUtils.createUUID();
+		        const data = {
+		            description,
+		            timeline: JSON.stringify(ACEController.timeline),
+		            creator,
+		            clientVersion: settings.clientVersion,
+		            device: browser.name + " " + browser.version,
+		            apiKey: settings.aceScenariosApiKey,
+		            serverVersion: serverInfo.serverVersion
+		        };
+		        return AppUtils.httpPost(settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
+		            return new Promise((resolve) => {
+		                resolve(uuid);
 		            });
 		        });
-		    }
-		
-		    static loadTimeline(id) {
-		        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
-		    }
-		
-		    static getBrowserInfo() {
-		        let ua = navigator.userAgent, tem,
-		            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-		        if (/trident/i.test(M[1])) {
-		            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-		            return {name: 'IE ', version: (tem[1] || '')};
-		        }
-		        if (M[1] === 'Chrome') {
-		            tem = ua.match(/\bOPR\/(\d+)/);
-		            if (tem != null) {
-		                return {name: 'Opera', version: tem[1]};
-		            }
-		        }
-		        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-		        if ((tem = ua.match(/version\/(\d+)/i)) != null) {
-		            M.splice(1, 1, tem[1]);
-		        }
-		        return {
-		            name: M[0],
-		            version: M[1]
-		        };
-		    }
-		    
+		    });
 		}
+		
+		export function loadTimeline(id) {
+		    return AppUtils.httpGet(settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+		}
+		
+		function getBrowserInfo() {
+		    let ua = navigator.userAgent, tem,
+		        M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+		    if (/trident/i.test(M[1])) {
+		        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+		        return {name: 'IE ', version: (tem[1] || '')};
+		    }
+		    if (M[1] === 'Chrome') {
+		        tem = ua.match(/\bOPR\/(\d+)/);
+		        if (tem != null) {
+		            return {name: 'Opera', version: tem[1]};
+		        }
+		    }
+		    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+		    if ((tem = ua.match(/version\/(\d+)/i)) != null) {
+		        M.splice(1, 1, tem[1]);
+		    }
+		    return {
+		        name: M[0],
+		        version: M[1]
+		    };
+		}
+		
 		
 		«sdg»
 		
@@ -532,18 +498,10 @@ class AceTemplate {
 	def String generateAppState(List<ClientAttribute> attributes, String prefix, HttpClient httpClient) '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
+		import * as AppUtils from "../../src/app/AppUtils";
 		
-		export let appState;
+		let appState;
 
-		«IF httpClient.isReact16_8»
-			import { set«httpClient.container.componentName»State } from "../components/«httpClient.container.reactComponentName»";
-			«clearImports»
-			«FOR attribute : attributes»
-				«attribute.generateAppStateImportsRec("/" +  httpClient.container.name.toFirstLower, httpClient)»
-			«ENDFOR»
-		«ENDIF»
-		
 		export function getAppState() {
 			return AppUtils.deepCopy(appState);
 		}
@@ -668,31 +626,8 @@ class AceTemplate {
 	
 	private def setState(SingleClientAttribute it, HttpClient httpClient) '''
 		const newAppState = getAppState();
-		«IF httpClient.isReact16_8»
-			«var parent = findNextNonListSingleClientAttributeParent»
-			«IF parent === null»
-				setContainerState(newAppState);
-			«ELSE»
-				«IF it.name === parent.name && parent.eContainer instanceof GroupedClientAttribute»
-					set«(parent.eContainer as GroupedClientAttribute).componentName»State(AppUtils.deepCopy(«elementPath»));
-					set«parent.componentName»State(AppUtils.deepCopy(«parent.elementPath»));
-				«ELSE»
-					set«findComponentParent(parent).componentName»State(AppUtils.deepCopy(«findComponentParent(parent).elementPath»));
-				«ENDIF»
-			«ENDIF»
-		«ENDIF»
 		AppUtils.stateUpdated(newAppState);
 	'''
-	
-	private def ClientAttribute findComponentParent(SingleClientAttribute it) {
-		if (!noComponent) {
-			return it
-		}
-		if (eContainer instanceof GroupedClientAttribute) {
-			return eContainer as GroupedClientAttribute
-		}
-		return findComponentParent(eContainer as SingleClientAttribute)
-	}
 	
 	private def childAttributes(SingleClientAttribute it, HttpClient httpClient) '''
 		«IF attributes !== null && !isList && !isHash && !isStorage»
@@ -723,47 +658,6 @@ class AceTemplate {
 			«ENDFOR»
 		«ENDIF»
 	'''
-	
-	def dispatch String generateAppStateImportsRec(SingleClientAttribute it, String subFolder, HttpClient httpClient) '''
-		«IF attributes.size > 0»
-			«imports(subFolder)»
-			«FOR attribute : attributes»
-				«attribute.generateAppStateImportsRec(subFolder + "/" + name, httpClient)»
-			«ENDFOR»
-		«ENDIF»
-	'''
-	
-	def dispatch String generateAppStateImportsRec(GroupedClientAttribute it, String subFolder, HttpClient httpClient) '''
-		«IF attributeGroup.length > 0»
-			«FOR attribute : attributeGroup»
-				«imports(subFolder)»
-				«attribute.generateAppStateImportsRec(subFolder + "/" + name, httpClient)»
-			«ENDFOR»
-		«ENDIF»
-	'''
-	
-	private def imports(SingleClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0 && !isList && !imports.contains(componentName) && !noComponent»
-			import { set«componentName»State } from "../components«subFolder»/«reactComponentName»";
-			«addImport(componentName)»
-		«ENDIF»
-	'''
-	
-	private def imports(GroupedClientAttribute it, String subFolder) '''
-		«IF attributeGroup.size > 0 && !imports.contains(componentName)»
-			import { set«componentName»State } from "../components«subFolder»/«reactComponentName»";
-			«addImport(componentName)»
-		«ENDIF»
-	'''
-	
-	private def void addImport(String componentName) {
-		imports.add(componentName)
-	}
-	
-	private def void clearImports() {
-		imports.clear
-	}
-	
 	
 }	
 	

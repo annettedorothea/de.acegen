@@ -6,7 +6,7 @@ import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
-import de.acegen.templates.es6.ReactTemplate;
+import de.acegen.templates.es6.JsxTemplate;
 import java.util.Arrays;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -18,7 +18,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class ReactGenerator {
   @Inject
-  private ReactTemplate reactTemplate;
+  private JsxTemplate reactTemplate;
   
   @Inject
   @Extension
@@ -38,27 +38,18 @@ public class ReactGenerator {
       _builder.append("components");
       _builder.append(subFolder);
       _builder.append("/");
-      String _reactComponentName = this._es6Extension.reactComponentName(it);
-      _builder.append(_reactComponentName);
-      _builder.append(".js");
-      fsa.generateFile(_builder.toString(), IFileSystemAccess2.DEFAULT_OUTPUT, 
-        this.reactTemplate.generateComponent(it, subFolder, this.folderPrefix(subFolder)));
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("components");
-      _builder_1.append(subFolder);
-      _builder_1.append("/");
       String _componentName = this._es6Extension.componentName(it);
-      _builder_1.append(_componentName);
-      _builder_1.append(".js");
-      fsa.generateFile(_builder_1.toString(), 
+      _builder.append(_componentName);
+      _builder.append(".js");
+      fsa.generateFile(_builder.toString(), 
         ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
         this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append(subFolder);
-      _builder_2.append("/");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append(subFolder);
+      _builder_1.append("/");
       String _firstLower = StringExtensions.toFirstLower(it.getName());
-      _builder_2.append(_firstLower);
-      final String nextSubFolder = _builder_2.toString();
+      _builder_1.append(_firstLower);
+      final String nextSubFolder = _builder_1.toString();
       EList<ClientAttribute> _attributes = it.getAttributes();
       for (final ClientAttribute attribute : _attributes) {
         this.doGenerate(attribute, fsa, nextSubFolder, false);
@@ -71,27 +62,18 @@ public class ReactGenerator {
     _builder.append("components");
     _builder.append(subFolder);
     _builder.append("/");
-    String _reactComponentName = this._es6Extension.reactComponentName(it);
-    _builder.append(_reactComponentName);
-    _builder.append(".js");
-    fsa.generateFile(_builder.toString(), IFileSystemAccess2.DEFAULT_OUTPUT, 
-      this.reactTemplate.generateComponent(it, subFolder, this.folderPrefix(subFolder)));
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("components");
-    _builder_1.append(subFolder);
-    _builder_1.append("/");
     String _componentName = this._es6Extension.componentName(it);
-    _builder_1.append(_componentName);
-    _builder_1.append(".js");
-    fsa.generateFile(_builder_1.toString(), 
+    _builder.append(_componentName);
+    _builder.append(".js");
+    fsa.generateFile(_builder.toString(), 
       ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append(subFolder);
-    _builder_2.append("/");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append(subFolder);
+    _builder_1.append("/");
     String _firstLower = StringExtensions.toFirstLower(it.getName());
-    _builder_2.append(_firstLower);
-    final String nextSubFolder = _builder_2.toString();
+    _builder_1.append(_firstLower);
+    final String nextSubFolder = _builder_1.toString();
     EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
     for (final ClientAttribute attribute : _attributeGroup) {
       this.doGenerate(attribute, fsa, nextSubFolder, true);

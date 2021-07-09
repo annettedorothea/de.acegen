@@ -56,7 +56,7 @@ class EventTemplate {
 	def generateEventListenerRegistration(HttpClient it) '''
 		«copyright»
 
-		import ACEController from "../ace/ACEController";
+		import * as ACEController from "../ace/ACEController";
 		import * as AppState from "../ace/AppState";
 		
 		export default class EventListenerRegistration«projectName» {
@@ -81,8 +81,8 @@ class EventTemplate {
 	def generateEvent() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
-		import ACEController from "./ACEController";
+		import * as AppUtils from "../../src/app/AppUtils";
+		import * as ACEController from "./ACEController";
 		
 		export default class Event {
 		    constructor(eventData, eventName) {
@@ -124,7 +124,7 @@ class EventTemplate {
 		«copyright»
 
 		import Event from "./Event";
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		
 		export default class TriggerAction extends Event {
 		    constructor(action) {
@@ -149,12 +149,11 @@ class EventTemplate {
 				if (existingTimeout) {
 					clearTimeout(existingTimeout);
 				}
-				const timeout = setTimeout(() => {
+				ACEController.delayedActions[this.eventData.actionName] = setTimeout(() => {
 					ACEController.delayedActions[this.eventData.actionName] = undefined;
 					ACEController.addItemToTimeLine({event: this});
 					this.notifyListeners();
 				}, delayInMillis);
-				ACEController.delayedActions[this.eventData.actionName] = timeout;
 			}
 
 			replay() {
@@ -185,7 +184,7 @@ class EventTemplate {
 	def generateEventFactoryRegistration(HttpClient it) '''
 		«copyright»
 
-		import ACEController from "../ace/ACEController";
+		import * as ACEController from "../ace/ACEController";
 		«FOR aceOperation : aceOperations»
 			«FOR outcome : aceOperation.outcomes»
 				«IF outcome.listeners.size > 0»

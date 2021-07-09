@@ -264,7 +264,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=QualifiedName (ambiguity) 'scenarios' scenarios+=ClientScenario
 	 *     name=QualifiedName (ambiguity) 'scenarios'? (rule end)
 	 *     name=QualifiedName (ambiguity) 'ui' container=SingleClientAttribute
-	 *     name=QualifiedName (ambiguity) 'ui' react16_8?='React_16.8'
+	 *     name=QualifiedName (ambiguity) 'ui' jsx?='JSX'
 	 */
 	protected void emit_HttpClient_ACEKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

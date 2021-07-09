@@ -165,7 +165,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1(), "rule__Project__HttpServerAssignment_1_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
 			builder.put(grammarAccess.getHttpClientAccess().getAceOperationsAssignment_1_1(), "rule__HttpClient__AceOperationsAssignment_1_1");
-			builder.put(grammarAccess.getHttpClientAccess().getReact16_8Assignment_2_1(), "rule__HttpClient__React16_8Assignment_2_1");
+			builder.put(grammarAccess.getHttpClientAccess().getJsxAssignment_2_1(), "rule__HttpClient__JsxAssignment_2_1");
 			builder.put(grammarAccess.getHttpClientAccess().getContainerAssignment_2_2(), "rule__HttpClient__ContainerAssignment_2_2");
 			builder.put(grammarAccess.getHttpClientAccess().getScenariosAssignment_3_1(), "rule__HttpClient__ScenariosAssignment_3_1");
 			builder.put(grammarAccess.getHttpClientAceAccess().getAsyncAssignment_0(), "rule__HttpClientAce__AsyncAssignment_0");

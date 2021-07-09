@@ -393,11 +393,11 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import Utils from \"./Utils\";");
+    _builder.append("import * as Utils from \"./Utils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Action {");
@@ -451,7 +451,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("        \t");
-    _builder.append("if (this.actionData.uuid === null) {");
+    _builder.append("if (!this.actionData.uuid) {");
     _builder.newLine();
     _builder.append("        \t\t");
     _builder.append("this.actionData.uuid = AppUtils.createUUID();");
@@ -460,7 +460,7 @@ public class ActionTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("        \t");
-    _builder.append("if (this.actionData.clientSystemTime === null) {");
+    _builder.append("if (!this.actionData.clientSystemTime) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("this.actionData.clientSystemTime = new Date();");
@@ -528,11 +528,9 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import Action from \"./Action\";");
-    _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class AsynchronousAction extends Action {");
@@ -632,11 +630,9 @@ public class ActionTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import Action from \"./Action\";");
-    _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class SynchronousAction extends Action {");
