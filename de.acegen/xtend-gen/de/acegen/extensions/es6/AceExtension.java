@@ -185,7 +185,7 @@ public class AceExtension {
       } else {
         String _urlWithPathParam_1 = urlWithPathParam;
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("${this.commandData.");
+        _builder.append("${data.");
         String _get_1 = urlElements.get(i);
         _builder.append(_get_1);
         _builder.append("}");

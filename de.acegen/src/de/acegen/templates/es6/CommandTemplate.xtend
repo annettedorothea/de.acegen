@@ -114,19 +114,31 @@ class CommandTemplate {
 								«IF triggerdAceOperation.delay == 0»
 									new TriggerAction().publish(
 										new «triggerdAceOperation.aceOperation.actionName»(), 
-										{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»}
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											}
 									)
 								«ELSE»
 									«IF triggerdAceOperation.takeLatest»
 										new TriggerAction().publishWithDelayTakeLatest(
 											new «triggerdAceOperation.aceOperation.actionName»(), 
-											{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»},
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
 											«triggerdAceOperation.delay»
 										)
 									«ELSE»
 										new TriggerAction().publishWithDelay(
 											new «triggerdAceOperation.aceOperation.actionName»(), 
-											{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»},
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
 											«triggerdAceOperation.delay»
 										)
 									«ENDIF»
@@ -189,19 +201,32 @@ class CommandTemplate {
 								«IF triggerdAceOperation.delay == 0»
 									new TriggerAction().publish(
 										new «triggerdAceOperation.aceOperation.actionName»(), 
-										{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»}
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											}
 									)
 								«ELSE»
 									«IF triggerdAceOperation.takeLatest»
 										new TriggerAction().publishWithDelayTakeLatest(
 											new «triggerdAceOperation.aceOperation.actionName»(), 
-											{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»},
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
 											«triggerdAceOperation.delay»
 										)
 									«ELSE»
 										new TriggerAction().publishWithDelay(
 											new «triggerdAceOperation.aceOperation.actionName»(), 
-											{«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»data.«inputParam.name»«ENDFOR»},
+											new «triggerdAceOperation.aceOperation.actionName»(), 
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
 											«triggerdAceOperation.delay»
 										)
 									«ENDIF»

@@ -48,8 +48,6 @@ public class AceTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import * as App from \"./App\";");
-    _builder.newLine();
     _builder.append("import * as AppState from \"../../gen/ace/AppState\";");
     _builder.newLine();
     _builder.append("import * as Utils from \"../../gen/ace/Utils\";");

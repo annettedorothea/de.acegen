@@ -59,9 +59,9 @@ class JsxTemplate {
 	def dispatch renderChild(SingleClientAttribute it) '''
 		«IF !noComponent && attributes.size > 0»
 			«IF list»
-				{ props.«name».map(i => <«componentName» {...i} />) }
+				{ props.«name» ? props.«name».map(i => <«componentName» {...i} />) : [] }
 			«ELSE»
-				<«componentName» {...props} />
+				<«componentName» {...props.«name.toFirstLower»} />
 			«ENDIF»
 		«ELSE»
 			<div>{props.«name.toFirstLower»}</div>

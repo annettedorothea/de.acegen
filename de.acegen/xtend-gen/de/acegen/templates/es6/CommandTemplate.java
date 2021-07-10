@@ -379,8 +379,9 @@ public class CommandTemplate {
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t\t");
                     _builder.append("\t");
-                    _builder.append("\t");
+                    _builder.append("\t\t");
                     _builder.append("{");
+                    _builder.newLine();
                     {
                       EList<Input> _input = triggerdAceOperation.getAceOperation().getInput();
                       boolean _hasElements_2 = false;
@@ -388,15 +389,24 @@ public class CommandTemplate {
                         if (!_hasElements_2) {
                           _hasElements_2 = true;
                         } else {
-                          _builder.appendImmediate(", ", "\t\t\t\t");
+                          _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                         }
-                        _builder.append("data.");
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t\t");
                         String _name_11 = inputParam.getName();
-                        _builder.append(_name_11, "\t\t\t\t");
+                        _builder.append(_name_11, "\t\t\t\t\t\t");
+                        _builder.append(": data.");
+                        String _name_12 = inputParam.getName();
+                        _builder.append(_name_12, "\t\t\t\t\t\t");
+                        _builder.newLineIfNotEmpty();
                       }
                     }
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("\t\t");
                     _builder.append("}");
-                    _builder.newLineIfNotEmpty();
+                    _builder.newLine();
                     _builder.append("\t\t");
                     _builder.append("\t");
                     _builder.append(")");
@@ -419,8 +429,9 @@ public class CommandTemplate {
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("{");
+                        _builder.newLine();
                         {
                           EList<Input> _input_1 = triggerdAceOperation.getAceOperation().getInput();
                           boolean _hasElements_3 = false;
@@ -428,15 +439,24 @@ public class CommandTemplate {
                             if (!_hasElements_3) {
                               _hasElements_3 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                             }
-                            _builder.append("data.");
-                            String _name_12 = inputParam_1.getName();
-                            _builder.append(_name_12, "\t\t\t\t");
+                            _builder.append("\t\t");
+                            _builder.append("\t");
+                            _builder.append("\t\t\t");
+                            String _name_13 = inputParam_1.getName();
+                            _builder.append(_name_13, "\t\t\t\t\t\t");
+                            _builder.append(": data.");
+                            String _name_14 = inputParam_1.getName();
+                            _builder.append(_name_14, "\t\t\t\t\t\t");
+                            _builder.newLineIfNotEmpty();
                           }
                         }
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("},");
-                        _builder.newLineIfNotEmpty();
+                        _builder.newLine();
                         _builder.append("\t\t");
                         _builder.append("\t");
                         _builder.append("\t");
@@ -462,8 +482,9 @@ public class CommandTemplate {
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("{");
+                        _builder.newLine();
                         {
                           EList<Input> _input_2 = triggerdAceOperation.getAceOperation().getInput();
                           boolean _hasElements_4 = false;
@@ -471,15 +492,24 @@ public class CommandTemplate {
                             if (!_hasElements_4) {
                               _hasElements_4 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                             }
-                            _builder.append("data.");
-                            String _name_13 = inputParam_2.getName();
-                            _builder.append(_name_13, "\t\t\t\t");
+                            _builder.append("\t\t");
+                            _builder.append("\t");
+                            _builder.append("\t\t\t");
+                            String _name_15 = inputParam_2.getName();
+                            _builder.append(_name_15, "\t\t\t\t\t\t");
+                            _builder.append(": data.");
+                            String _name_16 = inputParam_2.getName();
+                            _builder.append(_name_16, "\t\t\t\t\t\t");
+                            _builder.newLineIfNotEmpty();
                           }
                         }
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("},");
-                        _builder.newLineIfNotEmpty();
+                        _builder.newLine();
                         _builder.append("\t\t");
                         _builder.append("\t");
                         _builder.append("\t");
@@ -691,8 +721,9 @@ public class CommandTemplate {
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t\t");
                     _builder.append("\t");
-                    _builder.append("\t");
+                    _builder.append("\t\t");
                     _builder.append("{");
+                    _builder.newLine();
                     {
                       EList<Input> _input = triggerdAceOperation.getAceOperation().getInput();
                       boolean _hasElements = false;
@@ -700,15 +731,24 @@ public class CommandTemplate {
                         if (!_hasElements) {
                           _hasElements = true;
                         } else {
-                          _builder.appendImmediate(", ", "\t\t\t\t");
+                          _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                         }
-                        _builder.append("data.");
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t\t");
                         String _name_5 = inputParam.getName();
-                        _builder.append(_name_5, "\t\t\t\t");
+                        _builder.append(_name_5, "\t\t\t\t\t\t");
+                        _builder.append(": data.");
+                        String _name_6 = inputParam.getName();
+                        _builder.append(_name_6, "\t\t\t\t\t\t");
+                        _builder.newLineIfNotEmpty();
                       }
                     }
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("\t\t");
                     _builder.append("}");
-                    _builder.newLineIfNotEmpty();
+                    _builder.newLine();
                     _builder.append("\t\t");
                     _builder.append("\t");
                     _builder.append(")");
@@ -731,8 +771,9 @@ public class CommandTemplate {
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("{");
+                        _builder.newLine();
                         {
                           EList<Input> _input_1 = triggerdAceOperation.getAceOperation().getInput();
                           boolean _hasElements_1 = false;
@@ -740,15 +781,24 @@ public class CommandTemplate {
                             if (!_hasElements_1) {
                               _hasElements_1 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                             }
-                            _builder.append("data.");
-                            String _name_6 = inputParam_1.getName();
-                            _builder.append(_name_6, "\t\t\t\t");
+                            _builder.append("\t\t");
+                            _builder.append("\t");
+                            _builder.append("\t\t\t");
+                            String _name_7 = inputParam_1.getName();
+                            _builder.append(_name_7, "\t\t\t\t\t\t");
+                            _builder.append(": data.");
+                            String _name_8 = inputParam_1.getName();
+                            _builder.append(_name_8, "\t\t\t\t\t\t");
+                            _builder.newLineIfNotEmpty();
                           }
                         }
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("},");
-                        _builder.newLineIfNotEmpty();
+                        _builder.newLine();
                         _builder.append("\t\t");
                         _builder.append("\t");
                         _builder.append("\t");
@@ -775,7 +825,16 @@ public class CommandTemplate {
                         _builder.append("\t\t");
                         _builder.append("\t");
                         _builder.append("\t");
+                        _builder.append("new ");
+                        String _actionName_5 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
+                        _builder.append(_actionName_5, "\t\t\t\t");
+                        _builder.append("(), ");
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("{");
+                        _builder.newLine();
                         {
                           EList<Input> _input_2 = triggerdAceOperation.getAceOperation().getInput();
                           boolean _hasElements_2 = false;
@@ -783,15 +842,24 @@ public class CommandTemplate {
                             if (!_hasElements_2) {
                               _hasElements_2 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
                             }
-                            _builder.append("data.");
-                            String _name_7 = inputParam_2.getName();
-                            _builder.append(_name_7, "\t\t\t\t");
+                            _builder.append("\t\t");
+                            _builder.append("\t");
+                            _builder.append("\t\t\t");
+                            String _name_9 = inputParam_2.getName();
+                            _builder.append(_name_9, "\t\t\t\t\t\t");
+                            _builder.append(": data.");
+                            String _name_10 = inputParam_2.getName();
+                            _builder.append(_name_10, "\t\t\t\t\t\t");
+                            _builder.newLineIfNotEmpty();
                           }
                         }
+                        _builder.append("\t\t");
+                        _builder.append("\t");
+                        _builder.append("\t\t");
                         _builder.append("},");
-                        _builder.newLineIfNotEmpty();
+                        _builder.newLine();
                         _builder.append("\t\t");
                         _builder.append("\t");
                         _builder.append("\t");

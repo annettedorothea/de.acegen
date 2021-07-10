@@ -40,7 +40,6 @@ class AceTemplate {
 		«copyright»
 		
 		
-		import * as App from "./App";
 		import * as AppState from "../../gen/ace/AppState";
 		import * as Utils from "../../gen/ace/Utils";
 		

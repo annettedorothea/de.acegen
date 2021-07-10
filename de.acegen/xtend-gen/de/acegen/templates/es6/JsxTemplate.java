@@ -133,23 +133,29 @@ public class JsxTemplate {
             _builder.append("{ props.");
             String _name = it.getName();
             _builder.append(_name);
+            _builder.append(" ? props.");
+            String _name_1 = it.getName();
+            _builder.append(_name_1);
             _builder.append(".map(i => <");
             String _componentName = this._es6Extension.componentName(it);
             _builder.append(_componentName);
-            _builder.append(" {...i} />) }");
+            _builder.append(" {...i} />) : [] }");
             _builder.newLineIfNotEmpty();
           } else {
             _builder.append("<");
             String _componentName_1 = this._es6Extension.componentName(it);
             _builder.append(_componentName_1);
-            _builder.append(" {...props} />");
+            _builder.append(" {...props.");
+            String _firstLower = StringExtensions.toFirstLower(it.getName());
+            _builder.append(_firstLower);
+            _builder.append("} />");
             _builder.newLineIfNotEmpty();
           }
         }
       } else {
         _builder.append("<div>{props.");
-        String _firstLower = StringExtensions.toFirstLower(it.getName());
-        _builder.append(_firstLower);
+        String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
+        _builder.append(_firstLower_1);
         _builder.append("}</div>");
         _builder.newLineIfNotEmpty();
       }

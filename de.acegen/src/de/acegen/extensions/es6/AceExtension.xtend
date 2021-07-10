@@ -78,7 +78,7 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''${this.commandData.«urlElements.get(i)»}'''
+				urlWithPathParam += '''${data.«urlElements.get(i)»}'''
 			}
 		}
 		return "${Utils.settings.rootPath}" + urlWithPathParam;
