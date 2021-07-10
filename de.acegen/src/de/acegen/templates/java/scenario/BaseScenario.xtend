@@ -336,13 +336,13 @@ class BaseScenario {
 		
 			@Override
 			protected HttpResponse<Object> callSquishyDataProviderPutValue(String uuid, String key, String value) {
-				return this.httpPut("/test/non-deterministic/value?uuid=" + uuid + "&key=" + key + "&value=" + value, null, null, null,
+				return this.httpPut("/test/squishy/value?uuid=" + uuid + "&key=" + key + "&value=" + value, null, null, null,
 						Object.class);
 			}
 		
 			@Override
 			protected HttpResponse<Object> callSquishyDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {
-				return this.httpPut("/test/non-deterministic/system-time?uuid=" + uuid + "&system-time=" + dateTime, null, null,
+				return this.httpPut("/test/squishy/system-time?uuid=" + uuid + "&system-time=" + dateTime, null, null,
 						null, Object.class);
 			}
 		

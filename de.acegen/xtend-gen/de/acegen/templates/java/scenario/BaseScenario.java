@@ -821,7 +821,7 @@ public class BaseScenario {
     _builder.append("protected HttpResponse<Object> callSquishyDataProviderPutValue(String uuid, String key, String value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return this.httpPut(\"/test/non-deterministic/value?uuid=\" + uuid + \"&key=\" + key + \"&value=\" + value, null, null, null,");
+    _builder.append("return this.httpPut(\"/test/squishy/value?uuid=\" + uuid + \"&key=\" + key + \"&value=\" + value, null, null, null,");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("Object.class);");
@@ -837,7 +837,7 @@ public class BaseScenario {
     _builder.append("protected HttpResponse<Object> callSquishyDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("return this.httpPut(\"/test/non-deterministic/system-time?uuid=\" + uuid + \"&system-time=\" + dateTime, null, null,");
+    _builder.append("return this.httpPut(\"/test/squishy/system-time?uuid=\" + uuid + \"&system-time=\" + dateTime, null, null,");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("null, Object.class);");
