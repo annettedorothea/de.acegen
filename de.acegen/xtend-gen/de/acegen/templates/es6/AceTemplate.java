@@ -527,6 +527,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppState from \"./AppState\";");
     _builder.newLine();
+    _builder.append("import Event from \"./Event\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export let timeline = [];");
     _builder.newLine();

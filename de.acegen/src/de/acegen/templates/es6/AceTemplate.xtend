@@ -246,6 +246,7 @@ class AceTemplate {
 	import * as AppUtils from "../../src/app/AppUtils";
 	import * as Utils from "./Utils";
 	import * as AppState from "./AppState";
+	import Event from "./Event";
 	
 	export let timeline = [];
 	export let listeners = {};
