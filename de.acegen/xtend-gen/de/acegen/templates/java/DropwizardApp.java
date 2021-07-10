@@ -58,7 +58,7 @@ public class DropwizardApp {
     _builder.newLine();
     _builder.append("import de.acegen.resources.GetServerInfoResource;");
     _builder.newLine();
-    _builder.append("import de.acegen.resources.NonDeterministicDataProviderResource;");
+    _builder.append("import de.acegen.resources.SquishyDataProviderResource;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import com.codahale.metrics.servlets.AdminServlet;");
@@ -205,7 +205,7 @@ public class DropwizardApp {
     _builder.append("if (Config.DEV.equals(mode)) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new NonDeterministicDataProviderResource());");
+    _builder.append("environment.jersey().register(new SquishyDataProviderResource());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");

@@ -21,12 +21,12 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
-public class NonDeterministicDataProvider {
+public class SquishyDataProvider {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generateNonDeterministicDataProvider() {
+  public CharSequence generate() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
     String _copyright = this._commonExtension.copyright();
@@ -53,7 +53,7 @@ public class NonDeterministicDataProvider {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public class NonDeterministicDataProvider {");
+    _builder.append("public class SquishyDataProvider {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.newLine();

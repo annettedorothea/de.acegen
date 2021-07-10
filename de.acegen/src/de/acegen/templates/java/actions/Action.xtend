@@ -60,7 +60,7 @@ class Action {
 		import de.acegen.IDataContainer;
 		import de.acegen.ITimelineItem;
 		import de.acegen.ViewProvider;
-		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.SquishyDataProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.WriteAction;
 
@@ -89,7 +89,7 @@ class Action {
 				«ENDIF»
 			}
 			
-			«initActionDataFromNonDeterministicDataProvider»		
+			«initActionDataFromSquishyDataProvider»		
 
 			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
 				return data;
@@ -122,7 +122,7 @@ class Action {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.SquishyDataProvider;
 		
 		«getModel.dataImport»
 		«getModel.dataClassImport»
@@ -138,7 +138,7 @@ class Action {
 		
 			protected abstract «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle);
 		
-			«initActionDataFromNonDeterministicDataProvider»
+			«initActionDataFromSquishyDataProvider»
 
 			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
 				return data;
@@ -264,7 +264,7 @@ class Action {
 		
 			protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);
 			
-			protected abstract T initActionDataFromNonDeterministicDataProvider(T data);
+			protected abstract T initActionDataFromSquishyDataProvider(T data);
 
 			public T apply(T data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
@@ -282,7 +282,7 @@ class Action {
 
 					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
-						data = initActionDataFromNonDeterministicDataProvider(data);
+						data = initActionDataFromSquishyDataProvider(data);
 					}
 					data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());
 					
@@ -326,7 +326,7 @@ class Action {
 				this.viewProvider = viewProvider;
 			}
 		
-			protected abstract T initActionDataFromNonDeterministicDataProvider(T data);
+			protected abstract T initActionDataFromSquishyDataProvider(T data);
 
 			protected abstract ICommand<T> getCommand();
 		
@@ -345,7 +345,7 @@ class Action {
 
 					data = this.initActionData(data);
 					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
-						data = initActionDataFromNonDeterministicDataProvider(data);
+						data = initActionDataFromSquishyDataProvider(data);
 					}
 					
 					ICommand<T> command = this.getCommand();
@@ -403,25 +403,25 @@ class Action {
 				IDaoProvider daoProvider, ViewProvider viewProvider) {
 	'''
 	
-	private def initActionDataFromNonDeterministicDataProvider(HttpServerAce it) '''
+	private def initActionDataFromSquishyDataProvider(HttpServerAce it) '''
 		@Override
-		protected «model.dataParamType» initActionDataFromNonDeterministicDataProvider(«model.dataParamType» data) {
-			LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(data.getUuid());
+		protected «model.dataParamType» initActionDataFromSquishyDataProvider(«model.dataParamType» data) {
+			LocalDateTime systemTime = SquishyDataProvider.consumeSystemTime(data.getUuid());
 			if (systemTime != null) {
 				data.setSystemTime(systemTime);
 			}
 			«FOR attribute : getModel.allAttributes»
 				«IF attribute.squishy»
-					String «attribute.name»Object = NonDeterministicDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
+					String «attribute.name»Object = SquishyDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
 					if («attribute.name»Object != null) {
 						try {
 							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
 							data.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.", «attribute.name»Object);
+							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from SquishyDataProvider.", «attribute.name»Object);
 						}
 					} else {
-						LOG.warn("«attribute.name» is declared as non-deterministnic but no value was found in NonDeterministicDataProvider.");
+						LOG.warn("«attribute.name» is declared as non-deterministnic but no value was found in SquishyDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»

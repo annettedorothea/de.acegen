@@ -33,7 +33,6 @@ import de.acegen.generator.java.LiquibaseGenerator
 import de.acegen.templates.java.AceOperation
 import de.acegen.templates.java.Converter
 import de.acegen.templates.java.DatabaseHandle
-import de.acegen.templates.java.NonDeterministicDataProvider
 import de.acegen.templates.java.Persistence
 import de.acegen.templates.java.ServerInfo
 import de.acegen.templates.java.TimelineItem
@@ -55,6 +54,7 @@ import de.acegen.templates.java.views.ViewProvider
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import de.acegen.templates.java.events.EventReplayService
+import de.acegen.templates.java.SquishyDataProvider
 
 class JavaGenerator {
 
@@ -125,7 +125,7 @@ class JavaGenerator {
 	YamlConfiguration yamlConfiguration;
 
 	@Inject
-	NonDeterministicDataProvider notReplayableDataProvider;
+	SquishyDataProvider squishyDataProvider;
 
 	@Inject
 	DatabaseHandle databaseHandle;
@@ -235,8 +235,8 @@ class JavaGenerator {
 			aceOperation.generate());
 		fsa.generateFile("de/acegen/ServerInfo.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			serverInfo.generate());
-		fsa.generateFile("de/acegen/NonDeterministicDataProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-			notReplayableDataProvider.generateNonDeterministicDataProvider());
+		fsa.generateFile("de/acegen/SquishyDataProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			squishyDataProvider.generate());
 
 		fsa.generateFile("de/acegen/AceDao.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			dao.generateAceDao());

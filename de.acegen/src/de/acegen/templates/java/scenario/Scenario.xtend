@@ -110,7 +110,7 @@ class Scenario {
 		
 		import de.acegen.BaseScenario;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.SquishyDataProvider;
 		import de.acegen.HttpResponse;
 		
 		@SuppressWarnings("unused")
@@ -369,12 +369,12 @@ class Scenario {
 
 	private def generatePrepare(WhenBlock it) '''
 		«IF dataDefinition.systemtime !== null»
-			this.callNonDeterministicDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
+			this.callSquishyDataProviderPutSystemTime(uuid, LocalDateTime.parse("«dataDefinition.systemtime»", DateTimeFormatter.ofPattern("«dataDefinition.pattern»")));
 		«ENDIF»
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
 			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
 				«IF attributeDefinition.attribute.squishy»
-					this.callNonDeterministicDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.nonDeterministicValueFrom»");
+					this.callSquishyDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.nonDeterministicValueFrom»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»

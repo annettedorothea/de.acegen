@@ -21,7 +21,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
-public class NonDeterministicDataProviderResource {
+public class SquishyDataProviderResource {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
@@ -60,24 +60,24 @@ public class NonDeterministicDataProviderResource {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("@Path(\"/test/non-deterministic\")");
+    _builder.append("@Path(\"/test/squishy\")");
     _builder.newLine();
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
     _builder.newLine();
-    _builder.append("public class NonDeterministicDataProviderResource {");
+    _builder.append("public class SquishyDataProviderResource {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("static final Logger LOG = LoggerFactory.getLogger(NonDeterministicDataProviderResource.class);");
+    _builder.append("static final Logger LOG = LoggerFactory.getLogger(SquishyDataProviderResource.class);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public NonDeterministicDataProviderResource() {");
+    _builder.append("public SquishyDataProviderResource() {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("super();");
@@ -96,7 +96,7 @@ public class NonDeterministicDataProviderResource {
     _builder.append("public Response putValue(@QueryParam(\"uuid\") String uuid, @QueryParam(\"key\") String key,  @QueryParam(\"value\") String value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("NonDeterministicDataProvider.put(uuid, key, value);");
+    _builder.append("SquishyDataProvider.put(uuid, key, value);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Response.ok().build();");
@@ -115,7 +115,7 @@ public class NonDeterministicDataProviderResource {
     _builder.append("public Response putSystemTime(@QueryParam(\"uuid\") String uuid, @QueryParam(\"system-time\") String systemTime) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("NonDeterministicDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));");
+    _builder.append("SquishyDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return Response.ok().build();");

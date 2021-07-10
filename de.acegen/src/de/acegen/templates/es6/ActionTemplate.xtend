@@ -156,21 +156,21 @@ class ActionTemplate {
 		            }
 		        });
 		        if (Utils.settings.mode === "dev") {
-		            let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
-		            if (nonDeterministicValues) {
-		                const nonDeterministicValue = nonDeterministicValues.shift();
-		                if (nonDeterministicValue) {
-		                    data.uuid = nonDeterministicValue.uuid;
-		                    data.clientSystemTime = nonDeterministicValue.clientSystemTime;
-		                }
-		                localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
-		            }
-		            if (!data.uuid) {
-		                data.uuid = AppUtils.createUUID();
-		            }
-		            if (!data.clientSystemTime) {
-		                data.clientSystemTime = new Date();
-		            }
+					let squishyValues = JSON.parse(localStorage.getItem("squishyValues"));
+					if (squishyValues && squishyValues.length > 0) {
+					    const squishyValue = JSON.parse(squishyValues.shift());
+					    if (squishyValue) {
+					        data.uuid = squishyValue.uuid;
+					        data.clientSystemTime = squishyValue.clientSystemTime;
+					    }
+					    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
+					}
+					if (!data.uuid) {
+					    data.uuid = AppUtils.createUUID();
+					}
+					if (!data.clientSystemTime) {
+					    data.clientSystemTime = new Date();
+					}
 		        } else {
 		            data.uuid = AppUtils.createUUID();
 		            data.clientSystemTime = new Date();

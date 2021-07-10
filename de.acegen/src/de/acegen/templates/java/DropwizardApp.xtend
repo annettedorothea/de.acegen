@@ -43,7 +43,7 @@ class DropwizardApp {
 		import org.slf4j.LoggerFactory;
 		
 		import de.acegen.resources.GetServerInfoResource;
-		import de.acegen.resources.NonDeterministicDataProviderResource;
+		import de.acegen.resources.SquishyDataProviderResource;
 
 		import com.codahale.metrics.servlets.AdminServlet;
 		
@@ -104,7 +104,7 @@ class DropwizardApp {
 				mode = configuration.getConfig().getMode();
 				LOG.info("running in {} mode", mode);
 				if (Config.DEV.equals(mode)) {
-					environment.jersey().register(new NonDeterministicDataProviderResource());
+					environment.jersey().register(new SquishyDataProviderResource());
 				}
 		
 				environment.jersey().register(new GetServerInfoResource());

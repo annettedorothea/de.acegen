@@ -166,9 +166,6 @@ class AceTemplate {
 		}
 		
 		export function stateUpdated(appState) {
-		    if (Utils.settings && Utils.settings.mode === "dev") {
-		        localStorage.setItem("appState", JSON.stringify(appState));
-		    }
 		    // re-render app
 		}
 		
@@ -206,21 +203,31 @@ class AceTemplate {
 		    return AppState.getAppState();
 		}
 		
-		export function addNonDeterministicValueClient(value) {
-		    let nonDeterministicValues = JSON.parse(localStorage.getItem('nonDeterministicValues'));
-		    if (!nonDeterministicValues) {
-		        nonDeterministicValues = [];
+		export function addSquishyValueClient(value) {
+		    let squishyValues = JSON.parse(localStorage.getItem('squishyValues'));
+		    if (!squishyValues) {
+		        squishyValues = [];
 		    }
-		    nonDeterministicValues.push(JSON.parse(value));
-		    localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
+		    squishyValues.push(value);
+		    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
 		}
-		
-		export async function addNonDeterministicValueServer(uuid, key, value) {
-			if (key === "system-time") {
-			    await AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${uuid}&system-time=${value}`);
-			} else {
-			    await AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=${uuid}&key=${key}&value=${value}`);
-			}
+
+		export function addSquishyValueServer(uuid, key, value) {
+		    return new Promise((resolve, reject) => {
+		        let url = "";
+		        if (key === "system-time") {
+		            url =`/api/test/squishy/system-time?uuid=${uuid}&system-time=${value}`;
+		        } else {
+		            url =`/api/test/squishy/value?uuid=${uuid}&key=${key}&value=${value}`
+		        }
+		        return new Promise((resolve, reject) => {
+		            AppUtils.httpPut(url).then(() => {
+		                resolve();
+		            }, (error) => {
+		                reject(error);
+		            });
+		        });
+		    })
 		}
 		
 		export async function getValueFromLocalStorage(key) {

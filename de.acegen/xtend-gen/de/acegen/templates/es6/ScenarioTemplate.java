@@ -113,23 +113,23 @@ public class ScenarioTemplate {
     _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("addNonDeterministicValueClient: async function(driver, value) {");
+    _builder.append("addSquishyValueClient: async function(driver, value) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("const jsonValue = JSON.stringify(value);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("await driver.executeScript(`appName.addNonDeterministicValueClient(\'${jsonValue}\')`);");
+    _builder.append("await driver.executeScript(`appName.addSquishyValueClient(\'${jsonValue}\')`);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("},");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("addNonDeterministicValueServer: async function(driver, uuid, key, value) {");
+    _builder.append("addSquishyValueServer: async function(driver, uuid, key, value) {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("await driver.executeScript(`appName.addNonDeterministicValueServer(\"${uuid}\", \"${key}\", \"${value}\")`);");
+    _builder.append("await driver.executeScript(`appName.addSquishyValueServer(\"${uuid}\", \"${key}\", \"${value}\")`);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("},");
@@ -142,6 +142,9 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("browserName: \"firefox\"");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("//browserName: \"chrome\"");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -234,8 +237,8 @@ public class ScenarioTemplate {
       ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
       for(final ClientGivenRef givenRef : _allGivenItems) {
         _builder.append("\t\t");
-        CharSequence _initNonDeterministicData = this.initNonDeterministicData(givenRef.getScenario().getWhenBlock());
-        _builder.append(_initNonDeterministicData, "\t\t");
+        CharSequence _initSquishyData = this.initSquishyData(givenRef.getScenario().getWhenBlock());
+        _builder.append(_initSquishyData, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("await ScenarioUtils.invokeAction(driver, ");
@@ -284,8 +287,8 @@ public class ScenarioTemplate {
       boolean _tripleNotEquals = (_whenBlock != null);
       if (_tripleNotEquals) {
         _builder.append("\t\t");
-        CharSequence _initNonDeterministicData_1 = this.initNonDeterministicData(it.getWhenBlock());
-        _builder.append(_initNonDeterministicData_1, "\t\t");
+        CharSequence _initSquishyData_1 = this.initSquishyData(it.getWhenBlock());
+        _builder.append(_initSquishyData_1, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");
         _builder.append("await ScenarioUtils.invokeAction(driver, ");
@@ -422,14 +425,14 @@ public class ScenarioTemplate {
     return _builder;
   }
   
-  private CharSequence initNonDeterministicData(final ClientWhenBlock it) {
+  private CharSequence initSquishyData(final ClientWhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getSquishyValues() != null) && (it.getSquishyValues().size() > 0))) {
         {
           EList<SquishyValue> _squishyValues = it.getSquishyValues();
-          for(final SquishyValue nonDeterministicValue : _squishyValues) {
-            _builder.append("await ScenarioUtils.addNonDeterministicValueClient(");
+          for(final SquishyValue squishyValue : _squishyValues) {
+            _builder.append("await ScenarioUtils.addSquishyValueClient(");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("driver,");
@@ -439,18 +442,18 @@ public class ScenarioTemplate {
             _builder.newLine();
             _builder.append("\t\t");
             _builder.append("uuid: `");
-            String _uuid = nonDeterministicValue.getUuid();
+            String _uuid = squishyValue.getUuid();
             _builder.append(_uuid, "\t\t");
             _builder.append("`");
             {
-              String _clientSystemTime = nonDeterministicValue.getClientSystemTime();
+              String _clientSystemTime = squishyValue.getClientSystemTime();
               boolean _tripleNotEquals = (_clientSystemTime != null);
               if (_tripleNotEquals) {
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("clientSystemTime: `");
-                String _clientSystemTime_1 = nonDeterministicValue.getClientSystemTime();
+                String _clientSystemTime_1 = squishyValue.getClientSystemTime();
                 _builder.append(_clientSystemTime_1, "\t\t");
                 _builder.append("`");
               }
@@ -462,31 +465,31 @@ public class ScenarioTemplate {
             _builder.append(");");
             _builder.newLine();
             {
-              String _serverSystemTime = nonDeterministicValue.getServerSystemTime();
+              String _serverSystemTime = squishyValue.getServerSystemTime();
               boolean _tripleNotEquals_1 = (_serverSystemTime != null);
               if (_tripleNotEquals_1) {
-                _builder.append("await ScenarioUtils.addNonDeterministicValueServer(driver, `");
-                String _uuid_1 = nonDeterministicValue.getUuid();
+                _builder.append("await ScenarioUtils.addSquishyValueServer(driver, `");
+                String _uuid_1 = squishyValue.getUuid();
                 _builder.append(_uuid_1);
                 _builder.append("`, \"system-time\", new Date(\'");
-                String _serverSystemTime_1 = nonDeterministicValue.getServerSystemTime();
+                String _serverSystemTime_1 = squishyValue.getServerSystemTime();
                 _builder.append(_serverSystemTime_1);
                 _builder.append("\').toISOString());");
                 _builder.newLineIfNotEmpty();
               }
             }
             {
-              Attribute _attribute = nonDeterministicValue.getAttribute();
+              Attribute _attribute = squishyValue.getAttribute();
               boolean _tripleNotEquals_2 = (_attribute != null);
               if (_tripleNotEquals_2) {
-                _builder.append("await ScenarioUtils.addNonDeterministicValueServer(driver, `");
-                String _uuid_2 = nonDeterministicValue.getUuid();
+                _builder.append("await ScenarioUtils.addSquishyValueServer(driver, `");
+                String _uuid_2 = squishyValue.getUuid();
                 _builder.append(_uuid_2);
                 _builder.append("`, \"");
-                String _firstLower = StringExtensions.toFirstLower(nonDeterministicValue.getAttribute().getName());
+                String _firstLower = StringExtensions.toFirstLower(squishyValue.getAttribute().getName());
                 _builder.append(_firstLower);
                 _builder.append("\", `");
-                Object _primitiveParamFrom = this._es6Extension.primitiveParamFrom(nonDeterministicValue.getValue());
+                Object _primitiveParamFrom = this._es6Extension.primitiveParamFrom(squishyValue.getValue());
                 _builder.append(_primitiveParamFrom);
                 _builder.append("`);");
                 _builder.newLineIfNotEmpty();

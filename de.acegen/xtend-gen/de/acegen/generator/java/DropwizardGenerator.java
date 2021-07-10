@@ -27,8 +27,8 @@ import de.acegen.templates.java.DropwizardConfiguration;
 import de.acegen.templates.java.DropwizardEventReplayCommand;
 import de.acegen.templates.java.DropwizardResource;
 import de.acegen.templates.java.resources.GetServerInfoResource;
-import de.acegen.templates.java.resources.NonDeterministicDataProviderResource;
 import de.acegen.templates.java.resources.Resource;
+import de.acegen.templates.java.resources.SquishyDataProviderResource;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -49,7 +49,7 @@ public class DropwizardGenerator {
   private DropwizardConfiguration dropwizardConfiguration;
   
   @Inject
-  private NonDeterministicDataProviderResource notReplayableDataProviderResource;
+  private SquishyDataProviderResource squishyDataProviderResource;
   
   @Inject
   private DropwizardResource dropwizardResource;
@@ -85,8 +85,8 @@ public class DropwizardGenerator {
     }
     fsa.generateFile("de/acegen/resources/GetServerInfoResource.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.getServerInfoResource.generate());
-    fsa.generateFile("de/acegen/resources/NonDeterministicDataProviderResource.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.notReplayableDataProviderResource.generate());
+    fsa.generateFile("de/acegen/resources/SquishyDataProviderResource.java", 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.squishyDataProviderResource.generate());
     fsa.generateFile("de/acegen/App.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.dropwizardApp.generate(authUser));
     fsa.generateFile("de/acegen/CustomAppConfiguration.java", 

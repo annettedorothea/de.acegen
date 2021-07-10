@@ -335,13 +335,13 @@ class BaseScenario {
 			}
 		
 			@Override
-			protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, String value) {
+			protected HttpResponse<Object> callSquishyDataProviderPutValue(String uuid, String key, String value) {
 				return this.httpPut("/test/non-deterministic/value?uuid=" + uuid + "&key=" + key + "&value=" + value, null, null, null,
 						Object.class);
 			}
 		
 			@Override
-			protected HttpResponse<Object> callNonDeterministicDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {
+			protected HttpResponse<Object> callSquishyDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {
 				return this.httpPut("/test/non-deterministic/system-time?uuid=" + uuid + "&system-time=" + dateTime, null, null,
 						null, Object.class);
 			}
@@ -433,10 +433,10 @@ class BaseScenario {
 
 			protected abstract boolean prerequisite(String scenarioName);
 			
-			protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutValue(
+			protected abstract HttpResponse<Object> callSquishyDataProviderPutValue(
 						String uuid, String key, String data);
 						
-			protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutSystemTime(
+			protected abstract HttpResponse<Object> callSquishyDataProviderPutSystemTime(
 						String uuid, LocalDateTime dateTime);
 						
 			protected abstract void addToMetrics(String action, Long duration);

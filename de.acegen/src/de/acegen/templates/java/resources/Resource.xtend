@@ -71,7 +71,7 @@ class Resource {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.SquishyDataProvider;
 		import de.acegen.Config;
 		
 		«IF authorize»

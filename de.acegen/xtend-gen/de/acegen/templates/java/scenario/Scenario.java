@@ -206,7 +206,7 @@ public class Scenario {
     _builder.newLine();
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.HttpResponse;");
     _builder.newLine();
@@ -1193,7 +1193,7 @@ public class Scenario {
       String _systemtime = it.getDataDefinition().getSystemtime();
       boolean _tripleNotEquals = (_systemtime != null);
       if (_tripleNotEquals) {
-        _builder.append("this.callNonDeterministicDataProviderPutSystemTime(uuid, LocalDateTime.parse(\"");
+        _builder.append("this.callSquishyDataProviderPutSystemTime(uuid, LocalDateTime.parse(\"");
         String _systemtime_1 = it.getDataDefinition().getSystemtime();
         _builder.append(_systemtime_1);
         _builder.append("\", DateTimeFormatter.ofPattern(\"");
@@ -1212,7 +1212,7 @@ public class Scenario {
             {
               boolean _isSquishy = attributeDefinition.getAttribute().isSquishy();
               if (_isSquishy) {
-                _builder.append("this.callNonDeterministicDataProviderPutValue(uuid, \"");
+                _builder.append("this.callSquishyDataProviderPutValue(uuid, \"");
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
                 _builder.append("\",\t\"");

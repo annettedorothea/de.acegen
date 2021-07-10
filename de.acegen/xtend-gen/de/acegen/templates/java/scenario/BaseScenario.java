@@ -818,7 +818,7 @@ public class BaseScenario {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected HttpResponse<Object> callNonDeterministicDataProviderPutValue(String uuid, String key, String value) {");
+    _builder.append("protected HttpResponse<Object> callSquishyDataProviderPutValue(String uuid, String key, String value) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return this.httpPut(\"/test/non-deterministic/value?uuid=\" + uuid + \"&key=\" + key + \"&value=\" + value, null, null, null,");
@@ -834,7 +834,7 @@ public class BaseScenario {
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected HttpResponse<Object> callNonDeterministicDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {");
+    _builder.append("protected HttpResponse<Object> callSquishyDataProviderPutSystemTime(String uuid, LocalDateTime dateTime) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return this.httpPut(\"/test/non-deterministic/system-time?uuid=\" + uuid + \"&system-time=\" + dateTime, null, null,");
@@ -1040,7 +1040,7 @@ public class BaseScenario {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutValue(");
+    _builder.append("protected abstract HttpResponse<Object> callSquishyDataProviderPutValue(");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("String uuid, String key, String data);");
@@ -1048,7 +1048,7 @@ public class BaseScenario {
     _builder.append("\t\t\t\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract HttpResponse<Object> callNonDeterministicDataProviderPutSystemTime(");
+    _builder.append("protected abstract HttpResponse<Object> callSquishyDataProviderPutSystemTime(");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("String uuid, LocalDateTime dateTime);");

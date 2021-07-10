@@ -86,7 +86,7 @@ public class Action {
     _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
-    _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
@@ -178,8 +178,8 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    CharSequence _initActionDataFromNonDeterministicDataProvider = this.initActionDataFromNonDeterministicDataProvider(it);
-    _builder.append(_initActionDataFromNonDeterministicDataProvider, "\t");
+    CharSequence _initActionDataFromSquishyDataProvider = this.initActionDataFromSquishyDataProvider(it);
+    _builder.append(_initActionDataFromSquishyDataProvider, "\t");
     _builder.append("\t\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -249,7 +249,7 @@ public class Action {
     _builder.newLine();
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
@@ -303,8 +303,8 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    CharSequence _initActionDataFromNonDeterministicDataProvider = this.initActionDataFromNonDeterministicDataProvider(it);
-    _builder.append(_initActionDataFromNonDeterministicDataProvider, "\t");
+    CharSequence _initActionDataFromSquishyDataProvider = this.initActionDataFromSquishyDataProvider(it);
+    _builder.append(_initActionDataFromSquishyDataProvider, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
@@ -634,7 +634,7 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract T initActionDataFromNonDeterministicDataProvider(T data);");
+    _builder.append("protected abstract T initActionDataFromSquishyDataProvider(T data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -684,7 +684,7 @@ public class Action {
     _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("data = initActionDataFromNonDeterministicDataProvider(data);");
+    _builder.append("data = initActionDataFromSquishyDataProvider(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -785,7 +785,7 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("protected abstract T initActionDataFromNonDeterministicDataProvider(T data);");
+    _builder.append("protected abstract T initActionDataFromSquishyDataProvider(T data);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -835,7 +835,7 @@ public class Action {
     _builder.append("if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("data = initActionDataFromNonDeterministicDataProvider(data);");
+    _builder.append("data = initActionDataFromSquishyDataProvider(data);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -955,20 +955,20 @@ public class Action {
     return _builder;
   }
   
-  private CharSequence initActionDataFromNonDeterministicDataProvider(final HttpServerAce it) {
+  private CharSequence initActionDataFromSquishyDataProvider(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("protected ");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
     _builder.append(_dataParamType);
-    _builder.append(" initActionDataFromNonDeterministicDataProvider(");
+    _builder.append(" initActionDataFromSquishyDataProvider(");
     String _dataParamType_1 = this._modelExtension.dataParamType(it.getModel());
     _builder.append(_dataParamType_1);
     _builder.append(" data) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    _builder.append("LocalDateTime systemTime = NonDeterministicDataProvider.consumeSystemTime(data.getUuid());");
+    _builder.append("LocalDateTime systemTime = SquishyDataProvider.consumeSystemTime(data.getUuid());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("if (systemTime != null) {");
@@ -989,7 +989,7 @@ public class Action {
             _builder.append("String ");
             String _name = attribute.getName();
             _builder.append(_name, "\t");
-            _builder.append("Object = NonDeterministicDataProvider.consumeValue(data.getUuid(), \"");
+            _builder.append("Object = SquishyDataProvider.consumeValue(data.getUuid(), \"");
             String _name_1 = attribute.getName();
             _builder.append(_name_1, "\t");
             _builder.append("\");");
@@ -1035,7 +1035,7 @@ public class Action {
             _builder.append("LOG.warn(\"");
             String _name_5 = attribute.getName();
             _builder.append(_name_5, "\t\t\t");
-            _builder.append(" is declared as non-deterministnic and failed to parse {} from NonDeterministicDataProvider.\", ");
+            _builder.append(" is declared as non-deterministnic and failed to parse {} from SquishyDataProvider.\", ");
             String _name_6 = attribute.getName();
             _builder.append(_name_6, "\t\t\t");
             _builder.append("Object);");
@@ -1052,7 +1052,7 @@ public class Action {
             _builder.append("LOG.warn(\"");
             String _name_7 = attribute.getName();
             _builder.append(_name_7, "\t\t");
-            _builder.append(" is declared as non-deterministnic but no value was found in NonDeterministicDataProvider.\");");
+            _builder.append(" is declared as non-deterministnic but no value was found in SquishyDataProvider.\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("}");

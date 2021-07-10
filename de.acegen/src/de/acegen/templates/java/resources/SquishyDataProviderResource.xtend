@@ -20,7 +20,7 @@ package de.acegen.templates.java.resources
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
 
-class NonDeterministicDataProviderResource {
+class SquishyDataProviderResource {
 
 	@Inject
 	extension CommonExtension
@@ -44,30 +44,30 @@ class NonDeterministicDataProviderResource {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import de.acegen.NonDeterministicDataProvider;
+		import de.acegen.SquishyDataProvider;
 		
-		@Path("/test/non-deterministic")
+		@Path("/test/squishy")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public class NonDeterministicDataProviderResource {
+		public class SquishyDataProviderResource {
 		
-			static final Logger LOG = LoggerFactory.getLogger(NonDeterministicDataProviderResource.class);
+			static final Logger LOG = LoggerFactory.getLogger(SquishyDataProviderResource.class);
 		
-			public NonDeterministicDataProviderResource() {
+			public SquishyDataProviderResource() {
 				super();
 			}
 		
 			@PUT
 			@Path("/value")
 			public Response putValue(@QueryParam("uuid") String uuid, @QueryParam("key") String key,  @QueryParam("value") String value) {
-				NonDeterministicDataProvider.put(uuid, key, value);
+				SquishyDataProvider.put(uuid, key, value);
 				return Response.ok().build();
 			}
 		
 			@PUT
 			@Path("/system-time")
 			public Response putSystemTime(@QueryParam("uuid") String uuid, @QueryParam("system-time") String systemTime) {
-				NonDeterministicDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));
+				SquishyDataProvider.putSystemTime(uuid, LocalDateTime.parse(systemTime, DateTimeFormatter.ISO_DATE_TIME));
 				return Response.ok().build();
 			}
 			

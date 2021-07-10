@@ -49,18 +49,19 @@ class ScenarioTemplate {
 			    });
 			},
 				
-			addNonDeterministicValueClient: async function(driver, value) {
+			addSquishyValueClient: async function(driver, value) {
 				const jsonValue = JSON.stringify(value);
-				await driver.executeScript(`appName.addNonDeterministicValueClient('${jsonValue}')`);
+				await driver.executeScript(`appName.addSquishyValueClient('${jsonValue}')`);
 			},
 		
-			addNonDeterministicValueServer: async function(driver, uuid, key, value) {
-				await driver.executeScript(`appName.addNonDeterministicValueServer("${uuid}", "${key}", "${value}")`);
+			addSquishyValueServer: async function(driver, uuid, key, value) {
+				await driver.executeScript(`appName.addSquishyValueServer("${uuid}", "${key}", "${value}")`);
 			},
 
 			defaultTimeout: 30 * 1000,
 			
 			browserName: "firefox"
+			//browserName: "chrome"
 			
 		}
 		
@@ -95,7 +96,7 @@ class ScenarioTemplate {
 		    			    .forBrowser(ScenarioUtils.browserName)
 		    			    .build();
 				«FOR givenRef: allGivenItems»
-					«givenRef.scenario.whenBlock.initNonDeterministicData»
+					«givenRef.scenario.whenBlock.initSquishyData»
 					await ScenarioUtils.invokeAction(driver, «(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
 					«IF givenRef.scenario.delayInMillis > 0»
 						await ScenarioUtils.waitInMillis(«givenRef.scenario.delayInMillis»);
@@ -103,7 +104,7 @@ class ScenarioTemplate {
 				«ENDFOR»
 
 				«IF whenBlock !== null»
-					«whenBlock.initNonDeterministicData»
+					«whenBlock.initSquishyData»
 					await ScenarioUtils.invokeAction(driver, «(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
 					«IF delayInMillis > 0»
 						await ScenarioUtils.waitInMillis(«delayInMillis»);
@@ -140,21 +141,21 @@ class ScenarioTemplate {
 		
 	'''
 	
-	private def initNonDeterministicData(ClientWhenBlock it) '''
+	private def initSquishyData(ClientWhenBlock it) '''
 		«IF squishyValues !== null && squishyValues.size > 0»
-			«FOR nonDeterministicValue: squishyValues»
-				await ScenarioUtils.addNonDeterministicValueClient(
+			«FOR squishyValue: squishyValues»
+				await ScenarioUtils.addSquishyValueClient(
 					driver,
 					{
-						uuid: `«nonDeterministicValue.uuid»`«IF nonDeterministicValue.clientSystemTime !== null»,
-						clientSystemTime: `«nonDeterministicValue.clientSystemTime»`«ENDIF»
+						uuid: `«squishyValue.uuid»`«IF squishyValue.clientSystemTime !== null»,
+						clientSystemTime: `«squishyValue.clientSystemTime»`«ENDIF»
 					}
 				);
-				«IF nonDeterministicValue.serverSystemTime !== null»
-					await ScenarioUtils.addNonDeterministicValueServer(driver, `«nonDeterministicValue.uuid»`, "system-time", new Date('«nonDeterministicValue.serverSystemTime»').toISOString());
+				«IF squishyValue.serverSystemTime !== null»
+					await ScenarioUtils.addSquishyValueServer(driver, `«squishyValue.uuid»`, "system-time", new Date('«squishyValue.serverSystemTime»').toISOString());
 				«ENDIF»
-				«IF nonDeterministicValue.attribute !== null»
-					await ScenarioUtils.addNonDeterministicValueServer(driver, `«nonDeterministicValue.uuid»`, "«nonDeterministicValue.attribute.name.toFirstLower»", `«nonDeterministicValue.value.primitiveParamFrom»`);
+				«IF squishyValue.attribute !== null»
+					await ScenarioUtils.addSquishyValueServer(driver, `«squishyValue.uuid»`, "«squishyValue.attribute.name.toFirstLower»", `«squishyValue.value.primitiveParamFrom»`);
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»

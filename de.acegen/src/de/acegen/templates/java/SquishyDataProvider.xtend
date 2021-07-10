@@ -20,12 +20,12 @@ package de.acegen.templates.java
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
 
-class NonDeterministicDataProvider {
+class SquishyDataProvider {
 
 	@Inject
 	extension CommonExtension
 	
-	def generateNonDeterministicDataProvider() '''
+	def generate() '''
 		«copyright»
 		
 		package de.acegen;
@@ -35,7 +35,7 @@ class NonDeterministicDataProvider {
 		
 		import java.time.LocalDateTime;
 		
-		public class NonDeterministicDataProvider {
+		public class SquishyDataProvider {
 			
 			private static ConcurrentMap<String, LocalDateTime> systemTimeMap = new ConcurrentHashMap<>();
 	

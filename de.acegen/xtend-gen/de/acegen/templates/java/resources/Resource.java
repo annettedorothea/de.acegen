@@ -108,7 +108,7 @@ public class Resource {
     _builder.newLine();
     _builder.append("import de.acegen.ITimelineItem;");
     _builder.newLine();
-    _builder.append("import de.acegen.NonDeterministicDataProvider;");
+    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.Config;");
     _builder.newLine();
