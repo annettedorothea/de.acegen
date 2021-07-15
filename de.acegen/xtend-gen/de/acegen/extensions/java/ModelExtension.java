@@ -549,38 +549,4 @@ public class ModelExtension {
     }
     return false;
   }
-  
-  public CharSequence newFromCommandData(final Model it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("new ");
-    String _dataNameWithPackage = this.dataNameWithPackage(it);
-    _builder.append(_dataNameWithPackage);
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    {
-      List<Attribute> _allAttributes = this.allAttributes(it);
-      boolean _hasElements = false;
-      for(final Attribute attribute : _allAttributes) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate(",", "\t");
-        }
-        _builder.append("\t");
-        _builder.append("this.commandData.");
-        String _terCall = this._attributeExtension.getterCall(attribute);
-        _builder.append(_terCall, "\t");
-        _builder.newLineIfNotEmpty();
-      }
-      if (_hasElements) {
-        _builder.append(",", "\t");
-      }
-    }
-    _builder.append("\t");
-    _builder.append("this.commandData.getUuid()");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(")");
-    return _builder;
-  }
 }

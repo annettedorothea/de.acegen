@@ -224,13 +224,6 @@ class ModelExtension {
 		return false;
 	}
 	
-	def newFromCommandData(Model it) '''new «dataNameWithPackage»(
-	«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
-		this.commandData.«attribute.getterCall»
-	«ENDFOR»
-	this.commandData.getUuid()
-	)'''
-	
 }
 	
 	

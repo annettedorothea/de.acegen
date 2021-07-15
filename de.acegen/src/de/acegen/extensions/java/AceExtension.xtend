@@ -29,9 +29,6 @@ import de.acegen.aceGen.HttpServerAceRead
 class AceExtension {
 	
 	@Inject
-	extension ModelExtension
-	
-	@Inject
 	extension AttributeExtension
 	
 	def String abstractActionName(HttpServerAce it) '''Abstract«getName.toFirstUpper»Action'''
@@ -46,8 +43,6 @@ class AceExtension {
 	
 	def String resourceName(HttpServerAce it) '''«getName.toFirstUpper»Resource'''
 
-	def String newAction(HttpServerAce it) '''final «actionNameWithPackage» action = new «actionNameWithPackage»(«getModel.newFromCommandData», DatabaseService.getDatabaseHandle());'''
-	
 	def String abstractCommandName(HttpServerAce it) '''Abstract«getName.toFirstUpper»Command'''
 
 	def String commandName(HttpServerAce it) '''«getName.toFirstUpper»Command'''

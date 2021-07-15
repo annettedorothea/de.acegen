@@ -352,7 +352,7 @@ public class AceTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export function stateUpdated(appState) {");
+    _builder.append("export function stateUpdated() {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("// re-render app");
@@ -1460,10 +1460,6 @@ public class AceTemplate {
         }
       }
     }
-    _builder.append("\t");
-    CharSequence _setState = this.setState(it, httpClient);
-    _builder.append(_setState, "\t");
-    _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -1561,24 +1557,11 @@ public class AceTemplate {
             }
           }
         }
-        _builder.append("\t");
-        CharSequence _setState = this.setState(it, httpClient);
-        _builder.append(_setState, "\t");
-        _builder.newLineIfNotEmpty();
         _builder.append("}");
         _builder.newLine();
         _builder.newLine();
       }
     }
-    return _builder;
-  }
-  
-  private CharSequence setState(final SingleClientAttribute it, final HttpClient httpClient) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("const newAppState = getAppState();");
-    _builder.newLine();
-    _builder.append("AppUtils.stateUpdated(newAppState);");
-    _builder.newLine();
     return _builder;
   }
   

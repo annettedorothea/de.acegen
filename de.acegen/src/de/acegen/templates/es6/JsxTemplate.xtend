@@ -63,6 +63,12 @@ class JsxTemplate {
 			«ELSE»
 				<«componentName» {...props.«name.toFirstLower»} />
 			«ENDIF»
+		«ELSEIF noComponent && attributes.size > 0»
+			{props.«name.toFirstLower» && <div>
+				«FOR attribute: attributes»
+					<div>{props.«name.toFirstLower».«attribute.name.toFirstLower»}</div>
+				«ENDFOR»
+			</div>}
 		«ELSE»
 			<div>{props.«name.toFirstLower»}</div>
 		«ENDIF»

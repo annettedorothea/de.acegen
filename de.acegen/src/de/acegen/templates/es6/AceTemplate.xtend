@@ -164,7 +164,7 @@ class AceTemplate {
 		    return JSON.parse(JSON.stringify(object));
 		}
 		
-		export function stateUpdated(appState) {
+		export function stateUpdated() {
 		    // re-render app
 		}
 		
@@ -578,7 +578,6 @@ class AceTemplate {
 					«elementPath» = eventData.«getName»;
 				«ENDIF»
 			«ENDIF»
-			«setState(httpClient)»
 		}
 		
 	'''
@@ -607,15 +606,9 @@ class AceTemplate {
 						}
 					«ENDIF»
 				«ENDFOR»
-				«setState(httpClient)»
 			}
 			
 		«ENDIF»
-	'''
-	
-	private def setState(SingleClientAttribute it, HttpClient httpClient) '''
-		const newAppState = getAppState();
-		AppUtils.stateUpdated(newAppState);
 	'''
 	
 	private def childAttributes(SingleClientAttribute it, HttpClient httpClient) '''

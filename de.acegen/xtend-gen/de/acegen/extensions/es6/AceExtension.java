@@ -19,6 +19,7 @@ import com.google.common.base.Objects;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
+import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.TriggerdAceOperation;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,22 @@ public class AceExtension {
         boolean _not = (!_contains);
         if (_not) {
           list.add(triggerdAceOperation.getAceOperation());
+        }
+      }
+    }
+    return list;
+  }
+  
+  public List<HttpClientStateFunction> aggregatedListeners(final HttpClientAce it) {
+    ArrayList<HttpClientStateFunction> list = new ArrayList<HttpClientStateFunction>();
+    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
+    for (final HttpClientOutcome outcome : _outcomes) {
+      EList<HttpClientStateFunction> _listeners = outcome.getListeners();
+      for (final HttpClientStateFunction listener : _listeners) {
+        boolean _contains = list.contains(listener);
+        boolean _not = (!_contains);
+        if (_not) {
+          list.add(listener);
         }
       }
     }

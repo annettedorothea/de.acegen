@@ -45,6 +45,7 @@ class ActionTemplate {
 		«ENDIF»
 		«IF getLoadingFlag !== null»
 			import * as AppState from "../../ace/AppState";
+			import * as AppUtils from "../../../src/app/AppUtils";
 		«ENDIF»
 		
 		export default class «abstractActionName» extends Action {
@@ -65,10 +66,12 @@ class ActionTemplate {
 			«IF getLoadingFlag !== null»
 				preCall() {
 					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: true});
+					AppUtils.stateUpdated(AppState.getAppState());
 				}
 				
 				postCall() {
 					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: false});
+					AppUtils.stateUpdated(AppState.getAppState());
 				}
 			«ENDIF»
 		

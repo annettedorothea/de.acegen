@@ -153,11 +153,35 @@ public class JsxTemplate {
           }
         }
       } else {
-        _builder.append("<div>{props.");
-        String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
-        _builder.append(_firstLower_1);
-        _builder.append("}</div>");
-        _builder.newLineIfNotEmpty();
+        if ((it.isNoComponent() && (it.getAttributes().size() > 0))) {
+          _builder.append("{props.");
+          String _firstLower_1 = StringExtensions.toFirstLower(it.getName());
+          _builder.append(_firstLower_1);
+          _builder.append(" && <div>");
+          _builder.newLineIfNotEmpty();
+          {
+            EList<ClientAttribute> _attributes = it.getAttributes();
+            for(final ClientAttribute attribute : _attributes) {
+              _builder.append("\t");
+              _builder.append("<div>{props.");
+              String _firstLower_2 = StringExtensions.toFirstLower(it.getName());
+              _builder.append(_firstLower_2, "\t");
+              _builder.append(".");
+              String _firstLower_3 = StringExtensions.toFirstLower(attribute.getName());
+              _builder.append(_firstLower_3, "\t");
+              _builder.append("}</div>");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          _builder.append("</div>}");
+          _builder.newLine();
+        } else {
+          _builder.append("<div>{props.");
+          String _firstLower_4 = StringExtensions.toFirstLower(it.getName());
+          _builder.append(_firstLower_4);
+          _builder.append("}</div>");
+          _builder.newLineIfNotEmpty();
+        }
       }
     }
     return _builder;

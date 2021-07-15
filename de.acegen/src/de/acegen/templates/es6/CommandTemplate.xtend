@@ -48,16 +48,16 @@ class CommandTemplate {
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+		import AsynchronousCommand from "../../ace/AsynchronousCommand";
 		«IF hasEventOutcome»
-			import Event from "../../../gen/ace/Event";
+			import Event from "../../ace/Event";
 		«ENDIF»
 		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../../gen/ace/TriggerAction";
+			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
 		import * as Utils from "../../ace/Utils";
 		import * as AppUtils from "../../../src/app/AppUtils";
-		«IF refs.size > 0»
+		«IF refs.size > 0 || aggregatedListeners.size > 0»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
@@ -109,6 +109,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
+								AppUtils.stateUpdated(AppState.getAppState());
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
@@ -158,14 +159,17 @@ class CommandTemplate {
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
+		import SynchronousCommand from "../../ace/SynchronousCommand";
 		«IF hasEventOutcome»
-			import Event from "../../../gen/ace/Event";
+			import Event from "../../ace/Event";
+		«ENDIF»
+		«IF aggregatedListeners.size > 0»
+			import * as AppUtils from "../../../src/app/AppUtils";
 		«ENDIF»
 		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../../gen/ace/TriggerAction";
+			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
-		«IF refs.size > 0»
+		«IF refs.size > 0 || aggregatedListeners.size > 0»
 			import * as AppState from "../../ace/AppState";
 		«ENDIF»
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
@@ -196,6 +200,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
+								AppUtils.stateUpdated(AppState.getAppState());
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
@@ -220,7 +225,6 @@ class CommandTemplate {
 										)
 									«ELSE»
 										new TriggerAction().publishWithDelay(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
 											new «triggerdAceOperation.aceOperation.actionName»(), 
 												{
 													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
@@ -273,8 +277,8 @@ class CommandTemplate {
 		    }
 		«ELSE»
 			execute(data) {
-				return new Promise((resolve, reject) => {
-					resolve(data);
+			    return new Promise((resolve, reject) => {
+				    resolve(data);
 			    });			    
 			}
 		«ENDIF»
@@ -378,7 +382,7 @@ class CommandTemplate {
 						data
 					}
 		        });
-			    this.execute(data);
+			    data = this.execute(data);
 				this.publishEvents(data);
 		    }
 		

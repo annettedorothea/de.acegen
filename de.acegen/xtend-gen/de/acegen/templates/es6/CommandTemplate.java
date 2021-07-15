@@ -68,12 +68,12 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AsynchronousCommand from \"../../../gen/ace/AsynchronousCommand\";");
+    _builder.append("import AsynchronousCommand from \"../../ace/AsynchronousCommand\";");
     _builder.newLine();
     {
       boolean _hasEventOutcome = this.hasEventOutcome(it);
       if (_hasEventOutcome) {
-        _builder.append("import Event from \"../../../gen/ace/Event\";");
+        _builder.append("import Event from \"../../ace/Event\";");
         _builder.newLine();
       }
     }
@@ -81,7 +81,7 @@ public class CommandTemplate {
       int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
+        _builder.append("import TriggerAction from \"../../ace/TriggerAction\";");
         _builder.newLine();
       }
     }
@@ -90,9 +90,7 @@ public class CommandTemplate {
     _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
     {
-      int _size_1 = it.getRefs().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
+      if (((it.getRefs().size() > 0) || (this._aceExtension.aggregatedListeners(it).size() > 0))) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
       }
@@ -275,9 +273,9 @@ public class CommandTemplate {
         }
         _builder.append(").then((");
         {
-          int _size_2 = it.getServerCall().getResponse().size();
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
+          int _size_1 = it.getServerCall().getResponse().size();
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
             _builder.append("response");
           }
         }
@@ -343,9 +341,9 @@ public class CommandTemplate {
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
-              int _size_3 = outcome_1.getListeners().size();
-              boolean _greaterThan_3 = (_size_3 > 0);
-              if (_greaterThan_3) {
+              int _size_2 = outcome_1.getListeners().size();
+              boolean _greaterThan_2 = (_size_2 > 0);
+              if (_greaterThan_2) {
                 _builder.append("\t\t");
                 _builder.append("\t");
                 _builder.append("new Event(\'");
@@ -356,6 +354,10 @@ public class CommandTemplate {
                 _builder.append(_eventName, "\t\t\t");
                 _builder.append("\').publish(data);");
                 _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+                _builder.newLine();
               }
             }
             {
@@ -553,27 +555,33 @@ public class CommandTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import SynchronousCommand from \"../../../gen/ace/SynchronousCommand\";");
+    _builder.append("import SynchronousCommand from \"../../ace/SynchronousCommand\";");
     _builder.newLine();
     {
       boolean _hasEventOutcome = this.hasEventOutcome(it);
       if (_hasEventOutcome) {
-        _builder.append("import Event from \"../../../gen/ace/Event\";");
+        _builder.append("import Event from \"../../ace/Event\";");
         _builder.newLine();
       }
     }
     {
-      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
+      int _size = this._aceExtension.aggregatedListeners(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        _builder.append("import TriggerAction from \"../../../gen/ace/TriggerAction\";");
+        _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
         _builder.newLine();
       }
     }
     {
-      int _size_1 = it.getRefs().size();
+      int _size_1 = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
+        _builder.append("import TriggerAction from \"../../ace/TriggerAction\";");
+        _builder.newLine();
+      }
+    }
+    {
+      if (((it.getRefs().size() > 0) || (this._aceExtension.aggregatedListeners(it).size() > 0))) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
       }
@@ -698,6 +706,10 @@ public class CommandTemplate {
                 _builder.append(_eventName, "\t\t\t");
                 _builder.append("\').publish(data);");
                 _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+                _builder.newLine();
               }
             }
             {
@@ -820,14 +832,6 @@ public class CommandTemplate {
                         _builder.append("new ");
                         String _actionName_4 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
                         _builder.append(_actionName_4, "\t\t\t\t");
-                        _builder.append("(), ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t\t");
-                        _builder.append("\t");
-                        _builder.append("\t");
-                        _builder.append("new ");
-                        String _actionName_5 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
-                        _builder.append(_actionName_5, "\t\t\t\t");
                         _builder.append("(), ");
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
@@ -1025,10 +1029,10 @@ public class CommandTemplate {
       } else {
         _builder.append("execute(data) {");
         _builder.newLine();
-        _builder.append("\t");
+        _builder.append("    ");
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
-        _builder.append("\t\t");
+        _builder.append("\t    ");
         _builder.append("resolve(data);");
         _builder.newLine();
         _builder.append("    ");
@@ -1281,7 +1285,7 @@ public class CommandTemplate {
     _builder.append("});");
     _builder.newLine();
     _builder.append("\t    ");
-    _builder.append("this.execute(data);");
+    _builder.append("data = this.execute(data);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.publishEvents(data);");

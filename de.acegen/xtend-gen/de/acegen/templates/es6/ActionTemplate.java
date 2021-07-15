@@ -81,6 +81,8 @@ public class ActionTemplate {
       if (_tripleNotEquals) {
         _builder.append("import * as AppState from \"../../ace/AppState\";");
         _builder.newLine();
+        _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
+        _builder.newLine();
       }
     }
     _builder.newLine();
@@ -154,6 +156,10 @@ public class ActionTemplate {
         _builder.append(": true});");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+        _builder.newLine();
+        _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
         _builder.append("\t");
@@ -171,6 +177,10 @@ public class ActionTemplate {
         _builder.append(_name_3, "\t\t");
         _builder.append(": false});");
         _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+        _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
         _builder.newLine();

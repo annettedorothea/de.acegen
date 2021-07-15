@@ -24,6 +24,7 @@ import java.util.List
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientOutcome
 import de.acegen.aceGen.HttpClient
+import de.acegen.aceGen.HttpClientStateFunction
 
 class AceExtension {
 	
@@ -49,6 +50,18 @@ class AceExtension {
 			for (triggerdAceOperation : outcome.triggerdAceOperations) {
 				if (!list.contains(triggerdAceOperation.aceOperation)) {
 					list.add(triggerdAceOperation.aceOperation);
+				}
+			}
+		}
+		return list;
+	}
+
+	def List<HttpClientStateFunction> aggregatedListeners(HttpClientAce it) {
+		var list = new ArrayList<HttpClientStateFunction>();
+		for (outcome : outcomes) {
+			for (listener : outcome.listeners) {
+				if (!list.contains(listener)) {
+					list.add(listener);
 				}
 			}
 		}

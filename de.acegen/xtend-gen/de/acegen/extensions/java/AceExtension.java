@@ -34,10 +34,6 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class AceExtension {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
-  
-  @Inject
-  @Extension
   private AttributeExtension _attributeExtension;
   
   public String abstractActionName(final HttpServerAce it) {
@@ -88,21 +84,6 @@ public class AceExtension {
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     _builder.append("Resource");
-    return _builder.toString();
-  }
-  
-  public String newAction(final HttpServerAce it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("final ");
-    String _actionNameWithPackage = this.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage);
-    _builder.append(" action = new ");
-    String _actionNameWithPackage_1 = this.actionNameWithPackage(it);
-    _builder.append(_actionNameWithPackage_1);
-    _builder.append("(");
-    CharSequence _newFromCommandData = this._modelExtension.newFromCommandData(it.getModel());
-    _builder.append(_newFromCommandData);
-    _builder.append(", DatabaseService.getDatabaseHandle());");
     return _builder.toString();
   }
   
