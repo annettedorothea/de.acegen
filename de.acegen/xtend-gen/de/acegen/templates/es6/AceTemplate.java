@@ -496,7 +496,7 @@ public class AceTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export async function getValueFromLocalStorage(key) {");
+    _builder.append("export function getValueFromLocalStorage(key) {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("return localStorage.getItem(key);");

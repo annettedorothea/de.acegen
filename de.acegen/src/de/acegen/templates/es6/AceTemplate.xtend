@@ -229,7 +229,7 @@ class AceTemplate {
 		    })
 		}
 		
-		export async function getValueFromLocalStorage(key) {
+		export function getValueFromLocalStorage(key) {
 		    return localStorage.getItem(key);
 		}
 		
