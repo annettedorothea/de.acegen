@@ -361,7 +361,7 @@ public class Action {
       }
     }
     {
-      if (((this._modelExtension.allNonDeterministicAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
+      if (((this._modelExtension.allSquishyAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
         String _dataImport = this._modelExtension.dataImport(it.getModel());
         _builder.append(_dataImport);
         _builder.newLineIfNotEmpty();
@@ -458,7 +458,7 @@ public class Action {
     _builder.append("\t");
     _builder.newLine();
     {
-      int _size = this._modelExtension.allNonDeterministicAttributes(it.getModel()).size();
+      int _size = this._modelExtension.allSquishyAttributes(it.getModel()).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("\t");
@@ -471,8 +471,8 @@ public class Action {
         _builder.append(" data) {");
         _builder.newLineIfNotEmpty();
         {
-          List<Attribute> _allNonDeterministicAttributes = this._modelExtension.allNonDeterministicAttributes(it.getModel());
-          for(final Attribute attribute_1 : _allNonDeterministicAttributes) {
+          List<Attribute> _allSquishyAttributes = this._modelExtension.allSquishyAttributes(it.getModel());
+          for(final Attribute attribute_1 : _allSquishyAttributes) {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("// ");
@@ -1035,7 +1035,7 @@ public class Action {
             _builder.append("LOG.warn(\"");
             String _name_5 = attribute.getName();
             _builder.append(_name_5, "\t\t\t");
-            _builder.append(" is declared as non-deterministnic and failed to parse {} from SquishyDataProvider.\", ");
+            _builder.append(" is declared as squishy and failed to parse {} from SquishyDataProvider.\", ");
             String _name_6 = attribute.getName();
             _builder.append(_name_6, "\t\t\t");
             _builder.append("Object);");
@@ -1052,7 +1052,7 @@ public class Action {
             _builder.append("LOG.warn(\"");
             String _name_7 = attribute.getName();
             _builder.append(_name_7, "\t\t");
-            _builder.append(" is declared as non-deterministnic but no value was found in SquishyDataProvider.\");");
+            _builder.append(" is declared as squishy but no value was found in SquishyDataProvider.\");");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("}");

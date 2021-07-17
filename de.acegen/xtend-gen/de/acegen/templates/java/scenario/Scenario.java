@@ -1216,8 +1216,8 @@ public class Scenario {
                 String _name = attributeDefinition.getAttribute().getName();
                 _builder.append(_name);
                 _builder.append("\",\t\"");
-                CharSequence _nonDeterministicValueFrom = this._attributeExtension.nonDeterministicValueFrom(attributeDefinition.getValue());
-                _builder.append(_nonDeterministicValueFrom);
+                CharSequence _squishyValueFrom = this._attributeExtension.squishyValueFrom(attributeDefinition.getValue());
+                _builder.append(_squishyValueFrom);
                 _builder.append("\");");
                 _builder.newLineIfNotEmpty();
               }

@@ -274,14 +274,14 @@ class AttributeExtension {
 		}
 	}
 
-	def dispatch CharSequence nonDeterministicValueFrom(
+	def dispatch CharSequence squishyValueFrom(
 		JsonObjectAce it) '''null'''
 
-	def dispatch CharSequence nonDeterministicValueFrom(String it) {
+	def dispatch CharSequence squishyValueFrom(String it) {
 		return valueFromString
 	}
 
-	def dispatch CharSequence nonDeterministicValueFrom(JsonValue it) {
+	def dispatch CharSequence squishyValueFrom(JsonValue it) {
 		if (it instanceof StringType) {
 			return '''«string.valueFromString»''';
 		} else if (it instanceof BooleanType) {

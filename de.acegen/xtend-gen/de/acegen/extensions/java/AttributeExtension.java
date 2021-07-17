@@ -914,17 +914,17 @@ public class AttributeExtension {
     return null;
   }
   
-  protected CharSequence _nonDeterministicValueFrom(final JsonObjectAce it) {
+  protected CharSequence _squishyValueFrom(final JsonObjectAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("null");
     return _builder;
   }
   
-  protected CharSequence _nonDeterministicValueFrom(final String it) {
+  protected CharSequence _squishyValueFrom(final String it) {
     return this.valueFromString(it);
   }
   
-  protected CharSequence _nonDeterministicValueFrom(final JsonValue it) {
+  protected CharSequence _squishyValueFrom(final JsonValue it) {
     if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
       CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
@@ -1080,13 +1080,13 @@ public class AttributeExtension {
     }
   }
   
-  public CharSequence nonDeterministicValueFrom(final Object it) {
+  public CharSequence squishyValueFrom(final Object it) {
     if (it instanceof JsonObjectAce) {
-      return _nonDeterministicValueFrom((JsonObjectAce)it);
+      return _squishyValueFrom((JsonObjectAce)it);
     } else if (it instanceof JsonValue) {
-      return _nonDeterministicValueFrom((JsonValue)it);
+      return _squishyValueFrom((JsonValue)it);
     } else if (it instanceof String) {
-      return _nonDeterministicValueFrom((String)it);
+      return _squishyValueFrom((String)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

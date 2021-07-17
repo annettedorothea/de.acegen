@@ -374,7 +374,7 @@ class Scenario {
 		«IF dataDefinition !== null && dataDefinition.data !== null && dataDefinition.data instanceof JsonObjectAce && (dataDefinition.data as JsonObjectAce).members !== null»
 			«FOR attributeDefinition: (dataDefinition.data as JsonObjectAce).members»
 				«IF attributeDefinition.attribute.squishy»
-					this.callSquishyDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.nonDeterministicValueFrom»");
+					this.callSquishyDataProviderPutValue(uuid, "«attributeDefinition.attribute.name»",	"«attributeDefinition.value.squishyValueFrom»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»

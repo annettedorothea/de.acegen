@@ -83,7 +83,7 @@ class ModelExtension {
 		return list;
 	}
 	
-	def List<Attribute> allNonDeterministicAttributes(Model it) {
+	def List<Attribute> allSquishyAttributes(Model it) {
 		var list = new ArrayList<Attribute>()
 		if (it === null) {
 			return list

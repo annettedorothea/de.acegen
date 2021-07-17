@@ -228,6 +228,9 @@ public class ActionTemplate {
     _builder.append("    ");
     _builder.append("initActionData(data) {");
     _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("return data;");
+    _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
@@ -547,7 +550,7 @@ public class ActionTemplate {
     _builder.append("this.preCall();");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("this.initActionData(data);");
+    _builder.append("data = this.initActionData(data);");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("let command = this.getCommand();");
@@ -635,7 +638,7 @@ public class ActionTemplate {
     _builder.append("applyAction(data) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("this.initActionData(data);");
+    _builder.append("data = this.initActionData(data);");
     _builder.newLine();
     _builder.append("\t    ");
     _builder.append("let command = this.getCommand();");

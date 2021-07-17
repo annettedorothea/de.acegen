@@ -278,7 +278,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
             for (final AttributeParamRef attributeRef_2 : _pathParams) {
               attr.add(attributeRef_2.getAttribute());
             }
-            attr.addAll(this._modelExtension.allNonDeterministicAttributes(scenario.getWhenBlock().getAction().getModel()));
+            attr.addAll(this._modelExtension.allSquishyAttributes(scenario.getWhenBlock().getAction().getModel()));
             return Scopes.scopeFor(attr);
           } else {
             if (isThen) {

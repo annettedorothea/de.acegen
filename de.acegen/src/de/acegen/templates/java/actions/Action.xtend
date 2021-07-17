@@ -162,7 +162,7 @@ class Action {
 		«IF getType.equals("GET")»
 			import de.acegen.PersistenceHandle;
 		«ENDIF»
-		«IF model.allNonDeterministicAttributes.size > 0 || getType.equals("GET")»
+		«IF model.allSquishyAttributes.size > 0 || getType.equals("GET")»
 			«getModel.dataImport»
 		«ENDIF»
 		
@@ -190,9 +190,9 @@ class Action {
 				}
 			«ENDIF»
 			
-			«IF model.allNonDeterministicAttributes.size > 0»
+			«IF model.allSquishyAttributes.size > 0»
 				public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
-					«FOR attribute: model.allNonDeterministicAttributes»
+					«FOR attribute: model.allSquishyAttributes»
 						// «attribute.name»
 					«ENDFOR»
 					return data;
@@ -418,10 +418,10 @@ class Action {
 							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
 							data.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as non-deterministnic and failed to parse {} from SquishyDataProvider.", «attribute.name»Object);
+							LOG.warn("«attribute.name» is declared as squishy and failed to parse {} from SquishyDataProvider.", «attribute.name»Object);
 						}
 					} else {
-						LOG.warn("«attribute.name» is declared as non-deterministnic but no value was found in SquishyDataProvider.");
+						LOG.warn("«attribute.name» is declared as squishy but no value was found in SquishyDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»

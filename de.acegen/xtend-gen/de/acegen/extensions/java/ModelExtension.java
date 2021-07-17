@@ -194,7 +194,7 @@ public class ModelExtension {
     return list;
   }
   
-  public List<Attribute> allNonDeterministicAttributes(final Model it) {
+  public List<Attribute> allSquishyAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     if ((it == null)) {
       return list;
