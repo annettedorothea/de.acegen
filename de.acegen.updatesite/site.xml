@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.acegen.feature_1.3.0.jar" id="de.acegen.feature" version="1.3.0"/>
+   <feature url="features/de.acegen.feature_1.4.0.jar" id="de.acegen.feature" version="1.4.0">
+      <category name="de.acegen"/>
+   </feature>
+   <category-def name="de.acegen" label="DSL &amp; Code Generator"/>
 </site>
