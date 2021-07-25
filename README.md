@@ -30,7 +30,7 @@ See [https://todo.acegen.de](https://todo.acegen.de) for a simple todoMVC exampl
 
 ## Installation
 
-You can get the latest Eclipse plugin from [https://www.acegen.de](https://www.acegen.de).
+You can get the latest Eclipse plugin from https://www.acegen.de.
 
 ## Usage
 
