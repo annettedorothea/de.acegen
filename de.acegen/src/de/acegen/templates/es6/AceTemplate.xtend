@@ -44,12 +44,44 @@ class AceTemplate {
 		import * as Utils from "../../gen/ace/Utils";
 		
 
+		export let settings;
+
+		function loadSettings() {
+		    return httpGet("settings.json").then((loadedSettings) => {
+		        settings = loadedSettings;
+		        if (!settings.clientVersion) {
+		            settings.clientVersion = "";
+		        }
+		        if (!settings.aceScenariosApiKey) {
+		            settings.aceScenariosApiKey = "";
+		        }
+		        if (!settings.aceScenariosBaseUrl) {
+		            settings.aceScenariosBaseUrl = "";
+		        }
+		        if (!settings.rootPath) {
+		            settings.rootPath = "";
+		        }
+		        if (!settings.timelineSize) {
+		            settings.timelineSize = 0;
+		        }
+				if (!settings.mode) {
+				    settings.mode = "live";
+				}
+		        if (settings.rootPath.startsWith("/")) {
+		            settings.rootPath = settings.rootPath.substring(1);
+		        }
+		        if (settings.rootPath.endsWith("/")) {
+		            settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);
+		        }
+		    });
+		}
+		
 		export function initEventListeners() {
 		    //EventListenerRegistration.init();
 		}
 		
 		export function startApp() {
-		    Utils.loadSettings().then(() => {
+		    loadSettings().then(() => {
 		    });
 		}
 		
@@ -178,12 +210,11 @@ class AceTemplate {
 	def generateApp(HttpClient httpClient) '''
 		«copyright»
 
-
-		import * as AppUtils from "../../src/app/AppUtils";
-		import * as AppState from "../ace/AppState";
-		import * as ACEController from "../ace/ACEController";
+		import * as AppUtils from "./app/AppUtils";
+		import * as AppState from "../gen/ace/AppState";
+		import * as ACEController from "../gen/ace/ACEController";
 		
-		export * from "../ace/Timeline";
+		export * from "../gen/ace/Timeline";
 
 		export function dumpAppState() {
 		    console.info(AppState.getAppState());
@@ -243,7 +274,6 @@ class AceTemplate {
 	«copyright»
 	
 	import * as AppUtils from "../../src/app/AppUtils";
-	import * as Utils from "./Utils";
 	import * as AppState from "./AppState";
 	import Event from "./Event";
 	
@@ -269,9 +299,9 @@ class AceTemplate {
 	}
 	
 	export function addItemToTimeLine(item) {
-		if (Utils.settings && Utils.settings.timelineSize > 0) {
+		if (AppUtils.settings && AppUtils.settings.timelineSize > 0) {
 		    timeline.push(AppUtils.deepCopy(item));
-			if (timeline.length > Utils.settings.timelineSize) {
+			if (timeline.length > AppUtils.settings.timelineSize) {
 			    timeline.shift();
 			    while (timeline.length > 0 && timeline.length > 0 && !timeline[0].appState) {
 			        timeline.shift();
@@ -393,40 +423,8 @@ class AceTemplate {
 		import * as AppUtils from "../../src/app/AppUtils";
 		import * as ACEController from "./ACEController";
 		
-		export let settings;
-		
 		function getServerInfo() {
-		    return AppUtils.httpGet(settings.rootPath + '/server/info');
-		}
-		
-		export function loadSettings() {
-		    return AppUtils.httpGet("settings.json").then((loadedSettings) => {
-		        settings = loadedSettings;
-		        if (!settings.clientVersion) {
-		            settings.clientVersion = "";
-		        }
-		        if (!settings.aceScenariosApiKey) {
-		            settings.aceScenariosApiKey = "";
-		        }
-		        if (!settings.aceScenariosBaseUrl) {
-		            settings.aceScenariosBaseUrl = "";
-		        }
-		        if (!settings.rootPath) {
-		            settings.rootPath = "";
-		        }
-		        if (!settings.timelineSize) {
-		            settings.timelineSize = 0;
-		        }
-				if (!settings.mode) {
-				    settings.mode = "live";
-				}
-		        if (settings.rootPath.startsWith("/")) {
-		            settings.rootPath = settings.rootPath.substring(1);
-		        }
-		        if (settings.rootPath.endsWith("/")) {
-		            settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);
-		        }
-		    });
+		    return AppUtils.httpGet(AppUtils.settings.rootPath + '/server/info');
 		}
 		
 		export function saveTimeline(description, creator) {
@@ -437,12 +435,12 @@ class AceTemplate {
 		            description,
 		            timeline: JSON.stringify(ACEController.timeline),
 		            creator,
-		            clientVersion: settings.clientVersion,
+		            clientVersion: AppUtils.settings.clientVersion,
 		            device: browser.name + " " + browser.version,
-		            apiKey: settings.aceScenariosApiKey,
+		            apiKey: AppUtils.settings.aceScenariosApiKey,
 		            serverVersion: serverInfo.serverVersion
 		        };
-		        return AppUtils.httpPost(settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
+		        return AppUtils.httpPost(AppUtils.settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
 		            return new Promise((resolve) => {
 		                resolve(uuid);
 		            });
@@ -451,7 +449,7 @@ class AceTemplate {
 		}
 		
 		export function loadTimeline(id) {
-		    return AppUtils.httpGet(settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+		    return AppUtils.httpGet(AppUtils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${AppUtils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
 		}
 		
 		function getBrowserInfo() {
@@ -582,30 +580,46 @@ class AceTemplate {
 		
 	'''
 	
+	private def stateObjectCreation(ClientAttribute it) '''
+		«IF eContainer !== null && eContainer instanceof GroupedClientAttribute»
+			if («elementPath» && !«elementPath».is«name.toFirstUpper») {
+				return;
+			}
+			if (!«elementPath») {
+				«elementPath» = {
+					is«name.toFirstUpper» : true
+				};
+			}
+		«ELSE»
+			if (!«elementPath») {
+				«elementPath» = {};
+			}
+		«ENDIF»
+	'''
+	
 	private def mergeStateFunction(SingleClientAttribute it, HttpClient httpClient) '''
-		«IF attributes !== null && attributes.length > 0 && !isHash && !isStorage && !isList» 
+		«IF isHash || isStorage || isList»
+		«ELSEIF attributes !== null && attributes.length > 0» 
 			export function merge_«functionName»(eventData) {
 				«FOR attr : allParentAttributes»
-					if (!«attr.elementPath») {
-						«attr.elementPath» = {};
-					}
+					«attr.stateObjectCreation»
 				«ENDFOR»
-				if (!«elementPath») {
-					«IF eContainer instanceof GroupedClientAttribute»
-						«elementPath» = {
-							is«name.toFirstUpper» : true
-						};
-					«ELSE»
-						«elementPath» = {};
-					«ENDIF»
-				}
+				«stateObjectCreation»
 				«FOR attribute : attributes»
 					«IF attribute instanceof SingleClientAttribute»
-						if (eventData.«attribute.name» !== undefined) {
-							«attribute.elementPath» = eventData.«attribute.getName»;
+						if (eventData.«name» && eventData.«name».«attribute.name» !== undefined) {
+							«attribute.elementPath» = eventData.«name».«attribute.getName»;
 						}
 					«ENDIF»
 				«ENDFOR»
+			}
+			
+		«ELSE»
+			export function merge_«functionName»(eventData) {
+				«FOR attr : allParentAttributes»
+					«attr.stateObjectCreation»
+				«ENDFOR»
+				«elementPath» = eventData.«getName»;
 			}
 			
 		«ENDIF»

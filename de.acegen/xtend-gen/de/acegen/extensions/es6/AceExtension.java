@@ -209,6 +209,6 @@ public class AceExtension {
         urlWithPathParam = (_urlWithPathParam_1 + _builder);
       }
     }
-    return ("${Utils.settings.rootPath}" + urlWithPathParam);
+    return ("${AppUtils.settings.rootPath}" + urlWithPathParam);
   }
 }

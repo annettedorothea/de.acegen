@@ -428,7 +428,7 @@ public class ActionTemplate {
     _builder.append("});");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("if (Utils.settings.mode === \"dev\") {");
+    _builder.append("if (AppUtils.settings.mode === \"dev\") {");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("let squishyValues = JSON.parse(localStorage.getItem(\"squishyValues\"));");
@@ -501,6 +501,8 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("    ");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

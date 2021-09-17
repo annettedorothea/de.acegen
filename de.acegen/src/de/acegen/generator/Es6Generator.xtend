@@ -88,7 +88,7 @@ class Es6Generator {
 			fsa.generateFile('actionIds/' + httpClient.getName + '/' + httpClient.actionIdName + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
 				actionTemplate.generateActionIds(httpClient));
 		}
-		fsa.generateFile('app/App.js', IFileSystemAccess.DEFAULT_OUTPUT,
+		fsa.generateFile('index.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateApp(httpClient));
 		fsa.generateFile('app/AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppUtilsStub());

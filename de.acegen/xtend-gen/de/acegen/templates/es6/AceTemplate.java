@@ -54,6 +54,95 @@ public class AceTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.newLine();
+    _builder.append("export let settings;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("function loadSettings() {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("return httpGet(\"settings.json\").then((loadedSettings) => {");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("settings = loadedSettings;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!settings.clientVersion) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.clientVersion = \"\";");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!settings.aceScenariosApiKey) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.aceScenariosApiKey = \"\";");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!settings.aceScenariosBaseUrl) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.aceScenariosBaseUrl = \"\";");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!settings.rootPath) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.rootPath = \"\";");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!settings.timelineSize) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.timelineSize = 0;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (!settings.mode) {");
+    _builder.newLine();
+    _builder.append("\t\t    ");
+    _builder.append("settings.mode = \"live\";");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (settings.rootPath.startsWith(\"/\")) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.rootPath = settings.rootPath.substring(1);");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (settings.rootPath.endsWith(\"/\")) {");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export function initEventListeners() {");
     _builder.newLine();
     _builder.append("    ");
@@ -65,7 +154,7 @@ public class AceTemplate {
     _builder.append("export function startApp() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("Utils.loadSettings().then(() => {");
+    _builder.append("loadSettings().then(() => {");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("});");
@@ -378,15 +467,14 @@ public class AceTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("import * as AppUtils from \"./app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppState from \"../gen/ace/AppState\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../ace/AppState\";");
-    _builder.newLine();
-    _builder.append("import * as ACEController from \"../ace/ACEController\";");
+    _builder.append("import * as ACEController from \"../gen/ace/ACEController\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export * from \"../ace/Timeline\";");
+    _builder.append("export * from \"../gen/ace/Timeline\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export function dumpAppState() {");
@@ -521,8 +609,6 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import * as Utils from \"./Utils\";");
-    _builder.newLine();
     _builder.append("import * as AppState from \"./AppState\";");
     _builder.newLine();
     _builder.append("import Event from \"./Event\";");
@@ -582,13 +668,13 @@ public class AceTemplate {
     _builder.append("export function addItemToTimeLine(item) {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("if (Utils.settings && Utils.settings.timelineSize > 0) {");
+    _builder.append("if (AppUtils.settings && AppUtils.settings.timelineSize > 0) {");
     _builder.newLine();
     _builder.append("\t    ");
     _builder.append("timeline.push(AppUtils.deepCopy(item));");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (timeline.length > Utils.settings.timelineSize) {");
+    _builder.append("if (timeline.length > AppUtils.settings.timelineSize) {");
     _builder.newLine();
     _builder.append("\t\t    ");
     _builder.append("timeline.shift();");
@@ -880,99 +966,10 @@ public class AceTemplate {
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("export let settings;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("function getServerInfo() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return AppUtils.httpGet(settings.rootPath + \'/server/info\');");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("export function loadSettings() {");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("return AppUtils.httpGet(\"settings.json\").then((loadedSettings) => {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("settings = loadedSettings;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!settings.clientVersion) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.clientVersion = \"\";");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!settings.aceScenariosApiKey) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.aceScenariosApiKey = \"\";");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!settings.aceScenariosBaseUrl) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.aceScenariosBaseUrl = \"\";");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!settings.rootPath) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.rootPath = \"\";");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (!settings.timelineSize) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.timelineSize = 0;");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (!settings.mode) {");
-    _builder.newLine();
-    _builder.append("\t\t    ");
-    _builder.append("settings.mode = \"live\";");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (settings.rootPath.startsWith(\"/\")) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.rootPath = settings.rootPath.substring(1);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("if (settings.rootPath.endsWith(\"/\")) {");
-    _builder.newLine();
-    _builder.append("            ");
-    _builder.append("settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("});");
+    _builder.append("return AppUtils.httpGet(AppUtils.settings.rootPath + \'/server/info\');");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -1001,13 +998,13 @@ public class AceTemplate {
     _builder.append("creator,");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("clientVersion: settings.clientVersion,");
+    _builder.append("clientVersion: AppUtils.settings.clientVersion,");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("device: browser.name + \" \" + browser.version,");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("apiKey: settings.aceScenariosApiKey,");
+    _builder.append("apiKey: AppUtils.settings.aceScenariosApiKey,");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("serverVersion: serverInfo.serverVersion");
@@ -1016,7 +1013,7 @@ public class AceTemplate {
     _builder.append("};");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("return AppUtils.httpPost(settings.aceScenariosBaseUrl + \'api/client-timeline/create\', uuid, false, data).then(() => {");
+    _builder.append("return AppUtils.httpPost(AppUtils.settings.aceScenariosBaseUrl + \'api/client-timeline/create\', uuid, false, data).then(() => {");
     _builder.newLine();
     _builder.append("            ");
     _builder.append("return new Promise((resolve) => {");
@@ -1039,7 +1036,7 @@ public class AceTemplate {
     _builder.append("export function loadTimeline(id) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return AppUtils.httpGet(settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);");
+    _builder.append("return AppUtils.httpGet(AppUtils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${AppUtils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -1466,100 +1463,155 @@ public class AceTemplate {
     return _builder;
   }
   
+  private CharSequence stateObjectCreation(final ClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((it.eContainer() != null) && (it.eContainer() instanceof GroupedClientAttribute))) {
+        _builder.append("if (");
+        String _elementPath = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath);
+        _builder.append(" && !");
+        String _elementPath_1 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_1);
+        _builder.append(".is");
+        String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+        _builder.append(_firstUpper);
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("return;");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("if (!");
+        String _elementPath_2 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_2);
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _elementPath_3 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_3, "\t");
+        _builder.append(" = {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("is");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
+        _builder.append(_firstUpper_1, "\t\t");
+        _builder.append(" : true");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("};");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+      } else {
+        _builder.append("if (!");
+        String _elementPath_4 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_4);
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        String _elementPath_5 = this._es6Extension.elementPath(it);
+        _builder.append(_elementPath_5, "\t");
+        _builder.append(" = {};");
+        _builder.newLineIfNotEmpty();
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    return _builder;
+  }
+  
   private CharSequence mergeStateFunction(final SingleClientAttribute it, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if ((((((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0)) && (!it.isHash())) && (!it.isStorage())) && (!it.isList()))) {
-        _builder.append("export function merge_");
-        String _functionName = this._es6Extension.functionName(it);
-        _builder.append(_functionName);
-        _builder.append("(eventData) {");
-        _builder.newLineIfNotEmpty();
-        {
-          List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
-          for(final ClientAttribute attr : _allParentAttributes) {
-            _builder.append("\t");
-            _builder.append("if (!");
-            String _elementPath = this._es6Extension.elementPath(attr);
-            _builder.append(_elementPath, "\t");
-            _builder.append(") {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t");
-            String _elementPath_1 = this._es6Extension.elementPath(attr);
-            _builder.append(_elementPath_1, "\t\t");
-            _builder.append(" = {};");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("}");
-            _builder.newLine();
+      if (((it.isHash() || it.isStorage()) || it.isList())) {
+      } else {
+        if (((it.getAttributes() != null) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0))) {
+          _builder.append("export function merge_");
+          String _functionName = this._es6Extension.functionName(it);
+          _builder.append(_functionName);
+          _builder.append("(eventData) {");
+          _builder.newLineIfNotEmpty();
+          {
+            List<ClientAttribute> _allParentAttributes = this._es6Extension.allParentAttributes(it);
+            for(final ClientAttribute attr : _allParentAttributes) {
+              _builder.append("\t");
+              CharSequence _stateObjectCreation = this.stateObjectCreation(attr);
+              _builder.append(_stateObjectCreation, "\t");
+              _builder.newLineIfNotEmpty();
+            }
           }
-        }
-        _builder.append("\t");
-        _builder.append("if (!");
-        String _elementPath_2 = this._es6Extension.elementPath(it);
-        _builder.append(_elementPath_2, "\t");
-        _builder.append(") {");
-        _builder.newLineIfNotEmpty();
-        {
-          EObject _eContainer = it.eContainer();
-          if ((_eContainer instanceof GroupedClientAttribute)) {
-            _builder.append("\t\t");
-            String _elementPath_3 = this._es6Extension.elementPath(it);
-            _builder.append(_elementPath_3, "\t\t");
-            _builder.append(" = {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("is");
-            String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-            _builder.append(_firstUpper, "\t\t\t");
-            _builder.append(" : true");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("};");
-            _builder.newLine();
-          } else {
-            _builder.append("\t\t");
-            String _elementPath_4 = this._es6Extension.elementPath(it);
-            _builder.append(_elementPath_4, "\t\t");
-            _builder.append(" = {};");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
-        {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          for(final ClientAttribute attribute : _attributes) {
-            {
-              if ((attribute instanceof SingleClientAttribute)) {
-                _builder.append("\t");
-                _builder.append("if (eventData.");
-                String _name = ((SingleClientAttribute)attribute).getName();
-                _builder.append(_name, "\t");
-                _builder.append(" !== undefined) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("\t");
-                String _elementPath_5 = this._es6Extension.elementPath(attribute);
-                _builder.append(_elementPath_5, "\t\t");
-                _builder.append(" = eventData.");
-                String _name_1 = ((SingleClientAttribute)attribute).getName();
-                _builder.append(_name_1, "\t\t");
-                _builder.append(";");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("}");
-                _builder.newLine();
+          _builder.append("\t");
+          CharSequence _stateObjectCreation_1 = this.stateObjectCreation(it);
+          _builder.append(_stateObjectCreation_1, "\t");
+          _builder.newLineIfNotEmpty();
+          {
+            EList<ClientAttribute> _attributes = it.getAttributes();
+            for(final ClientAttribute attribute : _attributes) {
+              {
+                if ((attribute instanceof SingleClientAttribute)) {
+                  _builder.append("\t");
+                  _builder.append("if (eventData.");
+                  String _name = it.getName();
+                  _builder.append(_name, "\t");
+                  _builder.append(" && eventData.");
+                  String _name_1 = it.getName();
+                  _builder.append(_name_1, "\t");
+                  _builder.append(".");
+                  String _name_2 = ((SingleClientAttribute)attribute).getName();
+                  _builder.append(_name_2, "\t");
+                  _builder.append(" !== undefined) {");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t");
+                  String _elementPath = this._es6Extension.elementPath(attribute);
+                  _builder.append(_elementPath, "\t\t");
+                  _builder.append(" = eventData.");
+                  String _name_3 = it.getName();
+                  _builder.append(_name_3, "\t\t");
+                  _builder.append(".");
+                  String _name_4 = ((SingleClientAttribute)attribute).getName();
+                  _builder.append(_name_4, "\t\t");
+                  _builder.append(";");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("}");
+                  _builder.newLine();
+                }
               }
             }
           }
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+        } else {
+          _builder.append("export function merge_");
+          String _functionName_1 = this._es6Extension.functionName(it);
+          _builder.append(_functionName_1);
+          _builder.append("(eventData) {");
+          _builder.newLineIfNotEmpty();
+          {
+            List<ClientAttribute> _allParentAttributes_1 = this._es6Extension.allParentAttributes(it);
+            for(final ClientAttribute attr_1 : _allParentAttributes_1) {
+              _builder.append("\t");
+              CharSequence _stateObjectCreation_2 = this.stateObjectCreation(attr_1);
+              _builder.append(_stateObjectCreation_2, "\t");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          _builder.append("\t");
+          String _elementPath_1 = this._es6Extension.elementPath(it);
+          _builder.append(_elementPath_1, "\t");
+          _builder.append(" = eventData.");
+          String _name_5 = it.getName();
+          _builder.append(_name_5, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
         }
-        _builder.append("}");
-        _builder.newLine();
-        _builder.newLine();
       }
     }
     return _builder;

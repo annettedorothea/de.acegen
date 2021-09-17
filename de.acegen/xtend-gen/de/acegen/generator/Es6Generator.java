@@ -135,7 +135,7 @@ public class Es6Generator {
       fsa.generateFile(_plus_5, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
         this.actionTemplate.generateActionIds(httpClient));
     }
-    fsa.generateFile("app/App.js", IFileSystemAccess.DEFAULT_OUTPUT, 
+    fsa.generateFile("index.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateApp(httpClient));
     fsa.generateFile("app/AppUtils.js", ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
       this.aceTemplate.generateAppUtilsStub());

@@ -94,7 +94,7 @@ class AceExtension {
 				urlWithPathParam += '''${data.«urlElements.get(i)»}'''
 			}
 		}
-		return "${Utils.settings.rootPath}" + urlWithPathParam;
+		return "${AppUtils.settings.rootPath}" + urlWithPathParam;
 	}
 
 }
