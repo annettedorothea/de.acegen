@@ -57,9 +57,6 @@ class CommandTemplate {
 		«ENDIF»
 		import * as Utils from "../../ace/Utils";
 		import * as AppUtils from "../../../src/app/AppUtils";
-		«IF refs.size > 0 || aggregatedListeners.size > 0»
-			import * as AppState from "../../ace/AppState";
-		«ENDIF»
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
@@ -71,7 +68,7 @@ class CommandTemplate {
 		    
 		    initCommandData(data) {
 		        «FOR ref : refs»
-		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "")»;
 		        «ENDFOR»
 		        data.outcomes = [];
 		    }
@@ -183,7 +180,7 @@ class CommandTemplate {
 		
 		    initCommandData(data) {
 		        «FOR ref : refs»
-		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = AppState.get_«ref.stateElement.functionName»();
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "")»;
 		        «ENDFOR»
 		        data.outcomes = [];
 		    }

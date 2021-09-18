@@ -90,12 +90,6 @@ public class CommandTemplate {
     _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
     {
-      if (((it.getRefs().size() > 0) || (this._aceExtension.aggregatedListeners(it).size() > 0))) {
-        _builder.append("import * as AppState from \"../../ace/AppState\";");
-        _builder.newLine();
-      }
-    }
-    {
       List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
       for(final HttpClientAce aceOperation : _aggregatedTriggeredAceOperations) {
         _builder.append("import ");
@@ -152,10 +146,10 @@ public class CommandTemplate {
           _xifexpression = ref.getStateElement().getName();
         }
         _builder.append(_xifexpression, "        ");
-        _builder.append(" = AppState.get_");
-        String _functionName = this._es6Extension.functionName(ref.getStateElement());
-        _builder.append(_functionName, "        ");
-        _builder.append("();");
+        _builder.append(" = ");
+        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "");
+        _builder.append(_stateFunctionCall, "        ");
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -642,10 +636,10 @@ public class CommandTemplate {
           _xifexpression = ref.getStateElement().getName();
         }
         _builder.append(_xifexpression, "        ");
-        _builder.append(" = AppState.get_");
-        String _functionName = this._es6Extension.functionName(ref.getStateElement());
-        _builder.append(_functionName, "        ");
-        _builder.append("();");
+        _builder.append(" = ");
+        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "");
+        _builder.append(_stateFunctionCall, "        ");
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
       }
     }

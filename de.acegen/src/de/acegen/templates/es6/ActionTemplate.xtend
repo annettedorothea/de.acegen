@@ -44,7 +44,6 @@ class ActionTemplate {
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»
 		«IF getLoadingFlag !== null»
-			import * as AppState from "../../ace/AppState";
 			import * as AppUtils from "../../../src/app/AppUtils";
 		«ENDIF»
 		
@@ -65,13 +64,13 @@ class ActionTemplate {
 		
 			«IF getLoadingFlag !== null»
 				preCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: true});
-					AppUtils.stateUpdated(AppState.getAppState());
+					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: true}''')»
+					AppUtils.stateUpdated();
 				}
 				
 				postCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: false});
-					AppUtils.stateUpdated(AppState.getAppState());
+					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: false}''')»
+					AppUtils.stateUpdated();
 				}
 			«ENDIF»
 		

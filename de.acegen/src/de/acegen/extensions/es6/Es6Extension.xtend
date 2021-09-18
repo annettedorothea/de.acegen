@@ -45,8 +45,32 @@ class Es6Extension {
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
 	def String appStateFunction(
-		HttpClientStateFunction it) '''AppState.«getStateFunctionType»_«stateElement.functionName»'''
-
+		HttpClientStateFunction it) '''(data) => «stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»'''
+		
+	def stateFunctionCall(SingleClientAttribute it, String functionName, String data) '''AppUtils.«stateFunctionName(functionName)»(«IF functionName !== "get"»«data», «ENDIF»[«FOR param: paramList SEPARATOR ", "»«param»«ENDFOR»]«IF attributes.size > 0 && functionName === "merge"», [«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»)'''
+	
+	def List<String> paramList(SingleClientAttribute it) {
+		var paramList = new ArrayList<String>()
+		for (item : allParentAttributesInclusiveItem) {
+			if (item.eContainer instanceof GroupedClientAttribute) {
+				paramList.add('''["«(item.eContainer as GroupedClientAttribute).name»", "«item.name»"]''')
+			} else {
+				paramList.add('''"«item.name»"''')
+			}
+		}
+		return paramList
+	}
+	
+	def String stateFunctionName(SingleClientAttribute it, String functionName) {
+		if (isHash) {
+			return functionName + "Hash"
+		}
+		if (isStorage) {
+			return functionName + "Storage"
+		}
+		return functionName
+	}
+		
 	def String functionName(SingleClientAttribute it) '''«functionNameRec("")»'''
 
 	def String functionNameRec(ClientAttribute it, String suffix) {
@@ -134,6 +158,20 @@ class Es6Extension {
 		return null;
 	}
 
+	def List<ClientAttribute> allParentAttributesInclusiveItem(ClientAttribute it) {
+		var attributes = new ArrayList<ClientAttribute>();
+		attributes.add(it);
+		var parent = eContainer;
+		while (parent !== null) {
+			val grandParent = parent.eContainer
+			if (parent instanceof SingleClientAttribute) {
+				attributes.add(0, parent as SingleClientAttribute)
+			}
+			parent = grandParent;
+		}
+		return attributes
+	}
+	
 	def List<ClientAttribute> allParentAttributes(ClientAttribute it) {
 		var attributes = new ArrayList<ClientAttribute>();
 		var parent = eContainer;

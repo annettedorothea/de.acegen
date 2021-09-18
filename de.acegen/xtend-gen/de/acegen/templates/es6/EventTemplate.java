@@ -49,7 +49,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import * as ACEController from \"../ace/ACEController\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../ace/AppState\";");
+    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class EventListenerRegistration");

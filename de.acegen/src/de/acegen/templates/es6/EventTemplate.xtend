@@ -40,7 +40,7 @@ class EventTemplate {
 		«copyright»
 
 		import * as ACEController from "../ace/ACEController";
-		import * as AppState from "../ace/AppState";
+		import * as AppUtils from "../../src/app/AppUtils";
 		
 		export default class EventListenerRegistration«projectName» {
 		

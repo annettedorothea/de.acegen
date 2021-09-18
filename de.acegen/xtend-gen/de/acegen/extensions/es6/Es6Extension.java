@@ -62,13 +62,105 @@ public class Es6Extension {
   
   public String appStateFunction(final HttpClientStateFunction it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("AppState.");
+    _builder.append("(data) => ");
+    SingleClientAttribute _stateElement = it.getStateElement();
+    StringConcatenation _builder_1 = new StringConcatenation();
     String _stateFunctionType = it.getStateFunctionType();
-    _builder.append(_stateFunctionType);
-    _builder.append("_");
-    String _functionName = this.functionName(it.getStateElement());
-    _builder.append(_functionName);
+    _builder_1.append(_stateFunctionType);
+    CharSequence _stateFunctionCall = this.stateFunctionCall(_stateElement, _builder_1.toString(), "data");
+    _builder.append(_stateFunctionCall);
     return _builder.toString();
+  }
+  
+  public CharSequence stateFunctionCall(final SingleClientAttribute it, final String functionName, final String data) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("AppUtils.");
+    String _stateFunctionName = this.stateFunctionName(it, functionName);
+    _builder.append(_stateFunctionName);
+    _builder.append("(");
+    {
+      if ((functionName != "get")) {
+        _builder.append(data);
+        _builder.append(", ");
+      }
+    }
+    _builder.append("[");
+    {
+      List<String> _paramList = this.paramList(it);
+      boolean _hasElements = false;
+      for(final String param : _paramList) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        _builder.append(param);
+      }
+    }
+    _builder.append("]");
+    {
+      if (((it.getAttributes().size() > 0) && (functionName == "merge"))) {
+        _builder.append(", [");
+        {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          boolean _hasElements_1 = false;
+          for(final ClientAttribute attribute : _attributes) {
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            _builder.append("\"");
+            String _name = attribute.getName();
+            _builder.append(_name);
+            _builder.append("\"");
+          }
+        }
+        _builder.append("]");
+      }
+    }
+    _builder.append(")");
+    return _builder;
+  }
+  
+  public List<String> paramList(final SingleClientAttribute it) {
+    ArrayList<String> paramList = new ArrayList<String>();
+    List<ClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
+    for (final ClientAttribute item : _allParentAttributesInclusiveItem) {
+      EObject _eContainer = item.eContainer();
+      if ((_eContainer instanceof GroupedClientAttribute)) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("[\"");
+        EObject _eContainer_1 = item.eContainer();
+        String _name = ((GroupedClientAttribute) _eContainer_1).getName();
+        _builder.append(_name);
+        _builder.append("\", \"");
+        String _name_1 = item.getName();
+        _builder.append(_name_1);
+        _builder.append("\"]");
+        paramList.add(_builder.toString());
+      } else {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\"");
+        String _name_2 = item.getName();
+        _builder_1.append(_name_2);
+        _builder_1.append("\"");
+        paramList.add(_builder_1.toString());
+      }
+    }
+    return paramList;
+  }
+  
+  public String stateFunctionName(final SingleClientAttribute it, final String functionName) {
+    boolean _isHash = it.isHash();
+    if (_isHash) {
+      return (functionName + "Hash");
+    }
+    boolean _isStorage = it.isStorage();
+    if (_isStorage) {
+      return (functionName + "Storage");
+    }
+    return functionName;
   }
   
   public String functionName(final SingleClientAttribute it) {
@@ -235,6 +327,22 @@ public class Es6Extension {
       }
     }
     return null;
+  }
+  
+  public List<ClientAttribute> allParentAttributesInclusiveItem(final ClientAttribute it) {
+    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
+    attributes.add(it);
+    EObject parent = it.eContainer();
+    while ((parent != null)) {
+      {
+        final EObject grandParent = parent.eContainer();
+        if ((parent instanceof SingleClientAttribute)) {
+          attributes.add(0, ((SingleClientAttribute) parent));
+        }
+        parent = grandParent;
+      }
+    }
+    return attributes;
   }
   
   public List<ClientAttribute> allParentAttributes(final ClientAttribute it) {
