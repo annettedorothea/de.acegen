@@ -160,9 +160,6 @@ class CommandTemplate {
 		«IF hasEventOutcome»
 			import Event from "../../ace/Event";
 		«ENDIF»
-		«IF aggregatedListeners.size > 0»
-			import * as AppUtils from "../../../src/app/AppUtils";
-		«ENDIF»
 		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»

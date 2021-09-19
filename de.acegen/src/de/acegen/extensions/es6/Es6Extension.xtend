@@ -25,7 +25,6 @@ import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.GroupedClientAttribute
 import de.acegen.aceGen.HttpClient
-import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientStateFunction
 import de.acegen.aceGen.JsonArrayClient
 import de.acegen.aceGen.JsonObjectClient
@@ -35,9 +34,9 @@ import de.acegen.aceGen.NullType
 import de.acegen.aceGen.PrimitiveValue
 import de.acegen.aceGen.SingleClientAttribute
 import de.acegen.aceGen.StringType
+import de.acegen.aceGen.UndefinedType
 import java.util.ArrayList
 import java.util.List
-import de.acegen.aceGen.UndefinedType
 
 class Es6Extension {
 	def String packageFolder(HttpClient it) '''«getName.replace('.', '/')»'''
@@ -62,7 +61,7 @@ AppUtils.«stateFunctionName(functionName)»(
 	[«IF eContainer instanceof GroupedClientAttribute»"group", «ENDIF»«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
 )'''
 	
-	def List<String> paramList(SingleClientAttribute it) {
+	private def List<String> paramList(SingleClientAttribute it) {
 		var paramList = new ArrayList<String>()
 		for (item : allParentAttributesInclusiveItem) {
 			if (item.eContainer instanceof GroupedClientAttribute) {
@@ -74,9 +73,9 @@ AppUtils.«stateFunctionName(functionName)»(
 		return paramList
 	}
 	
-	def String path(List<String> paramList) '''[«FOR param: paramList SEPARATOR ", "»«param»«ENDFOR»]'''
+	private def String path(List<String> paramList) '''[«FOR param: paramList SEPARATOR ", "»«param»«ENDFOR»]'''
 	
-	def List<String> groupVerifications(SingleClientAttribute it, String functionName) {
+	private def List<String> groupVerifications(SingleClientAttribute it, String functionName) {
 		var verifications = new ArrayList<String>()
 		val parentAttributes = functionName == "set" ? allParentAttributesExclusiveItem : allParentAttributesInclusiveItem;
 		for (item : parentAttributes) {
@@ -87,7 +86,7 @@ AppUtils.«stateFunctionName(functionName)»(
 		return verifications
 	}
 	
-	def String stateFunctionName(SingleClientAttribute it, String functionName) {
+	private def String stateFunctionName(SingleClientAttribute it, String functionName) {
 		if (isHash) {
 			return functionName + "Hash"
 		}
@@ -97,94 +96,7 @@ AppUtils.«stateFunctionName(functionName)»(
 		return functionName
 	}
 		
-	def String functionName(SingleClientAttribute it) '''«functionNameRec("")»'''
-
-	def String functionNameRec(ClientAttribute it, String suffix) {
-		val parent = findNextSingleClientAttributeParent
-		if (parent !== null) {
-			return parent.functionNameRec(name) + '''«IF suffix.length > 0»_«suffix»«ENDIF»'''
-		} else {
-			return getName + '''«IF suffix.length > 0»_«suffix»«ENDIF»''';
-		}
-	}
-
-	def String elementPath(ClientAttribute it) '''appState.«elementPathRec("")»'''
-
-	def String elementPathRec(ClientAttribute attr, String suffix) {
-		var clientAttribute = attr
-		if (clientAttribute.eContainer instanceof GroupedClientAttribute) {
-			clientAttribute = attr.eContainer as ClientAttribute
-		}
-		val parent = clientAttribute.findNextClientAttributeParent
-		if (parent !== null) {
-			return parent.elementPathRec(clientAttribute.name) + '''«IF suffix.length > 0».«suffix»«ENDIF»'''
-		} else {
-			return clientAttribute.getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
-		}
-	}
-
-	def SingleClientAttribute findNextSingleClientAttributeParent(ClientAttribute it) {
-		var parent = eContainer;
-		while (parent !== null) {
-			if (parent instanceof SingleClientAttribute) {
-				return parent as SingleClientAttribute
-			}
-			parent = parent.eContainer;
-		}
-		return null;
-	}
-
-	def SingleClientAttribute findNextNonListSingleClientAttributeParent(ClientAttribute it) {
-		var parentList = new ArrayList();
-		if (it instanceof SingleClientAttribute) {
-			val me = it as SingleClientAttribute
-			if (me.attributes.size > 0) {
-				parentList.add(me)
-			}
-		}
-		var parent = eContainer;
-		while (parent !== null) {
-			if (parent instanceof SingleClientAttribute) {
-				parentList.add(parent as SingleClientAttribute)
-			}
-			parent = parent.eContainer;
-		}
-		if (parentList.size === 0) {
-			return null;
-		}
-		var i = parentList.size-1;
-		while(i >= 0) {
-			if (parentList.get(i).isList) {
-				if (i+1 <= parentList.size-1) {
-					return parentList.get(i+1)
-				} else {
-					return null;
-				}
-			}
-			i--;
-		} 
-		if (parentList.get(0).isList) {
-			return null
-		} else {
-			parentList.get(0)
-		}
-	}
-
-	private def ClientAttribute findNextClientAttributeParent(ClientAttribute it) {
-		var parent = eContainer;
-		while (parent !== null) {
-			val grandParent = parent.eContainer
-			if (grandParent !== null && grandParent instanceof GroupedClientAttribute) {
-				return grandParent as GroupedClientAttribute
-			} else if (parent instanceof SingleClientAttribute) {
-				return parent as SingleClientAttribute
-			}
-			parent = grandParent;
-		}
-		return null;
-	}
-
-	def List<SingleClientAttribute> allParentAttributesInclusiveItem(SingleClientAttribute it) {
+	private def List<SingleClientAttribute> allParentAttributesInclusiveItem(SingleClientAttribute it) {
 		var attributes = new ArrayList<SingleClientAttribute>();
 		attributes.add(it);
 		var parent = eContainer;
@@ -197,20 +109,8 @@ AppUtils.«stateFunctionName(functionName)»(
 		return attributes
 	}
 	
-	def List<SingleClientAttribute> allParentAttributesExclusiveItem(SingleClientAttribute it) {
+	private def List<SingleClientAttribute> allParentAttributesExclusiveItem(SingleClientAttribute it) {
 		var attributes = new ArrayList<SingleClientAttribute>();
-		var parent = eContainer;
-		while (parent !== null) {
-			if (parent instanceof SingleClientAttribute) {
-				attributes.add(0, parent as SingleClientAttribute)
-			}
-			parent = parent.eContainer;
-		}
-		return attributes
-	}
-	
-	def List<ClientAttribute> allParentAttributes(ClientAttribute it) {
-		var attributes = new ArrayList<ClientAttribute>();
 		var parent = eContainer;
 		while (parent !== null) {
 			if (parent instanceof SingleClientAttribute) {
@@ -227,7 +127,7 @@ AppUtils.«stateFunctionName(functionName)»(
 		return list;
 	}
 	
-	def void allReferencedHttpClientsRec(ClientScenario it, ArrayList<HttpClient> list) {
+	private def void allReferencedHttpClientsRec(ClientScenario it, ArrayList<HttpClient> list) {
 		if (whenBlock !== null) {
 			var httpClient = whenBlock.action.eContainer as HttpClient
 			if (!list.contains(httpClient)) {
@@ -287,40 +187,6 @@ AppUtils.«stateFunctionName(functionName)»(
 		}
 	}
 	
-	def int numberOfAsyncCalls(HttpClientAce it) {
-		var number = 0;
-		if (async || serverCall !== null) {
-			number = 1
-		}
-		for (outcome : outcomes) {
-			if (outcome.triggerdAceOperations.size > 0) {
-				for (triggered : outcome.triggerdAceOperations) {
-					if (triggered.aceOperation.async || triggered.aceOperation.serverCall !== null) {
-						number = 2
-					}
-				}
-			}
-		}
-		return number;
-	}
-
-	def int numberOfSyncCalls(HttpClientAce it) {
-		var number = 0;
-		if (!async && serverCall === null) {
-			number = 1
-		}
-		for (outcome : outcomes) {
-			if (outcome.triggerdAceOperations.size > 0) {
-				for (triggered : outcome.triggerdAceOperations) {
-					if (!triggered.aceOperation.async && triggered.aceOperation.serverCall === null) {
-						number = 2
-					}
-				}
-			}
-		}
-		return number;
-	}
-	
 	dispatch def String componentName(SingleClientAttribute it) {
 		if (isList) {
 			return '''«name.toFirstUpper»Item'''
@@ -351,6 +217,34 @@ AppUtils.«stateFunctionName(functionName)»(
 	dispatch def String stateRefPath(SingleClientAttribute it) {
 		return elementPathRec("")
 	}
+	
+	private def String elementPathRec(ClientAttribute attr, String suffix) {
+		var clientAttribute = attr
+		if (clientAttribute.eContainer instanceof GroupedClientAttribute) {
+			clientAttribute = attr.eContainer as ClientAttribute
+		}
+		val parent = clientAttribute.findNextClientAttributeParent
+		if (parent !== null) {
+			return parent.elementPathRec(clientAttribute.name) + '''«IF suffix.length > 0».«suffix»«ENDIF»'''
+		} else {
+			return clientAttribute.getName + '''«IF suffix.length > 0».«suffix»«ENDIF»''';
+		}
+	}
+	
+	private def ClientAttribute findNextClientAttributeParent(ClientAttribute it) {
+		var parent = eContainer;
+		while (parent !== null) {
+			val grandParent = parent.eContainer
+			if (grandParent !== null && grandParent instanceof GroupedClientAttribute) {
+				return grandParent as GroupedClientAttribute
+			} else if (parent instanceof SingleClientAttribute) {
+				return parent as SingleClientAttribute
+			}
+			parent = grandParent;
+		}
+		return null;
+	}
+	
 
 
 }

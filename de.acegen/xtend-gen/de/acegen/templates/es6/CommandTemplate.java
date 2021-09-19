@@ -559,17 +559,9 @@ public class CommandTemplate {
       }
     }
     {
-      int _size = this._aceExtension.aggregatedListeners(it).size();
+      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
-        _builder.newLine();
-      }
-    }
-    {
-      int _size_1 = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
         _builder.append("import TriggerAction from \"../../ace/TriggerAction\";");
         _builder.newLine();
       }
@@ -683,9 +675,9 @@ public class CommandTemplate {
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
-              int _size_2 = outcome_1.getListeners().size();
-              boolean _greaterThan_2 = (_size_2 > 0);
-              if (_greaterThan_2) {
+              int _size_1 = outcome_1.getListeners().size();
+              boolean _greaterThan_1 = (_size_1 > 0);
+              if (_greaterThan_1) {
                 _builder.append("\t\t");
                 _builder.append("\t");
                 _builder.append("new Event(\'");

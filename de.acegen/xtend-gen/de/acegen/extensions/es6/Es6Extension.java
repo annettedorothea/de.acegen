@@ -23,8 +23,6 @@ import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.GroupedClientAttribute;
 import de.acegen.aceGen.HttpClient;
-import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.JsonArrayClient;
 import de.acegen.aceGen.JsonMemberClient;
@@ -35,7 +33,6 @@ import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StringType;
-import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.aceGen.UndefinedType;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -188,7 +185,7 @@ public class Es6Extension {
     return _builder;
   }
   
-  public List<String> paramList(final SingleClientAttribute it) {
+  private List<String> paramList(final SingleClientAttribute it) {
     ArrayList<String> paramList = new ArrayList<String>();
     List<SingleClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
     for (final SingleClientAttribute item : _allParentAttributesInclusiveItem) {
@@ -213,7 +210,7 @@ public class Es6Extension {
     return paramList;
   }
   
-  public String path(final List<String> paramList) {
+  private String path(final List<String> paramList) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("[");
     {
@@ -231,7 +228,7 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public List<String> groupVerifications(final SingleClientAttribute it, final String functionName) {
+  private List<String> groupVerifications(final SingleClientAttribute it, final String functionName) {
     ArrayList<String> verifications = new ArrayList<String>();
     List<SingleClientAttribute> _xifexpression = null;
     boolean _equals = Objects.equal(functionName, "set");
@@ -258,7 +255,7 @@ public class Es6Extension {
     return verifications;
   }
   
-  public String stateFunctionName(final SingleClientAttribute it, final String functionName) {
+  private String stateFunctionName(final SingleClientAttribute it, final String functionName) {
     boolean _isHash = it.isHash();
     if (_isHash) {
       return (functionName + "Hash");
@@ -270,173 +267,7 @@ public class Es6Extension {
     return functionName;
   }
   
-  public String functionName(final SingleClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _functionNameRec = this.functionNameRec(it, "");
-    _builder.append(_functionNameRec);
-    return _builder.toString();
-  }
-  
-  public String functionNameRec(final ClientAttribute it, final String suffix) {
-    final SingleClientAttribute parent = this.findNextSingleClientAttributeParent(it);
-    if ((parent != null)) {
-      String _functionNameRec = this.functionNameRec(parent, it.getName());
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        int _length = suffix.length();
-        boolean _greaterThan = (_length > 0);
-        if (_greaterThan) {
-          _builder.append("_");
-          _builder.append(suffix);
-        }
-      }
-      return (_functionNameRec + _builder);
-    } else {
-      String _name = it.getName();
-      StringConcatenation _builder_1 = new StringConcatenation();
-      {
-        int _length_1 = suffix.length();
-        boolean _greaterThan_1 = (_length_1 > 0);
-        if (_greaterThan_1) {
-          _builder_1.append("_");
-          _builder_1.append(suffix);
-        }
-      }
-      return (_name + _builder_1);
-    }
-  }
-  
-  public String elementPath(final ClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("appState.");
-    String _elementPathRec = this.elementPathRec(it, "");
-    _builder.append(_elementPathRec);
-    return _builder.toString();
-  }
-  
-  public String elementPathRec(final ClientAttribute attr, final String suffix) {
-    ClientAttribute clientAttribute = attr;
-    EObject _eContainer = clientAttribute.eContainer();
-    if ((_eContainer instanceof GroupedClientAttribute)) {
-      EObject _eContainer_1 = attr.eContainer();
-      clientAttribute = ((ClientAttribute) _eContainer_1);
-    }
-    final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
-    if ((parent != null)) {
-      String _elementPathRec = this.elementPathRec(parent, clientAttribute.getName());
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        int _length = suffix.length();
-        boolean _greaterThan = (_length > 0);
-        if (_greaterThan) {
-          _builder.append(".");
-          _builder.append(suffix);
-        }
-      }
-      return (_elementPathRec + _builder);
-    } else {
-      String _name = clientAttribute.getName();
-      StringConcatenation _builder_1 = new StringConcatenation();
-      {
-        int _length_1 = suffix.length();
-        boolean _greaterThan_1 = (_length_1 > 0);
-        if (_greaterThan_1) {
-          _builder_1.append(".");
-          _builder_1.append(suffix);
-        }
-      }
-      return (_name + _builder_1);
-    }
-  }
-  
-  public SingleClientAttribute findNextSingleClientAttributeParent(final ClientAttribute it) {
-    EObject parent = it.eContainer();
-    while ((parent != null)) {
-      {
-        if ((parent instanceof SingleClientAttribute)) {
-          return ((SingleClientAttribute) parent);
-        }
-        parent = parent.eContainer();
-      }
-    }
-    return null;
-  }
-  
-  public SingleClientAttribute findNextNonListSingleClientAttributeParent(final ClientAttribute it) {
-    SingleClientAttribute _xblockexpression = null;
-    {
-      ArrayList<SingleClientAttribute> parentList = new ArrayList<SingleClientAttribute>();
-      if ((it instanceof SingleClientAttribute)) {
-        final SingleClientAttribute me = ((SingleClientAttribute) it);
-        int _size = me.getAttributes().size();
-        boolean _greaterThan = (_size > 0);
-        if (_greaterThan) {
-          parentList.add(me);
-        }
-      }
-      EObject parent = it.eContainer();
-      while ((parent != null)) {
-        {
-          if ((parent instanceof SingleClientAttribute)) {
-            parentList.add(((SingleClientAttribute) parent));
-          }
-          parent = parent.eContainer();
-        }
-      }
-      int _size_1 = parentList.size();
-      boolean _tripleEquals = (_size_1 == 0);
-      if (_tripleEquals) {
-        return null;
-      }
-      int _size_2 = parentList.size();
-      int i = (_size_2 - 1);
-      while ((i >= 0)) {
-        {
-          boolean _isList = parentList.get(i).isList();
-          if (_isList) {
-            int _size_3 = parentList.size();
-            int _minus = (_size_3 - 1);
-            boolean _lessEqualsThan = ((i + 1) <= _minus);
-            if (_lessEqualsThan) {
-              return parentList.get((i + 1));
-            } else {
-              return null;
-            }
-          }
-          i--;
-        }
-      }
-      SingleClientAttribute _xifexpression = null;
-      boolean _isList = parentList.get(0).isList();
-      if (_isList) {
-        return null;
-      } else {
-        _xifexpression = parentList.get(0);
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
-  }
-  
-  private ClientAttribute findNextClientAttributeParent(final ClientAttribute it) {
-    EObject parent = it.eContainer();
-    while ((parent != null)) {
-      {
-        final EObject grandParent = parent.eContainer();
-        if (((grandParent != null) && (grandParent instanceof GroupedClientAttribute))) {
-          return ((GroupedClientAttribute) grandParent);
-        } else {
-          if ((parent instanceof SingleClientAttribute)) {
-            return ((SingleClientAttribute) parent);
-          }
-        }
-        parent = grandParent;
-      }
-    }
-    return null;
-  }
-  
-  public List<SingleClientAttribute> allParentAttributesInclusiveItem(final SingleClientAttribute it) {
+  private List<SingleClientAttribute> allParentAttributesInclusiveItem(final SingleClientAttribute it) {
     ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
     attributes.add(it);
     EObject parent = it.eContainer();
@@ -451,22 +282,8 @@ public class Es6Extension {
     return attributes;
   }
   
-  public List<SingleClientAttribute> allParentAttributesExclusiveItem(final SingleClientAttribute it) {
+  private List<SingleClientAttribute> allParentAttributesExclusiveItem(final SingleClientAttribute it) {
     ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
-    EObject parent = it.eContainer();
-    while ((parent != null)) {
-      {
-        if ((parent instanceof SingleClientAttribute)) {
-          attributes.add(0, ((SingleClientAttribute) parent));
-        }
-        parent = parent.eContainer();
-      }
-    }
-    return attributes;
-  }
-  
-  public List<ClientAttribute> allParentAttributes(final ClientAttribute it) {
-    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
@@ -485,7 +302,7 @@ public class Es6Extension {
     return list;
   }
   
-  public void allReferencedHttpClientsRec(final ClientScenario it, final ArrayList<HttpClient> list) {
+  private void allReferencedHttpClientsRec(final ClientScenario it, final ArrayList<HttpClient> list) {
     ClientWhenBlock _whenBlock = it.getWhenBlock();
     boolean _tripleNotEquals = (_whenBlock != null);
     if (_tripleNotEquals) {
@@ -629,48 +446,6 @@ public class Es6Extension {
     return null;
   }
   
-  public int numberOfAsyncCalls(final HttpClientAce it) {
-    int number = 0;
-    if ((it.isAsync() || (it.getServerCall() != null))) {
-      number = 1;
-    }
-    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
-    for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getTriggerdAceOperations().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
-        for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
-          if ((triggered.getAceOperation().isAsync() || (triggered.getAceOperation().getServerCall() != null))) {
-            number = 2;
-          }
-        }
-      }
-    }
-    return number;
-  }
-  
-  public int numberOfSyncCalls(final HttpClientAce it) {
-    int number = 0;
-    if (((!it.isAsync()) && (it.getServerCall() == null))) {
-      number = 1;
-    }
-    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
-    for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getTriggerdAceOperations().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
-        for (final TriggerdAceOperation triggered : _triggerdAceOperations) {
-          if (((!triggered.getAceOperation().isAsync()) && (triggered.getAceOperation().getServerCall() == null))) {
-            number = 2;
-          }
-        }
-      }
-    }
-    return number;
-  }
-  
   protected String _componentName(final SingleClientAttribute it) {
     boolean _isList = it.isList();
     if (_isList) {
@@ -739,6 +514,59 @@ public class Es6Extension {
   
   protected String _stateRefPath(final SingleClientAttribute it) {
     return this.elementPathRec(it, "");
+  }
+  
+  private String elementPathRec(final ClientAttribute attr, final String suffix) {
+    ClientAttribute clientAttribute = attr;
+    EObject _eContainer = clientAttribute.eContainer();
+    if ((_eContainer instanceof GroupedClientAttribute)) {
+      EObject _eContainer_1 = attr.eContainer();
+      clientAttribute = ((ClientAttribute) _eContainer_1);
+    }
+    final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
+    if ((parent != null)) {
+      String _elementPathRec = this.elementPathRec(parent, clientAttribute.getName());
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        int _length = suffix.length();
+        boolean _greaterThan = (_length > 0);
+        if (_greaterThan) {
+          _builder.append(".");
+          _builder.append(suffix);
+        }
+      }
+      return (_elementPathRec + _builder);
+    } else {
+      String _name = clientAttribute.getName();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      {
+        int _length_1 = suffix.length();
+        boolean _greaterThan_1 = (_length_1 > 0);
+        if (_greaterThan_1) {
+          _builder_1.append(".");
+          _builder_1.append(suffix);
+        }
+      }
+      return (_name + _builder_1);
+    }
+  }
+  
+  private ClientAttribute findNextClientAttributeParent(final ClientAttribute it) {
+    EObject parent = it.eContainer();
+    while ((parent != null)) {
+      {
+        final EObject grandParent = parent.eContainer();
+        if (((grandParent != null) && (grandParent instanceof GroupedClientAttribute))) {
+          return ((GroupedClientAttribute) grandParent);
+        } else {
+          if ((parent instanceof SingleClientAttribute)) {
+            return ((SingleClientAttribute) parent);
+          }
+        }
+        parent = grandParent;
+      }
+    }
+    return null;
   }
   
   public CharSequence valueFrom(final JsonValueClient it) {

@@ -107,10 +107,6 @@ class Es6Generator {
 		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateTriggerAction());
 		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
-		if (httpClient.container !== null && httpClient.container.attributes.size() > 0) {
-			fsa.generateFile('ace/AppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateAppState(httpClient.container.attributes, "", httpClient));
-		}
 		
 		if (httpClient.jsx) {
 			reactGenerator.doGenerate(httpClient, fsa);
