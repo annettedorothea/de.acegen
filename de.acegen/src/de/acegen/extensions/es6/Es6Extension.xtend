@@ -45,20 +45,46 @@ class Es6Extension {
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
 	def String appStateFunction(
-		HttpClientStateFunction it) '''(data) => «stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»'''
+		HttpClientStateFunction it) '''(data) => {
+	«stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»
+}'''
 		
-	def stateFunctionCall(SingleClientAttribute it, String functionName, String data) '''AppUtils.«stateFunctionName(functionName)»(«IF functionName !== "get"»«data», «ENDIF»[«FOR param: paramList SEPARATOR ", "»«param»«ENDFOR»]«IF attributes.size > 0 && functionName === "merge"», [«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»)'''
+	def stateFunctionCall(SingleClientAttribute it, String functionName, String data) '''«IF functionName == "set" && eContainer instanceof GroupedClientAttribute»
+if (data.«(eContainer as GroupedClientAttribute).name») {
+	data.«(eContainer as GroupedClientAttribute).name».group = "«name»";
+} else {
+	data.«(eContainer as GroupedClientAttribute).name» = { group: "«name»" };
+}«ENDIF»
+AppUtils.«stateFunctionName(functionName)»(
+	«IF functionName != "get"»«data», «ENDIF»
+	«paramList.path»«IF functionName != "get"», 
+	[«FOR verification: groupVerifications(functionName) SEPARATOR ", "»«verification»«ENDFOR»]«ENDIF»«IF eContainer instanceof GroupedClientAttribute || attributes.size > 0 && !isList», 
+	[«IF eContainer instanceof GroupedClientAttribute»"group", «ENDIF»«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
+)'''
 	
 	def List<String> paramList(SingleClientAttribute it) {
 		var paramList = new ArrayList<String>()
 		for (item : allParentAttributesInclusiveItem) {
 			if (item.eContainer instanceof GroupedClientAttribute) {
-				paramList.add('''["«(item.eContainer as GroupedClientAttribute).name»", "«item.name»"]''')
+				paramList.add('''"«(item.eContainer as GroupedClientAttribute).name»"''')
 			} else {
 				paramList.add('''"«item.name»"''')
 			}
 		}
 		return paramList
+	}
+	
+	def String path(List<String> paramList) '''[«FOR param: paramList SEPARATOR ", "»«param»«ENDFOR»]'''
+	
+	def List<String> groupVerifications(SingleClientAttribute it, String functionName) {
+		var verifications = new ArrayList<String>()
+		val parentAttributes = functionName == "set" ? allParentAttributesExclusiveItem : allParentAttributesInclusiveItem;
+		for (item : parentAttributes) {
+			if (item.eContainer instanceof GroupedClientAttribute) {
+				verifications.add('''{ path: «item.paramList.path», group: "«item.name»" }''')
+			}
+		}
+		return verifications
 	}
 	
 	def String stateFunctionName(SingleClientAttribute it, String functionName) {
@@ -158,16 +184,27 @@ class Es6Extension {
 		return null;
 	}
 
-	def List<ClientAttribute> allParentAttributesInclusiveItem(ClientAttribute it) {
-		var attributes = new ArrayList<ClientAttribute>();
+	def List<SingleClientAttribute> allParentAttributesInclusiveItem(SingleClientAttribute it) {
+		var attributes = new ArrayList<SingleClientAttribute>();
 		attributes.add(it);
 		var parent = eContainer;
 		while (parent !== null) {
-			val grandParent = parent.eContainer
 			if (parent instanceof SingleClientAttribute) {
 				attributes.add(0, parent as SingleClientAttribute)
 			}
-			parent = grandParent;
+			parent = parent.eContainer;
+		}
+		return attributes
+	}
+	
+	def List<SingleClientAttribute> allParentAttributesExclusiveItem(SingleClientAttribute it) {
+		var attributes = new ArrayList<SingleClientAttribute>();
+		var parent = eContainer;
+		while (parent !== null) {
+			if (parent instanceof SingleClientAttribute) {
+				attributes.add(0, parent as SingleClientAttribute)
+			}
+			parent = parent.eContainer;
 		}
 		return attributes
 	}
@@ -176,11 +213,10 @@ class Es6Extension {
 		var attributes = new ArrayList<ClientAttribute>();
 		var parent = eContainer;
 		while (parent !== null) {
-			val grandParent = parent.eContainer
 			if (parent instanceof SingleClientAttribute) {
 				attributes.add(0, parent as SingleClientAttribute)
 			}
-			parent = grandParent;
+			parent = parent.eContainer;
 		}
 		return attributes
 	}

@@ -68,7 +68,7 @@ class CommandTemplate {
 		    
 		    initCommandData(data) {
 		        «FOR ref : refs»
-		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "")»;
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
 		        «ENDFOR»
 		        data.outcomes = [];
 		    }
@@ -106,7 +106,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppUtils.stateUpdated(AppState.getAppState());
+								AppUtils.stateUpdated();
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
@@ -166,12 +166,10 @@ class CommandTemplate {
 		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
-		«IF refs.size > 0 || aggregatedListeners.size > 0»
-			import * as AppState from "../../ace/AppState";
-		«ENDIF»
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
+		import * as AppUtils from "../../../src/app/AppUtils";
 		
 		export default class «abstractCommandName» extends SynchronousCommand {
 		    constructor() {
@@ -180,7 +178,7 @@ class CommandTemplate {
 		
 		    initCommandData(data) {
 		        «FOR ref : refs»
-		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "")»;
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
 		        «ENDFOR»
 		        data.outcomes = [];
 		    }
@@ -197,7 +195,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppUtils.stateUpdated(AppState.getAppState());
+								AppUtils.stateUpdated();
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»

@@ -147,7 +147,7 @@ public class CommandTemplate {
         }
         _builder.append(_xifexpression, "        ");
         _builder.append(" = ");
-        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "");
+        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "data");
         _builder.append(_stateFunctionCall, "        ");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -350,7 +350,7 @@ public class CommandTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+                _builder.append("AppUtils.stateUpdated();");
                 _builder.newLine();
               }
             }
@@ -575,12 +575,6 @@ public class CommandTemplate {
       }
     }
     {
-      if (((it.getRefs().size() > 0) || (this._aceExtension.aggregatedListeners(it).size() > 0))) {
-        _builder.append("import * as AppState from \"../../ace/AppState\";");
-        _builder.newLine();
-      }
-    }
-    {
       List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
       for(final HttpClientAce aceOperation : _aggregatedTriggeredAceOperations) {
         _builder.append("import ");
@@ -597,6 +591,8 @@ public class CommandTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ");
     String _abstractCommandName = this._aceExtension.abstractCommandName(it);
@@ -637,7 +633,7 @@ public class CommandTemplate {
         }
         _builder.append(_xifexpression, "        ");
         _builder.append(" = ");
-        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "");
+        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(ref.getStateElement(), "get", "data");
         _builder.append(_stateFunctionCall, "        ");
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -702,7 +698,7 @@ public class CommandTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                _builder.append("AppUtils.stateUpdated(AppState.getAppState());");
+                _builder.append("AppUtils.stateUpdated();");
                 _builder.newLine();
               }
             }

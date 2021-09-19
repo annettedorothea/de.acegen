@@ -15,6 +15,7 @@
  */
 package de.acegen.extensions.es6;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
@@ -62,33 +63,162 @@ public class Es6Extension {
   
   public String appStateFunction(final HttpClientStateFunction it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(data) => ");
+    _builder.append("(data) => {");
+    _builder.newLine();
+    _builder.append("\t");
     SingleClientAttribute _stateElement = it.getStateElement();
     StringConcatenation _builder_1 = new StringConcatenation();
     String _stateFunctionType = it.getStateFunctionType();
     _builder_1.append(_stateFunctionType);
     CharSequence _stateFunctionCall = this.stateFunctionCall(_stateElement, _builder_1.toString(), "data");
-    _builder.append(_stateFunctionCall);
+    _builder.append(_stateFunctionCall, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
     return _builder.toString();
   }
   
   public CharSequence stateFunctionCall(final SingleClientAttribute it, final String functionName, final String data) {
     StringConcatenation _builder = new StringConcatenation();
+    {
+      if ((Objects.equal(functionName, "set") && (it.eContainer() instanceof GroupedClientAttribute))) {
+        _builder.newLineIfNotEmpty();
+        _builder.append("if (data.");
+        EObject _eContainer = it.eContainer();
+        String _name = ((GroupedClientAttribute) _eContainer).getName();
+        _builder.append(_name);
+        _builder.append(") {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("data.");
+        EObject _eContainer_1 = it.eContainer();
+        String _name_1 = ((GroupedClientAttribute) _eContainer_1).getName();
+        _builder.append(_name_1, "\t");
+        _builder.append(".group = \"");
+        String _name_2 = it.getName();
+        _builder.append(_name_2, "\t");
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+        _builder.append("} else {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("data.");
+        EObject _eContainer_2 = it.eContainer();
+        String _name_3 = ((GroupedClientAttribute) _eContainer_2).getName();
+        _builder.append(_name_3, "\t");
+        _builder.append(" = { group: \"");
+        String _name_4 = it.getName();
+        _builder.append(_name_4, "\t");
+        _builder.append("\" };");
+        _builder.newLineIfNotEmpty();
+        _builder.append("}");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.append("AppUtils.");
     String _stateFunctionName = this.stateFunctionName(it, functionName);
     _builder.append(_stateFunctionName);
     _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     {
-      if ((functionName != "get")) {
-        _builder.append(data);
+      boolean _notEquals = (!Objects.equal(functionName, "get"));
+      if (_notEquals) {
+        _builder.append(data, "\t");
         _builder.append(", ");
       }
     }
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    String _path = this.path(this.paramList(it));
+    _builder.append(_path, "\t");
+    {
+      boolean _notEquals_1 = (!Objects.equal(functionName, "get"));
+      if (_notEquals_1) {
+        _builder.append(", ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("[");
+        {
+          List<String> _groupVerifications = this.groupVerifications(it, functionName);
+          boolean _hasElements = false;
+          for(final String verification : _groupVerifications) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "\t");
+            }
+            _builder.append(verification, "\t");
+          }
+        }
+        _builder.append("]");
+      }
+    }
+    {
+      if (((it.eContainer() instanceof GroupedClientAttribute) || ((it.getAttributes().size() > 0) && (!it.isList())))) {
+        _builder.append(", ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("[");
+        {
+          EObject _eContainer_3 = it.eContainer();
+          if ((_eContainer_3 instanceof GroupedClientAttribute)) {
+            _builder.append("\"group\", ");
+          }
+        }
+        {
+          EList<ClientAttribute> _attributes = it.getAttributes();
+          boolean _hasElements_1 = false;
+          for(final ClientAttribute attribute : _attributes) {
+            if (!_hasElements_1) {
+              _hasElements_1 = true;
+            } else {
+              _builder.appendImmediate(", ", "\t");
+            }
+            _builder.append("\"");
+            String _name_5 = attribute.getName();
+            _builder.append(_name_5, "\t");
+            _builder.append("\"");
+          }
+        }
+        _builder.append("]");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append(")");
+    return _builder;
+  }
+  
+  public List<String> paramList(final SingleClientAttribute it) {
+    ArrayList<String> paramList = new ArrayList<String>();
+    List<SingleClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
+    for (final SingleClientAttribute item : _allParentAttributesInclusiveItem) {
+      EObject _eContainer = item.eContainer();
+      if ((_eContainer instanceof GroupedClientAttribute)) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\"");
+        EObject _eContainer_1 = item.eContainer();
+        String _name = ((GroupedClientAttribute) _eContainer_1).getName();
+        _builder.append(_name);
+        _builder.append("\"");
+        paramList.add(_builder.toString());
+      } else {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\"");
+        String _name_1 = item.getName();
+        _builder_1.append(_name_1);
+        _builder_1.append("\"");
+        paramList.add(_builder_1.toString());
+      }
+    }
+    return paramList;
+  }
+  
+  public String path(final List<String> paramList) {
+    StringConcatenation _builder = new StringConcatenation();
     _builder.append("[");
     {
-      List<String> _paramList = this.paramList(it);
       boolean _hasElements = false;
-      for(final String param : _paramList) {
+      for(final String param : paramList) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
@@ -98,57 +228,34 @@ public class Es6Extension {
       }
     }
     _builder.append("]");
-    {
-      if (((it.getAttributes().size() > 0) && (functionName == "merge"))) {
-        _builder.append(", [");
-        {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          boolean _hasElements_1 = false;
-          for(final ClientAttribute attribute : _attributes) {
-            if (!_hasElements_1) {
-              _hasElements_1 = true;
-            } else {
-              _builder.appendImmediate(", ", "");
-            }
-            _builder.append("\"");
-            String _name = attribute.getName();
-            _builder.append(_name);
-            _builder.append("\"");
-          }
-        }
-        _builder.append("]");
-      }
-    }
-    _builder.append(")");
-    return _builder;
+    return _builder.toString();
   }
   
-  public List<String> paramList(final SingleClientAttribute it) {
-    ArrayList<String> paramList = new ArrayList<String>();
-    List<ClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
-    for (final ClientAttribute item : _allParentAttributesInclusiveItem) {
+  public List<String> groupVerifications(final SingleClientAttribute it, final String functionName) {
+    ArrayList<String> verifications = new ArrayList<String>();
+    List<SingleClientAttribute> _xifexpression = null;
+    boolean _equals = Objects.equal(functionName, "set");
+    if (_equals) {
+      _xifexpression = this.allParentAttributesExclusiveItem(it);
+    } else {
+      _xifexpression = this.allParentAttributesInclusiveItem(it);
+    }
+    final List<SingleClientAttribute> parentAttributes = _xifexpression;
+    for (final SingleClientAttribute item : parentAttributes) {
       EObject _eContainer = item.eContainer();
       if ((_eContainer instanceof GroupedClientAttribute)) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("[\"");
-        EObject _eContainer_1 = item.eContainer();
-        String _name = ((GroupedClientAttribute) _eContainer_1).getName();
+        _builder.append("{ path: ");
+        String _path = this.path(this.paramList(item));
+        _builder.append(_path);
+        _builder.append(", group: \"");
+        String _name = item.getName();
         _builder.append(_name);
-        _builder.append("\", \"");
-        String _name_1 = item.getName();
-        _builder.append(_name_1);
-        _builder.append("\"]");
-        paramList.add(_builder.toString());
-      } else {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("\"");
-        String _name_2 = item.getName();
-        _builder_1.append(_name_2);
-        _builder_1.append("\"");
-        paramList.add(_builder_1.toString());
+        _builder.append("\" }");
+        verifications.add(_builder.toString());
       }
     }
-    return paramList;
+    return verifications;
   }
   
   public String stateFunctionName(final SingleClientAttribute it, final String functionName) {
@@ -329,17 +436,30 @@ public class Es6Extension {
     return null;
   }
   
-  public List<ClientAttribute> allParentAttributesInclusiveItem(final ClientAttribute it) {
-    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
+  public List<SingleClientAttribute> allParentAttributesInclusiveItem(final SingleClientAttribute it) {
+    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
     attributes.add(it);
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
-        final EObject grandParent = parent.eContainer();
         if ((parent instanceof SingleClientAttribute)) {
           attributes.add(0, ((SingleClientAttribute) parent));
         }
-        parent = grandParent;
+        parent = parent.eContainer();
+      }
+    }
+    return attributes;
+  }
+  
+  public List<SingleClientAttribute> allParentAttributesExclusiveItem(final SingleClientAttribute it) {
+    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
+    EObject parent = it.eContainer();
+    while ((parent != null)) {
+      {
+        if ((parent instanceof SingleClientAttribute)) {
+          attributes.add(0, ((SingleClientAttribute) parent));
+        }
+        parent = parent.eContainer();
       }
     }
     return attributes;
@@ -350,11 +470,10 @@ public class Es6Extension {
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
-        final EObject grandParent = parent.eContainer();
         if ((parent instanceof SingleClientAttribute)) {
           attributes.add(0, ((SingleClientAttribute) parent));
         }
-        parent = grandParent;
+        parent = parent.eContainer();
       }
     }
     return attributes;

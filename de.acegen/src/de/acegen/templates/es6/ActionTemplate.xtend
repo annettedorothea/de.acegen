@@ -139,8 +139,6 @@ class ActionTemplate {
 
 		import * as ACEController from "./ACEController";
 		import * as AppUtils from "../../src/app/AppUtils";
-		import * as Utils from "./Utils";
-		import * as AppState from "./AppState";
 		
 		export default class Action {
 		
@@ -150,7 +148,7 @@ class ActionTemplate {
 		
 		    apply(data) {
 				ACEController.addItemToTimeLine({
-				    appState: AppState.getAppState()
+				    appState: AppUtils.appState
 				});
 		        ACEController.addItemToTimeLine({
 		            action: {

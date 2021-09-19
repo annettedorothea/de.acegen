@@ -40,7 +40,6 @@ class AceTemplate {
 		«copyright»
 		
 		
-		import * as AppState from "../../gen/ace/AppState";
 		import * as Utils from "../../gen/ace/Utils";
 		
 
@@ -89,9 +88,7 @@ class AceTemplate {
 		}
 		
 		export function createInitialAppState() {
-		    const initialAppState = {
-		    };
-		    AppState.setInitialAppState(initialAppState);
+			appState = {};
 		}
 		
 		function createHeaders(authorize) {
@@ -211,7 +208,6 @@ class AceTemplate {
 		«copyright»
 
 		import * as AppUtils from "./app/AppUtils";
-		import * as AppState from "../gen/ace/AppState";
 		import * as ACEController from "../gen/ace/ACEController";
 		
 		export * from "../gen/ace/Timeline";
@@ -274,7 +270,6 @@ class AceTemplate {
 	«copyright»
 	
 	import * as AppUtils from "../../src/app/AppUtils";
-	import * as AppState from "./AppState";
 	import Event from "./Event";
 	
 	export let timeline = [];
@@ -352,7 +347,8 @@ class AceTemplate {
 	            });
 	        }
 			if (item.appState && !appStateWasSet) {
-			    AppState.setInitialAppState(item.appState);
+			    AppUtils.appState = item.appState;
+	            AppUtils.stateUpdated();
 			    appStateWasSet = true;
 			}
 	    }

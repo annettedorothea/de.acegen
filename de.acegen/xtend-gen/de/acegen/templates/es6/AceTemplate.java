@@ -48,8 +48,6 @@ public class AceTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import * as AppState from \"../../gen/ace/AppState\";");
-    _builder.newLine();
     _builder.append("import * as Utils from \"../../gen/ace/Utils\";");
     _builder.newLine();
     _builder.newLine();
@@ -169,14 +167,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("export function createInitialAppState() {");
     _builder.newLine();
-    _builder.append("    ");
-    _builder.append("const initialAppState = {");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("};");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("AppState.setInitialAppState(initialAppState);");
+    _builder.append("\t");
+    _builder.append("appState = {};");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -469,8 +461,6 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"./app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../gen/ace/AppState\";");
-    _builder.newLine();
     _builder.append("import * as ACEController from \"../gen/ace/ACEController\";");
     _builder.newLine();
     _builder.newLine();
@@ -608,8 +598,6 @@ public class AceTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
-    _builder.newLine();
-    _builder.append("import * as AppState from \"./AppState\";");
     _builder.newLine();
     _builder.append("import Event from \"./Event\";");
     _builder.newLine();
@@ -812,7 +800,10 @@ public class AceTemplate {
     _builder.append("if (item.appState && !appStateWasSet) {");
     _builder.newLine();
     _builder.append("\t\t    ");
-    _builder.append("AppState.setInitialAppState(item.appState);");
+    _builder.append("AppUtils.appState = item.appState;");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("AppUtils.stateUpdated();");
     _builder.newLine();
     _builder.append("\t\t    ");
     _builder.append("appStateWasSet = true;");

@@ -379,10 +379,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
     _builder.newLine();
-    _builder.append("import * as Utils from \"./Utils\";");
-    _builder.newLine();
-    _builder.append("import * as AppState from \"./AppState\";");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Action {");
     _builder.newLine();
@@ -404,7 +400,7 @@ public class ActionTemplate {
     _builder.append("ACEController.addItemToTimeLine({");
     _builder.newLine();
     _builder.append("\t\t    ");
-    _builder.append("appState: AppState.getAppState()");
+    _builder.append("appState: AppUtils.appState");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("});");
