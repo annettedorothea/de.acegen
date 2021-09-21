@@ -245,10 +245,13 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("}});");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("action.apply(data);");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("ACEController.addActionToTriggeredActionsQueue(action, data);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

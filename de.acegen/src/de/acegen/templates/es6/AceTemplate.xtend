@@ -31,162 +31,77 @@ class AceTemplate {
 	def generateAppUtilsStub() '''
 		«copyright»
 		
-		
-		import * as Utils from "../../gen/ace/Utils";
-		
 
 		export let settings;
 
-		function loadSettings() {
-		    return httpGet("settings.json").then((loadedSettings) => {
-		        settings = loadedSettings;
-		        if (!settings.clientVersion) {
-		            settings.clientVersion = "";
-		        }
-		        if (!settings.aceScenariosApiKey) {
-		            settings.aceScenariosApiKey = "";
-		        }
-		        if (!settings.aceScenariosBaseUrl) {
-		            settings.aceScenariosBaseUrl = "";
-		        }
-		        if (!settings.rootPath) {
-		            settings.rootPath = "";
-		        }
-		        if (!settings.timelineSize) {
-		            settings.timelineSize = 0;
-		        }
-				if (!settings.mode) {
-				    settings.mode = "live";
-				}
-		        if (settings.rootPath.startsWith("/")) {
-		            settings.rootPath = settings.rootPath.substring(1);
-		        }
-		        if (settings.rootPath.endsWith("/")) {
-		            settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);
-		        }
-		    });
+
+		export function get(path) {
 		}
 		
+		export function getHash() {
+		}
+		
+		export function getStorage(path) {
+		}
+		
+		function verifyGroups(groupVerifications) {
+		}
+		
+		export function set(data, path, groupVerifications, attributes) {
+		}
+		
+		export function setHash(data, path) {
+		}
+		
+		export function setStorage(data, path) {
+		}
+		
+		export function merge(data, path, groupVerifications, attributes) {
+		}
+		
+		export function mergeHash(data, path) {
+		}
+		
+		export function mergeStorage(data, path) {
+		}
+		
+		export function createInitialAppState() {
+		}
+		
+		export function setInitialAppState(initialAppState) {
+		}
+
 		export function initEventListeners() {
-		    //EventListenerRegistration.init();
 		}
 		
 		export function startApp() {
-		    loadSettings().then(() => {
-		    });
 		}
 		
 		export function startReplay() {
 		}
 		
-		export function createInitialAppState() {
-			appState = {};
-		}
-		
-		function createHeaders(authorize) {
-		    const headers = new Headers();
-		    headers.append("Content-Type", "application/json");
-		    headers.append("Accept", "application/json");
-		    if (authorize === true) {
-		        let authorization = basicAuth();
-		        if (authorization !== undefined) {
-		            headers.append("Authorization", authorization);
-		        }
-		    }
-		    return headers;
-		}
-		
-		function addUuidToUrl(url, uuid) {
-		    if (uuid) {
-		        if (url.indexOf("?") < 0) {
-		            url += "?uuid=" + uuid;
-		        } else {
-		            url += "&uuid=" + uuid;
-		        }
-		    }
-		    return url;
-		}
-		
-		function httpRequest(methodType, url, uuid, authorize, data) {
-		    return new Promise((resolve, reject) => {
-		        const options = {
-		            method: methodType,
-		            headers: createHeaders(authorize),
-		            mode: 'cors',
-		            cache: 'no-cache'
-		        };
-		        if (data && methodType !== "GET") {
-		            options.body = JSON.stringify(data);
-		        }
-		        url = addUuidToUrl(url, uuid);
-		        const request = new Request(url, options);
-		
-		        fetch(request).then(function (response) {
-		            response.text().then((text) => {
-		                if (response.status >= 300) {
-		                    const error = {
-		                        code: response.status,
-		                        text: response.statusText,
-		                        key: text
-		                    };
-		                    reject(error);
-		                } else {
-		                    let data = {};
-		                    if (text.length > 0) {
-		                        data = JSON.parse(text);
-		                    }
-		                    resolve(data);
-		                }
-		            });
-		        }).catch(function (error) {
-		            const status = {
-		                code: error.name,
-		                text: error.message
-		            };
-		            reject(status);
-		        });
-		    });
-		}
-		
 		export function httpGet(url, uuid, authorize) {
-		    return httpRequest("GET", url, uuid, authorize, null);
 		}
 		
 		export function httpPost(url, uuid, authorize, data) {
-		    return httpRequest("POST", url, uuid, authorize, data);
 		}
 		
 		export function httpPut(url, uuid, authorize, data) {
-		    return httpRequest("PUT", url, uuid, authorize, data);
 		}
 		
 		export function httpDelete(url, uuid, authorize, data) {
-		    return httpRequest("DELETE", url, uuid, authorize, data);
-		}
-		
-		function basicAuth() {
-		    return "<your authorization>";
 		}
 		
 		export function createUUID() {
-		    let d = new Date().getTime();
-		    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-		        let r = (d + Math.random() * 16) % 16 | 0;
-		        d = Math.floor(d / 16);
-		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-		    });
 		}
 		
 		export function displayUnexpectedError(error) {
-		    console.error("unexpected error ", error);
 		}
 		
 		export function deepCopy(object) {
-		    return JSON.parse(JSON.stringify(object));
 		}
 		
 		export function stateUpdated() {
-		    // re-render app
 		}
 		
 		export function renderApp() {
@@ -200,25 +115,20 @@ class AceTemplate {
 		«copyright»
 
 		import * as AppUtils from "./app/AppUtils";
-		import * as ACEController from "../gen/ace/ACEController";
 		
 		export * from "../gen/ace/Timeline";
-
+		
 		export function dumpAppState() {
-		    console.info(AppState.getAppState());
+		    console.info(AppUtils.get([]));
 		}
-
-		AppUtils.createInitialAppState();
-		ACEController.addItemToTimeLine({
-			appState: AppState.getAppState()
-		});
+		
 		AppUtils.initEventListeners();
 		AppUtils.startApp();
 		AppUtils.renderApp();
 		
 		// for Selenium tests
 		export function getAppState() {
-		    return AppState.getAppState();
+		    return AppUtils.get([])
 		}
 		
 		export function addSquishyValueClient(value) {
@@ -229,9 +139,9 @@ class AceTemplate {
 		    squishyValues.push(value);
 		    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
 		}
-
+		
 		export function addSquishyValueServer(uuid, key, value) {
-		    return new Promise((resolve, reject) => {
+		    return new Promise(() => {
 		        let url = "";
 		        if (key === "system-time") {
 		            url =`/api/test/squishy/system-time?uuid=${uuid}&system-time=${value}`;
@@ -246,10 +156,6 @@ class AceTemplate {
 		            });
 		        });
 		    })
-		}
-		
-		export function getValueFromLocalStorage(key) {
-		    return localStorage.getItem(key);
 		}
 		
 		
@@ -269,7 +175,8 @@ class AceTemplate {
 	export let delayedActions = {};
 	
 	let actionQueue = [];
-
+	let triggeredActionsQueue = [];
+	
 	export function registerListener(eventName, listener) {
 	    if (!eventName.trim()) {
 	        throw new Error('cannot register listener for empty eventName');
@@ -302,6 +209,10 @@ class AceTemplate {
 	    applyNextActions();
 	}
 
+	export function addActionToTriggeredActionsQueue(action, data) {
+		triggeredActionsQueue.push({action, data});
+	}
+
 	function applyNextActions() {
 	    let nextAction = actionQueue.shift();
 	    if (nextAction) {
@@ -322,6 +233,11 @@ class AceTemplate {
 				}
 			}
 	    }
+		let nextTriggeredAction = triggeredActionsQueue.shift();
+		while (nextTriggeredAction) {
+		    nextTriggeredAction.action.apply(nextTriggeredAction.data);
+		    nextTriggeredAction = triggeredActionsQueue.shift();
+		}
 	}
 	
 	export function startReplay(timeline, pauseInMillis) {
@@ -339,11 +255,13 @@ class AceTemplate {
 	            });
 	        }
 			if (item.appState && !appStateWasSet) {
-			    AppUtils.appState = item.appState;
+			    AppUtils.setInitialAppState(item.appState);
 	            AppUtils.stateUpdated();
 			    appStateWasSet = true;
 			}
 	    }
+	    
+	    console.info(`replay ${events.length} events`);
 	
 		setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
 	}
@@ -351,7 +269,9 @@ class AceTemplate {
 	function replayNextEvent(events, pauseInMillis) {
 	    let nextEvent = events.shift();
 	    if (nextEvent) {
+	    	console.info("replay", nextEvent);
 	    	nextEvent.event.replay(nextEvent.data);
+			AppUtils.stateUpdated();
 	    	setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
 	    } else {
 	        setTimeout(() => finishReplay(), pauseInMillis);

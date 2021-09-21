@@ -400,7 +400,7 @@ public class ActionTemplate {
     _builder.append("ACEController.addItemToTimeLine({");
     _builder.newLine();
     _builder.append("\t\t    ");
-    _builder.append("appState: AppUtils.appState");
+    _builder.append("appState: AppUtils.get([])");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("});");
