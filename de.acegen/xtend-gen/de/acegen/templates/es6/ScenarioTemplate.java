@@ -379,7 +379,15 @@ public class ScenarioTemplate {
         _builder.append(", \"");
         String _name_6 = stateVerification.getName();
         _builder.append(_name_6, "\t\t");
-        _builder.append("\").toEqual(");
+        _builder.append("\")");
+        {
+          boolean _isNot = stateVerification.isNot();
+          boolean _equals = (_isNot == true);
+          if (_equals) {
+            _builder.append(".not");
+          }
+        }
+        _builder.append(".toEqual(");
         CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
         _builder.append(_valueFrom, "\t\t");
         _builder.append(")");

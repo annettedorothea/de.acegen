@@ -121,7 +121,7 @@ ClientThenBlock: {ClientThenBlock}
 ;
 
 StateVerification:
-	name = ID stateRef = [SingleClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
+	name = ID stateRef = [SingleClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
 ;
 
 JsonObjectClient:

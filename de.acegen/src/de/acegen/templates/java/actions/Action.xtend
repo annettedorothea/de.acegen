@@ -66,9 +66,7 @@ class Action {
 
 		«getModel.dataImport»
 		«getModel.dataClassImport»
-		«IF outcomes.size > 0»
-			import «commandNameWithPackage»;
-		«ENDIF»
+		import «commandNameWithPackage»;
 		
 		@SuppressWarnings("unused")
 		public abstract class «abstractActionName» extends WriteAction<«model.dataParamType»> {
@@ -82,11 +80,7 @@ class Action {
 		
 			@Override
 			public ICommand<«model.dataParamType»> getCommand() {
-				«IF outcomes.size > 0»
-					return new «commandName»(daoProvider, viewProvider, this.appConfiguration);
-				«ELSE»
-					return null;
-				«ENDIF»
+				return new «commandName»(daoProvider, viewProvider, this.appConfiguration);
 			}
 			
 			«initActionDataFromSquishyDataProvider»		

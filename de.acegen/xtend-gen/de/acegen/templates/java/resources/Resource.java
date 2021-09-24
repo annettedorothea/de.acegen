@@ -114,8 +114,7 @@ public class Resource {
     _builder.newLine();
     _builder.newLine();
     {
-      boolean _isAuthorize = it.isAuthorize();
-      if (_isAuthorize) {
+      if ((it.isAuthorize() && (authUser != null))) {
         _builder.append("import de.acegen.auth.");
         String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
         _builder.append(_firstUpper);

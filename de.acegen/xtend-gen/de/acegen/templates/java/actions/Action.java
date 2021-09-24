@@ -99,17 +99,11 @@ public class Action {
     String _dataClassImport = this._modelExtension.dataClassImport(it.getModel());
     _builder.append(_dataClassImport);
     _builder.newLineIfNotEmpty();
-    {
-      int _size = it.getOutcomes().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("import ");
-        String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it);
-        _builder.append(_commandNameWithPackage);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
+    _builder.append("import ");
+    String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it);
+    _builder.append(_commandNameWithPackage);
+    _builder.append(";");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
@@ -156,22 +150,12 @@ public class Action {
     _builder.append(_dataParamType_1, "\t");
     _builder.append("> getCommand() {");
     _builder.newLineIfNotEmpty();
-    {
-      int _size_1 = it.getOutcomes().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
-        _builder.append("\t\t");
-        _builder.append("return new ");
-        String _commandName = this._aceExtension.commandName(it);
-        _builder.append(_commandName, "\t\t");
-        _builder.append("(daoProvider, viewProvider, this.appConfiguration);");
-        _builder.newLineIfNotEmpty();
-      } else {
-        _builder.append("\t\t");
-        _builder.append("return null;");
-        _builder.newLine();
-      }
-    }
+    _builder.append("\t\t");
+    _builder.append("return new ");
+    String _commandName = this._aceExtension.commandName(it);
+    _builder.append(_commandName, "\t\t");
+    _builder.append("(daoProvider, viewProvider, this.appConfiguration);");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();

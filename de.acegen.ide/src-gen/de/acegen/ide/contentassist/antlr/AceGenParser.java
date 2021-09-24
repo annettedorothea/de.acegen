@@ -219,7 +219,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientThenBlockAccess().getVerificationsAssignment_2_1(), "rule__ClientThenBlock__VerificationsAssignment_2_1");
 			builder.put(grammarAccess.getStateVerificationAccess().getNameAssignment_0(), "rule__StateVerification__NameAssignment_0");
 			builder.put(grammarAccess.getStateVerificationAccess().getStateRefAssignment_1(), "rule__StateVerification__StateRefAssignment_1");
-			builder.put(grammarAccess.getStateVerificationAccess().getValueAssignment_3(), "rule__StateVerification__ValueAssignment_3");
+			builder.put(grammarAccess.getStateVerificationAccess().getNotAssignment_3(), "rule__StateVerification__NotAssignment_3");
+			builder.put(grammarAccess.getStateVerificationAccess().getValueAssignment_5(), "rule__StateVerification__ValueAssignment_5");
 			builder.put(grammarAccess.getJsonObjectClientAccess().getMembersAssignment_2(), "rule__JsonObjectClient__MembersAssignment_2");
 			builder.put(grammarAccess.getJsonObjectClientAccess().getMembersAssignment_3_1(), "rule__JsonObjectClient__MembersAssignment_3_1");
 			builder.put(grammarAccess.getJsonMemberClientAccess().getAttributeAssignment_0(), "rule__JsonMemberClient__AttributeAssignment_0");

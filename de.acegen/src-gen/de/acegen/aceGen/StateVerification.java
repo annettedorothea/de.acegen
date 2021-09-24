@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.StateVerification#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.StateVerification#getStateRef <em>State Ref</em>}</li>
+ *   <li>{@link de.acegen.aceGen.StateVerification#isNot <em>Not</em>}</li>
  *   <li>{@link de.acegen.aceGen.StateVerification#getValue <em>Value</em>}</li>
  * </ul>
  *
@@ -68,6 +69,28 @@ public interface StateVerification extends EObject
    * @generated
    */
   void setStateRef(SingleClientAttribute value);
+
+  /**
+   * Returns the value of the '<em><b>Not</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Not</em>' attribute.
+   * @see #setNot(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getStateVerification_Not()
+   * @model
+   * @generated
+   */
+  boolean isNot();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.StateVerification#isNot <em>Not</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Not</em>' attribute.
+   * @see #isNot()
+   * @generated
+   */
+  void setNot(boolean value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.

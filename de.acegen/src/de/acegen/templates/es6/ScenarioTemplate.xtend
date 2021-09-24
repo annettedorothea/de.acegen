@@ -122,7 +122,7 @@ class ScenarioTemplate {
 		    
 			«FOR stateVerification: thenBlock.stateVerifications»
 				it("«stateVerification.name»", async () => {
-					expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»").toEqual(«stateVerification.value.valueFrom»)
+					expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»")«IF stateVerification.not == true».not«ENDIF».toEqual(«stateVerification.value.valueFrom»)
 				});
 			«ENDFOR»
 		    

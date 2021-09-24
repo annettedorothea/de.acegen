@@ -176,6 +176,8 @@ class AceTemplate {
 	
 	let actionQueue = [];
 	let triggeredActionsQueue = [];
+	let idle = true;
+	
 	
 	export function registerListener(eventName, listener) {
 	    if (!eventName.trim()) {
@@ -211,9 +213,13 @@ class AceTemplate {
 
 	export function addActionToTriggeredActionsQueue(action, data) {
 		triggeredActionsQueue.push({action, data});
+		if (idle) {
+			applyNextActions();
+		}
 	}
 
 	function applyNextActions() {
+		idle = false;
 	    let nextAction = actionQueue.shift();
 	    if (nextAction) {
 			if (nextAction.action.asynchronous) {
@@ -238,6 +244,7 @@ class AceTemplate {
 		    nextTriggeredAction.action.apply(nextTriggeredAction.data);
 		    nextTriggeredAction = triggeredActionsQueue.shift();
 		}
+		idle = true;
 	}
 	
 	export function startReplay(timeline, pauseInMillis) {

@@ -5808,9 +5808,9 @@ rule__StateVerification__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getStateVerificationAccess().getShouldBeKeyword_2()); }
-	'shouldBe'
-	{ after(grammarAccess.getStateVerificationAccess().getShouldBeKeyword_2()); }
+	{ before(grammarAccess.getStateVerificationAccess().getShouldKeyword_2()); }
+	'should'
+	{ after(grammarAccess.getStateVerificationAccess().getShouldKeyword_2()); }
 )
 ;
 finally {
@@ -5823,6 +5823,7 @@ rule__StateVerification__Group__3
 	}
 :
 	rule__StateVerification__Group__3__Impl
+	rule__StateVerification__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5834,9 +5835,62 @@ rule__StateVerification__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getStateVerificationAccess().getValueAssignment_3()); }
-	(rule__StateVerification__ValueAssignment_3)
-	{ after(grammarAccess.getStateVerificationAccess().getValueAssignment_3()); }
+	{ before(grammarAccess.getStateVerificationAccess().getNotAssignment_3()); }
+	(rule__StateVerification__NotAssignment_3)?
+	{ after(grammarAccess.getStateVerificationAccess().getNotAssignment_3()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__StateVerification__Group__4
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__StateVerification__Group__4__Impl
+	rule__StateVerification__Group__5
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__StateVerification__Group__4__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getStateVerificationAccess().getBeKeyword_4()); }
+	'be'
+	{ after(grammarAccess.getStateVerificationAccess().getBeKeyword_4()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__StateVerification__Group__5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__StateVerification__Group__5__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__StateVerification__Group__5__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getStateVerificationAccess().getValueAssignment_5()); }
+	(rule__StateVerification__ValueAssignment_5)
+	{ after(grammarAccess.getStateVerificationAccess().getValueAssignment_5()); }
 )
 ;
 finally {
@@ -13073,15 +13127,34 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__StateVerification__ValueAssignment_3
+rule__StateVerification__NotAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0()); }
+		{ before(grammarAccess.getStateVerificationAccess().getNotNotKeyword_3_0()); }
+		(
+			{ before(grammarAccess.getStateVerificationAccess().getNotNotKeyword_3_0()); }
+			'not'
+			{ after(grammarAccess.getStateVerificationAccess().getNotNotKeyword_3_0()); }
+		)
+		{ after(grammarAccess.getStateVerificationAccess().getNotNotKeyword_3_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__StateVerification__ValueAssignment_5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_5_0()); }
 		ruleJsonValueClient
-		{ after(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0()); }
+		{ after(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_5_0()); }
 	)
 ;
 finally {

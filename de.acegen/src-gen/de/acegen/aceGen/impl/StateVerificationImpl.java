@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.StateVerificationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.StateVerificationImpl#getStateRef <em>State Ref</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.StateVerificationImpl#isNot <em>Not</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.StateVerificationImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
@@ -63,6 +64,26 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected SingleClientAttribute stateRef;
+
+  /**
+   * The default value of the '{@link #isNot() <em>Not</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNot()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NOT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNot() <em>Not</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNot()
+   * @generated
+   * @ordered
+   */
+  protected boolean not = NOT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -171,6 +192,31 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
+  public boolean isNot()
+  {
+    return not;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNot(boolean newNot)
+  {
+    boolean oldNot = not;
+    not = newNot;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.STATE_VERIFICATION__NOT, oldNot, not));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public JsonValueClient getValue()
   {
     return value;
@@ -246,6 +292,8 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
         if (resolve) return getStateRef();
         return basicGetStateRef();
+      case AceGenPackage.STATE_VERIFICATION__NOT:
+        return isNot();
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         return getValue();
     }
@@ -267,6 +315,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
         setStateRef((SingleClientAttribute)newValue);
+        return;
+      case AceGenPackage.STATE_VERIFICATION__NOT:
+        setNot((Boolean)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         setValue((JsonValueClient)newValue);
@@ -291,6 +342,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
         setStateRef((SingleClientAttribute)null);
         return;
+      case AceGenPackage.STATE_VERIFICATION__NOT:
+        setNot(NOT_EDEFAULT);
+        return;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         setValue((JsonValueClient)null);
         return;
@@ -312,6 +366,8 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
         return stateRef != null;
+      case AceGenPackage.STATE_VERIFICATION__NOT:
+        return not != NOT_EDEFAULT;
       case AceGenPackage.STATE_VERIFICATION__VALUE:
         return value != null;
     }
@@ -331,6 +387,8 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", not: ");
+    result.append(not);
     result.append(')');
     return result.toString();
   }

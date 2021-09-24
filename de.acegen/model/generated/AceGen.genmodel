@@ -93,6 +93,7 @@
     <genClasses ecoreClass="AceGen.ecore#//StateVerification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//StateVerification/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//StateVerification/stateRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//StateVerification/not"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//StateVerification/value"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//JsonObjectClient">

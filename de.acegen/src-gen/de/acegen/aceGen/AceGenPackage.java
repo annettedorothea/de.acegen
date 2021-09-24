@@ -877,13 +877,22 @@ public interface AceGenPackage extends EPackage
   int STATE_VERIFICATION__STATE_REF = 1;
 
   /**
+   * The feature id for the '<em><b>Not</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VERIFICATION__NOT = 2;
+
+  /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_VERIFICATION__VALUE = 2;
+  int STATE_VERIFICATION__VALUE = 3;
 
   /**
    * The number of structural features of the '<em>State Verification</em>' class.
@@ -892,7 +901,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_VERIFICATION_FEATURE_COUNT = 3;
+  int STATE_VERIFICATION_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.JsonValueClientImpl <em>Json Value Client</em>}' class.
@@ -3573,6 +3582,17 @@ public interface AceGenPackage extends EPackage
   EReference getStateVerification_StateRef();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.StateVerification#isNot <em>Not</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Not</em>'.
+   * @see de.acegen.aceGen.StateVerification#isNot()
+   * @see #getStateVerification()
+   * @generated
+   */
+  EAttribute getStateVerification_Not();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.acegen.aceGen.StateVerification#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5752,6 +5772,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EReference STATE_VERIFICATION__STATE_REF = eINSTANCE.getStateVerification_StateRef();
+
+    /**
+     * The meta object literal for the '<em><b>Not</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATE_VERIFICATION__NOT = eINSTANCE.getStateVerification_Not();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.

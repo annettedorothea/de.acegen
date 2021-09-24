@@ -109,6 +109,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="StateVerification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateRef" eType="#//SingleClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="not" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValueClient"
         containment="true"/>
   </eClassifiers>

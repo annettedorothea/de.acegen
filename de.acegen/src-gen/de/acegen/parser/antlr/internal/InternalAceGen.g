@@ -1733,16 +1733,34 @@ ruleStateVerification returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='shouldBe'
+		otherlv_2='should'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getStateVerificationAccess().getShouldBeKeyword_2());
+			newLeafNode(otherlv_2, grammarAccess.getStateVerificationAccess().getShouldKeyword_2());
+		}
+		(
+			(
+				lv_not_3_0='not'
+				{
+					newLeafNode(lv_not_3_0, grammarAccess.getStateVerificationAccess().getNotNotKeyword_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getStateVerificationRule());
+					}
+					setWithLastConsumed($current, "not", lv_not_3_0 != null, "not");
+				}
+			)
+		)?
+		otherlv_4='be'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getStateVerificationAccess().getBeKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_5_0());
 				}
-				lv_value_3_0=ruleJsonValueClient
+				lv_value_5_0=ruleJsonValueClient
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getStateVerificationRule());
@@ -1750,7 +1768,7 @@ ruleStateVerification returns [EObject current=null]
 					set(
 						$current,
 						"value",
-						lv_value_3_0,
+						lv_value_5_0,
 						"de.acegen.AceGen.JsonValueClient");
 					afterParserOrEnumRuleCall();
 				}

@@ -1049,22 +1049,10 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     StateVerification returns StateVerification
 	 *
 	 * Constraint:
-	 *     (name=ID stateRef=[SingleClientAttribute|QualifiedName] value=JsonValueClient)
+	 *     (name=ID stateRef=[SingleClientAttribute|QualifiedName] not?='not'? value=JsonValueClient)
 	 */
 	protected void sequence_StateVerification(ISerializationContext context, StateVerification semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__NAME));
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF));
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.STATE_VERIFICATION__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getStateVerificationAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getStateVerificationAccess().getStateRefSingleClientAttributeQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.STATE_VERIFICATION__STATE_REF, false));
-		feeder.accept(grammarAccess.getStateVerificationAccess().getValueJsonValueClientParserRuleCall_3_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

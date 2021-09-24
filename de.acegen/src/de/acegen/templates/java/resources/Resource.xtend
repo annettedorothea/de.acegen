@@ -74,7 +74,7 @@ class Resource {
 		import de.acegen.SquishyDataProvider;
 		import de.acegen.Config;
 		
-		«IF authorize»
+		«IF authorize && authUser !== null»
 			import de.acegen.auth.«authUser.name.toFirstUpper»;
 			import io.dropwizard.auth.Auth;
 		«ENDIF»

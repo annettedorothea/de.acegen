@@ -1123,16 +1123,19 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cStateRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cStateRefSingleClientAttributeCrossReference_1_0 = (CrossReference)cStateRefAssignment_1.eContents().get(0);
 		private final RuleCall cStateRefSingleClientAttributeQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cStateRefSingleClientAttributeCrossReference_1_0.eContents().get(1);
-		private final Keyword cShouldBeKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cValueJsonValueClientParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
+		private final Keyword cShouldKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cNotAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cNotNotKeyword_3_0 = (Keyword)cNotAssignment_3.eContents().get(0);
+		private final Keyword cBeKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cValueAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cValueJsonValueClientParserRuleCall_5_0 = (RuleCall)cValueAssignment_5.eContents().get(0);
 		
 		//StateVerification:
-		//    name = ID stateRef = [SingleClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
+		//    name = ID stateRef = [SingleClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name = ID stateRef = [SingleClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
+		//name = ID stateRef = [SingleClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
 		public Group getGroup() { return cGroup; }
 		
 		//name = ID
@@ -1150,14 +1153,23 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//QualifiedName
 		public RuleCall getStateRefSingleClientAttributeQualifiedNameParserRuleCall_1_0_1() { return cStateRefSingleClientAttributeQualifiedNameParserRuleCall_1_0_1; }
 		
-		//'shouldBe'
-		public Keyword getShouldBeKeyword_2() { return cShouldBeKeyword_2; }
+		//'should'
+		public Keyword getShouldKeyword_2() { return cShouldKeyword_2; }
+		
+		//(not ?= 'not')?
+		public Assignment getNotAssignment_3() { return cNotAssignment_3; }
+		
+		//'not'
+		public Keyword getNotNotKeyword_3_0() { return cNotNotKeyword_3_0; }
+		
+		//'be'
+		public Keyword getBeKeyword_4() { return cBeKeyword_4; }
 		
 		//value = JsonValueClient
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
+		public Assignment getValueAssignment_5() { return cValueAssignment_5; }
 		
 		//JsonValueClient
-		public RuleCall getValueJsonValueClientParserRuleCall_3_0() { return cValueJsonValueClientParserRuleCall_3_0; }
+		public RuleCall getValueJsonValueClientParserRuleCall_5_0() { return cValueJsonValueClientParserRuleCall_5_0; }
 	}
 	public class JsonObjectClientElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonObjectClient");
@@ -3912,7 +3924,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//StateVerification:
-	//    name = ID stateRef = [SingleClientAttribute | QualifiedName] 'shouldBe' value = JsonValueClient
+	//    name = ID stateRef = [SingleClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
 	//;
 	public StateVerificationElements getStateVerificationAccess() {
 		return pStateVerification;

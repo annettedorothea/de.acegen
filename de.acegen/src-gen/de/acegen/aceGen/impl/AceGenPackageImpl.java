@@ -1356,9 +1356,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getStateVerification_Not()
+  {
+    return (EAttribute)stateVerificationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getStateVerification_Value()
   {
-    return (EReference)stateVerificationEClass.getEStructuralFeatures().get(2);
+    return (EReference)stateVerificationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -3074,6 +3085,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     stateVerificationEClass = createEClass(STATE_VERIFICATION);
     createEAttribute(stateVerificationEClass, STATE_VERIFICATION__NAME);
     createEReference(stateVerificationEClass, STATE_VERIFICATION__STATE_REF);
+    createEAttribute(stateVerificationEClass, STATE_VERIFICATION__NOT);
     createEReference(stateVerificationEClass, STATE_VERIFICATION__VALUE);
 
     jsonObjectClientEClass = createEClass(JSON_OBJECT_CLIENT);
@@ -3409,6 +3421,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(stateVerificationEClass, StateVerification.class, "StateVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStateVerification_Name(), ecorePackage.getEString(), "name", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStateVerification_StateRef(), this.getSingleClientAttribute(), null, "stateRef", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStateVerification_Not(), ecorePackage.getEBoolean(), "not", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStateVerification_Value(), this.getJsonValueClient(), null, "value", null, 0, 1, StateVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(jsonObjectClientEClass, JsonObjectClient.class, "JsonObjectClient", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
