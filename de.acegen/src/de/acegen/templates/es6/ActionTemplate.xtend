@@ -156,7 +156,7 @@ class ActionTemplate {
 		                data
 		            }
 		        });
-		        if (AppUtils.settings.mode === "dev") {
+		        if (AppUtils.settings.mode === "dev" && localStorage) {
 					let squishyValues = JSON.parse(localStorage.getItem("squishyValues"));
 					if (squishyValues && squishyValues.length > 0) {
 					    const squishyValue = JSON.parse(squishyValues.shift());
