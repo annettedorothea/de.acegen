@@ -55,7 +55,6 @@ class CommandTemplate {
 		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
-		import * as Utils from "../../ace/Utils";
 		import * as AppUtils from "../../../src/app/AppUtils";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";

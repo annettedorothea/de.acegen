@@ -85,8 +85,6 @@ public class CommandTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("import * as Utils from \"../../ace/Utils\";");
-    _builder.newLine();
     _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
     _builder.newLine();
     {

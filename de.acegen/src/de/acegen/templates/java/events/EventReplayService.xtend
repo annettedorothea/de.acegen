@@ -58,6 +58,7 @@ class EventReplayService {
 		
 		import de.acegen.IDaoProvider;
 		import de.acegen.IEvent;
+		import de.acegen.Event;
 		import de.acegen.ViewProvider;
 		import «getName».data.*;
 		import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -118,7 +119,7 @@ class EventReplayService {
 				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
 					«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
 					data.migrateLegacyData(json);
-					«eventName(outcome)» event = new «eventName(outcome)»(daoProvider, viewProvider, appConfiguration);
+					Event event = new Event<«getModel.dataName»>("«java.getName».events.«eventName(outcome)»", daoProvider, viewProvider, appConfiguration);
 					event.notifyListeners(data, handle);
 					event.notifyAfterCommitListeners(data, handle);
 				}

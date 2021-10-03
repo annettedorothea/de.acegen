@@ -193,12 +193,6 @@ class JavaGenerator {
 				fsa.generateFile(httpServer.packageFolder + "/commands/" + ace.commandName + ".java",
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 					command.generateInitialCommandFile(ace as HttpServerAceWrite, httpServer));
-				val aceWrite = ace as HttpServerAceWrite
-				for (outcome : aceWrite.outcomes) {
-					fsa.generateFile(httpServer.packageFolder + "/events/" + ace.eventName(outcome) + ".java",
-						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-						event.generateEventFile(ace, outcome, httpServer));
-				}
 			}
 			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + ".java",
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));

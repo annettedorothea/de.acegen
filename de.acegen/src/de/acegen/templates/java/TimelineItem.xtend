@@ -132,6 +132,8 @@ class TimelineItem {
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
+		import java.time.LocalDateTime;
+		
 		
 		import org.jdbi.v3.core.mapper.RowMapper;
 		import org.jdbi.v3.core.statement.StatementContext;
@@ -139,10 +141,16 @@ class TimelineItem {
 		public class TimelineItemMapper implements RowMapper<ITimelineItem> {
 			
 			public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {
+				LocalDateTime timestamp;
+				try {
+					timestamp = r.getTimestamp("time") != null ? r.getTimestamp("time").toLocalDateTime() : null;
+				} catch (Exception x) {
+					timestamp = null;
+				}
 				return new TimelineItem(
 					r.getString("type"),
 					r.getString("name"),
-					r.getTimestamp("time") != null ? r.getTimestamp("time").toLocalDateTime() : null,
+					timestamp,
 					r.getString("data"),
 					r.getString("uuid")
 				);

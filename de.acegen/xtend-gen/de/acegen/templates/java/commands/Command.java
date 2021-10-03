@@ -68,10 +68,14 @@ public class Command {
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
+    _builder.append("import de.acegen.Event;");
+    _builder.newLine();
     _builder.newLine();
     String _dataImport = this._modelExtension.dataImport(it.getModel());
     _builder.append(_dataImport);
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractCommandName = this._aceExtension.abstractCommandName(it);
@@ -155,10 +159,13 @@ public class Command {
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("new ");
+            _builder.append("new Event<");
+            String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
+            _builder.append(_dataParamType_3, "\t\t\t");
+            _builder.append(">(\"");
             String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
             _builder.append(_eventNameWithPackage, "\t\t\t");
-            _builder.append("(daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);");
+            _builder.append("\", daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
@@ -177,8 +184,8 @@ public class Command {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void publishAfterCommitEvents(");
-    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_3, "\t");
+    String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_4, "\t");
     _builder.append(" data, PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLineIfNotEmpty();
     {
@@ -200,10 +207,13 @@ public class Command {
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("new ");
+            _builder.append("new Event<");
+            String _dataParamType_5 = this._modelExtension.dataParamType(it.getModel());
+            _builder.append(_dataParamType_5, "\t\t\t");
+            _builder.append(">(\"");
             String _eventNameWithPackage_1 = this._aceExtension.eventNameWithPackage(it, outcome_2);
             _builder.append(_eventNameWithPackage_1, "\t\t\t");
-            _builder.append("(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
+            _builder.append("\", daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");

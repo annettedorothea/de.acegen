@@ -49,8 +49,8 @@ class ActionTemplate {
 		
 		export default class «abstractActionName» extends Action {
 		
-		    constructor() {
-		        super('«es6.getName».«actionName»');
+		    constructor(callback) {
+		        super('«es6.getName».«actionName»', callback);
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
@@ -107,8 +107,8 @@ class ActionTemplate {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR») {
-			    new «aceOperation.actionName»().apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
+			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR»«IF aceOperation.isAsync || aceOperation.getServerCall !== null»«IF aceOperation.input.length > 0», «ENDIF»callback«ENDIF») {
+			    new «aceOperation.actionName»(«IF aceOperation.isAsync || aceOperation.getServerCall !== null»callback«ENDIF»).apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
 			}
 			
 		«ENDFOR»
@@ -142,8 +142,9 @@ class ActionTemplate {
 		
 		export default class Action {
 		
-		    constructor(actionName) {
+		    constructor(actionName, callback) {
 		        this.actionName = actionName;
+		        this.callback = callback;
 		    }
 		
 		    apply(data) {
@@ -198,8 +199,8 @@ class ActionTemplate {
 		
 		export default class AsynchronousAction extends Action {
 		
-		    constructor(actionName) {
-		        super(actionName);
+		    constructor(actionName, callback) {
+		        super(actionName, callback);
 		        this.asynchronous = true;
 		    }
 		

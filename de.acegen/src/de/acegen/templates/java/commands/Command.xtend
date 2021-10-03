@@ -46,9 +46,11 @@ class Command {
 		import de.acegen.IDaoProvider;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceHandle;
+		import de.acegen.Event;
 		
 		«getModel.dataImport»
 		
+		@SuppressWarnings("unused")
 		public abstract class «abstractCommandName» extends Command<«getModel.dataParamType»> {
 		
 			public «abstractCommandName»(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
@@ -66,7 +68,7 @@ class Command {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);
+							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -77,7 +79,7 @@ class Command {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new «eventNameWithPackage(outcome)»(daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
+							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»

@@ -428,6 +428,15 @@ public class AceTemplate {
     _builder.append("            ");
     _builder.append("nextAction.action.applyAction(nextAction.data).then(() => {");
     _builder.newLine();
+    _builder.append("            \t");
+    _builder.append("if (nextAction.callback) {");
+    _builder.newLine();
+    _builder.append("            \t\t");
+    _builder.append("nextAction.callback();");
+    _builder.newLine();
+    _builder.append("            \t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.append("\t\t    \t");
     _builder.append("applyNextActions();");
     _builder.newLine();

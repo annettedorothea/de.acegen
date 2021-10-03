@@ -25,6 +25,7 @@ import de.acegen.extensions.es6.Es6Extension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -91,7 +92,7 @@ public class ActionTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("constructor() {");
+    _builder.append("constructor(callback) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("super(\'");
@@ -100,7 +101,7 @@ public class ActionTemplate {
     _builder.append(".");
     String _actionName = this._aceExtension.actionName(it);
     _builder.append(_actionName, "        ");
-    _builder.append("\');");
+    _builder.append("\', callback);");
     _builder.newLineIfNotEmpty();
     {
       SingleClientAttribute _loadingFlag_1 = it.getLoadingFlag();
@@ -289,13 +290,31 @@ public class ActionTemplate {
             _builder.append(_name_1);
           }
         }
+        {
+          if ((aceOperation_1.isAsync() || (aceOperation_1.getServerCall() != null))) {
+            {
+              int _length = ((Object[])Conversions.unwrapArray(aceOperation_1.getInput(), Object.class)).length;
+              boolean _greaterThan = (_length > 0);
+              if (_greaterThan) {
+                _builder.append(", ");
+              }
+            }
+            _builder.append("callback");
+          }
+        }
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("    ");
         _builder.append("new ");
         String _actionName_2 = this._aceExtension.actionName(aceOperation_1);
         _builder.append(_actionName_2, "    ");
-        _builder.append("().apply({");
+        _builder.append("(");
+        {
+          if ((aceOperation_1.isAsync() || (aceOperation_1.getServerCall() != null))) {
+            _builder.append("callback");
+          }
+        }
+        _builder.append(").apply({");
         {
           EList<Input> _input_1 = aceOperation_1.getInput();
           boolean _hasElements_1 = false;
@@ -384,10 +403,13 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("constructor(actionName) {");
+    _builder.append("constructor(actionName, callback) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.actionName = actionName;");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("this.callback = callback;");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
@@ -526,10 +548,10 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("constructor(actionName) {");
+    _builder.append("constructor(actionName, callback) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("super(actionName);");
+    _builder.append("super(actionName, callback);");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.asynchronous = true;");

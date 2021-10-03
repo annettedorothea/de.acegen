@@ -17,49 +17,14 @@
 
 package de.acegen.templates.java.events
 
-import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
-import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class Event {
 
 	@Inject
-	extension AceExtension
-
-	@Inject
-	extension ModelExtension
-
-	@Inject
 	extension CommonExtension
 	
-	def generateEventFile(HttpServerAce it, HttpServerOutcome outcome, HttpServer java) '''
-		«copyright»
-		
-		package «java.getName».events;
-		
-		import de.acegen.Event;
-		import de.acegen.IDaoProvider;
-		import de.acegen.ViewProvider;
-		import de.acegen.CustomAppConfiguration;
-		
-		«getModel.dataImport»
-		
-		public class «eventName(outcome)» extends Event<«getModel.dataParamType»> {
-		
-			public «eventName(outcome)»(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
-				super("«java.getName».events.«eventName(outcome)»", daoProvider, viewProvider, appConfiguration);
-			}
-		
-		}
-		
-		«sdg»
-		
-	'''
-
 	def generateEvent() '''
 		«copyright»
 		
@@ -67,7 +32,7 @@ class Event {
 		
 		import java.util.List;
 		
-		public abstract class Event<T extends IDataContainer> implements IEvent<T> {
+		public class Event<T extends IDataContainer> implements IEvent<T> {
 		
 			private String eventName;
 			private IDaoProvider daoProvider;
@@ -88,6 +53,8 @@ class Event {
 					for (EventConsumer consumer : consumerList) {
 						consumer.consumeEvent(data, handle);
 					}
+				} else if (viewProvider.getAfterCommitConsumerForEvent(eventName) == null) {
+					System.out.println("No listeners for " + eventName + " found. Did you forget to register them?");
 				}
 			}
 		
@@ -97,6 +64,8 @@ class Event {
 					for (EventConsumer consumer : consumerList) {
 						consumer.consumeEvent(data, handle);
 					}
+				} else if(viewProvider.getConsumerForEvent(eventName) == null) {
+					System.out.println("No listeners for " + eventName + " found. Did you forget to register them?");
 				}
 			}
 		
