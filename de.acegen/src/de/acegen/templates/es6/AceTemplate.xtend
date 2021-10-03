@@ -224,8 +224,8 @@ class AceTemplate {
 	    if (nextAction) {
 			if (nextAction.action.asynchronous) {
 	            nextAction.action.applyAction(nextAction.data).then(() => {
-	            	if (nextAction.callback) {
-	            		nextAction.callback();
+	            	if (nextAction.action.callback) {
+	            		nextAction.action.callback(nextAction.callback);
 	            	}
 			    	applyNextActions();
 			    }, (error) => {
