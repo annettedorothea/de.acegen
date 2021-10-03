@@ -146,12 +146,28 @@ public class Command {
     {
       EList<HttpServerOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpServerOutcome outcome_1 : _outcomes_1) {
-        _builder.append("\t\t\t");
-        _builder.append("daoProvider.getAceDao().addEventToTimeline(\"");
-        String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
-        _builder.append(_eventNameWithPackage, "\t\t\t");
-        _builder.append("\", data, timelineHandle);");
-        _builder.newLineIfNotEmpty();
+        {
+          int _size = outcome_1.getListeners().size();
+          boolean _greaterThan = (_size > 0);
+          if (_greaterThan) {
+            _builder.append("\t\t\t");
+            _builder.append("if (data.hasOutcome(\"");
+            String _name_3 = outcome_1.getName();
+            _builder.append(_name_3, "\t\t\t");
+            _builder.append("\")){");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t");
+            _builder.append("\t");
+            _builder.append("daoProvider.getAceDao().addEventToTimeline(\"");
+            String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
+            _builder.append(_eventNameWithPackage, "\t\t\t\t");
+            _builder.append("\", data, timelineHandle);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t");
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
       }
     }
     _builder.append("\t\t");
@@ -180,13 +196,13 @@ public class Command {
             boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
             return Boolean.valueOf((!_isAfterCommit));
           };
-          int _size = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function));
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
+          int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function));
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
             _builder.append("\t\t");
             _builder.append("if (data.hasOutcome(\"");
-            String _name_3 = outcome_2.getName();
-            _builder.append(_name_3, "\t\t");
+            String _name_4 = outcome_2.getName();
+            _builder.append(_name_4, "\t\t");
             _builder.append("\")){");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
@@ -228,13 +244,13 @@ public class Command {
             EObject _eContainer = listenerFunction.eContainer();
             return Boolean.valueOf(((HttpServerView) _eContainer).isAfterCommit());
           };
-          int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_3.getListeners(), _function_1));
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size_2 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_3.getListeners(), _function_1));
+          boolean _greaterThan_2 = (_size_2 > 0);
+          if (_greaterThan_2) {
             _builder.append("\t\t");
             _builder.append("if (data.hasOutcome(\"");
-            String _name_4 = outcome_3.getName();
-            _builder.append(_name_4, "\t\t");
+            String _name_5 = outcome_3.getName();
+            _builder.append(_name_5, "\t\t");
             _builder.append("\")){");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");

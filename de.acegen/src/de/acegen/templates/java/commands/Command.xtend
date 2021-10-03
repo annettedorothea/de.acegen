@@ -67,7 +67,11 @@ class Command {
 			public void addEventsToTimeline(«getModel.dataParamType» data, PersistenceHandle timelineHandle) {
 				if (appConfiguration.getConfig().writeTimeline()) {
 					«FOR outcome : outcomes»
-						daoProvider.getAceDao().addEventToTimeline("«eventNameWithPackage(outcome)»", data, timelineHandle);
+						«IF outcome.listeners.size > 0»
+							if (data.hasOutcome("«outcome.getName»")){
+								daoProvider.getAceDao().addEventToTimeline("«eventNameWithPackage(outcome)»", data, timelineHandle);
+							}
+						«ENDIF»
 					«ENDFOR»
 				}
 			}
