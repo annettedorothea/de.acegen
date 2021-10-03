@@ -35,16 +35,12 @@ class Event {
 		public class Event<T extends IDataContainer> implements IEvent<T> {
 		
 			private String eventName;
-			private IDaoProvider daoProvider;
 			private ViewProvider viewProvider;
-			private CustomAppConfiguration appConfiguration;
 		
-			public Event(String eventName, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public Event(String eventName, ViewProvider viewProvider) {
 				super();
 				this.eventName = eventName;
-				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
-				this.appConfiguration = appConfiguration;
 			}
 		
 			public void notifyListeners(T data, PersistenceHandle handle) {
@@ -74,16 +70,10 @@ class Event {
 			}
 		
 			public void publish(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
-				if (appConfiguration.getConfig().writeTimeline()) {
-					daoProvider.getAceDao().addEventToTimeline(this.getEventName(), data, timelineHandle);
-				}
 				this.notifyListeners(data, handle);
 			}
 		
 			public void publishAfterCommit(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
-				if (appConfiguration.getConfig().writeTimeline()) {
-					daoProvider.getAceDao().addEventToTimeline(this.getEventName(), data, timelineHandle);
-				}
 				this.notifyAfterCommitListeners(data, handle);
 			}
 		

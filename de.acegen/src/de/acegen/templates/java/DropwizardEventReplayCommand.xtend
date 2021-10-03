@@ -83,7 +83,7 @@ class DropwizardEventReplayCommand {
 		
 					int i = 0;
 					for (ITimelineItem nextEvent : timeline) {
-						EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, daoProvider, viewProvider, configuration);
+						EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, viewProvider);
 						i++;
 						if (i%1000 == 0) {
 							LOG.info("published " + i + " events");

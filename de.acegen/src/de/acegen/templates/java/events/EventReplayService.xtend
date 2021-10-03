@@ -42,7 +42,7 @@ class EventReplayService {
 		package de.acegen;
 		
 		public class EventReplayService {
-			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, ViewProvider viewProvider) {
 				//delegate to package EventReplayService
 			}
 		}
@@ -56,7 +56,6 @@ class EventReplayService {
 		
 		package «name».events;
 		
-		import de.acegen.IDaoProvider;
 		import de.acegen.IEvent;
 		import de.acegen.Event;
 		import de.acegen.ViewProvider;
@@ -64,7 +63,6 @@ class EventReplayService {
 		import com.fasterxml.jackson.databind.DeserializationFeature;
 		import com.fasterxml.jackson.databind.ObjectMapper;
 		import de.acegen.IDataContainer;
-		import de.acegen.CustomAppConfiguration;
 		import de.acegen.PersistenceHandle;
 		
 		import java.io.IOException;
@@ -82,7 +80,7 @@ class EventReplayService {
 				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			}
 		
-			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {
+			public static void replayEvent(String eventClass, String json, PersistenceHandle handle, ViewProvider viewProvider) {
 				«IF eventCount > 0»
 					try {
 						«FOR ace : aceOperations»
@@ -119,7 +117,7 @@ class EventReplayService {
 				if (eventClass.equals("«java.getName».events.«eventName(outcome)»")) {
 					«getModel.dataName» data = mapper.readValue(json, «getModel.dataName».class);
 					data.migrateLegacyData(json);
-					Event event = new Event<«getModel.dataName»>("«java.getName».events.«eventName(outcome)»", daoProvider, viewProvider, appConfiguration);
+					Event event = new Event<«getModel.dataName»>("«java.getName».events.«eventName(outcome)»", viewProvider);
 					event.notifyListeners(data, handle);
 					event.notifyAfterCommitListeners(data, handle);
 				}

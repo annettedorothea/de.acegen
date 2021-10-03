@@ -55,7 +55,7 @@ public class EventReplayService {
     _builder.append("public class EventReplayService {");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
+    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("//delegate to package EventReplayService");
@@ -85,8 +85,6 @@ public class EventReplayService {
     _builder.append(".events;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import de.acegen.IDaoProvider;");
-    _builder.newLine();
     _builder.append("import de.acegen.IEvent;");
     _builder.newLine();
     _builder.append("import de.acegen.Event;");
@@ -103,8 +101,6 @@ public class EventReplayService {
     _builder.append("import com.fasterxml.jackson.databind.ObjectMapper;");
     _builder.newLine();
     _builder.append("import de.acegen.IDataContainer;");
-    _builder.newLine();
-    _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
@@ -141,7 +137,7 @@ public class EventReplayService {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
+    _builder.append("public static void replayEvent(String eventClass, String json, PersistenceHandle handle, ViewProvider viewProvider) {");
     _builder.newLine();
     {
       int _eventCount = this.eventCount(it);
@@ -241,7 +237,7 @@ public class EventReplayService {
             _builder.append(".events.");
             String _eventName_1 = this._aceExtension.eventName(it, outcome);
             _builder.append(_eventName_1, "\t");
-            _builder.append("\", daoProvider, viewProvider, appConfiguration);");
+            _builder.append("\", viewProvider);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("event.notifyListeners(data, handle);");

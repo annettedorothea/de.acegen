@@ -61,14 +61,23 @@ class Command {
 				protected void add«outcome.getName.toFirstUpper»Outcome(«getModel.dataParamType» data) {
 					data.addOutcome("«outcome.getName»");
 				}
-
 			«ENDFOR»
+			
+			@Override
+			public void addEventsToTimeline(«getModel.dataParamType» data, PersistenceHandle timelineHandle) {
+				if (appConfiguration.getConfig().writeTimeline()) {
+					«FOR outcome : outcomes»
+						daoProvider.getAceDao().addEventToTimeline("«eventNameWithPackage(outcome)»", data, timelineHandle);
+					«ENDFOR»
+				}
+			}
+			
 			@Override
 			public void publishEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);
+							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", viewProvider).publish(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -79,7 +88,7 @@ class Command {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
-							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
+							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", viewProvider).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -193,6 +202,8 @@ class Command {
 
 			T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);
 		
+			void addEventsToTimeline(T data, PersistenceHandle timelineHandle);
+
 			void publishEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 
 			void publishAfterCommitEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);

@@ -127,45 +127,77 @@ public class Command {
         _builder.append("\t");
         _builder.append("}");
         _builder.newLine();
-        _builder.newLine();
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public void addEventsToTimeline(");
+    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_2, "\t");
+    _builder.append(" data, PersistenceHandle timelineHandle) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
+    _builder.newLine();
+    {
+      EList<HttpServerOutcome> _outcomes_1 = it.getOutcomes();
+      for(final HttpServerOutcome outcome_1 : _outcomes_1) {
+        _builder.append("\t\t\t");
+        _builder.append("daoProvider.getAceDao().addEventToTimeline(\"");
+        String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
+        _builder.append(_eventNameWithPackage, "\t\t\t");
+        _builder.append("\", data, timelineHandle);");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
     _builder.append("\t");
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void publishEvents(");
-    String _dataParamType_2 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_2, "\t");
+    String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_3, "\t");
     _builder.append(" data, PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLineIfNotEmpty();
     {
-      EList<HttpServerOutcome> _outcomes_1 = it.getOutcomes();
-      for(final HttpServerOutcome outcome_1 : _outcomes_1) {
+      EList<HttpServerOutcome> _outcomes_2 = it.getOutcomes();
+      for(final HttpServerOutcome outcome_2 : _outcomes_2) {
         {
           final Function1<HttpServerViewFunction, Boolean> _function = (HttpServerViewFunction listenerFunction) -> {
             EObject _eContainer = listenerFunction.eContainer();
             boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
             return Boolean.valueOf((!_isAfterCommit));
           };
-          int _size = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_1.getListeners(), _function));
+          int _size = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function));
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
             _builder.append("\t\t");
             _builder.append("if (data.hasOutcome(\"");
-            String _name_3 = outcome_1.getName();
+            String _name_3 = outcome_2.getName();
             _builder.append(_name_3, "\t\t");
             _builder.append("\")){");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new Event<");
-            String _dataParamType_3 = this._modelExtension.dataParamType(it.getModel());
-            _builder.append(_dataParamType_3, "\t\t\t");
+            String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
+            _builder.append(_dataParamType_4, "\t\t\t");
             _builder.append(">(\"");
-            String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
-            _builder.append(_eventNameWithPackage, "\t\t\t");
-            _builder.append("\", daoProvider, viewProvider, appConfiguration).publish(data.deepCopy(), handle, timelineHandle);");
+            String _eventNameWithPackage_1 = this._aceExtension.eventNameWithPackage(it, outcome_2);
+            _builder.append(_eventNameWithPackage_1, "\t\t\t");
+            _builder.append("\", viewProvider).publish(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
@@ -184,36 +216,36 @@ public class Command {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void publishAfterCommitEvents(");
-    String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_4, "\t");
+    String _dataParamType_5 = this._modelExtension.dataParamType(it.getModel());
+    _builder.append(_dataParamType_5, "\t");
     _builder.append(" data, PersistenceHandle handle, PersistenceHandle timelineHandle) {");
     _builder.newLineIfNotEmpty();
     {
-      EList<HttpServerOutcome> _outcomes_2 = it.getOutcomes();
-      for(final HttpServerOutcome outcome_2 : _outcomes_2) {
+      EList<HttpServerOutcome> _outcomes_3 = it.getOutcomes();
+      for(final HttpServerOutcome outcome_3 : _outcomes_3) {
         {
           final Function1<HttpServerViewFunction, Boolean> _function_1 = (HttpServerViewFunction listenerFunction) -> {
             EObject _eContainer = listenerFunction.eContainer();
             return Boolean.valueOf(((HttpServerView) _eContainer).isAfterCommit());
           };
-          int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function_1));
+          int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_3.getListeners(), _function_1));
           boolean _greaterThan_1 = (_size_1 > 0);
           if (_greaterThan_1) {
             _builder.append("\t\t");
             _builder.append("if (data.hasOutcome(\"");
-            String _name_4 = outcome_2.getName();
+            String _name_4 = outcome_3.getName();
             _builder.append(_name_4, "\t\t");
             _builder.append("\")){");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t");
             _builder.append("new Event<");
-            String _dataParamType_5 = this._modelExtension.dataParamType(it.getModel());
-            _builder.append(_dataParamType_5, "\t\t\t");
+            String _dataParamType_6 = this._modelExtension.dataParamType(it.getModel());
+            _builder.append(_dataParamType_6, "\t\t\t");
             _builder.append(">(\"");
-            String _eventNameWithPackage_1 = this._aceExtension.eventNameWithPackage(it, outcome_2);
-            _builder.append(_eventNameWithPackage_1, "\t\t\t");
-            _builder.append("\", daoProvider, viewProvider, appConfiguration).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
+            String _eventNameWithPackage_2 = this._aceExtension.eventNameWithPackage(it, outcome_3);
+            _builder.append(_eventNameWithPackage_2, "\t\t\t");
+            _builder.append("\", viewProvider).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
@@ -479,6 +511,10 @@ public class Command {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("T execute(T data, PersistenceHandle readonlyHandle, PersistenceHandle timelineHandle);");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("void addEventsToTimeline(T data, PersistenceHandle timelineHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");

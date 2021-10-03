@@ -48,34 +48,26 @@ class Action {
 		
 		import java.time.LocalDateTime;
 		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
-		import org.apache.commons.lang3.StringUtils;
-		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.HttpMethod;
 		import de.acegen.ICommand;
 		import de.acegen.IDaoProvider;
-		import de.acegen.IDataContainer;
-		import de.acegen.ITimelineItem;
 		import de.acegen.ViewProvider;
 		import de.acegen.SquishyDataProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.WriteAction;
 
 		«getModel.dataImport»
-		«getModel.dataClassImport»
 		import «commandNameWithPackage»;
 		
-		@SuppressWarnings("unused")
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+
 		public abstract class «abstractActionName» extends WriteAction<«model.dataParamType»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
-			
+
 			«constructor»
-				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider);
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
 			@Override
@@ -344,6 +336,7 @@ class Action {
 					
 					ICommand<T> command = this.getCommand();
 					data = command.execute(data, databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
+					command.addEventsToTimeline(data, databaseHandle.getTimelineHandle());
 					command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
 					command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());

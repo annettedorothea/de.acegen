@@ -158,7 +158,7 @@ public class DropwizardEventReplayCommand {
     _builder.append("for (ITimelineItem nextEvent : timeline) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, daoProvider, viewProvider, configuration);");
+    _builder.append("EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, viewProvider);");
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("i++;");
