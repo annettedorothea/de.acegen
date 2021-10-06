@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.JsonValueClient;
-import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StateVerification;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -63,7 +63,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    * @ordered
    */
-  protected SingleClientAttribute stateRef;
+  protected ClientAttribute stateRef;
 
   /**
    * The default value of the '{@link #isNot() <em>Not</em>}' attribute.
@@ -147,12 +147,12 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public SingleClientAttribute getStateRef()
+  public ClientAttribute getStateRef()
   {
     if (stateRef != null && stateRef.eIsProxy())
     {
       InternalEObject oldStateRef = (InternalEObject)stateRef;
-      stateRef = (SingleClientAttribute)eResolveProxy(oldStateRef);
+      stateRef = (ClientAttribute)eResolveProxy(oldStateRef);
       if (stateRef != oldStateRef)
       {
         if (eNotificationRequired())
@@ -167,7 +167,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public SingleClientAttribute basicGetStateRef()
+  public ClientAttribute basicGetStateRef()
   {
     return stateRef;
   }
@@ -178,9 +178,9 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public void setStateRef(SingleClientAttribute newStateRef)
+  public void setStateRef(ClientAttribute newStateRef)
   {
-    SingleClientAttribute oldStateRef = stateRef;
+    ClientAttribute oldStateRef = stateRef;
     stateRef = newStateRef;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.STATE_VERIFICATION__STATE_REF, oldStateRef, stateRef));
@@ -314,7 +314,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName((String)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((SingleClientAttribute)newValue);
+        setStateRef((ClientAttribute)newValue);
         return;
       case AceGenPackage.STATE_VERIFICATION__NOT:
         setNot((Boolean)newValue);
@@ -340,7 +340,7 @@ public class StateVerificationImpl extends MinimalEObjectImpl.Container implemen
         setName(NAME_EDEFAULT);
         return;
       case AceGenPackage.STATE_VERIFICATION__STATE_REF:
-        setStateRef((SingleClientAttribute)null);
+        setStateRef((ClientAttribute)null);
         return;
       case AceGenPackage.STATE_VERIFICATION__NOT:
         setNot(NOT_EDEFAULT);

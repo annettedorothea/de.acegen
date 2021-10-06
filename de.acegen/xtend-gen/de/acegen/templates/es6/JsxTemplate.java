@@ -1,11 +1,8 @@
 package de.acegen.templates.es6;
 
 import de.acegen.aceGen.ClientAttribute;
-import de.acegen.aceGen.GroupedClientAttribute;
-import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.Es6Extension;
-import java.util.Arrays;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -22,7 +19,7 @@ public class JsxTemplate {
   @Extension
   private Es6Extension _es6Extension;
   
-  protected CharSequence _generateComponentStruct(final SingleClientAttribute it, final String folderPrefix) {
+  public CharSequence generateComponentStruct(final ClientAttribute it, final String folderPrefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -71,59 +68,7 @@ public class JsxTemplate {
     return _builder;
   }
   
-  protected CharSequence _generateComponentStruct(final GroupedClientAttribute it, final String folderPrefix) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import React from \"react\";");
-    _builder.newLine();
-    _builder.newLine();
-    CharSequence _componentImports = this.componentImports(it, "");
-    _builder.append(_componentImports);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("export const ");
-    String _componentName = this._es6Extension.componentName(it);
-    _builder.append(_componentName);
-    _builder.append(" = (props) => {");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
-      for(final ClientAttribute attribute : _attributeGroup) {
-        _builder.append("\t");
-        _builder.append("if (props.is");
-        String _firstUpper = StringExtensions.toFirstUpper(attribute.getName());
-        _builder.append(_firstUpper, "\t");
-        _builder.append(" === true) {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("return <");
-        String _componentName_1 = this._es6Extension.componentName(attribute);
-        _builder.append(_componentName_1, "\t\t");
-        _builder.append(" {...props}/>;");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
-      }
-    }
-    _builder.append("\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
-  protected CharSequence _renderChild(final SingleClientAttribute it) {
+  public CharSequence renderChild(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((!it.isNoComponent()) && (it.getAttributes().size() > 0))) {
@@ -187,22 +132,7 @@ public class JsxTemplate {
     return _builder;
   }
   
-  protected CharSequence _renderChild(final GroupedClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("<");
-    String _componentName = this._es6Extension.componentName(it);
-    _builder.append(_componentName);
-    _builder.append(" {...props} />");
-    _builder.newLineIfNotEmpty();
-    return _builder;
-  }
-  
-  protected CharSequence _componentImports(final ClientAttribute it, final String subFolder) {
-    StringConcatenation _builder = new StringConcatenation();
-    return _builder;
-  }
-  
-  protected CharSequence _componentImports(final SingleClientAttribute it, final String subFolder) {
+  public CharSequence componentImports(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<ClientAttribute> _attributes = it.getAttributes();
@@ -218,58 +148,5 @@ public class JsxTemplate {
       }
     }
     return _builder;
-  }
-  
-  protected CharSequence _componentImports(final GroupedClientAttribute it, final String subFolder) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<ClientAttribute> _attributeGroup = it.getAttributeGroup();
-      for(final ClientAttribute attribute : _attributeGroup) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append(subFolder);
-        _builder_1.append("/");
-        String _firstLower = StringExtensions.toFirstLower(it.getName());
-        _builder_1.append(_firstLower);
-        String _importComponent = this._es6Extension.importComponent(attribute, _builder_1.toString());
-        _builder.append(_importComponent);
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  public CharSequence generateComponentStruct(final ClientAttribute it, final String folderPrefix) {
-    if (it instanceof GroupedClientAttribute) {
-      return _generateComponentStruct((GroupedClientAttribute)it, folderPrefix);
-    } else if (it instanceof SingleClientAttribute) {
-      return _generateComponentStruct((SingleClientAttribute)it, folderPrefix);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, folderPrefix).toString());
-    }
-  }
-  
-  public CharSequence renderChild(final ClientAttribute it) {
-    if (it instanceof GroupedClientAttribute) {
-      return _renderChild((GroupedClientAttribute)it);
-    } else if (it instanceof SingleClientAttribute) {
-      return _renderChild((SingleClientAttribute)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
-  }
-  
-  public CharSequence componentImports(final ClientAttribute it, final String subFolder) {
-    if (it instanceof GroupedClientAttribute) {
-      return _componentImports((GroupedClientAttribute)it, subFolder);
-    } else if (it instanceof SingleClientAttribute) {
-      return _componentImports((SingleClientAttribute)it, subFolder);
-    } else if (it != null) {
-      return _componentImports(it, subFolder);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, subFolder).toString());
-    }
   }
 }

@@ -3,6 +3,8 @@
  */
 package de.acegen.aceGen;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,7 +16,12 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getClientAttribute()
@@ -23,6 +30,50 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ClientAttribute extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>No Component</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>No Component</em>' attribute.
+   * @see #setNoComponent(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_NoComponent()
+   * @model
+   * @generated
+   */
+  boolean isNoComponent();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>No Component</em>' attribute.
+   * @see #isNoComponent()
+   * @generated
+   */
+  void setNoComponent(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>List</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>List</em>' attribute.
+   * @see #setList(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_List()
+   * @model
+   * @generated
+   */
+  boolean isList();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>List</em>' attribute.
+   * @see #isList()
+   * @generated
+   */
+  void setList(boolean value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -44,5 +95,61 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Location</em>' attribute.
+   * @see #setLocation(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Location()
+   * @model
+   * @generated
+   */
+  boolean isLocation();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Location</em>' attribute.
+   * @see #isLocation()
+   * @generated
+   */
+  void setLocation(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Storage</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Storage</em>' attribute.
+   * @see #setStorage(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Storage()
+   * @model
+   * @generated
+   */
+  boolean isStorage();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Storage</em>' attribute.
+   * @see #isStorage()
+   * @generated
+   */
+  void setStorage(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Attributes</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Attributes()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ClientAttribute> getAttributes();
 
 } // ClientAttribute

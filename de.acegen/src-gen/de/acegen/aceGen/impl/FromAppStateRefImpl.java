@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.FromAppStateRef;
-import de.acegen.aceGen.SingleClientAttribute;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -39,7 +39,7 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
    * @generated
    * @ordered
    */
-  protected SingleClientAttribute stateElement;
+  protected ClientAttribute stateElement;
 
   /**
    * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
@@ -88,12 +88,12 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public SingleClientAttribute getStateElement()
+  public ClientAttribute getStateElement()
   {
     if (stateElement != null && stateElement.eIsProxy())
     {
       InternalEObject oldStateElement = (InternalEObject)stateElement;
-      stateElement = (SingleClientAttribute)eResolveProxy(oldStateElement);
+      stateElement = (ClientAttribute)eResolveProxy(oldStateElement);
       if (stateElement != oldStateElement)
       {
         if (eNotificationRequired())
@@ -108,7 +108,7 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public SingleClientAttribute basicGetStateElement()
+  public ClientAttribute basicGetStateElement()
   {
     return stateElement;
   }
@@ -119,9 +119,9 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public void setStateElement(SingleClientAttribute newStateElement)
+  public void setStateElement(ClientAttribute newStateElement)
   {
-    SingleClientAttribute oldStateElement = stateElement;
+    ClientAttribute oldStateElement = stateElement;
     stateElement = newStateElement;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.FROM_APP_STATE_REF__STATE_ELEMENT, oldStateElement, stateElement));
@@ -182,7 +182,7 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
     switch (featureID)
     {
       case AceGenPackage.FROM_APP_STATE_REF__STATE_ELEMENT:
-        setStateElement((SingleClientAttribute)newValue);
+        setStateElement((ClientAttribute)newValue);
         return;
       case AceGenPackage.FROM_APP_STATE_REF__VAR_NAME:
         setVarName((String)newValue);
@@ -202,7 +202,7 @@ public class FromAppStateRefImpl extends MinimalEObjectImpl.Container implements
     switch (featureID)
     {
       case AceGenPackage.FROM_APP_STATE_REF__STATE_ELEMENT:
-        setStateElement((SingleClientAttribute)null);
+        setStateElement((ClientAttribute)null);
         return;
       case AceGenPackage.FROM_APP_STATE_REF__VAR_NAME:
         setVarName(VAR_NAME_EDEFAULT);

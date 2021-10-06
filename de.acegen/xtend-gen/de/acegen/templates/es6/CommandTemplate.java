@@ -85,7 +85,9 @@ public class CommandTemplate {
         _builder.newLine();
       }
     }
-    _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../../src/AppUtils\";");
+    _builder.newLine();
+    _builder.append("import * as AppState from \"../../../src/AppState\";");
     _builder.newLine();
     {
       List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
@@ -348,7 +350,7 @@ public class CommandTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                _builder.append("AppUtils.stateUpdated();");
+                _builder.append("AppState.stateUpdated();");
                 _builder.newLine();
               }
             }
@@ -581,7 +583,9 @@ public class CommandTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../../src/AppUtils\";");
+    _builder.newLine();
+    _builder.append("import * as AppState from \"../../../src/AppState\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class ");
@@ -688,7 +692,7 @@ public class CommandTemplate {
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                _builder.append("AppUtils.stateUpdated();");
+                _builder.append("AppState.stateUpdated();");
                 _builder.newLine();
               }
             }

@@ -4,12 +4,12 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.FromAppStateRef;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Input;
-import de.acegen.aceGen.SingleClientAttribute;
 
 import java.util.Collection;
 
@@ -126,7 +126,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    * @ordered
    */
-  protected SingleClientAttribute loadingFlag;
+  protected ClientAttribute loadingFlag;
 
   /**
    * The cached value of the '{@link #getOutcomes() <em>Outcomes</em>}' containment reference list.
@@ -290,12 +290,12 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public SingleClientAttribute getLoadingFlag()
+  public ClientAttribute getLoadingFlag()
   {
     if (loadingFlag != null && loadingFlag.eIsProxy())
     {
       InternalEObject oldLoadingFlag = (InternalEObject)loadingFlag;
-      loadingFlag = (SingleClientAttribute)eResolveProxy(oldLoadingFlag);
+      loadingFlag = (ClientAttribute)eResolveProxy(oldLoadingFlag);
       if (loadingFlag != oldLoadingFlag)
       {
         if (eNotificationRequired())
@@ -310,7 +310,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * <!-- end-user-doc -->
    * @generated
    */
-  public SingleClientAttribute basicGetLoadingFlag()
+  public ClientAttribute basicGetLoadingFlag()
   {
     return loadingFlag;
   }
@@ -321,9 +321,9 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
    * @generated
    */
   @Override
-  public void setLoadingFlag(SingleClientAttribute newLoadingFlag)
+  public void setLoadingFlag(ClientAttribute newLoadingFlag)
   {
-    SingleClientAttribute oldLoadingFlag = loadingFlag;
+    ClientAttribute oldLoadingFlag = loadingFlag;
     loadingFlag = newLoadingFlag;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG, oldLoadingFlag, loadingFlag));
@@ -423,7 +423,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         setServerCall((HttpServerAce)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:
-        setLoadingFlag((SingleClientAttribute)newValue);
+        setLoadingFlag((ClientAttribute)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();
@@ -459,7 +459,7 @@ public class HttpClientAceImpl extends MinimalEObjectImpl.Container implements H
         setServerCall((HttpServerAce)null);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__LOADING_FLAG:
-        setLoadingFlag((SingleClientAttribute)null);
+        setLoadingFlag((ClientAttribute)null);
         return;
       case AceGenPackage.HTTP_CLIENT_ACE__OUTCOMES:
         getOutcomes().clear();

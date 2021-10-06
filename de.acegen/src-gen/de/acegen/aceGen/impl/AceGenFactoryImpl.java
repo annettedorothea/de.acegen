@@ -68,14 +68,14 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.PROJECT: return createProject();
       case AceGenPackage.HTTP_CLIENT: return createHttpClient();
       case AceGenPackage.HTTP_CLIENT_ACE: return createHttpClientAce();
+      case AceGenPackage.FUNCTION: return createFunction();
       case AceGenPackage.FROM_APP_STATE_REF: return createFromAppStateRef();
       case AceGenPackage.INPUT: return createInput();
       case AceGenPackage.HTTP_CLIENT_OUTCOME: return createHttpClientOutcome();
       case AceGenPackage.TRIGGERD_ACE_OPERATION: return createTriggerdAceOperation();
       case AceGenPackage.HTTP_CLIENT_STATE_FUNCTION: return createHttpClientStateFunction();
+      case AceGenPackage.FUNCTION_CALL: return createFunctionCall();
       case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
-      case AceGenPackage.SINGLE_CLIENT_ATTRIBUTE: return createSingleClientAttribute();
-      case AceGenPackage.GROUPED_CLIENT_ATTRIBUTE: return createGroupedClientAttribute();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
       case AceGenPackage.CLIENT_GIVEN_REF: return createClientGivenRef();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
@@ -174,6 +174,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public Function createFunction()
+  {
+    FunctionImpl function = new FunctionImpl();
+    return function;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public FromAppStateRef createFromAppStateRef()
   {
     FromAppStateRefImpl fromAppStateRef = new FromAppStateRefImpl();
@@ -234,34 +246,22 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
    * @generated
    */
   @Override
+  public FunctionCall createFunctionCall()
+  {
+    FunctionCallImpl functionCall = new FunctionCallImpl();
+    return functionCall;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public ClientAttribute createClientAttribute()
   {
     ClientAttributeImpl clientAttribute = new ClientAttributeImpl();
     return clientAttribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public SingleClientAttribute createSingleClientAttribute()
-  {
-    SingleClientAttributeImpl singleClientAttribute = new SingleClientAttributeImpl();
-    return singleClientAttribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public GroupedClientAttribute createGroupedClientAttribute()
-  {
-    GroupedClientAttributeImpl groupedClientAttribute = new GroupedClientAttributeImpl();
-    return groupedClientAttribute;
   }
 
   /**

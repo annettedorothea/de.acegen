@@ -141,13 +141,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT__CONTAINER = 3;
 
   /**
+   * The feature id for the '<em><b>Functions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_CLIENT__FUNCTIONS = 4;
+
+  /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT__SCENARIOS = 4;
+  int HTTP_CLIENT__SCENARIOS = 5;
 
   /**
    * The number of structural features of the '<em>Http Client</em>' class.
@@ -156,7 +165,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_FEATURE_COUNT = 5;
+  int HTTP_CLIENT_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpClientAceImpl <em>Http Client Ace</em>}' class.
@@ -241,6 +250,43 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_ACE_FEATURE_COUNT = 7;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.FunctionImpl <em>Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.FunctionImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getFunction()
+   * @generated
+   */
+  int FUNCTION = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>State Element</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION__STATE_ELEMENT = 1;
+
+  /**
+   * The number of structural features of the '<em>Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.FromAppStateRefImpl <em>From App State Ref</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -248,7 +294,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getFromAppStateRef()
    * @generated
    */
-  int FROM_APP_STATE_REF = 3;
+  int FROM_APP_STATE_REF = 4;
 
   /**
    * The feature id for the '<em><b>State Element</b></em>' reference.
@@ -285,7 +331,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getInput()
    * @generated
    */
-  int INPUT = 4;
+  int INPUT = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -313,7 +359,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpClientOutcome()
    * @generated
    */
-  int HTTP_CLIENT_OUTCOME = 5;
+  int HTTP_CLIENT_OUTCOME = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -334,13 +380,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_OUTCOME__LISTENERS = 1;
 
   /**
+   * The feature id for the '<em><b>Functions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_CLIENT_OUTCOME__FUNCTIONS = 2;
+
+  /**
    * The feature id for the '<em><b>Triggerd Ace Operations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS = 2;
+  int HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS = 3;
 
   /**
    * The number of structural features of the '<em>Http Client Outcome</em>' class.
@@ -349,7 +404,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_CLIENT_OUTCOME_FEATURE_COUNT = 3;
+  int HTTP_CLIENT_OUTCOME_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.TriggerdAceOperationImpl <em>Triggerd Ace Operation</em>}' class.
@@ -359,7 +414,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getTriggerdAceOperation()
    * @generated
    */
-  int TRIGGERD_ACE_OPERATION = 6;
+  int TRIGGERD_ACE_OPERATION = 7;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -405,7 +460,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getHttpClientStateFunction()
    * @generated
    */
-  int HTTP_CLIENT_STATE_FUNCTION = 7;
+  int HTTP_CLIENT_STATE_FUNCTION = 8;
 
   /**
    * The feature id for the '<em><b>State Function Type</b></em>' attribute.
@@ -435,6 +490,34 @@ public interface AceGenPackage extends EPackage
   int HTTP_CLIENT_STATE_FUNCTION_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.acegen.aceGen.impl.FunctionCallImpl <em>Function Call</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.acegen.aceGen.impl.FunctionCallImpl
+   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getFunctionCall()
+   * @generated
+   */
+  int FUNCTION_CALL = 9;
+
+  /**
+   * The feature id for the '<em><b>Function</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_CALL__FUNCTION = 0;
+
+  /**
+   * The number of structural features of the '<em>Function Call</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_CALL_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ClientAttributeImpl <em>Client Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -442,44 +525,7 @@ public interface AceGenPackage extends EPackage
    * @see de.acegen.aceGen.impl.AceGenPackageImpl#getClientAttribute()
    * @generated
    */
-  int CLIENT_ATTRIBUTE = 8;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_ATTRIBUTE__NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Client Attribute</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.SingleClientAttributeImpl <em>Single Client Attribute</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.SingleClientAttributeImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSingleClientAttribute()
-   * @generated
-   */
-  int SINGLE_CLIENT_ATTRIBUTE = 9;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__NAME = CLIENT_ATTRIBUTE__NAME;
+  int CLIENT_ATTRIBUTE = 10;
 
   /**
    * The feature id for the '<em><b>No Component</b></em>' attribute.
@@ -488,7 +534,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
+  int CLIENT_ATTRIBUTE__NO_COMPONENT = 0;
 
   /**
    * The feature id for the '<em><b>List</b></em>' attribute.
@@ -497,53 +543,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SINGLE_CLIENT_ATTRIBUTE__LIST = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Hash</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__HASH = CLIENT_ATTRIBUTE_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Storage</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__STORAGE = CLIENT_ATTRIBUTE_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = CLIENT_ATTRIBUTE_FEATURE_COUNT + 4;
-
-  /**
-   * The number of structural features of the '<em>Single Client Attribute</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SINGLE_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 5;
-
-  /**
-   * The meta object id for the '{@link de.acegen.aceGen.impl.GroupedClientAttributeImpl <em>Grouped Client Attribute</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.acegen.aceGen.impl.GroupedClientAttributeImpl
-   * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGroupedClientAttribute()
-   * @generated
-   */
-  int GROUPED_CLIENT_ATTRIBUTE = 10;
+  int CLIENT_ATTRIBUTE__LIST = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -552,25 +552,43 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GROUPED_CLIENT_ATTRIBUTE__NAME = CLIENT_ATTRIBUTE__NAME;
+  int CLIENT_ATTRIBUTE__NAME = 2;
 
   /**
-   * The feature id for the '<em><b>Attribute Group</b></em>' containment reference list.
+   * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GROUPED_CLIENT_ATTRIBUTE__ATTRIBUTE_GROUP = CLIENT_ATTRIBUTE_FEATURE_COUNT + 0;
+  int CLIENT_ATTRIBUTE__LOCATION = 3;
 
   /**
-   * The number of structural features of the '<em>Grouped Client Attribute</em>' class.
+   * The feature id for the '<em><b>Storage</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GROUPED_CLIENT_ATTRIBUTE_FEATURE_COUNT = CLIENT_ATTRIBUTE_FEATURE_COUNT + 1;
+  int CLIENT_ATTRIBUTE__STORAGE = 4;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__ATTRIBUTES = 5;
+
+  /**
+   * The number of structural features of the '<em>Client Attribute</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.ClientScenarioImpl <em>Client Scenario</em>}' class.
@@ -2916,6 +2934,17 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClient_Container();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getFunctions <em>Functions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Functions</em>'.
+   * @see de.acegen.aceGen.HttpClient#getFunctions()
+   * @see #getHttpClient()
+   * @generated
+   */
+  EReference getHttpClient_Functions();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3014,6 +3043,38 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClientAce_Outcomes();
 
   /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.Function <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Function</em>'.
+   * @see de.acegen.aceGen.Function
+   * @generated
+   */
+  EClass getFunction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.Function#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.Function#getName()
+   * @see #getFunction()
+   * @generated
+   */
+  EAttribute getFunction_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.Function#getStateElement <em>State Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>State Element</em>'.
+   * @see de.acegen.aceGen.Function#getStateElement()
+   * @see #getFunction()
+   * @generated
+   */
+  EReference getFunction_StateElement();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.FromAppStateRef <em>From App State Ref</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3097,6 +3158,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getHttpClientOutcome_Listeners();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClientOutcome#getFunctions <em>Functions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Functions</em>'.
+   * @see de.acegen.aceGen.HttpClientOutcome#getFunctions()
+   * @see #getHttpClientOutcome()
+   * @generated
+   */
+  EReference getHttpClientOutcome_Functions();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpClientOutcome#getTriggerdAceOperations <em>Triggerd Ace Operations</em>}'.
@@ -3185,6 +3257,27 @@ public interface AceGenPackage extends EPackage
   EReference getHttpClientStateFunction_StateElement();
 
   /**
+   * Returns the meta object for class '{@link de.acegen.aceGen.FunctionCall <em>Function Call</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Function Call</em>'.
+   * @see de.acegen.aceGen.FunctionCall
+   * @generated
+   */
+  EClass getFunctionCall();
+
+  /**
+   * Returns the meta object for the reference '{@link de.acegen.aceGen.FunctionCall#getFunction <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Function</em>'.
+   * @see de.acegen.aceGen.FunctionCall#getFunction()
+   * @see #getFunctionCall()
+   * @generated
+   */
+  EReference getFunctionCall_Function();
+
+  /**
    * Returns the meta object for class '{@link de.acegen.aceGen.ClientAttribute <em>Client Attribute</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3193,6 +3286,28 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EClass getClientAttribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>No Component</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isNoComponent()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_NoComponent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>List</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isList()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_List();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}'.
@@ -3206,90 +3321,37 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientAttribute_Name();
 
   /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.SingleClientAttribute <em>Single Client Attribute</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Single Client Attribute</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute
+   * @return the meta object for the attribute '<em>Location</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isLocation()
+   * @see #getClientAttribute()
    * @generated
    */
-  EClass getSingleClientAttribute();
+  EAttribute getClientAttribute_Location();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isNoComponent <em>No Component</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>No Component</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#isNoComponent()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EAttribute getSingleClientAttribute_NoComponent();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isList <em>List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>List</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#isList()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EAttribute getSingleClientAttribute_List();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isHash <em>Hash</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Hash</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#isHash()
-   * @see #getSingleClientAttribute()
-   * @generated
-   */
-  EAttribute getSingleClientAttribute_Hash();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.SingleClientAttribute#isStorage <em>Storage</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Storage</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#isStorage()
-   * @see #getSingleClientAttribute()
+   * @see de.acegen.aceGen.ClientAttribute#isStorage()
+   * @see #getClientAttribute()
    * @generated
    */
-  EAttribute getSingleClientAttribute_Storage();
+  EAttribute getClientAttribute_Storage();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.SingleClientAttribute#getAttributes <em>Attributes</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Attributes</em>'.
-   * @see de.acegen.aceGen.SingleClientAttribute#getAttributes()
-   * @see #getSingleClientAttribute()
+   * @see de.acegen.aceGen.ClientAttribute#getAttributes()
+   * @see #getClientAttribute()
    * @generated
    */
-  EReference getSingleClientAttribute_Attributes();
-
-  /**
-   * Returns the meta object for class '{@link de.acegen.aceGen.GroupedClientAttribute <em>Grouped Client Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Grouped Client Attribute</em>'.
-   * @see de.acegen.aceGen.GroupedClientAttribute
-   * @generated
-   */
-  EClass getGroupedClientAttribute();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.GroupedClientAttribute#getAttributeGroup <em>Attribute Group</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attribute Group</em>'.
-   * @see de.acegen.aceGen.GroupedClientAttribute#getAttributeGroup()
-   * @see #getGroupedClientAttribute()
-   * @generated
-   */
-  EReference getGroupedClientAttribute_AttributeGroup();
+  EReference getClientAttribute_Attributes();
 
   /**
    * Returns the meta object for class '{@link de.acegen.aceGen.ClientScenario <em>Client Scenario</em>}'.
@@ -5246,6 +5308,14 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT__CONTAINER = eINSTANCE.getHttpClient_Container();
 
     /**
+     * The meta object literal for the '<em><b>Functions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HTTP_CLIENT__FUNCTIONS = eINSTANCE.getHttpClient_Functions();
+
+    /**
      * The meta object literal for the '<em><b>Scenarios</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5320,6 +5390,32 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT_ACE__OUTCOMES = eINSTANCE.getHttpClientAce_Outcomes();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.FunctionImpl <em>Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.FunctionImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getFunction()
+     * @generated
+     */
+    EClass FUNCTION = eINSTANCE.getFunction();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNCTION__NAME = eINSTANCE.getFunction_Name();
+
+    /**
+     * The meta object literal for the '<em><b>State Element</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION__STATE_ELEMENT = eINSTANCE.getFunction_StateElement();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.FromAppStateRefImpl <em>From App State Ref</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5390,6 +5486,14 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT_OUTCOME__LISTENERS = eINSTANCE.getHttpClientOutcome_Listeners();
 
     /**
+     * The meta object literal for the '<em><b>Functions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HTTP_CLIENT_OUTCOME__FUNCTIONS = eINSTANCE.getHttpClientOutcome_Functions();
+
+    /**
      * The meta object literal for the '<em><b>Triggerd Ace Operations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5458,6 +5562,24 @@ public interface AceGenPackage extends EPackage
     EReference HTTP_CLIENT_STATE_FUNCTION__STATE_ELEMENT = eINSTANCE.getHttpClientStateFunction_StateElement();
 
     /**
+     * The meta object literal for the '{@link de.acegen.aceGen.impl.FunctionCallImpl <em>Function Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.acegen.aceGen.impl.FunctionCallImpl
+     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getFunctionCall()
+     * @generated
+     */
+    EClass FUNCTION_CALL = eINSTANCE.getFunctionCall();
+
+    /**
+     * The meta object literal for the '<em><b>Function</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION_CALL__FUNCTION = eINSTANCE.getFunctionCall_Function();
+
+    /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.ClientAttributeImpl <em>Client Attribute</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5468,6 +5590,22 @@ public interface AceGenPackage extends EPackage
     EClass CLIENT_ATTRIBUTE = eINSTANCE.getClientAttribute();
 
     /**
+     * The meta object literal for the '<em><b>No Component</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__NO_COMPONENT = eINSTANCE.getClientAttribute_NoComponent();
+
+    /**
+     * The meta object literal for the '<em><b>List</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__LIST = eINSTANCE.getClientAttribute_List();
+
+    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5476,38 +5614,12 @@ public interface AceGenPackage extends EPackage
     EAttribute CLIENT_ATTRIBUTE__NAME = eINSTANCE.getClientAttribute_Name();
 
     /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.SingleClientAttributeImpl <em>Single Client Attribute</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.SingleClientAttributeImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getSingleClientAttribute()
-     * @generated
-     */
-    EClass SINGLE_CLIENT_ATTRIBUTE = eINSTANCE.getSingleClientAttribute();
-
-    /**
-     * The meta object literal for the '<em><b>No Component</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__NO_COMPONENT = eINSTANCE.getSingleClientAttribute_NoComponent();
-
-    /**
-     * The meta object literal for the '<em><b>List</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__LIST = eINSTANCE.getSingleClientAttribute_List();
-
-    /**
-     * The meta object literal for the '<em><b>Hash</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__HASH = eINSTANCE.getSingleClientAttribute_Hash();
+    EAttribute CLIENT_ATTRIBUTE__LOCATION = eINSTANCE.getClientAttribute_Location();
 
     /**
      * The meta object literal for the '<em><b>Storage</b></em>' attribute feature.
@@ -5515,7 +5627,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SINGLE_CLIENT_ATTRIBUTE__STORAGE = eINSTANCE.getSingleClientAttribute_Storage();
+    EAttribute CLIENT_ATTRIBUTE__STORAGE = eINSTANCE.getClientAttribute_Storage();
 
     /**
      * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
@@ -5523,25 +5635,7 @@ public interface AceGenPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SINGLE_CLIENT_ATTRIBUTE__ATTRIBUTES = eINSTANCE.getSingleClientAttribute_Attributes();
-
-    /**
-     * The meta object literal for the '{@link de.acegen.aceGen.impl.GroupedClientAttributeImpl <em>Grouped Client Attribute</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.acegen.aceGen.impl.GroupedClientAttributeImpl
-     * @see de.acegen.aceGen.impl.AceGenPackageImpl#getGroupedClientAttribute()
-     * @generated
-     */
-    EClass GROUPED_CLIENT_ATTRIBUTE = eINSTANCE.getGroupedClientAttribute();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Group</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference GROUPED_CLIENT_ATTRIBUTE__ATTRIBUTE_GROUP = eINSTANCE.getGroupedClientAttribute_AttributeGroup();
+    EReference CLIENT_ATTRIBUTE__ATTRIBUTES = eINSTANCE.getClientAttribute_Attributes();
 
     /**
      * The meta object literal for the '{@link de.acegen.aceGen.impl.ClientScenarioImpl <em>Client Scenario</em>}' class.

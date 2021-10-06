@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getListeners <em>Listeners</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getFunctions <em>Functions</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClientOutcome#getTriggerdAceOperations <em>Triggerd Ace Operations</em>}</li>
  * </ul>
  *
@@ -60,6 +61,18 @@ public interface HttpClientOutcome extends EObject
    * @generated
    */
   EList<HttpClientStateFunction> getListeners();
+
+  /**
+   * Returns the value of the '<em><b>Functions</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.FunctionCall}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Functions</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClientOutcome_Functions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<FunctionCall> getFunctions();
 
   /**
    * Returns the value of the '<em><b>Triggerd Ace Operations</b></em>' containment reference list.

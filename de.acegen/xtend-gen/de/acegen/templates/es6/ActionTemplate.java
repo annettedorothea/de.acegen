@@ -15,10 +15,10 @@
  */
 package de.acegen.templates.es6;
 
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.Input;
-import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
@@ -77,10 +77,10 @@ public class ActionTemplate {
       }
     }
     {
-      SingleClientAttribute _loadingFlag = it.getLoadingFlag();
+      ClientAttribute _loadingFlag = it.getLoadingFlag();
       boolean _tripleNotEquals = (_loadingFlag != null);
       if (_tripleNotEquals) {
-        _builder.append("import * as AppUtils from \"../../../src/app/AppUtils\";");
+        _builder.append("import * as AppState from \"../../../src/AppState\";");
         _builder.newLine();
       }
     }
@@ -104,7 +104,7 @@ public class ActionTemplate {
     _builder.append("\', callback);");
     _builder.newLineIfNotEmpty();
     {
-      SingleClientAttribute _loadingFlag_1 = it.getLoadingFlag();
+      ClientAttribute _loadingFlag_1 = it.getLoadingFlag();
       boolean _tripleNotEquals_1 = (_loadingFlag_1 != null);
       if (_tripleNotEquals_1) {
         _builder.append("\t\t");
@@ -138,7 +138,7 @@ public class ActionTemplate {
     }
     _builder.newLine();
     {
-      SingleClientAttribute _loadingFlag_2 = it.getLoadingFlag();
+      ClientAttribute _loadingFlag_2 = it.getLoadingFlag();
       boolean _tripleNotEquals_2 = (_loadingFlag_2 != null);
       if (_tripleNotEquals_2) {
         _builder.append("\t");
@@ -146,7 +146,7 @@ public class ActionTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t");
-        SingleClientAttribute _loadingFlag_3 = it.getLoadingFlag();
+        ClientAttribute _loadingFlag_3 = it.getLoadingFlag();
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("{");
         String _name_2 = it.getLoadingFlag().getName();
@@ -157,7 +157,7 @@ public class ActionTemplate {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("AppUtils.stateUpdated();");
+        _builder.append("AppState.stateUpdated();");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
@@ -169,7 +169,7 @@ public class ActionTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("\t");
-        SingleClientAttribute _loadingFlag_4 = it.getLoadingFlag();
+        ClientAttribute _loadingFlag_4 = it.getLoadingFlag();
         StringConcatenation _builder_2 = new StringConcatenation();
         _builder_2.append("{");
         String _name_3 = it.getLoadingFlag().getName();
@@ -180,7 +180,7 @@ public class ActionTemplate {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
-        _builder.append("AppUtils.stateUpdated();");
+        _builder.append("AppState.stateUpdated();");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("}");
@@ -396,7 +396,9 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
-    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
+    _builder.newLine();
+    _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Action {");
@@ -422,7 +424,7 @@ public class ActionTemplate {
     _builder.append("ACEController.addItemToTimeLine({");
     _builder.newLine();
     _builder.append("\t\t    ");
-    _builder.append("appState: AppUtils.get([])");
+    _builder.append("appState: AppState.get([])");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("});");

@@ -35,42 +35,6 @@ class AceTemplate {
 		export let settings;
 
 
-		export function get(path) {
-		}
-		
-		export function getHash() {
-		}
-		
-		export function getStorage(path) {
-		}
-		
-		function verifyGroups(groupVerifications) {
-		}
-		
-		export function set(data, path, groupVerifications, attributes) {
-		}
-		
-		export function setHash(data, path) {
-		}
-		
-		export function setStorage(data, path) {
-		}
-		
-		export function merge(data, path, groupVerifications, attributes) {
-		}
-		
-		export function mergeHash(data, path) {
-		}
-		
-		export function mergeStorage(data, path) {
-		}
-		
-		export function createInitialAppState() {
-		}
-		
-		export function setInitialAppState(initialAppState) {
-		}
-
 		export function initEventListeners() {
 		}
 		
@@ -101,10 +65,52 @@ class AceTemplate {
 		export function deepCopy(object) {
 		}
 		
-		export function stateUpdated() {
+		export function renderApp() {
 		}
 		
-		export function renderApp() {
+		«sdg»
+		
+	'''
+	
+	def generateAppStateStub() '''
+		«copyright»
+		
+
+
+		export function get(path) {
+		}
+		
+		export function getLocation() {
+		}
+		
+		export function getStorage(path) {
+		}
+		
+		export function set(data, path, groupVerifications, attributes) {
+		}
+		
+		export function setLocation(data, path) {
+		}
+		
+		export function setStorage(data, path) {
+		}
+		
+		export function merge(data, path, groupVerifications, attributes) {
+		}
+		
+		export function mergeLocation(data, path) {
+		}
+		
+		export function mergeStorage(data, path) {
+		}
+		
+		export function createInitialAppState() {
+		}
+		
+		export function setInitialAppState(initialAppState) {
+		}
+
+		export function stateUpdated() {
 		}
 		
 		«sdg»
@@ -114,7 +120,7 @@ class AceTemplate {
 	def generateApp(HttpClient httpClient) '''
 		«copyright»
 
-		import * as AppUtils from "./app/AppUtils";
+		import * as AppUtils from "./AppUtils";
 		
 		export * from "../gen/ace/Timeline";
 		
@@ -167,7 +173,7 @@ class AceTemplate {
 	def generateACEController() '''
 	«copyright»
 	
-	import * as AppUtils from "../../src/app/AppUtils";
+	import * as AppUtils from "../../src/AppUtils";
 	import Event from "./Event";
 	
 	export let timeline = [];
@@ -180,18 +186,16 @@ class AceTemplate {
 	
 	
 	export function registerListener(eventName, listener) {
-	    if (!eventName.trim()) {
-	        throw new Error('cannot register listener for empty eventName');
-	    }
-	    if (!listener) {
-	        throw new Error('cannot register undefined listener for event ' + eventName);
-	    }
-	    let listenersForEventName;
-	    if (listeners[eventName] === undefined) {
-	        listeners[eventName] = [];
-	    }
-	    listenersForEventName = listeners[eventName];
-	    listenersForEventName.push(listener);
+		if (!listener) {
+			console.warn("you try to register an undefined listener for event " + eventName)
+		} else {
+			let listenersForEventName;
+			if (listeners[eventName] === undefined) {
+				listeners[eventName] = [];
+			}
+			listenersForEventName = listeners[eventName];
+			listenersForEventName.push(listener);
+		}
 	}
 	
 	export function addItemToTimeLine(item) {
@@ -224,7 +228,7 @@ class AceTemplate {
 	    if (nextAction) {
 			if (nextAction.action.asynchronous) {
 	            nextAction.action.applyAction(nextAction.data).then(() => {
-	            	if (nextAction.action.callback) {
+	            	if (nextAction.action.callback && typeof nextAction.action.callback === 'function') {
 	            		nextAction.action.callback(nextAction.callback);
 	            	}
 			    	applyNextActions();
@@ -305,7 +309,7 @@ class AceTemplate {
 	def generateTimeline() '''
 		«copyright»
 
-		import * as AppUtils from "../../src/app/AppUtils";
+		import * as AppUtils from "../../src/AppUtils";
 		import * as ACEController from "./ACEController";
 		import * as Utils from "./Utils";
 		
@@ -338,7 +342,7 @@ class AceTemplate {
 	def generateUtils() '''
 		«copyright»
 
-		import * as AppUtils from "../../src/app/AppUtils";
+		import * as AppUtils from "../../src/AppUtils";
 		import * as ACEController from "./ACEController";
 		
 		function getServerInfo() {

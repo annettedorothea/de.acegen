@@ -40,7 +40,7 @@ class EventTemplate {
 		«copyright»
 
 		import * as ACEController from "../ace/ACEController";
-		import * as AppUtils from "../../src/app/AppUtils";
+		import * as AppState from "../../src/AppState";
 		
 		export default class EventListenerRegistration«projectName» {
 		
@@ -49,6 +49,9 @@ class EventTemplate {
 					«FOR outcome : aceOperation.outcomes»
 						«FOR listener : outcome.listeners»
 							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «listener.appStateFunction()»);
+						«ENDFOR»
+						«FOR function : outcome.functions»
+							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «function.appStateFunction()»);
 						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»

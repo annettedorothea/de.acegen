@@ -55,7 +55,8 @@ class CommandTemplate {
 		«IF aggregatedTriggeredAceOperations.size > 0»
 			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
-		import * as AppUtils from "../../../src/app/AppUtils";
+		import * as AppUtils from "../../../src/AppUtils";
+		import * as AppState from "../../../src/AppState";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
@@ -105,7 +106,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppUtils.stateUpdated();
+								AppState.stateUpdated();
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
@@ -165,7 +166,8 @@ class CommandTemplate {
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
-		import * as AppUtils from "../../../src/app/AppUtils";
+		import * as AppUtils from "../../../src/AppUtils";
+		import * as AppState from "../../../src/AppState";
 		
 		export default class «abstractCommandName» extends SynchronousCommand {
 		    constructor() {
@@ -191,7 +193,7 @@ class CommandTemplate {
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
 								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppUtils.stateUpdated();
+								AppState.stateUpdated();
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»

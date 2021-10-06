@@ -4,9 +4,9 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.JsonMemberClient;
 import de.acegen.aceGen.JsonValueClient;
-import de.acegen.aceGen.SingleClientAttribute;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -41,7 +41,7 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected SingleClientAttribute attribute;
+  protected ClientAttribute attribute;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -80,12 +80,12 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
    * @generated
    */
   @Override
-  public SingleClientAttribute getAttribute()
+  public ClientAttribute getAttribute()
   {
     if (attribute != null && attribute.eIsProxy())
     {
       InternalEObject oldAttribute = (InternalEObject)attribute;
-      attribute = (SingleClientAttribute)eResolveProxy(oldAttribute);
+      attribute = (ClientAttribute)eResolveProxy(oldAttribute);
       if (attribute != oldAttribute)
       {
         if (eNotificationRequired())
@@ -100,7 +100,7 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public SingleClientAttribute basicGetAttribute()
+  public ClientAttribute basicGetAttribute()
   {
     return attribute;
   }
@@ -111,9 +111,9 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
    * @generated
    */
   @Override
-  public void setAttribute(SingleClientAttribute newAttribute)
+  public void setAttribute(ClientAttribute newAttribute)
   {
-    SingleClientAttribute oldAttribute = attribute;
+    ClientAttribute oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE, oldAttribute, attribute));
@@ -215,7 +215,7 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
-        setAttribute((SingleClientAttribute)newValue);
+        setAttribute((ClientAttribute)newValue);
         return;
       case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
         setValue((JsonValueClient)newValue);
@@ -235,7 +235,7 @@ public class JsonMemberClientImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case AceGenPackage.JSON_MEMBER_CLIENT__ATTRIBUTE:
-        setAttribute((SingleClientAttribute)null);
+        setAttribute((ClientAttribute)null);
         return;
       case AceGenPackage.JSON_MEMBER_CLIENT__VALUE:
         setValue((JsonValueClient)null);

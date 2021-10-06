@@ -21,7 +21,7 @@ import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
-import de.acegen.aceGen.GroupedClientAttribute;
+import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.JsonArrayClient;
@@ -31,7 +31,6 @@ import de.acegen.aceGen.JsonValueClient;
 import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
-import de.acegen.aceGen.SingleClientAttribute;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.UndefinedType;
 import java.util.ArrayList;
@@ -58,60 +57,82 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  public String appStateFunction(final HttpClientStateFunction it) {
+  protected String _appStateFunction(final HttpClientStateFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(data) => {");
     _builder.newLine();
-    _builder.append("\t");
-    SingleClientAttribute _stateElement = it.getStateElement();
+    _builder.append("\t\t");
+    ClientAttribute _stateElement = it.getStateElement();
     StringConcatenation _builder_1 = new StringConcatenation();
     String _stateFunctionType = it.getStateFunctionType();
     _builder_1.append(_stateFunctionType);
     CharSequence _stateFunctionCall = this.stateFunctionCall(_stateElement, _builder_1.toString(), "data");
-    _builder.append(_stateFunctionCall, "\t");
+    _builder.append(_stateFunctionCall, "\t\t");
     _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     _builder.append("}");
     return _builder.toString();
   }
   
-  public CharSequence stateFunctionCall(final SingleClientAttribute it, final String functionName, final String data) {
+  protected String _appStateFunction(final FunctionCall it) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(data) => {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("AppState.");
+    String _name = it.getFunction().getName();
+    _builder.append(_name, "\t\t");
+    _builder.append("(");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t\t");
+    _builder.append("data");
     {
-      if ((Objects.equal(functionName, "set") && (it.eContainer() instanceof GroupedClientAttribute))) {
+      ClientAttribute _stateElement = it.getFunction().getStateElement();
+      boolean _tripleNotEquals = (_stateElement != null);
+      if (_tripleNotEquals) {
+        _builder.append(",");
         _builder.newLineIfNotEmpty();
-        _builder.append("if (data.");
-        EObject _eContainer = it.eContainer();
-        String _name = ((GroupedClientAttribute) _eContainer).getName();
-        _builder.append(_name);
-        _builder.append(") {");
+        _builder.append("\t\t\t");
+        String _path = this.path(this.paramList(it.getFunction().getStateElement()));
+        _builder.append(_path, "\t\t\t");
+        {
+          if (((it.getFunction().getStateElement().getAttributes().size() > 0) && (!it.getFunction().getStateElement().isList()))) {
+            _builder.append(", ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t");
+            _builder.append("[");
+            {
+              EList<ClientAttribute> _attributes = it.getFunction().getStateElement().getAttributes();
+              boolean _hasElements = false;
+              for(final ClientAttribute attribute : _attributes) {
+                if (!_hasElements) {
+                  _hasElements = true;
+                } else {
+                  _builder.appendImmediate(", ", "\t\t\t");
+                }
+                _builder.append("\"");
+                String _name_1 = attribute.getName();
+                _builder.append(_name_1, "\t\t\t");
+                _builder.append("\"");
+              }
+            }
+            _builder.append("]");
+          }
+        }
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("data.");
-        EObject _eContainer_1 = it.eContainer();
-        String _name_1 = ((GroupedClientAttribute) _eContainer_1).getName();
-        _builder.append(_name_1, "\t");
-        _builder.append(".group = \"");
-        String _name_2 = it.getName();
-        _builder.append(_name_2, "\t");
-        _builder.append("\";");
-        _builder.newLineIfNotEmpty();
-        _builder.append("} else {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("data.");
-        EObject _eContainer_2 = it.eContainer();
-        String _name_3 = ((GroupedClientAttribute) _eContainer_2).getName();
-        _builder.append(_name_3, "\t");
-        _builder.append(" = { group: \"");
-        String _name_4 = it.getName();
-        _builder.append(_name_4, "\t");
-        _builder.append("\" };");
-        _builder.newLineIfNotEmpty();
-        _builder.append("}");
       }
     }
-    _builder.newLineIfNotEmpty();
-    _builder.append("AppUtils.");
+    _builder.append("\t\t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    return _builder.toString();
+  }
+  
+  public CharSequence stateFunctionCall(final ClientAttribute it, final String functionName, final String data) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("AppState.");
     String _stateFunctionName = this.stateFunctionName(it, functionName);
     _builder.append(_stateFunctionName);
     _builder.append("(");
@@ -129,51 +150,23 @@ public class Es6Extension {
     String _path = this.path(this.paramList(it));
     _builder.append(_path, "\t");
     {
-      boolean _notEquals_1 = (!Objects.equal(functionName, "get"));
-      if (_notEquals_1) {
+      if ((((!Objects.equal(functionName, "get")) && (it.getAttributes().size() > 0)) && (!it.isList()))) {
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("[");
         {
-          List<String> _groupVerifications = this.groupVerifications(it, functionName);
+          EList<ClientAttribute> _attributes = it.getAttributes();
           boolean _hasElements = false;
-          for(final String verification : _groupVerifications) {
+          for(final ClientAttribute attribute : _attributes) {
             if (!_hasElements) {
               _hasElements = true;
             } else {
               _builder.appendImmediate(", ", "\t");
             }
-            _builder.append(verification, "\t");
-          }
-        }
-        _builder.append("]");
-      }
-    }
-    {
-      if (((it.eContainer() instanceof GroupedClientAttribute) || ((it.getAttributes().size() > 0) && (!it.isList())))) {
-        _builder.append(", ");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("[");
-        {
-          EObject _eContainer_3 = it.eContainer();
-          if ((_eContainer_3 instanceof GroupedClientAttribute)) {
-            _builder.append("\"group\", ");
-          }
-        }
-        {
-          EList<ClientAttribute> _attributes = it.getAttributes();
-          boolean _hasElements_1 = false;
-          for(final ClientAttribute attribute : _attributes) {
-            if (!_hasElements_1) {
-              _hasElements_1 = true;
-            } else {
-              _builder.appendImmediate(", ", "\t");
-            }
             _builder.append("\"");
-            String _name_5 = attribute.getName();
-            _builder.append(_name_5, "\t");
+            String _name = attribute.getName();
+            _builder.append(_name, "\t");
             _builder.append("\"");
           }
         }
@@ -182,30 +175,20 @@ public class Es6Extension {
     }
     _builder.newLineIfNotEmpty();
     _builder.append(")");
+    _builder.newLine();
     return _builder;
   }
   
-  private List<String> paramList(final SingleClientAttribute it) {
+  private List<String> paramList(final ClientAttribute it) {
     ArrayList<String> paramList = new ArrayList<String>();
-    List<SingleClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
-    for (final SingleClientAttribute item : _allParentAttributesInclusiveItem) {
-      EObject _eContainer = item.eContainer();
-      if ((_eContainer instanceof GroupedClientAttribute)) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("\"");
-        EObject _eContainer_1 = item.eContainer();
-        String _name = ((GroupedClientAttribute) _eContainer_1).getName();
-        _builder.append(_name);
-        _builder.append("\"");
-        paramList.add(_builder.toString());
-      } else {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("\"");
-        String _name_1 = item.getName();
-        _builder_1.append(_name_1);
-        _builder_1.append("\"");
-        paramList.add(_builder_1.toString());
-      }
+    List<ClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
+    for (final ClientAttribute item : _allParentAttributesInclusiveItem) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\"");
+      String _name = item.getName();
+      _builder.append(_name);
+      _builder.append("\"");
+      paramList.add(_builder.toString());
     }
     return paramList;
   }
@@ -228,37 +211,10 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  private List<String> groupVerifications(final SingleClientAttribute it, final String functionName) {
-    ArrayList<String> verifications = new ArrayList<String>();
-    List<SingleClientAttribute> _xifexpression = null;
-    boolean _equals = Objects.equal(functionName, "set");
-    if (_equals) {
-      _xifexpression = this.allParentAttributesExclusiveItem(it);
-    } else {
-      _xifexpression = this.allParentAttributesInclusiveItem(it);
-    }
-    final List<SingleClientAttribute> parentAttributes = _xifexpression;
-    for (final SingleClientAttribute item : parentAttributes) {
-      EObject _eContainer = item.eContainer();
-      if ((_eContainer instanceof GroupedClientAttribute)) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("{ path: ");
-        String _path = this.path(this.paramList(item));
-        _builder.append(_path);
-        _builder.append(", group: \"");
-        String _name = item.getName();
-        _builder.append(_name);
-        _builder.append("\" }");
-        verifications.add(_builder.toString());
-      }
-    }
-    return verifications;
-  }
-  
-  private String stateFunctionName(final SingleClientAttribute it, final String functionName) {
-    boolean _isHash = it.isHash();
-    if (_isHash) {
-      return (functionName + "Hash");
+  private String stateFunctionName(final ClientAttribute it, final String functionName) {
+    boolean _isLocation = it.isLocation();
+    if (_isLocation) {
+      return (functionName + "Location");
     }
     boolean _isStorage = it.isStorage();
     if (_isStorage) {
@@ -267,28 +223,14 @@ public class Es6Extension {
     return functionName;
   }
   
-  private List<SingleClientAttribute> allParentAttributesInclusiveItem(final SingleClientAttribute it) {
-    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
+  private List<ClientAttribute> allParentAttributesInclusiveItem(final ClientAttribute it) {
+    ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
     attributes.add(it);
     EObject parent = it.eContainer();
     while ((parent != null)) {
       {
-        if ((parent instanceof SingleClientAttribute)) {
-          attributes.add(0, ((SingleClientAttribute) parent));
-        }
-        parent = parent.eContainer();
-      }
-    }
-    return attributes;
-  }
-  
-  private List<SingleClientAttribute> allParentAttributesExclusiveItem(final SingleClientAttribute it) {
-    ArrayList<SingleClientAttribute> attributes = new ArrayList<SingleClientAttribute>();
-    EObject parent = it.eContainer();
-    while ((parent != null)) {
-      {
-        if ((parent instanceof SingleClientAttribute)) {
-          attributes.add(0, ((SingleClientAttribute) parent));
+        if ((parent instanceof ClientAttribute)) {
+          attributes.add(0, ((ClientAttribute) parent));
         }
         parent = parent.eContainer();
       }
@@ -446,7 +388,7 @@ public class Es6Extension {
     return null;
   }
   
-  protected String _componentName(final SingleClientAttribute it) {
+  public String componentName(final ClientAttribute it) {
     boolean _isList = it.isList();
     if (_isList) {
       StringConcatenation _builder = new StringConcatenation();
@@ -461,14 +403,7 @@ public class Es6Extension {
     return _builder_1.toString();
   }
   
-  protected String _componentName(final GroupedClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    return _builder.toString();
-  }
-  
-  protected String _importComponent(final SingleClientAttribute it, final String subFolder) {
+  public String importComponent(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getAttributes().size() > 0) && (!it.isNoComponent()))) {
@@ -487,42 +422,12 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  protected String _importComponent(final GroupedClientAttribute it, final String subFolder) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      int _size = it.getAttributeGroup().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("import { ");
-        String _componentName = this.componentName(it);
-        _builder.append(_componentName);
-        _builder.append(" } from \".");
-        _builder.append(subFolder);
-        _builder.append("/");
-        String _componentName_1 = this.componentName(it);
-        _builder.append(_componentName_1);
-        _builder.append("\";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder.toString();
-  }
-  
-  protected String _stateRefPath(final GroupedClientAttribute it) {
-    return this.elementPathRec(it, "");
-  }
-  
-  protected String _stateRefPath(final SingleClientAttribute it) {
+  public String stateRefPath(final ClientAttribute it) {
     return this.elementPathRec(it, "");
   }
   
   private String elementPathRec(final ClientAttribute attr, final String suffix) {
     ClientAttribute clientAttribute = attr;
-    EObject _eContainer = clientAttribute.eContainer();
-    if ((_eContainer instanceof GroupedClientAttribute)) {
-      EObject _eContainer_1 = attr.eContainer();
-      clientAttribute = ((ClientAttribute) _eContainer_1);
-    }
     final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
     if ((parent != null)) {
       String _elementPathRec = this.elementPathRec(parent, clientAttribute.getName());
@@ -556,12 +461,8 @@ public class Es6Extension {
     while ((parent != null)) {
       {
         final EObject grandParent = parent.eContainer();
-        if (((grandParent != null) && (grandParent instanceof GroupedClientAttribute))) {
-          return ((GroupedClientAttribute) grandParent);
-        } else {
-          if ((parent instanceof SingleClientAttribute)) {
-            return ((SingleClientAttribute) parent);
-          }
+        if ((parent instanceof ClientAttribute)) {
+          return ((ClientAttribute) parent);
         }
         parent = grandParent;
       }
@@ -569,44 +470,22 @@ public class Es6Extension {
     return null;
   }
   
+  public String appStateFunction(final EObject it) {
+    if (it instanceof FunctionCall) {
+      return _appStateFunction((FunctionCall)it);
+    } else if (it instanceof HttpClientStateFunction) {
+      return _appStateFunction((HttpClientStateFunction)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
+  }
+  
   public CharSequence valueFrom(final JsonValueClient it) {
     if (it instanceof JsonObjectClient) {
       return _valueFrom((JsonObjectClient)it);
     } else if (it != null) {
       return _valueFrom(it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
-  }
-  
-  public String componentName(final ClientAttribute it) {
-    if (it instanceof GroupedClientAttribute) {
-      return _componentName((GroupedClientAttribute)it);
-    } else if (it instanceof SingleClientAttribute) {
-      return _componentName((SingleClientAttribute)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
-  }
-  
-  public String importComponent(final ClientAttribute it, final String subFolder) {
-    if (it instanceof GroupedClientAttribute) {
-      return _importComponent((GroupedClientAttribute)it, subFolder);
-    } else if (it instanceof SingleClientAttribute) {
-      return _importComponent((SingleClientAttribute)it, subFolder);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it, subFolder).toString());
-    }
-  }
-  
-  public String stateRefPath(final ClientAttribute it) {
-    if (it instanceof GroupedClientAttribute) {
-      return _stateRefPath((GroupedClientAttribute)it);
-    } else if (it instanceof SingleClientAttribute) {
-      return _stateRefPath((SingleClientAttribute)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

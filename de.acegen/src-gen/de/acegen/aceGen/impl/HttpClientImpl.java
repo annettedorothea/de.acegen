@@ -4,10 +4,11 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientScenario;
+import de.acegen.aceGen.Function;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
-import de.acegen.aceGen.SingleClientAttribute;
 
 import java.util.Collection;
 
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#isJsx <em>Jsx</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getContainer <em>Container</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getFunctions <em>Functions</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientImpl#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -102,7 +104,17 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    * @ordered
    */
-  protected SingleClientAttribute container;
+  protected ClientAttribute container;
+
+  /**
+   * The cached value of the '{@link #getFunctions() <em>Functions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFunctions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Function> functions;
 
   /**
    * The cached value of the '{@link #getScenarios() <em>Scenarios</em>}' containment reference list.
@@ -206,7 +218,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public SingleClientAttribute getContainer()
+  public ClientAttribute getContainer()
   {
     return container;
   }
@@ -216,9 +228,9 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetContainer(SingleClientAttribute newContainer, NotificationChain msgs)
+  public NotificationChain basicSetContainer(ClientAttribute newContainer, NotificationChain msgs)
   {
-    SingleClientAttribute oldContainer = container;
+    ClientAttribute oldContainer = container;
     container = newContainer;
     if (eNotificationRequired())
     {
@@ -234,7 +246,7 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setContainer(SingleClientAttribute newContainer)
+  public void setContainer(ClientAttribute newContainer)
   {
     if (newContainer != container)
     {
@@ -248,6 +260,21 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_CLIENT__CONTAINER, newContainer, newContainer));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Function> getFunctions()
+  {
+    if (functions == null)
+    {
+      functions = new EObjectContainmentEList<Function>(Function.class, this, AceGenPackage.HTTP_CLIENT__FUNCTIONS);
+    }
+    return functions;
   }
 
   /**
@@ -279,6 +306,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return ((InternalEList<?>)getAceOperations()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         return basicSetContainer(null, msgs);
+      case AceGenPackage.HTTP_CLIENT__FUNCTIONS:
+        return ((InternalEList<?>)getFunctions()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return ((InternalEList<?>)getScenarios()).basicRemove(otherEnd, msgs);
     }
@@ -303,6 +332,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return isJsx();
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         return getContainer();
+      case AceGenPackage.HTTP_CLIENT__FUNCTIONS:
+        return getFunctions();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return getScenarios();
     }
@@ -331,7 +362,11 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         setJsx((Boolean)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
-        setContainer((SingleClientAttribute)newValue);
+        setContainer((ClientAttribute)newValue);
+        return;
+      case AceGenPackage.HTTP_CLIENT__FUNCTIONS:
+        getFunctions().clear();
+        getFunctions().addAll((Collection<? extends Function>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -361,7 +396,10 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         setJsx(JSX_EDEFAULT);
         return;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
-        setContainer((SingleClientAttribute)null);
+        setContainer((ClientAttribute)null);
+        return;
+      case AceGenPackage.HTTP_CLIENT__FUNCTIONS:
+        getFunctions().clear();
         return;
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         getScenarios().clear();
@@ -388,6 +426,8 @@ public class HttpClientImpl extends MinimalEObjectImpl.Container implements Http
         return jsx != JSX_EDEFAULT;
       case AceGenPackage.HTTP_CLIENT__CONTAINER:
         return container != null;
+      case AceGenPackage.HTTP_CLIENT__FUNCTIONS:
+        return functions != null && !functions.isEmpty();
       case AceGenPackage.HTTP_CLIENT__SCENARIOS:
         return scenarios != null && !scenarios.isEmpty();
     }

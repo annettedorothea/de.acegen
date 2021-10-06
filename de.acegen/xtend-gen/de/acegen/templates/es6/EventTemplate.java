@@ -15,6 +15,7 @@
  */
 package de.acegen.templates.es6;
 
+import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -49,7 +50,7 @@ public class EventTemplate {
     _builder.newLine();
     _builder.append("import * as ACEController from \"../ace/ACEController\";");
     _builder.newLine();
-    _builder.append("import * as AppUtils from \"../../src/app/AppUtils\";");
+    _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class EventListenerRegistration");
@@ -80,6 +81,23 @@ public class EventTemplate {
                 _builder.append("\', ");
                 String _appStateFunction = this._es6Extension.appStateFunction(listener);
                 _builder.append(_appStateFunction, "\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            {
+              EList<FunctionCall> _functions = outcome.getFunctions();
+              for(final FunctionCall function : _functions) {
+                _builder.append("\t\t");
+                _builder.append("ACEController.registerListener(\'");
+                String _name_1 = it.getName();
+                _builder.append(_name_1, "\t\t");
+                _builder.append(".");
+                String _eventName_1 = this._aceExtension.eventName(aceOperation, outcome);
+                _builder.append(_eventName_1, "\t\t");
+                _builder.append("\', ");
+                String _appStateFunction_1 = this._es6Extension.appStateFunction(function);
+                _builder.append(_appStateFunction_1, "\t\t");
                 _builder.append(");");
                 _builder.newLineIfNotEmpty();
               }

@@ -44,7 +44,7 @@ class ActionTemplate {
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»
 		«IF getLoadingFlag !== null»
-			import * as AppUtils from "../../../src/app/AppUtils";
+			import * as AppState from "../../../src/AppState";
 		«ENDIF»
 		
 		export default class «abstractActionName» extends Action {
@@ -65,12 +65,12 @@ class ActionTemplate {
 			«IF getLoadingFlag !== null»
 				preCall() {
 					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: true}''')»
-					AppUtils.stateUpdated();
+					AppState.stateUpdated();
 				}
 				
 				postCall() {
 					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: false}''')»
-					AppUtils.stateUpdated();
+					AppState.stateUpdated();
 				}
 			«ENDIF»
 		
@@ -138,7 +138,8 @@ class ActionTemplate {
 
 
 		import * as ACEController from "./ACEController";
-		import * as AppUtils from "../../src/app/AppUtils";
+		import * as AppUtils from "../../src/AppUtils";
+		import * as AppState from "../../src/AppState";
 		
 		export default class Action {
 		
@@ -149,7 +150,7 @@ class ActionTemplate {
 		
 		    apply(data) {
 				ACEController.addItemToTimeLine({
-				    appState: AppUtils.get([])
+				    appState: AppState.get([])
 				});
 		        ACEController.addItemToTimeLine({
 		            action: {

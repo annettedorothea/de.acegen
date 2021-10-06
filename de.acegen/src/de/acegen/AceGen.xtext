@@ -26,7 +26,10 @@ Project: {Project}
 HttpClient: 
 	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('ui' (jsx ?= 'JSX')?  container = SingleClientAttribute)?
+	('ui' (jsx ?= 'JSX')?  
+		container = ClientAttribute
+		('functions' functions += Function* )? 
+	)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
@@ -35,12 +38,16 @@ HttpClientAce:
 		('(' input += Input (',' input += Input)* ')' )?
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [SingleClientAttribute | QualifiedName])? 
+	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
 ;
 
+Function: 
+	name = ID ('(' stateElement = [ClientAttribute | QualifiedName] ')' )?
+;
+
 FromAppStateRef:
-	stateElement = [SingleClientAttribute | QualifiedName] ('as' varName = ID)?
+	stateElement = [ClientAttribute | QualifiedName] ('as' varName = ID)?
 ;
 
 Input:
@@ -49,7 +56,10 @@ Input:
 
 HttpClientOutcome:
 	'on' name = ID 
-	('(' listeners += HttpClientStateFunction* ')')? 
+	('(' 
+		listeners += HttpClientStateFunction* 
+		functions += FunctionCall *
+	')'	)? 
 	('triggers' '(' (triggerdAceOperations += TriggerdAceOperation)* ')')? 
 ;
 
@@ -58,7 +68,11 @@ TriggerdAceOperation:
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType stateElement = [SingleClientAttribute | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]	
+;
+
+FunctionCall:
+	'call' function = [Function]
 ;
 
 HttpClientStateFunctionType:
@@ -66,22 +80,14 @@ HttpClientStateFunctionType:
 ;
 
 ClientAttribute:
-	SingleClientAttribute | 'group' GroupedClientAttribute
-;
-
-SingleClientAttribute:
 	noComponent ?= 'noComponent'? 
 	list ?= 'List'? 
 	name = ID 
-	hash ?= 'location.hash'? 
+	location ?= 'location'? 
 	storage ?= 'storage'? 
 	('{'
 		attributes += ClientAttribute*
 	'}')?
-;
-
-GroupedClientAttribute:
-	name = ID '{' attributeGroup += ClientAttribute ( attributeGroup += ClientAttribute* ) '}' 
 ;
 
 ClientScenario:
@@ -121,7 +127,7 @@ ClientThenBlock: {ClientThenBlock}
 ;
 
 StateVerification:
-	name = ID stateRef = [SingleClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
+	name = ID stateRef = [ClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
 ;
 
 JsonObjectClient:
@@ -132,7 +138,7 @@ JsonObjectClient:
 	'}';
 
 JsonMemberClient:
-	attribute=[SingleClientAttribute | QualifiedName] ':' value=JsonValueClient;
+	attribute=[ClientAttribute | QualifiedName] ':' value=JsonValueClient;
 	
 JsonValueClient:
 	JsonObjectClient | StringType | JsonArrayClient | BooleanType | NullType | LongType | JsonDateTime | UndefinedType;

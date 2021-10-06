@@ -126,12 +126,12 @@ public interface HttpClientAce extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Loading Flag</em>' reference.
-   * @see #setLoadingFlag(SingleClientAttribute)
+   * @see #setLoadingFlag(ClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getHttpClientAce_LoadingFlag()
    * @model
    * @generated
    */
-  SingleClientAttribute getLoadingFlag();
+  ClientAttribute getLoadingFlag();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.HttpClientAce#getLoadingFlag <em>Loading Flag</em>}' reference.
@@ -141,7 +141,7 @@ public interface HttpClientAce extends EObject
    * @see #getLoadingFlag()
    * @generated
    */
-  void setLoadingFlag(SingleClientAttribute value);
+  void setLoadingFlag(ClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Outcomes</b></em>' containment reference list.

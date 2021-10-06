@@ -53,12 +53,12 @@ public interface StateVerification extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>State Ref</em>' reference.
-   * @see #setStateRef(SingleClientAttribute)
+   * @see #setStateRef(ClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getStateVerification_StateRef()
    * @model
    * @generated
    */
-  SingleClientAttribute getStateRef();
+  ClientAttribute getStateRef();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.StateVerification#getStateRef <em>State Ref</em>}' reference.
@@ -68,7 +68,7 @@ public interface StateVerification extends EObject
    * @see #getStateRef()
    * @generated
    */
-  void setStateRef(SingleClientAttribute value);
+  void setStateRef(ClientAttribute value);
 
   /**
    * Returns the value of the '<em><b>Not</b></em>' attribute.

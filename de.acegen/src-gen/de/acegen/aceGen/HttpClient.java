@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.HttpClient#getAceOperations <em>Ace Operations</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#isJsx <em>Jsx</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}</li>
+ *   <li>{@link de.acegen.aceGen.HttpClient#getFunctions <em>Functions</em>}</li>
  *   <li>{@link de.acegen.aceGen.HttpClient#getScenarios <em>Scenarios</em>}</li>
  * </ul>
  *
@@ -90,12 +91,12 @@ public interface HttpClient extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Container</em>' containment reference.
-   * @see #setContainer(SingleClientAttribute)
+   * @see #setContainer(ClientAttribute)
    * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Container()
    * @model containment="true"
    * @generated
    */
-  SingleClientAttribute getContainer();
+  ClientAttribute getContainer();
 
   /**
    * Sets the value of the '{@link de.acegen.aceGen.HttpClient#getContainer <em>Container</em>}' containment reference.
@@ -105,7 +106,19 @@ public interface HttpClient extends EObject
    * @see #getContainer()
    * @generated
    */
-  void setContainer(SingleClientAttribute value);
+  void setContainer(ClientAttribute value);
+
+  /**
+   * Returns the value of the '<em><b>Functions</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.Function}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Functions</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getHttpClient_Functions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Function> getFunctions();
 
   /**
    * Returns the value of the '<em><b>Scenarios</b></em>' containment reference list.
