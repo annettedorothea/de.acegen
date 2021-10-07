@@ -12785,9 +12785,9 @@ rule__FunctionCall__FunctionAssignment_1
 	(
 		{ before(grammarAccess.getFunctionCallAccess().getFunctionFunctionCrossReference_1_0()); }
 		(
-			{ before(grammarAccess.getFunctionCallAccess().getFunctionFunctionIDTerminalRuleCall_1_0_1()); }
-			RULE_ID
-			{ after(grammarAccess.getFunctionCallAccess().getFunctionFunctionIDTerminalRuleCall_1_0_1()); }
+			{ before(grammarAccess.getFunctionCallAccess().getFunctionFunctionQualifiedNameParserRuleCall_1_0_1()); }
+			ruleQualifiedName
+			{ after(grammarAccess.getFunctionCallAccess().getFunctionFunctionQualifiedNameParserRuleCall_1_0_1()); }
 		)
 		{ after(grammarAccess.getFunctionCallAccess().getFunctionFunctionCrossReference_1_0()); }
 	)

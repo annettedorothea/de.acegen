@@ -121,6 +121,7 @@ class AceTemplate {
 		«copyright»
 
 		import * as AppUtils from "./AppUtils";
+		import * as AppState from "./AppState";
 		
 		export * from "../gen/ace/Timeline";
 		
@@ -134,7 +135,7 @@ class AceTemplate {
 		
 		// for Selenium tests
 		export function getAppState() {
-		    return AppUtils.get([])
+		    return AppState.get([])
 		}
 		
 		export function addSquishyValueClient(value) {
@@ -174,6 +175,7 @@ class AceTemplate {
 	«copyright»
 	
 	import * as AppUtils from "../../src/AppUtils";
+	import * as AppState from "../../src/AppState";
 	import Event from "./Event";
 	
 	export let timeline = [];
@@ -269,8 +271,8 @@ class AceTemplate {
 	            });
 	        }
 			if (item.appState && !appStateWasSet) {
-			    AppUtils.setInitialAppState(item.appState);
-	            AppUtils.stateUpdated();
+			    AppState.setInitialAppState(item.appState);
+	            AppState.stateUpdated();
 			    appStateWasSet = true;
 			}
 	    }
@@ -285,7 +287,7 @@ class AceTemplate {
 	    if (nextEvent) {
 	    	console.info("replay", nextEvent);
 	    	nextEvent.event.replay(nextEvent.data);
-			AppUtils.stateUpdated();
+			AppState.stateUpdated();
 	    	setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);
 	    } else {
 	        setTimeout(() => finishReplay(), pauseInMillis);
@@ -296,7 +298,7 @@ class AceTemplate {
 	    console.info("replay finished");
 	    timeline = [];
 	    actionQueue = [];
-	    AppUtils.createInitialAppState();
+	    AppState.createInitialAppState();
 	    AppUtils.startApp();
 	}
 	
@@ -310,6 +312,7 @@ class AceTemplate {
 		«copyright»
 
 		import * as AppUtils from "../../src/AppUtils";
+		import * as AppState from "../../src/AppState";
 		import * as ACEController from "./ACEController";
 		import * as Utils from "./Utils";
 		
@@ -318,7 +321,7 @@ class AceTemplate {
 				pauseInMillis = 100;
 			}
 		    Utils.loadTimeline(timelineId).then((scenario) => {
-		        AppUtils.createInitialAppState();
+		        AppState.createInitialAppState();
 		        ACEController.startReplay(JSON.parse(scenario.timeline), pauseInMillis)
 		    });
 		}

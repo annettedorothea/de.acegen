@@ -183,6 +183,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"./AppUtils\";");
     _builder.newLine();
+    _builder.append("import * as AppState from \"./AppState\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export * from \"../gen/ace/Timeline\";");
     _builder.newLine();
@@ -207,7 +209,7 @@ public class AceTemplate {
     _builder.append("export function getAppState() {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return AppUtils.get([])");
+    _builder.append("return AppState.get([])");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -301,6 +303,8 @@ public class AceTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
+    _builder.newLine();
+    _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
     _builder.append("import Event from \"./Event\";");
     _builder.newLine();
@@ -549,10 +553,10 @@ public class AceTemplate {
     _builder.append("if (item.appState && !appStateWasSet) {");
     _builder.newLine();
     _builder.append("\t\t    ");
-    _builder.append("AppUtils.setInitialAppState(item.appState);");
+    _builder.append("AppState.setInitialAppState(item.appState);");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("AppUtils.stateUpdated();");
+    _builder.append("AppState.stateUpdated();");
     _builder.newLine();
     _builder.append("\t\t    ");
     _builder.append("appStateWasSet = true;");
@@ -590,7 +594,7 @@ public class AceTemplate {
     _builder.append("nextEvent.event.replay(nextEvent.data);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppUtils.stateUpdated();");
+    _builder.append("AppState.stateUpdated();");
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("setTimeout(() => replayNextEvent(events, pauseInMillis), pauseInMillis);");
@@ -619,7 +623,7 @@ public class AceTemplate {
     _builder.append("actionQueue = [];");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("AppUtils.createInitialAppState();");
+    _builder.append("AppState.createInitialAppState();");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("AppUtils.startApp();");
@@ -644,6 +648,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
     _builder.newLine();
+    _builder.append("import * as AppState from \"../../src/AppState\";");
+    _builder.newLine();
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.append("import * as Utils from \"./Utils\";");
@@ -664,7 +670,7 @@ public class AceTemplate {
     _builder.append("Utils.loadTimeline(timelineId).then((scenario) => {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("AppUtils.createInitialAppState();");
+    _builder.append("AppState.createInitialAppState();");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("ACEController.startReplay(JSON.parse(scenario.timeline), pauseInMillis)");

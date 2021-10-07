@@ -517,7 +517,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     FunctionCall returns FunctionCall
 	 *
 	 * Constraint:
-	 *     function=[Function|ID]
+	 *     function=[Function|QualifiedName]
 	 */
 	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		if (errorAcceptor != null) {
@@ -525,7 +525,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.FUNCTION_CALL__FUNCTION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFunctionCallAccess().getFunctionFunctionIDTerminalRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.FUNCTION_CALL__FUNCTION, false));
+		feeder.accept(grammarAccess.getFunctionCallAccess().getFunctionFunctionQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.FUNCTION_CALL__FUNCTION, false));
 		feeder.finish();
 	}
 	

@@ -621,27 +621,27 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cCallKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cFunctionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cFunctionFunctionCrossReference_1_0 = (CrossReference)cFunctionAssignment_1.eContents().get(0);
-		private final RuleCall cFunctionFunctionIDTerminalRuleCall_1_0_1 = (RuleCall)cFunctionFunctionCrossReference_1_0.eContents().get(1);
+		private final RuleCall cFunctionFunctionQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cFunctionFunctionCrossReference_1_0.eContents().get(1);
 		
 		//FunctionCall:
-		//    'call' function = [Function]
+		//    'call' function = [Function | QualifiedName]
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'call' function = [Function]
+		//'call' function = [Function | QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
 		//'call'
 		public Keyword getCallKeyword_0() { return cCallKeyword_0; }
 		
-		//function = [Function]
+		//function = [Function | QualifiedName]
 		public Assignment getFunctionAssignment_1() { return cFunctionAssignment_1; }
 		
-		//[Function]
+		//[Function | QualifiedName]
 		public CrossReference getFunctionFunctionCrossReference_1_0() { return cFunctionFunctionCrossReference_1_0; }
 		
-		//ID
-		public RuleCall getFunctionFunctionIDTerminalRuleCall_1_0_1() { return cFunctionFunctionIDTerminalRuleCall_1_0_1; }
+		//QualifiedName
+		public RuleCall getFunctionFunctionQualifiedNameParserRuleCall_1_0_1() { return cFunctionFunctionQualifiedNameParserRuleCall_1_0_1; }
 	}
 	public class HttpClientStateFunctionTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpClientStateFunctionType");
@@ -3855,7 +3855,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//FunctionCall:
-	//    'call' function = [Function]
+	//    'call' function = [Function | QualifiedName]
 	//;
 	public FunctionCallElements getFunctionCallAccess() {
 		return pFunctionCall;

@@ -950,9 +950,12 @@ ruleFunctionCall returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getFunctionCallRule());
 					}
 				}
-				otherlv_1=RULE_ID
 				{
-					newLeafNode(otherlv_1, grammarAccess.getFunctionCallAccess().getFunctionFunctionCrossReference_1_0());
+					newCompositeNode(grammarAccess.getFunctionCallAccess().getFunctionFunctionCrossReference_1_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
