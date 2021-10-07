@@ -72,7 +72,7 @@ HttpClientStateFunction:
 ;
 
 FunctionCall:
-	'call' function = [Function]
+	'call' function = [Function | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
