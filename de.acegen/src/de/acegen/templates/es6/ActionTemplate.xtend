@@ -49,8 +49,8 @@ class ActionTemplate {
 		
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(callback) {
-		        super('«es6.getName».«actionName»', callback);
+		    constructor() {
+		        super('«es6.getName».«actionName»');
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
@@ -107,8 +107,8 @@ class ActionTemplate {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR»«IF aceOperation.isAsync || aceOperation.getServerCall !== null»«IF aceOperation.input.length > 0», «ENDIF»callback«ENDIF») {
-			    new «aceOperation.actionName»(«IF aceOperation.isAsync || aceOperation.getServerCall !== null»callback«ENDIF»).apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
+			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR») {
+			    return new «aceOperation.actionName»().apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
 			}
 			
 		«ENDFOR»
@@ -143,48 +143,55 @@ class ActionTemplate {
 		
 		export default class Action {
 		
-		    constructor(actionName, callback) {
+		    constructor(actionName) {
 		        this.actionName = actionName;
-		        this.callback = callback;
 		    }
-		
+		    
 		    apply(data) {
-				ACEController.addItemToTimeLine({
-				    appState: AppState.get([])
-				});
-		        ACEController.addItemToTimeLine({
-		            action: {
-		                actionName: this.actionName,
-		                data
+		        return new Promise((resolve) => {
+		            ACEController.addItemToTimeLine({
+		                appState: AppState.get([])
+		            });
+		            ACEController.addItemToTimeLine({
+		                action: {
+		                    actionName: this.actionName,
+		                    data
+		                }
+		            });
+		            if (AppUtils.settings.mode === "dev" && typeof window !== "undefined") {
+		                let squishyValues = JSON.parse(localStorage.getItem("squishyValues"));
+		                if (squishyValues && squishyValues.length > 0) {
+		                    const squishyValue = JSON.parse(squishyValues.shift());
+		                    if (squishyValue) {
+		                        data.uuid = squishyValue.uuid;
+		                        data.clientSystemTime = squishyValue.clientSystemTime;
+		                    }
+		                    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
+		                }
+		                if (!data.uuid) {
+		                    data.uuid = AppUtils.createUUID();
+		                }
+		                if (!data.clientSystemTime) {
+		                    data.clientSystemTime = new Date();
+		                }
+		            } else {
+		                data.uuid = AppUtils.createUUID();
+		                data.clientSystemTime = new Date();
 		            }
-		        });
-		        if (AppUtils.settings.mode === "dev" && localStorage) {
-					let squishyValues = JSON.parse(localStorage.getItem("squishyValues"));
-					if (squishyValues && squishyValues.length > 0) {
-					    const squishyValue = JSON.parse(squishyValues.shift());
-					    if (squishyValue) {
-					        data.uuid = squishyValue.uuid;
-					        data.clientSystemTime = squishyValue.clientSystemTime;
+					this.applyAction(data).then(
+					    resolve,
+					    (error) => {
+					        AppUtils.displayUnexpectedError(error);
 					    }
-					    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
-					}
-					if (!data.uuid) {
-					    data.uuid = AppUtils.createUUID();
-					}
-					if (!data.clientSystemTime) {
-					    data.clientSystemTime = new Date();
-					}
-		        } else {
-		            data.uuid = AppUtils.createUUID();
-		            data.clientSystemTime = new Date();
-		        }
-		        ACEController.addActionToQueue({
-		            action: this,
-		            data
+					);
 		        });
 		    }
 		    
+		    applyAction(data) {
+		    }
+		    
 		}
+		
 
 		
 		«sdg»
@@ -241,15 +248,17 @@ class ActionTemplate {
 		
 		export default class SynchronousAction extends Action {
 		
-		    constructor(actionName) {
-		    	super(actionName);
+		    constructor(actionName, callback) {
+		    	super(actionName, callback);
 		    	this.asynchronous = false;
 		    }
 		
 		    applyAction(data) {
-		        data = this.initActionData(data);
-			    let command = this.getCommand();
-			    command.executeCommand(data);
+		    	return new Promise((resolve) => {
+			        data = this.initActionData(data);
+				    let command = this.getCommand();
+				    command.executeCommand(data).then(resolve);
+		    	});
 		    }
 		}
 		

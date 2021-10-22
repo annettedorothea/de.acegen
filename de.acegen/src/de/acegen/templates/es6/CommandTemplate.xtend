@@ -99,25 +99,37 @@ class CommandTemplate {
 				    });
 				}
 			«ENDIF»
+			
+			«publishEvents(es6)»
 		
-		    publishEvents(data) {
+
+		}
+		
+		«sdg»
+		
+	'''
+	
+	def private publishEvents(HttpClientAce it, HttpClient es6) '''
+		publishEvents(data) {
+			return new Promise((resolve) => {
+				const promises = [];
+				const promisesTrigger = [];
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
-								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppState.stateUpdated();
+								promises.push(new Event('«es6.getName».«eventName(outcome)»').publish(data));
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
-									new TriggerAction().publish(
+									promisesTrigger.push(new TriggerAction().publish(
 										new «triggerdAceOperation.aceOperation.actionName»(), 
 											{
 												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
 													«inputParam.name»: data.«inputParam.name»
 												«ENDFOR»
 											}
-									)
+									));
 								«ELSE»
 									«IF triggerdAceOperation.takeLatest»
 										new TriggerAction().publishWithDelayTakeLatest(
@@ -128,7 +140,7 @@ class CommandTemplate {
 													«ENDFOR»
 												},
 											«triggerdAceOperation.delay»
-										)
+										).then();
 									«ELSE»
 										new TriggerAction().publishWithDelay(
 											new «triggerdAceOperation.aceOperation.actionName»(), 
@@ -138,19 +150,22 @@ class CommandTemplate {
 													«ENDFOR»
 												},
 											«triggerdAceOperation.delay»
-										)
+										).then();
 									«ENDIF»
 								«ENDIF»
 							«ENDFOR»
 						}
 					«ENDIF»
 				«ENDFOR»
-		    }
-
+			    Promise.all(promises).then(() => {
+			        AppState.stateUpdated();
+				    Promise.all(promisesTrigger).then(() => {
+				        resolve();
+				    });
+			    });
+			})
+		
 		}
-		
-		«sdg»
-		
 	'''
 	
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
@@ -186,53 +201,10 @@ class CommandTemplate {
 					data.outcomes.push("«outcome.getName»");
 				}
 			«ENDFOR»
+			
+			«publishEvents(es6)»
+			
 
-		    publishEvents(data) {
-				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
-						if (data.outcomes.includes("«outcome.getName»")) {
-							«IF outcome.listeners.size > 0»
-								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppState.stateUpdated();
-							«ENDIF»
-							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
-								«IF triggerdAceOperation.delay == 0»
-									new TriggerAction().publish(
-										new «triggerdAceOperation.aceOperation.actionName»(), 
-											{
-												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-													«inputParam.name»: data.«inputParam.name»
-												«ENDFOR»
-											}
-									)
-								«ELSE»
-									«IF triggerdAceOperation.takeLatest»
-										new TriggerAction().publishWithDelayTakeLatest(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ELSE»
-										new TriggerAction().publishWithDelay(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ENDIF»
-								«ENDIF»
-							«ENDFOR»
-						}
-					«ENDIF»
-				«ENDFOR»
-		    }
 		}
 		
 		
@@ -335,14 +307,12 @@ class CommandTemplate {
 		        return new Promise((resolve, reject) => {
 					if (this.validateCommandData(data)) {
 					    this.execute(data).then((data) => {
-					        this.publishEvents(data);
-					        resolve();
+					        this.publishEvents(data).then(resolve);
 					    }, (error) => {
 					        reject(error);
 					    });
 					} else {
-				        this.publishEvents(data);
-						resolve();
+					    this.publishEvents(data).then(resolve);
 					}
 		        });
 		    }
@@ -376,7 +346,9 @@ class CommandTemplate {
 					}
 		        });
 			    data = this.execute(data);
-				this.publishEvents(data);
+			    return new Promise((resolve) => {
+			    	this.publishEvents(data).then(resolve);
+			    });
 		    }
 		
 		}

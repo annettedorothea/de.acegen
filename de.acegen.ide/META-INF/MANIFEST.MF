@@ -10,6 +10,7 @@ Require-Bundle: de.acegen,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-11,
+ JavaSE-15
 Export-Package: de.acegen.ide.contentassist.antlr,
  de.acegen.ide.contentassist.antlr.internal

@@ -73,14 +73,17 @@ class EventTemplate {
 		    constructor(eventName) {
 		        this.eventName = eventName;
 		    }
-		
+
 		    publish(data) {
-				ACEController.addItemToTimeLine({
-		            event: {
-		                eventName: this.eventName,
-		                data
-		            }});
-		        this.notifyListeners(data);
+		        return new Promise((resolve) => {
+		            ACEController.addItemToTimeLine({
+		                event: {
+		                    eventName: this.eventName,
+		                    data
+		                }});
+		            this.notifyListeners(data);
+		            resolve();
+		        });
 		    }
 		
 		    replay(data) {
@@ -116,36 +119,44 @@ class EventTemplate {
 		import * as ACEController from "./ACEController";
 		
 		export default class TriggerAction {
-		
+			
 			publish(action, data) {
-				ACEController.addItemToTimeLine({
-		            event: {
-		                eventName: 'TriggerAction',
-		                action: {
-		                	actionName: action.actionName,
-		                	data
-		                }
-		            }
-		        });
-				ACEController.addActionToTriggeredActionsQueue(action, data);
+				return new Promise((resolve) => {
+					ACEController.addItemToTimeLine({
+						event: {
+							eventName: 'TriggerAction',
+							action: {
+								actionName: action.actionName,
+								data
+							}
+						}
+					});
+					action.applyAction(data).then(resolve);
+				});
 			}
 			
 			publishWithDelay(action, data, delayInMillis) {
-		    	setTimeout(() => {
-		    		this.publish(action, data);
-				}, delayInMillis);
+				return new Promise((resolve) => {
+					setTimeout(() => {
+						this.publish(action, data).then(resolve)
+					}, delayInMillis);
+				});
 			}
-
+		
 			publishWithDelayTakeLatest(action, data, delayInMillis) {
-				const existingTimeout = ACEController.delayedActions[action.actionName];
-				if (existingTimeout) {
-					clearTimeout(existingTimeout);
-				}
-				ACEController.delayedActions[action.actionName] = setTimeout(() => {
-					ACEController.delayedActions[action.actionName] = undefined;
-		    		this.publish(action, data);
-				}, delayInMillis);
+				return new Promise((resolve) => {
+					const existingTimeout = ACEController.delayedActions[action.actionName];
+					if (existingTimeout) {
+						clearTimeout(existingTimeout);
+					}
+					ACEController.delayedActions[action.actionName] = setTimeout(() => {
+						ACEController.delayedActions[action.actionName] = undefined;
+						this.publish(action, data).then(resolve)
+					}, delayInMillis);
+				});
 			}
+			
+		
 
 		}
 		

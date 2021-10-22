@@ -182,11 +182,6 @@ class AceTemplate {
 	export let listeners = {};
 	export let delayedActions = {};
 	
-	let actionQueue = [];
-	let triggeredActionsQueue = [];
-	let idle = true;
-	
-	
 	export function registerListener(eventName, listener) {
 		if (!listener) {
 			console.warn("you try to register an undefined listener for event " + eventName)
@@ -210,50 +205,6 @@ class AceTemplate {
 			    }
 			}
 		}
-	}
-	
-	export function addActionToQueue(action) {
-		actionQueue.push(action);
-	    applyNextActions();
-	}
-
-	export function addActionToTriggeredActionsQueue(action, data) {
-		triggeredActionsQueue.push({action, data});
-		if (idle) {
-			applyNextActions();
-		}
-	}
-
-	function applyNextActions() {
-		idle = false;
-	    let nextAction = actionQueue.shift();
-	    if (nextAction) {
-			if (nextAction.action.asynchronous) {
-	            nextAction.action.applyAction(nextAction.data).then(() => {
-	            	if (nextAction.action.callback && typeof nextAction.action.callback === 'function') {
-	            		nextAction.action.callback(nextAction.callback);
-	            	}
-			    	applyNextActions();
-			    }, (error) => {
-			        AppUtils.displayUnexpectedError(error);
-			    	applyNextActions();
-			    });
-			} else {
-				try {
-	                nextAction.action.applyAction(nextAction.data);
-			    	applyNextActions();
-				} catch(error) {
-			        AppUtils.displayUnexpectedError(error);
-			    	applyNextActions();
-				}
-			}
-	    }
-		let nextTriggeredAction = triggeredActionsQueue.shift();
-		while (nextTriggeredAction) {
-		    nextTriggeredAction.action.apply(nextTriggeredAction.data);
-		    nextTriggeredAction = triggeredActionsQueue.shift();
-		}
-		idle = true;
 	}
 	
 	export function startReplay(timeline, pauseInMillis) {
@@ -297,7 +248,6 @@ class AceTemplate {
 	function finishReplay() {
 	    console.info("replay finished");
 	    timeline = [];
-	    actionQueue = [];
 	    AppState.createInitialAppState();
 	    AppUtils.startApp();
 	}
