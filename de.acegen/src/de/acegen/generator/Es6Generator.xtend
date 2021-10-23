@@ -106,7 +106,6 @@ class Es6Generator {
 			commandTemplate.generateSynchronousCommand());
 		fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateEvent());
 		fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateACEController());
-		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateTriggerAction());
 		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
 		

@@ -77,14 +77,6 @@ public class CommandTemplate {
         _builder.newLine();
       }
     }
-    {
-      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("import TriggerAction from \"../../ace/TriggerAction\";");
-        _builder.newLine();
-      }
-    }
     _builder.append("import * as AppUtils from \"../../../src/AppUtils\";");
     _builder.newLine();
     _builder.append("import * as AppState from \"../../../src/AppState\";");
@@ -267,9 +259,9 @@ public class CommandTemplate {
         }
         _builder.append(").then((");
         {
-          int _size_1 = it.getServerCall().getResponse().size();
-          boolean _greaterThan_1 = (_size_1 > 0);
-          if (_greaterThan_1) {
+          int _size = it.getServerCall().getResponse().size();
+          boolean _greaterThan = (_size > 0);
+          if (_greaterThan) {
             _builder.append("response");
           }
         }
@@ -345,10 +337,10 @@ public class CommandTemplate {
     _builder.append("return new Promise((resolve) => {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("const promises = [];");
+    _builder.append("const events = [];");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("const promisesTrigger = [];");
+    _builder.append("const actionsToBeTriggered = [];");
     _builder.newLine();
     {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
@@ -367,13 +359,13 @@ public class CommandTemplate {
               if (_greaterThan) {
                 _builder.append("\t\t");
                 _builder.append("\t");
-                _builder.append("promises.push(new Event(\'");
+                _builder.append("events.push(new Event(\'");
                 String _name_1 = es6.getName();
                 _builder.append(_name_1, "\t\t\t");
                 _builder.append(".");
                 String _eventName = this._aceExtension.eventName(it, outcome);
                 _builder.append(_eventName, "\t\t\t");
-                _builder.append("\').publish(data));");
+                _builder.append("\'));");
                 _builder.newLineIfNotEmpty();
               }
             }
@@ -386,20 +378,25 @@ public class CommandTemplate {
                   if (_equals) {
                     _builder.append("\t\t");
                     _builder.append("\t");
-                    _builder.append("promisesTrigger.push(new TriggerAction().publish(");
+                    _builder.append("actionsToBeTriggered.push(");
                     _builder.newLine();
                     _builder.append("\t\t");
                     _builder.append("\t");
                     _builder.append("\t");
-                    _builder.append("new ");
+                    _builder.append("{");
+                    _builder.newLine();
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append("\t\t");
+                    _builder.append("action: new ");
                     String _actionName = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
-                    _builder.append(_actionName, "\t\t\t\t");
+                    _builder.append(_actionName, "\t\t\t\t\t");
                     _builder.append("(), ");
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t\t");
                     _builder.append("\t");
                     _builder.append("\t\t");
-                    _builder.append("{");
+                    _builder.append("data: {");
                     _builder.newLine();
                     {
                       EList<Input> _input = triggerdAceOperation.getAceOperation().getInput();
@@ -428,7 +425,12 @@ public class CommandTemplate {
                     _builder.newLine();
                     _builder.append("\t\t");
                     _builder.append("\t");
-                    _builder.append("));");
+                    _builder.append("\t");
+                    _builder.append("}");
+                    _builder.newLine();
+                    _builder.append("\t\t");
+                    _builder.append("\t");
+                    _builder.append(");");
                     _builder.newLine();
                   } else {
                     {
@@ -436,19 +438,14 @@ public class CommandTemplate {
                       if (_isTakeLatest) {
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("new TriggerAction().publishWithDelayTakeLatest(");
-                        _builder.newLine();
-                        _builder.append("\t\t");
-                        _builder.append("\t");
-                        _builder.append("\t");
-                        _builder.append("new ");
+                        _builder.append("this.triggerWithDelayTakeLatest(new ");
                         String _actionName_1 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
-                        _builder.append(_actionName_1, "\t\t\t\t");
+                        _builder.append(_actionName_1, "\t\t\t");
                         _builder.append("(), ");
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t\t");
+                        _builder.append("\t");
                         _builder.append("{");
                         _builder.newLine();
                         {
@@ -458,22 +455,22 @@ public class CommandTemplate {
                             if (!_hasElements_1) {
                               _hasElements_1 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t");
                             }
                             _builder.append("\t\t");
                             _builder.append("\t");
-                            _builder.append("\t\t\t");
+                            _builder.append("\t\t");
                             String _name_4 = inputParam_1.getName();
-                            _builder.append(_name_4, "\t\t\t\t\t\t");
+                            _builder.append(_name_4, "\t\t\t\t\t");
                             _builder.append(": data.");
                             String _name_5 = inputParam_1.getName();
-                            _builder.append(_name_5, "\t\t\t\t\t\t");
+                            _builder.append(_name_5, "\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t\t");
+                        _builder.append("\t");
                         _builder.append("},");
                         _builder.newLine();
                         _builder.append("\t\t");
@@ -484,24 +481,19 @@ public class CommandTemplate {
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append(").then();");
+                        _builder.append(");");
                         _builder.newLine();
                       } else {
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("new TriggerAction().publishWithDelay(");
-                        _builder.newLine();
-                        _builder.append("\t\t");
-                        _builder.append("\t");
-                        _builder.append("\t");
-                        _builder.append("new ");
+                        _builder.append("this.triggerWithDelay(new ");
                         String _actionName_2 = this._aceExtension.actionName(triggerdAceOperation.getAceOperation());
-                        _builder.append(_actionName_2, "\t\t\t\t");
+                        _builder.append(_actionName_2, "\t\t\t");
                         _builder.append("(), ");
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t\t");
+                        _builder.append("\t");
                         _builder.append("{");
                         _builder.newLine();
                         {
@@ -511,22 +503,22 @@ public class CommandTemplate {
                             if (!_hasElements_2) {
                               _hasElements_2 = true;
                             } else {
-                              _builder.appendImmediate(", ", "\t\t\t\t\t\t");
+                              _builder.appendImmediate(", ", "\t\t\t\t\t");
                             }
                             _builder.append("\t\t");
                             _builder.append("\t");
-                            _builder.append("\t\t\t");
+                            _builder.append("\t\t");
                             String _name_6 = inputParam_2.getName();
-                            _builder.append(_name_6, "\t\t\t\t\t\t");
+                            _builder.append(_name_6, "\t\t\t\t\t");
                             _builder.append(": data.");
                             String _name_7 = inputParam_2.getName();
-                            _builder.append(_name_7, "\t\t\t\t\t\t");
+                            _builder.append(_name_7, "\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append("\t\t");
+                        _builder.append("\t");
                         _builder.append("},");
                         _builder.newLine();
                         _builder.append("\t\t");
@@ -537,7 +529,7 @@ public class CommandTemplate {
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t\t");
                         _builder.append("\t");
-                        _builder.append(").then();");
+                        _builder.append(");");
                         _builder.newLine();
                       }
                     }
@@ -552,22 +544,18 @@ public class CommandTemplate {
         }
       }
     }
-    _builder.append("\t    ");
-    _builder.append("Promise.all(promises).then(() => {");
+    _builder.append("\t\t");
     _builder.newLine();
-    _builder.append("\t        ");
+    _builder.append("\t\t");
+    _builder.append("this.publish(events, data).then(() => {");
+    _builder.newLine();
+    _builder.append("\t  \t\t");
     _builder.append("AppState.stateUpdated();");
     _builder.newLine();
-    _builder.append("\t\t    ");
-    _builder.append("Promise.all(promisesTrigger).then(() => {");
+    _builder.append("\t\t\t");
+    _builder.append("this.trigger(actionsToBeTriggered).then(resolve);");
     _builder.newLine();
-    _builder.append("\t\t        ");
-    _builder.append("resolve();");
-    _builder.newLine();
-    _builder.append("\t\t    ");
-    _builder.append("});");
-    _builder.newLine();
-    _builder.append("\t    ");
+    _builder.append("\t\t");
     _builder.append("});");
     _builder.newLine();
     _builder.append("\t");
@@ -591,14 +579,6 @@ public class CommandTemplate {
       boolean _hasEventOutcome = this.hasEventOutcome(it);
       if (_hasEventOutcome) {
         _builder.append("import Event from \"../../ace/Event\";");
-        _builder.newLine();
-      }
-    }
-    {
-      int _size = this._aceExtension.aggregatedTriggeredAceOperations(it).size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _builder.append("import TriggerAction from \"../../ace/TriggerAction\";");
         _builder.newLine();
       }
     }
@@ -934,6 +914,9 @@ public class CommandTemplate {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
+    _builder.append("let delayedActions = {};");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("export default class Command {");
     _builder.newLine();
     _builder.append("    ");
@@ -946,6 +929,137 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("triggerWithDelay(action, data, delayInMillis) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("setTimeout(() => {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("action.apply(data).then();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}, delayInMillis);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("triggerWithDelayTakeLatest(action, data, delayInMillis) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("const existingTimeout = delayedActions[action.actionName];");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (existingTimeout) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("clearTimeout(existingTimeout);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("delayedActions[action.actionName] = setTimeout(() => {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("delayedActions[action.actionName] = undefined;");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("action.apply(data).then();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}, delayInMillis);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("createEventPromise(event, data) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return new Promise(resolve => {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("event.publish(data).then(resolve);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("})");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("publish(events, data) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (events.length === 0) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new Promise(resolve => resolve());");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return this.createEventPromise(events.shift(), data)");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append(".then(event => events.length === 0 ? event : this.publish(events, data));");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("createActionPromise(actionToBeTriggered) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return new Promise(resolve => {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("})");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("trigger(actionsToBeTriggered) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (actionsToBeTriggered.length === 0) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return new Promise(resolve => resolve());");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return this.createActionPromise(actionsToBeTriggered.shift())");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append(".then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

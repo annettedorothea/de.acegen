@@ -180,7 +180,6 @@ class AceTemplate {
 	
 	export let timeline = [];
 	export let listeners = {};
-	export let delayedActions = {};
 	
 	export function registerListener(eventName, listener) {
 		if (!listener) {
@@ -261,7 +260,6 @@ class AceTemplate {
 	def generateTimeline() '''
 		«copyright»
 
-		import * as AppUtils from "../../src/AppUtils";
 		import * as AppState from "../../src/AppState";
 		import * as ACEController from "./ACEController";
 		import * as Utils from "./Utils";

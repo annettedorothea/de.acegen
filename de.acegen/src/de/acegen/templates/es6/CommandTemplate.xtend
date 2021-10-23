@@ -52,9 +52,6 @@ class CommandTemplate {
 		«IF hasEventOutcome»
 			import Event from "../../ace/Event";
 		«ENDIF»
-		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../ace/TriggerAction";
-		«ENDIF»
 		import * as AppUtils from "../../../src/AppUtils";
 		import * as AppState from "../../../src/AppState";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
@@ -112,57 +109,56 @@ class CommandTemplate {
 	def private publishEvents(HttpClientAce it, HttpClient es6) '''
 		publishEvents(data) {
 			return new Promise((resolve) => {
-				const promises = [];
-				const promisesTrigger = [];
+				const events = [];
+				const actionsToBeTriggered = [];
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (data.outcomes.includes("«outcome.getName»")) {
 							«IF outcome.listeners.size > 0»
-								promises.push(new Event('«es6.getName».«eventName(outcome)»').publish(data));
+								events.push(new Event('«es6.getName».«eventName(outcome)»'));
 							«ENDIF»
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
-									promisesTrigger.push(new TriggerAction().publish(
-										new «triggerdAceOperation.aceOperation.actionName»(), 
-											{
+									actionsToBeTriggered.push(
+										{
+											action: new «triggerdAceOperation.aceOperation.actionName»(), 
+											data: {
 												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
 													«inputParam.name»: data.«inputParam.name»
 												«ENDFOR»
 											}
-									));
+										}
+									);
 								«ELSE»
 									«IF triggerdAceOperation.takeLatest»
-										new TriggerAction().publishWithDelayTakeLatest(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
+										this.triggerWithDelayTakeLatest(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
 											«triggerdAceOperation.delay»
-										).then();
+										);
 									«ELSE»
-										new TriggerAction().publishWithDelay(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
+										this.triggerWithDelay(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
 											«triggerdAceOperation.delay»
-										).then();
+										);
 									«ENDIF»
 								«ENDIF»
 							«ENDFOR»
 						}
 					«ENDIF»
 				«ENDFOR»
-			    Promise.all(promises).then(() => {
-			        AppState.stateUpdated();
-				    Promise.all(promisesTrigger).then(() => {
-				        resolve();
-				    });
-			    });
+				
+				this.publish(events, data).then(() => {
+			  		AppState.stateUpdated();
+					this.trigger(actionsToBeTriggered).then(resolve);
+				});
 			})
 		
 		}
@@ -174,9 +170,6 @@ class CommandTemplate {
 		import SynchronousCommand from "../../ace/SynchronousCommand";
 		«IF hasEventOutcome»
 			import Event from "../../ace/Event";
-		«ENDIF»
-		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../ace/TriggerAction";
 		«ENDIF»
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
@@ -273,16 +266,64 @@ class CommandTemplate {
 	
 	def generateCommand() '''
 		«copyright»
-
-
+		
+		
+		let delayedActions = {};
+		
 		export default class Command {
 		    
 		    constructor(commandName) {
 		        this.commandName = commandName;
 		    }
+		    
+			triggerWithDelay(action, data, delayInMillis) {
+				setTimeout(() => {
+					action.apply(data).then();
+				}, delayInMillis);
+			}
+			
+			triggerWithDelayTakeLatest(action, data, delayInMillis) {
+				const existingTimeout = delayedActions[action.actionName];
+				if (existingTimeout) {
+					clearTimeout(existingTimeout);
+				}
+				delayedActions[action.actionName] = setTimeout(() => {
+					delayedActions[action.actionName] = undefined;
+					action.apply(data).then();
+				}, delayInMillis);
+			}
+			
+			createEventPromise(event, data) {
+				return new Promise(resolve => {
+					event.publish(data).then(resolve);
+				})
+			}
+			
+			publish(events, data) {
+				if (events.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createEventPromise(events.shift(), data)
+					.then(event => events.length === 0 ? event : this.publish(events, data));
+			}
+			
+			createActionPromise(actionToBeTriggered) {
+				return new Promise(resolve => {
+					actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
+				})
+			}
+			
+			trigger(actionsToBeTriggered) {
+				if (actionsToBeTriggered.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createActionPromise(actionsToBeTriggered.shift())
+					.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
+			}
+			
 		
 		}
-
+		
 		
 		«sdg»
 		

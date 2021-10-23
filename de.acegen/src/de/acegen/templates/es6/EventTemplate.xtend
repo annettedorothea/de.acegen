@@ -113,59 +113,6 @@ class EventTemplate {
 		
 	'''
 
-	def generateTriggerAction() '''
-		«copyright»
-
-		import * as ACEController from "./ACEController";
-		
-		export default class TriggerAction {
-			
-			publish(action, data) {
-				return new Promise((resolve) => {
-					ACEController.addItemToTimeLine({
-						event: {
-							eventName: 'TriggerAction',
-							action: {
-								actionName: action.actionName,
-								data
-							}
-						}
-					});
-					action.applyAction(data).then(resolve);
-				});
-			}
-			
-			publishWithDelay(action, data, delayInMillis) {
-				return new Promise((resolve) => {
-					setTimeout(() => {
-						this.publish(action, data).then(resolve)
-					}, delayInMillis);
-				});
-			}
-		
-			publishWithDelayTakeLatest(action, data, delayInMillis) {
-				return new Promise((resolve) => {
-					const existingTimeout = ACEController.delayedActions[action.actionName];
-					if (existingTimeout) {
-						clearTimeout(existingTimeout);
-					}
-					ACEController.delayedActions[action.actionName] = setTimeout(() => {
-						ACEController.delayedActions[action.actionName] = undefined;
-						this.publish(action, data).then(resolve)
-					}, delayInMillis);
-				});
-			}
-			
-		
-
-		}
-		
-		
-		«sdg»
-		
-		
-	'''
-
 }
 	
 	

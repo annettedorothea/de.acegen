@@ -153,7 +153,6 @@ public class Es6Generator {
       this.commandTemplate.generateSynchronousCommand());
     fsa.generateFile("ace/Event.js", IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateEvent());
     fsa.generateFile("ace/ACEController.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateACEController());
-    fsa.generateFile("ace/TriggerAction.js", IFileSystemAccess.DEFAULT_OUTPUT, this.eventTemplate.generateTriggerAction());
     fsa.generateFile("ace/Timeline.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateTimeline());
     fsa.generateFile("ace/Utils.js", IFileSystemAccess.DEFAULT_OUTPUT, this.aceTemplate.generateUtils());
     boolean _isJsx = httpClient.isJsx();

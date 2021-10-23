@@ -313,8 +313,6 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("export let listeners = {};");
     _builder.newLine();
-    _builder.append("export let delayedActions = {};");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("export function registerListener(eventName, listener) {");
     _builder.newLine();
@@ -514,8 +512,6 @@ public class AceTemplate {
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
     _builder.newLine();
     _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
