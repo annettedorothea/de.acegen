@@ -147,6 +147,15 @@ class ActionTemplate {
 		        this.actionName = actionName;
 		    }
 		    
+		    initSquishy(data) {
+				if (AppUtils.settings.mode === "dev") {
+				    AppUtils.readSquishyValuesClient(data);
+				} else {
+				    data.uuid = AppUtils.createUUID();
+				    data.clientSystemTime = new Date();
+				}
+		    }
+		    
 		    apply(data) {
 		        return new Promise((resolve) => {
 		            ACEController.addItemToTimeLine({
@@ -158,26 +167,7 @@ class ActionTemplate {
 		                    data
 		                }
 		            });
-		            if (AppUtils.settings.mode === "dev" && typeof window !== "undefined") {
-		                let squishyValues = JSON.parse(localStorage.getItem("squishyValues"));
-		                if (squishyValues && squishyValues.length > 0) {
-		                    const squishyValue = JSON.parse(squishyValues.shift());
-		                    if (squishyValue) {
-		                        data.uuid = squishyValue.uuid;
-		                        data.clientSystemTime = squishyValue.clientSystemTime;
-		                    }
-		                    localStorage.setItem('squishyValues', JSON.stringify(squishyValues));
-		                }
-		                if (!data.uuid) {
-		                    data.uuid = AppUtils.createUUID();
-		                }
-		                if (!data.clientSystemTime) {
-		                    data.clientSystemTime = new Date();
-		                }
-		            } else {
-		                data.uuid = AppUtils.createUUID();
-		                data.clientSystemTime = new Date();
-		            }
+					this.initSquishy(data);
 					this.applyAction(data).then(
 					    resolve,
 					    (error) => {
@@ -186,7 +176,7 @@ class ActionTemplate {
 					);
 		        });
 		    }
-		    
+		
 		    applyAction(data) {
 		    }
 		    
