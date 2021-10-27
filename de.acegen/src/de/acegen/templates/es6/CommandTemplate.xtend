@@ -49,9 +49,7 @@ class CommandTemplate {
 		«copyright»
 
 		import AsynchronousCommand from "../../ace/AsynchronousCommand";
-		«IF hasEventOutcome»
-			import Event from "../../ace/Event";
-		«ENDIF»
+		import Event from "../../ace/Event";
 		import * as AppUtils from "../../../src/AppUtils";
 		import * as AppState from "../../../src/AppState";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
@@ -114,9 +112,7 @@ class CommandTemplate {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (data.outcomes.includes("«outcome.getName»")) {
-							«IF outcome.listeners.size > 0»
-								events.push(new Event('«es6.getName».«eventName(outcome)»'));
-							«ENDIF»
+							events.push(new Event('«es6.getName».«eventName(outcome)»'));
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
 								«IF triggerdAceOperation.delay == 0»
 									actionsToBeTriggered.push(

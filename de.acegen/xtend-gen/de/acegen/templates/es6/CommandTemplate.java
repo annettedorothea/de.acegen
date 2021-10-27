@@ -70,13 +70,8 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import AsynchronousCommand from \"../../ace/AsynchronousCommand\";");
     _builder.newLine();
-    {
-      boolean _hasEventOutcome = this.hasEventOutcome(it);
-      if (_hasEventOutcome) {
-        _builder.append("import Event from \"../../ace/Event\";");
-        _builder.newLine();
-      }
-    }
+    _builder.append("import Event from \"../../ace/Event\";");
+    _builder.newLine();
     _builder.append("import * as AppUtils from \"../../../src/AppUtils\";");
     _builder.newLine();
     _builder.append("import * as AppState from \"../../../src/AppState\";");
@@ -353,22 +348,16 @@ public class CommandTemplate {
             _builder.append(_name, "\t\t");
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
-            {
-              int _size = outcome.getListeners().size();
-              boolean _greaterThan = (_size > 0);
-              if (_greaterThan) {
-                _builder.append("\t\t");
-                _builder.append("\t");
-                _builder.append("events.push(new Event(\'");
-                String _name_1 = es6.getName();
-                _builder.append(_name_1, "\t\t\t");
-                _builder.append(".");
-                String _eventName = this._aceExtension.eventName(it, outcome);
-                _builder.append(_eventName, "\t\t\t");
-                _builder.append("\'));");
-                _builder.newLineIfNotEmpty();
-              }
-            }
+            _builder.append("\t\t");
+            _builder.append("\t");
+            _builder.append("events.push(new Event(\'");
+            String _name_1 = es6.getName();
+            _builder.append(_name_1, "\t\t\t");
+            _builder.append(".");
+            String _eventName = this._aceExtension.eventName(it, outcome);
+            _builder.append(_eventName, "\t\t\t");
+            _builder.append("\'));");
+            _builder.newLineIfNotEmpty();
             {
               EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
               for(final TriggerdAceOperation triggerdAceOperation : _triggerdAceOperations) {
