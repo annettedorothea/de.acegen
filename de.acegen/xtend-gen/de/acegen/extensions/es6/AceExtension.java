@@ -23,14 +23,20 @@ import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.TriggerdAceOperation;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
+import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AceExtension {
+  @Inject
+  @Extension
+  private de.acegen.extensions.java.AceExtension _aceExtension;
+  
   public String abstractActionName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -153,29 +159,36 @@ public class AceExtension {
   }
   
   public String httpCall(final HttpClientAce it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
+    Boolean _isMulitpartFormData = this._aceExtension.isMulitpartFormData(it.getServerCall());
+    if ((_isMulitpartFormData).booleanValue()) {
       String _type = it.getServerCall().getType();
-      boolean _equals = Objects.equal(_type, "DELETE");
+      boolean _equals = Objects.equal(_type, "POST");
       if (_equals) {
-        _builder.append("httpDelete");
+        return "httpMulitpartFormDataPost";
       } else {
-        String _type_1 = it.getServerCall().getType();
-        boolean _equals_1 = Objects.equal(_type_1, "POST");
-        if (_equals_1) {
-          _builder.append("httpPost");
+        return "httpMulitpartFormDataPut";
+      }
+    } else {
+      String _type_1 = it.getServerCall().getType();
+      boolean _equals_1 = Objects.equal(_type_1, "DELETE");
+      if (_equals_1) {
+        return "httpDelete";
+      } else {
+        String _type_2 = it.getServerCall().getType();
+        boolean _equals_2 = Objects.equal(_type_2, "POST");
+        if (_equals_2) {
+          return "httpPost";
         } else {
-          String _type_2 = it.getServerCall().getType();
-          boolean _equals_2 = Objects.equal(_type_2, "PUT");
-          if (_equals_2) {
-            _builder.append("httpPut");
+          String _type_3 = it.getServerCall().getType();
+          boolean _equals_3 = Objects.equal(_type_3, "PUT");
+          if (_equals_3) {
+            return "httpPut";
           } else {
-            _builder.append("httpGet");
+            return "httpGet";
           }
         }
       }
     }
-    return _builder.toString();
   }
   
   public String httpUrl(final HttpClientAce it) {

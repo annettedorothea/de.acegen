@@ -28,6 +28,7 @@ import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
+import de.acegen.extensions.java.ModelExtension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -49,6 +50,14 @@ public class CommandTemplate {
   @Inject
   @Extension
   private Es6Extension _es6Extension;
+  
+  @Inject
+  @Extension
+  private de.acegen.extensions.java.AceExtension _aceExtension_1;
+  
+  @Inject
+  @Extension
+  private ModelExtension _modelExtension;
   
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
@@ -181,7 +190,7 @@ public class CommandTemplate {
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
         {
-          if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
+          if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._aceExtension_1.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
             _builder.append("\t");
             _builder.append("    \t");
             _builder.append("let payload = {");
@@ -210,6 +219,16 @@ public class CommandTemplate {
             _builder.append("    \t");
             _builder.append("};");
             _builder.newLine();
+          } else {
+            if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._aceExtension_1.isMulitpartFormData(it.getServerCall())).booleanValue())) {
+              _builder.append("\t");
+              _builder.append("    \t");
+              _builder.append("const formData = data.");
+              String _formDataAttributeName = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
+              _builder.append(_formDataAttributeName, "\t    \t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+            }
           }
         }
         _builder.append("\t");
@@ -217,28 +236,39 @@ public class CommandTemplate {
         _builder.append("AppUtils.");
         String _httpCall = this._aceExtension.httpCall(it);
         _builder.append(_httpCall, "\t\t\t");
-        _builder.append("(`");
+        _builder.append("(");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t\t\t");
+        _builder.append("`");
         String _httpUrl = this._aceExtension.httpUrl(it);
-        _builder.append(_httpUrl, "\t\t\t");
+        _builder.append(_httpUrl, "\t\t\t\t\t");
         {
           EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
           boolean _hasElements_1 = false;
           for(final AttributeParamRef queryParam : _queryParams) {
             if (!_hasElements_1) {
               _hasElements_1 = true;
-              _builder.append("?", "\t\t\t");
+              _builder.append("?", "\t\t\t\t\t");
             } else {
-              _builder.appendImmediate("&", "\t\t\t");
+              _builder.appendImmediate("&", "\t\t\t\t\t");
             }
             String _name_5 = queryParam.getAttribute().getName();
-            _builder.append(_name_5, "\t\t\t");
+            _builder.append(_name_5, "\t\t\t\t\t");
             _builder.append("=${data.");
             String _name_6 = queryParam.getAttribute().getName();
-            _builder.append(_name_6, "\t\t\t");
+            _builder.append(_name_6, "\t\t\t\t\t");
             _builder.append("}");
           }
         }
-        _builder.append("`, data.uuid, ");
+        _builder.append("`, ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t\t\t");
+        _builder.append("data.uuid, ");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t\t\t");
         {
           boolean _isAuthorize = it.getServerCall().isAuthorize();
           if (_isAuthorize) {
@@ -248,15 +278,39 @@ public class CommandTemplate {
           }
         }
         {
-          if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0))) {
-            _builder.append(", payload");
+          if ((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT"))) {
+            {
+              Boolean _isMulitpartFormData = this._aceExtension_1.isMulitpartFormData(it.getServerCall());
+              if ((_isMulitpartFormData).booleanValue()) {
+                _builder.append(",");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t\t\t\t");
+                _builder.append(" ");
+                _builder.append("formData, \"");
+                String _formDataAttributeName_1 = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
+                _builder.append(_formDataAttributeName_1, "\t\t\t\t\t ");
+                _builder.append("\"");
+              } else {
+                int _size = it.getServerCall().getPayload().size();
+                boolean _greaterThan = (_size > 0);
+                if (_greaterThan) {
+                  _builder.append(",");
+                  _builder.newLineIfNotEmpty();
+                  _builder.append("\t");
+                  _builder.append("\t\t\t\t");
+                  _builder.append(" ");
+                  _builder.append("payload");
+                }
+              }
+            }
           }
         }
         _builder.append(").then((");
         {
-          int _size = it.getServerCall().getResponse().size();
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
+          int _size_1 = it.getServerCall().getResponse().size();
+          boolean _greaterThan_1 = (_size_1 > 0);
+          if (_greaterThan_1) {
             _builder.append("response");
           }
         }

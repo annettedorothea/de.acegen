@@ -25,6 +25,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
+import de.acegen.extensions.java.ModelExtension
 
 class CommandTemplate {
 	@Inject
@@ -35,6 +36,12 @@ class CommandTemplate {
 	
 	@Inject
 	extension Es6Extension
+	
+	@Inject
+	extension de.acegen.extensions.java.AceExtension
+	
+	@Inject
+	extension ModelExtension
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {
@@ -77,12 +84,19 @@ class CommandTemplate {
 			«IF serverCall !== null»
 				execute(data) {
 				    return new Promise((resolve, reject) => {
-				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0»
+				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
 				    		let payload = {
 				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
 				    		};
+				    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
+				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
 				        «ENDIF»
-						AppUtils.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${data.«queryParam.attribute.name»}«ENDFOR»`, data.uuid, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((«IF serverCall.response.size > 0»response«ENDIF») => {
+						AppUtils.«httpCall»(
+								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${data.«queryParam.attribute.name»}«ENDFOR»`, 
+								data.uuid, 
+								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
+								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
+								 payload«ENDIF»«ENDIF»).then((«IF serverCall.response.size > 0»response«ENDIF») => {
 							«FOR attribute : serverCall.response»
 								data.«attribute.name» = response.«attribute.name»;
 							«ENDFOR»
