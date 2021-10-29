@@ -19,12 +19,13 @@
 
 package de.acegen.extensions.java
 
-import java.util.ArrayList
-import javax.inject.Inject
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerAceRead
+import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.HttpServerOutcome
+import java.util.ArrayList
+import javax.inject.Inject
 
 class AceExtension {
 	
@@ -64,6 +65,10 @@ class AceExtension {
 	def String payloadDataNameWithPackage(HttpServerAce it) '''«(eContainer as HttpServer).name».data.«getName.toFirstUpper»Payload'''
 	
 	def String payloadDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Payload'''
+
+	def Boolean isMulitpartFormData(HttpServerAce it) {
+		return (it instanceof HttpServerAceWrite && (it as HttpServerAceWrite).isMultipartFormData)
+	}
 
 	def boolean isRead(HttpServerAce it) {
 		return it instanceof HttpServerAceRead

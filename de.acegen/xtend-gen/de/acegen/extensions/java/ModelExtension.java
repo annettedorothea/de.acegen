@@ -15,6 +15,7 @@
  */
 package de.acegen.extensions.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
@@ -345,6 +346,18 @@ public class ModelExtension {
     final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
     this.allAttributesRec(it, attrs);
     return attrs;
+  }
+  
+  public String formDataAttributeName(final Model it) {
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attr : _attributes) {
+      String _type = attr.getType();
+      boolean _equals = Objects.equal(_type, "FormData");
+      if (_equals) {
+        return attr.getName();
+      }
+    }
+    return "formData";
   }
   
   public void allAttributesRec(final Model it, final List<Attribute> attrs) {

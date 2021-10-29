@@ -655,6 +655,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         type=WriteFunctionType 
 	 *         url=STRING 
 	 *         authorize?='authorize'? 
+	 *         multipartFormData?='multipartFormData'? 
 	 *         pathParams+=AttributeParamRef* 
 	 *         queryParams+=AttributeParamRef* 
 	 *         payload+=AttributeParamRef* 

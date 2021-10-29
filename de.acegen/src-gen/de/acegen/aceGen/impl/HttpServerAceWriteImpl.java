@@ -9,12 +9,15 @@ import de.acegen.aceGen.HttpServerOutcome;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -27,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl#isMultipartFormData <em>Multipart Form Data</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerAceWriteImpl#getOutcomes <em>Outcomes</em>}</li>
  * </ul>
  *
@@ -34,6 +38,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpServerAceWrite
 {
+  /**
+   * The default value of the '{@link #isMultipartFormData() <em>Multipart Form Data</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultipartFormData()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MULTIPART_FORM_DATA_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMultipartFormData() <em>Multipart Form Data</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultipartFormData()
+   * @generated
+   * @ordered
+   */
+  protected boolean multipartFormData = MULTIPART_FORM_DATA_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getOutcomes() <em>Outcomes</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -63,6 +87,31 @@ public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpSer
   protected EClass eStaticClass()
   {
     return AceGenPackage.Literals.HTTP_SERVER_ACE_WRITE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isMultipartFormData()
+  {
+    return multipartFormData;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setMultipartFormData(boolean newMultipartFormData)
+  {
+    boolean oldMultipartFormData = multipartFormData;
+    multipartFormData = newMultipartFormData;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA, oldMultipartFormData, multipartFormData));
   }
 
   /**
@@ -106,6 +155,8 @@ public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpSer
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA:
+        return isMultipartFormData();
       case AceGenPackage.HTTP_SERVER_ACE_WRITE__OUTCOMES:
         return getOutcomes();
     }
@@ -123,6 +174,9 @@ public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpSer
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA:
+        setMultipartFormData((Boolean)newValue);
+        return;
       case AceGenPackage.HTTP_SERVER_ACE_WRITE__OUTCOMES:
         getOutcomes().clear();
         getOutcomes().addAll((Collection<? extends HttpServerOutcome>)newValue);
@@ -141,6 +195,9 @@ public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpSer
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA:
+        setMultipartFormData(MULTIPART_FORM_DATA_EDEFAULT);
+        return;
       case AceGenPackage.HTTP_SERVER_ACE_WRITE__OUTCOMES:
         getOutcomes().clear();
         return;
@@ -158,10 +215,29 @@ public class HttpServerAceWriteImpl extends HttpServerAceImpl implements HttpSer
   {
     switch (featureID)
     {
+      case AceGenPackage.HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA:
+        return multipartFormData != MULTIPART_FORM_DATA_EDEFAULT;
       case AceGenPackage.HTTP_SERVER_ACE_WRITE__OUTCOMES:
         return outcomes != null && !outcomes.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (multipartFormData: ");
+    result.append(multipartFormData);
+    result.append(')');
+    return result.toString();
   }
 
 } //HttpServerAceWriteImpl

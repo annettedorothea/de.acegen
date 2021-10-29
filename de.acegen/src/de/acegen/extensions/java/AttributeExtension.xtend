@@ -102,7 +102,7 @@ class AttributeExtension {
 
 	def String javaType(Attribute it) {
 		if (type !== null) {
-			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»java.time.LocalDateTime«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
+			return '''«IF list»java.util.List<«ENDIF»«IF type.equals('DateTime')»java.time.LocalDateTime«ELSEIF type.equals('FormData')»de.acegen.FormData«ELSE»«type»«ENDIF»«IF list»>«ENDIF»''';
 		}
 		if (model !== null) {
 			return '''«IF list»java.util.List<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
@@ -128,7 +128,7 @@ class AttributeExtension {
 
 	def String mapperInit(Attribute it) {
 		if (type !== null) {
-			return '''«IF isList»null«ELSEIF type == 'DateTime'»this.mapToDateTime(r, "«name»")«ELSE»this.mapTo«javaType»(r, "«name»")«ENDIF»'''
+			return '''«IF isList»null«ELSEIF type == 'DateTime'»this.mapToDateTime(r, "«name»")«ELSEIF type == 'FormData'»null«ELSE»this.mapTo«javaType»(r, "«name»")«ENDIF»'''
 		}
 		if (model !== null) {
 			return '''null''';
@@ -157,6 +157,7 @@ class AttributeExtension {
 				case 'Float': "random.nextFloat()"
 				case 'Boolean': "random.nextBoolean()"
 				case 'DateTime': "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) "
+				case 'FormData': "null"
 			}
 		}
 	}
@@ -195,18 +196,24 @@ class AttributeExtension {
 			«IF type !== null»
 				copy.«setterCall('''this.«getterCall»''')»;
 			«ELSEIF model !== null»
-				copy.«setterCall('''this.«getterCall».deepCopy()''')»;
+				if (this.«getterCall» != null) {
+					copy.«setterCall('''this.«getterCall».deepCopy()''')»;
+				}
 			«ENDIF»
 		«ELSE»
 			«IF type !== null»
 				List<«type»> «name»Copy = new ArrayList<«type»>();
-				for(«type» item: this.«getterCall») {
-					«name»Copy.add(item);
+				if (this.«getterCall» != null) {
+					for(«type» item: this.«getterCall») {
+						«name»Copy.add(item);
+					}
 				}
 			«ELSEIF model !== null»
 				List<«model.interfaceWithPackage»> «name»Copy = new ArrayList<«model.interfaceWithPackage»>();
-				for(«model.interfaceWithPackage» item: this.«getterCall») {
-					«name»Copy.add(item.deepCopy());
+				if (this.«getterCall» != null) {
+					for(«model.interfaceWithPackage» item: this.«getterCall») {
+						«name»Copy.add(item.deepCopy());
+					}
 				}
 			«ENDIF»
 			copy.«setterCall('''«name»Copy''')»;

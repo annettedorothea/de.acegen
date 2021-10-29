@@ -1763,9 +1763,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getHttpServerAceWrite_MultipartFormData()
+  {
+    return (EAttribute)httpServerAceWriteEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getHttpServerAceWrite_Outcomes()
   {
-    return (EReference)httpServerAceWriteEClass.getEStructuralFeatures().get(0);
+    return (EReference)httpServerAceWriteEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3173,6 +3184,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(httpServerAceEClass, HTTP_SERVER_ACE__RESPONSE);
 
     httpServerAceWriteEClass = createEClass(HTTP_SERVER_ACE_WRITE);
+    createEAttribute(httpServerAceWriteEClass, HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA);
     createEReference(httpServerAceWriteEClass, HTTP_SERVER_ACE_WRITE__OUTCOMES);
 
     httpServerOutcomeEClass = createEClass(HTTP_SERVER_OUTCOME);
@@ -3511,6 +3523,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getHttpServerAce_Response(), this.getAttribute(), null, "response", null, 0, -1, HttpServerAce.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerAceWriteEClass, HttpServerAceWrite.class, "HttpServerAceWrite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHttpServerAceWrite_MultipartFormData(), ecorePackage.getEBoolean(), "multipartFormData", null, 0, 1, HttpServerAceWrite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServerAceWrite_Outcomes(), this.getHttpServerOutcome(), null, "outcomes", null, 0, -1, HttpServerAceWrite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerOutcomeEClass, HttpServerOutcome.class, "HttpServerOutcome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

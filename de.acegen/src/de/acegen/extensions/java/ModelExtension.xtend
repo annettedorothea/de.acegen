@@ -141,6 +141,15 @@ class ModelExtension {
 		return attrs;
 	}
 	
+	def String formDataAttributeName(Model it) {
+		for (attr : attributes) {
+			if (attr.type == "FormData") {
+				return attr.name
+			}
+		} 
+		return "formData"
+	}
+	
 	def void allAttributesRec(Model it, List<Attribute> attrs) {
 		for (attribute : attributes) {
 			if (!attrs.containsAttribute(attribute)) {

@@ -136,6 +136,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/response"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceWrite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAceWrite/multipartFormData"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceWrite/outcomes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerOutcome">

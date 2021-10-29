@@ -1343,13 +1343,22 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER_ACE_WRITE__RESPONSE = HTTP_SERVER_ACE__RESPONSE;
 
   /**
+   * The feature id for the '<em><b>Multipart Form Data</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Outcomes</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_WRITE__OUTCOMES = HTTP_SERVER_ACE_FEATURE_COUNT + 0;
+  int HTTP_SERVER_ACE_WRITE__OUTCOMES = HTTP_SERVER_ACE_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Http Server Ace Write</em>' class.
@@ -1358,7 +1367,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_ACE_WRITE_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 1;
+  int HTTP_SERVER_ACE_WRITE_FEATURE_COUNT = HTTP_SERVER_ACE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerOutcomeImpl <em>Http Server Outcome</em>}' class.
@@ -4000,6 +4009,17 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServerAceWrite();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServerAceWrite#isMultipartFormData <em>Multipart Form Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Multipart Form Data</em>'.
+   * @see de.acegen.aceGen.HttpServerAceWrite#isMultipartFormData()
+   * @see #getHttpServerAceWrite()
+   * @generated
+   */
+  EAttribute getHttpServerAceWrite_MultipartFormData();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.HttpServerAceWrite#getOutcomes <em>Outcomes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6144,6 +6164,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EClass HTTP_SERVER_ACE_WRITE = eINSTANCE.getHttpServerAceWrite();
+
+    /**
+     * The meta object literal for the '<em><b>Multipart Form Data</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER_ACE_WRITE__MULTIPART_FORM_DATA = eINSTANCE.getHttpServerAceWrite_MultipartFormData();
 
     /**
      * The meta object literal for the '<em><b>Outcomes</b></em>' containment reference list feature.

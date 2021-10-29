@@ -20,6 +20,7 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
+import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -192,6 +193,10 @@ public class AceExtension {
     _builder.append(_firstUpper);
     _builder.append("Payload");
     return _builder.toString();
+  }
+  
+  public Boolean isMulitpartFormData(final HttpServerAce it) {
+    return Boolean.valueOf(((it instanceof HttpServerAceWrite) && ((HttpServerAceWrite) it).isMultipartFormData()));
   }
   
   public boolean isRead(final HttpServerAce it) {

@@ -268,8 +268,13 @@ public class AttributeExtension {
         if (_equals) {
           _builder.append("java.time.LocalDateTime");
         } else {
-          String _type_1 = it.getType();
-          _builder.append(_type_1);
+          boolean _equals_1 = it.getType().equals("FormData");
+          if (_equals_1) {
+            _builder.append("de.acegen.FormData");
+          } else {
+            String _type_1 = it.getType();
+            _builder.append(_type_1);
+          }
         }
       }
       {
@@ -380,13 +385,19 @@ public class AttributeExtension {
             _builder.append(_name);
             _builder.append("\")");
           } else {
-            _builder.append("this.mapTo");
-            String _javaType = this.javaType(it);
-            _builder.append(_javaType);
-            _builder.append("(r, \"");
-            String _name_1 = it.getName();
-            _builder.append(_name_1);
-            _builder.append("\")");
+            String _type_2 = it.getType();
+            boolean _equals_1 = Objects.equal(_type_2, "FormData");
+            if (_equals_1) {
+              _builder.append("null");
+            } else {
+              _builder.append("this.mapTo");
+              String _javaType = this.javaType(it);
+              _builder.append(_javaType);
+              _builder.append("(r, \"");
+              String _name_1 = it.getName();
+              _builder.append(_name_1);
+              _builder.append("\")");
+            }
           }
         }
       }
@@ -489,6 +500,12 @@ public class AttributeExtension {
         if (Objects.equal(_type_1, "DateTime")) {
           _matched=true;
           _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "FormData")) {
+          _matched=true;
+          _switchResult = "null";
         }
       }
       _xifexpression = _switchResult;
@@ -630,16 +647,24 @@ public class AttributeExtension {
             Model _model = it.getModel();
             boolean _tripleNotEquals_1 = (_model != null);
             if (_tripleNotEquals_1) {
+              _builder.append("if (this.");
+              String _terCall_1 = this.getterCall(it);
+              _builder.append(_terCall_1);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
               _builder.append("copy.");
               StringConcatenation _builder_2 = new StringConcatenation();
               _builder_2.append("this.");
-              String _terCall_1 = this.getterCall(it);
-              _builder_2.append(_terCall_1);
+              String _terCall_2 = this.getterCall(it);
+              _builder_2.append(_terCall_2);
               _builder_2.append(".deepCopy()");
               String _setterCall_1 = this.setterCall(it, _builder_2.toString());
-              _builder.append(_setterCall_1);
+              _builder.append(_setterCall_1, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
             }
           }
         }
@@ -659,19 +684,28 @@ public class AttributeExtension {
             _builder.append(_type_3);
             _builder.append(">();");
             _builder.newLineIfNotEmpty();
-            _builder.append("for(");
-            String _type_4 = it.getType();
-            _builder.append(_type_4);
-            _builder.append(" item: this.");
-            String _terCall_2 = this.getterCall(it);
-            _builder.append(_terCall_2);
-            _builder.append(") {");
+            _builder.append("if (this.");
+            String _terCall_3 = this.getterCall(it);
+            _builder.append(_terCall_3);
+            _builder.append(" != null) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
+            _builder.append("for(");
+            String _type_4 = it.getType();
+            _builder.append(_type_4, "\t");
+            _builder.append(" item: this.");
+            String _terCall_4 = this.getterCall(it);
+            _builder.append(_terCall_4, "\t");
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
             String _name_1 = it.getName();
-            _builder.append(_name_1, "\t");
+            _builder.append(_name_1, "\t\t");
             _builder.append("Copy.add(item);");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
             _builder.append("}");
             _builder.newLine();
           } else {
@@ -689,19 +723,28 @@ public class AttributeExtension {
               _builder.append(_interfaceWithPackage_1);
               _builder.append(">();");
               _builder.newLineIfNotEmpty();
-              _builder.append("for(");
-              String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getModel());
-              _builder.append(_interfaceWithPackage_2);
-              _builder.append(" item: this.");
-              String _terCall_3 = this.getterCall(it);
-              _builder.append(_terCall_3);
-              _builder.append(") {");
+              _builder.append("if (this.");
+              String _terCall_5 = this.getterCall(it);
+              _builder.append(_terCall_5);
+              _builder.append(" != null) {");
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
+              _builder.append("for(");
+              String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage_2, "\t");
+              _builder.append(" item: this.");
+              String _terCall_6 = this.getterCall(it);
+              _builder.append(_terCall_6, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t\t");
               String _name_3 = it.getName();
-              _builder.append(_name_3, "\t");
+              _builder.append(_name_3, "\t\t");
               _builder.append("Copy.add(item.deepCopy());");
               _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
               _builder.append("}");
               _builder.newLine();
             }

@@ -15,6 +15,7 @@
  */
 package de.acegen.templates.java.resources;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.AuthUser;
@@ -91,6 +92,18 @@ public class Resource {
     _builder.newLine();
     _builder.append("import org.apache.commons.lang3.StringUtils;");
     _builder.newLine();
+    _builder.newLine();
+    {
+      Boolean _isMulitpartFormData = this._aceExtension.isMulitpartFormData(it);
+      if ((_isMulitpartFormData).booleanValue()) {
+        _builder.append("import org.glassfish.jersey.media.multipart.FormDataContentDisposition;");
+        _builder.newLine();
+        _builder.append("import org.glassfish.jersey.media.multipart.FormDataParam;");
+        _builder.newLine();
+        _builder.append("import java.io.InputStream;");
+        _builder.newLine();
+      }
+    }
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
@@ -248,9 +261,18 @@ public class Resource {
     _builder.append("\t");
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
-    _builder.newLine();
+    {
+      Boolean _isMulitpartFormData_1 = this._aceExtension.isMulitpartFormData(it);
+      if ((_isMulitpartFormData_1).booleanValue()) {
+        _builder.append("\t");
+        _builder.append("@Consumes(MediaType.MULTIPART_FORM_DATA)");
+        _builder.newLine();
+      } else {
+        _builder.append("\t");
+        _builder.append("@Consumes(MediaType.APPLICATION_JSON)");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t");
     _builder.append("public Response ");
     String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
@@ -301,6 +323,23 @@ public class Resource {
         String _name_4 = param_1.getAttribute().getName();
         _builder.append(_name_4, "\t\t\t");
         _builder.append(", ");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      Boolean _isMulitpartFormData_2 = this._aceExtension.isMulitpartFormData(it);
+      if ((_isMulitpartFormData_2).booleanValue()) {
+        _builder.append("\t\t\t");
+        _builder.append("@FormDataParam(\"");
+        String _formDataAttributeName = this._modelExtension.formDataAttributeName(it.getModel());
+        _builder.append(_formDataAttributeName, "\t\t\t");
+        _builder.append("\")FormDataContentDisposition contentDisposition,");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t\t");
+        _builder.append("@FormDataParam(\"");
+        String _formDataAttributeName_1 = this._modelExtension.formDataAttributeName(it.getModel());
+        _builder.append(_formDataAttributeName_1, "\t\t\t");
+        _builder.append("\")InputStream inputStream,");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -404,6 +443,30 @@ public class Resource {
                 _builder_1.append(_terCall);
                 String _setterCall = this._attributeExtension.setterCall(param_2, _builder_1.toString());
                 _builder.append(_setterCall, "\t\t\t");
+                _builder.append(";");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    {
+      Boolean _isMulitpartFormData_3 = this._aceExtension.isMulitpartFormData(it);
+      if ((_isMulitpartFormData_3).booleanValue()) {
+        {
+          List<Attribute> _allAttributes_1 = this._modelExtension.allAttributes(it.getModel());
+          for(final Attribute param_3 : _allAttributes_1) {
+            {
+              String _type_2 = param_3.getType();
+              boolean _equals = Objects.equal(_type_2, "FormData");
+              if (_equals) {
+                _builder.append("\t\t\t");
+                _builder.append("data.");
+                StringConcatenation _builder_2 = new StringConcatenation();
+                _builder_2.append("new de.acegen.FormData(contentDisposition, inputStream)");
+                String _setterCall_1 = this._attributeExtension.setterCall(param_3, _builder_2.toString());
+                _builder.append(_setterCall_1, "\t\t\t");
                 _builder.append(";");
                 _builder.newLineIfNotEmpty();
               }
