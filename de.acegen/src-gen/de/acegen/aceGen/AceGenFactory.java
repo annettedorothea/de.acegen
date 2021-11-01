@@ -330,6 +330,15 @@ public interface AceGenFactory extends EFactory
   Scenario createScenario();
 
   /**
+   * Returns a new object of class '<em>When Then</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>When Then</em>'.
+   * @generated
+   */
+  WhenThen createWhenThen();
+
+  /**
    * Returns a new object of class '<em>Given</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -3430,47 +3430,110 @@ ruleScenario returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_3='WHEN'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getScenarioAccess().getWHENKeyword_2());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getScenarioAccess().getWhenBlockWhenBlockParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getScenarioAccess().getWhenThenWhenThenParserRuleCall_2_0());
 				}
-				lv_whenBlock_4_0=ruleWhenBlock
+				lv_whenThen_3_0=ruleWhenThen
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getScenarioRule());
 					}
+					add(
+						$current,
+						"whenThen",
+						lv_whenThen_3_0,
+						"de.acegen.AceGen.WhenThen");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='AND'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getScenarioAccess().getANDKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getScenarioAccess().getWhenThenWhenThenParserRuleCall_3_1_0());
+					}
+					lv_whenThen_5_0=ruleWhenThen
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScenarioRule());
+						}
+						add(
+							$current,
+							"whenThen",
+							lv_whenThen_5_0,
+							"de.acegen.AceGen.WhenThen");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleWhenThen
+entryRuleWhenThen returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getWhenThenRule()); }
+	iv_ruleWhenThen=ruleWhenThen
+	{ $current=$iv_ruleWhenThen.current; }
+	EOF;
+
+// Rule WhenThen
+ruleWhenThen returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='WHEN'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getWhenThenAccess().getWHENKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getWhenThenAccess().getWhenBlockWhenBlockParserRuleCall_1_0());
+				}
+				lv_whenBlock_1_0=ruleWhenBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getWhenThenRule());
+					}
 					set(
 						$current,
 						"whenBlock",
-						lv_whenBlock_4_0,
+						lv_whenBlock_1_0,
 						"de.acegen.AceGen.WhenBlock");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_5='THEN'
+		otherlv_2='THEN'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getScenarioAccess().getTHENKeyword_4());
+			newLeafNode(otherlv_2, grammarAccess.getWhenThenAccess().getTHENKeyword_2());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getScenarioAccess().getThenBlockThenBlockParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getWhenThenAccess().getThenBlockThenBlockParserRuleCall_3_0());
 				}
-				lv_thenBlock_6_0=ruleThenBlock
+				lv_thenBlock_3_0=ruleThenBlock
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getScenarioRule());
+						$current = createModelElementForParent(grammarAccess.getWhenThenRule());
 					}
 					set(
 						$current,
 						"thenBlock",
-						lv_thenBlock_6_0,
+						lv_thenBlock_3_0,
 						"de.acegen.AceGen.ThenBlock");
 					afterParserOrEnumRuleCall();
 				}

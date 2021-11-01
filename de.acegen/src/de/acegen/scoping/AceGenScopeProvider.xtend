@@ -225,21 +225,25 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					return Scopes.scopeFor(attrs)
 				} else if (isWhen) {
 					var attr = new ArrayList<Attribute>();
-					for (attributeRef : scenario.whenBlock.action.payload) {
-						attr.add(attributeRef.attribute)
+					for (whenThenItem : scenario.whenThen) {
+						for (attributeRef : whenThenItem.whenBlock.action.payload) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.queryParams) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.pathParams) {
+							attr.add(attributeRef.attribute)
+						}
+						attr.addAll(whenThenItem.whenBlock.action.model.allSquishyAttributes)
 					}
-					for (attributeRef : scenario.whenBlock.action.queryParams) {
-						attr.add(attributeRef.attribute)
-					}
-					for (attributeRef : scenario.whenBlock.action.pathParams) {
-						attr.add(attributeRef.attribute)
-					}
-					attr.addAll(scenario.whenBlock.action.model.allSquishyAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {
 					var attr = new ArrayList<Attribute>();
-					for (attribute : scenario.whenBlock.action.response) {
-						attr.add(attribute)
+					for (whenThenItem : scenario.whenThen) {
+						for (attribute : whenThenItem.whenBlock.action.response) {
+							attr.add(attribute)
+						}
 					}
 					return Scopes.scopeFor(attr);
 				}

@@ -99,6 +99,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.AUTH_USER: return createAuthUser();
       case AceGenPackage.MODEL: return createModel();
       case AceGenPackage.SCENARIO: return createScenario();
+      case AceGenPackage.WHEN_THEN: return createWhenThen();
       case AceGenPackage.GIVEN: return createGiven();
       case AceGenPackage.CUSTOM_CALL: return createCustomCall();
       case AceGenPackage.GIVEN_REF: return createGivenRef();
@@ -539,6 +540,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ScenarioImpl scenario = new ScenarioImpl();
     return scenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public WhenThen createWhenThen()
+  {
+    WhenThenImpl whenThen = new WhenThenImpl();
+    return whenThen;
   }
 
   /**

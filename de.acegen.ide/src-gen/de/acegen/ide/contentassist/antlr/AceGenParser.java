@@ -133,6 +133,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getGroup_3(), "rule__Model__Group_3__0");
 			builder.put(grammarAccess.getScenarioAccess().getGroup(), "rule__Scenario__Group__0");
 			builder.put(grammarAccess.getScenarioAccess().getGroup_1(), "rule__Scenario__Group_1__0");
+			builder.put(grammarAccess.getScenarioAccess().getGroup_3(), "rule__Scenario__Group_3__0");
+			builder.put(grammarAccess.getWhenThenAccess().getGroup(), "rule__WhenThen__Group__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup(), "rule__CustomCall__Group__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup_2(), "rule__CustomCall__Group_2__0");
 			builder.put(grammarAccess.getCustomCallAccess().getGroup_2_1(), "rule__CustomCall__Group_2_1__0");
@@ -288,8 +290,10 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModelAccess().getAttributesAssignment_3_1(), "rule__Model__AttributesAssignment_3_1");
 			builder.put(grammarAccess.getScenarioAccess().getNameAssignment_0(), "rule__Scenario__NameAssignment_0");
 			builder.put(grammarAccess.getScenarioAccess().getGivenItemsAssignment_1_1(), "rule__Scenario__GivenItemsAssignment_1_1");
-			builder.put(grammarAccess.getScenarioAccess().getWhenBlockAssignment_3(), "rule__Scenario__WhenBlockAssignment_3");
-			builder.put(grammarAccess.getScenarioAccess().getThenBlockAssignment_5(), "rule__Scenario__ThenBlockAssignment_5");
+			builder.put(grammarAccess.getScenarioAccess().getWhenThenAssignment_2(), "rule__Scenario__WhenThenAssignment_2");
+			builder.put(grammarAccess.getScenarioAccess().getWhenThenAssignment_3_1(), "rule__Scenario__WhenThenAssignment_3_1");
+			builder.put(grammarAccess.getWhenThenAccess().getWhenBlockAssignment_1(), "rule__WhenThen__WhenBlockAssignment_1");
+			builder.put(grammarAccess.getWhenThenAccess().getThenBlockAssignment_3(), "rule__WhenThen__ThenBlockAssignment_3");
 			builder.put(grammarAccess.getCustomCallAccess().getCustomCallNameAssignment_0(), "rule__CustomCall__CustomCallNameAssignment_0");
 			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_0(), "rule__CustomCall__ValuesAssignment_2_0");
 			builder.put(grammarAccess.getCustomCallAccess().getValuesAssignment_2_1_1(), "rule__CustomCall__ValuesAssignment_2_1_1");

@@ -2290,25 +2290,23 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cGIVENKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cGivenItemsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cGivenItemsGivenParserRuleCall_1_1_0 = (RuleCall)cGivenItemsAssignment_1_1.eContents().get(0);
-		private final Keyword cWHENKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cWhenBlockAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cWhenBlockWhenBlockParserRuleCall_3_0 = (RuleCall)cWhenBlockAssignment_3.eContents().get(0);
-		private final Keyword cTHENKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cThenBlockAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cThenBlockThenBlockParserRuleCall_5_0 = (RuleCall)cThenBlockAssignment_5.eContents().get(0);
+		private final Assignment cWhenThenAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWhenThenWhenThenParserRuleCall_2_0 = (RuleCall)cWhenThenAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cANDKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cWhenThenAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cWhenThenWhenThenParserRuleCall_3_1_0 = (RuleCall)cWhenThenAssignment_3_1.eContents().get(0);
 		
 		//Scenario:
 		//    name = ID
 		//    ('GIVEN' (givenItems += Given)* )?
-		//    'WHEN' whenBlock = WhenBlock
-		//    'THEN' thenBlock = ThenBlock
+		//    whenThen += WhenThen ('AND' whenThen += WhenThen)*
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//name = ID
 		//('GIVEN' (givenItems += Given)* )?
-		//'WHEN' whenBlock = WhenBlock
-		//'THEN' thenBlock = ThenBlock
+		//whenThen += WhenThen ('AND' whenThen += WhenThen)*
 		public Group getGroup() { return cGroup; }
 		
 		//name = ID
@@ -2329,23 +2327,61 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//Given
 		public RuleCall getGivenItemsGivenParserRuleCall_1_1_0() { return cGivenItemsGivenParserRuleCall_1_1_0; }
 		
+		//whenThen += WhenThen
+		public Assignment getWhenThenAssignment_2() { return cWhenThenAssignment_2; }
+		
+		//WhenThen
+		public RuleCall getWhenThenWhenThenParserRuleCall_2_0() { return cWhenThenWhenThenParserRuleCall_2_0; }
+		
+		//('AND' whenThen += WhenThen)*
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'AND'
+		public Keyword getANDKeyword_3_0() { return cANDKeyword_3_0; }
+		
+		//whenThen += WhenThen
+		public Assignment getWhenThenAssignment_3_1() { return cWhenThenAssignment_3_1; }
+		
+		//WhenThen
+		public RuleCall getWhenThenWhenThenParserRuleCall_3_1_0() { return cWhenThenWhenThenParserRuleCall_3_1_0; }
+	}
+	public class WhenThenElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.WhenThen");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cWHENKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cWhenBlockAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cWhenBlockWhenBlockParserRuleCall_1_0 = (RuleCall)cWhenBlockAssignment_1.eContents().get(0);
+		private final Keyword cTHENKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cThenBlockAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cThenBlockThenBlockParserRuleCall_3_0 = (RuleCall)cThenBlockAssignment_3.eContents().get(0);
+		
+		//WhenThen:
+		//    'WHEN' whenBlock = WhenBlock
+		//    'THEN' thenBlock = ThenBlock
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'WHEN' whenBlock = WhenBlock
+		//'THEN' thenBlock = ThenBlock
+		public Group getGroup() { return cGroup; }
+		
 		//'WHEN'
-		public Keyword getWHENKeyword_2() { return cWHENKeyword_2; }
+		public Keyword getWHENKeyword_0() { return cWHENKeyword_0; }
 		
 		//whenBlock = WhenBlock
-		public Assignment getWhenBlockAssignment_3() { return cWhenBlockAssignment_3; }
+		public Assignment getWhenBlockAssignment_1() { return cWhenBlockAssignment_1; }
 		
 		//WhenBlock
-		public RuleCall getWhenBlockWhenBlockParserRuleCall_3_0() { return cWhenBlockWhenBlockParserRuleCall_3_0; }
+		public RuleCall getWhenBlockWhenBlockParserRuleCall_1_0() { return cWhenBlockWhenBlockParserRuleCall_1_0; }
 		
 		//'THEN'
-		public Keyword getTHENKeyword_4() { return cTHENKeyword_4; }
+		public Keyword getTHENKeyword_2() { return cTHENKeyword_2; }
 		
 		//thenBlock = ThenBlock
-		public Assignment getThenBlockAssignment_5() { return cThenBlockAssignment_5; }
+		public Assignment getThenBlockAssignment_3() { return cThenBlockAssignment_3; }
 		
 		//ThenBlock
-		public RuleCall getThenBlockThenBlockParserRuleCall_5_0() { return cThenBlockThenBlockParserRuleCall_5_0; }
+		public RuleCall getThenBlockThenBlockParserRuleCall_3_0() { return cThenBlockThenBlockParserRuleCall_3_0; }
 	}
 	public class GivenElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.Given");
@@ -3687,6 +3723,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final AuthUserElements pAuthUser;
 	private final ModelElements pModel;
 	private final ScenarioElements pScenario;
+	private final WhenThenElements pWhenThen;
 	private final GivenElements pGiven;
 	private final CustomCallElements pCustomCall;
 	private final GivenRefElements pGivenRef;
@@ -3766,6 +3803,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pAuthUser = new AuthUserElements();
 		this.pModel = new ModelElements();
 		this.pScenario = new ScenarioElements();
+		this.pWhenThen = new WhenThenElements();
 		this.pGiven = new GivenElements();
 		this.pCustomCall = new CustomCallElements();
 		this.pGivenRef = new GivenRefElements();
@@ -4275,8 +4313,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//Scenario:
 	//    name = ID
 	//    ('GIVEN' (givenItems += Given)* )?
-	//    'WHEN' whenBlock = WhenBlock
-	//    'THEN' thenBlock = ThenBlock
+	//    whenThen += WhenThen ('AND' whenThen += WhenThen)*
 	//;
 	public ScenarioElements getScenarioAccess() {
 		return pScenario;
@@ -4284,6 +4321,18 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getScenarioRule() {
 		return getScenarioAccess().getRule();
+	}
+	
+	//WhenThen:
+	//    'WHEN' whenBlock = WhenBlock
+	//    'THEN' thenBlock = ThenBlock
+	//;
+	public WhenThenElements getWhenThenAccess() {
+		return pWhenThen;
+	}
+	
+	public ParserRule getWhenThenRule() {
+		return getWhenThenAccess().getRule();
 	}
 	
 	//Given:

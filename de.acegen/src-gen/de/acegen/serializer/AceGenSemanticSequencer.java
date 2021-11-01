@@ -62,6 +62,7 @@ import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
+import de.acegen.aceGen.WhenThen;
 import de.acegen.services.AceGenGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -258,6 +259,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.WHEN_BLOCK:
 				sequence_WhenBlock(context, (WhenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.WHEN_THEN:
+				sequence_WhenThen(context, (WhenThen) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -1009,7 +1013,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Scenario returns Scenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenItems+=Given* whenBlock=WhenBlock thenBlock=ThenBlock)
+	 *     (name=ID givenItems+=Given* whenThen+=WhenThen whenThen+=WhenThen*)
 	 */
 	protected void sequence_Scenario(ISerializationContext context, Scenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1178,6 +1182,27 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_WhenBlock(ISerializationContext context, WhenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     WhenThen returns WhenThen
+	 *
+	 * Constraint:
+	 *     (whenBlock=WhenBlock thenBlock=ThenBlock)
+	 */
+	protected void sequence_WhenThen(ISerializationContext context, WhenThen semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.WHEN_THEN__WHEN_BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.WHEN_THEN__WHEN_BLOCK));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.WHEN_THEN__THEN_BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.WHEN_THEN__THEN_BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getWhenThenAccess().getWhenBlockWhenBlockParserRuleCall_1_0(), semanticObject.getWhenBlock());
+		feeder.accept(grammarAccess.getWhenThenAccess().getThenBlockThenBlockParserRuleCall_3_0(), semanticObject.getThenBlock());
+		feeder.finish();
 	}
 	
 	

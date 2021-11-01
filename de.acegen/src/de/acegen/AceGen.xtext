@@ -235,6 +235,10 @@ Model:
 Scenario:
 	name = ID
 	('GIVEN' (givenItems += Given)* )? 
+	whenThen += WhenThen ('AND' whenThen += WhenThen)*
+;
+
+WhenThen:
 	'WHEN' whenBlock = WhenBlock
 	'THEN' thenBlock = ThenBlock
 ;

@@ -68,6 +68,7 @@ import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
+import de.acegen.aceGen.WhenThen;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -321,6 +322,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   private EClass scenarioEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass whenThenEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2101,7 +2109,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getScenario_WhenBlock()
+  public EReference getScenario_WhenThen()
   {
     return (EReference)scenarioEClass.getEStructuralFeatures().get(2);
   }
@@ -2112,9 +2120,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getScenario_ThenBlock()
+  public EClass getWhenThen()
   {
-    return (EReference)scenarioEClass.getEStructuralFeatures().get(3);
+    return whenThenEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getWhenThen_WhenBlock()
+  {
+    return (EReference)whenThenEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getWhenThen_ThenBlock()
+  {
+    return (EReference)whenThenEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3264,8 +3294,11 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     scenarioEClass = createEClass(SCENARIO);
     createEAttribute(scenarioEClass, SCENARIO__NAME);
     createEReference(scenarioEClass, SCENARIO__GIVEN_ITEMS);
-    createEReference(scenarioEClass, SCENARIO__WHEN_BLOCK);
-    createEReference(scenarioEClass, SCENARIO__THEN_BLOCK);
+    createEReference(scenarioEClass, SCENARIO__WHEN_THEN);
+
+    whenThenEClass = createEClass(WHEN_THEN);
+    createEReference(whenThenEClass, WHEN_THEN__WHEN_BLOCK);
+    createEReference(whenThenEClass, WHEN_THEN__THEN_BLOCK);
 
     givenEClass = createEClass(GIVEN);
     createEAttribute(givenEClass, GIVEN__TIMES);
@@ -3607,8 +3640,11 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(scenarioEClass, Scenario.class, "Scenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScenario_Name(), ecorePackage.getEString(), "name", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScenario_GivenItems(), this.getGiven(), null, "givenItems", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScenario_WhenBlock(), this.getWhenBlock(), null, "whenBlock", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScenario_ThenBlock(), this.getThenBlock(), null, "thenBlock", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScenario_WhenThen(), this.getWhenThen(), null, "whenThen", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(whenThenEClass, WhenThen.class, "WhenThen", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getWhenThen_WhenBlock(), this.getWhenBlock(), null, "whenBlock", null, 0, 1, WhenThen.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWhenThen_ThenBlock(), this.getThenBlock(), null, "thenBlock", null, 0, 1, WhenThen.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(givenEClass, Given.class, "Given", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGiven_Times(), ecorePackage.getEInt(), "times", null, 0, 1, Given.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

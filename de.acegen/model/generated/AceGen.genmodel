@@ -174,8 +174,11 @@
     <genClasses ecoreClass="AceGen.ecore#//Scenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Scenario/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/givenItems"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenBlock"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/thenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenThen"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//WhenThen">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenThen/whenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenThen/thenBlock"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Given">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Given/times"/>

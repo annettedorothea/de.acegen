@@ -212,6 +212,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="givenItems" upperBound="-1"
         eType="#//Given" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whenThen" upperBound="-1"
+        eType="#//WhenThen" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WhenThen">
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//WhenBlock"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ThenBlock"

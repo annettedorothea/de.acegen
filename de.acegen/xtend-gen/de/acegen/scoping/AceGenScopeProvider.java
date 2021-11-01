@@ -47,6 +47,7 @@ import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
+import de.acegen.aceGen.WhenThen;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -272,26 +273,34 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         } else {
           if (isWhen) {
             ArrayList<Attribute> attr = new ArrayList<Attribute>();
-            EList<AttributeParamRef> _payload = scenario.getWhenBlock().getAction().getPayload();
-            for (final AttributeParamRef attributeRef : _payload) {
-              attr.add(attributeRef.getAttribute());
+            EList<WhenThen> _whenThen = scenario.getWhenThen();
+            for (final WhenThen whenThenItem : _whenThen) {
+              {
+                EList<AttributeParamRef> _payload = whenThenItem.getWhenBlock().getAction().getPayload();
+                for (final AttributeParamRef attributeRef : _payload) {
+                  attr.add(attributeRef.getAttribute());
+                }
+                EList<AttributeParamRef> _queryParams = whenThenItem.getWhenBlock().getAction().getQueryParams();
+                for (final AttributeParamRef attributeRef_1 : _queryParams) {
+                  attr.add(attributeRef_1.getAttribute());
+                }
+                EList<AttributeParamRef> _pathParams = whenThenItem.getWhenBlock().getAction().getPathParams();
+                for (final AttributeParamRef attributeRef_2 : _pathParams) {
+                  attr.add(attributeRef_2.getAttribute());
+                }
+                attr.addAll(this._modelExtension.allSquishyAttributes(whenThenItem.getWhenBlock().getAction().getModel()));
+              }
             }
-            EList<AttributeParamRef> _queryParams = scenario.getWhenBlock().getAction().getQueryParams();
-            for (final AttributeParamRef attributeRef_1 : _queryParams) {
-              attr.add(attributeRef_1.getAttribute());
-            }
-            EList<AttributeParamRef> _pathParams = scenario.getWhenBlock().getAction().getPathParams();
-            for (final AttributeParamRef attributeRef_2 : _pathParams) {
-              attr.add(attributeRef_2.getAttribute());
-            }
-            attr.addAll(this._modelExtension.allSquishyAttributes(scenario.getWhenBlock().getAction().getModel()));
             return Scopes.scopeFor(attr);
           } else {
             if (isThen) {
               ArrayList<Attribute> attr_1 = new ArrayList<Attribute>();
-              EList<Attribute> _response = scenario.getWhenBlock().getAction().getResponse();
-              for (final Attribute attribute_3 : _response) {
-                attr_1.add(attribute_3);
+              EList<WhenThen> _whenThen_1 = scenario.getWhenThen();
+              for (final WhenThen whenThenItem_1 : _whenThen_1) {
+                EList<Attribute> _response = whenThenItem_1.getWhenBlock().getAction().getResponse();
+                for (final Attribute attribute_3 : _response) {
+                  attr_1.add(attribute_3);
+                }
               }
               return Scopes.scopeFor(attr_1);
             }
@@ -316,17 +325,17 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
             boolean _tripleNotEquals = (_serverCall != null);
             if (_tripleNotEquals) {
               final HttpServerAce serverCall = clientWhenThenItem_1.getWhenBlock().getAction().getServerCall();
-              EList<AttributeParamRef> _payload_1 = serverCall.getPayload();
-              for (final AttributeParamRef attributeRef_3 : _payload_1) {
-                attr_3.add(attributeRef_3.getAttribute());
+              EList<AttributeParamRef> _payload = serverCall.getPayload();
+              for (final AttributeParamRef attributeRef : _payload) {
+                attr_3.add(attributeRef.getAttribute());
               }
-              EList<AttributeParamRef> _queryParams_1 = serverCall.getQueryParams();
-              for (final AttributeParamRef attributeRef_4 : _queryParams_1) {
-                attr_3.add(attributeRef_4.getAttribute());
+              EList<AttributeParamRef> _queryParams = serverCall.getQueryParams();
+              for (final AttributeParamRef attributeRef_1 : _queryParams) {
+                attr_3.add(attributeRef_1.getAttribute());
               }
-              EList<AttributeParamRef> _pathParams_1 = serverCall.getPathParams();
-              for (final AttributeParamRef attributeRef_5 : _pathParams_1) {
-                attr_3.add(attributeRef_5.getAttribute());
+              EList<AttributeParamRef> _pathParams = serverCall.getPathParams();
+              for (final AttributeParamRef attributeRef_2 : _pathParams) {
+                attr_3.add(attributeRef_2.getAttribute());
               }
             }
           }

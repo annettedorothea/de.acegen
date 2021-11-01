@@ -246,6 +246,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createScenarioAdapter();
       }
       @Override
+      public Adapter caseWhenThen(WhenThen object)
+      {
+        return createWhenThenAdapter();
+      }
+      @Override
       public Adapter caseGiven(Given object)
       {
         return createGivenAdapter();
@@ -918,6 +923,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.WhenThen <em>When Then</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.WhenThen
+   * @generated
+   */
+  public Adapter createWhenThenAdapter()
   {
     return null;
   }
