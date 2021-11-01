@@ -247,12 +247,17 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			if (parent instanceof ClientScenario) {
 				val scenario = parent as ClientScenario;
 				if (isWhen) {
-					return Scopes.scopeFor(scenario.whenBlock.action.serverCall.response);
+					var attr = new ArrayList<Attribute>();
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+						attr.addAll(clientWhenThenItem.whenBlock.action.serverCall.response)
+					}
+					return Scopes.scopeFor(attr);
 				}
 				if (isThen) {
 					var attr = new ArrayList<Attribute>();
-					if (scenario.whenBlock.action.serverCall !== null) {
-						val serverCall = scenario.whenBlock.action.serverCall
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+					if (clientWhenThenItem.whenBlock.action.serverCall !== null) {
+						val serverCall = clientWhenThenItem.whenBlock.action.serverCall
 						for (attributeRef : serverCall.payload) {
 							attr.add(attributeRef.attribute)
 						}
@@ -262,6 +267,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 						for (attributeRef : serverCall.pathParams) {
 							attr.add(attributeRef.attribute)
 						}
+					}
 					}
 					return Scopes.scopeFor(attr);
 				}

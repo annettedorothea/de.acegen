@@ -24,6 +24,7 @@ import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
+import de.acegen.aceGen.ClientWhenThen;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
@@ -300,39 +301,47 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       if ((parent_1 instanceof ClientScenario)) {
         final ClientScenario scenario_1 = ((ClientScenario) parent_1);
         if (isWhen) {
-          return Scopes.scopeFor(scenario_1.getWhenBlock().getAction().getServerCall().getResponse());
-        }
-        if (isThen) {
           ArrayList<Attribute> attr_2 = new ArrayList<Attribute>();
-          HttpServerAce _serverCall = scenario_1.getWhenBlock().getAction().getServerCall();
-          boolean _tripleNotEquals = (_serverCall != null);
-          if (_tripleNotEquals) {
-            final HttpServerAce serverCall = scenario_1.getWhenBlock().getAction().getServerCall();
-            EList<AttributeParamRef> _payload_1 = serverCall.getPayload();
-            for (final AttributeParamRef attributeRef_3 : _payload_1) {
-              attr_2.add(attributeRef_3.getAttribute());
-            }
-            EList<AttributeParamRef> _queryParams_1 = serverCall.getQueryParams();
-            for (final AttributeParamRef attributeRef_4 : _queryParams_1) {
-              attr_2.add(attributeRef_4.getAttribute());
-            }
-            EList<AttributeParamRef> _pathParams_1 = serverCall.getPathParams();
-            for (final AttributeParamRef attributeRef_5 : _pathParams_1) {
-              attr_2.add(attributeRef_5.getAttribute());
-            }
+          EList<ClientWhenThen> _clientWhenThen = scenario_1.getClientWhenThen();
+          for (final ClientWhenThen clientWhenThenItem : _clientWhenThen) {
+            attr_2.addAll(clientWhenThenItem.getWhenBlock().getAction().getServerCall().getResponse());
           }
           return Scopes.scopeFor(attr_2);
         }
+        if (isThen) {
+          ArrayList<Attribute> attr_3 = new ArrayList<Attribute>();
+          EList<ClientWhenThen> _clientWhenThen_1 = scenario_1.getClientWhenThen();
+          for (final ClientWhenThen clientWhenThenItem_1 : _clientWhenThen_1) {
+            HttpServerAce _serverCall = clientWhenThenItem_1.getWhenBlock().getAction().getServerCall();
+            boolean _tripleNotEquals = (_serverCall != null);
+            if (_tripleNotEquals) {
+              final HttpServerAce serverCall = clientWhenThenItem_1.getWhenBlock().getAction().getServerCall();
+              EList<AttributeParamRef> _payload_1 = serverCall.getPayload();
+              for (final AttributeParamRef attributeRef_3 : _payload_1) {
+                attr_3.add(attributeRef_3.getAttribute());
+              }
+              EList<AttributeParamRef> _queryParams_1 = serverCall.getQueryParams();
+              for (final AttributeParamRef attributeRef_4 : _queryParams_1) {
+                attr_3.add(attributeRef_4.getAttribute());
+              }
+              EList<AttributeParamRef> _pathParams_1 = serverCall.getPathParams();
+              for (final AttributeParamRef attributeRef_5 : _pathParams_1) {
+                attr_3.add(attributeRef_5.getAttribute());
+              }
+            }
+          }
+          return Scopes.scopeFor(attr_3);
+        }
       }
       if ((parent_1 instanceof JsonMember)) {
-        ArrayList<Attribute> attr_3 = new ArrayList<Attribute>();
+        ArrayList<Attribute> attr_4 = new ArrayList<Attribute>();
         final JsonMember jsonMember = ((JsonMember) parent_1);
         if (((jsonMember.getAttribute() != null) && (jsonMember.getAttribute().getModel() != null))) {
           Model _model = jsonMember.getAttribute().getModel();
           final Model model_5 = ((Model) _model);
-          this._modelExtension.allAttributesRec(model_5, attr_3);
+          this._modelExtension.allAttributesRec(model_5, attr_4);
         }
-        return Scopes.scopeFor(attr_3);
+        return Scopes.scopeFor(attr_4);
       }
     }
     if ((((context instanceof JsonObjectClient) || (context instanceof JsonArrayClient)) || 

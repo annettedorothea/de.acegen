@@ -6,8 +6,7 @@ package de.acegen.aceGen.impl;
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
-import de.acegen.aceGen.ClientThenBlock;
-import de.acegen.aceGen.ClientWhenBlock;
+import de.acegen.aceGen.ClientWhenThen;
 
 import java.util.Collection;
 
@@ -35,9 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getGivenRefs <em>Given Refs</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getWhenBlock <em>When Block</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getDelayInMillis <em>Delay In Millis</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getThenBlock <em>Then Block</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientScenarioImpl#getClientWhenThen <em>Client When Then</em>}</li>
  * </ul>
  *
  * @generated
@@ -75,44 +72,14 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
   protected EList<ClientGivenRef> givenRefs;
 
   /**
-   * The cached value of the '{@link #getWhenBlock() <em>When Block</em>}' containment reference.
+   * The cached value of the '{@link #getClientWhenThen() <em>Client When Then</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getWhenBlock()
+   * @see #getClientWhenThen()
    * @generated
    * @ordered
    */
-  protected ClientWhenBlock whenBlock;
-
-  /**
-   * The default value of the '{@link #getDelayInMillis() <em>Delay In Millis</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDelayInMillis()
-   * @generated
-   * @ordered
-   */
-  protected static final int DELAY_IN_MILLIS_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getDelayInMillis() <em>Delay In Millis</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDelayInMillis()
-   * @generated
-   * @ordered
-   */
-  protected int delayInMillis = DELAY_IN_MILLIS_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getThenBlock() <em>Then Block</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getThenBlock()
-   * @generated
-   * @ordered
-   */
-  protected ClientThenBlock thenBlock;
+  protected EList<ClientWhenThen> clientWhenThen;
 
   /**
    * <!-- begin-user-doc -->
@@ -181,123 +148,13 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
-  public ClientWhenBlock getWhenBlock()
+  public EList<ClientWhenThen> getClientWhenThen()
   {
-    return whenBlock;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetWhenBlock(ClientWhenBlock newWhenBlock, NotificationChain msgs)
-  {
-    ClientWhenBlock oldWhenBlock = whenBlock;
-    whenBlock = newWhenBlock;
-    if (eNotificationRequired())
+    if (clientWhenThen == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK, oldWhenBlock, newWhenBlock);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      clientWhenThen = new EObjectContainmentEList<ClientWhenThen>(ClientWhenThen.class, this, AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setWhenBlock(ClientWhenBlock newWhenBlock)
-  {
-    if (newWhenBlock != whenBlock)
-    {
-      NotificationChain msgs = null;
-      if (whenBlock != null)
-        msgs = ((InternalEObject)whenBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK, null, msgs);
-      if (newWhenBlock != null)
-        msgs = ((InternalEObject)newWhenBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK, null, msgs);
-      msgs = basicSetWhenBlock(newWhenBlock, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK, newWhenBlock, newWhenBlock));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int getDelayInMillis()
-  {
-    return delayInMillis;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setDelayInMillis(int newDelayInMillis)
-  {
-    int oldDelayInMillis = delayInMillis;
-    delayInMillis = newDelayInMillis;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS, oldDelayInMillis, delayInMillis));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ClientThenBlock getThenBlock()
-  {
-    return thenBlock;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetThenBlock(ClientThenBlock newThenBlock, NotificationChain msgs)
-  {
-    ClientThenBlock oldThenBlock = thenBlock;
-    thenBlock = newThenBlock;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK, oldThenBlock, newThenBlock);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setThenBlock(ClientThenBlock newThenBlock)
-  {
-    if (newThenBlock != thenBlock)
-    {
-      NotificationChain msgs = null;
-      if (thenBlock != null)
-        msgs = ((InternalEObject)thenBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK, null, msgs);
-      if (newThenBlock != null)
-        msgs = ((InternalEObject)newThenBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK, null, msgs);
-      msgs = basicSetThenBlock(newThenBlock, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK, newThenBlock, newThenBlock));
+    return clientWhenThen;
   }
 
   /**
@@ -312,10 +169,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
     {
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         return ((InternalEList<?>)getGivenRefs()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
-        return basicSetWhenBlock(null, msgs);
-      case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
-        return basicSetThenBlock(null, msgs);
+      case AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN:
+        return ((InternalEList<?>)getClientWhenThen()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -334,12 +189,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return getName();
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         return getGivenRefs();
-      case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
-        return getWhenBlock();
-      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
-        return getDelayInMillis();
-      case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
-        return getThenBlock();
+      case AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN:
+        return getClientWhenThen();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -362,14 +213,9 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         getGivenRefs().clear();
         getGivenRefs().addAll((Collection<? extends ClientGivenRef>)newValue);
         return;
-      case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
-        setWhenBlock((ClientWhenBlock)newValue);
-        return;
-      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
-        setDelayInMillis((Integer)newValue);
-        return;
-      case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
-        setThenBlock((ClientThenBlock)newValue);
+      case AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN:
+        getClientWhenThen().clear();
+        getClientWhenThen().addAll((Collection<? extends ClientWhenThen>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -391,14 +237,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         getGivenRefs().clear();
         return;
-      case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
-        setWhenBlock((ClientWhenBlock)null);
-        return;
-      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
-        setDelayInMillis(DELAY_IN_MILLIS_EDEFAULT);
-        return;
-      case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
-        setThenBlock((ClientThenBlock)null);
+      case AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN:
+        getClientWhenThen().clear();
         return;
     }
     super.eUnset(featureID);
@@ -418,12 +258,8 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.CLIENT_SCENARIO__GIVEN_REFS:
         return givenRefs != null && !givenRefs.isEmpty();
-      case AceGenPackage.CLIENT_SCENARIO__WHEN_BLOCK:
-        return whenBlock != null;
-      case AceGenPackage.CLIENT_SCENARIO__DELAY_IN_MILLIS:
-        return delayInMillis != DELAY_IN_MILLIS_EDEFAULT;
-      case AceGenPackage.CLIENT_SCENARIO__THEN_BLOCK:
-        return thenBlock != null;
+      case AceGenPackage.CLIENT_SCENARIO__CLIENT_WHEN_THEN:
+        return clientWhenThen != null && !clientWhenThen.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -441,8 +277,6 @@ public class ClientScenarioImpl extends MinimalEObjectImpl.Container implements 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", delayInMillis: ");
-    result.append(delayInMillis);
     result.append(')');
     return result.toString();
   }

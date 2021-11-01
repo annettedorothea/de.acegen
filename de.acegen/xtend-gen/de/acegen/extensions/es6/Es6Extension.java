@@ -21,6 +21,7 @@ import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
+import de.acegen.aceGen.ClientWhenThen;
 import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
@@ -245,20 +246,25 @@ public class Es6Extension {
   }
   
   private void allReferencedHttpClientsRec(final ClientScenario it, final ArrayList<HttpClient> list) {
-    ClientWhenBlock _whenBlock = it.getWhenBlock();
-    boolean _tripleNotEquals = (_whenBlock != null);
-    if (_tripleNotEquals) {
-      EObject _eContainer = it.getWhenBlock().getAction().eContainer();
-      HttpClient httpClient = ((HttpClient) _eContainer);
-      boolean _contains = list.contains(httpClient);
-      boolean _not = (!_contains);
-      if (_not) {
-        list.add(httpClient);
+    EList<ClientWhenThen> _clientWhenThen = it.getClientWhenThen();
+    for (final ClientWhenThen whenThenItem : _clientWhenThen) {
+      {
+        ClientWhenBlock _whenBlock = whenThenItem.getWhenBlock();
+        boolean _tripleNotEquals = (_whenBlock != null);
+        if (_tripleNotEquals) {
+          EObject _eContainer = whenThenItem.getWhenBlock().getAction().eContainer();
+          HttpClient httpClient = ((HttpClient) _eContainer);
+          boolean _contains = list.contains(httpClient);
+          boolean _not = (!_contains);
+          if (_not) {
+            list.add(httpClient);
+          }
+        }
+        EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
+        for (final ClientGivenRef givenRef : _givenRefs) {
+          this.allReferencedHttpClientsRec(givenRef.getScenario(), list);
+        }
       }
-    }
-    EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
-    for (final ClientGivenRef givenRef : _givenRefs) {
-      this.allReferencedHttpClientsRec(givenRef.getScenario(), list);
     }
   }
   
@@ -321,13 +327,11 @@ public class Es6Extension {
         }
         _builder.newLineIfNotEmpty();
         _builder.append("}");
-        _builder.newLine();
-        _builder.append("\t\t");
       } else {
         _builder.append("{}");
-        _builder.newLineIfNotEmpty();
       }
     }
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
   
@@ -468,6 +472,17 @@ public class Es6Extension {
       }
     }
     return null;
+  }
+  
+  public List<String> allVerifications(final ClientScenario it) {
+    final ArrayList<String> verifications = new ArrayList<String>();
+    EList<ClientWhenThen> _clientWhenThen = it.getClientWhenThen();
+    for (final ClientWhenThen clientWhenThenItem : _clientWhenThen) {
+      if ((((clientWhenThenItem != null) && (clientWhenThenItem.getThenBlock() != null)) && (clientWhenThenItem.getThenBlock().getVerifications() != null))) {
+        verifications.addAll(clientWhenThenItem.getThenBlock().getVerifications());
+      }
+    }
+    return verifications;
   }
   
   public String appStateFunction(final EObject it) {

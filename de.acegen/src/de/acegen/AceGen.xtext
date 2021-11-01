@@ -93,12 +93,18 @@ ClientAttribute:
 ClientScenario:
 	name = ID
 	('GIVEN' (givenRefs += ClientGivenRef)* )? 
+	clientWhenThen += ClientWhenThen ('AND' clientWhenThen += ClientWhenThen)*
+;
+
+ClientWhenThen: 
+	{ClientWhenThen} 
 	'WHEN' (whenBlock = ClientWhenBlock)? ('delayInMillis' delayInMillis = INT)?
-	'THEN' thenBlock = ClientThenBlock
+	('THEN' thenBlock = ClientThenBlock)?
+	
 ;
 
 ClientGivenRef:
-	scenario = [ClientScenario | QualifiedName]
+	scenario = [ClientScenario | QualifiedName] (excludeGiven ?= 'exclude' 'GIVEN')?
 ;
 
 ClientWhenBlock: 
@@ -242,7 +248,7 @@ CustomCall:
 ;
 
 GivenRef:
-	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'excludeGIVEN')?
+	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'exclude' 'GIVEN')?
 ;
 
 WhenBlock: 

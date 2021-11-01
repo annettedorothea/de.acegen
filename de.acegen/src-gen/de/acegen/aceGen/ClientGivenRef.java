@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.ClientGivenRef#getScenario <em>Scenario</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientGivenRef#isExcludeGiven <em>Exclude Given</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getClientGivenRef()
@@ -44,5 +45,27 @@ public interface ClientGivenRef extends EObject
    * @generated
    */
   void setScenario(ClientScenario value);
+
+  /**
+   * Returns the value of the '<em><b>Exclude Given</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Exclude Given</em>' attribute.
+   * @see #setExcludeGiven(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientGivenRef_ExcludeGiven()
+   * @model
+   * @generated
+   */
+  boolean isExcludeGiven();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientGivenRef#isExcludeGiven <em>Exclude Given</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Exclude Given</em>' attribute.
+   * @see #isExcludeGiven()
+   * @generated
+   */
+  void setExcludeGiven(boolean value);
 
 } // ClientGivenRef

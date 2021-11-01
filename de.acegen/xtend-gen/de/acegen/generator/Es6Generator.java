@@ -169,7 +169,7 @@ public class Es6Generator {
         String _plus_8 = (_plus_7 + ".scenario.js");
         fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT, 
           this.scenarioTemplate.generateScenario(scenario, httpClient));
-        int _size_1 = scenario.getThenBlock().getVerifications().size();
+        int _size_1 = this._es6Extension.allVerifications(scenario).size();
         boolean _greaterThan_1 = (_size_1 > 0);
         if (_greaterThan_1) {
           String _name_5 = httpClient.getName();

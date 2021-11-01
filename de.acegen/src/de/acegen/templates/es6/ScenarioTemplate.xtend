@@ -77,7 +77,7 @@ class ScenarioTemplate {
 		«FOR referencedHttpClient: allReferencedHttpClients»
 			const «referencedHttpClient.actionIdName»  = require("../../gen/actionIds/«referencedHttpClient.name»/«referencedHttpClient.actionIdName»");
 		«ENDFOR»
-		«IF thenBlock.verifications.size > 0»
+		«IF allVerifications.size > 0»
 			const Verifications = require("../../src/«httpClient.name»/«name»Verifications");
 		«ENDIF»
 		const { Builder } = require('selenium-webdriver');
@@ -88,49 +88,75 @@ class ScenarioTemplate {
 		
 		let driver;
 		
-		let appState;
+		let appStates = {};
+		let verifications = {};
 		    
 		describe("«httpClient.name».«name»", function () {
 		    beforeAll(async function () {
 		    	driver = new Builder()
 		    			    .forBrowser(ScenarioUtils.browserName)
 		    			    .build();
+		    	let appState;
 				«FOR givenRef: allGivenItems»
-					«givenRef.scenario.whenBlock.initSquishyData»
-					await ScenarioUtils.invokeAction(driver, «(givenRef.scenario.whenBlock.action.eContainer as HttpClient).actionIdName».«givenRef.scenario.whenBlock.action.getName.toFirstLower»«FOR arg: givenRef.scenario.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
-					«IF givenRef.scenario.delayInMillis > 0»
-						await ScenarioUtils.waitInMillis(«givenRef.scenario.delayInMillis»);
-					«ENDIF»
+					«FOR whenThenItem: givenRef.scenario.clientWhenThen»
+						«whenThenItem.whenBlock.initSquishyData»
+						await ScenarioUtils.invokeAction(driver, «(whenThenItem.whenBlock.action.eContainer as HttpClient).actionIdName».«whenThenItem.whenBlock.action.getName.toFirstLower»«FOR arg: whenThenItem.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
+						«IF whenThenItem.delayInMillis > 0»
+							await ScenarioUtils.waitInMillis(«whenThenItem.delayInMillis»);
+						«ENDIF»
+					«ENDFOR»
 				«ENDFOR»
 
-				«IF whenBlock !== null»
-					«whenBlock.initSquishyData»
-					await ScenarioUtils.invokeAction(driver, «(whenBlock.action.eContainer as HttpClient).actionIdName».«whenBlock.action.getName.toFirstLower»«FOR arg: whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
-					«IF delayInMillis > 0»
-						await ScenarioUtils.waitInMillis(«delayInMillis»);
+				«FOR whenThenItem: clientWhenThen»
+					«IF whenThenItem.whenBlock !== null»
+						«whenThenItem.whenBlock.initSquishyData»
+						await ScenarioUtils.invokeAction(driver, «(whenThenItem.whenBlock.action.eContainer as HttpClient).actionIdName».«whenThenItem.whenBlock.action.getName.toFirstLower»«FOR arg: whenThenItem.whenBlock.inputValues BEFORE ', [' SEPARATOR ',' AFTER ']'»«arg.value.primitiveValueFrom»«ENDFOR»);
+						await ScenarioUtils.waitInMillis(10);
+						«IF whenThenItem.delayInMillis > 0»
+							await ScenarioUtils.waitInMillis(«whenThenItem.delayInMillis»);
+						«ENDIF»
+					«ELSEIF whenThenItem.delayInMillis > 0»
+						await ScenarioUtils.waitInMillis(«whenThenItem.delayInMillis»);
 					«ENDIF»
-				«ELSEIF delayInMillis > 0»
-					await ScenarioUtils.waitInMillis(«delayInMillis»);
+					
+					«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.stateVerifications !== null»
+						appState = await ScenarioUtils.getAppState(driver);
+						«FOR stateVerification: whenThenItem.thenBlock.stateVerifications»
+							appStates.«stateVerification.name» = appState;
+						«ENDFOR»
+						
+					«ENDIF»
+					«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.verifications !== null»
+						«FOR verification: whenThenItem.thenBlock.verifications»
+							verifications.«verification» = await Verifications.«verification»(driver, testId);
+						«ENDFOR»
+						
+					«ENDIF»
+				«ENDFOR»
+		    });
+
+			«FOR whenThenItem: clientWhenThen»
+				«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.stateVerifications !== null»
+					«FOR stateVerification: whenThenItem.thenBlock.stateVerifications»
+						it("«stateVerification.name»", async () => {
+							expect(appStates.«stateVerification.name».«stateVerification.stateRef.stateRefPath», "«stateVerification.name»")«IF stateVerification.not == true».not«ENDIF».toEqual(«stateVerification.value.valueFrom»)
+						});
+					«ENDFOR»
 				«ENDIF»
 				
-				appState = await ScenarioUtils.getAppState(driver);
-		    });
+				«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.verifications !== null»
+					«FOR verification: whenThenItem.thenBlock.verifications»
+						it("«verification»", async () => {
+							expect(verifications.«verification», "verifications.«verification»").toBeTrue();
+						});
+					«ENDFOR»
+				«ENDIF»
+			«ENDFOR»
 
 		    afterAll(async function () {
 		        await ScenarioUtils.tearDown(driver);
 		    });
 		    
-			«FOR stateVerification: thenBlock.stateVerifications»
-				it("«stateVerification.name»", async () => {
-					expect(appState.«stateVerification.stateRef.stateRefPath», "«stateVerification.name»")«IF stateVerification.not == true».not«ENDIF».toEqual(«stateVerification.value.valueFrom»)
-				});
-			«ENDFOR»
-		    
-			«FOR verification: thenBlock.verifications»
-				it("«verification»", async () => {
-					await Verifications.«verification»(driver, testId);
-				});
-	        «ENDFOR»
 		    
 		});
 		
@@ -164,7 +190,9 @@ class ScenarioTemplate {
 	private def allGivenItems(ClientScenario it) {
 		var allWhenBlocks = new ArrayList<ClientGivenRef>();
 		for (given : givenRefs) {
-			if (given instanceof ClientGivenRef) {
+			if (given.excludeGiven) {
+				allWhenBlocks.add(given)
+			} else if (given instanceof ClientGivenRef) {
 				allGivenItemsRec(given, allWhenBlocks)
 			}
 		}
@@ -184,7 +212,7 @@ class ScenarioTemplate {
 		«copyright»
 		
 		module.exports = {
-			«FOR verification: thenBlock.verifications SEPARATOR ","»
+			«FOR verification: allVerifications SEPARATOR ","»
 				«verification»: async function(driver, testId) {
 					fail("«verification» not implemented");
 				}

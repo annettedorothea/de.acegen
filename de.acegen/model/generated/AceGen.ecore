@@ -76,6 +76,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" upperBound="-1"
         eType="#//ClientGivenRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clientWhenThen" upperBound="-1"
+        eType="#//ClientWhenThen" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientWhenThen">
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//ClientWhenBlock"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delayInMillis" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -84,6 +88,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientGivenRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//ClientScenario"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludeGiven" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientWhenBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpClientAce"/>

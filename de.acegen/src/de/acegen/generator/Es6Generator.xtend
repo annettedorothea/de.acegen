@@ -116,7 +116,7 @@ class Es6Generator {
 		for (scenario : httpClient.scenarios) {
 			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.scenario.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
 				scenarioTemplate.generateScenario(scenario, httpClient));
-			if (scenario.thenBlock.verifications.size > 0) {
+			if (scenario.allVerifications.size > 0) {
 				fsa.generateFile(httpClient.getName + '/' + scenario.name + 'Verifications.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE,
 					scenarioTemplate.generateVerifications(scenario));
 			}

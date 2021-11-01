@@ -1173,76 +1173,148 @@ ruleClientScenario returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_3='WHEN'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getClientScenarioAccess().getWHENKeyword_2());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getClientScenarioAccess().getWhenBlockClientWhenBlockParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getClientScenarioAccess().getClientWhenThenClientWhenThenParserRuleCall_2_0());
 				}
-				lv_whenBlock_4_0=ruleClientWhenBlock
+				lv_clientWhenThen_3_0=ruleClientWhenThen
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
 					}
+					add(
+						$current,
+						"clientWhenThen",
+						lv_clientWhenThen_3_0,
+						"de.acegen.AceGen.ClientWhenThen");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='AND'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getClientScenarioAccess().getANDKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getClientScenarioAccess().getClientWhenThenClientWhenThenParserRuleCall_3_1_0());
+					}
+					lv_clientWhenThen_5_0=ruleClientWhenThen
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
+						}
+						add(
+							$current,
+							"clientWhenThen",
+							lv_clientWhenThen_5_0,
+							"de.acegen.AceGen.ClientWhenThen");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleClientWhenThen
+entryRuleClientWhenThen returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getClientWhenThenRule()); }
+	iv_ruleClientWhenThen=ruleClientWhenThen
+	{ $current=$iv_ruleClientWhenThen.current; }
+	EOF;
+
+// Rule ClientWhenThen
+ruleClientWhenThen returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getClientWhenThenAccess().getClientWhenThenAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='WHEN'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getClientWhenThenAccess().getWHENKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getClientWhenThenAccess().getWhenBlockClientWhenBlockParserRuleCall_2_0());
+				}
+				lv_whenBlock_2_0=ruleClientWhenBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getClientWhenThenRule());
+					}
 					set(
 						$current,
 						"whenBlock",
-						lv_whenBlock_4_0,
+						lv_whenBlock_2_0,
 						"de.acegen.AceGen.ClientWhenBlock");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
 		(
-			otherlv_5='delayInMillis'
+			otherlv_3='delayInMillis'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getClientScenarioAccess().getDelayInMillisKeyword_4_0());
+				newLeafNode(otherlv_3, grammarAccess.getClientWhenThenAccess().getDelayInMillisKeyword_3_0());
 			}
 			(
 				(
-					lv_delayInMillis_6_0=RULE_INT
+					lv_delayInMillis_4_0=RULE_INT
 					{
-						newLeafNode(lv_delayInMillis_6_0, grammarAccess.getClientScenarioAccess().getDelayInMillisINTTerminalRuleCall_4_1_0());
+						newLeafNode(lv_delayInMillis_4_0, grammarAccess.getClientWhenThenAccess().getDelayInMillisINTTerminalRuleCall_3_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getClientScenarioRule());
+							$current = createModelElement(grammarAccess.getClientWhenThenRule());
 						}
 						setWithLastConsumed(
 							$current,
 							"delayInMillis",
-							lv_delayInMillis_6_0,
+							lv_delayInMillis_4_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
 		)?
-		otherlv_7='THEN'
-		{
-			newLeafNode(otherlv_7, grammarAccess.getClientScenarioAccess().getTHENKeyword_5());
-		}
 		(
+			otherlv_5='THEN'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getClientWhenThenAccess().getTHENKeyword_4_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getClientScenarioAccess().getThenBlockClientThenBlockParserRuleCall_6_0());
-				}
-				lv_thenBlock_8_0=ruleClientThenBlock
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getClientWhenThenAccess().getThenBlockClientThenBlockParserRuleCall_4_1_0());
 					}
-					set(
-						$current,
-						"thenBlock",
-						lv_thenBlock_8_0,
-						"de.acegen.AceGen.ClientThenBlock");
-					afterParserOrEnumRuleCall();
-				}
+					lv_thenBlock_6_0=ruleClientThenBlock
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getClientWhenThenRule());
+						}
+						set(
+							$current,
+							"thenBlock",
+							lv_thenBlock_6_0,
+							"de.acegen.AceGen.ClientThenBlock");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
+		)?
 	)
 ;
 
@@ -1263,19 +1335,41 @@ ruleClientGivenRef returns [EObject current=null]
 }:
 	(
 		(
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getClientGivenRefRule());
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getClientGivenRefRule());
+					}
 				}
-			}
-			{
-				newCompositeNode(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioCrossReference_0());
-			}
-			ruleQualifiedName
-			{
-				afterParserOrEnumRuleCall();
-			}
+				{
+					newCompositeNode(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioCrossReference_0_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)
+		(
+			(
+				(
+					lv_excludeGiven_1_0='exclude'
+					{
+						newLeafNode(lv_excludeGiven_1_0, grammarAccess.getClientGivenRefAccess().getExcludeGivenExcludeKeyword_1_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientGivenRefRule());
+						}
+						setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_1_0 != null, "exclude");
+					}
+				)
+			)
+			otherlv_2='GIVEN'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getClientGivenRefAccess().getGIVENKeyword_1_1());
+			}
+		)?
 	)
 ;
 
@@ -3594,17 +3688,23 @@ ruleGivenRef returns [EObject current=null]
 		)?
 		(
 			(
-				lv_excludeGiven_3_0='excludeGIVEN'
-				{
-					newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGivenRefRule());
+				(
+					lv_excludeGiven_3_0='exclude'
+					{
+						newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeKeyword_2_0_0());
 					}
-					setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_3_0 != null, "excludeGIVEN");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getGivenRefRule());
+						}
+						setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_3_0 != null, "exclude");
+					}
+				)
 			)
+			otherlv_4='GIVEN'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getGivenRefAccess().getGIVENKeyword_2_1());
+			}
 		)?
 	)
 ;
