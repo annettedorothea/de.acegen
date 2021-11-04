@@ -210,14 +210,16 @@ class Scenario {
 		private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then_«index»(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
 			if (response.getStatusCode() == 500) {
 				String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
-				LOG.error("THEN: status " + response.getStatusCode() + " failed: " + statusMessage);
-				assertFail(statusMessage);
+				String errorMessage = "status " + response.getStatusCode() + " failed: " + statusMessage;
+				LOG.error("THEN: " + errorMessage);
+				assertFail(errorMessage);
 			}
 			«IF thenBlock.statusCode !== 0»
 				if (response.getStatusCode() != «thenBlock.statusCode») {
 					String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
-					LOG.error("THEN: status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + statusMessage);
-					assertFail(statusMessage);
+					String errorMessage = "status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + statusMessage;
+					LOG.error("THEN: " + errorMessage);
+					assertFail(errorMessage);
 				} else {
 					LOG.info("THEN: status «thenBlock.statusCode» passed");
 				}

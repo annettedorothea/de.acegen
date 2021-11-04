@@ -395,7 +395,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes = it.getOutcomes();
       for(final HttpClientOutcome outcome : _outcomes) {
         {
-          if (((outcome.getListeners().size() > 0) || (outcome.getTriggerdAceOperations().size() > 0))) {
+          if ((((outcome.getListeners().size() > 0) || (outcome.getTriggerdAceOperations().size() > 0)) || (outcome.getFunctions().size() > 0))) {
             _builder.append("\t\t");
             _builder.append("if (data.outcomes.includes(\"");
             String _name = outcome.getName();
