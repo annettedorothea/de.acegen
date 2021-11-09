@@ -618,13 +618,8 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("import SynchronousCommand from \"../../ace/SynchronousCommand\";");
     _builder.newLine();
-    {
-      boolean _hasEventOutcome = this.hasEventOutcome(it);
-      if (_hasEventOutcome) {
-        _builder.append("import Event from \"../../ace/Event\";");
-        _builder.newLine();
-      }
-    }
+    _builder.append("import Event from \"../../ace/Event\";");
+    _builder.newLine();
     {
       List<HttpClientAce> _aggregatedTriggeredAceOperations = this._aceExtension.aggregatedTriggeredAceOperations(it);
       for(final HttpClientAce aceOperation : _aggregatedTriggeredAceOperations) {

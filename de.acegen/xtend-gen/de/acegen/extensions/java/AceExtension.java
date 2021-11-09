@@ -233,10 +233,13 @@ public class AceExtension {
               String _name = queryParam.getAttribute().getName();
               _builder.append(_name);
               _builder.append("=\" + ");
-              _builder.append(dataVarName);
-              _builder.append(".");
+              StringConcatenation _builder_1 = new StringConcatenation();
+              _builder_1.append(dataVarName);
+              _builder_1.append(".");
               String _terCall = this._attributeExtension.getterCall(queryParam.getAttribute());
-              _builder.append(_terCall);
+              _builder_1.append(_terCall);
+              String _urlEncodedValue = this.urlEncodedValue(_builder_1.toString());
+              _builder.append(_urlEncodedValue);
               _builder.append(" + \"");
             }
           }
@@ -261,18 +264,22 @@ public class AceExtension {
         urlWithPathParam = (_urlWithPathParam + _get);
       } else {
         String _urlWithPathParam_1 = urlWithPathParam;
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("\" + ");
-        _builder_1.append(dataVarName);
-        _builder_1.append(".get");
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("\" + ");
+        StringConcatenation _builder_3 = new StringConcatenation();
+        _builder_3.append(dataVarName);
+        _builder_3.append(".get");
         String _firstUpper = StringExtensions.toFirstUpper(urlElements.get(i));
-        _builder_1.append(_firstUpper);
-        _builder_1.append("() + \"");
-        urlWithPathParam = (_urlWithPathParam_1 + _builder_1);
+        _builder_3.append(_firstUpper);
+        _builder_3.append("()");
+        String _urlEncodedValue_1 = this.urlEncodedValue(_builder_3.toString());
+        _builder_2.append(_urlEncodedValue_1);
+        _builder_2.append(" + \"");
+        urlWithPathParam = (_urlWithPathParam_1 + _builder_2);
       }
     }
     String _urlWithPathParam = urlWithPathParam;
-    StringConcatenation _builder_1 = new StringConcatenation();
+    StringConcatenation _builder_2 = new StringConcatenation();
     {
       if (generateQueryParams) {
         {
@@ -281,24 +288,37 @@ public class AceExtension {
           for(final AttributeParamRef queryParam_1 : _queryParams_1) {
             if (!_hasElements_1) {
               _hasElements_1 = true;
-              _builder_1.append("?");
+              _builder_2.append("?");
             } else {
-              _builder_1.appendImmediate("&", "");
+              _builder_2.appendImmediate("&", "");
             }
             String _name_1 = queryParam_1.getAttribute().getName();
-            _builder_1.append(_name_1);
-            _builder_1.append("=\" + ");
-            _builder_1.append(dataVarName);
-            _builder_1.append(".");
+            _builder_2.append(_name_1);
+            _builder_2.append("=\" + ");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append(dataVarName);
+            _builder_3.append(".");
             String _terCall_1 = this._attributeExtension.getterCall(queryParam_1.getAttribute());
-            _builder_1.append(_terCall_1);
-            _builder_1.append(" + \"");
+            _builder_3.append(_terCall_1);
+            String _urlEncodedValue_1 = this.urlEncodedValue(_builder_3.toString());
+            _builder_2.append(_urlEncodedValue_1);
+            _builder_2.append(" + \"");
           }
         }
       }
     }
-    urlWithPathParam = (_urlWithPathParam + _builder_1);
+    urlWithPathParam = (_urlWithPathParam + _builder_2);
     return urlWithPathParam;
+  }
+  
+  public String urlEncodedValue(final String valueVar) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    _builder.append(valueVar);
+    _builder.append(" != null ? URLEncoder.encode(");
+    _builder.append(valueVar);
+    _builder.append(", StandardCharsets.UTF_8.toString()) : \"\")");
+    return _builder.toString();
   }
   
   public boolean isDropwizard(final HttpServer it) {

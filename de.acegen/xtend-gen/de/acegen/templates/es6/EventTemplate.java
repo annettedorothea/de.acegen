@@ -214,12 +214,6 @@ public class EventTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("                ");
-    _builder.append("console.warn(`No listeners for ${this.eventName} found. Did you forget to register them?`)");
-    _builder.newLine();
-    _builder.append("            ");
     _builder.append("}");
     _builder.newLine();
     _builder.append("        ");

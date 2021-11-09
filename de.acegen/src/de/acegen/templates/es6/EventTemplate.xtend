@@ -99,8 +99,6 @@ class EventTemplate {
 		                    listener = listenersForEvent[i];
 							listener(data);
 		                }
-		            } else {
-		                console.warn(`No listeners for ${this.eventName} found. Did you forget to register them?`)
 		            }
 		        }
 		    }

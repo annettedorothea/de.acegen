@@ -178,9 +178,7 @@ class CommandTemplate {
 		«copyright»
 
 		import SynchronousCommand from "../../ace/SynchronousCommand";
-		«IF hasEventOutcome»
-			import Event from "../../ace/Event";
-		«ENDIF»
+		import Event from "../../ace/Event";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»

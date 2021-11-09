@@ -106,6 +106,8 @@ class Scenario {
 		import java.util.List;
 		import java.util.Map;
 		import java.util.HashMap;
+		import java.net.URLEncoder;
+		import java.nio.charset.StandardCharsets;
 		
 		import java.time.LocalDateTime;
 		import java.time.format.DateTimeFormatter;

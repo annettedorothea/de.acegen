@@ -202,6 +202,10 @@ public class Scenario {
     _builder.newLine();
     _builder.append("import java.util.HashMap;");
     _builder.newLine();
+    _builder.append("import java.net.URLEncoder;");
+    _builder.newLine();
+    _builder.append("import java.nio.charset.StandardCharsets;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();

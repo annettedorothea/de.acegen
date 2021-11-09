@@ -19,6 +19,7 @@
 
 package de.acegen.extensions.java
 
+import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
@@ -81,7 +82,7 @@ class AceExtension {
 	
 	def String urlWithPathParams(HttpServerAce it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
-			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')» + "«ENDFOR»«ENDIF»'''
 			return retUrl
 		}
 		val split1 = getUrl.split('\\{')
@@ -95,12 +96,14 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''" + «dataVarName».get«urlElements.get(i).toFirstUpper»() + "'''
+				urlWithPathParam += '''" + «urlEncodedValue('''«dataVarName».get«urlElements.get(i).toFirstUpper»()''')» + "'''
 			}
 		}
-		urlWithPathParam += '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+		urlWithPathParam += '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')» + "«ENDFOR»«ENDIF»'''
 		return urlWithPathParam ;
 	}
+	
+	def String urlEncodedValue(String valueVar) '''(«valueVar» != null ? URLEncoder.encode(«valueVar», StandardCharsets.UTF_8.toString()) : "")'''
 	
 	def boolean isDropwizard(HttpServer it) {
 		return it.type == "Dropwizard"
