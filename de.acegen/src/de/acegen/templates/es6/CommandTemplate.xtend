@@ -92,7 +92,7 @@ class CommandTemplate {
 				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
 				        «ENDIF»
 						AppUtils.«httpCall»(
-								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${data.«queryParam.attribute.name»}«ENDFOR»`, 
+								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
 								data.uuid, 
 								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
 								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,

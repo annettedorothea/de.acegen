@@ -253,12 +253,16 @@ public class CommandTemplate {
             } else {
               _builder.appendImmediate("&", "\t\t\t\t\t");
             }
+            _builder.append("${data.");
             String _name_5 = queryParam.getAttribute().getName();
             _builder.append(_name_5, "\t\t\t\t\t");
-            _builder.append("=${data.");
+            _builder.append(" ? `");
             String _name_6 = queryParam.getAttribute().getName();
             _builder.append(_name_6, "\t\t\t\t\t");
-            _builder.append("}");
+            _builder.append("=${data.");
+            String _name_7 = queryParam.getAttribute().getName();
+            _builder.append(_name_7, "\t\t\t\t\t");
+            _builder.append("}` : \"\"}");
           }
         }
         _builder.append("`, ");
@@ -322,11 +326,11 @@ public class CommandTemplate {
             _builder.append("\t");
             _builder.append("\t\t\t");
             _builder.append("data.");
-            String _name_7 = attribute.getName();
-            _builder.append(_name_7, "\t\t\t\t");
-            _builder.append(" = response.");
             String _name_8 = attribute.getName();
             _builder.append(_name_8, "\t\t\t\t");
+            _builder.append(" = response.");
+            String _name_9 = attribute.getName();
+            _builder.append(_name_9, "\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }

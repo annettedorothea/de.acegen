@@ -19,7 +19,6 @@
 
 package de.acegen.extensions.java
 
-import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
