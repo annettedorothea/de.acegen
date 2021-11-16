@@ -204,57 +204,7 @@ class CommandTemplate {
 			«ENDFOR»
 			
 			«publishEvents(es6)»
-			
 
-<<<<<<< HEAD
-		    publishEvents(data) {
-				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0  || outcome.functions.size > 0 || outcome.triggerdAceOperations.size > 0»
-						if (data.outcomes.includes("«outcome.getName»")) {
-							«IF outcome.listeners.size > 0 || outcome.functions.size > 0»
-								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppState.stateUpdated();
-							«ENDIF»
-							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
-								«IF triggerdAceOperation.delay == 0»
-									new TriggerAction().publish(
-										new «triggerdAceOperation.aceOperation.actionName»(), 
-											{
-												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-													«inputParam.name»: data.«inputParam.name»
-												«ENDFOR»
-											}
-									)
-								«ELSE»
-									«IF triggerdAceOperation.takeLatest»
-										new TriggerAction().publishWithDelayTakeLatest(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ELSE»
-										new TriggerAction().publishWithDelay(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ENDIF»
-								«ENDIF»
-							«ENDFOR»
-						}
-					«ENDIF»
-				«ENDFOR»
-		    }
-=======
->>>>>>> master
 		}
 		
 		

@@ -50,7 +50,6 @@ public class AttributeExtension {
   private ModelExtension _modelExtension;
   
   public String stringLineBreak = new Function0<String>() {
-    @Override
     public String apply() {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(",\" + ");
@@ -421,26 +420,39 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       String _switchResult = null;
       String _type_1 = it.getType();
-      if (_type_1 != null) {
-        switch (_type_1) {
-          case "Integer":
-            _switchResult = "integer";
-            break;
-          case "Long":
-            _switchResult = "bigint";
-            break;
-          case "String":
-            _switchResult = "character varying";
-            break;
-          case "Float":
-            _switchResult = "numeric";
-            break;
-          case "Boolean":
-            _switchResult = "boolean";
-            break;
-          case "DateTime":
-            _switchResult = "timestamp with time zone";
-            break;
+      boolean _matched = false;
+      if (Objects.equal(_type_1, "Integer")) {
+        _matched=true;
+        _switchResult = "integer";
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Long")) {
+          _matched=true;
+          _switchResult = "bigint";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "String")) {
+          _matched=true;
+          _switchResult = "character varying";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Float")) {
+          _matched=true;
+          _switchResult = "numeric";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Boolean")) {
+          _matched=true;
+          _switchResult = "boolean";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "DateTime")) {
+          _matched=true;
+          _switchResult = "timestamp with time zone";
         }
       }
       _xifexpression = _switchResult;
@@ -455,29 +467,45 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       String _switchResult = null;
       String _type_1 = it.getType();
-      if (_type_1 != null) {
-        switch (_type_1) {
-          case "Integer":
-            _switchResult = "random.nextInt(50)";
-            break;
-          case "Long":
-            _switchResult = "random.nextLong()";
-            break;
-          case "String":
-            _switchResult = "randomString(random)";
-            break;
-          case "Float":
-            _switchResult = "random.nextFloat()";
-            break;
-          case "Boolean":
-            _switchResult = "random.nextBoolean()";
-            break;
-          case "DateTime":
-            _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
-            break;
-          case "FormData":
-            _switchResult = "null";
-            break;
+      boolean _matched = false;
+      if (Objects.equal(_type_1, "Integer")) {
+        _matched=true;
+        _switchResult = "random.nextInt(50)";
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Long")) {
+          _matched=true;
+          _switchResult = "random.nextLong()";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "String")) {
+          _matched=true;
+          _switchResult = "randomString(random)";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Float")) {
+          _matched=true;
+          _switchResult = "random.nextFloat()";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "Boolean")) {
+          _matched=true;
+          _switchResult = "random.nextBoolean()";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "DateTime")) {
+          _matched=true;
+          _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
+        }
+      }
+      if (!_matched) {
+        if (Objects.equal(_type_1, "FormData")) {
+          _matched=true;
+          _switchResult = "null";
         }
       }
       _xifexpression = _switchResult;
