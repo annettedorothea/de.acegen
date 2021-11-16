@@ -33,5 +33,11 @@
    <feature url="features/de.acegen.feature_1.6.3.jar" id="de.acegen.feature" version="1.6.3">
       <category name="de.acegen"/>
    </feature>
+   <feature url="features/de.acegen.feature_1.6.4.jar" id="de.acegen.feature" version="1.6.4">
+      <category name="de.acegen"/>
+   </feature>
+   <feature url="features/de.acegen.feature_1.6.5.jar" id="de.acegen.feature" version="1.6.5">
+      <category name="de.acegen"/>
+   </feature>
    <category-def name="de.acegen" label="DSL &amp; Code Generator"/>
 </site>

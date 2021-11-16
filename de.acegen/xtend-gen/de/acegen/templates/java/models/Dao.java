@@ -554,7 +554,7 @@ public class Dao {
     _builder.append("statement.bind(\"uuid\", uuid);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("statement.bind(\"timestamp\", timestamp);");
+    _builder.append("statement.bind(\"timestamp\", LocalDateTime.now());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("statement.execute();");

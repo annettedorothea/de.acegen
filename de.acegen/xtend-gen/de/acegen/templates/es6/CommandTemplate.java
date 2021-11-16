@@ -53,9 +53,7 @@ public class CommandTemplate {
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getListeners().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((outcome.getListeners().size() > 0) || (outcome.getFunctions().size() > 0))) {
         return true;
       }
     }
@@ -327,7 +325,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpClientOutcome outcome_1 : _outcomes_1) {
         {
-          if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
+          if ((((outcome_1.getListeners().size() > 0) || (outcome_1.getFunctions().size() > 0)) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t");
             _builder.append("if (data.outcomes.includes(\"");
             String _name_9 = outcome_1.getName();
@@ -335,9 +333,7 @@ public class CommandTemplate {
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
-              int _size_2 = outcome_1.getListeners().size();
-              boolean _greaterThan_2 = (_size_2 > 0);
-              if (_greaterThan_2) {
+              if (((outcome_1.getListeners().size() > 0) || (outcome_1.getFunctions().size() > 0))) {
                 _builder.append("\t\t");
                 _builder.append("\t");
                 _builder.append("new Event(\'");
@@ -669,7 +665,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpClientOutcome outcome_1 : _outcomes_1) {
         {
-          if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
+          if ((((outcome_1.getListeners().size() > 0) || (outcome_1.getFunctions().size() > 0)) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t");
             _builder.append("if (data.outcomes.includes(\"");
             String _name_3 = outcome_1.getName();
@@ -677,9 +673,7 @@ public class CommandTemplate {
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             {
-              int _size_1 = outcome_1.getListeners().size();
-              boolean _greaterThan_1 = (_size_1 > 0);
-              if (_greaterThan_1) {
+              if (((outcome_1.getListeners().size() > 0) || (outcome_1.getFunctions().size() > 0))) {
                 _builder.append("\t\t");
                 _builder.append("\t");
                 _builder.append("new Event(\'");

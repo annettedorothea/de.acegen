@@ -184,7 +184,7 @@ class Dao {
 				statement.bind("name", name);
 				statement.bind("data", data);
 				statement.bind("uuid", uuid);
-				statement.bind("timestamp", timestamp);
+				statement.bind("timestamp", LocalDateTime.now());
 				statement.execute();
 			}
 		
