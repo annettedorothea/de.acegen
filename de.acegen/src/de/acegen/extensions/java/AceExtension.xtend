@@ -19,12 +19,13 @@
 
 package de.acegen.extensions.java
 
-import java.util.ArrayList
-import javax.inject.Inject
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerAceRead
+import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.HttpServerOutcome
+import java.util.ArrayList
+import javax.inject.Inject
 
 class AceExtension {
 	
@@ -65,6 +66,10 @@ class AceExtension {
 	
 	def String payloadDataInterfaceName(HttpServerAce it) '''I«name.toFirstUpper»Payload'''
 
+	def Boolean isMulitpartFormData(HttpServerAce it) {
+		return (it instanceof HttpServerAceWrite && (it as HttpServerAceWrite).isMultipartFormData)
+	}
+
 	def boolean isRead(HttpServerAce it) {
 		return it instanceof HttpServerAceRead
 	}
@@ -76,7 +81,7 @@ class AceExtension {
 	
 	def String urlWithPathParams(HttpServerAce it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
-			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «IF queryParam.attribute.type == "String"»«urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')»«ELSE»«dataVarName».«queryParam.attribute.getterCall»«ENDIF» + "«ENDFOR»«ENDIF»'''
 			return retUrl
 		}
 		val split1 = getUrl.split('\\{')
@@ -90,12 +95,14 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''" + «dataVarName».get«urlElements.get(i).toFirstUpper»() + "'''
+				urlWithPathParam += '''" + «urlEncodedValue('''«dataVarName».get«urlElements.get(i).toFirstUpper»()''')» + "'''
 			}
 		}
-		urlWithPathParam += '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «dataVarName».«queryParam.attribute.getterCall» + "«ENDFOR»«ENDIF»'''
+		urlWithPathParam += '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')» + "«ENDFOR»«ENDIF»'''
 		return urlWithPathParam ;
 	}
+	
+	def String urlEncodedValue(String valueVar) '''(«valueVar» != null ? URLEncoder.encode(«valueVar», StandardCharsets.UTF_8.toString()) : "")'''
 	
 	def boolean isDropwizard(HttpServer it) {
 		return it.type == "Dropwizard"

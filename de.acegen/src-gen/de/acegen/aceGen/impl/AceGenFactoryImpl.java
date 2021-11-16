@@ -77,6 +77,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.FUNCTION_CALL: return createFunctionCall();
       case AceGenPackage.CLIENT_ATTRIBUTE: return createClientAttribute();
       case AceGenPackage.CLIENT_SCENARIO: return createClientScenario();
+      case AceGenPackage.CLIENT_WHEN_THEN: return createClientWhenThen();
       case AceGenPackage.CLIENT_GIVEN_REF: return createClientGivenRef();
       case AceGenPackage.CLIENT_WHEN_BLOCK: return createClientWhenBlock();
       case AceGenPackage.SQUISHY_VALUE: return createSquishyValue();
@@ -98,6 +99,7 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
       case AceGenPackage.AUTH_USER: return createAuthUser();
       case AceGenPackage.MODEL: return createModel();
       case AceGenPackage.SCENARIO: return createScenario();
+      case AceGenPackage.WHEN_THEN: return createWhenThen();
       case AceGenPackage.GIVEN: return createGiven();
       case AceGenPackage.CUSTOM_CALL: return createCustomCall();
       case AceGenPackage.GIVEN_REF: return createGivenRef();
@@ -274,6 +276,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ClientScenarioImpl clientScenario = new ClientScenarioImpl();
     return clientScenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ClientWhenThen createClientWhenThen()
+  {
+    ClientWhenThenImpl clientWhenThen = new ClientWhenThenImpl();
+    return clientWhenThen;
   }
 
   /**
@@ -526,6 +540,18 @@ public class AceGenFactoryImpl extends EFactoryImpl implements AceGenFactory
   {
     ScenarioImpl scenario = new ScenarioImpl();
     return scenario;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public WhenThen createWhenThen()
+  {
+    WhenThenImpl whenThen = new WhenThenImpl();
+    return whenThen;
   }
 
   /**

@@ -4,6 +4,7 @@ import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
+import de.acegen.aceGen.ClientWhenThen;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.SquishyValue;
@@ -184,7 +185,7 @@ public class ScenarioTemplate {
       }
     }
     {
-      int _size = it.getThenBlock().getVerifications().size();
+      int _size = this._es6Extension.allVerifications(it).size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         _builder.append("const Verifications = require(\"../../src/");
@@ -209,7 +210,9 @@ public class ScenarioTemplate {
     _builder.append("let driver;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("let appState;");
+    _builder.append("let appStates = {};");
+    _builder.newLine();
+    _builder.append("let verifications = {};");
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
@@ -233,123 +236,249 @@ public class ScenarioTemplate {
     _builder.append("    \t\t\t    ");
     _builder.append(".build();");
     _builder.newLine();
+    _builder.append("    \t");
+    _builder.append("let appState;");
+    _builder.newLine();
     {
       ArrayList<ClientGivenRef> _allGivenItems = this.allGivenItems(it);
       for(final ClientGivenRef givenRef : _allGivenItems) {
-        _builder.append("\t\t");
-        CharSequence _initSquishyData = this.initSquishyData(givenRef.getScenario().getWhenBlock());
-        _builder.append(_initSquishyData, "\t\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("await ScenarioUtils.invokeAction(driver, ");
-        EObject _eContainer = givenRef.getScenario().getWhenBlock().getAction().eContainer();
-        CharSequence _actionIdName_2 = this._es6Extension.actionIdName(((HttpClient) _eContainer));
-        _builder.append(_actionIdName_2, "\t\t");
-        _builder.append(".");
-        String _firstLower = StringExtensions.toFirstLower(givenRef.getScenario().getWhenBlock().getAction().getName());
-        _builder.append(_firstLower, "\t\t");
         {
-          EList<InputValue> _inputValues = givenRef.getScenario().getWhenBlock().getInputValues();
-          boolean _hasElements = false;
-          for(final InputValue arg : _inputValues) {
-            if (!_hasElements) {
-              _hasElements = true;
-              _builder.append(", [", "\t\t");
-            } else {
-              _builder.appendImmediate(",", "\t\t");
-            }
-            Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(arg.getValue());
-            _builder.append(_primitiveValueFrom, "\t\t");
-          }
-          if (_hasElements) {
-            _builder.append("]", "\t\t");
-          }
-        }
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-        {
-          int _delayInMillis = givenRef.getScenario().getDelayInMillis();
-          boolean _greaterThan_1 = (_delayInMillis > 0);
-          if (_greaterThan_1) {
+          EList<ClientWhenThen> _clientWhenThen = givenRef.getScenario().getClientWhenThen();
+          for(final ClientWhenThen whenThenItem : _clientWhenThen) {
             _builder.append("\t\t");
-            _builder.append("await ScenarioUtils.waitInMillis(");
-            int _delayInMillis_1 = givenRef.getScenario().getDelayInMillis();
-            _builder.append(_delayInMillis_1, "\t\t");
+            CharSequence _initSquishyData = this.initSquishyData(whenThenItem.getWhenBlock());
+            _builder.append(_initSquishyData, "\t\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("await ScenarioUtils.invokeAction(driver, ");
+            EObject _eContainer = whenThenItem.getWhenBlock().getAction().eContainer();
+            CharSequence _actionIdName_2 = this._es6Extension.actionIdName(((HttpClient) _eContainer));
+            _builder.append(_actionIdName_2, "\t\t");
+            _builder.append(".");
+            String _firstLower = StringExtensions.toFirstLower(whenThenItem.getWhenBlock().getAction().getName());
+            _builder.append(_firstLower, "\t\t");
+            {
+              EList<InputValue> _inputValues = whenThenItem.getWhenBlock().getInputValues();
+              boolean _hasElements = false;
+              for(final InputValue arg : _inputValues) {
+                if (!_hasElements) {
+                  _hasElements = true;
+                  _builder.append(", [", "\t\t");
+                } else {
+                  _builder.appendImmediate(",", "\t\t");
+                }
+                Object _primitiveValueFrom = this._es6Extension.primitiveValueFrom(arg.getValue());
+                _builder.append(_primitiveValueFrom, "\t\t");
+              }
+              if (_hasElements) {
+                _builder.append("]", "\t\t");
+              }
+            }
             _builder.append(");");
             _builder.newLineIfNotEmpty();
+            {
+              int _delayInMillis = whenThenItem.getDelayInMillis();
+              boolean _greaterThan_1 = (_delayInMillis > 0);
+              if (_greaterThan_1) {
+                _builder.append("\t\t");
+                _builder.append("await ScenarioUtils.waitInMillis(");
+                int _delayInMillis_1 = whenThenItem.getDelayInMillis();
+                _builder.append(_delayInMillis_1, "\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }
     }
     _builder.newLine();
     {
-      ClientWhenBlock _whenBlock = it.getWhenBlock();
-      boolean _tripleNotEquals = (_whenBlock != null);
-      if (_tripleNotEquals) {
-        _builder.append("\t\t");
-        CharSequence _initSquishyData_1 = this.initSquishyData(it.getWhenBlock());
-        _builder.append(_initSquishyData_1, "\t\t");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("await ScenarioUtils.invokeAction(driver, ");
-        EObject _eContainer_1 = it.getWhenBlock().getAction().eContainer();
-        CharSequence _actionIdName_3 = this._es6Extension.actionIdName(((HttpClient) _eContainer_1));
-        _builder.append(_actionIdName_3, "\t\t");
-        _builder.append(".");
-        String _firstLower_1 = StringExtensions.toFirstLower(it.getWhenBlock().getAction().getName());
-        _builder.append(_firstLower_1, "\t\t");
+      EList<ClientWhenThen> _clientWhenThen_1 = it.getClientWhenThen();
+      for(final ClientWhenThen whenThenItem_1 : _clientWhenThen_1) {
         {
-          EList<InputValue> _inputValues_1 = it.getWhenBlock().getInputValues();
-          boolean _hasElements_1 = false;
-          for(final InputValue arg_1 : _inputValues_1) {
-            if (!_hasElements_1) {
-              _hasElements_1 = true;
-              _builder.append(", [", "\t\t");
-            } else {
-              _builder.appendImmediate(",", "\t\t");
-            }
-            Object _primitiveValueFrom_1 = this._es6Extension.primitiveValueFrom(arg_1.getValue());
-            _builder.append(_primitiveValueFrom_1, "\t\t");
-          }
-          if (_hasElements_1) {
-            _builder.append("]", "\t\t");
-          }
-        }
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-        {
-          int _delayInMillis_2 = it.getDelayInMillis();
-          boolean _greaterThan_2 = (_delayInMillis_2 > 0);
-          if (_greaterThan_2) {
+          ClientWhenBlock _whenBlock = whenThenItem_1.getWhenBlock();
+          boolean _tripleNotEquals = (_whenBlock != null);
+          if (_tripleNotEquals) {
             _builder.append("\t\t");
-            _builder.append("await ScenarioUtils.waitInMillis(");
-            int _delayInMillis_3 = it.getDelayInMillis();
-            _builder.append(_delayInMillis_3, "\t\t");
+            CharSequence _initSquishyData_1 = this.initSquishyData(whenThenItem_1.getWhenBlock());
+            _builder.append(_initSquishyData_1, "\t\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("await ScenarioUtils.invokeAction(driver, ");
+            EObject _eContainer_1 = whenThenItem_1.getWhenBlock().getAction().eContainer();
+            CharSequence _actionIdName_3 = this._es6Extension.actionIdName(((HttpClient) _eContainer_1));
+            _builder.append(_actionIdName_3, "\t\t");
+            _builder.append(".");
+            String _firstLower_1 = StringExtensions.toFirstLower(whenThenItem_1.getWhenBlock().getAction().getName());
+            _builder.append(_firstLower_1, "\t\t");
+            {
+              EList<InputValue> _inputValues_1 = whenThenItem_1.getWhenBlock().getInputValues();
+              boolean _hasElements_1 = false;
+              for(final InputValue arg_1 : _inputValues_1) {
+                if (!_hasElements_1) {
+                  _hasElements_1 = true;
+                  _builder.append(", [", "\t\t");
+                } else {
+                  _builder.appendImmediate(",", "\t\t");
+                }
+                Object _primitiveValueFrom_1 = this._es6Extension.primitiveValueFrom(arg_1.getValue());
+                _builder.append(_primitiveValueFrom_1, "\t\t");
+              }
+              if (_hasElements_1) {
+                _builder.append("]", "\t\t");
+              }
+            }
             _builder.append(");");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("await ScenarioUtils.waitInMillis(10);");
+            _builder.newLine();
+            {
+              int _delayInMillis_2 = whenThenItem_1.getDelayInMillis();
+              boolean _greaterThan_2 = (_delayInMillis_2 > 0);
+              if (_greaterThan_2) {
+                _builder.append("\t\t");
+                _builder.append("await ScenarioUtils.waitInMillis(");
+                int _delayInMillis_3 = whenThenItem_1.getDelayInMillis();
+                _builder.append(_delayInMillis_3, "\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          } else {
+            int _delayInMillis_4 = whenThenItem_1.getDelayInMillis();
+            boolean _greaterThan_3 = (_delayInMillis_4 > 0);
+            if (_greaterThan_3) {
+              _builder.append("\t\t");
+              _builder.append("await ScenarioUtils.waitInMillis(");
+              int _delayInMillis_5 = whenThenItem_1.getDelayInMillis();
+              _builder.append(_delayInMillis_5, "\t\t");
+              _builder.append(");");
+              _builder.newLineIfNotEmpty();
+            }
           }
         }
-      } else {
-        int _delayInMillis_4 = it.getDelayInMillis();
-        boolean _greaterThan_3 = (_delayInMillis_4 > 0);
-        if (_greaterThan_3) {
-          _builder.append("\t\t");
-          _builder.append("await ScenarioUtils.waitInMillis(");
-          int _delayInMillis_5 = it.getDelayInMillis();
-          _builder.append(_delayInMillis_5, "\t\t");
-          _builder.append(");");
-          _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.newLine();
+        {
+          if (((whenThenItem_1.getThenBlock() != null) && (whenThenItem_1.getThenBlock().getStateVerifications() != null))) {
+            _builder.append("\t\t");
+            _builder.append("appState = await ScenarioUtils.getAppState(driver);");
+            _builder.newLine();
+            {
+              EList<StateVerification> _stateVerifications = whenThenItem_1.getThenBlock().getStateVerifications();
+              for(final StateVerification stateVerification : _stateVerifications) {
+                _builder.append("\t\t");
+                _builder.append("appStates.");
+                String _name_5 = stateVerification.getName();
+                _builder.append(_name_5, "\t\t");
+                _builder.append(" = appState;");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t");
+            _builder.newLine();
+          }
+        }
+        {
+          if (((whenThenItem_1.getThenBlock() != null) && (whenThenItem_1.getThenBlock().getVerifications() != null))) {
+            {
+              EList<String> _verifications = whenThenItem_1.getThenBlock().getVerifications();
+              for(final String verification : _verifications) {
+                _builder.append("\t\t");
+                _builder.append("verifications.");
+                _builder.append(verification, "\t\t");
+                _builder.append(" = await Verifications.");
+                _builder.append(verification, "\t\t");
+                _builder.append("(driver, testId);");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+            _builder.append("\t\t");
+            _builder.newLine();
+          }
         }
       }
     }
-    _builder.append("\t\t");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("appState = await ScenarioUtils.getAppState(driver);");
-    _builder.newLine();
     _builder.append("    ");
     _builder.append("});");
     _builder.newLine();
+    _builder.newLine();
+    {
+      EList<ClientWhenThen> _clientWhenThen_2 = it.getClientWhenThen();
+      for(final ClientWhenThen whenThenItem_2 : _clientWhenThen_2) {
+        {
+          if (((whenThenItem_2.getThenBlock() != null) && (whenThenItem_2.getThenBlock().getStateVerifications() != null))) {
+            {
+              EList<StateVerification> _stateVerifications_1 = whenThenItem_2.getThenBlock().getStateVerifications();
+              for(final StateVerification stateVerification_1 : _stateVerifications_1) {
+                _builder.append("\t");
+                _builder.append("it(\"");
+                String _name_6 = stateVerification_1.getName();
+                _builder.append(_name_6, "\t");
+                _builder.append("\", async () => {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("expect(appStates.");
+                String _name_7 = stateVerification_1.getName();
+                _builder.append(_name_7, "\t\t");
+                _builder.append(".");
+                String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
+                _builder.append(_stateRefPath, "\t\t");
+                _builder.append(", \"");
+                String _name_8 = stateVerification_1.getName();
+                _builder.append(_name_8, "\t\t");
+                _builder.append("\")");
+                {
+                  boolean _isNot = stateVerification_1.isNot();
+                  boolean _equals = (_isNot == true);
+                  if (_equals) {
+                    _builder.append(".not");
+                  }
+                }
+                _builder.append(".toEqual(");
+                CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification_1.getValue());
+                _builder.append(_valueFrom, "\t\t");
+                _builder.append(")");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("});");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        _builder.append("\t");
+        _builder.newLine();
+        {
+          if (((whenThenItem_2.getThenBlock() != null) && (whenThenItem_2.getThenBlock().getVerifications() != null))) {
+            {
+              EList<String> _verifications_1 = whenThenItem_2.getThenBlock().getVerifications();
+              for(final String verification_1 : _verifications_1) {
+                _builder.append("\t");
+                _builder.append("it(\"");
+                _builder.append(verification_1, "\t");
+                _builder.append("\", async () => {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("\t");
+                _builder.append("expect(verifications.");
+                _builder.append(verification_1, "\t\t");
+                _builder.append(", \"verifications.");
+                _builder.append(verification_1, "\t\t");
+                _builder.append("\").toBeTrue();");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                _builder.append("});");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+      }
+    }
     _builder.newLine();
     _builder.append("    ");
     _builder.append("afterAll(async function () {");
@@ -362,62 +491,6 @@ public class ScenarioTemplate {
     _builder.newLine();
     _builder.append("    ");
     _builder.newLine();
-    {
-      EList<StateVerification> _stateVerifications = it.getThenBlock().getStateVerifications();
-      for(final StateVerification stateVerification : _stateVerifications) {
-        _builder.append("\t");
-        _builder.append("it(\"");
-        String _name_5 = stateVerification.getName();
-        _builder.append(_name_5, "\t");
-        _builder.append("\", async () => {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("expect(appState.");
-        String _stateRefPath = this._es6Extension.stateRefPath(stateVerification.getStateRef());
-        _builder.append(_stateRefPath, "\t\t");
-        _builder.append(", \"");
-        String _name_6 = stateVerification.getName();
-        _builder.append(_name_6, "\t\t");
-        _builder.append("\")");
-        {
-          boolean _isNot = stateVerification.isNot();
-          boolean _equals = (_isNot == true);
-          if (_equals) {
-            _builder.append(".not");
-          }
-        }
-        _builder.append(".toEqual(");
-        CharSequence _valueFrom = this._es6Extension.valueFrom(stateVerification.getValue());
-        _builder.append(_valueFrom, "\t\t");
-        _builder.append(")");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("});");
-        _builder.newLine();
-      }
-    }
-    _builder.append("    ");
-    _builder.newLine();
-    {
-      EList<String> _verifications = it.getThenBlock().getVerifications();
-      for(final String verification : _verifications) {
-        _builder.append("\t");
-        _builder.append("it(\"");
-        _builder.append(verification, "\t");
-        _builder.append("\", async () => {");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("await Verifications.");
-        _builder.append(verification, "\t\t");
-        _builder.append("(driver, testId);");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("});");
-        _builder.newLine();
-      }
-    }
     _builder.append("    ");
     _builder.newLine();
     _builder.append("});");
@@ -514,8 +587,13 @@ public class ScenarioTemplate {
     ArrayList<ClientGivenRef> allWhenBlocks = new ArrayList<ClientGivenRef>();
     EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
     for (final ClientGivenRef given : _givenRefs) {
-      if ((given instanceof ClientGivenRef)) {
-        this.allGivenItemsRec(given, allWhenBlocks);
+      boolean _isExcludeGiven = given.isExcludeGiven();
+      if (_isExcludeGiven) {
+        allWhenBlocks.add(given);
+      } else {
+        if ((given instanceof ClientGivenRef)) {
+          this.allGivenItemsRec(given, allWhenBlocks);
+        }
       }
     }
     return allWhenBlocks;
@@ -540,9 +618,9 @@ public class ScenarioTemplate {
     _builder.append("module.exports = {");
     _builder.newLine();
     {
-      EList<String> _verifications = it.getThenBlock().getVerifications();
+      List<String> _allVerifications = this._es6Extension.allVerifications(it);
       boolean _hasElements = false;
-      for(final String verification : _verifications) {
+      for(final String verification : _allVerifications) {
         if (!_hasElements) {
           _hasElements = true;
         } else {

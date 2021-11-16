@@ -225,21 +225,25 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					return Scopes.scopeFor(attrs)
 				} else if (isWhen) {
 					var attr = new ArrayList<Attribute>();
-					for (attributeRef : scenario.whenBlock.action.payload) {
-						attr.add(attributeRef.attribute)
+					for (whenThenItem : scenario.whenThen) {
+						for (attributeRef : whenThenItem.whenBlock.action.payload) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.queryParams) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.pathParams) {
+							attr.add(attributeRef.attribute)
+						}
+						attr.addAll(whenThenItem.whenBlock.action.model.allSquishyAttributes)
 					}
-					for (attributeRef : scenario.whenBlock.action.queryParams) {
-						attr.add(attributeRef.attribute)
-					}
-					for (attributeRef : scenario.whenBlock.action.pathParams) {
-						attr.add(attributeRef.attribute)
-					}
-					attr.addAll(scenario.whenBlock.action.model.allSquishyAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {
 					var attr = new ArrayList<Attribute>();
-					for (attribute : scenario.whenBlock.action.response) {
-						attr.add(attribute)
+					for (whenThenItem : scenario.whenThen) {
+						for (attribute : whenThenItem.whenBlock.action.response) {
+							attr.add(attribute)
+						}
 					}
 					return Scopes.scopeFor(attr);
 				}
@@ -247,12 +251,17 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			if (parent instanceof ClientScenario) {
 				val scenario = parent as ClientScenario;
 				if (isWhen) {
-					return Scopes.scopeFor(scenario.whenBlock.action.serverCall.response);
+					var attr = new ArrayList<Attribute>();
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+						attr.addAll(clientWhenThenItem.whenBlock.action.serverCall.response)
+					}
+					return Scopes.scopeFor(attr);
 				}
 				if (isThen) {
 					var attr = new ArrayList<Attribute>();
-					if (scenario.whenBlock.action.serverCall !== null) {
-						val serverCall = scenario.whenBlock.action.serverCall
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+					if (clientWhenThenItem.whenBlock.action.serverCall !== null) {
+						val serverCall = clientWhenThenItem.whenBlock.action.serverCall
 						for (attributeRef : serverCall.payload) {
 							attr.add(attributeRef.attribute)
 						}
@@ -262,6 +271,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 						for (attributeRef : serverCall.pathParams) {
 							attr.add(attributeRef.attribute)
 						}
+					}
 					}
 					return Scopes.scopeFor(attr);
 				}

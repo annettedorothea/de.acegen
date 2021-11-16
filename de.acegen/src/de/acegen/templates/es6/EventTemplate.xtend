@@ -73,14 +73,17 @@ class EventTemplate {
 		    constructor(eventName) {
 		        this.eventName = eventName;
 		    }
-		
+
 		    publish(data) {
-				ACEController.addItemToTimeLine({
-		            event: {
-		                eventName: this.eventName,
-		                data
-		            }});
-		        this.notifyListeners(data);
+		        return new Promise((resolve) => {
+		            ACEController.addItemToTimeLine({
+		                event: {
+		                    eventName: this.eventName,
+		                    data
+		                }});
+		            this.notifyListeners(data);
+		            resolve();
+		        });
 		    }
 		
 		    replay(data) {
@@ -96,57 +99,10 @@ class EventTemplate {
 		                    listener = listenersForEvent[i];
 							listener(data);
 		                }
-		            } else {
-		                console.warn(`No listeners for ${this.eventName} found. Did you forget to register them?`)
 		            }
 		        }
 		    }
 		
-		}
-		
-		
-		«sdg»
-		
-		
-	'''
-
-	def generateTriggerAction() '''
-		«copyright»
-
-		import * as ACEController from "./ACEController";
-		
-		export default class TriggerAction {
-		
-			publish(action, data) {
-				ACEController.addItemToTimeLine({
-		            event: {
-		                eventName: 'TriggerAction',
-		                action: {
-		                	actionName: action.actionName,
-		                	data
-		                }
-		            }
-		        });
-				ACEController.addActionToTriggeredActionsQueue(action, data);
-			}
-			
-			publishWithDelay(action, data, delayInMillis) {
-		    	setTimeout(() => {
-		    		this.publish(action, data);
-				}, delayInMillis);
-			}
-
-			publishWithDelayTakeLatest(action, data, delayInMillis) {
-				const existingTimeout = ACEController.delayedActions[action.actionName];
-				if (existingTimeout) {
-					clearTimeout(existingTimeout);
-				}
-				ACEController.delayedActions[action.actionName] = setTimeout(() => {
-					ACEController.delayedActions[action.actionName] = undefined;
-		    		this.publish(action, data);
-				}, delayInMillis);
-			}
-
 		}
 		
 		

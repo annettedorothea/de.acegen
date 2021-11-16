@@ -1173,76 +1173,148 @@ ruleClientScenario returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_3='WHEN'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getClientScenarioAccess().getWHENKeyword_2());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getClientScenarioAccess().getWhenBlockClientWhenBlockParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getClientScenarioAccess().getClientWhenThenClientWhenThenParserRuleCall_2_0());
 				}
-				lv_whenBlock_4_0=ruleClientWhenBlock
+				lv_clientWhenThen_3_0=ruleClientWhenThen
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
 					}
+					add(
+						$current,
+						"clientWhenThen",
+						lv_clientWhenThen_3_0,
+						"de.acegen.AceGen.ClientWhenThen");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='AND'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getClientScenarioAccess().getANDKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getClientScenarioAccess().getClientWhenThenClientWhenThenParserRuleCall_3_1_0());
+					}
+					lv_clientWhenThen_5_0=ruleClientWhenThen
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
+						}
+						add(
+							$current,
+							"clientWhenThen",
+							lv_clientWhenThen_5_0,
+							"de.acegen.AceGen.ClientWhenThen");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleClientWhenThen
+entryRuleClientWhenThen returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getClientWhenThenRule()); }
+	iv_ruleClientWhenThen=ruleClientWhenThen
+	{ $current=$iv_ruleClientWhenThen.current; }
+	EOF;
+
+// Rule ClientWhenThen
+ruleClientWhenThen returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getClientWhenThenAccess().getClientWhenThenAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='WHEN'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getClientWhenThenAccess().getWHENKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getClientWhenThenAccess().getWhenBlockClientWhenBlockParserRuleCall_2_0());
+				}
+				lv_whenBlock_2_0=ruleClientWhenBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getClientWhenThenRule());
+					}
 					set(
 						$current,
 						"whenBlock",
-						lv_whenBlock_4_0,
+						lv_whenBlock_2_0,
 						"de.acegen.AceGen.ClientWhenBlock");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
 		(
-			otherlv_5='delayInMillis'
+			otherlv_3='delayInMillis'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getClientScenarioAccess().getDelayInMillisKeyword_4_0());
+				newLeafNode(otherlv_3, grammarAccess.getClientWhenThenAccess().getDelayInMillisKeyword_3_0());
 			}
 			(
 				(
-					lv_delayInMillis_6_0=RULE_INT
+					lv_delayInMillis_4_0=RULE_INT
 					{
-						newLeafNode(lv_delayInMillis_6_0, grammarAccess.getClientScenarioAccess().getDelayInMillisINTTerminalRuleCall_4_1_0());
+						newLeafNode(lv_delayInMillis_4_0, grammarAccess.getClientWhenThenAccess().getDelayInMillisINTTerminalRuleCall_3_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getClientScenarioRule());
+							$current = createModelElement(grammarAccess.getClientWhenThenRule());
 						}
 						setWithLastConsumed(
 							$current,
 							"delayInMillis",
-							lv_delayInMillis_6_0,
+							lv_delayInMillis_4_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
 		)?
-		otherlv_7='THEN'
-		{
-			newLeafNode(otherlv_7, grammarAccess.getClientScenarioAccess().getTHENKeyword_5());
-		}
 		(
+			otherlv_5='THEN'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getClientWhenThenAccess().getTHENKeyword_4_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getClientScenarioAccess().getThenBlockClientThenBlockParserRuleCall_6_0());
-				}
-				lv_thenBlock_8_0=ruleClientThenBlock
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getClientScenarioRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getClientWhenThenAccess().getThenBlockClientThenBlockParserRuleCall_4_1_0());
 					}
-					set(
-						$current,
-						"thenBlock",
-						lv_thenBlock_8_0,
-						"de.acegen.AceGen.ClientThenBlock");
-					afterParserOrEnumRuleCall();
-				}
+					lv_thenBlock_6_0=ruleClientThenBlock
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getClientWhenThenRule());
+						}
+						set(
+							$current,
+							"thenBlock",
+							lv_thenBlock_6_0,
+							"de.acegen.AceGen.ClientThenBlock");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
+		)?
 	)
 ;
 
@@ -1263,19 +1335,41 @@ ruleClientGivenRef returns [EObject current=null]
 }:
 	(
 		(
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getClientGivenRefRule());
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getClientGivenRefRule());
+					}
 				}
-			}
-			{
-				newCompositeNode(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioCrossReference_0());
-			}
-			ruleQualifiedName
-			{
-				afterParserOrEnumRuleCall();
-			}
+				{
+					newCompositeNode(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioCrossReference_0_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)
+		(
+			(
+				(
+					lv_excludeGiven_1_0='exclude'
+					{
+						newLeafNode(lv_excludeGiven_1_0, grammarAccess.getClientGivenRefAccess().getExcludeGivenExcludeKeyword_1_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getClientGivenRefRule());
+						}
+						setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_1_0 != null, "exclude");
+					}
+				)
+			)
+			otherlv_2='GIVEN'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getClientGivenRefAccess().getGIVENKeyword_1_1());
+			}
+		)?
 	)
 ;
 
@@ -2489,16 +2583,30 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_7='pathParams'
+			(
+				lv_multipartFormData_7_0='multipartFormData'
+				{
+					newLeafNode(lv_multipartFormData_7_0, grammarAccess.getHttpServerAceWriteAccess().getMultipartFormDataMultipartFormDataKeyword_7_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getHttpServerAceWriteRule());
+					}
+					setWithLastConsumed($current, "multipartFormData", lv_multipartFormData_7_0 != null, "multipartFormData");
+				}
+			)
+		)?
+		(
+			otherlv_8='pathParams'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getHttpServerAceWriteAccess().getPathParamsKeyword_7_0());
+				newLeafNode(otherlv_8, grammarAccess.getHttpServerAceWriteAccess().getPathParamsKeyword_8_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeParamRefParserRuleCall_7_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPathParamsAttributeParamRefParserRuleCall_8_1_0());
 					}
-					lv_pathParams_8_0=ruleAttributeParamRef
+					lv_pathParams_9_0=ruleAttributeParamRef
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
@@ -2506,7 +2614,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 						add(
 							$current,
 							"pathParams",
-							lv_pathParams_8_0,
+							lv_pathParams_9_0,
 							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
@@ -2514,16 +2622,16 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_9='queryParams'
+			otherlv_10='queryParams'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getHttpServerAceWriteAccess().getQueryParamsKeyword_8_0());
+				newLeafNode(otherlv_10, grammarAccess.getHttpServerAceWriteAccess().getQueryParamsKeyword_9_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeParamRefParserRuleCall_8_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getQueryParamsAttributeParamRefParserRuleCall_9_1_0());
 					}
-					lv_queryParams_10_0=ruleAttributeParamRef
+					lv_queryParams_11_0=ruleAttributeParamRef
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
@@ -2531,7 +2639,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 						add(
 							$current,
 							"queryParams",
-							lv_queryParams_10_0,
+							lv_queryParams_11_0,
 							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
@@ -2539,16 +2647,16 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_11='payload'
+			otherlv_12='payload'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getHttpServerAceWriteAccess().getPayloadKeyword_9_0());
+				newLeafNode(otherlv_12, grammarAccess.getHttpServerAceWriteAccess().getPayloadKeyword_10_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeParamRefParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getPayloadAttributeParamRefParserRuleCall_10_1_0());
 					}
-					lv_payload_12_0=ruleAttributeParamRef
+					lv_payload_13_0=ruleAttributeParamRef
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
@@ -2556,7 +2664,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 						add(
 							$current,
 							"payload",
-							lv_payload_12_0,
+							lv_payload_13_0,
 							"de.acegen.AceGen.AttributeParamRef");
 						afterParserOrEnumRuleCall();
 					}
@@ -2564,9 +2672,9 @@ ruleHttpServerAceWrite returns [EObject current=null]
 			)*
 		)?
 		(
-			otherlv_13='response'
+			otherlv_14='response'
 			{
-				newLeafNode(otherlv_13, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_10_0());
+				newLeafNode(otherlv_14, grammarAccess.getHttpServerAceWriteAccess().getResponseKeyword_11_0());
 			}
 			(
 				(
@@ -2576,7 +2684,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeCrossReference_10_1_0());
+						newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getResponseAttributeCrossReference_11_1_0());
 					}
 					ruleQualifiedName
 					{
@@ -2588,9 +2696,9 @@ ruleHttpServerAceWrite returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getHttpServerAceWriteAccess().getOutcomesHttpServerOutcomeParserRuleCall_12_0());
 				}
-				lv_outcomes_15_0=ruleHttpServerOutcome
+				lv_outcomes_16_0=ruleHttpServerOutcome
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getHttpServerAceWriteRule());
@@ -2598,7 +2706,7 @@ ruleHttpServerAceWrite returns [EObject current=null]
 					add(
 						$current,
 						"outcomes",
-						lv_outcomes_15_0,
+						lv_outcomes_16_0,
 						"de.acegen.AceGen.HttpServerOutcome");
 					afterParserOrEnumRuleCall();
 				}
@@ -3322,47 +3430,110 @@ ruleScenario returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_3='WHEN'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getScenarioAccess().getWHENKeyword_2());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getScenarioAccess().getWhenBlockWhenBlockParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getScenarioAccess().getWhenThenWhenThenParserRuleCall_2_0());
 				}
-				lv_whenBlock_4_0=ruleWhenBlock
+				lv_whenThen_3_0=ruleWhenThen
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getScenarioRule());
 					}
+					add(
+						$current,
+						"whenThen",
+						lv_whenThen_3_0,
+						"de.acegen.AceGen.WhenThen");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='AND'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getScenarioAccess().getANDKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getScenarioAccess().getWhenThenWhenThenParserRuleCall_3_1_0());
+					}
+					lv_whenThen_5_0=ruleWhenThen
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScenarioRule());
+						}
+						add(
+							$current,
+							"whenThen",
+							lv_whenThen_5_0,
+							"de.acegen.AceGen.WhenThen");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleWhenThen
+entryRuleWhenThen returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getWhenThenRule()); }
+	iv_ruleWhenThen=ruleWhenThen
+	{ $current=$iv_ruleWhenThen.current; }
+	EOF;
+
+// Rule WhenThen
+ruleWhenThen returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='WHEN'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getWhenThenAccess().getWHENKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getWhenThenAccess().getWhenBlockWhenBlockParserRuleCall_1_0());
+				}
+				lv_whenBlock_1_0=ruleWhenBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getWhenThenRule());
+					}
 					set(
 						$current,
 						"whenBlock",
-						lv_whenBlock_4_0,
+						lv_whenBlock_1_0,
 						"de.acegen.AceGen.WhenBlock");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_5='THEN'
+		otherlv_2='THEN'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getScenarioAccess().getTHENKeyword_4());
+			newLeafNode(otherlv_2, grammarAccess.getWhenThenAccess().getTHENKeyword_2());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getScenarioAccess().getThenBlockThenBlockParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getWhenThenAccess().getThenBlockThenBlockParserRuleCall_3_0());
 				}
-				lv_thenBlock_6_0=ruleThenBlock
+				lv_thenBlock_3_0=ruleThenBlock
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getScenarioRule());
+						$current = createModelElementForParent(grammarAccess.getWhenThenRule());
 					}
 					set(
 						$current,
 						"thenBlock",
-						lv_thenBlock_6_0,
+						lv_thenBlock_3_0,
 						"de.acegen.AceGen.ThenBlock");
 					afterParserOrEnumRuleCall();
 				}
@@ -3580,17 +3751,23 @@ ruleGivenRef returns [EObject current=null]
 		)?
 		(
 			(
-				lv_excludeGiven_3_0='excludeGIVEN'
-				{
-					newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeGIVENKeyword_2_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGivenRefRule());
+				(
+					lv_excludeGiven_3_0='exclude'
+					{
+						newLeafNode(lv_excludeGiven_3_0, grammarAccess.getGivenRefAccess().getExcludeGivenExcludeKeyword_2_0_0());
 					}
-					setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_3_0 != null, "excludeGIVEN");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getGivenRefRule());
+						}
+						setWithLastConsumed($current, "excludeGiven", lv_excludeGiven_3_0 != null, "exclude");
+					}
+				)
 			)
+			otherlv_4='GIVEN'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getGivenRefAccess().getGIVENKeyword_2_1());
+			}
 		)?
 	)
 ;
@@ -4879,6 +5056,12 @@ ruleType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 		{
 			$current.merge(kw);
 			newLeafNode(kw, grammarAccess.getTypeAccess().getLongKeyword_5());
+		}
+		    |
+		kw='FormData'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getTypeAccess().getFormDataKeyword_6());
 		}
 	)
 ;

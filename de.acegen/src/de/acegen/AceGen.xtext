@@ -93,12 +93,18 @@ ClientAttribute:
 ClientScenario:
 	name = ID
 	('GIVEN' (givenRefs += ClientGivenRef)* )? 
+	clientWhenThen += ClientWhenThen ('AND' clientWhenThen += ClientWhenThen)*
+;
+
+ClientWhenThen: 
+	{ClientWhenThen} 
 	'WHEN' (whenBlock = ClientWhenBlock)? ('delayInMillis' delayInMillis = INT)?
-	'THEN' thenBlock = ClientThenBlock
+	('THEN' thenBlock = ClientThenBlock)?
+	
 ;
 
 ClientGivenRef:
-	scenario = [ClientScenario | QualifiedName]
+	scenario = [ClientScenario | QualifiedName] (excludeGiven ?= 'exclude' 'GIVEN')?
 ;
 
 ClientWhenBlock: 
@@ -174,6 +180,7 @@ HttpServerAceWrite:
 	type = WriteFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
+	multipartFormData ?= 'multipartFormData'? 
 	('pathParams' (pathParams += AttributeParamRef)*)?
 	('queryParams' (queryParams += AttributeParamRef)*)?
 	('payload' (payload += AttributeParamRef)*)?
@@ -228,6 +235,10 @@ Model:
 Scenario:
 	name = ID
 	('GIVEN' (givenItems += Given)* )? 
+	whenThen += WhenThen ('AND' whenThen += WhenThen)*
+;
+
+WhenThen:
 	'WHEN' whenBlock = WhenBlock
 	'THEN' thenBlock = ThenBlock
 ;
@@ -241,7 +252,7 @@ CustomCall:
 ;
 
 GivenRef:
-	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'excludeGIVEN')?
+	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'exclude' 'GIVEN')?
 ;
 
 WhenBlock: 
@@ -329,7 +340,7 @@ ReadFunctionType:
 ;
 
 Type:
-	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
+	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' | 'FormData'
 ;
 
 JsonObject: JsonObjectAce | 'json' StringType;

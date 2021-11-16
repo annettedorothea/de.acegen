@@ -39,6 +39,7 @@ import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
+import de.acegen.aceGen.WhenThen
 
 class Scenario {
 
@@ -70,17 +71,21 @@ class Scenario {
 		
 		package «java.getName».scenarios;
 		
-		import «whenBlock.action.responseDataNameWithPackage»;
+		«FOR whenThenItem : whenThen»
+			import «whenThenItem.whenBlock.action.responseDataNameWithPackage»;
+		«ENDFOR»
 		
 		@SuppressWarnings("unused")
 		public class «name»Scenario extends Abstract«name»Scenario {
 		
-			«FOR verification : thenBlock.verifications»
-				@Override
-				protected void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» response«ENDIF») {
-					assertFail("«verification.name» not implemented");
-					LOG.info("THEN: «verification.name» passed");
-				}
+			«FOR whenThenItem : whenThen»
+				«FOR verification : whenThenItem.thenBlock.verifications»
+					@Override
+					protected void «verification.name»(«IF whenThenItem.whenBlock.action.response.size > 0»«whenThenItem.whenBlock.action.responseDataNameWithPackage» response«ENDIF») {
+						assertFail("«verification.name» not implemented");
+						LOG.info("THEN: «verification.name» passed");
+					}
+				«ENDFOR»
 			«ENDFOR»
 			
 		
@@ -101,6 +106,8 @@ class Scenario {
 		import java.util.List;
 		import java.util.Map;
 		import java.util.HashMap;
+		import java.net.URLEncoder;
+		import java.nio.charset.StandardCharsets;
 		
 		import java.time.LocalDateTime;
 		import java.time.format.DateTimeFormatter;
@@ -128,104 +135,40 @@ class Scenario {
 				«ENDFOR»
 			}
 			
-			private HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> when() throws Exception {
-				«resetIndex»
-				String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
-				«whenBlock.generatePrepare»
-				«whenBlock.generateDataCreation»
-				HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = «whenBlock.generateActionCalls(java)»
-				LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", response.getDuration());
-				if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
-					addToMetrics("«whenBlock.action.name»", response.getDuration());
-				}
-				return response;
-			}
-			
-			private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
-				if (response.getStatusCode() == 500) {
-					String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
-					LOG.error("THEN: status " + response.getStatusCode() + " failed: " + statusMessage);
-					assertFail(statusMessage);
-				}
-				«IF thenBlock.statusCode !== 0»
-					if (response.getStatusCode() != «thenBlock.statusCode») {
-						String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
-						LOG.error("THEN: status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + statusMessage);
-						assertFail(statusMessage);
-					} else {
-						LOG.info("THEN: status «thenBlock.statusCode» passed");
-					}
-				«ENDIF»
-				
-				«IF whenBlock.action.response.size > 0»
-					«whenBlock.action.responseDataNameWithPackage» actual = null;
-					if (response.getStatusCode() < 400) {
-						try {
-							actual = response.getEntity();
-							
-							«IF whenBlock.extractions.size > 0»
-								try {
-									«FOR extraction: whenBlock.extractions»
-										
-										Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(actual);
-										extractedValues.put("«extraction.name»", «extraction.name»);
-										LOG.info("THEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
-									«ENDFOR»
-								} catch (Exception x) {
-									LOG.info("THEN: failed to extract values from response ", x);
-								}
-							«ENDIF»
-						} catch (Exception x) {
-							LOG.error("THEN: failed to read response", x);
-							assertFail(x.getMessage());
-						}
-	
-						«IF thenBlock.response !== null»
-							«whenBlock.action.model.dataNameWithPackage» expectedData = «thenBlock.response.data.objectMapperCallExpectedData(whenBlock.action.model)»;
-							
-							«whenBlock.action.responseDataNameWithPackage» expected = new «whenBlock.action.responseDataNameWithPackage»(expectedData);
-							
-							assertThat(actual, expected);
-							
-							LOG.info("THEN: response passed");
-						«ENDIF»
-					}
-
-					return actual;
-				«ENDIF»
-			}
+			«var index = 0»
+			«FOR whenThenItem : whenThen»
+				«whenThenItem.whenThenBlock(index++, java)»
+			«ENDFOR»
 					
 			@Override
 			public void runTest() throws Exception {
 				given();
-					
+				
 				if (prerequisite("«name»")) {
-					HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = when();
-		
-					«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» actualResponse = «ENDIF»then(response);
-					
-					«FOR persistenceVerification : thenBlock.persistenceVerifications»
-						this.«persistenceVerification.name»();
+					«var testIndex = 0»
+					«FOR whenThenItem: whenThen»
+						«whenThenItem.whenThenTestBlock(it, java, testIndex++)»
 					«ENDFOR»
-			
-					«FOR verification : thenBlock.verifications»
-						«verification.name»(«IF whenBlock.action.response.size > 0»actualResponse«ENDIF»);
-					«ENDFOR»
+				
 				} else {
 					LOG.info("WHEN: prerequisite for «name» not met");
 				}
+				
+					
 			}
 			
-			«FOR verification : thenBlock.verifications»
-				protected abstract void «verification.name»(«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» response«ENDIF»);
-			«ENDFOR»
-			
-			«FOR persistenceVerification : thenBlock.persistenceVerifications»
-				private void «persistenceVerification.name»() throws Exception {
-					«persistenceVerification.expression.persistenceVerification(persistenceVerification.model)»
+			«FOR whenThenItem: whenThen»
+				«FOR verification : whenThenItem.thenBlock.verifications»
+					protected abstract void «verification.name»(«IF whenThenItem.whenBlock.action.response.size > 0»«whenThenItem.whenBlock.action.responseDataNameWithPackage» response«ENDIF»);
+				«ENDFOR»
 				
-					LOG.info("THEN: «persistenceVerification.name» passed");
-				}
+				«FOR persistenceVerification : whenThenItem.thenBlock.persistenceVerifications»
+					private void «persistenceVerification.name»() throws Exception {
+						«persistenceVerification.expression.persistenceVerification(persistenceVerification.model)»
+					
+						LOG.info("THEN: «persistenceVerification.name» passed");
+					}
+				«ENDFOR»
 			«ENDFOR»
 				
 			@Override
@@ -237,6 +180,90 @@ class Scenario {
 		
 		«sdg»
 
+	'''
+	
+	private def whenThenTestBlock(WhenThen it, de.acegen.aceGen.Scenario scenario, HttpServer java, int index) '''
+	
+		HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = when_«index»();
+		«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage» actualResponse_«index» = «ENDIF»then_«index»(response_«index»);
+		«FOR persistenceVerification : thenBlock.persistenceVerifications»
+			this.«persistenceVerification.name»();
+		«ENDFOR»
+		«FOR verification : thenBlock.verifications»
+			«verification.name»(«IF whenBlock.action.response.size > 0»actualResponse_«index»«ENDIF»);
+		«ENDFOR»
+		
+	'''
+	
+	private def whenThenBlock(WhenThen it, int index, HttpServer java) '''
+		private HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> when_«index»() throws Exception {
+			«resetIndex»
+			String uuid = «IF whenBlock.dataDefinition.uuid !== null»"«whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+			«whenBlock.generatePrepare»
+			«whenBlock.generateDataCreation»
+			HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response = «whenBlock.generateActionCalls(java)»
+			LOG.info("WHEN: «whenBlock.action.name» finished in {} ms", response.getDuration());
+			if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+				addToMetrics("«whenBlock.action.name»", response.getDuration());
+			}
+			return response;
+		}
+		
+		private «IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»void«ENDIF» then_«index»(HttpResponse<«IF whenBlock.action.response.size > 0»«whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response) throws Exception {
+			if (response.getStatusCode() == 500) {
+				String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
+				String errorMessage = "status " + response.getStatusCode() + " failed: " + statusMessage;
+				LOG.error("THEN: " + errorMessage);
+				assertFail(errorMessage);
+			}
+			«IF thenBlock.statusCode !== 0»
+				if (response.getStatusCode() != «thenBlock.statusCode») {
+					String statusMessage = response.getStatusMessage() != null ? response.getStatusMessage() : "";
+					String errorMessage = "status " + response.getStatusCode() + " failed, expected «thenBlock.statusCode»: " + statusMessage;
+					LOG.error("THEN: " + errorMessage);
+					assertFail(errorMessage);
+				} else {
+					LOG.info("THEN: status «thenBlock.statusCode» passed");
+				}
+			«ENDIF»
+			
+			«IF whenBlock.action.response.size > 0»
+				«whenBlock.action.responseDataNameWithPackage» actual = null;
+				if (response.getStatusCode() < 400) {
+					try {
+						actual = response.getEntity();
+						
+						«IF whenBlock.extractions.size > 0»
+							try {
+								«FOR extraction: whenBlock.extractions»
+									
+									Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(actual);
+									extractedValues.put("«extraction.name»", «extraction.name»);
+									LOG.info("THEN: extracted " + «extraction.name».toString()  + " as «extraction.name»");
+								«ENDFOR»
+							} catch (Exception x) {
+								LOG.info("THEN: failed to extract values from response ", x);
+							}
+						«ENDIF»
+					} catch (Exception x) {
+						LOG.error("THEN: failed to read response", x);
+						assertFail(x.getMessage());
+					}
+
+					«IF thenBlock.response !== null»
+						«whenBlock.action.model.dataNameWithPackage» expectedData = «thenBlock.response.data.objectMapperCallExpectedData(whenBlock.action.model)»;
+						
+						«whenBlock.action.responseDataNameWithPackage» expected = new «whenBlock.action.responseDataNameWithPackage»(expectedData);
+						
+						assertThat(actual, expected);
+						
+						LOG.info("THEN: response passed");
+					«ENDIF»
+				}
+
+				return actual;
+			«ENDIF»
+		}
 	'''
 	
 	private def dispatch givenItem(GivenRef it, HttpServer java) '''
@@ -264,35 +291,37 @@ class Scenario {
 	'''
 
 	private def givenBlock(GivenRef givenRef, HttpServer java, boolean forLoop) '''
-		if (prerequisite("«givenRef.scenario.name»")) {
-			uuid = «IF givenRef.scenario.whenBlock.dataDefinition.uuid !== null»"«givenRef.scenario.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
-			«givenRef.scenario.whenBlock.generatePrepare»
-			«givenRef.scenario.whenBlock.generateDataCreation»
-			HttpResponse<«IF givenRef.scenario.whenBlock.action.response.size > 0»«givenRef.scenario.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «givenRef.scenario.whenBlock.generateActionCalls(java)»
-			if (response_«index».getStatusCode() >= 400) {
-				String statusMessage = response_«index».getStatusMessage() != null ? response_«index».getStatusMessage() : "";
-				String message = "GIVEN «givenRef.scenario.name» fails\n" + statusMessage;
-				LOG.error("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
-				assertFail(message);
-			}
-			LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", response_«index».getDuration());
-			addToMetrics("«givenRef.scenario.whenBlock.action.name»", response_«index».getDuration());
-			«IF givenRef.scenario.whenBlock.extractions.size > 0 && givenRef.scenario.whenBlock.action.response.size > 0»
-				«givenRef.scenario.whenBlock.action.responseDataNameWithPackage» responseEntity_«index» = null;
-				try {
-					«FOR extraction: givenRef.scenario.whenBlock.extractions»
-						
-						Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(response_«index».getEntity());
-						extractedValues.put("«extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF», «extraction.name»);
-						LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF»);
-					«ENDFOR»
-				} catch (Exception x) {
-					LOG.error("GIVEN: failed to extract values from response ", x);
+		«FOR whenThenItem: givenRef.scenario.whenThen»
+			if (prerequisite("«givenRef.scenario.name»")) {
+				uuid = «IF whenThenItem.whenBlock.dataDefinition.uuid !== null»"«whenThenItem.whenBlock.dataDefinition.uuid.valueFromString»"«ELSE»this.randomUUID()«ENDIF»;
+				«whenThenItem.whenBlock.generatePrepare»
+				«whenThenItem.whenBlock.generateDataCreation»
+				HttpResponse<«IF whenThenItem.whenBlock.action.response.size > 0»«whenThenItem.whenBlock.action.responseDataNameWithPackage»«ELSE»Object«ENDIF»> response_«index» = «whenThenItem.whenBlock.generateActionCalls(java)»
+				if (response_«index».getStatusCode() >= 400) {
+					String statusMessage = response_«index».getStatusMessage() != null ? response_«index».getStatusMessage() : "";
+					String message = "GIVEN «givenRef.scenario.name» fails\n" + statusMessage;
+					LOG.error("GIVEN: «givenRef.scenario.name» fails due to {} in {} ms", message, response_«index».getDuration());
+					assertFail(message);
 				}
-			«ENDIF»
-		} else {
-			LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
-		}
+				LOG.info("GIVEN: «givenRef.scenario.name» success in {} ms", response_«index».getDuration());
+				addToMetrics("«whenThenItem.whenBlock.action.name»", response_«index».getDuration());
+				«IF whenThenItem.whenBlock.extractions.size > 0 && whenThenItem.whenBlock.action.response.size > 0»
+					«whenThenItem.whenBlock.action.responseDataNameWithPackage» responseEntity_«index» = null;
+					try {
+						«FOR extraction: whenThenItem.whenBlock.extractions»
+							
+							Object «extraction.name» = this.extract«extraction.name.toFirstUpper»(response_«index».getEntity());
+							extractedValues.put("«extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF», «extraction.name»);
+							LOG.info("GIVEN: extracted " + «extraction.name».toString()  + " as «extraction.name»«IF forLoop»_" + i«ELSE»"«ENDIF»);
+						«ENDFOR»
+					} catch (Exception x) {
+						LOG.error("GIVEN: failed to extract values from response ", x);
+					}
+				«ENDIF»
+			} else {
+				LOG.info("GIVEN: prerequisite for «givenRef.scenario.name» not met");
+			}
+		«ENDFOR»
 	'''
 
 	private dispatch def persistenceVerification(SelectByUniqueAttribute it, Model model) '''

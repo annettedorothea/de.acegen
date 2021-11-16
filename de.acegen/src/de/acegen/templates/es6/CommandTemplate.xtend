@@ -25,6 +25,7 @@ import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
 import javax.inject.Inject
+import de.acegen.extensions.java.ModelExtension
 
 class CommandTemplate {
 	@Inject
@@ -35,6 +36,12 @@ class CommandTemplate {
 	
 	@Inject
 	extension Es6Extension
+	
+	@Inject
+	extension de.acegen.extensions.java.AceExtension
+	
+	@Inject
+	extension ModelExtension
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {
@@ -49,12 +56,7 @@ class CommandTemplate {
 		«copyright»
 
 		import AsynchronousCommand from "../../ace/AsynchronousCommand";
-		«IF hasEventOutcome»
-			import Event from "../../ace/Event";
-		«ENDIF»
-		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../ace/TriggerAction";
-		«ENDIF»
+		import Event from "../../ace/Event";
 		import * as AppUtils from "../../../src/AppUtils";
 		import * as AppState from "../../../src/AppState";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
@@ -82,12 +84,19 @@ class CommandTemplate {
 			«IF serverCall !== null»
 				execute(data) {
 				    return new Promise((resolve, reject) => {
-				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0»
+				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
 				    		let payload = {
 				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
 				    		};
+				    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
+				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
 				        «ENDIF»
-						AppUtils.«httpCall»(`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=${data.«queryParam.attribute.name»}«ENDFOR»`, data.uuid, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((«IF serverCall.response.size > 0»response«ENDIF») => {
+						AppUtils.«httpCall»(
+								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
+								data.uuid, 
+								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
+								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
+								 payload«ENDIF»«ENDIF»).then((«IF serverCall.response.size > 0»response«ENDIF») => {
 							«FOR attribute : serverCall.response»
 								data.«attribute.name» = response.«attribute.name»;
 							«ENDFOR»
@@ -99,53 +108,9 @@ class CommandTemplate {
 				    });
 				}
 			«ENDIF»
+			
+			«publishEvents(es6)»
 		
-		    publishEvents(data) {
-				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0  || outcome.functions.size > 0|| outcome.triggerdAceOperations.size > 0»
-						if (data.outcomes.includes("«outcome.getName»")) {
-							«IF outcome.listeners.size > 0 || outcome.functions.size > 0»
-								new Event('«es6.getName».«eventName(outcome)»').publish(data);
-								AppState.stateUpdated();
-							«ENDIF»
-							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
-								«IF triggerdAceOperation.delay == 0»
-									new TriggerAction().publish(
-										new «triggerdAceOperation.aceOperation.actionName»(), 
-											{
-												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-													«inputParam.name»: data.«inputParam.name»
-												«ENDFOR»
-											}
-									)
-								«ELSE»
-									«IF triggerdAceOperation.takeLatest»
-										new TriggerAction().publishWithDelayTakeLatest(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ELSE»
-										new TriggerAction().publishWithDelay(
-											new «triggerdAceOperation.aceOperation.actionName»(), 
-												{
-													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
-														«inputParam.name»: data.«inputParam.name»
-													«ENDFOR»
-												},
-											«triggerdAceOperation.delay»
-										)
-									«ENDIF»
-								«ENDIF»
-							«ENDFOR»
-						}
-					«ENDIF»
-				«ENDFOR»
-		    }
 
 		}
 		
@@ -153,16 +118,67 @@ class CommandTemplate {
 		
 	'''
 	
+	def private publishEvents(HttpClientAce it, HttpClient es6) '''
+		publishEvents(data) {
+			return new Promise((resolve) => {
+				const events = [];
+				const actionsToBeTriggered = [];
+				«FOR outcome : outcomes»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+						if (data.outcomes.includes("«outcome.getName»")) {
+							events.push(new Event('«es6.getName».«eventName(outcome)»'));
+							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+								«IF triggerdAceOperation.delay == 0»
+									actionsToBeTriggered.push(
+										{
+											action: new «triggerdAceOperation.aceOperation.actionName»(), 
+											data: {
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											}
+										}
+									);
+								«ELSE»
+									«IF triggerdAceOperation.takeLatest»
+										this.triggerWithDelayTakeLatest(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
+											«triggerdAceOperation.delay»
+										);
+									«ELSE»
+										this.triggerWithDelay(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
+											«triggerdAceOperation.delay»
+										);
+									«ENDIF»
+								«ENDIF»
+							«ENDFOR»
+						}
+					«ENDIF»
+				«ENDFOR»
+				
+				this.publish(events, data).then(() => {
+			  		AppState.stateUpdated();
+					this.trigger(actionsToBeTriggered).then(resolve);
+				});
+			})
+		
+		}
+	'''
+	
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
 		import SynchronousCommand from "../../ace/SynchronousCommand";
-		«IF hasEventOutcome»
-			import Event from "../../ace/Event";
-		«ENDIF»
-		«IF aggregatedTriggeredAceOperations.size > 0»
-			import TriggerAction from "../../ace/TriggerAction";
-		«ENDIF»
+		import Event from "../../ace/Event";
 		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
@@ -186,7 +202,11 @@ class CommandTemplate {
 					data.outcomes.push("«outcome.getName»");
 				}
 			«ENDFOR»
+			
+			«publishEvents(es6)»
+			
 
+<<<<<<< HEAD
 		    publishEvents(data) {
 				«FOR outcome : outcomes»
 					«IF outcome.listeners.size > 0  || outcome.functions.size > 0 || outcome.triggerdAceOperations.size > 0»
@@ -233,6 +253,8 @@ class CommandTemplate {
 					«ENDIF»
 				«ENDFOR»
 		    }
+=======
+>>>>>>> master
 		}
 		
 		
@@ -301,16 +323,64 @@ class CommandTemplate {
 	
 	def generateCommand() '''
 		«copyright»
-
-
+		
+		
+		let delayedActions = {};
+		
 		export default class Command {
 		    
 		    constructor(commandName) {
 		        this.commandName = commandName;
 		    }
+		    
+			triggerWithDelay(action, data, delayInMillis) {
+				setTimeout(() => {
+					action.apply(data).then();
+				}, delayInMillis);
+			}
+			
+			triggerWithDelayTakeLatest(action, data, delayInMillis) {
+				const existingTimeout = delayedActions[action.actionName];
+				if (existingTimeout) {
+					clearTimeout(existingTimeout);
+				}
+				delayedActions[action.actionName] = setTimeout(() => {
+					delayedActions[action.actionName] = undefined;
+					action.apply(data).then();
+				}, delayInMillis);
+			}
+			
+			createEventPromise(event, data) {
+				return new Promise(resolve => {
+					event.publish(data).then(resolve);
+				})
+			}
+			
+			publish(events, data) {
+				if (events.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createEventPromise(events.shift(), data)
+					.then(event => events.length === 0 ? event : this.publish(events, data));
+			}
+			
+			createActionPromise(actionToBeTriggered) {
+				return new Promise(resolve => {
+					actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
+				})
+			}
+			
+			trigger(actionsToBeTriggered) {
+				if (actionsToBeTriggered.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createActionPromise(actionsToBeTriggered.shift())
+					.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
+			}
+			
 		
 		}
-
+		
 		
 		«sdg»
 		
@@ -335,14 +405,12 @@ class CommandTemplate {
 		        return new Promise((resolve, reject) => {
 					if (this.validateCommandData(data)) {
 					    this.execute(data).then((data) => {
-					        this.publishEvents(data);
-					        resolve();
+					        this.publishEvents(data).then(resolve);
 					    }, (error) => {
 					        reject(error);
 					    });
 					} else {
-				        this.publishEvents(data);
-						resolve();
+					    this.publishEvents(data).then(resolve);
 					}
 		        });
 		    }
@@ -376,7 +444,9 @@ class CommandTemplate {
 					}
 		        });
 			    data = this.execute(data);
-				this.publishEvents(data);
+			    return new Promise((resolve) => {
+			    	this.publishEvents(data).then(resolve);
+			    });
 		    }
 		
 		}

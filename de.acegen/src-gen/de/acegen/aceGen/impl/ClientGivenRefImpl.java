@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientGivenRefImpl#getScenario <em>Scenario</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientGivenRefImpl#isExcludeGiven <em>Exclude Given</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,6 +40,26 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected ClientScenario scenario;
+
+  /**
+   * The default value of the '{@link #isExcludeGiven() <em>Exclude Given</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isExcludeGiven()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean EXCLUDE_GIVEN_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isExcludeGiven() <em>Exclude Given</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isExcludeGiven()
+   * @generated
+   * @ordered
+   */
+  protected boolean excludeGiven = EXCLUDE_GIVEN_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -112,6 +133,31 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
+  public boolean isExcludeGiven()
+  {
+    return excludeGiven;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setExcludeGiven(boolean newExcludeGiven)
+  {
+    boolean oldExcludeGiven = excludeGiven;
+    excludeGiven = newExcludeGiven;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_GIVEN_REF__EXCLUDE_GIVEN, oldExcludeGiven, excludeGiven));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -119,6 +165,8 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.CLIENT_GIVEN_REF__SCENARIO:
         if (resolve) return getScenario();
         return basicGetScenario();
+      case AceGenPackage.CLIENT_GIVEN_REF__EXCLUDE_GIVEN:
+        return isExcludeGiven();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -135,6 +183,9 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
     {
       case AceGenPackage.CLIENT_GIVEN_REF__SCENARIO:
         setScenario((ClientScenario)newValue);
+        return;
+      case AceGenPackage.CLIENT_GIVEN_REF__EXCLUDE_GIVEN:
+        setExcludeGiven((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -153,6 +204,9 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
       case AceGenPackage.CLIENT_GIVEN_REF__SCENARIO:
         setScenario((ClientScenario)null);
         return;
+      case AceGenPackage.CLIENT_GIVEN_REF__EXCLUDE_GIVEN:
+        setExcludeGiven(EXCLUDE_GIVEN_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -169,8 +223,27 @@ public class ClientGivenRefImpl extends MinimalEObjectImpl.Container implements 
     {
       case AceGenPackage.CLIENT_GIVEN_REF__SCENARIO:
         return scenario != null;
+      case AceGenPackage.CLIENT_GIVEN_REF__EXCLUDE_GIVEN:
+        return excludeGiven != EXCLUDE_GIVEN_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (excludeGiven: ");
+    result.append(excludeGiven);
+    result.append(')');
+    return result.toString();
   }
 
 } //ClientGivenRefImpl

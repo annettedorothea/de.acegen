@@ -67,12 +67,16 @@
     <genClasses ecoreClass="AceGen.ecore#//ClientScenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientScenario/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/givenRefs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/whenBlock"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientScenario/delayInMillis"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/thenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientScenario/clientWhenThen"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//ClientWhenThen">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenThen/whenBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientWhenThen/delayInMillis"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenThen/thenBlock"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ClientGivenRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientGivenRef/scenario"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientGivenRef/excludeGiven"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//ClientWhenBlock">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientWhenBlock/action"/>
@@ -136,6 +140,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAce/response"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerAceWrite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServerAceWrite/multipartFormData"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServerAceWrite/outcomes"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServerOutcome">
@@ -169,8 +174,11 @@
     <genClasses ecoreClass="AceGen.ecore#//Scenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Scenario/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/givenItems"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenBlock"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/thenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//Scenario/whenThen"/>
+    </genClasses>
+    <genClasses ecoreClass="AceGen.ecore#//WhenThen">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenThen/whenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//WhenThen/thenBlock"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//Given">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//Given/times"/>

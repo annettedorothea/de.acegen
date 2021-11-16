@@ -21,7 +21,6 @@ package de.acegen.extensions.es6
 
 import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.ClientAttribute
-import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.FunctionCall
 import de.acegen.aceGen.HttpClient
@@ -36,8 +35,10 @@ import de.acegen.aceGen.StringType
 import de.acegen.aceGen.UndefinedType
 import java.util.ArrayList
 import java.util.List
+import de.acegen.aceGen.ClientGivenRef
 
 class Es6Extension {
+	
 	def String packageFolder(HttpClient it) '''«getName.replace('.', '/')»'''
 
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
@@ -103,14 +104,16 @@ class Es6Extension {
 	}
 
 	private def void allReferencedHttpClientsRec(ClientScenario it, ArrayList<HttpClient> list) {
-		if (whenBlock !== null) {
-			var httpClient = whenBlock.action.eContainer as HttpClient
-			if (!list.contains(httpClient)) {
-				list.add(httpClient)
+		for (whenThenItem : clientWhenThen) {
+			if (whenThenItem.whenBlock !== null) {
+				var httpClient = whenThenItem.whenBlock.action.eContainer as HttpClient
+				if (!list.contains(httpClient)) {
+					list.add(httpClient)
+				}
 			}
-		}
-		for (ClientGivenRef givenRef : givenRefs) {
-			givenRef.scenario.allReferencedHttpClientsRec(list);
+			for (ClientGivenRef givenRef : givenRefs) {
+				givenRef.scenario.allReferencedHttpClientsRec(list);
+			}
 		}
 	}
 
@@ -134,9 +137,7 @@ class Es6Extension {
 		«IF it !== null && members !== null && members.size > 0»
 			{ 
 				«FOR member : members SEPARATOR ",\n"»«member.attribute.name» : «member.value.valueFrom()»«ENDFOR»
-			}
-		«ELSE»{}
-		«ENDIF»
+			}«ELSE»{}«ENDIF»
 	'''
 
 	def dispatch CharSequence valueFrom(JsonValueClient it) {
@@ -196,6 +197,16 @@ class Es6Extension {
 			parent = grandParent;
 		}
 		return null;
+	}
+
+	def List<String> allVerifications(ClientScenario it) {
+		val verifications = new ArrayList<String>()
+		for (clientWhenThenItem : clientWhenThen) {
+			if (clientWhenThenItem !== null && clientWhenThenItem.thenBlock !== null && clientWhenThenItem.thenBlock.verifications !== null) {
+				verifications.addAll(clientWhenThenItem.thenBlock.verifications)
+			}
+		}
+		return verifications;
 	}
 
 }

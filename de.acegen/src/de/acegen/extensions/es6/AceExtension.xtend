@@ -19,14 +19,19 @@
 
 package de.acegen.extensions.es6
 
-import java.util.ArrayList
-import java.util.List
+import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientOutcome
-import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
+import java.util.ArrayList
+import java.util.List
+import javax.inject.Inject
 
 class AceExtension {
+
+	@Inject
+	extension de.acegen.extensions.java.AceExtension
+	
 	
 	def String abstractActionName(HttpClientAce it) '''Abstract«getName.toFirstUpper»Action'''
 
@@ -73,7 +78,25 @@ class AceExtension {
 	def String eventNameWithPackage(HttpClientAce it,
 		HttpClientOutcome outcome) '''«(eContainer as HttpClient).getName».events.«eventName(outcome)»'''
 
-	def String httpCall(HttpClientAce it) '''«IF getServerCall.getType == "DELETE"»httpDelete«ELSEIF getServerCall.getType == "POST"»httpPost«ELSEIF getServerCall.getType == "PUT"»httpPut«ELSE»httpGet«ENDIF»'''
+	def String httpCall(HttpClientAce it) {
+		if (getServerCall.isMulitpartFormData) {
+			if (getServerCall.getType == "POST") {
+				return "httpMulitpartFormDataPost"
+			} else {
+				return "httpMulitpartFormDataPut"
+			}
+		} else {
+			if (getServerCall.getType == "DELETE") {
+				return "httpDelete"
+			} else if (getServerCall.getType == "POST") {
+				return "httpPost"
+			} else if (getServerCall.getType == "PUT") {
+				return "httpPut"
+			} else {
+				return "httpGet"
+			}
+		}
+	}
 
 	def String httpUrl(HttpClientAce it) {
 		var url = getServerCall.getUrl;

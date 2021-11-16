@@ -62,6 +62,12 @@ class Resource {
 		import org.slf4j.LoggerFactory;
 		
 		import org.apache.commons.lang3.StringUtils;
+
+		«IF isMulitpartFormData»
+			import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+			import org.glassfish.jersey.media.multipart.FormDataParam;
+			import java.io.InputStream;
+		«ENDIF»
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
@@ -121,7 +127,11 @@ class Resource {
 			@ExceptionMetered
 			@ResponseMetered
 			@Produces(MediaType.APPLICATION_JSON)
-			@Consumes(MediaType.APPLICATION_JSON)
+			«IF isMulitpartFormData»
+				@Consumes(MediaType.MULTIPART_FORM_DATA)
+			«ELSE»
+				@Consumes(MediaType.APPLICATION_JSON)
+			«ENDIF»
 			public Response «resourceName.toFirstLower»(
 					«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
 					«FOR param : queryParams»
@@ -130,6 +140,10 @@ class Resource {
 					«FOR param : pathParams»
 						@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
 					«ENDFOR»
+					«IF isMulitpartFormData»
+						@FormDataParam("«getModel.formDataAttributeName»")FormDataContentDisposition contentDisposition,
+						@FormDataParam("«getModel.formDataAttributeName»")InputStream inputStream,
+					«ENDIF»
 					@QueryParam("uuid") String uuid«IF payload.size > 0», 
 					«getModel.dataParamType» payload«ENDIF») 
 					throws JsonProcessingException {
@@ -156,6 +170,13 @@ class Resource {
 						«FOR param : getModel.allAttributes»
 								«IF authUser.attributes.containsAttribute(param)»
 									data.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+								«ENDIF»
+						«ENDFOR»
+					«ENDIF»
+					«IF isMulitpartFormData»
+						«FOR param : getModel.allAttributes»
+								«IF param.type == "FormData"»
+									data.«param.setterCall('''new de.acegen.FormData(contentDisposition, inputStream)''')»;
 								«ENDIF»
 						«ENDFOR»
 					«ENDIF»

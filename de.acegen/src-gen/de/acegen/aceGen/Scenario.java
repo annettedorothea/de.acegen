@@ -18,8 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.Scenario#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.Scenario#getGivenItems <em>Given Items</em>}</li>
- *   <li>{@link de.acegen.aceGen.Scenario#getWhenBlock <em>When Block</em>}</li>
- *   <li>{@link de.acegen.aceGen.Scenario#getThenBlock <em>Then Block</em>}</li>
+ *   <li>{@link de.acegen.aceGen.Scenario#getWhenThen <em>When Then</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getScenario()
@@ -63,47 +62,15 @@ public interface Scenario extends EObject
   EList<Given> getGivenItems();
 
   /**
-   * Returns the value of the '<em><b>When Block</b></em>' containment reference.
+   * Returns the value of the '<em><b>When Then</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.WhenThen}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>When Block</em>' containment reference.
-   * @see #setWhenBlock(WhenBlock)
-   * @see de.acegen.aceGen.AceGenPackage#getScenario_WhenBlock()
+   * @return the value of the '<em>When Then</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getScenario_WhenThen()
    * @model containment="true"
    * @generated
    */
-  WhenBlock getWhenBlock();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.Scenario#getWhenBlock <em>When Block</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>When Block</em>' containment reference.
-   * @see #getWhenBlock()
-   * @generated
-   */
-  void setWhenBlock(WhenBlock value);
-
-  /**
-   * Returns the value of the '<em><b>Then Block</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Then Block</em>' containment reference.
-   * @see #setThenBlock(ThenBlock)
-   * @see de.acegen.aceGen.AceGenPackage#getScenario_ThenBlock()
-   * @model containment="true"
-   * @generated
-   */
-  ThenBlock getThenBlock();
-
-  /**
-   * Sets the value of the '{@link de.acegen.aceGen.Scenario#getThenBlock <em>Then Block</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Then Block</em>' containment reference.
-   * @see #getThenBlock()
-   * @generated
-   */
-  void setThenBlock(ThenBlock value);
+  EList<WhenThen> getWhenThen();
 
 } // Scenario

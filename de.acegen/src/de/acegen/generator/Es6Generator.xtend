@@ -106,7 +106,6 @@ class Es6Generator {
 			commandTemplate.generateSynchronousCommand());
 		fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateEvent());
 		fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateACEController());
-		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateTriggerAction());
 		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
 		
@@ -117,7 +116,7 @@ class Es6Generator {
 		for (scenario : httpClient.scenarios) {
 			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.scenario.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
 				scenarioTemplate.generateScenario(scenario, httpClient));
-			if (scenario.thenBlock.verifications.size > 0) {
+			if (scenario.allVerifications.size > 0) {
 				fsa.generateFile(httpClient.getName + '/' + scenario.name + 'Verifications.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE,
 					scenarioTemplate.generateVerifications(scenario));
 			}

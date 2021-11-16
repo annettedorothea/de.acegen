@@ -26,6 +26,7 @@ import de.acegen.templates.java.DropwizardAppRegistration;
 import de.acegen.templates.java.DropwizardConfiguration;
 import de.acegen.templates.java.DropwizardEventReplayCommand;
 import de.acegen.templates.java.DropwizardResource;
+import de.acegen.templates.java.FormData;
 import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.Resource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
@@ -59,6 +60,9 @@ public class DropwizardGenerator {
   
   @Inject
   private DropwizardEventReplayCommand dropwizardEventReplayCommand;
+  
+  @Inject
+  private FormData formData;
   
   @Inject
   @Extension
@@ -105,5 +109,7 @@ public class DropwizardGenerator {
       this.dropwizardAppRegistration.generateAppRegistration());
     fsa.generateFile("de/acegen/EventReplayCommand.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.dropwizardEventReplayCommand.generateEventReplayCommand());
+    fsa.generateFile("de/acegen/FormData.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.formData.generate());
   }
 }

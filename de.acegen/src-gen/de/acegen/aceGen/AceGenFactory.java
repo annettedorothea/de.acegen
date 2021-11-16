@@ -132,6 +132,15 @@ public interface AceGenFactory extends EFactory
   ClientScenario createClientScenario();
 
   /**
+   * Returns a new object of class '<em>Client When Then</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Client When Then</em>'.
+   * @generated
+   */
+  ClientWhenThen createClientWhenThen();
+
+  /**
    * Returns a new object of class '<em>Client Given Ref</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -319,6 +328,15 @@ public interface AceGenFactory extends EFactory
    * @generated
    */
   Scenario createScenario();
+
+  /**
+   * Returns a new object of class '<em>When Then</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>When Then</em>'.
+   * @generated
+   */
+  WhenThen createWhenThen();
 
   /**
    * Returns a new object of class '<em>Given</em>'.

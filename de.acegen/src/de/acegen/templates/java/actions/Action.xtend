@@ -257,10 +257,8 @@ class Action {
 				databaseHandle.beginTransaction();
 				try {
 					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
-						databaseHandle.rollbackTransaction();
-						LOG.warn("duplicate request {} {} ", actionName, data.getUuid());
-						databaseHandle.rollbackTransaction();
-						return data;
+						LOG.error("duplicate request {} {} ", actionName, data.getUuid());
+						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
 					
 					data.setSystemTime(LocalDateTime.now());
@@ -321,9 +319,8 @@ class Action {
 				databaseHandle.beginTransaction();
 				try {
 					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
-						LOG.warn("duplicate request {} {} ", actionName, data.getUuid());
-						databaseHandle.rollbackTransaction();
-						return data;
+						LOG.error("duplicate request {} {} ", actionName, data.getUuid());
+						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
 
 					data.setSystemTime(LocalDateTime.now());

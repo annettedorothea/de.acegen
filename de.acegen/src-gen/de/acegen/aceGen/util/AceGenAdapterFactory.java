@@ -136,6 +136,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createClientScenarioAdapter();
       }
       @Override
+      public Adapter caseClientWhenThen(ClientWhenThen object)
+      {
+        return createClientWhenThenAdapter();
+      }
+      @Override
       public Adapter caseClientGivenRef(ClientGivenRef object)
       {
         return createClientGivenRefAdapter();
@@ -239,6 +244,11 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseScenario(Scenario object)
       {
         return createScenarioAdapter();
+      }
+      @Override
+      public Adapter caseWhenThen(WhenThen object)
+      {
+        return createWhenThenAdapter();
       }
       @Override
       public Adapter caseGiven(Given object)
@@ -588,6 +598,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientWhenThen <em>Client When Then</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.ClientWhenThen
+   * @generated
+   */
+  public Adapter createClientWhenThenAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientGivenRef <em>Client Given Ref</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -898,6 +923,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScenarioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.WhenThen <em>When Then</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.WhenThen
+   * @generated
+   */
+  public Adapter createWhenThenAdapter()
   {
     return null;
   }

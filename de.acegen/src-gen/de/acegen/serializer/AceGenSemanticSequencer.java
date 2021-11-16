@@ -16,6 +16,7 @@ import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientThenBlock;
 import de.acegen.aceGen.ClientWhenBlock;
+import de.acegen.aceGen.ClientWhenThen;
 import de.acegen.aceGen.Count;
 import de.acegen.aceGen.CustomCall;
 import de.acegen.aceGen.DataDefinition;
@@ -61,6 +62,7 @@ import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
+import de.acegen.aceGen.WhenThen;
 import de.acegen.services.AceGenGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -119,6 +121,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.CLIENT_WHEN_BLOCK:
 				sequence_ClientWhenBlock(context, (ClientWhenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.CLIENT_WHEN_THEN:
+				sequence_ClientWhenThen(context, (ClientWhenThen) semanticObject); 
 				return; 
 			case AceGenPackage.COUNT:
 				sequence_Count(context, (Count) semanticObject); 
@@ -254,6 +259,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.WHEN_BLOCK:
 				sequence_WhenBlock(context, (WhenBlock) semanticObject); 
+				return; 
+			case AceGenPackage.WHEN_THEN:
+				sequence_WhenThen(context, (WhenThen) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -391,16 +399,10 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientGivenRef returns ClientGivenRef
 	 *
 	 * Constraint:
-	 *     scenario=[ClientScenario|QualifiedName]
+	 *     (scenario=[ClientScenario|QualifiedName] excludeGiven?='exclude'?)
 	 */
 	protected void sequence_ClientGivenRef(ISerializationContext context, ClientGivenRef semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClientGivenRefAccess().getScenarioClientScenarioQualifiedNameParserRuleCall_0_1(), semanticObject.eGet(AceGenPackage.Literals.CLIENT_GIVEN_REF__SCENARIO, false));
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -409,7 +411,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ClientScenario returns ClientScenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenRefs+=ClientGivenRef* whenBlock=ClientWhenBlock? delayInMillis=INT? thenBlock=ClientThenBlock)
+	 *     (name=ID givenRefs+=ClientGivenRef* clientWhenThen+=ClientWhenThen clientWhenThen+=ClientWhenThen*)
 	 */
 	protected void sequence_ClientScenario(ISerializationContext context, ClientScenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -440,6 +442,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_ClientWhenBlock(ISerializationContext context, ClientWhenBlock semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ClientWhenThen returns ClientWhenThen
+	 *
+	 * Constraint:
+	 *     (whenBlock=ClientWhenBlock? delayInMillis=INT? thenBlock=ClientThenBlock?)
+	 */
+	protected void sequence_ClientWhenThen(ISerializationContext context, ClientWhenThen semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -548,7 +562,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     GivenRef returns GivenRef
 	 *
 	 * Constraint:
-	 *     (scenario=[Scenario|QualifiedName] times=INT? excludeGiven?='excludeGIVEN'?)
+	 *     (scenario=[Scenario|QualifiedName] times=INT? excludeGiven?='exclude'?)
 	 */
 	protected void sequence_GivenRef(ISerializationContext context, GivenRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -655,6 +669,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         type=WriteFunctionType 
 	 *         url=STRING 
 	 *         authorize?='authorize'? 
+	 *         multipartFormData?='multipartFormData'? 
 	 *         pathParams+=AttributeParamRef* 
 	 *         queryParams+=AttributeParamRef* 
 	 *         payload+=AttributeParamRef* 
@@ -998,7 +1013,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Scenario returns Scenario
 	 *
 	 * Constraint:
-	 *     (name=ID givenItems+=Given* whenBlock=WhenBlock thenBlock=ThenBlock)
+	 *     (name=ID givenItems+=Given* whenThen+=WhenThen whenThen+=WhenThen*)
 	 */
 	protected void sequence_Scenario(ISerializationContext context, Scenario semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1167,6 +1182,27 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_WhenBlock(ISerializationContext context, WhenBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     WhenThen returns WhenThen
+	 *
+	 * Constraint:
+	 *     (whenBlock=WhenBlock thenBlock=ThenBlock)
+	 */
+	protected void sequence_WhenThen(ISerializationContext context, WhenThen semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.WHEN_THEN__WHEN_BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.WHEN_THEN__WHEN_BLOCK));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.WHEN_THEN__THEN_BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.WHEN_THEN__THEN_BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getWhenThenAccess().getWhenBlockWhenBlockParserRuleCall_1_0(), semanticObject.getWhenBlock());
+		feeder.accept(grammarAccess.getWhenThenAccess().getThenBlockThenBlockParserRuleCall_3_0(), semanticObject.getThenBlock());
+		feeder.finish();
 	}
 	
 	
