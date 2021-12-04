@@ -72,11 +72,17 @@ class AttributeExtension {
 				}
 			«ENDIF»
 			«IF "Integer".equals(attribute.type)»
-				data.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+				}
 			«ELSEIF "String".equals(attribute.type)»
-				data.«attribute.setterCall(attribute.resourceParam)»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam)»;
+				}
 			«ELSE»
-				data.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+				}
 			«ENDIF»
 		«ENDIF»
 	'''
