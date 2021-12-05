@@ -67,7 +67,7 @@ class AttributeExtension {
 			}
 		«ELSE»
 			«IF notNull»
-				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
+				if («attribute.name» == null || StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
 					return badRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
