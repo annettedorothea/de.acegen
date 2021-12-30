@@ -2,9 +2,12 @@ __If the iron is blunt, and one does not sharpen the edge, he must use more stre
 
 _King Solomon, Book of Ecclesiastes 10,10_
 
+_DSL (Domain Specific Language) and code generator implemented with Xtext based on the Action - Command - Event pattern_
+
+This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
+
 # Table Of Contents
 
-* [DSL and Code Generator](#dsl-and-code-generator)
 * [The Action - Command - Event Pattern](#the-action-command-event-pattern)
   * [Action](#action)
   * [Command](#command)
@@ -17,10 +20,6 @@ _King Solomon, Book of Ecclesiastes 10,10_
   * [SuperMemo App As PoC](#supermemo-app-as-poc) 
   * [The Replay Mechanism](#the-replay-mechanism) 
   * [Automated Testing](#automated-testing) 
-
-_DSL (Domain Specific Language) and code generator implemented with Xtext based on the Action - Command - Event pattern_
-
-This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
 
 # The Action - Command - Event Pattern
 
