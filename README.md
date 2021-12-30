@@ -2,9 +2,23 @@ __If the iron is blunt, and one does not sharpen the edge, he must use more stre
 
 _King Solomon, Book of Ecclesiastes 10,10_
 
-# de.acegen
+# Table Of Contents
 
-_DSL (Domain Specific Language) and code generator implemented with Xtext based on [the ACE-architecture](#The-ACE-Architecture)_
+* [DSL and Code Generator](#dsl-and-code-generator)
+* [The Action - Command - Event Pattern](#the-action-command-event-pattern)
+  * [Action](#action)
+  * [Command](#command)
+  * [Event](#event)
+* [TodoMVC App As Example](#todomvc-app-as-example)
+  * [The REST API](#the-rest-api)
+  * [The Single Page Application](#the-single-page-application)
+* [Additional Notes](#additional-notes)
+  * [DSL And Code Generator](#dsl-and-code-generator)
+  * [SuperMemo App As PoC](#supermemo-app-as-poc) 
+  * [The Replay Mechanism](#the-replay-mechanism) 
+  * [Automated Testing](#automated-testing) 
+
+_DSL (Domain Specific Language) and code generator implemented with Xtext based on the Action - Command - Event pattern_
 
 This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
 
@@ -90,7 +104,7 @@ The [TodoMVC example](https://todo.acegen.de) provides a way to see the [replay]
 
 ---
 
-# TodoMVC app as example
+# TodoMVC App As Example
 
 * [Server](https://github.com/annettedorothea/TodoMVC---Server)
 * [Client](https://github.com/annettedorothea/TodoMVC---Client)
@@ -98,7 +112,7 @@ The [TodoMVC example](https://todo.acegen.de) provides a way to see the [replay]
 
 ## The REST API
 
-### POST, PUT and DELETE as WriteActions
+### POST, PUT and DELETE As WriteActions
 
 In case of a REST API you have the resource or controller that receives the incoming request. Here you create the appropriate action and the data object that is going to be passed the action-command-event chain:
 
@@ -130,7 +144,7 @@ And in this view you find the listeners that react on the published events:
 
 [TodoView.java](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/main/java/com/anfelisa/todo/views/TodoView.java)
 
-### GET as ReadAction
+### GET As ReadAction
 
 The read action is rather simple:
 
@@ -138,7 +152,7 @@ The read action is rather simple:
 
 [ReadAction.java](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/gen/java/de/acegen/ReadAction.java)
 
-## The Single Page Application of the TodoMVC example
+## The Single Page Application
 
 If you are using this pattern in an UI that is connected to a REST API there are some things to consider:
 
@@ -168,11 +182,7 @@ Here are the components of the thin and logic free presentational layer:
 
 # Additional Notes
 
-## DSL and code generator
-
-There is a code generator based on Xtext that helps to write the boilerplate code that is needed for the action - command - event pattern:
-
-https://github.com/annettedorothea/de.acegen
+## DSL And Code Generator
 
 All files that are located in a gen folder are generated files in the above examples.
 
@@ -186,16 +196,16 @@ Here you can find the scenario DSL files for
 * [TodoMVC integration tests](https://github.com/annettedorothea/TodoMVC---Server/tree/master/todo-server)
 * [TodoMVC E2E tests](https://github.com/annettedorothea/TodoMVC---Client/tree/master/scenarios)
 
-## SuperMemo app as a PoC
+## SuperMemo App As PoC
 
 Check out a more complex implementation of a SuperMemo app:
 
 * [SuperMemo server](https://github.com/annettedorothea/com.anfelisa.server)
 * [SuperMemo client](https://github.com/annettedorothea/com.anfelisa.client)
 
-## The replay mechanism
+## The Replay Mechanism
 
-### Bug fixing
+### Bug Fixing
 
 You can see the replay mechanism on the client if you follow the instructions on the bottom left in the [TodoMVC example](https://todo.acegen.de). It may serve you as a way to find and fix bugs because you do not have to guess what the user did when he encoutnered the bug but you **know** what was going on.
 
