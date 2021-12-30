@@ -1,14 +1,14 @@
-__If the iron is blunt, and one does not sharpen the edge, he must use more strength, but wisdom helps one to succeed.__
+
+
+__If the axe is dull and its edge unsharpened, more strength is needed, but skill will bring success.__
 
 _King Solomon, Book of Ecclesiastes 10,10_
 
-_DSL (Domain Specific Language) and code generator implemented with Xtext based on the Action - Command - Event pattern_
-
-This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
+acegen is a DSL (Domain Specific Language) and code generator implemented with Xtext based on the Action - Command - Event pattern and it helps you to write web APIs and web clients and can be plugged into Eclipse.
 
 # Table Of Contents
 
-* [The Action - Command - Event Pattern](#the-action-command-event-pattern)
+* [The Action - Command - Event Pattern](#the-action---command---event-pattern)
   * [Action](#action)
   * [Command](#command)
   * [Event](#event)
@@ -31,12 +31,12 @@ The action-command-event pattern is a simple pattern for
 
 It can be used anywhere. Here are examples for the usage in a REST API
 
-* [TodoMVC-Server](https://github.com/annettedorothea/TodoMVC---Server)
+* [TodoMVC Server](https://github.com/annettedorothea/TodoMVC---Server)
 * [SuperMemo App Server](https://github.com/annettedorothea/com.anfelisa.server)
 
 and in the UI of a web client
 
-* [TodoMVC-Client](https://github.com/annettedorothea/TodoMVC---Client)
+* [TodoMVC Client](https://github.com/annettedorothea/TodoMVC---Client)
 * [SuperMemo App Client](https://github.com/annettedorothea/com.anfelisa.client).
 
 It consists of three steps that are executed sequentially:
@@ -62,32 +62,35 @@ A read action has no side effects and just reads the current state of the applic
 
 ### Write Action
 
-A write action is always followed by a command and one or more events. As the command contains the business logic to perform the desired side effect the action just serves to prepare it by initializing the *squishy* data. **Squishy data**?!? What's that?!?
+A write action is always followed by a command and one or more events. As the command contains the business logic to perform the desired side effect the action just serves to prepare it by initializing the *squishy* data. **Squishy data** - what's that?!?
 
 #### Squishy Data
 
 I admit squishy data is a rather weird category of data but just try to follow along. Squishy is everything that makes programming complex and unpredictable. Consider a function that always returns the same result no matter when or why or under whatever circumstance it is executed. It is like 2+2=4. Simple and predictable.
 
-On the other hand if a functions returns 2 on Monday and 3 on Tuesday and 5 if an admin executes it for the same input there is squishy data involved. This is complex and unpredictable. So you know what I mean? And because life is complex and we can't get rid of complex stuff in our software we need so do something in order to tame this beast.
+On the other hand if a functions returns 2 on Monday and 3 on Tuesday and 5 if an admin executes it for the same input there is squishy data involved. It is complex and unpredictable. So you know what I mean? And because life is complex and we can't get rid of complex stuff in our software we need to do something in order to tame this beast.
 
-#### What data is *squishy*?
+#### Examples for *squishy* data
 
-* Time. Time is always squishy and makes programming (and even life) hard.
-* Tokens are squishy.
-* Any random value.
+* Time
+* Tokens and random values
 
-#### Why do we initialize *squishy* data before we execute the business logic?
+#### Why should I distinguish *sqishy' data from 'normal' data?
 
-There are two benefits if you start to put data in either the category *squishy* or not.
+There are basically two benefits:
 
 1. It creates awareness of the complexity to be expected in the software.
-2. We do that in order to simplify our tests:
+2. If you initialize the *squishy* data separately it will simplify your tests:
    * Writing unit testing will be easier because one specific input has to result in only one outcome.
-   * Integration and E2E tests are challenging and fragile because ot the *squishy* data. But you can master it by finding a way to bypass the *squishy* data to the action and initialize it with specific test data so you can predict the outcome of the test.
+   * Integration and E2E tests are challenging and fragile mainly because of *squishy* data. But you can master it by finding a way to bypass the *squishy* data to the action and initialize it with specific test data so you can predict the outcome of the test.
 
 ## Command
 
-The command contains the core of your application: the business logic. It is only limited by the fact that it must not cause any side effect but is only allowed to read the current state of your application. So what the command basically does is collect data, validate it and prepare the desired side effects.
+The command contains the core of your application: the business logic. It is only limited by the fact that it must not cause any side effect but is only allowed to read the current state of your application. So what the command basically does is 
+
+* collect data,
+* validate it and
+* prepare the desired side effects.
 
 A command has one or more outcomes that result in events that will be fired.
 
@@ -95,7 +98,7 @@ A command has one or more outcomes that result in events that will be fired.
 
 The event contains the prepared data and will be consumed by one or more listeners or views that will perform the desired side effect. You can distinguish between side effects that are executed in a transaction or outside a transaction if a database is involved, just what best fits the scenario.
 
-An event is absolutely forbidden to change the data it receives!
+The listener or view that consumes the event is absolutely forbidden to change the data it receives!
 
 For the event contains all data to cause the desired side effect you can store it in a timeline and replay it afterwards for example to find a bug, to rebuild the state of the application or to prepare migrations.
 
@@ -105,8 +108,8 @@ The [TodoMVC example](https://todo.acegen.de) provides a way to see the [replay]
 
 # TodoMVC App As Example
 
-* [Server](https://github.com/annettedorothea/TodoMVC---Server)
-* [Client](https://github.com/annettedorothea/TodoMVC---Client)
+* [Server source code](https://github.com/annettedorothea/TodoMVC---Server)
+* [Client source code](https://github.com/annettedorothea/TodoMVC---Client)
 
 
 ## The REST API
@@ -126,7 +129,7 @@ There you can see that
 * a transaction is opened
 * the system time and 
 * the squishy data is initialized
-* in case you are running in DEV mode squishy data gets overwritten (this is the bypassing of test data)
+* in case you are running in DEV mode, squishy data gets overwritten (this is the bypassing of test data)
 * the command is called 
 * the events are published
 * the transaction is commited
@@ -147,9 +150,9 @@ And in this view you find the listeners that react on the published events:
 
 The read action is rather simple:
 
-[GetAllTodosAction.java](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/main/java/com/anfelisa/todo/actions/GetAllTodosAction.java)
-
 [ReadAction.java](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/gen/java/de/acegen/ReadAction.java)
+
+[GetAllTodosAction.java](https://github.com/annettedorothea/TodoMVC---Server/blob/master/src/main/java/com/anfelisa/todo/actions/GetAllTodosAction.java)
 
 ## The Single Page Application
 
@@ -197,7 +200,7 @@ Here you can find the scenario DSL files for
 
 ## SuperMemo App As PoC
 
-Check out a more complex implementation of a SuperMemo app:
+Check out a more complex implementation of a SuperMemo app that was written as a proof of concept for the action - command - event pattern.
 
 * [SuperMemo server](https://github.com/annettedorothea/com.anfelisa.server)
 * [SuperMemo client](https://github.com/annettedorothea/com.anfelisa.client)
@@ -206,11 +209,13 @@ Check out a more complex implementation of a SuperMemo app:
 
 ### Bug Fixing
 
-You can see the replay mechanism on the client if you follow the instructions on the bottom left in the [TodoMVC example](https://todo.acegen.de). It may serve you as a way to find and fix bugs because you do not have to guess what the user did when he encoutnered the bug but you **know** what was going on.
+You can see the replay mechanism on the client if you follow the instructions on the bottom left in the [TodoMVC example](https://todo.acegen.de). It may serve you as a way to find and fix bugs because you do not have to guess what the user did when he encountered the bug but you **know** what was going on.
 
 ### Migrations
 
-As you can replay the events on a server you can rebuild the state of the application with a changed data model. For example: If one of your select statements to query complex data with many joins gets really slow when the amount of data rises you might want to create a table that contains all data you need for the query in a way that is optimized for reading. You can fill this table by replaying all events. But you have to be aware of the fact that changing the structure of your events will make the attempt to always have a replayable timeline rather hard because you will have to migrate the events. So if you are live already and you have to make structural changes to your system you might want to give up the ability to replay the timeline on the server.
+As you can replay the events on a server you can rebuild the state of the application with a changed data model. For example: If one of your select statements to query complex data with many joins gets really slow when the amount of data rises you might want to create a table that contains all data you need for the query in a way that is optimized for reading. You can fill this table by replaying all events. 
+
+But you have to be aware of the fact that changing the structure of your events will make the attempt to always have a replayable timeline rather hard because you will have to migrate the events. So if you are live already and you have to make structural changes to your system you might want to give up the ability to replay the timeline on the server.
 
 ## Automated Testing
 
@@ -222,22 +227,22 @@ So I would suggest that we need a mixture of unit tests, integration and E2E tes
 
 I really love TDD. And writing unit tests with TDD for the *real* business logic in a software is fun. Writing unit tests with TDD for the UI is a pain, at least I think so.
 
-On the other hand unit tests are really annoying when you do a structural refactoring of your software.
+On the other hand unit tests are really annoying when you do structural refactorings of your software because they are very prone to fail on these kinds of changes.
 
 So there is the tension:
 
-For unit tests are tied to a unit they are not receptive for structural changes. And the promise that you can make refactorings very easily if you have unit tests proves to be deceptive.
+For unit tests are tied to a unit they are not receptive for structural changes. And the promise that you can make refactorings save and easily if you have unit tests proves to be deceptive.
 
 With the action - command - event pattern we only write unit tests for the commands because they contain the business logic. You also might want to write unit tests for the actions in order to verify that the squishy data was initialized correctly.
 
 ### Integration and E2E tests
 
-For the bigger picture and to make sure our tests a not prone to fail on structural changes of your software we write integration and E2E tests and chose a more behavioural way for our tests.
+For the bigger picture and to make sure our tests are not prone to fail on structural changes we write integration and E2E tests and chose a more behavioural way for our tests.
 
 The common problems with integration and E2E test as far as I perceive them is:
 
 1. They are fragile because of the *squishy* data.
-2. The preparation of the test data is hard to achieve.
+2. The preparation of the test data is hard.
 
 #### Squishy Data
 
