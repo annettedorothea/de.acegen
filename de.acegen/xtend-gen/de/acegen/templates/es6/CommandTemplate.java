@@ -62,9 +62,7 @@ public class CommandTemplate {
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      int _size = outcome.getListeners().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((outcome.getListeners().size() > 0) || (outcome.getFunctions().size() > 0))) {
         return true;
       }
     }
@@ -725,8 +723,6 @@ public class CommandTemplate {
     CharSequence _publishEvents = this.publishEvents(it, es6);
     _builder.append(_publishEvents, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

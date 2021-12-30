@@ -50,6 +50,7 @@ public class AttributeExtension {
   private ModelExtension _modelExtension;
   
   public String stringLineBreak = new Function0<String>() {
+    @Override
     public String apply() {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(",\" + ");
@@ -141,18 +142,21 @@ public class AttributeExtension {
         {
           boolean _isNotNull_1 = it.isNotNull();
           if (_isNotNull_1) {
-            _builder.append("if (StringUtils.isBlank(");
+            _builder.append("if (");
             String _name_6 = it.getAttribute().getName();
             _builder.append(_name_6);
-            _builder.append(") || \"null\".equals(");
+            _builder.append(" == null || StringUtils.isBlank(");
             String _name_7 = it.getAttribute().getName();
             _builder.append(_name_7);
+            _builder.append(") || \"null\".equals(");
+            String _name_8 = it.getAttribute().getName();
+            _builder.append(_name_8);
             _builder.append(")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("return badRequest(\"");
-            String _name_8 = it.getAttribute().getName();
-            _builder.append(_name_8, "\t");
+            String _name_9 = it.getAttribute().getName();
+            _builder.append(_name_9, "\t");
             _builder.append(" is mandatory\");");
             _builder.newLineIfNotEmpty();
             _builder.append("}");
@@ -162,25 +166,49 @@ public class AttributeExtension {
         {
           boolean _equals = "Integer".equals(it.getAttribute().getType());
           if (_equals) {
+            _builder.append("if (");
+            String _name_10 = it.getAttribute().getName();
+            _builder.append(_name_10);
+            _builder.append(" != null) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
             _builder.append("data.");
             String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType(), "Int");
-            _builder.append(_setterCall_1);
+            _builder.append(_setterCall_1, "\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
           } else {
             boolean _equals_1 = "String".equals(it.getAttribute().getType());
             if (_equals_1) {
+              _builder.append("if (");
+              String _name_11 = it.getAttribute().getName();
+              _builder.append(_name_11);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
               _builder.append("data.");
               String _setterCall_2 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
-              _builder.append(_setterCall_2);
+              _builder.append(_setterCall_2, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
             } else {
+              _builder.append("if (");
+              String _name_12 = it.getAttribute().getName();
+              _builder.append(_name_12);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
               _builder.append("data.");
               String _setterCall_3 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType());
-              _builder.append(_setterCall_3);
+              _builder.append(_setterCall_3, "\t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
             }
           }
         }
@@ -420,39 +448,26 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       String _switchResult = null;
       String _type_1 = it.getType();
-      boolean _matched = false;
-      if (Objects.equal(_type_1, "Integer")) {
-        _matched=true;
-        _switchResult = "integer";
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Long")) {
-          _matched=true;
-          _switchResult = "bigint";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "String")) {
-          _matched=true;
-          _switchResult = "character varying";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Float")) {
-          _matched=true;
-          _switchResult = "numeric";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Boolean")) {
-          _matched=true;
-          _switchResult = "boolean";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "DateTime")) {
-          _matched=true;
-          _switchResult = "timestamp with time zone";
+      if (_type_1 != null) {
+        switch (_type_1) {
+          case "Integer":
+            _switchResult = "integer";
+            break;
+          case "Long":
+            _switchResult = "bigint";
+            break;
+          case "String":
+            _switchResult = "character varying";
+            break;
+          case "Float":
+            _switchResult = "numeric";
+            break;
+          case "Boolean":
+            _switchResult = "boolean";
+            break;
+          case "DateTime":
+            _switchResult = "timestamp with time zone";
+            break;
         }
       }
       _xifexpression = _switchResult;
@@ -467,45 +482,29 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       String _switchResult = null;
       String _type_1 = it.getType();
-      boolean _matched = false;
-      if (Objects.equal(_type_1, "Integer")) {
-        _matched=true;
-        _switchResult = "random.nextInt(50)";
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Long")) {
-          _matched=true;
-          _switchResult = "random.nextLong()";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "String")) {
-          _matched=true;
-          _switchResult = "randomString(random)";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Float")) {
-          _matched=true;
-          _switchResult = "random.nextFloat()";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "Boolean")) {
-          _matched=true;
-          _switchResult = "random.nextBoolean()";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "DateTime")) {
-          _matched=true;
-          _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_type_1, "FormData")) {
-          _matched=true;
-          _switchResult = "null";
+      if (_type_1 != null) {
+        switch (_type_1) {
+          case "Integer":
+            _switchResult = "random.nextInt(50)";
+            break;
+          case "Long":
+            _switchResult = "random.nextLong()";
+            break;
+          case "String":
+            _switchResult = "randomString(random)";
+            break;
+          case "Float":
+            _switchResult = "random.nextFloat()";
+            break;
+          case "Boolean":
+            _switchResult = "random.nextBoolean()";
+            break;
+          case "DateTime":
+            _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
+            break;
+          case "FormData":
+            _switchResult = "null";
+            break;
         }
       }
       _xifexpression = _switchResult;

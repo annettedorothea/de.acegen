@@ -67,16 +67,22 @@ class AttributeExtension {
 			}
 		«ELSE»
 			«IF notNull»
-				if (StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
+				if («attribute.name» == null || StringUtils.isBlank(«attribute.name») || "null".equals(«attribute.name»)) {
 					return badRequest("«attribute.name» is mandatory");
 				}
 			«ENDIF»
 			«IF "Integer".equals(attribute.type)»
-				data.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam, attribute.type, "Int")»;
+				}
 			«ELSEIF "String".equals(attribute.type)»
-				data.«attribute.setterCall(attribute.resourceParam)»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam)»;
+				}
 			«ELSE»
-				data.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+				if («attribute.name» != null) {
+					data.«attribute.setterCall(attribute.resourceParam, attribute.type)»;
+				}
 			«ENDIF»
 		«ENDIF»
 	'''

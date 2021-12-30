@@ -233,13 +233,24 @@ public class AceExtension {
               String _name = queryParam.getAttribute().getName();
               _builder.append(_name);
               _builder.append("=\" + ");
-              StringConcatenation _builder_1 = new StringConcatenation();
-              _builder_1.append(dataVarName);
-              _builder_1.append(".");
-              String _terCall = this._attributeExtension.getterCall(queryParam.getAttribute());
-              _builder_1.append(_terCall);
-              String _urlEncodedValue = this.urlEncodedValue(_builder_1.toString());
-              _builder.append(_urlEncodedValue);
+              {
+                String _type = queryParam.getAttribute().getType();
+                boolean _equals_1 = Objects.equal(_type, "String");
+                if (_equals_1) {
+                  StringConcatenation _builder_1 = new StringConcatenation();
+                  _builder_1.append(dataVarName);
+                  _builder_1.append(".");
+                  String _terCall = this._attributeExtension.getterCall(queryParam.getAttribute());
+                  _builder_1.append(_terCall);
+                  String _urlEncodedValue = this.urlEncodedValue(_builder_1.toString());
+                  _builder.append(_urlEncodedValue);
+                } else {
+                  _builder.append(dataVarName);
+                  _builder.append(".");
+                  String _terCall_1 = this._attributeExtension.getterCall(queryParam.getAttribute());
+                  _builder.append(_terCall_1);
+                }
+              }
               _builder.append(" + \"");
             }
           }
@@ -298,8 +309,8 @@ public class AceExtension {
             StringConcatenation _builder_3 = new StringConcatenation();
             _builder_3.append(dataVarName);
             _builder_3.append(".");
-            String _terCall_1 = this._attributeExtension.getterCall(queryParam_1.getAttribute());
-            _builder_3.append(_terCall_1);
+            String _terCall_2 = this._attributeExtension.getterCall(queryParam_1.getAttribute());
+            _builder_3.append(_terCall_2);
             String _urlEncodedValue_1 = this.urlEncodedValue(_builder_3.toString());
             _builder_2.append(_urlEncodedValue_1);
             _builder_2.append(" + \"");

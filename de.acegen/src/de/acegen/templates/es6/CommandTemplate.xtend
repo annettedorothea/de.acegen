@@ -45,7 +45,7 @@ class CommandTemplate {
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {
-			if (outcome.listeners.size > 0) {
+			if (outcome.listeners.size > 0 || outcome.functions.size > 0) {
 				return true;
 			}
 		}
@@ -204,7 +204,6 @@ class CommandTemplate {
 			«ENDFOR»
 			
 			«publishEvents(es6)»
-			
 
 		}
 		

@@ -14,6 +14,7 @@ import org.eclipse.xtext.util.Modules2;
  */
 @SuppressWarnings("all")
 public class AceGenIdeSetup extends AceGenStandaloneSetup {
+  @Override
   public Injector createInjector() {
     AceGenRuntimeModule _aceGenRuntimeModule = new AceGenRuntimeModule();
     AceGenIdeModule _aceGenIdeModule = new AceGenIdeModule();

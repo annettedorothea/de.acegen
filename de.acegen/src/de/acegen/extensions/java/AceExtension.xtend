@@ -81,7 +81,7 @@ class AceExtension {
 	
 	def String urlWithPathParams(HttpServerAce it, String dataVarName, boolean generateQueryParams) {
 		if (pathParams.size == 0) {
-			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')» + "«ENDFOR»«ENDIF»'''
+			var retUrl = url + '''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «IF queryParam.attribute.type == "String"»«urlEncodedValue('''«dataVarName».«queryParam.attribute.getterCall»''')»«ELSE»«dataVarName».«queryParam.attribute.getterCall»«ENDIF» + "«ENDFOR»«ENDIF»'''
 			return retUrl
 		}
 		val split1 = getUrl.split('\\{')
