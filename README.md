@@ -13,8 +13,8 @@ This tool helps you to write web APIs and web clients and can be plugged into Ec
 The action-command-event pattern is a simple pattern for 
 
 * [separating read and write operations](#action)
-* [simplifying tests on all levels](#Automated Testing)
-* [writing and replaying a timeline](#The replay mechanism)
+* [simplifying tests on all levels](#automated-testing)
+* [writing and replaying a timeline](#the-replay-mechanism)
 
 It can be used anywhere. Here are examples for the usage in a REST API
 
