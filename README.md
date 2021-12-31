@@ -84,6 +84,10 @@ There are basically two benefits:
    * Writing unit testing will be easier because one specific input has to result in only one outcome.
    * Integration and E2E tests are challenging and fragile mainly because of *squishy* data. But you can master it by finding a way to bypass the *squishy* data to the action and initialize it with specific test data so you can predict the outcome of the test.
 
+#### Isn't The State Of An Application *Squishy*, too?
+
+Yes, in fact it is. Imagine a register user operation: If an username is already taken you would expect an error, if it is not, you would expect the user to be created. But keep in mind that the intention of *squishy* data is to make writing tests more easy and to bypass a value for testing purposes to the application. The state of an application is not achieved by bypassing test data but by writing a prepare (for unit tests) or a given (in a more behavioural approach) that is executed before the actual test runs.
+
 ## Command
 
 The command contains the core of your application: the business logic. It is only limited by the fact that it must not cause any side effect but is only allowed to read the current state of your application. So what the command basically does is 
