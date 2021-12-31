@@ -5,30 +5,29 @@
       version="1.7.8">
 
    <description url="https://todo.acegen.de">
-      If the iron is blunt, and one does not sharpen the edge, he must use more strength, but wisdom helps one to succeed.
-
+      If the axe is dull and its edge unsharpened, more strength is 
+needed, but skill will bring success.
 King Solomon, Book of Ecclesiastes 10,10
-
-
-DSL (Domain Specific Language) and code generator implemented with Xtext based on the ACE-architecture
-
-This tool helps you to write web APIs and web clients and can be plugged into Eclipse.
-
+DSL (Domain Specific Language) and code generator implemented
+with Xtext based on the ACE-architecture
+This tool helps you to write web APIs and web clients and can
+be plugged into Eclipse.
 You will benefit from:
-
 - expressive DSL that makes documentation obsolete
-- a code generator writes boilerplate code so you can focus on the business logic
+- a code generator writes boilerplate code so you can focus on
+the business logic
 - a simple but effective software architecture
-- the business logic is located in simple classes and is free of any framework dependency
-- you get a replayable timeline that might save your day when finding or reproducing a bug
-- write scenarios as part of your specification that result in integration tests and can even serve as load tests
-
-
+- the business logic is located in simple classes and is free
+of any framework dependency
+- you get a replayable timeline that might save your day when
+finding or reproducing a bug
+- write scenarios as part of your specification that result in
+integration tests and can even serve as load tests
 See https://todo.acegen.de for a simple todoMVC example.
    </description>
 
    <copyright>
-      Copyright (c) 2020 Annette Pohl
+      Copyright (c) 2022 Annette Pohl
    </copyright>
 
    <license url="">

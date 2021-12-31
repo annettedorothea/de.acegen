@@ -1,6 +1,6 @@
 
 
-__If the axe is dull and its edge unsharpened, more strength is needed, but skill will bring success.__
+***If the axe is dull and its edge unsharpened, more strength is needed, but skill will bring success.***
 
 _King Solomon, Book of Ecclesiastes 10,10_
 
@@ -72,8 +72,9 @@ On the other hand if a functions returns 2 on Monday and 3 on Tuesday and 5 if a
 
 #### Examples for *squishy* data
 
-* Time
-* Tokens and random values
+* time,
+* tokens and 
+* random values
 
 #### Why should I distinguish *squishy* data from 'normal' data?
 
@@ -86,7 +87,7 @@ There are basically two benefits:
 
 #### Isn't The State Of An Application *Squishy*, too?
 
-Yes, in fact it is. Imagine a register user operation: If an username is already taken you would expect an error, if it is not, you would expect the user to be created. But keep in mind that the intention of *squishy* data is to make writing tests more easy and to bypass a value for testing purposes to the application. The state of an application is not achieved by bypassing test data but by writing a prepare (for unit tests) or a given (in a more behavioural approach) that is executed before the actual test runs.
+Yes, in fact it is. Imagine a register user operation: If an username is already taken you would expect an error, if it is not, you would expect the user to be created. But keep in mind that the intention of *squishy* data is to make writing tests more easy and to bypass a value for testing purposes to the application. The state of an application is not achieved by bypassing test data but by writing a prepare (for unit tests) or a given (in a more behavioural approach) function that is executed before the actual test runs.
 
 ## Command
 
@@ -201,6 +202,8 @@ Here you can find the scenario DSL files for
 
 * [TodoMVC integration tests](https://github.com/annettedorothea/TodoMVC---Server/tree/master/todo-server)
 * [TodoMVC E2E tests](https://github.com/annettedorothea/TodoMVC---Client/tree/master/scenarios)
+
+You can install the plugin from http://acegen.de in Eclipse.
 
 ## SuperMemo App As PoC
 
