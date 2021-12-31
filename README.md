@@ -232,7 +232,7 @@ So I would suggest that we need a mixture of unit tests, integration and E2E tes
 
 ### Unit Tests
 
-I really love TDD. And writing unit tests with TDD for the *real* business logic in a software is fun. Writing unit tests with TDD for the UI is a pain, at least I think so.
+I really like TDD. Writing unit tests with TDD for the *real* business logic is fun. Writing unit tests with TDD for the UI for example is a pain, at least I think so.
 
 On the other hand unit tests are really annoying when you do structural refactorings of your software because they are very prone to fail on these kinds of changes.
 
