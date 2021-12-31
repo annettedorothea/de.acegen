@@ -75,7 +75,7 @@ On the other hand if a functions returns 2 on Monday and 3 on Tuesday and 5 if a
 * Time
 * Tokens and random values
 
-#### Why should I distinguish *sqishy' data from 'normal' data?
+#### Why should I distinguish *squishy* data from 'normal' data?
 
 There are basically two benefits:
 
