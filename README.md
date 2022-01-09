@@ -235,6 +235,8 @@ I am convinced that we should implement business logic in such a way that it is 
 * In addition, it is advisable to rely on a tried and tested framework for the REST interface.
 * And the same is true for the persistence layer.
 
+The Action-Command-Event pattern helps you to reach this goal more easily.
+
 ## Automated Testing
 
 When we write unit tests we are always in the tension of having to test the behaviour as well as the implementation. I think we cannot get rid of this tension, we have to live with it and find clever ways to avoid the pitfalls into which we can fall when writing automated tests.
