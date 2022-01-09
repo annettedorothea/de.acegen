@@ -235,7 +235,9 @@ I am convinced that we should implement business logic in such a way that it is 
 * In addition, it is advisable to rely on a tried and tested framework for the REST interface.
 * And the same is true for the persistence layer.
 
-The Action-Command-Event pattern helps you to reach this goal more easily.
+The Action-Command-Event pattern helps you to reach this goal more easily:
+
+Before the action, you have a thin layer tied to a framework. The Action-Command-Event pattern itself should be implemented framework-agnostic. Whereas the listeners or views can again rely on a framework for the database or the user interface.
 
 ## Automated Testing
 
