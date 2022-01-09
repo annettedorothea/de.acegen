@@ -19,6 +19,7 @@ Acegen is a DSL (Domain Specific Language) and code generator implemented with X
   * [DSL And Code Generator](#dsl-and-code-generator)
   * [SuperMemo App As PoC](#supermemo-app-as-poc) 
   * [The Replay Mechanism](#the-replay-mechanism) 
+  * [A Word On Frameworks](#a-word-on-frameworks)
   * [Automated Testing](#automated-testing) 
 
 # The Action-Command-Event Pattern
@@ -225,6 +226,14 @@ You can see the replay mechanism on the client if you follow the instructions on
 As you can replay the events on a server you can rebuild the state of the application with a changed data model. For example: If one of your select statements to query complex data with many joins gets very slow due to the rise of the amount of data, you might want to create a table that contains all data you need for the query in a way that is optimized for reading. You can fill this table by replaying all the events. 
 
 But you have to be aware of the fact that changing the structure of your events will make the attempt to always have a replayable timeline rather difficult because you will have to migrate the events. So if you are live already and you have to make structural changes to your system, you might want to give up the ability to replay the timeline on the server.
+
+## A Word On Frameworks
+
+I strongly believe that we should implement the business logic in a way that is framework agnostic. I would not advise completely abandoning the use of frameworks, but you should try to banish them to the edges of the software. For example:
+
+* It's fine to use a JS framework in the presentation layer of a user interface.
+* In addition, it is advisable to rely on a tried and tested framework for the REST interface.
+* And the same is true for the persistence layer.
 
 ## Automated Testing
 
