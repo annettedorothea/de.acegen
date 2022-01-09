@@ -229,7 +229,7 @@ But you have to be aware of the fact that changing the structure of your events 
 
 ## A Word On Frameworks
 
-I strongly believe that we should implement the business logic in a way that is framework agnostic. I would not advise completely abandoning the use of frameworks, but you should try to banish them to the edges of the software. For example:
+I am convinced that we should implement business logic in such a way that it is framework agnostic. I would not advise completely abandoning the use of frameworks, but you should try to banish them to the edges of the software. For example:
 
 * It's fine to use a JS framework in the presentation layer of a user interface.
 * In addition, it is advisable to rely on a tried and tested framework for the REST interface.
