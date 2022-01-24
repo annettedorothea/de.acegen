@@ -137,9 +137,7 @@ class ActionTemplate {
 		«copyright»
 
 
-		import * as ACEController from "./ACEController";
 		import * as AppUtils from "../../src/AppUtils";
-		import * as AppState from "../../src/AppState";
 		
 		export default class Action {
 		
@@ -156,30 +154,6 @@ class ActionTemplate {
 				}
 		    }
 		    
-		    apply(data) {
-		        return new Promise((resolve) => {
-		            ACEController.addItemToTimeLine({
-		                appState: AppState.get([])
-		            });
-		            ACEController.addItemToTimeLine({
-		                action: {
-		                    actionName: this.actionName,
-		                    data
-		                }
-		            });
-					this.initSquishy(data);
-					this.applyAction(data).then(
-					    resolve,
-					    (error) => {
-					        AppUtils.displayUnexpectedError(error);
-					    }
-					);
-		        });
-		    }
-		
-		    applyAction(data) {
-		    }
-		    
 		}
 		
 
@@ -194,6 +168,8 @@ class ActionTemplate {
 
 
 		import Action from "./Action";
+		import * as ACEController from "./ACEController";
+		import * as AppState from "../../src/AppState";
 		
 		export default class AsynchronousAction extends Action {
 		
@@ -202,6 +178,27 @@ class ActionTemplate {
 		        this.asynchronous = true;
 		    }
 		
+		    apply(data) {
+		        return new Promise((resolve) => {
+		            ACEController.addItemToTimeLine({
+		                appState: AppState.get([])
+		            });
+		            ACEController.addItemToTimeLine({
+		                action: {
+		                    actionName: this.actionName,
+		                    data
+		                }
+		            });
+		            this.initSquishy(data);
+		            this.applyAction(data).then(
+		                resolve,
+		                (error) => {
+		                    AppUtils.displayUnexpectedError(error);
+		                }
+		            );
+		        });
+		    }
+
 		    applyAction(data) {
 		        return new Promise((resolve, reject) => {
 		            this.preCall();
@@ -235,6 +232,9 @@ class ActionTemplate {
 		«copyright»
 
 		import Action from "./Action";
+		import * as ACEController from "./ACEController";
+		import * as AppState from "../../src/AppState";
+		
 		
 		export default class SynchronousAction extends Action {
 		
@@ -242,13 +242,29 @@ class ActionTemplate {
 		    	super(actionName, callback);
 		    	this.asynchronous = false;
 		    }
+		    
+			apply(data) {
+			    ACEController.addItemToTimeLine({
+			        appState: AppState.get([])
+			    });
+			    ACEController.addItemToTimeLine({
+			        action: {
+			            actionName: this.actionName,
+			            data
+			        }
+			    });
+			    this.initSquishy(data);
+			    try {
+			        this.applyAction(data);
+			    } catch (error) {
+			        AppUtils.displayUnexpectedError(error);
+			    }
+			}
 		
 		    applyAction(data) {
-		    	return new Promise((resolve) => {
-			        data = this.initActionData(data);
-				    let command = this.getCommand();
-				    command.executeCommand(data).then(resolve);
-		    	});
+		        data = this.initActionData(data);
+			    let command = this.getCommand();
+			    command.executeCommand(data);
 		    }
 		}
 		

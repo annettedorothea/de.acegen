@@ -109,8 +109,59 @@ class CommandTemplate {
 				}
 			«ENDIF»
 			
-			«publishEvents(es6)»
-		
+			publishEvents(data) {
+				return new Promise((resolve) => {
+					const events = [];
+					const actionsToBeTriggered = [];
+					«FOR outcome : outcomes»
+						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+							if (data.outcomes.includes("«outcome.getName»")) {
+								events.push(new Event('«es6.getName».«eventName(outcome)»'));
+								«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+									«IF triggerdAceOperation.delay == 0»
+										actionsToBeTriggered.push(
+											{
+												action: new «triggerdAceOperation.aceOperation.actionName»(), 
+												data: {
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												}
+											}
+										);
+									«ELSE»
+										«IF triggerdAceOperation.takeLatest»
+											this.triggerWithDelayTakeLatest(new «triggerdAceOperation.aceOperation.actionName»(), 
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
+												«triggerdAceOperation.delay»
+											);
+										«ELSE»
+											this.triggerWithDelay(new «triggerdAceOperation.aceOperation.actionName»(), 
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
+												«triggerdAceOperation.delay»
+											);
+										«ENDIF»
+									«ENDIF»
+								«ENDFOR»
+							}
+						«ENDIF»
+					«ENDFOR»
+					
+					this.publish(events, data).then(() => {
+				  		AppState.stateUpdated();
+						this.trigger(actionsToBeTriggered).then(resolve);
+					});
+				})
+			
+			}
 
 		}
 		
@@ -118,9 +169,36 @@ class CommandTemplate {
 		
 	'''
 	
-	def private publishEvents(HttpClientAce it, HttpClient es6) '''
-		publishEvents(data) {
-			return new Promise((resolve) => {
+	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
+		«copyright»
+
+		import SynchronousCommand from "../../ace/SynchronousCommand";
+		import Event from "../../ace/Event";
+		«FOR aceOperation : aggregatedTriggeredAceOperations»
+			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
+		«ENDFOR»
+		import * as AppUtils from "../../../src/AppUtils";
+		import * as AppState from "../../../src/AppState";
+		
+		export default class «abstractCommandName» extends SynchronousCommand {
+		    constructor() {
+		        super("«es6.getName».«commandName»");
+		    }
+		
+		    initCommandData(data) {
+		        «FOR ref : refs»
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
+		        «ENDFOR»
+		        data.outcomes = [];
+		    }
+
+			«FOR outcome : outcomes»
+				add«outcome.getName.toFirstUpper»Outcome(data) {
+					data.outcomes.push("«outcome.getName»");
+				}
+			«ENDFOR»
+			
+			publishEvents(data) {
 				const events = [];
 				const actionsToBeTriggered = [];
 				«FOR outcome : outcomes»
@@ -165,48 +243,13 @@ class CommandTemplate {
 					«ENDIF»
 				«ENDFOR»
 				
-				this.publish(events, data).then(() => {
-			  		AppState.stateUpdated();
-					this.trigger(actionsToBeTriggered).then(resolve);
-				});
-			})
+				this.publish(events, data);
+			  	AppState.stateUpdated();
+				this.trigger(actionsToBeTriggered);
 		
-		}
-	'''
+			}
 	
-	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
-		«copyright»
-
-		import SynchronousCommand from "../../ace/SynchronousCommand";
-		import Event from "../../ace/Event";
-		«FOR aceOperation : aggregatedTriggeredAceOperations»
-			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
-		«ENDFOR»
-		import * as AppUtils from "../../../src/AppUtils";
-		import * as AppState from "../../../src/AppState";
-		
-		export default class «abstractCommandName» extends SynchronousCommand {
-		    constructor() {
-		        super("«es6.getName».«commandName»");
-		    }
-		
-		    initCommandData(data) {
-		        «FOR ref : refs»
-		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
-		        «ENDFOR»
-		        data.outcomes = [];
-		    }
-
-			«FOR outcome : outcomes»
-				add«outcome.getName.toFirstUpper»Outcome(data) {
-					data.outcomes.push("«outcome.getName»");
-				}
-			«ENDFOR»
-			
-			«publishEvents(es6)»
-
 		}
-		
 		
 		«sdg»
 		
@@ -300,34 +343,6 @@ class CommandTemplate {
 				}, delayInMillis);
 			}
 			
-			createEventPromise(event, data) {
-				return new Promise(resolve => {
-					event.publish(data).then(resolve);
-				})
-			}
-			
-			publish(events, data) {
-				if (events.length === 0) {
-					return new Promise(resolve => resolve());
-				}
-				return this.createEventPromise(events.shift(), data)
-					.then(event => events.length === 0 ? event : this.publish(events, data));
-			}
-			
-			createActionPromise(actionToBeTriggered) {
-				return new Promise(resolve => {
-					actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
-				})
-			}
-			
-			trigger(actionsToBeTriggered) {
-				if (actionsToBeTriggered.length === 0) {
-					return new Promise(resolve => resolve());
-				}
-				return this.createActionPromise(actionsToBeTriggered.shift())
-					.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
-			}
-			
 		
 		}
 		
@@ -344,6 +359,7 @@ class CommandTemplate {
 		import Command from "./Command";
 		
 		export default class AsynchronousCommand extends Command {
+		    
 		    executeCommand(data) {
 				this.initCommandData(data);
 		        ACEController.addItemToTimeLine({
@@ -369,6 +385,40 @@ class CommandTemplate {
 		    	return true;
 		    }
 		
+			createEventPromise(event, data) {
+				return new Promise(resolve => {
+					event.publish(data);
+					resolve();
+				})
+			}
+			
+			publish(events, data) {
+				if (events.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createEventPromise(events.shift(), data)
+					.then(event => events.length === 0 ? event : this.publish(events, data));
+			}
+			
+			createActionPromise(actionToBeTriggered) {
+				return new Promise(resolve => {
+					if (actionToBeTriggered.action.asynchronous) {
+						actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
+					} else {
+						actionToBeTriggered.action.apply(actionToBeTriggered.data);
+						resolve();
+					}
+				})
+			}
+			
+			trigger(actionsToBeTriggered) {
+				if (actionsToBeTriggered.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createActionPromise(actionsToBeTriggered.shift())
+					.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
+			}
+			
 		}
 
 		
@@ -385,6 +435,7 @@ class CommandTemplate {
 		import Command from "./Command";
 		
 		export default class SynchronousCommand extends Command {
+		    
 		    executeCommand(data) {
 				this.initCommandData(data);
 		        ACEController.addItemToTimeLine({
@@ -394,10 +445,20 @@ class CommandTemplate {
 					}
 		        });
 			    data = this.execute(data);
-			    return new Promise((resolve) => {
-			    	this.publishEvents(data).then(resolve);
-			    });
+			    this.publishEvents(data)
 		    }
+		
+			publish(events, data) {
+				events.forEach(
+					event => event.publish(data)
+				)
+			}
+		
+			trigger(actionsToBeTriggered) {
+				actionsToBeTriggered.forEach(
+				    actionToBeTriggered => this.triggerWithDelay(actionToBeTriggered.action, actionToBeTriggered.data, 1)
+				)
+			}
 		
 		}
 		
