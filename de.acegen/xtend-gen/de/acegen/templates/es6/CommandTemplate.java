@@ -1199,7 +1199,7 @@ public class CommandTemplate {
     _builder.append("setTimeout(() => {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("action.apply(data).then();");
+    _builder.append("action.apply(data);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}, delayInMillis);");
@@ -1231,7 +1231,7 @@ public class CommandTemplate {
     _builder.append("delayedActions[action.actionName] = undefined;");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("action.apply(data).then();");
+    _builder.append("action.apply(data);");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}, delayInMillis);");
