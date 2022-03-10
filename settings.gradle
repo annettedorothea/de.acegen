@@ -1,0 +1,5 @@
+include 'de.acegen'
+include 'de.acegen.ide'
+include 'de.acegen.websockets'
+include 'vscode-extension'
+include 'vscode-extension-self-contained'

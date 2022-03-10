@@ -1,0 +1,29 @@
+apply plugin: 'application'
+
+dependencies {
+	compile project(':de.acegen')
+	compile "org.eclipse.xtext:org.eclipse.xtext.ide:${xtextVersion}"
+	compile "org.eclipse.xtext:org.eclipse.xtext.xbase.ide:${xtextVersion}"
+	compile "org.eclipse.lsp4j:org.eclipse.lsp4j:0.12.0"
+	compile "org.eclipse.lsp4j:org.eclipse.lsp4j:0.12.0"
+	compile "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:0.12.0"
+}
+
+// Add a start script for the socket case
+mainClassName = 'de.acegen.ide.RunServer'
+startScripts {
+	applicationName = 'acegen-socket'
+}
+
+// Add another start script for the standalone / self-contained case
+task standaloneStartScript(type: CreateStartScripts) {
+	mainClassName = 'org.eclipse.xtext.ide.server.ServerLauncher'
+	applicationName = 'acegen-standalone'
+	outputDir = new File(project.buildDir, 'scripts')
+	classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into("bin") {
+	from(standaloneStartScript)
+	fileMode = 0755
+}

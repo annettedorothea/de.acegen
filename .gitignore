@@ -28,3 +28,7 @@ de.acegen.ide/bin
 acegen.app/Contents
 .idea
 Eclipse-DSL.app
+node_modules
+.gradle
+build
+de.acegen.websockets/bin
