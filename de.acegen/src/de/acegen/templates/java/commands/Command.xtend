@@ -19,16 +19,16 @@ package de.acegen.templates.java.commands
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.HttpServerView
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerView
 
 class Command {
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension ModelExtension

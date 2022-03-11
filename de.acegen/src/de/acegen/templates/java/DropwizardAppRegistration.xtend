@@ -19,7 +19,7 @@ package de.acegen.templates.java
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import javax.inject.Inject
 
 class DropwizardAppRegistration {
@@ -28,7 +28,7 @@ class DropwizardAppRegistration {
 	extension CommonExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject AppRegistration appRegistration;
 

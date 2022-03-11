@@ -21,8 +21,8 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
@@ -38,8 +38,8 @@ class Data {
 	extension CommonExtension
 	
 	@Inject
-	extension AceExtension
-	
+	extension JavaHttpServerExtension
+
 	def generateDataInterface(Model it, HttpServer httpServer) '''
 		«copyright»
 		

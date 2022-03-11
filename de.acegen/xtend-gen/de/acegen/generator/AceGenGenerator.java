@@ -16,7 +16,6 @@
 package de.acegen.generator;
 
 import de.acegen.aceGen.HttpClient;
-import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Project;
 import javax.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
@@ -38,6 +37,9 @@ public class AceGenGenerator extends AbstractGenerator {
   @Inject
   private JavaGenerator javaGenerator;
   
+  @Inject
+  private CsGenerator csGenerator;
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
@@ -48,10 +50,12 @@ public class AceGenGenerator extends AbstractGenerator {
       if (_tripleNotEquals) {
         this.es6Generator.doGenerate(project.getHttpClient(), fsa);
       } else {
-        HttpServer _httpServer = project.getHttpServer();
-        boolean _tripleNotEquals_1 = (_httpServer != null);
-        if (_tripleNotEquals_1) {
+        if (((project.getHttpServer() != null) && project.getHttpServer().isJava())) {
           this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
+        } else {
+          if (((project.getHttpServer() != null) && project.getHttpServer().isCs())) {
+            this.csGenerator.doGenerate(project.getHttpServer(), fsa);
+          }
         }
       }
     }

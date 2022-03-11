@@ -21,8 +21,8 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +39,7 @@ public class Action {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -83,7 +83,7 @@ public class Action {
     _builder.append(_dataImport);
     _builder.newLineIfNotEmpty();
     _builder.append("import ");
-    String _commandNameWithPackage = this._aceExtension.commandNameWithPackage(it);
+    String _commandNameWithPackage = this._javaHttpServerExtension.commandNameWithPackage(it);
     _builder.append(_commandNameWithPackage);
     _builder.append(";");
     _builder.newLineIfNotEmpty();
@@ -94,7 +94,7 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" extends WriteAction<");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
@@ -104,7 +104,7 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._aceExtension.abstractActionName(it);
+    String _abstractActionName_1 = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
@@ -115,7 +115,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage = this._javaHttpServerExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
@@ -134,7 +134,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return new ");
-    String _commandName = this._aceExtension.commandName(it);
+    String _commandName = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
     _builder.append("(daoProvider, viewProvider, this.appConfiguration);");
     _builder.newLineIfNotEmpty();
@@ -228,7 +228,7 @@ public class Action {
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" extends ReadAction<");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
@@ -238,7 +238,7 @@ public class Action {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _abstractActionName_1 = this._aceExtension.abstractActionName(it);
+    String _abstractActionName_1 = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
@@ -250,7 +250,7 @@ public class Action {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("super(\"");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage = this._javaHttpServerExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t");
     _builder.append("\", persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
@@ -340,24 +340,24 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
-    String _actionName = this._aceExtension.actionName(it);
+    String _actionName = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName);
     _builder.append(" extends ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _actionName_1 = this._aceExtension.actionName(it);
+    String _actionName_1 = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _actionName_2 = this._aceExtension.actionName(it);
+    String _actionName_2 = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName_2, "\t");
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, ");
     _builder.newLineIfNotEmpty();
@@ -905,7 +905,7 @@ public class Action {
   private CharSequence constructor(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public ");
-    String _abstractActionName = this._aceExtension.abstractActionName(it);
+    String _abstractActionName = this._javaHttpServerExtension.abstractActionName(it);
     _builder.append(_abstractActionName);
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();

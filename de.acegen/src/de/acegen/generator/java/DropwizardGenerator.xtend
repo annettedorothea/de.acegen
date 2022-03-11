@@ -18,20 +18,19 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.AceExtension
-import de.acegen.extensions.java.JavaExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.DropwizardApp
 import de.acegen.templates.java.DropwizardAppRegistration
 import de.acegen.templates.java.DropwizardConfiguration
 import de.acegen.templates.java.DropwizardEventReplayCommand
 import de.acegen.templates.java.DropwizardResource
+import de.acegen.templates.java.FormData
 import de.acegen.templates.java.resources.GetServerInfoResource
 import de.acegen.templates.java.resources.Resource
+import de.acegen.templates.java.resources.SquishyDataProviderResource
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.templates.java.resources.SquishyDataProviderResource
-import de.acegen.templates.java.FormData
 
 class DropwizardGenerator {
 
@@ -63,10 +62,8 @@ class DropwizardGenerator {
 	FormData formData;
 
 	@Inject
-	extension JavaExtension
+	extension JavaHttpServerExtension
 
-	@Inject
-	extension AceExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
 		var authUser = httpServer.getAuthUser

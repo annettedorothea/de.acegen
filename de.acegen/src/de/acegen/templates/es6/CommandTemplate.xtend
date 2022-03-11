@@ -22,10 +22,11 @@ package de.acegen.templates.es6
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.extensions.CommonExtension
+import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
-import javax.inject.Inject
 import de.acegen.extensions.java.ModelExtension
+import javax.inject.Inject
 
 class CommandTemplate {
 	@Inject
@@ -38,8 +39,8 @@ class CommandTemplate {
 	extension Es6Extension
 	
 	@Inject
-	extension de.acegen.extensions.java.AceExtension
-	
+	extension HttpServerExtension
+
 	@Inject
 	extension ModelExtension
 	

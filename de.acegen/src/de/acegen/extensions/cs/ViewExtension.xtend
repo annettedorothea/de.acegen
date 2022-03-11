@@ -17,15 +17,23 @@
 
  
 
-package de.acegen.extensions.java
+package de.acegen.extensions.cs
 
 import de.acegen.aceGen.HttpServer
+import de.acegen.aceGen.HttpServerView
+import de.acegen.aceGen.HttpServerViewFunction
 
-class JavaExtension {
-	def String packageFolder(HttpServer it) '''«getName.replace('.', '/')»'''
-
-	def String projectName(HttpServer it) '''«getName.toFirstUpper»'''
-
+class ViewExtension {
+	def String viewName(HttpServerView it) '''«getName.toFirstUpper»View'''
+	def String viewInterfaceName(HttpServerView it) '''I«getName.toFirstUpper»View'''
+	def String viewNameWithPackage(HttpServerView it) '''«(eContainer as HttpServer).getName».views.«viewName»'''
+	def String viewNameAsVariable(HttpServerView it) '''«getName.toFirstLower»View'''
+	def String viewFunctionWithViewName(HttpServerViewFunction it) '''«(it.eContainer as HttpServerView).viewName».«getName»'''
+	def String viewFunctionWithViewNameAsVariable(HttpServerViewFunction it) '''«(it.eContainer as HttpServerView).viewNameAsVariable».«getName»'''
+	def HttpServerView view(HttpServerViewFunction it) {
+		return it.eContainer as HttpServerView;
+	}
+	
 }
 	
 	

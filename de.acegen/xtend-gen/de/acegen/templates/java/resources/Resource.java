@@ -22,8 +22,9 @@ import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.HttpServerExtension;
 import de.acegen.extensions.java.AttributeExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.List;
 import javax.inject.Inject;
@@ -40,7 +41,11 @@ public class Resource {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
+  
+  @Inject
+  @Extension
+  private HttpServerExtension _httpServerExtension;
   
   @Inject
   @Extension
@@ -94,7 +99,7 @@ public class Resource {
     _builder.newLine();
     _builder.newLine();
     {
-      Boolean _isMulitpartFormData = this._aceExtension.isMulitpartFormData(it);
+      Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it);
       if ((_isMulitpartFormData).booleanValue()) {
         _builder.append("import org.glassfish.jersey.media.multipart.FormDataContentDisposition;");
         _builder.newLine();
@@ -177,14 +182,14 @@ public class Resource {
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ");
-    String _resourceName = this._aceExtension.resourceName(it);
+    String _resourceName = this._javaHttpServerExtension.resourceName(it);
     _builder.append(_resourceName);
     _builder.append(" extends Resource {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _resourceName_1 = this._aceExtension.resourceName(it);
+    String _resourceName_1 = this._javaHttpServerExtension.resourceName(it);
     _builder.append(_resourceName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
@@ -205,7 +210,7 @@ public class Resource {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _resourceName_2 = this._aceExtension.resourceName(it);
+    String _resourceName_2 = this._javaHttpServerExtension.resourceName(it);
     _builder.append(_resourceName_2, "\t");
     _builder.append("(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLineIfNotEmpty();
@@ -242,13 +247,13 @@ public class Resource {
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("@Timed(name = \"");
-    String _actionName = this._aceExtension.actionName(it);
+    String _actionName = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName, "\t");
     _builder.append("Timed\")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("@Metered(name = \"");
-    String _actionName_1 = this._aceExtension.actionName(it);
+    String _actionName_1 = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName_1, "\t");
     _builder.append("Metered\")");
     _builder.newLineIfNotEmpty();
@@ -262,7 +267,7 @@ public class Resource {
     _builder.append("@Produces(MediaType.APPLICATION_JSON)");
     _builder.newLine();
     {
-      Boolean _isMulitpartFormData_1 = this._aceExtension.isMulitpartFormData(it);
+      Boolean _isMulitpartFormData_1 = this._httpServerExtension.isMulitpartFormData(it);
       if ((_isMulitpartFormData_1).booleanValue()) {
         _builder.append("\t");
         _builder.append("@Consumes(MediaType.MULTIPART_FORM_DATA)");
@@ -275,7 +280,7 @@ public class Resource {
     }
     _builder.append("\t");
     _builder.append("public Response ");
-    String _firstLower = StringExtensions.toFirstLower(this._aceExtension.resourceName(it));
+    String _firstLower = StringExtensions.toFirstLower(this._javaHttpServerExtension.resourceName(it));
     _builder.append(_firstLower, "\t");
     _builder.append("(");
     _builder.newLineIfNotEmpty();
@@ -327,7 +332,7 @@ public class Resource {
       }
     }
     {
-      Boolean _isMulitpartFormData_2 = this._aceExtension.isMulitpartFormData(it);
+      Boolean _isMulitpartFormData_2 = this._httpServerExtension.isMulitpartFormData(it);
       if ((_isMulitpartFormData_2).booleanValue()) {
         _builder.append("\t\t\t");
         _builder.append("@FormDataParam(\"");
@@ -452,7 +457,7 @@ public class Resource {
       }
     }
     {
-      Boolean _isMulitpartFormData_3 = this._aceExtension.isMulitpartFormData(it);
+      Boolean _isMulitpartFormData_3 = this._httpServerExtension.isMulitpartFormData(it);
       if ((_isMulitpartFormData_3).booleanValue()) {
         {
           List<Attribute> _allAttributes_1 = this._modelExtension.allAttributes(it.getModel());
@@ -478,10 +483,10 @@ public class Resource {
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
-    String _actionNameWithPackage = this._aceExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage = this._javaHttpServerExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage, "\t\t\t");
     _builder.append(" action = new ");
-    String _actionNameWithPackage_1 = this._aceExtension.actionNameWithPackage(it);
+    String _actionNameWithPackage_1 = this._javaHttpServerExtension.actionNameWithPackage(it);
     _builder.append(_actionNameWithPackage_1, "\t\t\t");
     _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider);");
     _builder.newLineIfNotEmpty();
@@ -494,7 +499,7 @@ public class Resource {
       if (_greaterThan_2) {
         _builder.append("\t\t\t");
         _builder.append("return Response.ok(new ");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it);
+        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it);
         _builder.append(_responseDataNameWithPackage, "\t\t\t");
         _builder.append("(data)).build();");
         _builder.newLineIfNotEmpty();

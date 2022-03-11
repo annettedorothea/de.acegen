@@ -32,14 +32,14 @@ import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.StringType
 import de.acegen.aceGen.WhenBlock
+import de.acegen.aceGen.WhenThen
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.WhenThen
 
 class Scenario {
 
@@ -50,7 +50,7 @@ class Scenario {
 	extension AttributeExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension CommonExtension

@@ -35,10 +35,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getLanguage <em>Language</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getPersistenceLayer <em>Persistence Layer</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getMigrations <em>Migrations</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isJava <em>Java</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isCs <em>Cs</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isDropwizard <em>Dropwizard</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isDotnet <em>Dotnet</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isJDBI3 <em>JDBI3</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isEF <em>EF</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#isLiquibase <em>Liquibase</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUser <em>Auth User</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpServerImpl#getAuthUserRef <em>Auth User Ref</em>}</li>
@@ -53,84 +56,144 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class HttpServerImpl extends MinimalEObjectImpl.Container implements HttpServer
 {
   /**
-   * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+   * The default value of the '{@link #isJava() <em>Java</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLanguage()
+   * @see #isJava()
    * @generated
    * @ordered
    */
-  protected static final String LANGUAGE_EDEFAULT = null;
+  protected static final boolean JAVA_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+   * The cached value of the '{@link #isJava() <em>Java</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLanguage()
+   * @see #isJava()
    * @generated
    * @ordered
    */
-  protected String language = LANGUAGE_EDEFAULT;
+  protected boolean java = JAVA_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The default value of the '{@link #isCs() <em>Cs</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #isCs()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
+  protected static final boolean CS_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #isCs() <em>Cs</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #isCs()
    * @generated
    * @ordered
    */
-  protected String type = TYPE_EDEFAULT;
+  protected boolean cs = CS_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPersistenceLayer() <em>Persistence Layer</em>}' attribute.
+   * The default value of the '{@link #isDropwizard() <em>Dropwizard</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPersistenceLayer()
+   * @see #isDropwizard()
    * @generated
    * @ordered
    */
-  protected static final String PERSISTENCE_LAYER_EDEFAULT = null;
+  protected static final boolean DROPWIZARD_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getPersistenceLayer() <em>Persistence Layer</em>}' attribute.
+   * The cached value of the '{@link #isDropwizard() <em>Dropwizard</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPersistenceLayer()
+   * @see #isDropwizard()
    * @generated
    * @ordered
    */
-  protected String persistenceLayer = PERSISTENCE_LAYER_EDEFAULT;
+  protected boolean dropwizard = DROPWIZARD_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getMigrations() <em>Migrations</em>}' attribute.
+   * The default value of the '{@link #isDotnet() <em>Dotnet</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMigrations()
+   * @see #isDotnet()
    * @generated
    * @ordered
    */
-  protected static final String MIGRATIONS_EDEFAULT = null;
+  protected static final boolean DOTNET_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getMigrations() <em>Migrations</em>}' attribute.
+   * The cached value of the '{@link #isDotnet() <em>Dotnet</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMigrations()
+   * @see #isDotnet()
    * @generated
    * @ordered
    */
-  protected String migrations = MIGRATIONS_EDEFAULT;
+  protected boolean dotnet = DOTNET_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isJDBI3() <em>JDBI3</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isJDBI3()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean JDBI3_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isJDBI3() <em>JDBI3</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isJDBI3()
+   * @generated
+   * @ordered
+   */
+  protected boolean jdbi3 = JDBI3_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isEF() <em>EF</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isEF()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean EF_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isEF() <em>EF</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isEF()
+   * @generated
+   * @ordered
+   */
+  protected boolean ef = EF_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isLiquibase() <em>Liquibase</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLiquibase()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean LIQUIBASE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isLiquibase() <em>Liquibase</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLiquibase()
+   * @generated
+   * @ordered
+   */
+  protected boolean liquibase = LIQUIBASE_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -239,9 +302,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public String getLanguage()
+  public boolean isJava()
   {
-    return language;
+    return java;
   }
 
   /**
@@ -250,12 +313,12 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setLanguage(String newLanguage)
+  public void setJava(boolean newJava)
   {
-    String oldLanguage = language;
-    language = newLanguage;
+    boolean oldJava = java;
+    java = newJava;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__LANGUAGE, oldLanguage, language));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__JAVA, oldJava, java));
   }
 
   /**
@@ -264,9 +327,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public String getType()
+  public boolean isCs()
   {
-    return type;
+    return cs;
   }
 
   /**
@@ -275,12 +338,12 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setType(String newType)
+  public void setCs(boolean newCs)
   {
-    String oldType = type;
-    type = newType;
+    boolean oldCs = cs;
+    cs = newCs;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__CS, oldCs, cs));
   }
 
   /**
@@ -289,9 +352,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public String getPersistenceLayer()
+  public boolean isDropwizard()
   {
-    return persistenceLayer;
+    return dropwizard;
   }
 
   /**
@@ -300,12 +363,12 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setPersistenceLayer(String newPersistenceLayer)
+  public void setDropwizard(boolean newDropwizard)
   {
-    String oldPersistenceLayer = persistenceLayer;
-    persistenceLayer = newPersistenceLayer;
+    boolean oldDropwizard = dropwizard;
+    dropwizard = newDropwizard;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER, oldPersistenceLayer, persistenceLayer));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__DROPWIZARD, oldDropwizard, dropwizard));
   }
 
   /**
@@ -314,9 +377,9 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public String getMigrations()
+  public boolean isDotnet()
   {
-    return migrations;
+    return dotnet;
   }
 
   /**
@@ -325,12 +388,87 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
    * @generated
    */
   @Override
-  public void setMigrations(String newMigrations)
+  public void setDotnet(boolean newDotnet)
   {
-    String oldMigrations = migrations;
-    migrations = newMigrations;
+    boolean oldDotnet = dotnet;
+    dotnet = newDotnet;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__MIGRATIONS, oldMigrations, migrations));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__DOTNET, oldDotnet, dotnet));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isJDBI3()
+  {
+    return jdbi3;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setJDBI3(boolean newJDBI3)
+  {
+    boolean oldJDBI3 = jdbi3;
+    jdbi3 = newJDBI3;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__JDBI3, oldJDBI3, jdbi3));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isEF()
+  {
+    return ef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setEF(boolean newEF)
+  {
+    boolean oldEF = ef;
+    ef = newEF;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__EF, oldEF, ef));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isLiquibase()
+  {
+    return liquibase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setLiquibase(boolean newLiquibase)
+  {
+    boolean oldLiquibase = liquibase;
+    liquibase = newLiquibase;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.HTTP_SERVER__LIQUIBASE, oldLiquibase, liquibase));
   }
 
   /**
@@ -547,14 +685,20 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER__LANGUAGE:
-        return getLanguage();
-      case AceGenPackage.HTTP_SERVER__TYPE:
-        return getType();
-      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
-        return getPersistenceLayer();
-      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
-        return getMigrations();
+      case AceGenPackage.HTTP_SERVER__JAVA:
+        return isJava();
+      case AceGenPackage.HTTP_SERVER__CS:
+        return isCs();
+      case AceGenPackage.HTTP_SERVER__DROPWIZARD:
+        return isDropwizard();
+      case AceGenPackage.HTTP_SERVER__DOTNET:
+        return isDotnet();
+      case AceGenPackage.HTTP_SERVER__JDBI3:
+        return isJDBI3();
+      case AceGenPackage.HTTP_SERVER__EF:
+        return isEF();
+      case AceGenPackage.HTTP_SERVER__LIQUIBASE:
+        return isLiquibase();
       case AceGenPackage.HTTP_SERVER__NAME:
         return getName();
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -585,17 +729,26 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER__LANGUAGE:
-        setLanguage((String)newValue);
+      case AceGenPackage.HTTP_SERVER__JAVA:
+        setJava((Boolean)newValue);
         return;
-      case AceGenPackage.HTTP_SERVER__TYPE:
-        setType((String)newValue);
+      case AceGenPackage.HTTP_SERVER__CS:
+        setCs((Boolean)newValue);
         return;
-      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
-        setPersistenceLayer((String)newValue);
+      case AceGenPackage.HTTP_SERVER__DROPWIZARD:
+        setDropwizard((Boolean)newValue);
         return;
-      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
-        setMigrations((String)newValue);
+      case AceGenPackage.HTTP_SERVER__DOTNET:
+        setDotnet((Boolean)newValue);
+        return;
+      case AceGenPackage.HTTP_SERVER__JDBI3:
+        setJDBI3((Boolean)newValue);
+        return;
+      case AceGenPackage.HTTP_SERVER__EF:
+        setEF((Boolean)newValue);
+        return;
+      case AceGenPackage.HTTP_SERVER__LIQUIBASE:
+        setLiquibase((Boolean)newValue);
         return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName((String)newValue);
@@ -636,17 +789,26 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER__LANGUAGE:
-        setLanguage(LANGUAGE_EDEFAULT);
+      case AceGenPackage.HTTP_SERVER__JAVA:
+        setJava(JAVA_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_SERVER__TYPE:
-        setType(TYPE_EDEFAULT);
+      case AceGenPackage.HTTP_SERVER__CS:
+        setCs(CS_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
-        setPersistenceLayer(PERSISTENCE_LAYER_EDEFAULT);
+      case AceGenPackage.HTTP_SERVER__DROPWIZARD:
+        setDropwizard(DROPWIZARD_EDEFAULT);
         return;
-      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
-        setMigrations(MIGRATIONS_EDEFAULT);
+      case AceGenPackage.HTTP_SERVER__DOTNET:
+        setDotnet(DOTNET_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_SERVER__JDBI3:
+        setJDBI3(JDBI3_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_SERVER__EF:
+        setEF(EF_EDEFAULT);
+        return;
+      case AceGenPackage.HTTP_SERVER__LIQUIBASE:
+        setLiquibase(LIQUIBASE_EDEFAULT);
         return;
       case AceGenPackage.HTTP_SERVER__NAME:
         setName(NAME_EDEFAULT);
@@ -683,14 +845,20 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
   {
     switch (featureID)
     {
-      case AceGenPackage.HTTP_SERVER__LANGUAGE:
-        return LANGUAGE_EDEFAULT == null ? language != null : !LANGUAGE_EDEFAULT.equals(language);
-      case AceGenPackage.HTTP_SERVER__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-      case AceGenPackage.HTTP_SERVER__PERSISTENCE_LAYER:
-        return PERSISTENCE_LAYER_EDEFAULT == null ? persistenceLayer != null : !PERSISTENCE_LAYER_EDEFAULT.equals(persistenceLayer);
-      case AceGenPackage.HTTP_SERVER__MIGRATIONS:
-        return MIGRATIONS_EDEFAULT == null ? migrations != null : !MIGRATIONS_EDEFAULT.equals(migrations);
+      case AceGenPackage.HTTP_SERVER__JAVA:
+        return java != JAVA_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__CS:
+        return cs != CS_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__DROPWIZARD:
+        return dropwizard != DROPWIZARD_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__DOTNET:
+        return dotnet != DOTNET_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__JDBI3:
+        return jdbi3 != JDBI3_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__EF:
+        return ef != EF_EDEFAULT;
+      case AceGenPackage.HTTP_SERVER__LIQUIBASE:
+        return liquibase != LIQUIBASE_EDEFAULT;
       case AceGenPackage.HTTP_SERVER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_SERVER__AUTH_USER:
@@ -720,14 +888,20 @@ public class HttpServerImpl extends MinimalEObjectImpl.Container implements Http
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (language: ");
-    result.append(language);
-    result.append(", type: ");
-    result.append(type);
-    result.append(", persistenceLayer: ");
-    result.append(persistenceLayer);
-    result.append(", migrations: ");
-    result.append(migrations);
+    result.append(" (java: ");
+    result.append(java);
+    result.append(", cs: ");
+    result.append(cs);
+    result.append(", dropwizard: ");
+    result.append(dropwizard);
+    result.append(", dotnet: ");
+    result.append(dotnet);
+    result.append(", JDBI3: ");
+    result.append(jdbi3);
+    result.append(", EF: ");
+    result.append(ef);
+    result.append(", liquibase: ");
+    result.append(liquibase);
     result.append(", name: ");
     result.append(name);
     result.append(')');

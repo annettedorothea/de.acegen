@@ -145,7 +145,7 @@ public class ModelExtension {
     EObject _eContainer = it.eContainer();
     String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
-    _builder.append(".models.");
+    _builder.append(".Models.");
     String _modelName = this.modelName(it);
     _builder.append(_modelName);
     return _builder.toString();

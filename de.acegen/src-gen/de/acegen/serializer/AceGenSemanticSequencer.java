@@ -733,10 +733,13 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         language='Java' 
-	 *         type='Dropwizard'? 
-	 *         persistenceLayer='JDBI3'? 
-	 *         migrations='Liquibase'? 
+	 *         java?='Java'? 
+	 *         cs?='C#'? 
+	 *         dropwizard?='Dropwizard'? 
+	 *         dotnet?='NET6'? 
+	 *         JDBI3?='JDBI3'? 
+	 *         EF?='EntityFramework'? 
+	 *         liquibase?='Liquibase'? 
 	 *         name=QualifiedName 
 	 *         authUser=AuthUser? 
 	 *         authUserRef=[AuthUser|QualifiedName]? 

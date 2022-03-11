@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -36,7 +36,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class Command {
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -78,7 +78,7 @@ public class Command {
     _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractCommandName = this._aceExtension.abstractCommandName(it);
+    String _abstractCommandName = this._javaHttpServerExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName);
     _builder.append(" extends Command<");
     String _dataParamType = this._modelExtension.dataParamType(it.getModel());
@@ -88,7 +88,7 @@ public class Command {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _abstractCommandName_1 = this._aceExtension.abstractCommandName(it);
+    String _abstractCommandName_1 = this._javaHttpServerExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName_1, "\t");
     _builder.append("(IDaoProvider daoProvider, ViewProvider viewProvider, CustomAppConfiguration appConfiguration) {");
     _builder.newLineIfNotEmpty();
@@ -97,7 +97,7 @@ public class Command {
     String _name_1 = java.getName();
     _builder.append(_name_1, "\t\t");
     _builder.append(".commands.");
-    String _commandName = this._aceExtension.commandName(it);
+    String _commandName = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
     _builder.append("\", daoProvider, viewProvider, appConfiguration);");
     _builder.newLineIfNotEmpty();
@@ -159,7 +159,7 @@ public class Command {
             _builder.append("\t\t\t");
             _builder.append("\t");
             _builder.append("daoProvider.getAceDao().addEventToTimeline(\"");
-            String _eventNameWithPackage = this._aceExtension.eventNameWithPackage(it, outcome_1);
+            String _eventNameWithPackage = this._javaHttpServerExtension.eventNameWithPackage(it, outcome_1);
             _builder.append(_eventNameWithPackage, "\t\t\t\t");
             _builder.append("\", data, timelineHandle);");
             _builder.newLineIfNotEmpty();
@@ -211,7 +211,7 @@ public class Command {
             String _dataParamType_4 = this._modelExtension.dataParamType(it.getModel());
             _builder.append(_dataParamType_4, "\t\t\t");
             _builder.append(">(\"");
-            String _eventNameWithPackage_1 = this._aceExtension.eventNameWithPackage(it, outcome_2);
+            String _eventNameWithPackage_1 = this._javaHttpServerExtension.eventNameWithPackage(it, outcome_2);
             _builder.append(_eventNameWithPackage_1, "\t\t\t");
             _builder.append("\", viewProvider).publish(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
@@ -259,7 +259,7 @@ public class Command {
             String _dataParamType_6 = this._modelExtension.dataParamType(it.getModel());
             _builder.append(_dataParamType_6, "\t\t\t");
             _builder.append(">(\"");
-            String _eventNameWithPackage_2 = this._aceExtension.eventNameWithPackage(it, outcome_3);
+            String _eventNameWithPackage_2 = this._javaHttpServerExtension.eventNameWithPackage(it, outcome_3);
             _builder.append(_eventNameWithPackage_2, "\t\t\t");
             _builder.append("\", viewProvider).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
@@ -317,24 +317,24 @@ public class Command {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
-    String _commandName = this._aceExtension.commandName(it);
+    String _commandName = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName);
     _builder.append(" extends ");
-    String _abstractCommandName = this._aceExtension.abstractCommandName(it);
+    String _abstractCommandName = this._javaHttpServerExtension.abstractCommandName(it);
     _builder.append(_abstractCommandName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("static final Logger LOG = LoggerFactory.getLogger(");
-    String _commandName_1 = this._aceExtension.commandName(it);
+    String _commandName_1 = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName_1, "\t");
     _builder.append(".class);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _commandName_2 = this._aceExtension.commandName(it);
+    String _commandName_2 = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName_2, "\t");
     _builder.append("(IDaoProvider daoProvider, ViewProvider viewProvider, ");
     _builder.newLineIfNotEmpty();

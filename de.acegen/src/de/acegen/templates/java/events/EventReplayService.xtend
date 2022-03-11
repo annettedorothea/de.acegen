@@ -21,14 +21,14 @@ import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class EventReplayService {
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension ModelExtension

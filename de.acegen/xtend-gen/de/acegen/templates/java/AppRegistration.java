@@ -23,7 +23,7 @@ import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.extensions.java.ViewExtension;
 import java.util.Arrays;
@@ -41,7 +41,7 @@ public class AppRegistration {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -186,7 +186,7 @@ public class AppRegistration {
     String _name = java.getName();
     _builder.append(_name);
     _builder.append(".events.");
-    String _eventName = this._aceExtension.eventName(aceOperation, outcome);
+    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
     _builder.append(_eventName);
     _builder.append("\", (dataContainer, handle) -> {");
     _builder.newLineIfNotEmpty();
@@ -211,7 +211,7 @@ public class AppRegistration {
     String _name = java.getName();
     _builder.append(_name);
     _builder.append(".events.");
-    String _eventName = this._aceExtension.eventName(aceOperation, outcome);
+    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
     _builder.append(_eventName);
     _builder.append("\", (dataContainer, handle) -> {");
     _builder.newLineIfNotEmpty();

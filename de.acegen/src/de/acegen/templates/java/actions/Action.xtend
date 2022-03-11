@@ -22,8 +22,8 @@ import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class Action {
 	extension ModelExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension AttributeExtension

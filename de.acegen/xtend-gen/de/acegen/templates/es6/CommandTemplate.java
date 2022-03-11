@@ -26,6 +26,7 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Input;
 import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.extensions.CommonExtension;
+import de.acegen.extensions.HttpServerExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
 import de.acegen.extensions.java.ModelExtension;
@@ -53,7 +54,7 @@ public class CommandTemplate {
   
   @Inject
   @Extension
-  private de.acegen.extensions.java.AceExtension _aceExtension_1;
+  private HttpServerExtension _httpServerExtension;
   
   @Inject
   @Extension
@@ -188,7 +189,7 @@ public class CommandTemplate {
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
         {
-          if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._aceExtension_1.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
+          if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
             _builder.append("\t");
             _builder.append("    \t");
             _builder.append("let payload = {");
@@ -218,7 +219,7 @@ public class CommandTemplate {
             _builder.append("};");
             _builder.newLine();
           } else {
-            if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._aceExtension_1.isMulitpartFormData(it.getServerCall())).booleanValue())) {
+            if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue())) {
               _builder.append("\t");
               _builder.append("    \t");
               _builder.append("const formData = data.");
@@ -282,7 +283,7 @@ public class CommandTemplate {
         {
           if ((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT"))) {
             {
-              Boolean _isMulitpartFormData = this._aceExtension_1.isMulitpartFormData(it.getServerCall());
+              Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it.getServerCall());
               if ((_isMulitpartFormData).booleanValue()) {
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();

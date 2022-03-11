@@ -21,8 +21,8 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.List;
 import javax.inject.Inject;
@@ -50,7 +50,7 @@ public class Data {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   public CharSequence generateDataInterface(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
@@ -729,10 +729,10 @@ public class Data {
     _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
-    String _responseDataName = this._aceExtension.responseDataName(it);
+    String _responseDataName = this._javaHttpServerExtension.responseDataName(it);
     _builder.append(_responseDataName);
     _builder.append(" implements ");
-    String _responseDataInterfaceName = this._aceExtension.responseDataInterfaceName(it);
+    String _responseDataInterfaceName = this._javaHttpServerExtension.responseDataInterfaceName(it);
     _builder.append(_responseDataInterfaceName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -751,7 +751,7 @@ public class Data {
     }
     _builder.append("\t");
     _builder.append("public ");
-    String _responseDataName_1 = this._aceExtension.responseDataName(it);
+    String _responseDataName_1 = this._javaHttpServerExtension.responseDataName(it);
     _builder.append(_responseDataName_1, "\t");
     _builder.append("() {");
     _builder.newLineIfNotEmpty();
@@ -762,7 +762,7 @@ public class Data {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _responseDataName_2 = this._aceExtension.responseDataName(it);
+    String _responseDataName_2 = this._javaHttpServerExtension.responseDataName(it);
     _builder.append(_responseDataName_2, "\t");
     _builder.append("(");
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
@@ -821,7 +821,7 @@ public class Data {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public interface ");
-    String _responseDataInterfaceName = this._aceExtension.responseDataInterfaceName(it);
+    String _responseDataInterfaceName = this._javaHttpServerExtension.responseDataInterfaceName(it);
     _builder.append(_responseDataInterfaceName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -883,10 +883,10 @@ public class Data {
     _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public class ");
-    String _payloadDataName = this._aceExtension.payloadDataName(it);
+    String _payloadDataName = this._javaHttpServerExtension.payloadDataName(it);
     _builder.append(_payloadDataName);
     _builder.append(" implements ");
-    String _payloadDataInterfaceName = this._aceExtension.payloadDataInterfaceName(it);
+    String _payloadDataInterfaceName = this._javaHttpServerExtension.payloadDataInterfaceName(it);
     _builder.append(_payloadDataInterfaceName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -905,7 +905,7 @@ public class Data {
     }
     _builder.append("\t");
     _builder.append("public ");
-    String _payloadDataName_1 = this._aceExtension.payloadDataName(it);
+    String _payloadDataName_1 = this._javaHttpServerExtension.payloadDataName(it);
     _builder.append(_payloadDataName_1, "\t");
     _builder.append("() {");
     _builder.newLineIfNotEmpty();
@@ -916,7 +916,7 @@ public class Data {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _payloadDataName_2 = this._aceExtension.payloadDataName(it);
+    String _payloadDataName_2 = this._javaHttpServerExtension.payloadDataName(it);
     _builder.append(_payloadDataName_2, "\t");
     _builder.append("(");
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
@@ -975,7 +975,7 @@ public class Data {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public interface ");
-    String _payloadDataInterfaceName = this._aceExtension.payloadDataInterfaceName(it);
+    String _payloadDataInterfaceName = this._javaHttpServerExtension.payloadDataInterfaceName(it);
     _builder.append(_payloadDataInterfaceName);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();

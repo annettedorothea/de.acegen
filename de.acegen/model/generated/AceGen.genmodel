@@ -116,10 +116,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//JsonArrayClient/values"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//HttpServer">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/language"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/persistenceLayer"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/migrations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/java"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/cs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/dropwizard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/dotnet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/JDBI3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/EF"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/liquibase"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//HttpServer/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServer/authUser"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AceGen.ecore#//HttpServer/authUserRef"/>

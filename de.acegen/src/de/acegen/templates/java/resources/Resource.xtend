@@ -21,8 +21,9 @@ import de.acegen.aceGen.AuthUser
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
@@ -32,7 +33,10 @@ class Resource {
 	extension ModelExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
+
+	@Inject
+	extension HttpServerExtension
 
 	@Inject
 	extension AttributeExtension

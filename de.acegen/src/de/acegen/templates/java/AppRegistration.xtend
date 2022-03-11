@@ -22,13 +22,13 @@ import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
+import de.acegen.aceGen.HttpServerView
 import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.extensions.java.ViewExtension
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerView
 
 class AppRegistration {
 
@@ -36,7 +36,7 @@ class AppRegistration {
 	extension ModelExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension ViewExtension

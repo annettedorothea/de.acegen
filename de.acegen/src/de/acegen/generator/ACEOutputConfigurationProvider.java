@@ -38,82 +38,36 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 	public final static String DEFAULT_JAVA_TEST_OUTPUT_ONCE = "DEFAULT_JAVA_TEST_OUTPUT_ONCE";
 	public final static String DEFAULT_JAVA_TEST_OUTPUT = "DEFAULT_JAVA_TEST_OUTPUT";
 
+	public final static String DEFAULT_CS_OUTPUT = "DEFAULT_CS_OUTPUT";
+	public final static String DEFAULT_CS_OUTPUT_ONCE = "DEFAULT_CS_OUTPUT_ONCE";
+	public final static String DEFAULT_CS_TEST_OUTPUT_ONCE = "DEFAULT_CS_TEST_OUTPUT_ONCE";
+	public final static String DEFAULT_CS_TEST_OUTPUT = "DEFAULT_CS_TEST_OUTPUT";
+	
 	/**
 	 * @return a set of {@link OutputConfiguration} available for the generator
 	 */
 	public Set<OutputConfiguration> getOutputConfigurations() {
-		OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
-		defaultOutput.setDescription("generated JavaScript sources");
-		defaultOutput.setOutputDirectory("./es6/gen/");
-		defaultOutput.setOverrideExistingResources(true);
-		defaultOutput.setCreateOutputDirectory(true);
-		defaultOutput.setCleanUpDerivedResources(true);
-		defaultOutput.setSetDerivedProperty(true);
 
-		OutputConfiguration onceOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_OUTPUT_ONCE);
-		onceOutput.setDescription("initial JavaScript sources");
-		onceOutput.setOutputDirectory("./es6/src/");
-		onceOutput.setOverrideExistingResources(false);
-		onceOutput.setCreateOutputDirectory(true);
-		onceOutput.setCleanUpDerivedResources(false);
-		onceOutput.setSetDerivedProperty(false);
+		OutputConfiguration defaultOutput = createOutpout(IFileSystemAccess.DEFAULT_OUTPUT, "generated JavaScript sources", "./es6/gen/");
+		OutputConfiguration testOutput = createOutpout(DEFAULT_JAVASCRIPT_TEST_OUTPUT, "generated JavaScript test sources", "./spec/gen/");
 
-		OutputConfiguration onceTestOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE);
-		onceTestOutput.setDescription("initial JavaScript test sources");
-		onceTestOutput.setOutputDirectory("./spec/src/");
-		onceTestOutput.setOverrideExistingResources(false);
-		onceTestOutput.setCreateOutputDirectory(true);
-		onceTestOutput.setCleanUpDerivedResources(false);
-		onceTestOutput.setSetDerivedProperty(false);
+		OutputConfiguration onceOutput = createOutpoutOnce(DEFAULT_JAVASCRIPT_OUTPUT_ONCE, "initial JavaScript sources", "./es6/src/");
+		OutputConfiguration onceTestOutput = createOutpoutOnce(DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, "initial JavaScript test sources", "./spec/src/");
 		
-		OutputConfiguration testOutput = new OutputConfiguration(DEFAULT_JAVASCRIPT_TEST_OUTPUT);
-		testOutput.setDescription("initial JavaScript test sources");
-		testOutput.setOutputDirectory("./spec/gen/");
-		testOutput.setOverrideExistingResources(true);
-		testOutput.setCreateOutputDirectory(true);
-		testOutput.setCleanUpDerivedResources(true);
-		testOutput.setSetDerivedProperty(true);
 		
-		OutputConfiguration defaultJavaOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT);
-		defaultJavaOutput.setDescription("generated Java sources");
-		defaultJavaOutput.setOutputDirectory("./src/gen/java/");
-		defaultJavaOutput.setOverrideExistingResources(true);
-		defaultJavaOutput.setCreateOutputDirectory(true);
-		defaultJavaOutput.setCleanUpDerivedResources(true);
-		defaultJavaOutput.setSetDerivedProperty(true);
+		OutputConfiguration defaultJavaOutput = createOutpout(DEFAULT_JAVA_OUTPUT, "generated Java sources", "./src/gen/java/");
+		OutputConfiguration defaultResourceOutput = createOutpout(DEFAULT_RESOURCE_OUTPUT, "generated resources", "./src/gen/resources/");
+		OutputConfiguration javaTestOutput = createOutpout(DEFAULT_JAVA_TEST_OUTPUT, "generated Java test sources", "./src/test/gen/");
 
-		OutputConfiguration defaultResourceOutput = new OutputConfiguration(DEFAULT_RESOURCE_OUTPUT);
-		defaultResourceOutput.setDescription("generated resources sources");
-		defaultResourceOutput.setOutputDirectory("./src/gen/resources/");
-		defaultResourceOutput.setOverrideExistingResources(true);
-		defaultResourceOutput.setCreateOutputDirectory(true);
-		defaultResourceOutput.setCleanUpDerivedResources(true);
-		defaultResourceOutput.setSetDerivedProperty(true);
+		OutputConfiguration onceJavaOutput = createOutpoutOnce(DEFAULT_JAVA_OUTPUT_ONCE, "initial Java sources", "./src/main/java/");
+		OutputConfiguration onceJavaTestOutput = createOutpoutOnce(DEFAULT_JAVA_TEST_OUTPUT_ONCE, "initial Java test sources", "./src/test/java/");
 
-		OutputConfiguration onceJavaOutput = new OutputConfiguration(DEFAULT_JAVA_OUTPUT_ONCE);
-		onceJavaOutput.setDescription("initial Java sources");
-		onceJavaOutput.setOutputDirectory("./src/main/java/");
-		onceJavaOutput.setOverrideExistingResources(false);
-		onceJavaOutput.setCreateOutputDirectory(true);
-		onceJavaOutput.setCleanUpDerivedResources(false);
-		onceJavaOutput.setSetDerivedProperty(false);
-
-		OutputConfiguration onceJavaTestOutput = new OutputConfiguration(DEFAULT_JAVA_TEST_OUTPUT_ONCE);
-		onceJavaTestOutput.setDescription("initial Java test sources");
-		onceJavaTestOutput.setOutputDirectory("./src/test/java/");
-		onceJavaTestOutput.setOverrideExistingResources(false);
-		onceJavaTestOutput.setCreateOutputDirectory(true);
-		onceJavaTestOutput.setCleanUpDerivedResources(false);
-		onceJavaTestOutput.setSetDerivedProperty(false);
-
-		OutputConfiguration javaTestOutput = new OutputConfiguration(DEFAULT_JAVA_TEST_OUTPUT);
-		javaTestOutput.setDescription("Java test sources");
-		javaTestOutput.setOutputDirectory("./src/test/gen/");
-		javaTestOutput.setOverrideExistingResources(true);
-		javaTestOutput.setCreateOutputDirectory(true);
-		javaTestOutput.setCleanUpDerivedResources(true);
-		javaTestOutput.setSetDerivedProperty(true);
-
+		OutputConfiguration defaultCsOutput = createOutpout(DEFAULT_CS_OUTPUT, "generated C# sources", "./Api/Generated");
+		OutputConfiguration csTestOutput = createOutpout(DEFAULT_CS_TEST_OUTPUT, "generated C# test sources", "./Api.Tests/Generated");
+		
+		OutputConfiguration onceCsOutput = createOutpoutOnce(DEFAULT_CS_OUTPUT_ONCE, "initial C# sources", "./Api/Source");
+		OutputConfiguration onceCsTestOutput = createOutpoutOnce(DEFAULT_CS_TEST_OUTPUT_ONCE, "initial C# test sources", "./Api.Tests/Source");
+		
 		return newHashSet(
 				defaultOutput, 
 				onceOutput, 
@@ -123,9 +77,35 @@ public class ACEOutputConfigurationProvider implements IOutputConfigurationProvi
 				onceJavaTestOutput, 
 				javaTestOutput,
 				onceTestOutput,
-				testOutput);
+				testOutput,
+				defaultCsOutput,
+				csTestOutput,
+				onceCsOutput,
+				onceCsTestOutput);
+	}
+	
+	private OutputConfiguration createOutpout(String name, String description, String outputDirectory) {
+		OutputConfiguration outputConfiguration = new OutputConfiguration(name);
+		outputConfiguration.setDescription(description);
+		outputConfiguration.setOutputDirectory(outputDirectory);
+		outputConfiguration.setOverrideExistingResources(true);
+		outputConfiguration.setCreateOutputDirectory(true);
+		outputConfiguration.setCleanUpDerivedResources(true);
+		outputConfiguration.setSetDerivedProperty(true);
+		return outputConfiguration;
 	}
 
+	private OutputConfiguration createOutpoutOnce(String name, String description, String outputDirectory) {
+		OutputConfiguration outputConfiguration = new OutputConfiguration(name);
+		outputConfiguration.setDescription(description);
+		outputConfiguration.setOutputDirectory(outputDirectory);
+		outputConfiguration.setOverrideExistingResources(false);
+		outputConfiguration.setCreateOutputDirectory(true);
+		outputConfiguration.setCleanUpDerivedResources(false);
+		outputConfiguration.setSetDerivedProperty(false);
+		return outputConfiguration;
+	}
+	
 }
 
 /******* S.D.G. *******/

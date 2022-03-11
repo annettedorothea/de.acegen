@@ -18,7 +18,7 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.JavaExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.models.Dao
@@ -31,7 +31,7 @@ class DaoGenerator {
 	Dao dao;
 
 	@Inject
-	extension JavaExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension ModelExtension

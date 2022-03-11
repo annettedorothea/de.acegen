@@ -26,11 +26,12 @@ import de.acegen.aceGen.HttpClientStateFunction
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
+import de.acegen.extensions.HttpServerExtension
 
 class AceExtension {
 
 	@Inject
-	extension de.acegen.extensions.java.AceExtension
+	extension HttpServerExtension
 	
 	
 	def String abstractActionName(HttpClientAce it) '''Abstract«getName.toFirstUpper»Action'''

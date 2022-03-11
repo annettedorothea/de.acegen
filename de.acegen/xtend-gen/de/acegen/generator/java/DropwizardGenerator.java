@@ -18,8 +18,7 @@ package de.acegen.generator.java;
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.extensions.java.AceExtension;
-import de.acegen.extensions.java.JavaExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.DropwizardApp;
 import de.acegen.templates.java.DropwizardAppRegistration;
@@ -66,11 +65,7 @@ public class DropwizardGenerator {
   
   @Inject
   @Extension
-  private JavaExtension _javaExtension;
-  
-  @Inject
-  @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     AuthUser authUser = httpServer.getAuthUser();
@@ -79,9 +74,9 @@ public class DropwizardGenerator {
     }
     EList<HttpServerAce> _aceOperations = httpServer.getAceOperations();
     for (final HttpServerAce ace : _aceOperations) {
-      String _packageFolder = this._javaExtension.packageFolder(httpServer);
+      String _packageFolder = this._javaHttpServerExtension.packageFolder(httpServer);
       String _plus = (_packageFolder + "/resources/");
-      String _resourceName = this._aceExtension.resourceName(ace);
+      String _resourceName = this._javaHttpServerExtension.resourceName(ace);
       String _plus_1 = (_plus + _resourceName);
       String _plus_2 = (_plus_1 + ".java");
       fsa.generateFile(_plus_2, 
@@ -101,7 +96,7 @@ public class DropwizardGenerator {
       this.dropwizardConfiguration.generateConfig());
     fsa.generateFile("de/acegen/Resource.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.dropwizardResource.generateDropwizardResource());
-    String _packageFolder_1 = this._javaExtension.packageFolder(httpServer);
+    String _packageFolder_1 = this._javaHttpServerExtension.packageFolder(httpServer);
     String _plus_3 = (_packageFolder_1 + "/AppRegistration.java");
     fsa.generateFile(_plus_3, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.dropwizardAppRegistration.generateAppRegistration(httpServer));

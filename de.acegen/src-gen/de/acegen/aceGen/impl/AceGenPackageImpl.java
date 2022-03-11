@@ -1570,7 +1570,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_Language()
+  public EAttribute getHttpServer_Java()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(0);
   }
@@ -1581,7 +1581,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_Type()
+  public EAttribute getHttpServer_Cs()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(1);
   }
@@ -1592,7 +1592,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_PersistenceLayer()
+  public EAttribute getHttpServer_Dropwizard()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(2);
   }
@@ -1603,7 +1603,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_Migrations()
+  public EAttribute getHttpServer_Dotnet()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(3);
   }
@@ -1614,7 +1614,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getHttpServer_Name()
+  public EAttribute getHttpServer_JDBI3()
   {
     return (EAttribute)httpServerEClass.getEStructuralFeatures().get(4);
   }
@@ -1625,40 +1625,40 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getHttpServer_EF()
+  {
+    return (EAttribute)httpServerEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHttpServer_Liquibase()
+  {
+    return (EAttribute)httpServerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHttpServer_Name()
+  {
+    return (EAttribute)httpServerEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getHttpServer_AuthUser()
-  {
-    return (EReference)httpServerEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHttpServer_AuthUserRef()
-  {
-    return (EReference)httpServerEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHttpServer_AceOperations()
-  {
-    return (EReference)httpServerEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getHttpServer_Views()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(8);
   }
@@ -1669,7 +1669,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_Models()
+  public EReference getHttpServer_AuthUserRef()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(9);
   }
@@ -1680,9 +1680,42 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getHttpServer_Scenarios()
+  public EReference getHttpServer_AceOperations()
   {
     return (EReference)httpServerEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpServer_Views()
+  {
+    return (EReference)httpServerEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpServer_Models()
+  {
+    return (EReference)httpServerEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHttpServer_Scenarios()
+  {
+    return (EReference)httpServerEClass.getEStructuralFeatures().get(13);
   }
 
   /**
@@ -3235,10 +3268,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEReference(jsonArrayClientEClass, JSON_ARRAY_CLIENT__VALUES);
 
     httpServerEClass = createEClass(HTTP_SERVER);
-    createEAttribute(httpServerEClass, HTTP_SERVER__LANGUAGE);
-    createEAttribute(httpServerEClass, HTTP_SERVER__TYPE);
-    createEAttribute(httpServerEClass, HTTP_SERVER__PERSISTENCE_LAYER);
-    createEAttribute(httpServerEClass, HTTP_SERVER__MIGRATIONS);
+    createEAttribute(httpServerEClass, HTTP_SERVER__JAVA);
+    createEAttribute(httpServerEClass, HTTP_SERVER__CS);
+    createEAttribute(httpServerEClass, HTTP_SERVER__DROPWIZARD);
+    createEAttribute(httpServerEClass, HTTP_SERVER__DOTNET);
+    createEAttribute(httpServerEClass, HTTP_SERVER__JDBI3);
+    createEAttribute(httpServerEClass, HTTP_SERVER__EF);
+    createEAttribute(httpServerEClass, HTTP_SERVER__LIQUIBASE);
     createEAttribute(httpServerEClass, HTTP_SERVER__NAME);
     createEReference(httpServerEClass, HTTP_SERVER__AUTH_USER);
     createEReference(httpServerEClass, HTTP_SERVER__AUTH_USER_REF);
@@ -3581,10 +3617,13 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEReference(getJsonArrayClient_Values(), this.getJsonValueClient(), null, "values", null, 0, -1, JsonArrayClient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(httpServerEClass, HttpServer.class, "HttpServer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHttpServer_Language(), ecorePackage.getEString(), "language", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpServer_Type(), ecorePackage.getEString(), "type", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpServer_PersistenceLayer(), ecorePackage.getEString(), "persistenceLayer", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getHttpServer_Migrations(), ecorePackage.getEString(), "migrations", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_Java(), ecorePackage.getEBoolean(), "java", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_Cs(), ecorePackage.getEBoolean(), "cs", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_Dropwizard(), ecorePackage.getEBoolean(), "dropwizard", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_Dotnet(), ecorePackage.getEBoolean(), "dotnet", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_JDBI3(), ecorePackage.getEBoolean(), "JDBI3", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_EF(), ecorePackage.getEBoolean(), "EF", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHttpServer_Liquibase(), ecorePackage.getEBoolean(), "liquibase", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getHttpServer_Name(), ecorePackage.getEString(), "name", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_AuthUser(), this.getAuthUser(), null, "authUser", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getHttpServer_AuthUserRef(), this.getAuthUser(), null, "authUserRef", null, 0, 1, HttpServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

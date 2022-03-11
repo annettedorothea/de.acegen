@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.Arrays;
 import javax.inject.Inject;
@@ -38,7 +38,7 @@ public class AceDataFactory {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -144,7 +144,7 @@ public class AceDataFactory {
     String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions.");
-    String _actionName = this._aceExtension.actionName(it);
+    String _actionName = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName);
     _builder.append("\") ||");
     _builder.newLineIfNotEmpty();
@@ -153,7 +153,7 @@ public class AceDataFactory {
     String _name_1 = httpServer.getName();
     _builder.append(_name_1, "\t\t");
     _builder.append(".commands.");
-    String _commandName = this._aceExtension.commandName(it);
+    String _commandName = this._javaHttpServerExtension.commandName(it);
     _builder.append(_commandName, "\t\t");
     _builder.append("\") ");
     {
@@ -178,7 +178,7 @@ public class AceDataFactory {
         String _name_2 = httpServer.getName();
         _builder.append(_name_2, "\t\t");
         _builder.append(".events.");
-        String _eventName = this._aceExtension.eventName(it, outcome);
+        String _eventName = this._javaHttpServerExtension.eventName(it, outcome);
         _builder.append(_eventName, "\t\t");
         _builder.append("\")");
         _builder.newLineIfNotEmpty();
@@ -211,7 +211,7 @@ public class AceDataFactory {
     String _name = httpServer.getName();
     _builder.append(_name);
     _builder.append(".actions.");
-    String _actionName = this._aceExtension.actionName(it);
+    String _actionName = this._javaHttpServerExtension.actionName(it);
     _builder.append(_actionName);
     _builder.append("\")) {");
     _builder.newLineIfNotEmpty();

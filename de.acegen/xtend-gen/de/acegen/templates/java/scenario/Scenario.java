@@ -40,8 +40,8 @@ import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.aceGen.WhenThen;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.AttributeExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class Scenario {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -102,7 +102,7 @@ public class Scenario {
       EList<WhenThen> _whenThen = it.getWhenThen();
       for(final WhenThen whenThenItem : _whenThen) {
         _builder.append("import ");
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage);
         _builder.append(";");
         _builder.newLineIfNotEmpty();
@@ -138,7 +138,7 @@ public class Scenario {
               int _size = whenThenItem_1.getWhenBlock().getAction().getResponse().size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
-                String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(whenThenItem_1.getWhenBlock().getAction());
+                String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem_1.getWhenBlock().getAction());
                 _builder.append(_responseDataNameWithPackage_1, "\t");
                 _builder.append(" response");
               }
@@ -351,7 +351,7 @@ public class Scenario {
               int _size = whenThenItem_2.getWhenBlock().getAction().getResponse().size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
-                String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(whenThenItem_2.getWhenBlock().getAction());
+                String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem_2.getWhenBlock().getAction());
                 _builder.append(_responseDataNameWithPackage, "\t");
                 _builder.append(" response");
               }
@@ -430,7 +430,7 @@ public class Scenario {
       int _size = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage, "\t");
       } else {
         _builder.append("Object");
@@ -447,7 +447,7 @@ public class Scenario {
       int _size_1 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_1, "\t");
         _builder.append(" actualResponse_");
         _builder.append(index, "\t");
@@ -502,7 +502,7 @@ public class Scenario {
       int _size = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage);
       } else {
         _builder.append("Object");
@@ -545,7 +545,7 @@ public class Scenario {
       int _size_1 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_1 = (_size_1 > 0);
       if (_greaterThan_1) {
-        String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_1, "\t");
       } else {
         _builder.append("Object");
@@ -584,7 +584,7 @@ public class Scenario {
       int _size_2 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_2 = (_size_2 > 0);
       if (_greaterThan_2) {
-        String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_2 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_2);
       } else {
         _builder.append("void");
@@ -597,7 +597,7 @@ public class Scenario {
       int _size_3 = it.getWhenBlock().getAction().getResponse().size();
       boolean _greaterThan_3 = (_size_3 > 0);
       if (_greaterThan_3) {
-        String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_3 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_3);
       } else {
         _builder.append("Object");
@@ -674,7 +674,7 @@ public class Scenario {
       boolean _greaterThan_4 = (_size_4 > 0);
       if (_greaterThan_4) {
         _builder.append("\t");
-        String _responseDataNameWithPackage_4 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+        String _responseDataNameWithPackage_4 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
         _builder.append(_responseDataNameWithPackage_4, "\t");
         _builder.append(" actual = null;");
         _builder.newLineIfNotEmpty();
@@ -792,10 +792,10 @@ public class Scenario {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
-            String _responseDataNameWithPackage_5 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_5 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_5, "\t\t");
             _builder.append(" expected = new ");
-            String _responseDataNameWithPackage_6 = this._aceExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_6 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_6, "\t\t");
             _builder.append("(expectedData);");
             _builder.newLineIfNotEmpty();
@@ -961,7 +961,7 @@ public class Scenario {
           int _size = whenThenItem.getWhenBlock().getAction().getResponse().size();
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
-            String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+            String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage, "\t");
           } else {
             _builder.append("Object");
@@ -1024,7 +1024,7 @@ public class Scenario {
         {
           if (((whenThenItem.getWhenBlock().getExtractions().size() > 0) && (whenThenItem.getWhenBlock().getAction().getResponse().size() > 0))) {
             _builder.append("\t");
-            String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
+            String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(whenThenItem.getWhenBlock().getAction());
             _builder.append(_responseDataNameWithPackage_1, "\t");
             _builder.append(" responseEntity_");
             _builder.append(this.index, "\t");
@@ -1339,7 +1339,7 @@ public class Scenario {
       int _size = it.getAction().getPayload().size();
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
-        String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(it.getAction());
+        String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(it.getAction());
         _builder.append(_payloadDataNameWithPackage);
         _builder.append(" payload_");
         _builder.append(this.index);
@@ -1473,7 +1473,7 @@ public class Scenario {
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage, "\t\t");
     _builder.append(".class)");
     return _builder;
@@ -1487,7 +1487,7 @@ public class Scenario {
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage, "\t\t");
     _builder.append(".class)");
     return _builder;
@@ -1497,7 +1497,7 @@ public class Scenario {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{}\",");
     _builder.newLine();
-    String _payloadDataNameWithPackage = this._aceExtension.payloadDataNameWithPackage(action);
+    String _payloadDataNameWithPackage = this._javaHttpServerExtension.payloadDataNameWithPackage(action);
     _builder.append(_payloadDataNameWithPackage);
     _builder.append(".class)");
     return _builder;
@@ -1641,7 +1641,7 @@ public class Scenario {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("data_");
         _builder_1.append(this.index);
-        String _urlWithPathParams = this._aceExtension.urlWithPathParams(_action, _builder_1.toString(), false);
+        String _urlWithPathParams = this._javaHttpServerExtension.urlWithPathParams(_action, _builder_1.toString(), false);
         _builder.append(_urlWithPathParams, "\t");
         _builder.append("\", ");
         _builder.newLineIfNotEmpty();
@@ -1682,7 +1682,7 @@ public class Scenario {
           int _size_1 = it.getAction().getResponse().size();
           boolean _greaterThan_1 = (_size_1 > 0);
           if (_greaterThan_1) {
-            String _responseDataNameWithPackage = this._aceExtension.responseDataNameWithPackage(it.getAction());
+            String _responseDataNameWithPackage = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
             _builder.append(_responseDataNameWithPackage, "\t");
             _builder.append(".class");
           } else {
@@ -1704,7 +1704,7 @@ public class Scenario {
           StringConcatenation _builder_2 = new StringConcatenation();
           _builder_2.append("data_");
           _builder_2.append(this.index);
-          String _urlWithPathParams_1 = this._aceExtension.urlWithPathParams(_action_1, _builder_2.toString(), true);
+          String _urlWithPathParams_1 = this._javaHttpServerExtension.urlWithPathParams(_action_1, _builder_2.toString(), true);
           _builder.append(_urlWithPathParams_1, "\t");
           _builder.append("\", ");
           _builder.newLineIfNotEmpty();
@@ -1745,7 +1745,7 @@ public class Scenario {
             int _size_3 = it.getAction().getResponse().size();
             boolean _greaterThan_3 = (_size_3 > 0);
             if (_greaterThan_3) {
-              String _responseDataNameWithPackage_1 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+              String _responseDataNameWithPackage_1 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
               _builder.append(_responseDataNameWithPackage_1, "\t");
               _builder.append(".class");
             } else {
@@ -1767,7 +1767,7 @@ public class Scenario {
             StringConcatenation _builder_3 = new StringConcatenation();
             _builder_3.append("data_");
             _builder_3.append(this.index);
-            String _urlWithPathParams_2 = this._aceExtension.urlWithPathParams(_action_2, _builder_3.toString(), true);
+            String _urlWithPathParams_2 = this._javaHttpServerExtension.urlWithPathParams(_action_2, _builder_3.toString(), true);
             _builder.append(_urlWithPathParams_2, "\t");
             _builder.append("\", ");
             _builder.newLineIfNotEmpty();
@@ -1795,7 +1795,7 @@ public class Scenario {
               int _size_4 = it.getAction().getResponse().size();
               boolean _greaterThan_4 = (_size_4 > 0);
               if (_greaterThan_4) {
-                String _responseDataNameWithPackage_2 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+                String _responseDataNameWithPackage_2 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
                 _builder.append(_responseDataNameWithPackage_2, "\t");
                 _builder.append(".class");
               } else {
@@ -1814,7 +1814,7 @@ public class Scenario {
             StringConcatenation _builder_4 = new StringConcatenation();
             _builder_4.append("data_");
             _builder_4.append(this.index);
-            String _urlWithPathParams_3 = this._aceExtension.urlWithPathParams(_action_3, _builder_4.toString(), true);
+            String _urlWithPathParams_3 = this._javaHttpServerExtension.urlWithPathParams(_action_3, _builder_4.toString(), true);
             _builder.append(_urlWithPathParams_3, "\t");
             _builder.append("\", ");
             _builder.newLineIfNotEmpty();
@@ -1842,7 +1842,7 @@ public class Scenario {
               int _size_5 = it.getAction().getResponse().size();
               boolean _greaterThan_5 = (_size_5 > 0);
               if (_greaterThan_5) {
-                String _responseDataNameWithPackage_3 = this._aceExtension.responseDataNameWithPackage(it.getAction());
+                String _responseDataNameWithPackage_3 = this._javaHttpServerExtension.responseDataNameWithPackage(it.getAction());
                 _builder.append(_responseDataNameWithPackage_3, "\t");
                 _builder.append(".class");
               } else {

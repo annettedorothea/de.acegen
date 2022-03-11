@@ -1460,47 +1460,56 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	public class HttpServerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServer");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cLanguageAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cLanguageJavaKeyword_0_0 = (Keyword)cLanguageAssignment_0.eContents().get(0);
-		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cTypeDropwizardKeyword_1_0 = (Keyword)cTypeAssignment_1.eContents().get(0);
-		private final Assignment cPersistenceLayerAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cPersistenceLayerJDBI3Keyword_2_0 = (Keyword)cPersistenceLayerAssignment_2.eContents().get(0);
-		private final Assignment cMigrationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cMigrationsLiquibaseKeyword_3_0 = (Keyword)cMigrationsAssignment_3.eContents().get(0);
-		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameQualifiedNameParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cAuthorizationKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cAuthUserAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cAuthUserAuthUserParserRuleCall_5_1_0 = (RuleCall)cAuthUserAssignment_5_1.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cImportKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cAuthUserRefAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final CrossReference cAuthUserRefAuthUserCrossReference_6_1_0 = (CrossReference)cAuthUserRefAssignment_6_1.eContents().get(0);
-		private final RuleCall cAuthUserRefAuthUserQualifiedNameParserRuleCall_6_1_0_1 = (RuleCall)cAuthUserRefAuthUserCrossReference_6_1_0.eContents().get(1);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cACEKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cAceOperationsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cAceOperationsHttpServerAceParserRuleCall_7_1_0 = (RuleCall)cAceOperationsAssignment_7_1.eContents().get(0);
+		private final Assignment cJavaAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cJavaJavaKeyword_0_0 = (Keyword)cJavaAssignment_0.eContents().get(0);
+		private final Assignment cCsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cCsCKeyword_1_0 = (Keyword)cCsAssignment_1.eContents().get(0);
+		private final Assignment cDropwizardAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cDropwizardDropwizardKeyword_2_0 = (Keyword)cDropwizardAssignment_2.eContents().get(0);
+		private final Assignment cDotnetAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cDotnetNET6Keyword_3_0 = (Keyword)cDotnetAssignment_3.eContents().get(0);
+		private final Assignment cJDBI3Assignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cJDBI3JDBI3Keyword_4_0 = (Keyword)cJDBI3Assignment_4.eContents().get(0);
+		private final Assignment cEFAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Keyword cEFEntityFrameworkKeyword_5_0 = (Keyword)cEFAssignment_5.eContents().get(0);
+		private final Assignment cLiquibaseAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final Keyword cLiquibaseLiquibaseKeyword_6_0 = (Keyword)cLiquibaseAssignment_6.eContents().get(0);
+		private final Assignment cNameAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cNameQualifiedNameParserRuleCall_7_0 = (RuleCall)cNameAssignment_7.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cViewsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cViewsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cViewsHttpServerViewParserRuleCall_8_1_0 = (RuleCall)cViewsAssignment_8_1.eContents().get(0);
+		private final Keyword cAuthorizationKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cAuthUserAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cAuthUserAuthUserParserRuleCall_8_1_0 = (RuleCall)cAuthUserAssignment_8_1.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cModelsKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cModelsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cModelsModelParserRuleCall_9_1_0 = (RuleCall)cModelsAssignment_9_1.eContents().get(0);
+		private final Keyword cImportKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cAuthUserRefAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final CrossReference cAuthUserRefAuthUserCrossReference_9_1_0 = (CrossReference)cAuthUserRefAssignment_9_1.eContents().get(0);
+		private final RuleCall cAuthUserRefAuthUserQualifiedNameParserRuleCall_9_1_0_1 = (RuleCall)cAuthUserRefAuthUserCrossReference_9_1_0.eContents().get(1);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cScenariosKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cScenariosAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final RuleCall cScenariosScenarioParserRuleCall_10_1_0 = (RuleCall)cScenariosAssignment_10_1.eContents().get(0);
+		private final Keyword cACEKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cAceOperationsAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final RuleCall cAceOperationsHttpServerAceParserRuleCall_10_1_0 = (RuleCall)cAceOperationsAssignment_10_1.eContents().get(0);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Keyword cViewsKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cViewsAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final RuleCall cViewsHttpServerViewParserRuleCall_11_1_0 = (RuleCall)cViewsAssignment_11_1.eContents().get(0);
+		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
+		private final Keyword cModelsKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Assignment cModelsAssignment_12_1 = (Assignment)cGroup_12.eContents().get(1);
+		private final RuleCall cModelsModelParserRuleCall_12_1_0 = (RuleCall)cModelsAssignment_12_1.eContents().get(0);
+		private final Group cGroup_13 = (Group)cGroup.eContents().get(13);
+		private final Keyword cScenariosKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final Assignment cScenariosAssignment_13_1 = (Assignment)cGroup_13.eContents().get(1);
+		private final RuleCall cScenariosScenarioParserRuleCall_13_1_0 = (RuleCall)cScenariosAssignment_13_1.eContents().get(0);
 		
 		//HttpServer:
-		//    language = ('Java')
-		//    type = ('Dropwizard')?
-		//    persistenceLayer = 'JDBI3'?
-		//    migrations = 'Liquibase' ?
+		//    java ?= 'Java'?
+		//    cs ?= 'C#'?
+		//    dropwizard ?= 'Dropwizard'?
+		//    dotnet ?= 'NET6'?
+		//    JDBI3 ?= 'JDBI3'?
+		//    EF ?= 'EntityFramework'?
+		//    liquibase ?= 'Liquibase'?
 		//    name = QualifiedName
 		//    ('Authorization' authUser = AuthUser)?
 		//    ('import' authUserRef = [AuthUser | QualifiedName])?
@@ -1511,10 +1520,13 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//language = ('Java')
-		//type = ('Dropwizard')?
-		//persistenceLayer = 'JDBI3'?
-		//migrations = 'Liquibase' ?
+		//java ?= 'Java'?
+		//cs ?= 'C#'?
+		//dropwizard ?= 'Dropwizard'?
+		//dotnet ?= 'NET6'?
+		//JDBI3 ?= 'JDBI3'?
+		//EF ?= 'EntityFramework'?
+		//liquibase ?= 'Liquibase'?
 		//name = QualifiedName
 		//('Authorization' authUser = AuthUser)?
 		//('import' authUserRef = [AuthUser | QualifiedName])?
@@ -1524,110 +1536,128 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//('scenarios' (scenarios += Scenario)*)?
 		public Group getGroup() { return cGroup; }
 		
-		//language = ('Java')
-		public Assignment getLanguageAssignment_0() { return cLanguageAssignment_0; }
+		//java ?= 'Java'?
+		public Assignment getJavaAssignment_0() { return cJavaAssignment_0; }
 		
-		//('Java')
-		public Keyword getLanguageJavaKeyword_0_0() { return cLanguageJavaKeyword_0_0; }
+		//'Java'
+		public Keyword getJavaJavaKeyword_0_0() { return cJavaJavaKeyword_0_0; }
 		
-		//type = ('Dropwizard')?
-		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
+		//cs ?= 'C#'?
+		public Assignment getCsAssignment_1() { return cCsAssignment_1; }
 		
-		//('Dropwizard')
-		public Keyword getTypeDropwizardKeyword_1_0() { return cTypeDropwizardKeyword_1_0; }
+		//'C#'
+		public Keyword getCsCKeyword_1_0() { return cCsCKeyword_1_0; }
 		
-		//persistenceLayer = 'JDBI3'?
-		public Assignment getPersistenceLayerAssignment_2() { return cPersistenceLayerAssignment_2; }
+		//dropwizard ?= 'Dropwizard'?
+		public Assignment getDropwizardAssignment_2() { return cDropwizardAssignment_2; }
+		
+		//'Dropwizard'
+		public Keyword getDropwizardDropwizardKeyword_2_0() { return cDropwizardDropwizardKeyword_2_0; }
+		
+		//dotnet ?= 'NET6'?
+		public Assignment getDotnetAssignment_3() { return cDotnetAssignment_3; }
+		
+		//'NET6'
+		public Keyword getDotnetNET6Keyword_3_0() { return cDotnetNET6Keyword_3_0; }
+		
+		//JDBI3 ?= 'JDBI3'?
+		public Assignment getJDBI3Assignment_4() { return cJDBI3Assignment_4; }
 		
 		//'JDBI3'
-		public Keyword getPersistenceLayerJDBI3Keyword_2_0() { return cPersistenceLayerJDBI3Keyword_2_0; }
+		public Keyword getJDBI3JDBI3Keyword_4_0() { return cJDBI3JDBI3Keyword_4_0; }
 		
-		//migrations = 'Liquibase' ?
-		public Assignment getMigrationsAssignment_3() { return cMigrationsAssignment_3; }
+		//EF ?= 'EntityFramework'?
+		public Assignment getEFAssignment_5() { return cEFAssignment_5; }
+		
+		//'EntityFramework'
+		public Keyword getEFEntityFrameworkKeyword_5_0() { return cEFEntityFrameworkKeyword_5_0; }
+		
+		//liquibase ?= 'Liquibase'?
+		public Assignment getLiquibaseAssignment_6() { return cLiquibaseAssignment_6; }
 		
 		//'Liquibase'
-		public Keyword getMigrationsLiquibaseKeyword_3_0() { return cMigrationsLiquibaseKeyword_3_0; }
+		public Keyword getLiquibaseLiquibaseKeyword_6_0() { return cLiquibaseLiquibaseKeyword_6_0; }
 		
 		//name = QualifiedName
-		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		public Assignment getNameAssignment_7() { return cNameAssignment_7; }
 		
 		//QualifiedName
-		public RuleCall getNameQualifiedNameParserRuleCall_4_0() { return cNameQualifiedNameParserRuleCall_4_0; }
+		public RuleCall getNameQualifiedNameParserRuleCall_7_0() { return cNameQualifiedNameParserRuleCall_7_0; }
 		
 		//('Authorization' authUser = AuthUser)?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//'Authorization'
-		public Keyword getAuthorizationKeyword_5_0() { return cAuthorizationKeyword_5_0; }
-		
-		//authUser = AuthUser
-		public Assignment getAuthUserAssignment_5_1() { return cAuthUserAssignment_5_1; }
-		
-		//AuthUser
-		public RuleCall getAuthUserAuthUserParserRuleCall_5_1_0() { return cAuthUserAuthUserParserRuleCall_5_1_0; }
-		
-		//('import' authUserRef = [AuthUser | QualifiedName])?
-		public Group getGroup_6() { return cGroup_6; }
-		
-		//'import'
-		public Keyword getImportKeyword_6_0() { return cImportKeyword_6_0; }
-		
-		//authUserRef = [AuthUser | QualifiedName]
-		public Assignment getAuthUserRefAssignment_6_1() { return cAuthUserRefAssignment_6_1; }
-		
-		//[AuthUser | QualifiedName]
-		public CrossReference getAuthUserRefAuthUserCrossReference_6_1_0() { return cAuthUserRefAuthUserCrossReference_6_1_0; }
-		
-		//QualifiedName
-		public RuleCall getAuthUserRefAuthUserQualifiedNameParserRuleCall_6_1_0_1() { return cAuthUserRefAuthUserQualifiedNameParserRuleCall_6_1_0_1; }
-		
-		//('ACE' (aceOperations += HttpServerAce)*	)?
-		public Group getGroup_7() { return cGroup_7; }
-		
-		//'ACE'
-		public Keyword getACEKeyword_7_0() { return cACEKeyword_7_0; }
-		
-		//(aceOperations += HttpServerAce)*
-		public Assignment getAceOperationsAssignment_7_1() { return cAceOperationsAssignment_7_1; }
-		
-		//HttpServerAce
-		public RuleCall getAceOperationsHttpServerAceParserRuleCall_7_1_0() { return cAceOperationsHttpServerAceParserRuleCall_7_1_0; }
-		
-		//('views' (views += HttpServerView)* )?
 		public Group getGroup_8() { return cGroup_8; }
 		
-		//'views'
-		public Keyword getViewsKeyword_8_0() { return cViewsKeyword_8_0; }
+		//'Authorization'
+		public Keyword getAuthorizationKeyword_8_0() { return cAuthorizationKeyword_8_0; }
 		
-		//(views += HttpServerView)*
-		public Assignment getViewsAssignment_8_1() { return cViewsAssignment_8_1; }
+		//authUser = AuthUser
+		public Assignment getAuthUserAssignment_8_1() { return cAuthUserAssignment_8_1; }
 		
-		//HttpServerView
-		public RuleCall getViewsHttpServerViewParserRuleCall_8_1_0() { return cViewsHttpServerViewParserRuleCall_8_1_0; }
+		//AuthUser
+		public RuleCall getAuthUserAuthUserParserRuleCall_8_1_0() { return cAuthUserAuthUserParserRuleCall_8_1_0; }
 		
-		//('models' (models += Model)*)?
+		//('import' authUserRef = [AuthUser | QualifiedName])?
 		public Group getGroup_9() { return cGroup_9; }
 		
-		//'models'
-		public Keyword getModelsKeyword_9_0() { return cModelsKeyword_9_0; }
+		//'import'
+		public Keyword getImportKeyword_9_0() { return cImportKeyword_9_0; }
 		
-		//(models += Model)*
-		public Assignment getModelsAssignment_9_1() { return cModelsAssignment_9_1; }
+		//authUserRef = [AuthUser | QualifiedName]
+		public Assignment getAuthUserRefAssignment_9_1() { return cAuthUserRefAssignment_9_1; }
 		
-		//Model
-		public RuleCall getModelsModelParserRuleCall_9_1_0() { return cModelsModelParserRuleCall_9_1_0; }
+		//[AuthUser | QualifiedName]
+		public CrossReference getAuthUserRefAuthUserCrossReference_9_1_0() { return cAuthUserRefAuthUserCrossReference_9_1_0; }
 		
-		//('scenarios' (scenarios += Scenario)*)?
+		//QualifiedName
+		public RuleCall getAuthUserRefAuthUserQualifiedNameParserRuleCall_9_1_0_1() { return cAuthUserRefAuthUserQualifiedNameParserRuleCall_9_1_0_1; }
+		
+		//('ACE' (aceOperations += HttpServerAce)*	)?
 		public Group getGroup_10() { return cGroup_10; }
 		
+		//'ACE'
+		public Keyword getACEKeyword_10_0() { return cACEKeyword_10_0; }
+		
+		//(aceOperations += HttpServerAce)*
+		public Assignment getAceOperationsAssignment_10_1() { return cAceOperationsAssignment_10_1; }
+		
+		//HttpServerAce
+		public RuleCall getAceOperationsHttpServerAceParserRuleCall_10_1_0() { return cAceOperationsHttpServerAceParserRuleCall_10_1_0; }
+		
+		//('views' (views += HttpServerView)* )?
+		public Group getGroup_11() { return cGroup_11; }
+		
+		//'views'
+		public Keyword getViewsKeyword_11_0() { return cViewsKeyword_11_0; }
+		
+		//(views += HttpServerView)*
+		public Assignment getViewsAssignment_11_1() { return cViewsAssignment_11_1; }
+		
+		//HttpServerView
+		public RuleCall getViewsHttpServerViewParserRuleCall_11_1_0() { return cViewsHttpServerViewParserRuleCall_11_1_0; }
+		
+		//('models' (models += Model)*)?
+		public Group getGroup_12() { return cGroup_12; }
+		
+		//'models'
+		public Keyword getModelsKeyword_12_0() { return cModelsKeyword_12_0; }
+		
+		//(models += Model)*
+		public Assignment getModelsAssignment_12_1() { return cModelsAssignment_12_1; }
+		
+		//Model
+		public RuleCall getModelsModelParserRuleCall_12_1_0() { return cModelsModelParserRuleCall_12_1_0; }
+		
+		//('scenarios' (scenarios += Scenario)*)?
+		public Group getGroup_13() { return cGroup_13; }
+		
 		//'scenarios'
-		public Keyword getScenariosKeyword_10_0() { return cScenariosKeyword_10_0; }
+		public Keyword getScenariosKeyword_13_0() { return cScenariosKeyword_13_0; }
 		
 		//(scenarios += Scenario)*
-		public Assignment getScenariosAssignment_10_1() { return cScenariosAssignment_10_1; }
+		public Assignment getScenariosAssignment_13_1() { return cScenariosAssignment_13_1; }
 		
 		//Scenario
-		public RuleCall getScenariosScenarioParserRuleCall_10_1_0() { return cScenariosScenarioParserRuleCall_10_1_0; }
+		public RuleCall getScenariosScenarioParserRuleCall_13_1_0() { return cScenariosScenarioParserRuleCall_13_1_0; }
 	}
 	public class HttpServerAceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.HttpServerAce");
@@ -4166,10 +4196,13 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//HttpServer:
-	//    language = ('Java')
-	//    type = ('Dropwizard')?
-	//    persistenceLayer = 'JDBI3'?
-	//    migrations = 'Liquibase' ?
+	//    java ?= 'Java'?
+	//    cs ?= 'C#'?
+	//    dropwizard ?= 'Dropwizard'?
+	//    dotnet ?= 'NET6'?
+	//    JDBI3 ?= 'JDBI3'?
+	//    EF ?= 'EntityFramework'?
+	//    liquibase ?= 'Liquibase'?
 	//    name = QualifiedName
 	//    ('Authorization' authUser = AuthUser)?
 	//    ('import' authUserRef = [AuthUser | QualifiedName])?

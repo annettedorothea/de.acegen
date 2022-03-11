@@ -18,7 +18,7 @@ package de.acegen.templates.java;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -32,7 +32,7 @@ public class DropwizardAppRegistration {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   private AppRegistration appRegistration;
@@ -88,7 +88,7 @@ public class DropwizardAppRegistration {
       for(final HttpServerAce aceOperation : _aceOperations) {
         _builder.append("\t\t");
         _builder.append("environment.jersey().register(new ");
-        String _resourceName = this._aceExtension.resourceName(aceOperation);
+        String _resourceName = this._javaHttpServerExtension.resourceName(aceOperation);
         _builder.append(_resourceName, "\t\t");
         _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider));");
         _builder.newLineIfNotEmpty();

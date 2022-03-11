@@ -39,14 +39,19 @@ class AceGenGenerator extends AbstractGenerator {
 	@Inject
 	JavaGenerator javaGenerator;
 
+	@Inject
+	CsGenerator csGenerator;
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {
 			val project = resource.contents.get(0) as Project
 
 			if (project.httpClient !== null) {
 				es6Generator.doGenerate(project.httpClient, fsa);
-			} else if (project.httpServer !== null) {
+			} else if (project.httpServer !== null && project.httpServer.java) {
 				javaGenerator.doGenerate(project.httpServer, fsa);
+			} else if (project.httpServer !== null && project.httpServer.cs) {
+				csGenerator.doGenerate(project.httpServer, fsa);
 			}
 
 		}

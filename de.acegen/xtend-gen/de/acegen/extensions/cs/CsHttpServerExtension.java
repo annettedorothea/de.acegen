@@ -1,26 +1,10 @@
-/**
- * Copyright (c) 2020 Annette Pohl
- * 
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- * 
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
- * 
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- */
-package de.acegen.extensions.java;
+package de.acegen.extensions.cs;
 
 import com.google.common.base.Objects;
 import de.acegen.aceGen.AttributeParamRef;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
-import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -32,10 +16,55 @@ import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
-public class AceExtension {
+public class CsHttpServerExtension {
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
+  
+  public String controllerNamespace(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _substring = it.getName().substring(0, it.getName().lastIndexOf("."));
+    _builder.append(_substring);
+    return _builder.toString();
+  }
+  
+  public String namespace(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    _builder.append(_name);
+    return _builder.toString();
+  }
+  
+  public String fileExtension() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(".cs");
+    return _builder.toString();
+  }
+  
+  public String controllerName(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _name = it.getName();
+    int _lastIndexOf = it.getName().lastIndexOf(".");
+    int _plus = (_lastIndexOf + 1);
+    String _firstUpper = StringExtensions.toFirstUpper(_name.substring(_plus));
+    _builder.append(_firstUpper);
+    _builder.append("Controller");
+    return _builder.toString();
+  }
+  
+  public String namespaceFolder(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _replace = this.namespace(it).replace(".", "/");
+    _builder.append(_replace);
+    return _builder.toString();
+  }
+  
+  public String projectName(final HttpServer it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    return _builder.toString();
+  }
   
   public String abstractActionName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -195,10 +224,6 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public Boolean isMulitpartFormData(final HttpServerAce it) {
-    return Boolean.valueOf(((it instanceof HttpServerAceWrite) && ((HttpServerAceWrite) it).isMultipartFormData()));
-  }
-  
   public boolean isRead(final HttpServerAce it) {
     return (it instanceof HttpServerAceRead);
   }
@@ -330,20 +355,5 @@ public class AceExtension {
     _builder.append(valueVar);
     _builder.append(", StandardCharsets.UTF_8.toString()) : \"\")");
     return _builder.toString();
-  }
-  
-  public boolean isDropwizard(final HttpServer it) {
-    String _type = it.getType();
-    return Objects.equal(_type, "Dropwizard");
-  }
-  
-  public boolean isJDBI3(final HttpServer it) {
-    String _persistenceLayer = it.getPersistenceLayer();
-    return Objects.equal(_persistenceLayer, "JDBI3");
-  }
-  
-  public boolean isLiquibase(final HttpServer it) {
-    String _migrations = it.getMigrations();
-    return Objects.equal(_migrations, "Liquibase");
   }
 }

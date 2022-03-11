@@ -1081,40 +1081,67 @@ public interface AceGenPackage extends EPackage
   int HTTP_SERVER = 23;
 
   /**
-   * The feature id for the '<em><b>Language</b></em>' attribute.
+   * The feature id for the '<em><b>Java</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__LANGUAGE = 0;
+  int HTTP_SERVER__JAVA = 0;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Cs</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__TYPE = 1;
+  int HTTP_SERVER__CS = 1;
 
   /**
-   * The feature id for the '<em><b>Persistence Layer</b></em>' attribute.
+   * The feature id for the '<em><b>Dropwizard</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__PERSISTENCE_LAYER = 2;
+  int HTTP_SERVER__DROPWIZARD = 2;
 
   /**
-   * The feature id for the '<em><b>Migrations</b></em>' attribute.
+   * The feature id for the '<em><b>Dotnet</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__MIGRATIONS = 3;
+  int HTTP_SERVER__DOTNET = 3;
+
+  /**
+   * The feature id for the '<em><b>JDBI3</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__JDBI3 = 4;
+
+  /**
+   * The feature id for the '<em><b>EF</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__EF = 5;
+
+  /**
+   * The feature id for the '<em><b>Liquibase</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HTTP_SERVER__LIQUIBASE = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1123,7 +1150,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__NAME = 4;
+  int HTTP_SERVER__NAME = 7;
 
   /**
    * The feature id for the '<em><b>Auth User</b></em>' containment reference.
@@ -1132,7 +1159,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER = 5;
+  int HTTP_SERVER__AUTH_USER = 8;
 
   /**
    * The feature id for the '<em><b>Auth User Ref</b></em>' reference.
@@ -1141,7 +1168,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__AUTH_USER_REF = 6;
+  int HTTP_SERVER__AUTH_USER_REF = 9;
 
   /**
    * The feature id for the '<em><b>Ace Operations</b></em>' containment reference list.
@@ -1150,7 +1177,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__ACE_OPERATIONS = 7;
+  int HTTP_SERVER__ACE_OPERATIONS = 10;
 
   /**
    * The feature id for the '<em><b>Views</b></em>' containment reference list.
@@ -1159,7 +1186,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__VIEWS = 8;
+  int HTTP_SERVER__VIEWS = 11;
 
   /**
    * The feature id for the '<em><b>Models</b></em>' containment reference list.
@@ -1168,7 +1195,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__MODELS = 9;
+  int HTTP_SERVER__MODELS = 12;
 
   /**
    * The feature id for the '<em><b>Scenarios</b></em>' containment reference list.
@@ -1177,7 +1204,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER__SCENARIOS = 10;
+  int HTTP_SERVER__SCENARIOS = 13;
 
   /**
    * The number of structural features of the '<em>Http Server</em>' class.
@@ -1186,7 +1213,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HTTP_SERVER_FEATURE_COUNT = 11;
+  int HTTP_SERVER_FEATURE_COUNT = 14;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.HttpServerAceImpl <em>Http Server Ace</em>}' class.
@@ -3866,48 +3893,81 @@ public interface AceGenPackage extends EPackage
   EClass getHttpServer();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getLanguage <em>Language</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isJava <em>Java</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Language</em>'.
-   * @see de.acegen.aceGen.HttpServer#getLanguage()
+   * @return the meta object for the attribute '<em>Java</em>'.
+   * @see de.acegen.aceGen.HttpServer#isJava()
    * @see #getHttpServer()
    * @generated
    */
-  EAttribute getHttpServer_Language();
+  EAttribute getHttpServer_Java();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isCs <em>Cs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.acegen.aceGen.HttpServer#getType()
+   * @return the meta object for the attribute '<em>Cs</em>'.
+   * @see de.acegen.aceGen.HttpServer#isCs()
    * @see #getHttpServer()
    * @generated
    */
-  EAttribute getHttpServer_Type();
+  EAttribute getHttpServer_Cs();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getPersistenceLayer <em>Persistence Layer</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isDropwizard <em>Dropwizard</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Persistence Layer</em>'.
-   * @see de.acegen.aceGen.HttpServer#getPersistenceLayer()
+   * @return the meta object for the attribute '<em>Dropwizard</em>'.
+   * @see de.acegen.aceGen.HttpServer#isDropwizard()
    * @see #getHttpServer()
    * @generated
    */
-  EAttribute getHttpServer_PersistenceLayer();
+  EAttribute getHttpServer_Dropwizard();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getMigrations <em>Migrations</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isDotnet <em>Dotnet</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Migrations</em>'.
-   * @see de.acegen.aceGen.HttpServer#getMigrations()
+   * @return the meta object for the attribute '<em>Dotnet</em>'.
+   * @see de.acegen.aceGen.HttpServer#isDotnet()
    * @see #getHttpServer()
    * @generated
    */
-  EAttribute getHttpServer_Migrations();
+  EAttribute getHttpServer_Dotnet();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isJDBI3 <em>JDBI3</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>JDBI3</em>'.
+   * @see de.acegen.aceGen.HttpServer#isJDBI3()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_JDBI3();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isEF <em>EF</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>EF</em>'.
+   * @see de.acegen.aceGen.HttpServer#isEF()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_EF();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#isLiquibase <em>Liquibase</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Liquibase</em>'.
+   * @see de.acegen.aceGen.HttpServer#isLiquibase()
+   * @see #getHttpServer()
+   * @generated
+   */
+  EAttribute getHttpServer_Liquibase();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.HttpServer#getName <em>Name</em>}'.
@@ -6130,36 +6190,60 @@ public interface AceGenPackage extends EPackage
     EClass HTTP_SERVER = eINSTANCE.getHttpServer();
 
     /**
-     * The meta object literal for the '<em><b>Language</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Java</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_SERVER__LANGUAGE = eINSTANCE.getHttpServer_Language();
+    EAttribute HTTP_SERVER__JAVA = eINSTANCE.getHttpServer_Java();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Cs</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_SERVER__TYPE = eINSTANCE.getHttpServer_Type();
+    EAttribute HTTP_SERVER__CS = eINSTANCE.getHttpServer_Cs();
 
     /**
-     * The meta object literal for the '<em><b>Persistence Layer</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Dropwizard</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_SERVER__PERSISTENCE_LAYER = eINSTANCE.getHttpServer_PersistenceLayer();
+    EAttribute HTTP_SERVER__DROPWIZARD = eINSTANCE.getHttpServer_Dropwizard();
 
     /**
-     * The meta object literal for the '<em><b>Migrations</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Dotnet</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HTTP_SERVER__MIGRATIONS = eINSTANCE.getHttpServer_Migrations();
+    EAttribute HTTP_SERVER__DOTNET = eINSTANCE.getHttpServer_Dotnet();
+
+    /**
+     * The meta object literal for the '<em><b>JDBI3</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__JDBI3 = eINSTANCE.getHttpServer_JDBI3();
+
+    /**
+     * The meta object literal for the '<em><b>EF</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__EF = eINSTANCE.getHttpServer_EF();
+
+    /**
+     * The meta object literal for the '<em><b>Liquibase</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HTTP_SERVER__LIQUIBASE = eINSTANCE.getHttpServer_Liquibase();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

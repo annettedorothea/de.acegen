@@ -55,7 +55,7 @@ class ModelExtension {
 	
 	def String importModel(Model it) '''import «interfaceWithPackage»;'''
 	
-	def String interfaceWithPackage(Model it) '''«(eContainer as HttpServer).getName».models.«modelName»'''
+	def String interfaceWithPackage(Model it) '''«(eContainer as HttpServer).getName».Models.«modelName»'''
 	
 	def String modelGetAttribute(Model it, Attribute attribute) 
 	''' «modelParam».«attribute.getterCall» '''

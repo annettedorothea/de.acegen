@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import java.util.Arrays;
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class EventReplayService {
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -212,7 +212,7 @@ public class EventReplayService {
             String _name = java.getName();
             _builder.append(_name);
             _builder.append(".events.");
-            String _eventName = this._aceExtension.eventName(it, outcome);
+            String _eventName = this._javaHttpServerExtension.eventName(it, outcome);
             _builder.append(_eventName);
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
@@ -235,7 +235,7 @@ public class EventReplayService {
             String _name_1 = java.getName();
             _builder.append(_name_1, "\t");
             _builder.append(".events.");
-            String _eventName_1 = this._aceExtension.eventName(it, outcome);
+            String _eventName_1 = this._javaHttpServerExtension.eventName(it, outcome);
             _builder.append(_eventName_1, "\t");
             _builder.append("\", viewProvider);");
             _builder.newLineIfNotEmpty();
