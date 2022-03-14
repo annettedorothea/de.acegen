@@ -26,7 +26,7 @@ import de.acegen.templates.java.DropwizardAppRegistration
 import de.acegen.templates.java.DropwizardConfiguration
 import de.acegen.templates.java.DropwizardEventReplayCommand
 import de.acegen.templates.java.DropwizardResource
-import de.acegen.templates.java.FormData
+import de.acegen.templates.cs.FormData
 import de.acegen.templates.java.resources.GetServerInfoResource
 import de.acegen.templates.java.resources.SquishyDataProviderResource
 import javax.inject.Inject
@@ -71,29 +71,29 @@ class DotNetGenerator {
 		}
 		fsa.generateFile(httpServer.controllerNamespace + '/Controller/' + httpServer.controllerName + fileExtension,
 			ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, controller.generate(httpServer, authUser));
-	/*fsa.generateFile("de/acegen/resources/GetServerInfoResource" + fileExtension,
-	 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, getServerInfoResource.generate());
-	 * fsa.generateFile("de/acegen/resources/SquishyDataProviderResource" + fileExtension,
-	 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, squishyDataProviderResource.generate());
+		/*fsa.generateFile("de/acegen/resources/GetServerInfoResource" + fileExtension,
+		 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, getServerInfoResource.generate());
+		 * fsa.generateFile("de/acegen/resources/SquishyDataProviderResource" + fileExtension,
+		 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, squishyDataProviderResource.generate());
 
-	 * fsa.generateFile("de/acegen/App" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
-	 * 	dropwizardApp.generate(authUser));
-	 * fsa.generateFile("de/acegen/CustomAppConfiguration" + fileExtension,
-	 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE, dropwizardConfiguration.generateCustomAppConfiguration());
-	 * fsa.generateFile("de/acegen/AppConfiguration" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-	 * 	dropwizardConfiguration.generateAppConfiguration());
-	 * fsa.generateFile("de/acegen/Config" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-	 * 	dropwizardConfiguration.generateConfig());
-	 * fsa.generateFile("de/acegen/Resource" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-	 * 	dropwizardResource.generateDropwizardResource());
-	 * fsa.generateFile(httpServer.packageFolder + '/AppRegistration.java',
-	 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, dropwizardAppRegistration.generateAppRegistration(httpServer));
-	 * fsa.generateFile("de/acegen" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
-	 * 	dropwizardAppRegistration.generateAppRegistration());
-	 * fsa.generateFile("de/acegen/EventReplayCommand" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-	 * 	dropwizardEventReplayCommand.generateEventReplayCommand());
-	 * fsa.generateFile("de/acegen/FormData" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
-	 formData.generate());*/
+		 * fsa.generateFile("de/acegen/App" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
+		 * 	dropwizardApp.generate(authUser));
+		 * fsa.generateFile("de/acegen/CustomAppConfiguration" + fileExtension,
+		 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE, dropwizardConfiguration.generateCustomAppConfiguration());
+		 * fsa.generateFile("de/acegen/AppConfiguration" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+		 * 	dropwizardConfiguration.generateAppConfiguration());
+		 * fsa.generateFile("de/acegen/Config" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+		 * 	dropwizardConfiguration.generateConfig());
+		 * fsa.generateFile("de/acegen/Resource" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+		 * 	dropwizardResource.generateDropwizardResource());
+		 * fsa.generateFile(httpServer.packageFolder + '/AppRegistration.java',
+		 * 	ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, dropwizardAppRegistration.generateAppRegistration(httpServer));
+		 * fsa.generateFile("de/acegen" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
+		 * 	dropwizardAppRegistration.generateAppRegistration());
+		 * fsa.generateFile("de/acegen/EventReplayCommand" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT,
+		 * 	dropwizardEventReplayCommand.generateEventReplayCommand());*/
+		fsa.generateFile("de/acegen/FormData" + fileExtension, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE,
+			formData.generate());
 	}
 
 }

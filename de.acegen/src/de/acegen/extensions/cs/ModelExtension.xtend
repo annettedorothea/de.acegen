@@ -188,20 +188,20 @@ class ModelExtension {
 	
 	def String dataInterfaceName(Model it) '''«IF it !== null»I«name.toFirstUpper»Data«ELSE»IDataContainer«ENDIF»'''
 	
-	def String dataNameWithPackage(Model it) '''«IF it !== null»«(eContainer as HttpServer).getName».data.«dataName»«ENDIF»'''
+	def String dataNameWithPackage(Model it) '''«IF it !== null»«(eContainer as HttpServer).getName».Data.«dataName»«ENDIF»'''
 	
-	def String dataInterfaceNameWithPackage(Model it) '''«(eContainer as HttpServer).getName».data.«dataInterfaceName»'''
+	def String dataInterfaceNameWithPackage(Model it) '''«(eContainer as HttpServer).getName».Data.«dataInterfaceName»'''
 	
 	def String dataImport(Model it) '''
 		«IF it !== null»
-			import «(eContainer as HttpServer).getName».data.«dataInterfaceName»;
+			import «(eContainer as HttpServer).getName».Data.«dataInterfaceName»;
 		«ELSE»
 			import de.acegen.IDataContainer;
 		«ENDIF»
 	'''
 	def String dataClassImport(Model it) '''
 		«IF it !== null»
-			import «(eContainer as HttpServer).getName».data.«dataName»;
+			import «(eContainer as HttpServer).getName».Data.«dataName»;
 		«ELSE»
 			import de.acegen.IDataContainer;
 		«ENDIF»

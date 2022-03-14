@@ -137,7 +137,7 @@ class Data {
 				«FOR attribute : allAttributes»
 					«IF attribute.model !== null»
 						«IF attribute.list»
-							List<«attribute.model.interfaceWithPackage»> «attribute.name.toFirstLower»List = new List<«attribute.model.dataInterfaceName»>();
+							List<«attribute.model.interfaceWithPackage»> «attribute.name.toFirstLower»List = new List<«attribute.model.interfaceWithPackage»>();
 							n = random.Next(20) + 1;
 							for ( int i = 0; i < n; i++ ) {
 								«attribute.name.toFirstLower»List.Add(«attribute.model.dataNameWithPackage».GenerateTestData());
@@ -167,6 +167,17 @@ class Data {
 				int length = random.Next(20) + 5;
 				return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
 			}
+			
+			private static bool RandomBool(Random random) {
+				return random.Next() > (Int32.MaxValue / 2);
+			}
+			
+			private static float RandomFloat(Random random) {
+			    double mantissa = (random.NextDouble() * 2.0) - 1.0;
+			    double exponent = Math.Pow(2.0, random.Next(-126, 128));
+			    return (float)(mantissa * exponent);
+			}
+			
 			
 		}
 		

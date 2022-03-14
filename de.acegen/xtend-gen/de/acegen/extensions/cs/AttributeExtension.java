@@ -299,15 +299,19 @@ public class AttributeExtension {
         } else {
           boolean _equals_1 = it.getType().equals("FormData");
           if (_equals_1) {
-            _builder.append("de.acegen.FormData");
+            _builder.append("AceGen.FormData");
           } else {
             boolean _equals_2 = it.getType().equals("Boolean");
             if (_equals_2) {
-              _builder.append("bool?");
+              _builder.append("bool");
             } else {
-              String _lowerCase = it.getType().toLowerCase();
-              _builder.append(_lowerCase);
-              _builder.append("?");
+              boolean _equals_3 = it.getType().equals("Integer");
+              if (_equals_3) {
+                _builder.append("int");
+              } else {
+                String _lowerCase = it.getType().toLowerCase();
+                _builder.append(_lowerCase);
+              }
             }
           }
         }
@@ -315,7 +319,7 @@ public class AttributeExtension {
       {
         boolean _isList_1 = it.isList();
         if (_isList_1) {
-          _builder.append(">?");
+          _builder.append(">");
         }
       }
       return _builder.toString();
@@ -335,7 +339,7 @@ public class AttributeExtension {
       {
         boolean _isList_3 = it.isList();
         if (_isList_3) {
-          _builder_1.append(">?");
+          _builder_1.append(">");
         }
       }
       return _builder_1.toString();
@@ -492,22 +496,22 @@ public class AttributeExtension {
       if (_type_1 != null) {
         switch (_type_1) {
           case "Integer":
-            _switchResult = "random.nextInt(50)";
+            _switchResult = "random.Next(50)";
             break;
           case "Long":
-            _switchResult = "random.nextLong()";
+            _switchResult = "random.Next(200000)";
             break;
           case "String":
             _switchResult = "RandomString(random)";
             break;
           case "Float":
-            _switchResult = "random.nextFloat()";
+            _switchResult = "RandomFloat(random)";
             break;
           case "Boolean":
-            _switchResult = "random.nextBoolean()";
+            _switchResult = "RandomBool(random)";
             break;
           case "DateTime":
-            _switchResult = "random.nextBoolean() ? DateTime.now().plusMinutes(random.nextInt(60)) : DateTime.now().minusMinutes(random.nextInt(60)) ";
+            _switchResult = "RandomBool(random) ? DateTime.Now.AddMinutes(random.Next(60)) : DateTime.Now.AddMinutes(-1*random.Next(60)) ;";
             break;
           case "FormData":
             _switchResult = "null";
@@ -586,7 +590,7 @@ public class AttributeExtension {
     StringConcatenation _builder = new StringConcatenation();
     String _csType = this.csType(it);
     _builder.append(_csType);
-    _builder.append(" ");
+    _builder.append("? ");
     String _name = it.getName();
     _builder.append(_name);
     return _builder.toString();
@@ -596,7 +600,7 @@ public class AttributeExtension {
     StringConcatenation _builder = new StringConcatenation();
     String _csType = this.csType(it);
     _builder.append(_csType);
-    _builder.append(" ");
+    _builder.append("? ");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     _builder.append(" { get; set; }");
@@ -607,7 +611,7 @@ public class AttributeExtension {
     StringConcatenation _builder = new StringConcatenation();
     String _csType = this.csType(it);
     _builder.append(_csType);
-    _builder.append(" ");
+    _builder.append("? ");
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     _builder.append(" { get; }");

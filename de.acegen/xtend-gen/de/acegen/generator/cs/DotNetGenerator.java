@@ -19,13 +19,13 @@ import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.extensions.cs.CsHttpServerExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
+import de.acegen.templates.cs.FormData;
 import de.acegen.templates.cs.controller.Controller;
 import de.acegen.templates.java.DropwizardApp;
 import de.acegen.templates.java.DropwizardAppRegistration;
 import de.acegen.templates.java.DropwizardConfiguration;
 import de.acegen.templates.java.DropwizardEventReplayCommand;
 import de.acegen.templates.java.DropwizardResource;
-import de.acegen.templates.java.FormData;
 import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
 import javax.inject.Inject;
@@ -78,5 +78,9 @@ public class DotNetGenerator {
     String _plus_2 = (_plus_1 + _fileExtension);
     fsa.generateFile(_plus_2, 
       ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, this.controller.generate(httpServer, authUser));
+    String _fileExtension_1 = this._csHttpServerExtension.fileExtension();
+    String _plus_3 = ("de/acegen/FormData" + _fileExtension_1);
+    fsa.generateFile(_plus_3, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT_ONCE, 
+      this.formData.generate());
   }
 }

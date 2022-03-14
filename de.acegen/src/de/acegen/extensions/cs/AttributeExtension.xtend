@@ -108,10 +108,10 @@ class AttributeExtension {
 
 	def String csType(Attribute it) {
 		if (type !== null) {
-			return '''«IF list»List<«ENDIF»«IF type.equals('DateTime')»DateTime«ELSEIF type.equals('FormData')»de.acegen.FormData«ELSEIF type.equals('Boolean')»bool?«ELSE»«type.toLowerCase»?«ENDIF»«IF list»>?«ENDIF»''';
+			return '''«IF list»List<«ENDIF»«IF type.equals('DateTime')»DateTime«ELSEIF type.equals('FormData')»AceGen.FormData«ELSEIF type.equals('Boolean')»bool«ELSEIF type.equals('Integer')»int«ELSE»«type.toLowerCase»«ENDIF»«IF list»>«ENDIF»''';
 		}
 		if (model !== null) {
-			return '''«IF list»List<«ENDIF»«model.interfaceWithPackage»«IF list»>?«ENDIF»'''
+			return '''«IF list»List<«ENDIF»«model.interfaceWithPackage»«IF list»>«ENDIF»'''
 		}
 	}
 
@@ -157,12 +157,12 @@ class AttributeExtension {
 	def String randomValue(Attribute it) {
 		if (type !== null) {
 			switch type {
-				case 'Integer': "random.nextInt(50)"
-				case 'Long': "random.nextLong()"
+				case 'Integer': "random.Next(50)"
+				case 'Long': "random.Next(200000)"
 				case 'String': "RandomString(random)"
-				case 'Float': "random.nextFloat()"
-				case 'Boolean': "random.nextBoolean()"
-				case 'DateTime': "random.nextBoolean() ? DateTime.now().plusMinutes(random.nextInt(60)) : DateTime.now().minusMinutes(random.nextInt(60)) "
+				case 'Float': "RandomFloat(random)"
+				case 'Boolean': "RandomBool(random)"
+				case 'DateTime': "RandomBool(random) ? DateTime.Now.AddMinutes(random.Next(60)) : DateTime.Now.AddMinutes(-1*random.Next(60)) ;"
 				case 'FormData': "null"
 			}
 		}
@@ -189,11 +189,11 @@ class AttributeExtension {
 
 	def String paramAsJsonProperty(Attribute it) '''@JsonProperty("«name»") «param»'''
 
-	def String param(Attribute it) '''«csType» «name»'''
+	def String param(Attribute it) '''«csType»? «name»'''
 
-	def String getSet(Attribute it) '''«csType» «name.toFirstUpper» { get; set; }'''
+	def String getSet(Attribute it) '''«csType»? «name.toFirstUpper» { get; set; }'''
 	
-	def String get(Attribute it) '''«csType» «name.toFirstUpper» { get; }'''
+	def String get(Attribute it) '''«csType»? «name.toFirstUpper» { get; }'''
 
 	def String assign(Attribute it) '''this.«name.toFirstUpper» = «name»;'''
 

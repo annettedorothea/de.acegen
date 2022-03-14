@@ -467,7 +467,7 @@ public class ModelExtension {
         EObject _eContainer = it.eContainer();
         String _name = ((HttpServer) _eContainer).getName();
         _builder.append(_name);
-        _builder.append(".data.");
+        _builder.append(".Data.");
         String _dataName = this.dataName(it);
         _builder.append(_dataName);
       }
@@ -480,7 +480,7 @@ public class ModelExtension {
     EObject _eContainer = it.eContainer();
     String _name = ((HttpServer) _eContainer).getName();
     _builder.append(_name);
-    _builder.append(".data.");
+    _builder.append(".Data.");
     String _dataInterfaceName = this.dataInterfaceName(it);
     _builder.append(_dataInterfaceName);
     return _builder.toString();
@@ -494,7 +494,7 @@ public class ModelExtension {
         EObject _eContainer = it.eContainer();
         String _name = ((HttpServer) _eContainer).getName();
         _builder.append(_name);
-        _builder.append(".data.");
+        _builder.append(".Data.");
         String _dataInterfaceName = this.dataInterfaceName(it);
         _builder.append(_dataInterfaceName);
         _builder.append(";");
@@ -515,7 +515,7 @@ public class ModelExtension {
         EObject _eContainer = it.eContainer();
         String _name = ((HttpServer) _eContainer).getName();
         _builder.append(_name);
-        _builder.append(".data.");
+        _builder.append(".Data.");
         String _dataName = this.dataName(it);
         _builder.append(_dataName);
         _builder.append(";");
