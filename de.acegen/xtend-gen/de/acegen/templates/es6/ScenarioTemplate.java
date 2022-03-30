@@ -36,6 +36,11 @@ public class ScenarioTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.append("const { Builder} = require(\'selenium-webdriver\');");
+    _builder.newLine();
+    _builder.append("const chrome = require(\'selenium-webdriver/chrome\');");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("module.exports = {");
     _builder.newLine();
     _builder.append("\t");
@@ -145,7 +150,21 @@ public class ScenarioTemplate {
     _builder.append("browserName: \"firefox\"");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("//browserName: \"chrome\"");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("createDriver: function() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return new Builder()");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append(".forBrowser(ScenarioUtils.browserName)");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append(".build();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -198,8 +217,6 @@ public class ScenarioTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("const { Builder } = require(\'selenium-webdriver\');");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;");
     _builder.newLine();
@@ -228,13 +245,7 @@ public class ScenarioTemplate {
     _builder.append("beforeAll(async function () {");
     _builder.newLine();
     _builder.append("    \t");
-    _builder.append("driver = new Builder()");
-    _builder.newLine();
-    _builder.append("    \t\t\t    ");
-    _builder.append(".forBrowser(ScenarioUtils.browserName)");
-    _builder.newLine();
-    _builder.append("    \t\t\t    ");
-    _builder.append(".build();");
+    _builder.append("driver = ScenarioUtils.createDriver();");
     _builder.newLine();
     _builder.append("    \t");
     _builder.append("let appState;");

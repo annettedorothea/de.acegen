@@ -21,6 +21,9 @@ class ScenarioTemplate {
 	def generateScenarioUtils() '''
 		«copyright»
 
+		const { Builder} = require('selenium-webdriver');
+		const chrome = require('selenium-webdriver/chrome');
+
 		module.exports = {
 			tearDown: async function(driver) {
 				await driver.quit();
@@ -61,7 +64,12 @@ class ScenarioTemplate {
 			defaultTimeout: 30 * 1000,
 			
 			browserName: "firefox"
-			//browserName: "chrome"
+			
+			createDriver: function() {
+				return new Builder()
+					.forBrowser(ScenarioUtils.browserName)
+					.build();
+			}	
 			
 		}
 		
@@ -80,7 +88,6 @@ class ScenarioTemplate {
 		«IF allVerifications.size > 0»
 			const Verifications = require("../../src/«httpClient.name»/«name»Verifications");
 		«ENDIF»
-		const { Builder } = require('selenium-webdriver');
 		
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -93,9 +100,7 @@ class ScenarioTemplate {
 		    
 		describe("«httpClient.name».«name»", function () {
 		    beforeAll(async function () {
-		    	driver = new Builder()
-		    			    .forBrowser(ScenarioUtils.browserName)
-		    			    .build();
+		    	driver = ScenarioUtils.createDriver();
 		    	let appState;
 				«FOR givenRef: allGivenItems»
 					«FOR whenThenItem: givenRef.scenario.clientWhenThen»
