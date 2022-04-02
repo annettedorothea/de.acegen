@@ -2,7 +2,7 @@
 <feature
       id="de.acegen.feature"
       label="AceGen Feature"
-      version="1.7.10">
+      version="1.8.0">
 
    <description url="https://todo.acegen.de">
       If the axe is dull and its edge unsharpened, more strength is 
