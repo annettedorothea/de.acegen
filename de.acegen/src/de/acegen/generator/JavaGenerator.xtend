@@ -21,7 +21,6 @@ package de.acegen.generator
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.extensions.java.ViewExtension

@@ -20,43 +20,15 @@ package de.acegen.generator.cs
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.cs.CsHttpServerExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
-import de.acegen.templates.cs.controller.Controller
-import de.acegen.templates.java.DropwizardApp
-import de.acegen.templates.java.DropwizardAppRegistration
-import de.acegen.templates.java.DropwizardConfiguration
-import de.acegen.templates.java.DropwizardEventReplayCommand
-import de.acegen.templates.java.DropwizardResource
 import de.acegen.templates.cs.FormData
-import de.acegen.templates.java.resources.GetServerInfoResource
-import de.acegen.templates.java.resources.SquishyDataProviderResource
+import de.acegen.templates.cs.controller.Controller
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
 
 class DotNetGenerator {
 
 	@Inject
-	GetServerInfoResource getServerInfoResource;
-
-	@Inject
 	Controller controller;
-
-	@Inject
-	DropwizardApp dropwizardApp;
-
-	@Inject
-	DropwizardConfiguration dropwizardConfiguration;
-
-	@Inject
-	SquishyDataProviderResource squishyDataProviderResource;
-
-	@Inject
-	DropwizardResource dropwizardResource;
-
-	@Inject
-	DropwizardAppRegistration dropwizardAppRegistration;
-
-	@Inject
-	DropwizardEventReplayCommand dropwizardEventReplayCommand;
 
 	@Inject
 	FormData formData;

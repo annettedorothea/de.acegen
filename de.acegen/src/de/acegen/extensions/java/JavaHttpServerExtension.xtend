@@ -3,7 +3,6 @@ package de.acegen.extensions.java
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
-import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import java.util.ArrayList
 import javax.inject.Inject

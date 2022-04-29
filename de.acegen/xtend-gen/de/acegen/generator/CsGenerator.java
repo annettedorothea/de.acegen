@@ -17,35 +17,16 @@ package de.acegen.generator;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.extensions.HttpServerExtension;
 import de.acegen.extensions.cs.CsHttpServerExtension;
 import de.acegen.extensions.cs.ModelExtension;
-import de.acegen.extensions.cs.ViewExtension;
-import de.acegen.generator.cs.DaoGenerator;
 import de.acegen.generator.cs.DotNetGenerator;
 import de.acegen.templates.cs.actions.Action;
 import de.acegen.templates.cs.commands.Command;
 import de.acegen.templates.cs.data.Data;
 import de.acegen.templates.cs.events.Event;
 import de.acegen.templates.cs.models.Dao;
-import de.acegen.templates.cs.models.DaoProvider;
 import de.acegen.templates.cs.models.Model;
 import de.acegen.templates.cs.views.ViewProvider;
-import de.acegen.templates.java.AceOperation;
-import de.acegen.templates.java.Converter;
-import de.acegen.templates.java.DatabaseHandle;
-import de.acegen.templates.java.Persistence;
-import de.acegen.templates.java.ServerInfo;
-import de.acegen.templates.java.SquishyDataProvider;
-import de.acegen.templates.java.TimelineItem;
-import de.acegen.templates.java.actions.AceDataFactory;
-import de.acegen.templates.java.auth.AuthUser;
-import de.acegen.templates.java.events.EventConsumer;
-import de.acegen.templates.java.events.EventReplayService;
-import de.acegen.templates.java.scenario.BaseScenario;
-import de.acegen.templates.java.scenario.Scenario;
-import de.acegen.templates.java.scenario.YamlConfiguration;
-import de.acegen.templates.java.views.View;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -54,13 +35,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 @SuppressWarnings("all")
 public class CsGenerator {
   @Inject
-  private DaoGenerator daoGenerator;
-  
-  @Inject
   private DotNetGenerator dotNetGenerator;
-  
-  @Inject
-  private EventConsumer eventConsumer;
   
   @Inject
   private Model model;
@@ -72,13 +47,7 @@ public class CsGenerator {
   private Dao dao;
   
   @Inject
-  private DaoProvider daoProvider;
-  
-  @Inject
   private Action action;
-  
-  @Inject
-  private AceDataFactory aceDataFactory;
   
   @Inject
   private Command command;
@@ -87,58 +56,11 @@ public class CsGenerator {
   private Event event;
   
   @Inject
-  private EventReplayService eventReplayService;
-  
-  @Inject
-  private View view;
-  
-  @Inject
   private ViewProvider viewProvider;
-  
-  @Inject
-  private ServerInfo serverInfo;
-  
-  @Inject
-  private AceOperation aceOperation;
-  
-  @Inject
-  private Scenario scenario;
-  
-  @Inject
-  private BaseScenario baseScenario;
-  
-  @Inject
-  private YamlConfiguration yamlConfiguration;
-  
-  @Inject
-  private SquishyDataProvider squishyDataProvider;
-  
-  @Inject
-  private DatabaseHandle databaseHandle;
-  
-  @Inject
-  private TimelineItem timelineItem;
-  
-  @Inject
-  private Converter converter;
-  
-  @Inject
-  private Persistence persistence;
-  
-  @Inject
-  private AuthUser authUser;
-  
-  @Inject
-  @Extension
-  private ViewExtension _viewExtension;
   
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
-  @Inject
-  @Extension
-  private HttpServerExtension _httpServerExtension;
   
   @Inject
   @Extension

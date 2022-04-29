@@ -14,6 +14,7 @@ import de.acegen.scoping.AceGenScopeProvider;
 import de.acegen.serializer.AceGenSemanticSequencer;
 import de.acegen.serializer.AceGenSyntacticSequencer;
 import de.acegen.services.AceGenGrammarAccess;
+import de.acegen.validation.AceGenConfigurableIssueCodesProvider;
 import de.acegen.validation.AceGenValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -49,6 +50,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link AceGenRuntimeModule}.
@@ -139,6 +141,11 @@ public abstract class AbstractAceGenRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends AceGenValidator> bindAceGenValidator() {
 		return AceGenValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
+		return AceGenConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

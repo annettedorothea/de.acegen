@@ -17,7 +17,6 @@ package de.acegen.generator.java;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
-import de.acegen.extensions.HttpServerExtension;
 import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.java.models.Liquibase;
@@ -28,10 +27,6 @@ import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class LiquibaseGenerator {
-  @Inject
-  @Extension
-  private HttpServerExtension _httpServerExtension;
-  
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;

@@ -21,13 +21,6 @@ import de.acegen.extensions.cs.CsHttpServerExtension;
 import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.cs.FormData;
 import de.acegen.templates.cs.controller.Controller;
-import de.acegen.templates.java.DropwizardApp;
-import de.acegen.templates.java.DropwizardAppRegistration;
-import de.acegen.templates.java.DropwizardConfiguration;
-import de.acegen.templates.java.DropwizardEventReplayCommand;
-import de.acegen.templates.java.DropwizardResource;
-import de.acegen.templates.java.resources.GetServerInfoResource;
-import de.acegen.templates.java.resources.SquishyDataProviderResource;
 import javax.inject.Inject;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -35,28 +28,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 @SuppressWarnings("all")
 public class DotNetGenerator {
   @Inject
-  private GetServerInfoResource getServerInfoResource;
-  
-  @Inject
   private Controller controller;
-  
-  @Inject
-  private DropwizardApp dropwizardApp;
-  
-  @Inject
-  private DropwizardConfiguration dropwizardConfiguration;
-  
-  @Inject
-  private SquishyDataProviderResource squishyDataProviderResource;
-  
-  @Inject
-  private DropwizardResource dropwizardResource;
-  
-  @Inject
-  private DropwizardAppRegistration dropwizardAppRegistration;
-  
-  @Inject
-  private DropwizardEventReplayCommand dropwizardEventReplayCommand;
   
   @Inject
   private FormData formData;

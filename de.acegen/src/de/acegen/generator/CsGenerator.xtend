@@ -20,35 +20,15 @@
 package de.acegen.generator
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.cs.CsHttpServerExtension
 import de.acegen.extensions.cs.ModelExtension
-import de.acegen.extensions.cs.ViewExtension
-import de.acegen.generator.cs.DaoGenerator
 import de.acegen.generator.cs.DotNetGenerator
-import de.acegen.templates.java.AceOperation
-import de.acegen.templates.java.Converter
-import de.acegen.templates.java.DatabaseHandle
-import de.acegen.templates.java.Persistence
-import de.acegen.templates.java.ServerInfo
-import de.acegen.templates.java.SquishyDataProvider
-import de.acegen.templates.java.TimelineItem
-import de.acegen.templates.java.actions.AceDataFactory
 import de.acegen.templates.cs.actions.Action
-import de.acegen.templates.java.auth.AuthUser
 import de.acegen.templates.cs.commands.Command
 import de.acegen.templates.cs.data.Data
 import de.acegen.templates.cs.events.Event
-import de.acegen.templates.java.events.EventConsumer
-import de.acegen.templates.java.events.EventReplayService
 import de.acegen.templates.cs.models.Dao
-import de.acegen.templates.cs.models.DaoProvider
 import de.acegen.templates.cs.models.Model
-import de.acegen.templates.java.scenario.BaseScenario
-import de.acegen.templates.java.scenario.Scenario
-import de.acegen.templates.java.scenario.YamlConfiguration
-import de.acegen.templates.java.views.View
 import de.acegen.templates.cs.views.ViewProvider
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -56,13 +36,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 class CsGenerator {
 
 	@Inject
-	DaoGenerator daoGenerator;
-
-	@Inject
 	DotNetGenerator dotNetGenerator;
-
-	@Inject
-	EventConsumer eventConsumer;
 
 	@Inject
 	Model model;
@@ -74,13 +48,7 @@ class CsGenerator {
 	Dao dao;
 
 	@Inject
-	DaoProvider daoProvider;
-
-	@Inject
 	Action action;
-
-	@Inject
-	AceDataFactory aceDataFactory;
 
 	@Inject
 	Command command;
@@ -89,55 +57,10 @@ class CsGenerator {
 	Event event;
 
 	@Inject
-	EventReplayService eventReplayService;
-
-	@Inject
-	View view;
-
-	@Inject
 	ViewProvider viewProvider;
 
 	@Inject
-	ServerInfo serverInfo;
-
-	@Inject
-	AceOperation aceOperation;
-
-	@Inject
-	Scenario scenario;
-
-	@Inject
-	BaseScenario baseScenario;
-
-	@Inject
-	YamlConfiguration yamlConfiguration;
-
-	@Inject
-	SquishyDataProvider squishyDataProvider;
-
-	@Inject
-	DatabaseHandle databaseHandle;
-
-	@Inject
-	TimelineItem timelineItem;
-
-	@Inject
-	Converter converter;
-
-	@Inject
-	Persistence persistence;
-
-	@Inject
-	AuthUser authUser;
-
-	@Inject
-	extension ViewExtension
-
-	@Inject
 	extension ModelExtension
-
-	@Inject
-	extension HttpServerExtension
 
 	@Inject
 	extension CsHttpServerExtension
