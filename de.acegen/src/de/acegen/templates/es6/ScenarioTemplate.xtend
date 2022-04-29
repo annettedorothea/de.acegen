@@ -155,7 +155,7 @@ class ScenarioTemplate {
 				
 				«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.verifications !== null»
 					«FOR verification: whenThenItem.thenBlock.verifications»
-						it("«verification»", async () => {
+						it("«verification.functionName»", async () => {
 							expect(verifications.«verification.functionName», "verifications.«verification.functionName»").toBeTrue();
 						});
 					«ENDFOR»

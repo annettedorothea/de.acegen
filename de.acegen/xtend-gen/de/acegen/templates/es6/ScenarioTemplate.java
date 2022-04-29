@@ -493,17 +493,18 @@ public class ScenarioTemplate {
               for(final CustomVerification verification_1 : _verifications_1) {
                 _builder.append("\t");
                 _builder.append("it(\"");
-                _builder.append(verification_1, "\t");
+                String _functionName_4 = verification_1.getFunctionName();
+                _builder.append(_functionName_4, "\t");
                 _builder.append("\", async () => {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
                 _builder.append("expect(verifications.");
-                String _functionName_4 = verification_1.getFunctionName();
-                _builder.append(_functionName_4, "\t\t");
-                _builder.append(", \"verifications.");
                 String _functionName_5 = verification_1.getFunctionName();
                 _builder.append(_functionName_5, "\t\t");
+                _builder.append(", \"verifications.");
+                String _functionName_6 = verification_1.getFunctionName();
+                _builder.append(_functionName_6, "\t\t");
                 _builder.append("\").toBeTrue();");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");

@@ -15,5 +15,8 @@
    <feature url="features/de.acegen.feature_1.9.2.202204292048.jar" id="de.acegen.feature" version="1.9.2.202204292048">
       <category name="de.acegen"/>
    </feature>
+   <feature url="features/de.acegen.feature_1.9.3.202204292122.jar" id="de.acegen.feature" version="1.9.3.202204292122">
+      <category name="de.acegen"/>
+   </feature>
    <category-def name="de.acegen" label="AceGen"/>
 </site>
