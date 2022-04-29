@@ -23,10 +23,14 @@ import de.acegen.extensions.cs.ModelExtension;
 import de.acegen.extensions.cs.ViewExtension;
 import de.acegen.generator.cs.DaoGenerator;
 import de.acegen.generator.cs.DotNetGenerator;
+import de.acegen.templates.cs.actions.Action;
+import de.acegen.templates.cs.commands.Command;
 import de.acegen.templates.cs.data.Data;
+import de.acegen.templates.cs.events.Event;
 import de.acegen.templates.cs.models.Dao;
 import de.acegen.templates.cs.models.DaoProvider;
 import de.acegen.templates.cs.models.Model;
+import de.acegen.templates.cs.views.ViewProvider;
 import de.acegen.templates.java.AceOperation;
 import de.acegen.templates.java.Converter;
 import de.acegen.templates.java.DatabaseHandle;
@@ -35,17 +39,13 @@ import de.acegen.templates.java.ServerInfo;
 import de.acegen.templates.java.SquishyDataProvider;
 import de.acegen.templates.java.TimelineItem;
 import de.acegen.templates.java.actions.AceDataFactory;
-import de.acegen.templates.java.actions.Action;
 import de.acegen.templates.java.auth.AuthUser;
-import de.acegen.templates.java.commands.Command;
-import de.acegen.templates.java.events.Event;
 import de.acegen.templates.java.events.EventConsumer;
 import de.acegen.templates.java.events.EventReplayService;
 import de.acegen.templates.java.scenario.BaseScenario;
 import de.acegen.templates.java.scenario.Scenario;
 import de.acegen.templates.java.scenario.YamlConfiguration;
 import de.acegen.templates.java.views.View;
-import de.acegen.templates.java.views.ViewProvider;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -221,12 +221,52 @@ public class CsGenerator {
       }
     }
     String _fileExtension_2 = this._csHttpServerExtension.fileExtension();
-    String _plus_6 = ("AceGen/IDataContainer" + _fileExtension_2);
+    String _plus_6 = ("AceGen/AceDao" + _fileExtension_2);
     fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
-      this.data.generateIDataContainer());
+      this.dao.generateAceDao());
     String _fileExtension_3 = this._csHttpServerExtension.fileExtension();
-    String _plus_7 = ("AceGen/AbstractData" + _fileExtension_3);
+    String _plus_7 = ("AceGen/Action" + _fileExtension_3);
     fsa.generateFile(_plus_7, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.action.generateAction());
+    String _fileExtension_4 = this._csHttpServerExtension.fileExtension();
+    String _plus_8 = ("AceGen/ReadAction" + _fileExtension_4);
+    fsa.generateFile(_plus_8, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.action.generateReadAction());
+    String _fileExtension_5 = this._csHttpServerExtension.fileExtension();
+    String _plus_9 = ("AceGen/WriteAction" + _fileExtension_5);
+    fsa.generateFile(_plus_9, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.action.generateWriteAction());
+    String _fileExtension_6 = this._csHttpServerExtension.fileExtension();
+    String _plus_10 = ("AceGen/IAction" + _fileExtension_6);
+    fsa.generateFile(_plus_10, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.action.generateIAction());
+    String _fileExtension_7 = this._csHttpServerExtension.fileExtension();
+    String _plus_11 = ("AceGen/Command" + _fileExtension_7);
+    fsa.generateFile(_plus_11, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.command.generateCommand());
+    String _fileExtension_8 = this._csHttpServerExtension.fileExtension();
+    String _plus_12 = ("AceGen/ICommand" + _fileExtension_8);
+    fsa.generateFile(_plus_12, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.command.generateICommand());
+    String _fileExtension_9 = this._csHttpServerExtension.fileExtension();
+    String _plus_13 = ("AceGen/Event" + _fileExtension_9);
+    fsa.generateFile(_plus_13, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.event.generateEvent());
+    String _fileExtension_10 = this._csHttpServerExtension.fileExtension();
+    String _plus_14 = ("AceGen/IEvent" + _fileExtension_10);
+    fsa.generateFile(_plus_14, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.event.generateIEvent());
+    String _fileExtension_11 = this._csHttpServerExtension.fileExtension();
+    String _plus_15 = ("AceGen/IDataContainer" + _fileExtension_11);
+    fsa.generateFile(_plus_15, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.data.generateIDataContainer());
+    String _fileExtension_12 = this._csHttpServerExtension.fileExtension();
+    String _plus_16 = ("AceGen/AbstractData" + _fileExtension_12);
+    fsa.generateFile(_plus_16, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
       this.data.generateAbstractData());
+    String _fileExtension_13 = this._csHttpServerExtension.fileExtension();
+    String _plus_17 = ("AceGen/ViewProvider" + _fileExtension_13);
+    fsa.generateFile(_plus_17, ACEOutputConfigurationProvider.DEFAULT_CS_OUTPUT, 
+      this.viewProvider.generateViewProvider());
   }
 }

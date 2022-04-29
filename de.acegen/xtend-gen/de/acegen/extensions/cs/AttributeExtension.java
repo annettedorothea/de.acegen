@@ -29,7 +29,6 @@ import de.acegen.aceGen.Model;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.StringType;
-import de.acegen.extensions.java.ModelExtension;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

@@ -113,8 +113,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ClientThenBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateVerifications" upperBound="-1"
         eType="#//StateVerification" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verifications" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
+        eType="#//CustomVerification" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateVerification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -122,6 +122,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="not" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValueClient"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomVerification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateRef" eType="#//ClientAttribute"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JsonObjectClient" eSuperTypes="#//JsonValueClient">
     <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"

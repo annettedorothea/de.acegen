@@ -22,6 +22,7 @@ import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.ClientWhenThen;
+import de.acegen.aceGen.CustomVerification;
 import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
@@ -474,8 +475,8 @@ public class Es6Extension {
     return null;
   }
   
-  public List<String> allVerifications(final ClientScenario it) {
-    final ArrayList<String> verifications = new ArrayList<String>();
+  public List<CustomVerification> allVerifications(final ClientScenario it) {
+    final ArrayList<CustomVerification> verifications = new ArrayList<CustomVerification>();
     EList<ClientWhenThen> _clientWhenThen = it.getClientWhenThen();
     for (final ClientWhenThen clientWhenThenItem : _clientWhenThen) {
       if ((((clientWhenThenItem != null) && (clientWhenThenItem.getThenBlock() != null)) && (clientWhenThenItem.getThenBlock().getVerifications() != null))) {

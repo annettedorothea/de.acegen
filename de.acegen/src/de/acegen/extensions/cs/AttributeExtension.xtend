@@ -40,7 +40,7 @@ import javax.inject.Inject
 class AttributeExtension {
 
 	@Inject
-	extension de.acegen.extensions.java.ModelExtension;
+	extension de.acegen.extensions.cs.ModelExtension;
 
 	public String stringLineBreak = '''," + 
 "'''

@@ -97,15 +97,17 @@ class CommandTemplate {
 								data.uuid, 
 								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
 								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
-								 payload«ENDIF»«ENDIF»).then((«IF serverCall.response.size > 0»response«ENDIF») => {
-							«FOR attribute : serverCall.response»
-								data.«attribute.name» = response.«attribute.name»;
-							«ENDFOR»
-							this.handleResponse(data, resolve, reject);
-						}, (error) => {
-							data.error = error;
-							this.handleError(data, resolve, reject);
-						});
+								 payload«ENDIF»«ENDIF»)
+							.then((«IF serverCall.response.size > 0»response«ENDIF») => {
+								«FOR attribute : serverCall.response»
+									data.«attribute.name» = response.«attribute.name»;
+								«ENDFOR»
+								this.handleResponse(data, resolve, reject);
+							}, (error) => {
+								data.error = error;
+								this.handleError(data, resolve, reject);
+							})
+							.catch(x => reject(x));
 				    });
 				}
 			«ENDIF»

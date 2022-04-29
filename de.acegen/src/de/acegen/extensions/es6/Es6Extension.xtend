@@ -21,7 +21,9 @@ package de.acegen.extensions.es6
 
 import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.ClientAttribute
+import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
+import de.acegen.aceGen.CustomVerification
 import de.acegen.aceGen.FunctionCall
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
@@ -35,7 +37,6 @@ import de.acegen.aceGen.StringType
 import de.acegen.aceGen.UndefinedType
 import java.util.ArrayList
 import java.util.List
-import de.acegen.aceGen.ClientGivenRef
 
 class Es6Extension {
 	
@@ -199,8 +200,8 @@ class Es6Extension {
 		return null;
 	}
 
-	def List<String> allVerifications(ClientScenario it) {
-		val verifications = new ArrayList<String>()
+	def List<CustomVerification> allVerifications(ClientScenario it) {
+		val verifications = new ArrayList<CustomVerification>()
 		for (clientWhenThenItem : clientWhenThen) {
 			if (clientWhenThenItem !== null && clientWhenThenItem.thenBlock !== null && clientWhenThenItem.thenBlock.verifications !== null) {
 				verifications.addAll(clientWhenThenItem.thenBlock.verifications)

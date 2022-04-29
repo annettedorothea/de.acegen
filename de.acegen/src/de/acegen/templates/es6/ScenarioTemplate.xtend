@@ -133,7 +133,11 @@ class ScenarioTemplate {
 					«ENDIF»
 					«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.verifications !== null»
 						«FOR verification: whenThenItem.thenBlock.verifications»
-							verifications.«verification» = await Verifications.«verification»(driver, testId);
+							«IF verification.stateRef !== null»
+								verifications.«verification.functionName» = await Verifications.«verification.functionName»(appState.«verification.stateRef.stateRefPath»);
+							«ELSE»
+								verifications.«verification.functionName» = await Verifications.«verification.functionName»(driver, testId);
+							«ENDIF»
 						«ENDFOR»
 						
 					«ENDIF»
@@ -152,7 +156,7 @@ class ScenarioTemplate {
 				«IF whenThenItem.thenBlock !== null && whenThenItem.thenBlock.verifications !== null»
 					«FOR verification: whenThenItem.thenBlock.verifications»
 						it("«verification»", async () => {
-							expect(verifications.«verification», "verifications.«verification»").toBeTrue();
+							expect(verifications.«verification.functionName», "verifications.«verification.functionName»").toBeTrue();
 						});
 					«ENDFOR»
 				«ENDIF»
@@ -218,8 +222,12 @@ class ScenarioTemplate {
 		
 		module.exports = {
 			«FOR verification: allVerifications SEPARATOR ","»
-				«verification»: async function(driver, testId) {
-					fail("«verification» not implemented");
+				«IF verification.stateRef !== null»
+					«verification.functionName»: async function(actual) {
+				«ELSE»
+					«verification.functionName»: async function(driver, testId) {
+				«ENDIF»
+					fail("«verification.functionName» not implemented");
 				}
 			«ENDFOR»
 		}

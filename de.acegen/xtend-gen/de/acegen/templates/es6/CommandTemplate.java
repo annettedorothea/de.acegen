@@ -309,7 +309,11 @@ public class CommandTemplate {
             }
           }
         }
-        _builder.append(").then((");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append(".then((");
         {
           int _size_1 = it.getServerCall().getResponse().size();
           boolean _greaterThan_1 = (_size_1 > 0);
@@ -323,36 +327,40 @@ public class CommandTemplate {
           EList<Attribute> _response = it.getServerCall().getResponse();
           for(final Attribute attribute : _response) {
             _builder.append("\t");
-            _builder.append("\t\t\t");
+            _builder.append("\t\t\t\t");
             _builder.append("data.");
             String _name_8 = attribute.getName();
-            _builder.append(_name_8, "\t\t\t\t");
+            _builder.append(_name_8, "\t\t\t\t\t");
             _builder.append(" = response.");
             String _name_9 = attribute.getName();
-            _builder.append(_name_9, "\t\t\t\t");
+            _builder.append(_name_9, "\t\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
         }
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append("this.handleResponse(data, resolve, reject);");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("}, (error) => {");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append("data.error = error;");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append("this.handleError(data, resolve, reject);");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t");
-        _builder.append("});");
+        _builder.append("\t\t\t");
+        _builder.append("})");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append(".catch(x => reject(x));");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("    ");

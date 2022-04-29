@@ -129,11 +129,15 @@ InputValue:
 
 ClientThenBlock: {ClientThenBlock} 
 	('expectedState' stateVerifications += StateVerification*)?
-	('verifications' verifications += ID*)?
+	('verifications' verifications += CustomVerification*)?
 ;
 
 StateVerification:
 	name = ID stateRef = [ClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
+;
+
+CustomVerification:
+	functionName = ID ('(' stateRef = [ClientAttribute | QualifiedName] ')') ?
 ;
 
 JsonObjectClient:

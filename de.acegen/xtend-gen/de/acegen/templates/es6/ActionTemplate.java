@@ -444,6 +444,8 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
+    _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("export default class AsynchronousAction extends Action {");
     _builder.newLine();
@@ -603,6 +605,7 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
+    _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class SynchronousAction extends Action {");

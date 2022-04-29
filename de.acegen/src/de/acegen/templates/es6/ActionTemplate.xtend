@@ -170,6 +170,7 @@ class ActionTemplate {
 		import Action from "./Action";
 		import * as ACEController from "./ACEController";
 		import * as AppState from "../../src/AppState";
+		import * as AppUtils from "../../src/AppUtils";
 		
 		export default class AsynchronousAction extends Action {
 		
@@ -234,7 +235,7 @@ class ActionTemplate {
 		import Action from "./Action";
 		import * as ACEController from "./ACEController";
 		import * as AppState from "../../src/AppState";
-		
+		import * as AppUtils from "../../src/AppUtils";
 		
 		export default class SynchronousAction extends Action {
 		

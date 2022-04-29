@@ -1,10 +1,12 @@
 package de.acegen.templates.es6;
 
 import de.acegen.aceGen.Attribute;
+import de.acegen.aceGen.ClientAttribute;
 import de.acegen.aceGen.ClientGivenRef;
 import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.ClientWhenThen;
+import de.acegen.aceGen.CustomVerification;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.InputValue;
 import de.acegen.aceGen.SquishyValue;
@@ -395,15 +397,36 @@ public class ScenarioTemplate {
         {
           if (((whenThenItem_1.getThenBlock() != null) && (whenThenItem_1.getThenBlock().getVerifications() != null))) {
             {
-              EList<String> _verifications = whenThenItem_1.getThenBlock().getVerifications();
-              for(final String verification : _verifications) {
-                _builder.append("\t\t");
-                _builder.append("verifications.");
-                _builder.append(verification, "\t\t");
-                _builder.append(" = await Verifications.");
-                _builder.append(verification, "\t\t");
-                _builder.append("(driver, testId);");
-                _builder.newLineIfNotEmpty();
+              EList<CustomVerification> _verifications = whenThenItem_1.getThenBlock().getVerifications();
+              for(final CustomVerification verification : _verifications) {
+                {
+                  ClientAttribute _stateRef = verification.getStateRef();
+                  boolean _tripleNotEquals_1 = (_stateRef != null);
+                  if (_tripleNotEquals_1) {
+                    _builder.append("\t\t");
+                    _builder.append("verifications.");
+                    String _functionName = verification.getFunctionName();
+                    _builder.append(_functionName, "\t\t");
+                    _builder.append(" = await Verifications.");
+                    String _functionName_1 = verification.getFunctionName();
+                    _builder.append(_functionName_1, "\t\t");
+                    _builder.append("(appState.");
+                    String _stateRefPath = this._es6Extension.stateRefPath(verification.getStateRef());
+                    _builder.append(_stateRefPath, "\t\t");
+                    _builder.append(");");
+                    _builder.newLineIfNotEmpty();
+                  } else {
+                    _builder.append("\t\t");
+                    _builder.append("verifications.");
+                    String _functionName_2 = verification.getFunctionName();
+                    _builder.append(_functionName_2, "\t\t");
+                    _builder.append(" = await Verifications.");
+                    String _functionName_3 = verification.getFunctionName();
+                    _builder.append(_functionName_3, "\t\t");
+                    _builder.append("(driver, testId);");
+                    _builder.newLineIfNotEmpty();
+                  }
+                }
               }
             }
             _builder.append("\t\t");
@@ -436,8 +459,8 @@ public class ScenarioTemplate {
                 String _name_7 = stateVerification_1.getName();
                 _builder.append(_name_7, "\t\t");
                 _builder.append(".");
-                String _stateRefPath = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
-                _builder.append(_stateRefPath, "\t\t");
+                String _stateRefPath_1 = this._es6Extension.stateRefPath(stateVerification_1.getStateRef());
+                _builder.append(_stateRefPath_1, "\t\t");
                 _builder.append(", \"");
                 String _name_8 = stateVerification_1.getName();
                 _builder.append(_name_8, "\t\t");
@@ -466,8 +489,8 @@ public class ScenarioTemplate {
         {
           if (((whenThenItem_2.getThenBlock() != null) && (whenThenItem_2.getThenBlock().getVerifications() != null))) {
             {
-              EList<String> _verifications_1 = whenThenItem_2.getThenBlock().getVerifications();
-              for(final String verification_1 : _verifications_1) {
+              EList<CustomVerification> _verifications_1 = whenThenItem_2.getThenBlock().getVerifications();
+              for(final CustomVerification verification_1 : _verifications_1) {
                 _builder.append("\t");
                 _builder.append("it(\"");
                 _builder.append(verification_1, "\t");
@@ -476,9 +499,11 @@ public class ScenarioTemplate {
                 _builder.append("\t");
                 _builder.append("\t");
                 _builder.append("expect(verifications.");
-                _builder.append(verification_1, "\t\t");
+                String _functionName_4 = verification_1.getFunctionName();
+                _builder.append(_functionName_4, "\t\t");
                 _builder.append(", \"verifications.");
-                _builder.append(verification_1, "\t\t");
+                String _functionName_5 = verification_1.getFunctionName();
+                _builder.append(_functionName_5, "\t\t");
                 _builder.append("\").toBeTrue();");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
@@ -629,22 +654,36 @@ public class ScenarioTemplate {
     _builder.append("module.exports = {");
     _builder.newLine();
     {
-      List<String> _allVerifications = this._es6Extension.allVerifications(it);
+      List<CustomVerification> _allVerifications = this._es6Extension.allVerifications(it);
       boolean _hasElements = false;
-      for(final String verification : _allVerifications) {
+      for(final CustomVerification verification : _allVerifications) {
         if (!_hasElements) {
           _hasElements = true;
         } else {
           _builder.appendImmediate(",", "\t");
         }
-        _builder.append("\t");
-        _builder.append(verification, "\t");
-        _builder.append(": async function(driver, testId) {");
-        _builder.newLineIfNotEmpty();
+        {
+          ClientAttribute _stateRef = verification.getStateRef();
+          boolean _tripleNotEquals = (_stateRef != null);
+          if (_tripleNotEquals) {
+            _builder.append("\t");
+            String _functionName = verification.getFunctionName();
+            _builder.append(_functionName, "\t");
+            _builder.append(": async function(actual) {");
+            _builder.newLineIfNotEmpty();
+          } else {
+            _builder.append("\t");
+            String _functionName_1 = verification.getFunctionName();
+            _builder.append(_functionName_1, "\t");
+            _builder.append(": async function(driver, testId) {");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("fail(\"");
-        _builder.append(verification, "\t\t");
+        String _functionName_2 = verification.getFunctionName();
+        _builder.append(_functionName_2, "\t\t");
         _builder.append(" not implemented\");");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
