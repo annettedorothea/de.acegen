@@ -585,6 +585,8 @@ public class AceTemplate {
     _builder.newLine();
     _builder.append("import * as AppUtils from \"../../src/AppUtils\";");
     _builder.newLine();
+    _builder.append("import * as AppState from \"../../src/AppState\";");
+    _builder.newLine();
     _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
