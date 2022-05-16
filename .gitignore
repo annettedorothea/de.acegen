@@ -11,3 +11,4 @@ Generate AceGen (ace) Language Infrastructure.launch
 de.acegen/bin
 *.xtendbin
 *._trace
+.idea/.idea.de.acegen.dir/.idea
