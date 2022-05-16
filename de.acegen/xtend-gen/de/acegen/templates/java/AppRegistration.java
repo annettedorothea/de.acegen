@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java;
 
 import de.acegen.aceGen.HttpServer;
@@ -5,14 +20,16 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.HttpServerAceRead;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
+import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.extensions.java.ViewExtension;
 import java.util.Arrays;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 
@@ -24,7 +41,7 @@ public class AppRegistration {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   @Extension
@@ -97,7 +114,7 @@ public class AppRegistration {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -114,7 +131,7 @@ public class AppRegistration {
   
   public CharSequence registerConsumers(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations = it.getAceOperations();
@@ -138,9 +155,19 @@ public class AppRegistration {
         {
           EList<HttpServerViewFunction> _listeners = outcome.getListeners();
           for(final HttpServerViewFunction listener : _listeners) {
-            CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
-            _builder.append(_addConsumers);
-            _builder.newLineIfNotEmpty();
+            {
+              EObject _eContainer = listener.eContainer();
+              boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
+              if (_isAfterCommit) {
+                CharSequence _addAfterCommitConsumers = this.addAfterCommitConsumers(httpServer, it, outcome, listener);
+                _builder.append(_addAfterCommitConsumers);
+                _builder.newLineIfNotEmpty();
+              } else {
+                CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
+                _builder.append(_addConsumers);
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }
@@ -159,7 +186,32 @@ public class AppRegistration {
     String _name = java.getName();
     _builder.append(_name);
     _builder.append(".events.");
-    String _eventName = this._aceExtension.eventName(aceOperation, outcome);
+    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
+    _builder.append(_eventName);
+    _builder.append("\", (dataContainer, handle) -> {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("viewProvider.");
+    String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
+    _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
+    _builder.append("((");
+    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
+    _builder.append(_dataNameWithPackage, "\t");
+    _builder.append(") dataContainer, handle);");
+    _builder.newLineIfNotEmpty();
+    _builder.append("});");
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  private CharSequence addAfterCommitConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("viewProvider.addAfterCommitConsumer(\"");
+    String _name = java.getName();
+    _builder.append(_name);
+    _builder.append(".events.");
+    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
     _builder.append(_eventName);
     _builder.append("\", (dataContainer, handle) -> {");
     _builder.newLineIfNotEmpty();

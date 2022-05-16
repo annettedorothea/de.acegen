@@ -1,3 +1,20 @@
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+
 package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
@@ -110,30 +127,36 @@ class TimelineItem {
 
 	def generateTimelineItemMapper() '''
 		«copyright»
-		
+
 		package de.acegen;
 		
 		import java.sql.ResultSet;
 		import java.sql.SQLException;
-		
 		import java.time.LocalDateTime;
-		import java.time.format.DateTimeFormatter;
+		
+		
 		import org.jdbi.v3.core.mapper.RowMapper;
 		import org.jdbi.v3.core.statement.StatementContext;
 		
 		public class TimelineItemMapper implements RowMapper<ITimelineItem> {
 			
 			public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {
-				LocalDateTime time = LocalDateTime.parse(r.getString("time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+				LocalDateTime timestamp;
+				try {
+					timestamp = r.getTimestamp("time") != null ? r.getTimestamp("time").toLocalDateTime() : null;
+				} catch (Exception x) {
+					timestamp = null;
+				}
 				return new TimelineItem(
 					r.getString("type"),
 					r.getString("name"),
-					time,
+					timestamp,
 					r.getString("data"),
 					r.getString("uuid")
 				);
 			}
 		}
+		
 		
 		«sdg»
 		

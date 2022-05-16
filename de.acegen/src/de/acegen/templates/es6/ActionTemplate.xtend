@@ -1,18 +1,20 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.templates.es6
@@ -42,31 +44,33 @@ class ActionTemplate {
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»
 		«IF getLoadingFlag !== null»
-			import * as AppState from "../../ace/WriteAppState";
+			import * as AppState from "../../../src/AppState";
 		«ENDIF»
 		
 		export default class «abstractActionName» extends Action {
 		
-		    constructor(«FOR inputParam: input SEPARATOR ','» «inputParam»«ENDFOR») {
-		        super({«FOR inputParam: input SEPARATOR ', '»«inputParam»«ENDFOR»}, '«es6.getName».«actionName»');
+		    constructor() {
+		        super('«es6.getName».«actionName»');
 				«IF getLoadingFlag !== null»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
-				}
+			}
 				
 			«IF outcomes.size > 0»
 				getCommand() {
-					return new «commandName»(this.actionData);
+					return new «commandName»();
 				}
 			«ENDIF»
 		
 			«IF getLoadingFlag !== null»
 				preCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: true});
+					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: true}''')»
+					AppState.stateUpdated();
 				}
 				
 				postCall() {
-					AppState.set_«getLoadingFlag.functionName»({«getLoadingFlag.getName»: false});
+					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: false}''')»
+					AppState.stateUpdated();
 				}
 			«ENDIF»
 		
@@ -84,8 +88,8 @@ class ActionTemplate {
 		
 		export default class «actionName» extends «abstractActionName» {
 		
-		    initActionData() {
-		    	//add not replayable data to action data in order to freeze for replay (e.g. time or date)
+		    initActionData(data) {
+		    	return data;
 		    }
 		
 		}
@@ -95,29 +99,6 @@ class ActionTemplate {
 		
 	'''
 	
-	def generateActionFactoryRegistration(HttpClient it) '''
-		«copyright»
-
-		import ACEController from "../ace/ACEController";
-		«FOR aceOperation : aceOperations»
-			import «aceOperation.actionName» from "../../src/«getName»/actions/«aceOperation.actionName»";
-		«ENDFOR»
-		
-		export default class ActionFactoryRegistration«projectName» {
-		
-			static init() {
-				«FOR aceOperation : aceOperations»
-					ACEController.registerFactory('«getName».«aceOperation.actionName»', 
-						(actionData) => new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»actionData.«attr»«ENDFOR»));
-				«ENDFOR»
-			}
-		
-		}
-		
-		
-		«sdg»
-		
-	'''
 	def generateActionFunctionExports(HttpClient it) '''
 		«copyright»
 
@@ -126,11 +107,26 @@ class ActionTemplate {
 		«ENDFOR»
 		
 		«FOR aceOperation : aceOperations»
-			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR») {
-			    new «aceOperation.actionName»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr»«ENDFOR»).apply();
+			export function «aceOperation.getName.toFirstLower»(«FOR attr: aceOperation.input SEPARATOR ", "»«attr.name»«ENDFOR») {
+			    return new «aceOperation.actionName»().apply({«FOR inputParam: aceOperation.input SEPARATOR ', '»«inputParam.name»«ENDFOR»});
 			}
 			
 		«ENDFOR»
+		
+		
+		«sdg»
+		
+	'''
+	
+	def generateActionIds(HttpClient it) '''
+		«copyright»
+
+		module.exports = {
+			«FOR aceOperation : aceOperations SEPARATOR ","»
+				«aceOperation.getName.toFirstLower» : "«packageFolder»_«aceOperation.getName.toFirstLower»"
+				
+			«ENDFOR»
+		}
 		
 		
 		«sdg»
@@ -140,30 +136,27 @@ class ActionTemplate {
 	def generateAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
-		import AppUtils from "../../src/app/AppUtils";
+
+		import * as AppUtils from "../../src/AppUtils";
 		
 		export default class Action {
-		    constructor(actionData, actionName) {
+		
+		    constructor(actionName) {
 		        this.actionName = actionName;
-		        if (actionData === undefined) {
-		            actionData = {};
-		        }
-		        this.actionData = AppUtils.deepCopy(actionData);
 		    }
-		
-		    initActionData() {
+		    
+		    initSquishy(data) {
+				if (AppUtils.settings.mode === "dev") {
+				    AppUtils.readSquishyValuesClient(data);
+				} else {
+				    data.uuid = AppUtils.createUUID();
+				    data.clientSystemTime = new Date();
+				}
 		    }
-		
-		    getCommand() {
-		        throw "no command defined for " + this.actionName;
-		    }
-		
-		    apply() {
-		        ACEController.addActionToQueue(this);
-		    }
+		    
 		}
 		
+
 		
 		«sdg»
 		
@@ -173,50 +166,63 @@ class ActionTemplate {
 	def generateAsynchronousAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+
 		import Action from "./Action";
-		import AppUtils from "../../src/app/AppUtils";
+		import * as ACEController from "./ACEController";
+		import * as AppState from "../../src/AppState";
+		import * as AppUtils from "../../src/AppUtils";
 		
 		export default class AsynchronousAction extends Action {
 		
-		    constructor(actionData, actionName) {
-		    	super(actionData, actionName);
-		    	   this.asynchronous = true;
+		    constructor(actionName, callback) {
+		        super(actionName, callback);
+		        this.asynchronous = true;
 		    }
-			
-			   applyAction() {
-			       return new Promise((resolve, reject) => {
-			           if (this.preCall) {
-			           	this.preCall();
-			           }
-			           AppUtils.renderNewState();
-			           if (ACEController.execution === ACEController.UI) {
-			               this.actionData.uuid = AppUtils.createUUID();
-			               this.initActionData();
-			           }
-			           ACEController.addItemToTimeLine({action: this});
-			           let command = this.getCommand();
-					command.executeCommand().then(
-					    () => {
-					           if (this.postCall) {
-					           	this.postCall();
-					           }
-					        AppUtils.renderNewState();
-					        resolve();
-					    },
-					    (error) => {
-					           if (this.postCall) {
-					           	this.postCall();
-					           }
-					        AppUtils.renderNewState();
-					        reject(error);
-					    }
-					);
-					     });
-					 }
+		
+		    apply(data) {
+		        return new Promise((resolve) => {
+		            ACEController.addItemToTimeLine({
+		                appState: AppState.get([])
+		            });
+		            ACEController.addItemToTimeLine({
+		                action: {
+		                    actionName: this.actionName,
+		                    data
+		                }
+		            });
+		            this.initSquishy(data);
+		            this.applyAction(data).then(
+		                resolve,
+		                (error) => {
+		                    AppUtils.displayUnexpectedError(error);
+		                }
+		            );
+		        });
+		    }
+
+		    applyAction(data) {
+		        return new Promise((resolve, reject) => {
+		            this.preCall();
+		            data = this.initActionData(data);
+		            let command = this.getCommand();
+		            command.executeCommand(data).then(() => {
+		                this.postCall();
+		                resolve();
+		            }, (error) => {
+		                this.postCall();
+		                reject(error);
+		            });
+		        });
+		    }
+		
+		    preCall() {
+		    }
+		
+		    postCall() {
+		    }
 		
 		}
-		
+
 		
 		«sdg»
 		
@@ -226,29 +232,44 @@ class ActionTemplate {
 	def generateSynchronousAction() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
 		import Action from "./Action";
-		import AppUtils from "../../src/app/AppUtils";
+		import * as ACEController from "./ACEController";
+		import * as AppState from "../../src/AppState";
+		import * as AppUtils from "../../src/AppUtils";
 		
 		export default class SynchronousAction extends Action {
 		
-		    constructor(actionData, actionName) {
-		    	super(actionData, actionName);
-		    	   this.asynchronous = false;
+		    constructor(actionName, callback) {
+		    	super(actionName, callback);
+		    	this.asynchronous = false;
 		    }
+		    
+			apply(data) {
+			    ACEController.addItemToTimeLine({
+			        appState: AppState.get([])
+			    });
+			    ACEController.addItemToTimeLine({
+			        action: {
+			            actionName: this.actionName,
+			            data
+			        }
+			    });
+			    this.initSquishy(data);
+			    try {
+			        this.applyAction(data);
+			    } catch (error) {
+			        AppUtils.displayUnexpectedError(error);
+			    }
+			}
 		
-		    applyAction() {
-		    if (ACEController.execution === ACEController.UI) {
-		        this.actionData.uuid = AppUtils.createUUID();
-		        this.initActionData();
-		    }
-		    ACEController.addItemToTimeLine({action: this});
-		    let command = this.getCommand();
-		    command.executeCommand();
-		    AppUtils.renderNewState();
+		    applyAction(data) {
+		        data = this.initActionData(data);
+			    let command = this.getCommand();
+			    command.executeCommand(data);
 		    }
 		}
 		
+
 		
 		«sdg»
 		

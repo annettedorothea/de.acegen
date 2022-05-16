@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java.views;
 
 import de.acegen.extensions.CommonExtension;
@@ -75,12 +90,18 @@ public class ViewProvider {
     _builder.append("\t");
     _builder.append("private final Map<String, List<EventConsumer>> consumerMap;");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private final Map<String, List<EventConsumer>> afterCommitConsumerMap;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public AbstractViewProvider() {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("consumerMap = new HashMap<String, List<EventConsumer>>();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("afterCommitConsumerMap = new HashMap<String, List<EventConsumer>>();");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -113,10 +134,45 @@ public class ViewProvider {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("public void addAfterCommitConsumer(String eventName, EventConsumer eventConsumer) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("List<EventConsumer> consumerForEvent = afterCommitConsumerMap.get(eventName);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (consumerForEvent == null) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("consumerForEvent = new ArrayList<EventConsumer>();");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("afterCommitConsumerMap.put(eventName, consumerForEvent);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("consumerForEvent.add(eventConsumer);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("public List<EventConsumer> getConsumerForEvent(String eventName) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return consumerMap.get(eventName);");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public List<EventConsumer> getAfterCommitConsumerForEvent(String eventName) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return afterCommitConsumerMap.get(eventName);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

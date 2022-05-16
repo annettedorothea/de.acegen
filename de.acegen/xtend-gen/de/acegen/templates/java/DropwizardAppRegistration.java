@@ -1,9 +1,24 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java;
 
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAce;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AceExtension;
+import de.acegen.extensions.java.JavaHttpServerExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -17,7 +32,7 @@ public class DropwizardAppRegistration {
   
   @Inject
   @Extension
-  private AceExtension _aceExtension;
+  private JavaHttpServerExtension _javaHttpServerExtension;
   
   @Inject
   private AppRegistration appRegistration;
@@ -41,8 +56,6 @@ public class DropwizardAppRegistration {
     _builder.append("import de.acegen.CustomAppConfiguration;");
     _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
-    _builder.newLine();
-    _builder.append("import de.acegen.E2E;");
     _builder.newLine();
     _builder.append("import de.acegen.ViewProvider;");
     _builder.newLine();
@@ -68,16 +81,16 @@ public class DropwizardAppRegistration {
     _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, ");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations = it.getAceOperations();
       for(final HttpServerAce aceOperation : _aceOperations) {
         _builder.append("\t\t");
         _builder.append("environment.jersey().register(new ");
-        String _resourceName = this._aceExtension.resourceName(aceOperation);
+        String _resourceName = this._javaHttpServerExtension.resourceName(aceOperation);
         _builder.append(_resourceName, "\t\t");
-        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));");
+        _builder.append("(persistenceConnection, appConfiguration, daoProvider, viewProvider));");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -120,14 +133,14 @@ public class DropwizardAppRegistration {
     _builder.append("public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {");
+    _builder.append("IDaoProvider daoProvider, ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider, String mode) {");
+    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

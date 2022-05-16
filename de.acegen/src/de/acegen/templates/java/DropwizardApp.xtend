@@ -1,14 +1,32 @@
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+
 package de.acegen.templates.java
 
 import de.acegen.extensions.CommonExtension
 import javax.inject.Inject
+import de.acegen.aceGen.AuthUser
 
 class DropwizardApp {
 
 	@Inject
 	extension CommonExtension
 
-	def generate() '''
+	def generate(AuthUser authUser) '''
 		«copyright»
 
 		package de.acegen;
@@ -24,6 +42,9 @@ class DropwizardApp {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
+		import de.acegen.resources.GetServerInfoResource;
+		import de.acegen.resources.SquishyDataProviderResource;
+
 		import com.codahale.metrics.servlets.AdminServlet;
 		
 		import io.dropwizard.Application;
@@ -37,7 +58,7 @@ class DropwizardApp {
 		import io.dropwizard.setup.Bootstrap;
 		import io.dropwizard.setup.Environment;
 		
-		//import de.acegen.auth.AuthUser;
+		«IF authUser !== null»//import de.acegen.auth.«authUser.name.toFirstUpper»;«ENDIF»
 		
 		public class App extends Application<CustomAppConfiguration> {
 		
@@ -66,10 +87,7 @@ class DropwizardApp {
 						return configuration.getDataSourceFactory();
 					}
 				});
-		
-				if (!Config.LIVE.equals(mode)) {
-					bootstrap.addCommand(new EventReplayCommand(this));
-				}
+				//bootstrap.addCommand(new EventReplayCommand(this));
 			}
 		
 			@Override
@@ -77,44 +95,30 @@ class DropwizardApp {
 				LOG.info("running version {}", getVersion());
 		
 				DaoProvider daoProvider = new DaoProvider();
-				ViewProvider viewProvider = new ViewProvider(daoProvider, configuration);
+				ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);
 		
 				final JdbiFactory factory = new JdbiFactory();
 		
 				Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "data-source-name");
 		
-				E2E e2e = new E2E();
-		
 				mode = configuration.getConfig().getMode();
 				LOG.info("running in {} mode", mode);
-				if (Config.REPLAY.equals(mode)) {
-					environment.jersey().register(new PrepareE2EResource(jdbi, daoProvider, viewProvider, e2e, configuration));
-					environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));
-					environment.jersey().register(new StopE2ESessionResource(e2e, configuration));
-					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are running in REPLAY mode. This is a security risc.");
-				} else if (Config.DEV.equals(mode)) {
-					environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));
-					LOG.warn("You are running in DEV mode. This is a security risc.");
-				} else if (Config.TEST.equals(mode)) {
-					LOG.warn("You are running in TEST mode and the database is going to be cleared.");
-					PersistenceHandle handle = new PersistenceHandle(jdbi.open());
-					daoProvider.truncateAllViews(handle);
-					handle.getHandle().close();
-					environment.jersey().register(new NotReplayableDataProviderResource());
+				if (Config.DEV.equals(mode)) {
+					environment.jersey().register(new SquishyDataProviderResource());
 				}
 		
 				environment.jersey().register(new GetServerInfoResource());
 		
 				JdbiExceptionsBundle dbiExceptionsBundle = new JdbiExceptionsBundle();
 				environment.jersey().register(dbiExceptionsBundle);
-		
-				//environment.jersey()
-				//		.register(new AuthDynamicFeature(
-				//				new BasicCredentialAuthFilter.Builder<AuthUser>()
-				//						.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))
-				//						.setPrefix("basic").setRealm("basic private realm").buildAuthFilter()));
-				//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(AuthUser.class));
+				«IF authUser !== null»
+					//environment.jersey()
+					//		.register(new AuthDynamicFeature(
+					//				new BasicCredentialAuthFilter.Builder<«authUser.name.toFirstUpper»>()
+					//						.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))
+					//						.setPrefix("basic").setRealm("basic private realm").buildAuthFilter()));
+					//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(«authUser.name.toFirstUpper».class));
+				«ENDIF»
 		
 				environment.jersey().register(RolesAllowedDynamicFeature.class);
 		
@@ -123,23 +127,24 @@ class DropwizardApp {
 				configureCors(environment);
 		
 				AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider,
-						viewProvider, e2e);
-				AppRegistration.registerConsumers(viewProvider, mode);
+						viewProvider);
+				AppRegistration.registerConsumers(viewProvider);
 			}
 		
 			private void configureCors(Environment environment) {
 				final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 		
 				// Configure CORS parameters
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
-						"X-Requested-With,Content-Type,Accept,Origin,Authorization");
-				cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-				cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
+				cors.setInitParameter("allowedOrigins", "*");
+				cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+				cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 		
 				// Add URL mapping
 				cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 		
+				// DO NOT pass a preflight request to down-stream auth filters
+				// unauthenticated preflight requests should be permitted by spec
+				cors.setInitParameter(CrossOriginFilter.CHAIN_PREFLIGHT_PARAM, Boolean.FALSE.toString());
 			}
 		
 		}		

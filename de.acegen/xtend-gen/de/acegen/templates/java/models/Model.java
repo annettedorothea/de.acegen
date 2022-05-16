@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java.models;
 
 import de.acegen.aceGen.Attribute;
@@ -94,6 +109,11 @@ public class Model {
     }
     _builder.append("\t");
     _builder.newLine();
+    _builder.append("\t");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" deepCopy();");
+    _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -157,7 +177,7 @@ public class Model {
     }
     _builder.newLine();
     {
-      int _length = ((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length;
+      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allAttributes(it), Object.class)).length;
       boolean _greaterThan = (_length > 0);
       if (_greaterThan) {
         _builder.append("\t");
@@ -224,6 +244,37 @@ public class Model {
         _builder.newLine();
       }
     }
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public ");
+    String _modelName_1 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_1, "\t");
+    _builder.append(" deepCopy() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    String _modelName_2 = this._modelExtension.modelName(it);
+    _builder.append(_modelName_2, "\t\t");
+    _builder.append(" copy = new ");
+    String _modelClassName_3 = this._modelExtension.modelClassName(it);
+    _builder.append(_modelClassName_3, "\t\t");
+    _builder.append("();");
+    _builder.newLineIfNotEmpty();
+    {
+      List<Attribute> _allAttributes_4 = this._modelExtension.allAttributes(it);
+      for(final Attribute attribute_4 : _allAttributes_4) {
+        _builder.append("\t\t");
+        String _deepCopy = this._attributeExtension.deepCopy(attribute_4);
+        _builder.append(_deepCopy, "\t\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("return copy;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

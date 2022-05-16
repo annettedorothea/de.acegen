@@ -1,18 +1,20 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
- * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
 
 
 package de.acegen.scoping
@@ -21,19 +23,28 @@ import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
 import de.acegen.aceGen.AttributeParamRef
+import de.acegen.aceGen.ClientScenario
+import de.acegen.aceGen.ClientThenBlock
+import de.acegen.aceGen.ClientWhenBlock
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
 import de.acegen.aceGen.HttpServerViewFunction
+import de.acegen.aceGen.InputValue
 import de.acegen.aceGen.JsonArray
+import de.acegen.aceGen.JsonArrayClient
 import de.acegen.aceGen.JsonMember
+import de.acegen.aceGen.JsonMemberClient
 import de.acegen.aceGen.JsonObject
+import de.acegen.aceGen.JsonObjectClient
 import de.acegen.aceGen.Model
 import de.acegen.aceGen.PersistenceVerification
 import de.acegen.aceGen.Scenario
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
+import de.acegen.aceGen.StateVerification
 import de.acegen.aceGen.ThenBlock
 import de.acegen.aceGen.WhenBlock
 import de.acegen.extensions.java.ModelExtension
@@ -42,7 +53,6 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
 
@@ -58,13 +68,26 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 	extension ModelExtension
 
 	override getScope(EObject context, EReference reference) {
-		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE) {
+		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
+			val clientWhenBlock = context as ClientWhenBlock;
+			return Scopes.scopeFor(clientWhenBlock.action.input)
+		}
+		if (context instanceof InputValue && reference == AceGenPackage.Literals.INPUT_VALUE__INPUT) {
+			val parent = context.eContainer
+			if (parent instanceof ClientWhenBlock) {
+				val input = (parent as ClientWhenBlock).action.input
+				return Scopes.scopeFor(input)
+			}
+		}
+		if ((context instanceof HttpServerAceRead || context instanceof HttpServerAceWrite) &&
+			reference == AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE) {
 			val javaAce = context as HttpServerAce;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
 			return Scopes.scopeFor(attrs)
 		}
-		if (context instanceof HttpServerAce && reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
+		if ((context instanceof HttpServerAceRead || context instanceof HttpServerAceWrite) &&
+			reference == AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE) {
 			val javaAce = context as HttpServerAce;
 			val attrs = new ArrayList<Attribute>();
 			javaAce.getModel.allAttributesRec(attrs);
@@ -89,6 +112,17 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 				val scope = super.getScope(context, reference)
 				return new FilteringScope(scope, [(getEObjectOrProxy as HttpServerAceWrite).getModel.equals(aceModel)])
 			}
+		}
+		if (context instanceof ClientWhenBlock && reference == AceGenPackage.Literals.SQUISHY_VALUE__ATTRIBUTE) {
+			val scope = super.getScope(context, reference)
+			val filtered = new ArrayList<Attribute>();
+			for(element: scope.allElements) {
+				val attribute = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Attribute
+				if (attribute.squishy) {
+					filtered.add(attribute)
+				}
+			}
+			return Scopes.scopeFor(filtered)
 		}
 		if (context instanceof Model) {
 			val aceModel = context as Model
@@ -142,8 +176,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			}
 			return Scopes.scopeFor(filtered)
 		}
-		if (context instanceof Count &&
-			reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
+		if (context instanceof Count && reference == AceGenPackage.Literals.ATTRIBUTE_AND_VALUE__ATTRIBUTE) {
 			val persistenceVerification = context.eContainer as PersistenceVerification
 			val model = persistenceVerification.model
 			val attrs = new ArrayList<Attribute>();
@@ -154,7 +187,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			reference == AceGenPackage.Literals.PERSISTENCE_VERIFICATION__MODEL) {
 			val scope = super.getScope(context, reference);
 			val models = new ArrayList<Model>();
-			for (element: scope.allElements) {
+			for (element : scope.allElements) {
 				val model = EcoreUtil2.resolve(element.EObjectOrProxy, context) as Model
 				if (model.persistent) {
 					models.add(model)
@@ -168,11 +201,13 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 			var isWhen = false
 			var isVerification = false
 			var PersistenceVerification persistenceVerification = null
-			while (parent !== null && !((parent instanceof Scenario) || (parent instanceof JsonMember))) {
-				if (parent instanceof ThenBlock) {
+			while (parent !== null && !(
+				parent instanceof Scenario || parent instanceof JsonMember || parent instanceof ClientScenario
+			)) {
+				if (parent instanceof ThenBlock || parent instanceof ClientThenBlock) {
 					isThen = true
 				}
-				if (parent instanceof WhenBlock) {
+				if (parent instanceof WhenBlock || parent instanceof ClientWhenBlock) {
 					isWhen = true
 				}
 				if (parent instanceof PersistenceVerification) {
@@ -190,36 +225,85 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 					return Scopes.scopeFor(attrs)
 				} else if (isWhen) {
 					var attr = new ArrayList<Attribute>();
-					for (attributeRef : scenario.whenBlock.action.payload) {
-						attr.add(attributeRef.attribute)
+					for (whenThenItem : scenario.whenThen) {
+						for (attributeRef : whenThenItem.whenBlock.action.payload) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.queryParams) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : whenThenItem.whenBlock.action.pathParams) {
+							attr.add(attributeRef.attribute)
+						}
+						attr.addAll(whenThenItem.whenBlock.action.model.allSquishyAttributes)
 					}
-					for (attributeRef : scenario.whenBlock.action.queryParams) {
-						attr.add(attributeRef.attribute)
-					}
-					for (attributeRef : scenario.whenBlock.action.pathParams) {
-						attr.add(attributeRef.attribute)
-					}
-					attr.addAll(scenario.whenBlock.action.model.allNotReplayableAttributes)
 					return Scopes.scopeFor(attr);
 				} else if (isThen) {
-					return Scopes.scopeFor(scenario.whenBlock.action.response);
+					var attr = new ArrayList<Attribute>();
+					for (whenThenItem : scenario.whenThen) {
+						for (attribute : whenThenItem.whenBlock.action.response) {
+							attr.add(attribute)
+						}
+					}
+					return Scopes.scopeFor(attr);
+				}
+			}
+			if (parent instanceof ClientScenario) {
+				val scenario = parent as ClientScenario;
+				if (isWhen) {
+					var attr = new ArrayList<Attribute>();
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+						attr.addAll(clientWhenThenItem.whenBlock.action.serverCall.response)
+					}
+					return Scopes.scopeFor(attr);
+				}
+				if (isThen) {
+					var attr = new ArrayList<Attribute>();
+					for (clientWhenThenItem : scenario.clientWhenThen) {
+					if (clientWhenThenItem.whenBlock.action.serverCall !== null) {
+						val serverCall = clientWhenThenItem.whenBlock.action.serverCall
+						for (attributeRef : serverCall.payload) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : serverCall.queryParams) {
+							attr.add(attributeRef.attribute)
+						}
+						for (attributeRef : serverCall.pathParams) {
+							attr.add(attributeRef.attribute)
+						}
+					}
+					}
+					return Scopes.scopeFor(attr);
 				}
 			}
 			if (parent instanceof JsonMember) {
+				var attr = new ArrayList<Attribute>();
 				val jsonMember = parent as JsonMember;
-				if (jsonMember.attribute.model !== null) {
+				if (jsonMember.attribute !== null && jsonMember.attribute.getModel !== null) {
 					val model = jsonMember.attribute.model as Model
-					return getScopeFor(model);
+					model.allAttributesRec(attr)
+				}
+				return Scopes.scopeFor(attr);
+			}
+		}
+		if (context instanceof JsonObjectClient || context instanceof JsonArrayClient ||
+			context instanceof JsonMemberClient) {
+			var parent = context.eContainer
+			while (parent !== null && !(parent instanceof StateVerification || parent instanceof JsonMemberClient)) {
+				parent = parent.eContainer
+			}
+			if (parent !== null) {
+				if (parent instanceof StateVerification) {
+					val stateVerification = parent as StateVerification
+					return Scopes.scopeFor(stateVerification.stateRef.attributes)
+				}
+				if (parent instanceof JsonMemberClient) {
+					val jsonMemberClient = parent as JsonMemberClient
+					return Scopes.scopeFor(jsonMemberClient.attribute.attributes)
 				}
 			}
 		}
 		return super.getScope(context, reference);
-	}
-
-	private def IScope getScopeFor(Model aceModel) {
-		val attrs = new ArrayList<Attribute>();
-		aceModel.allAttributesRec(attrs);
-		return Scopes.scopeFor(attrs)
 	}
 
 }

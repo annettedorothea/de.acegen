@@ -1,23 +1,21 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.generator;
 
-import com.google.common.base.Objects;
 import de.acegen.aceGen.HttpClient;
-import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Project;
 import javax.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
@@ -39,9 +37,6 @@ public class AceGenGenerator extends AbstractGenerator {
   @Inject
   private JavaGenerator javaGenerator;
   
-  @Inject
-  private CSGenerator csGenerator;
-  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
@@ -52,20 +47,8 @@ public class AceGenGenerator extends AbstractGenerator {
       if (_tripleNotEquals) {
         this.es6Generator.doGenerate(project.getHttpClient(), fsa);
       } else {
-        HttpServer _httpServer = project.getHttpServer();
-        boolean _tripleNotEquals_1 = (_httpServer != null);
-        if (_tripleNotEquals_1) {
-          String _language = project.getHttpServer().getLanguage();
-          boolean _equals = Objects.equal(_language, "Java");
-          if (_equals) {
-            this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
-          } else {
-            String _language_1 = project.getHttpServer().getLanguage();
-            boolean _equals_1 = Objects.equal(_language_1, "C#");
-            if (_equals_1) {
-              this.csGenerator.doGenerate(project.getHttpServer(), fsa);
-            }
-          }
+        if (((project.getHttpServer() != null) && project.getHttpServer().isJava())) {
+          this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
         }
       }
     }

@@ -1,29 +1,38 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.extensions.es6
 
-import java.util.ArrayList
-import java.util.List
+import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.aceGen.HttpClientOutcome
-import de.acegen.aceGen.HttpClient
+import de.acegen.aceGen.HttpClientStateFunction
+import java.util.ArrayList
+import java.util.List
+import javax.inject.Inject
+import de.acegen.extensions.HttpServerExtension
 
 class AceExtension {
+
+	@Inject
+	extension HttpServerExtension
+	
 	
 	def String abstractActionName(HttpClientAce it) '''Abstract«getName.toFirstUpper»Action'''
 
@@ -41,12 +50,24 @@ class AceExtension {
 
 	def String commandName(HttpClientAce it) '''«getName.toFirstUpper»Command'''
 
-	def List<HttpClientAce> triggeredAceOperations(HttpClientAce it) {
+	def List<HttpClientAce> aggregatedTriggeredAceOperations(HttpClientAce it) {
 		var list = new ArrayList<HttpClientAce>();
 		for (outcome : outcomes) {
-			for (aceOperation : outcome.aceOperations) {
-				if (!list.contains(aceOperation)) {
-					list.add(aceOperation);
+			for (triggerdAceOperation : outcome.triggerdAceOperations) {
+				if (!list.contains(triggerdAceOperation.aceOperation)) {
+					list.add(triggerdAceOperation.aceOperation);
+				}
+			}
+		}
+		return list;
+	}
+
+	def List<HttpClientStateFunction> aggregatedListeners(HttpClientAce it) {
+		var list = new ArrayList<HttpClientStateFunction>();
+		for (outcome : outcomes) {
+			for (listener : outcome.listeners) {
+				if (!list.contains(listener)) {
+					list.add(listener);
 				}
 			}
 		}
@@ -58,10 +79,31 @@ class AceExtension {
 	def String eventNameWithPackage(HttpClientAce it,
 		HttpClientOutcome outcome) '''«(eContainer as HttpClient).getName».events.«eventName(outcome)»'''
 
-	def String httpCall(HttpClientAce it) '''«IF getServerCall.getType == "DELETE"»httpDelete«ELSEIF getServerCall.getType == "POST"»httpPost«ELSEIF getServerCall.getType == "PUT"»httpPut«ELSE»httpGet«ENDIF»'''
+	def String httpCall(HttpClientAce it) {
+		if (getServerCall.isMulitpartFormData) {
+			if (getServerCall.getType == "POST") {
+				return "httpMulitpartFormDataPost"
+			} else {
+				return "httpMulitpartFormDataPut"
+			}
+		} else {
+			if (getServerCall.getType == "DELETE") {
+				return "httpDelete"
+			} else if (getServerCall.getType == "POST") {
+				return "httpPost"
+			} else if (getServerCall.getType == "PUT") {
+				return "httpPut"
+			} else {
+				return "httpGet"
+			}
+		}
+	}
 
 	def String httpUrl(HttpClientAce it) {
 		var url = getServerCall.getUrl;
+		if (url.indexOf('/') != 0) {
+			url = "/" + url
+		} 
 		val split1 = url.split('\\{')
 		var urlElements = new ArrayList();
 		for (split : split1) {
@@ -73,10 +115,10 @@ class AceExtension {
 			if (i%2 == 0) {
 				urlWithPathParam += urlElements.get(i)
 			} else {
-				urlWithPathParam += '''${this.commandData.«urlElements.get(i)»}'''
+				urlWithPathParam += '''${data.«urlElements.get(i)»}'''
 			}
 		}
-		return "/${Utils.getRootPath()}" + urlWithPathParam;
+		return "${AppUtils.settings.rootPath}" + urlWithPathParam;
 	}
 
 }

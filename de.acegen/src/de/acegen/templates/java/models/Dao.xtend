@@ -1,3 +1,20 @@
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+
 package de.acegen.templates.java.models
 
 import de.acegen.aceGen.HttpServer
@@ -117,6 +134,7 @@ class Dao {
 		import java.util.List;
 		import java.util.Optional;
 		import java.util.concurrent.ConcurrentLinkedQueue;
+		import java.time.LocalDateTime;
 		
 		import org.jdbi.v3.core.statement.Update;
 		
@@ -160,12 +178,13 @@ class Dao {
 				return count > 0;
 			}
 		
-			public void insertIntoTimeline(PersistenceHandle handle, String type, String name, String data, String uuid) {
-				Update statement = handle.getHandle().createUpdate("INSERT INTO timeline (type, name, time, data, uuid) " + "VALUES (:type, :name, NOW(), :data, :uuid);");
+			private void insertIntoTimeline(PersistenceHandle handle, String type, String name, String data, String uuid, LocalDateTime timestamp) {
+				Update statement = handle.getHandle().createUpdate("INSERT INTO timeline (type, name, time, data, uuid) " + "VALUES (:type, :name, :timestamp, :data, :uuid);");
 				statement.bind("type", type);
 				statement.bind("name", name);
 				statement.bind("data", data);
 				statement.bind("uuid", uuid);
+				statement.bind("timestamp", LocalDateTime.now());
 				statement.execute();
 			}
 		
@@ -189,39 +208,22 @@ class Dao {
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public void addActionToTimeline(IAction<? extends IDataContainer> action, PersistenceHandle timelineHandle) {
-				try {
-					String json = mapper.writeValueAsString(action.getActionData());
-					addItemToTimeline("action", action.getActionName(), json,
-							action.getActionData().getUuid(), timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addActionToTimeline(String actionName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("action", actionName, data, timelineHandle);
 			}
 		
-			public void addCommandToTimeline(ICommand command, PersistenceHandle timelineHandle) {
-				try {
-					addItemToTimeline("command", command.getCommandName(),
-							mapper.writeValueAsString(command.getCommandData()), command.getCommandData().getUuid(),
-							timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addCommandToTimeline(String commandName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("command", commandName, data, timelineHandle);
 			}
 		
-			public void addEventToTimeline(IEvent event, PersistenceHandle timelineHandle) {
-				try {
-					addItemToTimeline("event", event.getEventName(), mapper.writeValueAsString(event.getEventData()),
-							event.getEventData().getUuid(), timelineHandle);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
+			public void addEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
+				addItemToTimeline("event", eventName, data, timelineHandle);
 			}
 		
-			public void addPreparingEventToTimeline(IEvent event, String uuid, PersistenceHandle timelineHandle) {
+			public void addPreparingEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
 				try {
-					addItemToTimeline("preparing event", event.getEventName(),
-							mapper.writeValueAsString(event.getEventData()), uuid, timelineHandle);
+					String json = mapper.writeValueAsString(data);
+					this.insertIntoTimeline(timelineHandle, "preparing event", eventName, json, data.getUuid(), LocalDateTime.now());
 				} catch (JsonProcessingException e) {
 					throw new RuntimeException(e);
 				}
@@ -229,12 +231,17 @@ class Dao {
 		
 			public void addExceptionToTimeline(String uuid, Throwable x, PersistenceHandle timelineHandle) {
 				this.insertIntoTimeline(timelineHandle, "exception", x.getClass().getName(),
-						x.getMessage() != null ? x.getMessage() : "", uuid);
+						x.getMessage() != null ? x.getMessage() : "", uuid, LocalDateTime.now());
 			}
 		
-			private void addItemToTimeline(String type, String name, String json, String uuid,
+			private void addItemToTimeline(String type, String name, IDataContainer data, 
 					PersistenceHandle timelineHandle) {
-				this.insertIntoTimeline(timelineHandle, type, name, json, uuid);
+				try {
+					String json = mapper.writeValueAsString(data);
+					this.insertIntoTimeline(timelineHandle, type, name, json, data.getUuid(), data.getSystemTime());
+				} catch (JsonProcessingException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		
 		}

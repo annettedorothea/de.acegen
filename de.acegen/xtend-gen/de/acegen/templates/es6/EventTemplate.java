@@ -1,20 +1,21 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.templates.es6;
 
+import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -41,55 +42,15 @@ public class EventTemplate {
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generateAbstractEventFile(final HttpClientAce it, final HttpClientOutcome outcome, final HttpClient es6) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyright = this._commonExtension.copyright();
-    _builder.append(_copyright);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import Event from \"../../../gen/ace/Event\";");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("export default class ");
-    String _eventName = this._aceExtension.eventName(it, outcome);
-    _builder.append(_eventName);
-    _builder.append(" extends Event {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("    ");
-    _builder.append("constructor(eventData) {");
-    _builder.newLine();
-    _builder.append("        ");
-    _builder.append("super(eventData, \'");
-    String _name = es6.getName();
-    _builder.append(_name, "        ");
-    _builder.append(".");
-    String _eventName_1 = this._aceExtension.eventName(it, outcome);
-    _builder.append(_eventName_1, "        ");
-    _builder.append("\');");
-    _builder.newLineIfNotEmpty();
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.newLine();
-    String _sdg = this._commonExtension.sdg();
-    _builder.append(_sdg);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence generateEventListenerRegistration(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import ACEController from \"../ace/ACEController\";");
+    _builder.append("import * as ACEController from \"../ace/ACEController\";");
     _builder.newLine();
-    _builder.append("import * as AppState from \"../ace/WriteAppState\";");
+    _builder.append("import * as AppState from \"../../src/AppState\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class EventListenerRegistration");
@@ -124,6 +85,23 @@ public class EventTemplate {
                 _builder.newLineIfNotEmpty();
               }
             }
+            {
+              EList<FunctionCall> _functions = outcome.getFunctions();
+              for(final FunctionCall function : _functions) {
+                _builder.append("\t\t");
+                _builder.append("ACEController.registerListener(\'");
+                String _name_1 = it.getName();
+                _builder.append(_name_1, "\t\t");
+                _builder.append(".");
+                String _eventName_1 = this._aceExtension.eventName(aceOperation, outcome);
+                _builder.append(_eventName_1, "\t\t");
+                _builder.append("\', ");
+                String _appStateFunction_1 = this._es6Extension.appStateFunction(function);
+                _builder.append(_appStateFunction_1, "\t\t");
+                _builder.append(");");
+                _builder.newLineIfNotEmpty();
+              }
+            }
           }
         }
       }
@@ -149,41 +127,61 @@ public class EventTemplate {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import AppUtils from \"../../src/app/AppUtils\";");
-    _builder.newLine();
-    _builder.append("import ACEController from \"./ACEController\";");
+    _builder.append("import * as ACEController from \"./ACEController\";");
     _builder.newLine();
     _builder.newLine();
     _builder.append("export default class Event {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("constructor(eventData, eventName) {");
+    _builder.append("constructor(eventName) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.eventName = eventName;");
     _builder.newLine();
+    _builder.append("    ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("publish(data) {");
+    _builder.newLine();
     _builder.append("        ");
-    _builder.append("this.eventData = AppUtils.deepCopy(eventData);");
+    _builder.append("ACEController.addItemToTimeLine({");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("event: {");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("eventName: this.eventName,");
+    _builder.newLine();
+    _builder.append("                ");
+    _builder.append("data");
+    _builder.newLine();
+    _builder.append("            ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("});");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("this.notifyListeners(data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("publish() {");
+    _builder.append("replay(data) {");
     _builder.newLine();
     _builder.append("        ");
-    _builder.append("this.notifyListeners();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("ACEController.addItemToTimeLine({event: this});");
+    _builder.append("this.notifyListeners(data);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("notifyListeners() {");
+    _builder.append("notifyListeners(data) {");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("let i, listener;");
@@ -204,7 +202,7 @@ public class EventTemplate {
     _builder.append("listener = listenersForEvent[i];");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
-    _builder.append("listener(AppUtils.deepCopy(this.eventData));");
+    _builder.append("listener(data);");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("}");

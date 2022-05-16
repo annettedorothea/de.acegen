@@ -1,18 +1,20 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.templates.es6
@@ -20,7 +22,10 @@ package de.acegen.templates.es6
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientAce
 import de.acegen.extensions.CommonExtension
+import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.es6.AceExtension
+import de.acegen.extensions.es6.Es6Extension
+import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
 class CommandTemplate {
@@ -30,74 +35,138 @@ class CommandTemplate {
 	@Inject
 	extension CommonExtension
 	
+	@Inject
+	extension Es6Extension
+	
+	@Inject
+	extension HttpServerExtension
+
+	@Inject
+	extension ModelExtension
+	
+	def boolean hasEventOutcome(HttpClientAce it) {
+		for(outcome: outcomes) {
+			if (outcome.listeners.size > 0 || outcome.functions.size > 0) {
+				return true;
+			}
+		}
+		return false
+	}
+	
 	def generateAsynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/AsynchronousCommand";
-		import TriggerAction from "../../../gen/ace/TriggerAction";
-		import Utils from "../../ace/Utils";
-		import ACEController from "../../ace/ACEController";
-		«FOR outcome : outcomes»
-			«IF outcome.listeners.size > 0»
-				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
-			«ENDIF»
-		«ENDFOR»
-		«FOR aceOperation : triggeredAceOperations»
+		import AsynchronousCommand from "../../ace/AsynchronousCommand";
+		import Event from "../../ace/Event";
+		import * as AppUtils from "../../../src/AppUtils";
+		import * as AppState from "../../../src/AppState";
+		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
 		
-		export default class «abstractCommandName» extends Command {
-		    constructor(commandData) {
-		        super(commandData, "«es6.getName».«commandName»");
-		        «FOR outcome : outcomes»
-		        	this.«outcome.getName» = "«outcome.getName»";
-		        «ENDFOR»
-		    }
-		
-		    publishEvents() {
-				let promises = [];
-			    	
-				switch (this.commandData.outcome) {
-				«FOR outcome : outcomes»
-					case this.«outcome.getName»:
-						«IF outcome.listeners.size > 0»
-							promises.push(new «eventName(outcome)»(this.commandData).publish());
-						«ENDIF»
-						«FOR aceOperation : outcome.aceOperations»
-							promises.push(new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam»«ENDFOR»)).publish());
-						«ENDFOR»
-						break;
-				«ENDFOR»
-				default:
-					return new Promise((resolve, reject) => {reject('«commandName» unhandled outcome: ' + this.commandData.outcome)});
-				}
-				return Promise.all(promises);
+		export default class «abstractCommandName» extends AsynchronousCommand {
+		    constructor() {
+		        super("«es6.getName».«commandName»");
 		    }
 		    
+		    initCommandData(data) {
+		        «FOR ref : refs»
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
+		        «ENDFOR»
+		        data.outcomes = [];
+		    }
+		
+			«FOR outcome : outcomes»
+				add«outcome.getName.toFirstUpper»Outcome(data) {
+					data.outcomes.push("«outcome.getName»");
+				}
+			«ENDFOR»
+
 			«IF serverCall !== null»
-				execute() {
+				execute(data) {
 				    return new Promise((resolve, reject) => {
-				    	«IF serverCall.type != 'GET'»
+				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
 				    		let payload = {
-				    			uuid : this.commandData.uuid«FOR payload : getServerCall.payload BEFORE ",\n" SEPARATOR ",\n"»«payload.attribute.name» : this.commandData.«payload.attribute.name»«ENDFOR»
+				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
 				    		};
+				    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
+				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
 				        «ENDIF»
-				
-						this.«httpCall»(`«httpUrl»?uuid=${this.commandData.uuid}«FOR queryParam : getServerCall.queryParams»&«queryParam.attribute.name»=${this.commandData.«queryParam.attribute.name»}«ENDFOR»`, «IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0», payload«ENDIF»).then((data) => {
-							«FOR responseAttribute : getServerCall.response»
-								this.commandData.«responseAttribute.name» = data.«responseAttribute.name»;
-							«ENDFOR»
-							this.handleResponse(resolve, reject);
-						}, (error) => {
-							this.commandData.error = error;
-							this.handleError(resolve, reject);
-						});
+						AppUtils.«httpCall»(
+								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
+								data.uuid, 
+								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
+								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
+								 payload«ENDIF»«ENDIF»)
+							.then((«IF serverCall.response.size > 0»response«ENDIF») => {
+								«FOR attribute : serverCall.response»
+									data.«attribute.name» = response.«attribute.name»;
+								«ENDFOR»
+								this.handleResponse(data, resolve, reject);
+							}, (error) => {
+								data.error = error;
+								this.handleError(data, resolve, reject);
+							})
+							.catch(x => reject(x));
 				    });
 				}
 			«ENDIF»
-		
+			
+			publishEvents(data) {
+				return new Promise((resolve) => {
+					const events = [];
+					const actionsToBeTriggered = [];
+					«FOR outcome : outcomes»
+						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+							if (data.outcomes.includes("«outcome.getName»")) {
+								events.push(new Event('«es6.getName».«eventName(outcome)»'));
+								«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+									«IF triggerdAceOperation.delay == 0»
+										actionsToBeTriggered.push(
+											{
+												action: new «triggerdAceOperation.aceOperation.actionName»(), 
+												data: {
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												}
+											}
+										);
+									«ELSE»
+										«IF triggerdAceOperation.takeLatest»
+											this.triggerWithDelayTakeLatest(new «triggerdAceOperation.aceOperation.actionName»(), 
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
+												«triggerdAceOperation.delay»
+											);
+										«ELSE»
+											this.triggerWithDelay(new «triggerdAceOperation.aceOperation.actionName»(), 
+												{
+													«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+														«inputParam.name»: data.«inputParam.name»
+													«ENDFOR»
+												},
+												«triggerdAceOperation.delay»
+											);
+										«ENDIF»
+									«ENDIF»
+								«ENDFOR»
+							}
+						«ENDIF»
+					«ENDFOR»
+					
+					this.publish(events, data).then(() => {
+				  		AppState.stateUpdated();
+						this.trigger(actionsToBeTriggered).then(resolve);
+					});
+				})
+			
+			}
+
 		}
-		
 		
 		«sdg»
 		
@@ -106,43 +175,84 @@ class CommandTemplate {
 	def generateSynchronousAbstractCommandFile(HttpClientAce it, HttpClient es6) '''
 		«copyright»
 
-		import Command from "../../../gen/ace/SynchronousCommand";
-		import TriggerAction from "../../../gen/ace/TriggerAction";
-		«FOR outcome : outcomes»
-			«IF outcome.listeners.size > 0»
-				import «eventName(outcome)» from "../../../gen/«es6.getName»/events/«eventName(outcome)»";
-			«ENDIF»
-		«ENDFOR»
-		«FOR aceOperation : triggeredAceOperations»
+		import SynchronousCommand from "../../ace/SynchronousCommand";
+		import Event from "../../ace/Event";
+		«FOR aceOperation : aggregatedTriggeredAceOperations»
 			import «aceOperation.actionName» from "../../../src/«(aceOperation.eContainer as HttpClient).getName»/actions/«aceOperation.actionName»";
 		«ENDFOR»
+		import * as AppUtils from "../../../src/AppUtils";
+		import * as AppState from "../../../src/AppState";
 		
-		export default class «abstractCommandName» extends Command {
-		    constructor(commandData) {
-		        super(commandData, "«es6.getName».«commandName»");
-		        «FOR outcome : outcomes»
-		        	this.«outcome.getName» = "«outcome.getName»";
+		export default class «abstractCommandName» extends SynchronousCommand {
+		    constructor() {
+		        super("«es6.getName».«commandName»");
+		    }
+		
+		    initCommandData(data) {
+		        «FOR ref : refs»
+		        	data.«ref.varName !== null ? ref.varName : ref.stateElement.name» = «ref.stateElement.stateFunctionCall("get", "data")»;
 		        «ENDFOR»
+		        data.outcomes = [];
 		    }
-		
-		    publishEvents() {
-				switch (this.commandData.outcome) {
-				«FOR outcome : outcomes»
-					case this.«outcome.getName»:
-						«IF outcome.listeners.size > 0»
-							new «eventName(outcome)»(this.commandData).publish();
-						«ENDIF»
-						«FOR aceOperation : outcome.aceOperations»
-							new TriggerAction(new «aceOperation.actionName»(«FOR inputParam : aceOperation.input SEPARATOR ', '»this.commandData.«inputParam»«ENDFOR»)).publish();
-						«ENDFOR»
-						break;
-				«ENDFOR»
-				default:
-					throw '«commandName» unhandled outcome: ' + this.commandData.outcome;
+
+			«FOR outcome : outcomes»
+				add«outcome.getName.toFirstUpper»Outcome(data) {
+					data.outcomes.push("«outcome.getName»");
 				}
-		    }
-		}
+			«ENDFOR»
+			
+			publishEvents(data) {
+				const events = [];
+				const actionsToBeTriggered = [];
+				«FOR outcome : outcomes»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+						if (data.outcomes.includes("«outcome.getName»")) {
+							events.push(new Event('«es6.getName».«eventName(outcome)»'));
+							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
+								«IF triggerdAceOperation.delay == 0»
+									actionsToBeTriggered.push(
+										{
+											action: new «triggerdAceOperation.aceOperation.actionName»(), 
+											data: {
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											}
+										}
+									);
+								«ELSE»
+									«IF triggerdAceOperation.takeLatest»
+										this.triggerWithDelayTakeLatest(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
+											«triggerdAceOperation.delay»
+										);
+									«ELSE»
+										this.triggerWithDelay(new «triggerdAceOperation.aceOperation.actionName»(), 
+											{
+												«FOR inputParam : triggerdAceOperation.aceOperation.input SEPARATOR ', '»
+													«inputParam.name»: data.«inputParam.name»
+												«ENDFOR»
+											},
+											«triggerdAceOperation.delay»
+										);
+									«ENDIF»
+								«ENDIF»
+							«ENDFOR»
+						}
+					«ENDIF»
+				«ENDFOR»
+				
+				this.publish(events, data);
+			  	AppState.stateUpdated();
+				this.trigger(actionsToBeTriggered);
 		
+			}
+	
+		}
 		
 		«sdg»
 		
@@ -152,36 +262,34 @@ class CommandTemplate {
 		«copyright»
 
 		import «abstractCommandName» from "../../../gen/«es6.getName»/commands/«abstractCommandName»";
-		import * as AppState from "../../../gen/ace/ReadAppState";
-		//please do not import "../../../gen/ace/WriteAppState" for you should not write the state in a command
 		
 		export default class «commandName» extends «abstractCommandName» {
 
 		«IF serverCall !== null»
-		    initCommandData() {
-		    	//add from appState to commandData
+		    validateCommandData(data) {
 		    	«FOR param : serverCall.queryParams»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//data.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	«FOR param : serverCall.pathParams»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//data.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	«FOR param : serverCall.payload»
-		    		«IF !param.isOptional»//this.commandData.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
+		    		«IF param.isNotNull»//data.«param.attribute.name» is mandatory «param.attribute.type»«ENDIF»
 		    	«ENDFOR»
 		    	return true;
 		    }
 		
-		    handleResponse(resolve, reject) {
-		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).getName»;«ENDIF»
-		    	resolve();
+		    handleResponse(data, resolve, reject) {
+		    	«IF outcomes.size == 1»this.add«outcomes.get(0).getName.toFirstUpper»Outcome(data);«ENDIF»
+		    	resolve(data);
 		    }
-		    handleError(resolve, reject) {
-		    	reject(this.commandData.error);
+		    handleError(data, resolve, reject) {
+		    	reject(data.error);
 		    }
 		«ELSE»
-			execute() {
-				return new Promise((resolve, reject) => {
+			execute(data) {
+			    return new Promise((resolve, reject) => {
+				    resolve(data);
 			    });			    
 			}
 		«ENDIF»
@@ -196,12 +304,11 @@ class CommandTemplate {
 		«copyright»
 
 		import «abstractCommandName» from "../../../gen/«es6.getName»/commands/«abstractCommandName»";
-		import * as AppState from "../../../gen/ace/ReadAppState";
-		//please do not import "../../../gen/ace/WriteAppState" for you should not write the state in a command
 		
 		export default class «commandName» extends «abstractCommandName» {
-		    execute() {
-		    	«IF outcomes.size == 1»this.commandData.outcome = this.«outcomes.get(0).getName»;«ENDIF»
+		    execute(data) {
+		    	«IF outcomes.size == 1»this.add«outcomes.get(0).getName.toFirstUpper»Outcome(data);«ENDIF»
+		    	return data;
 		    }
 		}
 		
@@ -212,22 +319,33 @@ class CommandTemplate {
 	
 	def generateCommand() '''
 		«copyright»
-
-		import AppUtils from "../../src/app/AppUtils";
+		
+		
+		let delayedActions = {};
 		
 		export default class Command {
-		    constructor(commandData, commandName) {
+		    
+		    constructor(commandName) {
 		        this.commandName = commandName;
-		        this.commandData = AppUtils.deepCopy(commandData);
 		    }
-		
-		    execute() {
-		        throw "no execute method defined for " + this.commandName;
-		    }
-		
-		    publishEvents() {
-		        throw "no publishEvents method defined for " + this.commandName;
-		    }
+		    
+			triggerWithDelay(action, data, delayInMillis) {
+				setTimeout(() => {
+					action.apply(data);
+				}, delayInMillis);
+			}
+			
+			triggerWithDelayTakeLatest(action, data, delayInMillis) {
+				const existingTimeout = delayedActions[action.actionName];
+				if (existingTimeout) {
+					clearTimeout(existingTimeout);
+				}
+				delayedActions[action.actionName] = setTimeout(() => {
+					delayedActions[action.actionName] = undefined;
+					action.apply(data);
+				}, delayInMillis);
+			}
+			
 		
 		}
 		
@@ -239,85 +357,73 @@ class CommandTemplate {
 	def generateAsynchronousCommand() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+
+		import * as ACEController from "./ACEController";
 		import Command from "./Command";
-		import AppUtils from "../../src/app/AppUtils";
-		import Utils from "./Utils";
 		
 		export default class AsynchronousCommand extends Command {
-		    executeCommand() {
+		    
+		    executeCommand(data) {
+				this.initCommandData(data);
+		        ACEController.addItemToTimeLine({
+					command: {
+						commandName: this.commandName,
+						data
+					}
+		        });
 		        return new Promise((resolve, reject) => {
-					if (ACEController.execution !== ACEController.REPLAY) {
-						if (this.initCommandData()) {
-						    this.execute().then(() => {
-						        ACEController.addItemToTimeLine({command: this});
-						        this.publishEvents();
-						        resolve();
-						    }, (error) => {
-						    	ACEController.addItemToTimeLine({command: this});
-						        reject(error);
-						    });
-						} else {
-					        ACEController.addItemToTimeLine({command: this});
-					        this.publishEvents();
-							resolve();
-						}
+					if (this.validateCommandData(data)) {
+					    this.execute(data).then((data) => {
+					        this.publishEvents(data).then(resolve);
+					    }, (error) => {
+					        reject(error);
+					    });
 					} else {
-						const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-						if (timelineCommand) {
-						    if (timelineCommand.commandData.error) {
-						        reject(timelineCommand.commandData.error);
-						    } else {
-						        this.commandData = timelineCommand.commandData;
-						        ACEController.addItemToTimeLine({command: this});
-						        this.publishEvents();
-						        resolve();
-						    }
-						} else {
-						    resolve();
-						}
+					    this.publishEvents(data).then(resolve);
 					}
 		        });
 		    }
 		
-		    initCommandData() {
+		    validateCommandData() {
 		    	return true;
 		    }
 		
-		    httpGet(url, authorize) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpGet(url, authorize);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpPost(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPost(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpPut(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpPut(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
-		    httpDelete(url, authorize, data) {
-		        return Utils.prepareAction(this.commandData.uuid).then(() => {
-		            return AppUtils.httpDelete(url, authorize, data);
-		        }, (error) => {
-		            throw error;
-		        });
-		    }
-		
+			createEventPromise(event, data) {
+				return new Promise(resolve => {
+					event.publish(data);
+					resolve();
+				})
+			}
+			
+			publish(events, data) {
+				if (events.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createEventPromise(events.shift(), data)
+					.then(event => events.length === 0 ? event : this.publish(events, data));
+			}
+			
+			createActionPromise(actionToBeTriggered) {
+				return new Promise(resolve => {
+					if (actionToBeTriggered.action.asynchronous) {
+						actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
+					} else {
+						actionToBeTriggered.action.apply(actionToBeTriggered.data);
+						resolve();
+					}
+				})
+			}
+			
+			trigger(actionsToBeTriggered) {
+				if (actionsToBeTriggered.length === 0) {
+					return new Promise(resolve => resolve());
+				}
+				return this.createActionPromise(actionsToBeTriggered.shift())
+					.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
+			}
+			
 		}
-		
+
 		
 		«sdg»
 		
@@ -328,20 +434,34 @@ class CommandTemplate {
 	def generateSynchronousCommand() '''
 		«copyright»
 
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		import Command from "./Command";
 		
 		export default class SynchronousCommand extends Command {
-		    executeCommand() {
-				if (ACEController.execution !== ACEController.REPLAY) {
-				    this.execute();
-				} else {
-				    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-				    this.commandData = timelineCommand.commandData;
-				}
-				ACEController.addItemToTimeLine({command: this});
-				this.publishEvents();
+		    
+		    executeCommand(data) {
+				this.initCommandData(data);
+		        ACEController.addItemToTimeLine({
+					command: {
+						commandName: this.commandName,
+						data
+					}
+		        });
+			    data = this.execute(data);
+			    this.publishEvents(data)
 		    }
+		
+			publish(events, data) {
+				events.forEach(
+					event => event.publish(data)
+				)
+			}
+		
+			trigger(actionsToBeTriggered) {
+				actionsToBeTriggered.forEach(
+				    actionToBeTriggered => this.triggerWithDelay(actionToBeTriggered.action, actionToBeTriggered.data, 1)
+				)
+			}
 		
 		}
 		

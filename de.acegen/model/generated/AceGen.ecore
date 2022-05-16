@@ -11,48 +11,144 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" upperBound="-1"
         eType="#//HttpClientAce" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="appState" eType="#//HttpClientStateElement"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jsx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="#//ClientAttribute"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
+        eType="#//Function" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
+        eType="#//ClientScenario" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpClientAce">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="async" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="input" upperBound="-1"
+        eType="#//Input" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refs" upperBound="-1" eType="#//FromAppStateRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//HttpServerAce"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//HttpClientStateElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//ClientAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FromAppStateRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Input">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpClientOutcome">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" upperBound="-1"
         eType="#//HttpClientStateFunction" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperations" unique="false"
-        upperBound="-1" eType="#//HttpClientAce"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
+        eType="#//FunctionCall" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="triggerdAceOperations"
+        upperBound="-1" eType="#//TriggerdAceOperation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TriggerdAceOperation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="takeLatest" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aceOperation" eType="#//HttpClientAce"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpClientStateFunction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateFunctionType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//HttpClientStateElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HttpClientStateElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionCall">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noComponent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="list" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="storage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
-        eType="#//HttpClientTypeDefinition" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HttpClientTypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//HttpClientStateElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="storage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//ClientAttribute" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientScenario">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" upperBound="-1"
+        eType="#//ClientGivenRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clientWhenThen" upperBound="-1"
+        eType="#//ClientWhenThen" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientWhenThen">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//ClientWhenBlock"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delayInMillis" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ClientThenBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientGivenRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//ClientScenario"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludeGiven" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientWhenBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//HttpClientAce"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1"
+        eType="#//InputValue" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="squishyValues" upperBound="-1"
+        eType="#//SquishyValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SquishyValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uuid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverSystemTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PrimitiveValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputValue">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Input"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PrimitiveValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientThenBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateVerifications" upperBound="-1"
+        eType="#//StateVerification" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="verifications" upperBound="-1"
+        eType="#//CustomVerification" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateVerification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateRef" eType="#//ClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="not" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValueClient"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomVerification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateRef" eType="#//ClientAttribute"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonObjectClient" eSuperTypes="#//JsonValueClient">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//JsonMemberClient" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonMemberClient">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//ClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValueClient"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonValueClient"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonArrayClient" eSuperTypes="#//JsonValueClient">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//JsonValueClient" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServer">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistenceLayer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="migrations" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="java" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dropwizard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dotnet" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="JDBI3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EF" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="liquibase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authUser" eType="#//AuthUser"
         containment="true"/>
@@ -67,7 +163,6 @@
         eType="#//Scenario" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAce">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="proxy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -83,6 +178,7 @@
         upperBound="-1" eType="#//Attribute"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceWrite" eSuperTypes="#//HttpServerAce">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipartFormData" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpServerOutcome" containment="true"/>
   </eClassifiers>
@@ -93,10 +189,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerAceRead" eSuperTypes="#//HttpServerAce"/>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeParamRef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpServerView">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="afterCommit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renderFunctions" upperBound="-1"
         eType="#//HttpServerViewFunction" containment="true"/>
@@ -120,16 +217,27 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="givenRefs" upperBound="-1"
-        eType="#//GivenRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="givenItems" upperBound="-1"
+        eType="#//Given" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whenThen" upperBound="-1"
+        eType="#//WhenThen" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WhenThen">
     <eStructuralFeatures xsi:type="ecore:EReference" name="whenBlock" eType="#//WhenBlock"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenBlock" eType="#//ThenBlock"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GivenRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//Scenario"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Given">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="times" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomCall" eSuperTypes="#//Given">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="customCallName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//PrimitiveValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GivenRef" eSuperTypes="#//Given">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenario" eType="#//Scenario"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludeGiven" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WhenBlock">
@@ -138,6 +246,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authorization" eType="#//Authorization"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extractions" upperBound="-1"
+        eType="#//Extraction" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ThenBlock">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statusCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -180,6 +290,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Verification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Extraction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SelectByExpectation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="#//JsonObject"
         containment="true"/>
@@ -206,13 +319,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="foreignKey" eType="#//Attribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notReplayable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="squishy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JsonDateTime" eSuperTypes="#//JsonValue">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JsonObject" eSuperTypes="#//JsonValue">
+  <eClassifiers xsi:type="ecore:EClass" name="JsonObject" eSuperTypes="#//JsonValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonObjectAce" eSuperTypes="#//JsonObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
         eType="#//JsonMember" containment="true"/>
   </eClassifiers>
@@ -221,15 +331,29 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//JsonValue"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JsonValue">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="boolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="null" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="long" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="JsonArray" eSuperTypes="#//JsonValue">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
         eType="#//JsonValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JsonDateTime" eSuperTypes="#//JsonValueClient #//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringType" eSuperTypes="#//JsonValueClient #//JsonObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//JsonValueClient #//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="boolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NullType" eSuperTypes="#//JsonValueClient #//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="null" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UndefinedType" eSuperTypes="#//JsonValueClient">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="undefined" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LongType" eSuperTypes="#//JsonValueClient #//JsonValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="long" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrimitiveValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

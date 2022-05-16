@@ -1,20 +1,21 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.extensions.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
@@ -123,6 +124,13 @@ public class ModelExtension {
     return _builder.toString();
   }
   
+  public String tableFkRef(final Model it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _lowerCase = it.getName().toLowerCase();
+    _builder.append(_lowerCase);
+    return _builder.toString();
+  }
+  
   public String importModel(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import ");
@@ -187,7 +195,7 @@ public class ModelExtension {
     return list;
   }
   
-  public List<Attribute> allNotReplayableAttributes(final Model it) {
+  public List<Attribute> allSquishyAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     if ((it == null)) {
       return list;
@@ -195,8 +203,8 @@ public class ModelExtension {
     ArrayList<Attribute> allAttributes = new ArrayList<Attribute>();
     this.allAttributesRec(it, allAttributes);
     for (final Attribute attribute : allAttributes) {
-      boolean _isNotReplayable = attribute.isNotReplayable();
-      if (_isNotReplayable) {
+      boolean _isSquishy = attribute.isSquishy();
+      if (_isSquishy) {
         list.add(attribute);
       }
     }
@@ -338,6 +346,18 @@ public class ModelExtension {
     final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
     this.allAttributesRec(it, attrs);
     return attrs;
+  }
+  
+  public String formDataAttributeName(final Model it) {
+    EList<Attribute> _attributes = it.getAttributes();
+    for (final Attribute attr : _attributes) {
+      String _type = attr.getType();
+      boolean _equals = Objects.equal(_type, "FormData");
+      if (_equals) {
+        return attr.getName();
+      }
+    }
+    return "formData";
   }
   
   public void allAttributesRec(final Model it, final List<Attribute> attrs) {
@@ -541,39 +561,5 @@ public class ModelExtension {
       }
     }
     return false;
-  }
-  
-  public CharSequence newFromCommandData(final Model it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("new ");
-    String _dataNameWithPackage = this.dataNameWithPackage(it);
-    _builder.append(_dataNameWithPackage);
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    {
-      List<Attribute> _allAttributes = this.allAttributes(it);
-      boolean _hasElements = false;
-      for(final Attribute attribute : _allAttributes) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate(",", "\t");
-        }
-        _builder.append("\t");
-        _builder.append("this.commandData.");
-        String _terCall = this._attributeExtension.getterCall(attribute);
-        _builder.append(_terCall, "\t");
-        _builder.newLineIfNotEmpty();
-      }
-      if (_hasElements) {
-        _builder.append(",", "\t");
-      }
-    }
-    _builder.append("\t");
-    _builder.append("this.commandData.getUuid()");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(")");
-    return _builder;
   }
 }

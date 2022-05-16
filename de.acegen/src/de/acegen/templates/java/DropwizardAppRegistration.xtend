@@ -1,8 +1,25 @@
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+
 package de.acegen.templates.java
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import javax.inject.Inject
 
 class DropwizardAppRegistration {
@@ -11,7 +28,7 @@ class DropwizardAppRegistration {
 	extension CommonExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject AppRegistration appRegistration;
 
@@ -24,7 +41,6 @@ class DropwizardAppRegistration {
 		import de.acegen.PersistenceConnection;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
-		import de.acegen.E2E;
 		import de.acegen.ViewProvider;
 		
 		«IF aceOperations.size > 0»
@@ -35,9 +51,9 @@ class DropwizardAppRegistration {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				«FOR aceOperation : aceOperations»
-					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e));
+					environment.jersey().register(new «aceOperation.resourceName»(persistenceConnection, appConfiguration, daoProvider, viewProvider));
 				«ENDFOR»
 			}
 			
@@ -58,10 +74,10 @@ class DropwizardAppRegistration {
 		public class AppRegistration {
 		
 			public static void registerResources(Environment environment, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration,
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 			}
 		
-			public static void registerConsumers(ViewProvider viewProvider, String mode) {
+			public static void registerConsumers(ViewProvider viewProvider) {
 			}
 		}
 		

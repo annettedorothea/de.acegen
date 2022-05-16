@@ -1,17 +1,17 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.extensions.es6;
 
@@ -19,16 +19,25 @@ import com.google.common.base.Objects;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
+import de.acegen.aceGen.HttpClientStateFunction;
+import de.acegen.aceGen.TriggerdAceOperation;
+import de.acegen.extensions.HttpServerExtension;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
+import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class AceExtension {
+  @Inject
+  @Extension
+  private HttpServerExtension _httpServerExtension;
+  
   public String abstractActionName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -97,16 +106,32 @@ public class AceExtension {
     return _builder.toString();
   }
   
-  public List<HttpClientAce> triggeredAceOperations(final HttpClientAce it) {
+  public List<HttpClientAce> aggregatedTriggeredAceOperations(final HttpClientAce it) {
     ArrayList<HttpClientAce> list = new ArrayList<HttpClientAce>();
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      EList<HttpClientAce> _aceOperations = outcome.getAceOperations();
-      for (final HttpClientAce aceOperation : _aceOperations) {
-        boolean _contains = list.contains(aceOperation);
+      EList<TriggerdAceOperation> _triggerdAceOperations = outcome.getTriggerdAceOperations();
+      for (final TriggerdAceOperation triggerdAceOperation : _triggerdAceOperations) {
+        boolean _contains = list.contains(triggerdAceOperation.getAceOperation());
         boolean _not = (!_contains);
         if (_not) {
-          list.add(aceOperation);
+          list.add(triggerdAceOperation.getAceOperation());
+        }
+      }
+    }
+    return list;
+  }
+  
+  public List<HttpClientStateFunction> aggregatedListeners(final HttpClientAce it) {
+    ArrayList<HttpClientStateFunction> list = new ArrayList<HttpClientStateFunction>();
+    EList<HttpClientOutcome> _outcomes = it.getOutcomes();
+    for (final HttpClientOutcome outcome : _outcomes) {
+      EList<HttpClientStateFunction> _listeners = outcome.getListeners();
+      for (final HttpClientStateFunction listener : _listeners) {
+        boolean _contains = list.contains(listener);
+        boolean _not = (!_contains);
+        if (_not) {
+          list.add(listener);
         }
       }
     }
@@ -135,33 +160,45 @@ public class AceExtension {
   }
   
   public String httpCall(final HttpClientAce it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
+    Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it.getServerCall());
+    if ((_isMulitpartFormData).booleanValue()) {
       String _type = it.getServerCall().getType();
-      boolean _equals = Objects.equal(_type, "DELETE");
+      boolean _equals = Objects.equal(_type, "POST");
       if (_equals) {
-        _builder.append("httpDelete");
+        return "httpMulitpartFormDataPost";
       } else {
-        String _type_1 = it.getServerCall().getType();
-        boolean _equals_1 = Objects.equal(_type_1, "POST");
-        if (_equals_1) {
-          _builder.append("httpPost");
+        return "httpMulitpartFormDataPut";
+      }
+    } else {
+      String _type_1 = it.getServerCall().getType();
+      boolean _equals_1 = Objects.equal(_type_1, "DELETE");
+      if (_equals_1) {
+        return "httpDelete";
+      } else {
+        String _type_2 = it.getServerCall().getType();
+        boolean _equals_2 = Objects.equal(_type_2, "POST");
+        if (_equals_2) {
+          return "httpPost";
         } else {
-          String _type_2 = it.getServerCall().getType();
-          boolean _equals_2 = Objects.equal(_type_2, "PUT");
-          if (_equals_2) {
-            _builder.append("httpPut");
+          String _type_3 = it.getServerCall().getType();
+          boolean _equals_3 = Objects.equal(_type_3, "PUT");
+          if (_equals_3) {
+            return "httpPut";
           } else {
-            _builder.append("httpGet");
+            return "httpGet";
           }
         }
       }
     }
-    return _builder.toString();
   }
   
   public String httpUrl(final HttpClientAce it) {
     String url = it.getServerCall().getUrl();
+    int _indexOf = url.indexOf("/");
+    boolean _notEquals = (_indexOf != 0);
+    if (_notEquals) {
+      url = ("/" + url);
+    }
     final String[] split1 = url.split("\\{");
     ArrayList<String> urlElements = new ArrayList<String>();
     for (final String split : split1) {
@@ -179,13 +216,13 @@ public class AceExtension {
       } else {
         String _urlWithPathParam_1 = urlWithPathParam;
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("${this.commandData.");
+        _builder.append("${data.");
         String _get_1 = urlElements.get(i);
         _builder.append(_get_1);
         _builder.append("}");
         urlWithPathParam = (_urlWithPathParam_1 + _builder);
       }
     }
-    return ("/${Utils.getRootPath()}" + urlWithPathParam);
+    return ("${AppUtils.settings.rootPath}" + urlWithPathParam);
   }
 }

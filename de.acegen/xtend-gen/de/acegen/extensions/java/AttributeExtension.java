@@ -1,29 +1,34 @@
 /**
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020 Annette Pohl
  * 
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  */
 package de.acegen.extensions.java;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.AttributeParamRef;
+import de.acegen.aceGen.BooleanType;
 import de.acegen.aceGen.JsonArray;
 import de.acegen.aceGen.JsonDateTime;
 import de.acegen.aceGen.JsonMember;
-import de.acegen.aceGen.JsonObject;
+import de.acegen.aceGen.JsonObjectAce;
 import de.acegen.aceGen.JsonValue;
+import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
+import de.acegen.aceGen.StringType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -50,7 +55,6 @@ public class AttributeExtension {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(",\" + ");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("\"");
       return _builder.toString();
     }
@@ -58,14 +62,7 @@ public class AttributeExtension {
   
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      if (((it.getType() != null) && it.getType().equals("DateTime"))) {
-        _builder.append("String");
-      } else {
-        String _type = it.getType();
-        _builder.append(_type);
-      }
-    }
+    _builder.append("String");
     return _builder.toString();
   }
   
@@ -87,13 +84,11 @@ public class AttributeExtension {
   
   public String initActionData(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
     {
       if ((((it.getAttribute().getType() != null) && it.getAttribute().getType().equals("DateTime")) && (!it.getAttribute().isList()))) {
         {
-          boolean _isOptional = it.isOptional();
-          boolean _not = (!_isOptional);
-          if (_not) {
+          boolean _isNotNull = it.isNotNull();
+          if (_isNotNull) {
             _builder.append("if (StringUtils.isBlank(");
             String _name = it.getAttribute().getName();
             _builder.append(_name);
@@ -121,7 +116,7 @@ public class AttributeExtension {
         _builder.append("try {");
         _builder.newLine();
         _builder.append("\t\t");
-        _builder.append("actionData.");
+        _builder.append("data.");
         String _setterCall = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
         _builder.append(_setterCall, "\t\t");
         _builder.append(";");
@@ -145,50 +140,78 @@ public class AttributeExtension {
         _builder.newLine();
       } else {
         {
-          boolean _isOptional_1 = it.isOptional();
-          boolean _not_1 = (!_isOptional_1);
-          if (_not_1) {
-            {
-              if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
-                _builder.append("if (StringUtils.isBlank(");
-                String _name_6 = it.getAttribute().getName();
-                _builder.append(_name_6);
-                _builder.append(") || \"null\".equals(");
-                String _name_7 = it.getAttribute().getName();
-                _builder.append(_name_7);
-                _builder.append(")) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("return badRequest(\"");
-                String _name_8 = it.getAttribute().getName();
-                _builder.append(_name_8, "\t");
-                _builder.append(" is mandatory\");");
-                _builder.newLineIfNotEmpty();
-                _builder.append("}");
-                _builder.newLine();
-              } else {
-                _builder.append("if (");
-                String _name_9 = it.getAttribute().getName();
-                _builder.append(_name_9);
-                _builder.append(" == null) {");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("return badRequest(\"");
-                String _name_10 = it.getAttribute().getName();
-                _builder.append(_name_10, "\t");
-                _builder.append(" is mandatory\");");
-                _builder.newLineIfNotEmpty();
-                _builder.append("}");
-                _builder.newLine();
-              }
+          boolean _isNotNull_1 = it.isNotNull();
+          if (_isNotNull_1) {
+            _builder.append("if (");
+            String _name_6 = it.getAttribute().getName();
+            _builder.append(_name_6);
+            _builder.append(" == null || StringUtils.isBlank(");
+            String _name_7 = it.getAttribute().getName();
+            _builder.append(_name_7);
+            _builder.append(") || \"null\".equals(");
+            String _name_8 = it.getAttribute().getName();
+            _builder.append(_name_8);
+            _builder.append(")) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("return badRequest(\"");
+            String _name_9 = it.getAttribute().getName();
+            _builder.append(_name_9, "\t");
+            _builder.append(" is mandatory\");");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          }
+        }
+        {
+          boolean _equals = "Integer".equals(it.getAttribute().getType());
+          if (_equals) {
+            _builder.append("if (");
+            String _name_10 = it.getAttribute().getName();
+            _builder.append(_name_10);
+            _builder.append(" != null) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("data.");
+            String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType(), "Int");
+            _builder.append(_setterCall_1, "\t");
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            boolean _equals_1 = "String".equals(it.getAttribute().getType());
+            if (_equals_1) {
+              _builder.append("if (");
+              String _name_11 = it.getAttribute().getName();
+              _builder.append(_name_11);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("data.");
+              String _setterCall_2 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
+              _builder.append(_setterCall_2, "\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
+            } else {
+              _builder.append("if (");
+              String _name_12 = it.getAttribute().getName();
+              _builder.append(_name_12);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("data.");
+              String _setterCall_3 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()), it.getAttribute().getType());
+              _builder.append(_setterCall_3, "\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
             }
           }
         }
-        _builder.append("actionData.");
-        String _setterCall_1 = this.setterCall(it.getAttribute(), this.resourceParam(it.getAttribute()));
-        _builder.append(_setterCall_1);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
       }
     }
     return _builder.toString();
@@ -196,11 +219,9 @@ public class AttributeExtension {
   
   public String initActionDataFromPayload(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.newLine();
     {
-      boolean _isOptional = it.isOptional();
-      boolean _not = (!_isOptional);
-      if (_not) {
+      boolean _isNotNull = it.isNotNull();
+      if (_isNotNull) {
         {
           if (("String".equals(it.getAttribute().getType()) && (!it.getAttribute().isList()))) {
             _builder.append("if (StringUtils.isBlank(payload.");
@@ -237,7 +258,7 @@ public class AttributeExtension {
         }
       }
     }
-    _builder.append("actionData.");
+    _builder.append("data.");
     Attribute _attribute = it.getAttribute();
     StringConcatenation _builder_1 = new StringConcatenation();
     _builder_1.append("payload.");
@@ -275,8 +296,13 @@ public class AttributeExtension {
         if (_equals) {
           _builder.append("java.time.LocalDateTime");
         } else {
-          String _type_1 = it.getType();
-          _builder.append(_type_1);
+          boolean _equals_1 = it.getType().equals("FormData");
+          if (_equals_1) {
+            _builder.append("de.acegen.FormData");
+          } else {
+            String _type_1 = it.getType();
+            _builder.append(_type_1);
+          }
         }
       }
       {
@@ -310,6 +336,57 @@ public class AttributeExtension {
     return null;
   }
   
+  public String javaTypeNew(final Attribute it) {
+    String _type = it.getType();
+    boolean _tripleNotEquals = (_type != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        boolean _isList = it.isList();
+        if (_isList) {
+          _builder.append("java.util.ArrayList<");
+        }
+      }
+      {
+        boolean _equals = it.getType().equals("DateTime");
+        if (_equals) {
+          _builder.append("java.time.LocalDateTime");
+        } else {
+          String _type_1 = it.getType();
+          _builder.append(_type_1);
+        }
+      }
+      {
+        boolean _isList_1 = it.isList();
+        if (_isList_1) {
+          _builder.append(">");
+        }
+      }
+      return _builder.toString();
+    }
+    Model _model = it.getModel();
+    boolean _tripleNotEquals_1 = (_model != null);
+    if (_tripleNotEquals_1) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      {
+        boolean _isList_2 = it.isList();
+        if (_isList_2) {
+          _builder_1.append("java.util.ArrayList<");
+        }
+      }
+      String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+      _builder_1.append(_interfaceWithPackage);
+      {
+        boolean _isList_3 = it.isList();
+        if (_isList_3) {
+          _builder_1.append(">");
+        }
+      }
+      return _builder_1.toString();
+    }
+    return null;
+  }
+  
   public List<Integer> timesIterator(final int length) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     for (int i = 0; (i < length); i++) {
@@ -328,41 +405,26 @@ public class AttributeExtension {
         if (_isList) {
           _builder.append("null");
         } else {
-          boolean _equals = it.getType().equals("DateTime");
+          String _type_1 = it.getType();
+          boolean _equals = Objects.equal(_type_1, "DateTime");
           if (_equals) {
-            _builder.append("r.getTimestamp(\"");
+            _builder.append("this.mapToDateTime(r, \"");
             String _name = it.getName();
             _builder.append(_name);
-            _builder.append("\") != null ? r.getTimestamp(\"");
-            String _name_1 = it.getName();
-            _builder.append(_name_1);
-            _builder.append("\").toLocalDateTime() : null");
+            _builder.append("\")");
           } else {
-            boolean _equals_1 = it.getType().equals("Integer");
+            String _type_2 = it.getType();
+            boolean _equals_1 = Objects.equal(_type_2, "FormData");
             if (_equals_1) {
-              _builder.append("r.getObject(\"");
-              String _name_2 = it.getName();
-              _builder.append(_name_2);
-              _builder.append("\") != null ? r.getInt(\"");
-              String _name_3 = it.getName();
-              _builder.append(_name_3);
-              _builder.append("\") : null");
+              _builder.append("null");
             } else {
-              boolean _equals_2 = it.getType().equals("Serial");
-              if (_equals_2) {
-                _builder.append("r.getInt(\"");
-                String _name_4 = it.getName();
-                _builder.append(_name_4);
-                _builder.append("\")");
-              } else {
-                _builder.append("r.get");
-                String _javaType = this.javaType(it);
-                _builder.append(_javaType);
-                _builder.append("(\"");
-                String _name_5 = it.getName();
-                _builder.append(_name_5);
-                _builder.append("\")");
-              }
+              _builder.append("this.mapTo");
+              String _javaType = this.javaType(it);
+              _builder.append(_javaType);
+              _builder.append("(r, \"");
+              String _name_1 = it.getName();
+              _builder.append(_name_1);
+              _builder.append("\")");
             }
           }
         }
@@ -413,6 +475,43 @@ public class AttributeExtension {
     return _xifexpression;
   }
   
+  public String randomValue(final Attribute it) {
+    String _xifexpression = null;
+    String _type = it.getType();
+    boolean _tripleNotEquals = (_type != null);
+    if (_tripleNotEquals) {
+      String _switchResult = null;
+      String _type_1 = it.getType();
+      if (_type_1 != null) {
+        switch (_type_1) {
+          case "Integer":
+            _switchResult = "random.nextInt(50)";
+            break;
+          case "Long":
+            _switchResult = "random.nextLong()";
+            break;
+          case "String":
+            _switchResult = "randomString(random)";
+            break;
+          case "Float":
+            _switchResult = "random.nextFloat()";
+            break;
+          case "Boolean":
+            _switchResult = "random.nextBoolean()";
+            break;
+          case "DateTime":
+            _switchResult = "random.nextBoolean() ? java.time.LocalDateTime.now().plusMinutes(random.nextInt(60)) : java.time.LocalDateTime.now().minusMinutes(random.nextInt(60)) ";
+            break;
+          case "FormData":
+            _switchResult = "null";
+            break;
+        }
+      }
+      _xifexpression = _switchResult;
+    }
+    return _xifexpression;
+  }
+  
   public String tableName(final Attribute it) {
     String _xifexpression = null;
     String _type = it.getType();
@@ -420,8 +519,8 @@ public class AttributeExtension {
     if (_tripleNotEquals) {
       StringConcatenation _builder = new StringConcatenation();
       EObject _eContainer = it.eContainer();
-      String _table = this._modelExtension.table(((Model) _eContainer));
-      _builder.append(_table);
+      String _tableFkRef = this._modelExtension.tableFkRef(((Model) _eContainer));
+      _builder.append(_tableFkRef);
       _xifexpression = _builder.toString();
     }
     return _xifexpression;
@@ -521,6 +620,146 @@ public class AttributeExtension {
     String _name_1 = it.getName();
     _builder.append(_name_1);
     _builder.append(";");
+    return _builder.toString();
+  }
+  
+  public String deepCopy(final Attribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isList = it.isList();
+      boolean _not = (!_isList);
+      if (_not) {
+        {
+          String _type = it.getType();
+          boolean _tripleNotEquals = (_type != null);
+          if (_tripleNotEquals) {
+            _builder.append("copy.");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("this.");
+            String _terCall = this.getterCall(it);
+            _builder_1.append(_terCall);
+            String _setterCall = this.setterCall(it, _builder_1.toString());
+            _builder.append(_setterCall);
+            _builder.append(";");
+            _builder.newLineIfNotEmpty();
+          } else {
+            Model _model = it.getModel();
+            boolean _tripleNotEquals_1 = (_model != null);
+            if (_tripleNotEquals_1) {
+              _builder.append("if (this.");
+              String _terCall_1 = this.getterCall(it);
+              _builder.append(_terCall_1);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("copy.");
+              StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("this.");
+              String _terCall_2 = this.getterCall(it);
+              _builder_2.append(_terCall_2);
+              _builder_2.append(".deepCopy()");
+              String _setterCall_1 = this.setterCall(it, _builder_2.toString());
+              _builder.append(_setterCall_1, "\t");
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+        }
+      } else {
+        {
+          String _type_1 = it.getType();
+          boolean _tripleNotEquals_2 = (_type_1 != null);
+          if (_tripleNotEquals_2) {
+            _builder.append("List<");
+            String _type_2 = it.getType();
+            _builder.append(_type_2);
+            _builder.append("> ");
+            String _name = it.getName();
+            _builder.append(_name);
+            _builder.append("Copy = new ArrayList<");
+            String _type_3 = it.getType();
+            _builder.append(_type_3);
+            _builder.append(">();");
+            _builder.newLineIfNotEmpty();
+            _builder.append("if (this.");
+            String _terCall_3 = this.getterCall(it);
+            _builder.append(_terCall_3);
+            _builder.append(" != null) {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("for(");
+            String _type_4 = it.getType();
+            _builder.append(_type_4, "\t");
+            _builder.append(" item: this.");
+            String _terCall_4 = this.getterCall(it);
+            _builder.append(_terCall_4, "\t");
+            _builder.append(") {");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            String _name_1 = it.getName();
+            _builder.append(_name_1, "\t\t");
+            _builder.append("Copy.add(item);");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("}");
+            _builder.newLine();
+            _builder.append("}");
+            _builder.newLine();
+          } else {
+            Model _model_1 = it.getModel();
+            boolean _tripleNotEquals_3 = (_model_1 != null);
+            if (_tripleNotEquals_3) {
+              _builder.append("List<");
+              String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage);
+              _builder.append("> ");
+              String _name_2 = it.getName();
+              _builder.append(_name_2);
+              _builder.append("Copy = new ArrayList<");
+              String _interfaceWithPackage_1 = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage_1);
+              _builder.append(">();");
+              _builder.newLineIfNotEmpty();
+              _builder.append("if (this.");
+              String _terCall_5 = this.getterCall(it);
+              _builder.append(_terCall_5);
+              _builder.append(" != null) {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("for(");
+              String _interfaceWithPackage_2 = this._modelExtension.interfaceWithPackage(it.getModel());
+              _builder.append(_interfaceWithPackage_2, "\t");
+              _builder.append(" item: this.");
+              String _terCall_6 = this.getterCall(it);
+              _builder.append(_terCall_6, "\t");
+              _builder.append(") {");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t\t");
+              String _name_3 = it.getName();
+              _builder.append(_name_3, "\t\t");
+              _builder.append("Copy.add(item.deepCopy());");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("}");
+              _builder.newLine();
+              _builder.append("}");
+              _builder.newLine();
+            }
+          }
+        }
+        _builder.append("copy.");
+        StringConcatenation _builder_3 = new StringConcatenation();
+        String _name_4 = it.getName();
+        _builder_3.append(_name_4);
+        _builder_3.append("Copy");
+        String _setterCall_2 = this.setterCall(it, _builder_3.toString());
+        _builder.append(_setterCall_2);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     return _builder.toString();
   }
   
@@ -630,6 +869,41 @@ public class AttributeExtension {
     return _builder.toString();
   }
   
+  public String setterCall(final Attribute it, final String param, final String type) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("set");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("(\"null\".equals(");
+    _builder.append(param);
+    _builder.append(") ? null : ");
+    _builder.append(type);
+    _builder.append(".parse");
+    String _firstUpper_1 = StringExtensions.toFirstUpper(type);
+    _builder.append(_firstUpper_1);
+    _builder.append("(");
+    _builder.append(param);
+    _builder.append("))");
+    return _builder.toString();
+  }
+  
+  public String setterCall(final Attribute it, final String param, final String type, final String parse) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("set");
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("(\"null\".equals(");
+    _builder.append(param);
+    _builder.append(") ? null : ");
+    _builder.append(type);
+    _builder.append(".parse");
+    _builder.append(parse);
+    _builder.append("(");
+    _builder.append(param);
+    _builder.append("))");
+    return _builder.toString();
+  }
+  
   public boolean isPrimitive(final Attribute it) {
     return ((!it.isList()) && (it.getModel() == null));
   }
@@ -646,7 +920,7 @@ public class AttributeExtension {
     }
   }
   
-  protected CharSequence _valueFrom(final JsonObject it) {
+  protected CharSequence _valueFrom(final JsonObjectAce it) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if ((((it != null) && (it.getMembers() != null)) && (it.getMembers().size() > 0))) {
@@ -676,34 +950,70 @@ public class AttributeExtension {
     return _builder;
   }
   
+  protected CharSequence _valueFrom(final String it) {
+    return this.valueFromString(it);
+  }
+  
   protected CharSequence _valueFrom(final JsonValue it) {
-    String _string = it.getString();
-    boolean _tripleNotEquals = (_string != null);
-    if (_tripleNotEquals) {
+    if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("\\\"");
-      CharSequence _valueFromString = this.valueFromString(it.getString());
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
       _builder.append(_valueFromString);
       _builder.append("\\\"");
       return _builder;
     } else {
-      String _boolean = it.getBoolean();
-      boolean _tripleNotEquals_1 = (_boolean != null);
-      if (_tripleNotEquals_1) {
-        return it.getBoolean();
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
       } else {
-        String _null = it.getNull();
-        boolean _tripleNotEquals_2 = (_null != null);
-        if (_tripleNotEquals_2) {
+        if ((it instanceof NullType)) {
           return "null";
         } else {
-          StringConcatenation _builder_1 = new StringConcatenation();
-          int _long = it.getLong();
-          _builder_1.append(_long);
-          return _builder_1;
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
         }
       }
     }
+    return null;
+  }
+  
+  protected CharSequence _squishyValueFrom(final JsonObjectAce it) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("null");
+    return _builder;
+  }
+  
+  protected CharSequence _squishyValueFrom(final String it) {
+    return this.valueFromString(it);
+  }
+  
+  protected CharSequence _squishyValueFrom(final JsonValue it) {
+    if ((it instanceof StringType)) {
+      StringConcatenation _builder = new StringConcatenation();
+      CharSequence _valueFromString = this.valueFromString(((StringType)it).getString());
+      _builder.append(_valueFromString);
+      return _builder;
+    } else {
+      if ((it instanceof BooleanType)) {
+        return ((BooleanType)it).getBoolean();
+      } else {
+        if ((it instanceof NullType)) {
+          return "null";
+        } else {
+          if ((it instanceof LongType)) {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            int _long = ((LongType)it).getLong();
+            _builder_1.append(_long);
+            return _builder_1;
+          }
+        }
+      }
+    }
+    return null;
   }
   
   public CharSequence valueFromString(final String it) {
@@ -719,6 +1029,19 @@ public class AttributeExtension {
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("\" + this.getTestId() + \"");
       returnString = returnString.replace("${testId}", _builder_1);
+    }
+    while (returnString.contains("${")) {
+      {
+        final int beginIndex = returnString.indexOf("${");
+        final int endIndex = returnString.indexOf("}");
+        final String templateString = returnString.substring(beginIndex, (endIndex + 1));
+        final String templateStringName = returnString.substring((beginIndex + 2), endIndex);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("\" + this.extractedValues.get(\"");
+        _builder_2.append(templateStringName);
+        _builder_2.append("\").toString() + \"");
+        returnString = returnString.replace(templateString, _builder_2);
+      }
     }
     StringConcatenation _builder_2 = new StringConcatenation();
     _builder_2.append(returnString);
@@ -752,12 +1075,26 @@ public class AttributeExtension {
   }
   
   protected CharSequence _valueFrom(final JsonDateTime it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("\\\"");
+    boolean _contains = it.getDateTime().contains("${");
+    if (_contains) {
+      final int beginIndex = it.getDateTime().indexOf("${");
+      final int endIndex = it.getDateTime().indexOf("}");
+      final String templateStringName = it.getDateTime().substring((beginIndex + 2), endIndex);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\\\"\" + LocalDateTime.parse(this.extractedValues.get(\"");
+      _builder.append(templateStringName);
+      _builder.append("\").toString(), DateTimeFormatter.ofPattern(\"");
+      String _pattern = it.getPattern();
+      _builder.append(_pattern);
+      _builder.append("\"))  + \"\\\"");
+      return _builder;
+    }
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("\\\"");
     LocalDateTime _dateTimeParse = this.dateTimeParse(it.getDateTime(), it.getPattern());
-    _builder.append(_dateTimeParse);
-    _builder.append("\\\"");
-    return _builder;
+    _builder_1.append(_dateTimeParse);
+    _builder_1.append("\\\"");
+    return _builder_1;
   }
   
   public Object primitiveValueFrom(final PrimitiveValue it) {
@@ -770,25 +1107,53 @@ public class AttributeExtension {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("\" + this.getTestId() + \"");
         returnString = returnString.replace("${testId}", _builder);
+      } else {
+        boolean _contains_1 = it.getString().contains("${");
+        if (_contains_1) {
+          final int beginIndex = it.getString().indexOf("${");
+          final int endIndex = it.getString().indexOf("}");
+          final String templateString = it.getString().substring(beginIndex, (endIndex + 1));
+          final String templateStringName = it.getString().substring((beginIndex + 2), endIndex);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("\" + this.extractedValues.get(\"");
+          _builder_1.append(templateStringName);
+          _builder_1.append("\").toString() + \"");
+          returnString = returnString.replace(templateString, _builder_1);
+        }
       }
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("\"");
-      _builder_1.append(returnString);
-      _builder_1.append("\"");
-      return _builder_1.toString();
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\"");
+      _builder_2.append(returnString);
+      _builder_2.append("\"");
+      return _builder_2.toString();
     }
     return Integer.valueOf(it.getLong());
   }
   
-  public CharSequence valueFrom(final JsonValue it) {
-    if (it instanceof JsonArray) {
+  public CharSequence valueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _valueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonArray) {
       return _valueFrom((JsonArray)it);
     } else if (it instanceof JsonDateTime) {
       return _valueFrom((JsonDateTime)it);
-    } else if (it instanceof JsonObject) {
-      return _valueFrom((JsonObject)it);
-    } else if (it != null) {
-      return _valueFrom(it);
+    } else if (it instanceof JsonValue) {
+      return _valueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _valueFrom((String)it);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(it).toString());
+    }
+  }
+  
+  public CharSequence squishyValueFrom(final Object it) {
+    if (it instanceof JsonObjectAce) {
+      return _squishyValueFrom((JsonObjectAce)it);
+    } else if (it instanceof JsonValue) {
+      return _squishyValueFrom((JsonValue)it);
+    } else if (it instanceof String) {
+      return _squishyValueFrom((String)it);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(it).toString());

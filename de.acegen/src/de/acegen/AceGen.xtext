@@ -1,18 +1,18 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
-
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
  
 
 grammar de.acegen.AceGen with org.eclipse.xtext.common.Terminals
@@ -24,47 +24,151 @@ Project: {Project}
 ;
 
 HttpClient: 
-	name = QualifiedName
+	name = QualifiedName 
 	('ACE' (aceOperations += HttpClientAce)*)?
-	('appState' appState = HttpClientStateElement )?
+	('ui' (jsx ?= 'JSX')?  
+		container = ClientAttribute
+		('functions' functions += Function* )? 
+	)?
+	('scenarios' (scenarios += ClientScenario)*)?
 ;
 
 HttpClientAce: 
-	(async ?= 'async')? name = ID  ('<' input += ID (',' input += ID)* '>')?  
+	(async ?= 'async')? name = ID  
+		('(' input += Input (',' input += Input)* ')' )?
+		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [HttpClientStateElement | QualifiedName])? 
+	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
+;
+
+Function: 
+	name = ID ('(' stateElement = [ClientAttribute | QualifiedName] ')' )?
+;
+
+FromAppStateRef:
+	stateElement = [ClientAttribute | QualifiedName] ('as' varName = ID)?
+;
+
+Input:
+	name = ID
 ;
 
 HttpClientOutcome:
 	'on' name = ID 
-	('(' listeners += HttpClientStateFunction* ')')? 
-	('triggers' '(' (aceOperations += [HttpClientAce | QualifiedName])* ')')? 
+	('(' 
+		listeners += HttpClientStateFunction* 
+		functions += FunctionCall *
+	')'	)? 
+	('triggers' '(' (triggerdAceOperations += TriggerdAceOperation)* ')')? 
+;
+
+TriggerdAceOperation:
+	('delayInMillis' delay = INT takeLatest ?= 'takeLatest'? ) ? aceOperation = [HttpClientAce | QualifiedName]
 ;
 
 HttpClientStateFunction:
-	stateFunctionType = HttpClientStateFunctionType attribute = [HttpClientStateElement | QualifiedName]
+	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]	
+;
+
+FunctionCall:
+	'call' function = [Function | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
-	'set' | 'merge' | 'reset' | 'init'
+	'set' | 'merge'
 ;
 
-HttpClientStateElement:
-	name = ID list ?= 'list' ? hash ?= 'location.hash'? storage ?= 'storage'? (types += HttpClientTypeDefinition ('|' types += HttpClientTypeDefinition)*)?
+ClientAttribute:
+	noComponent ?= 'noComponent'? 
+	list ?= 'List'? 
+	name = ID 
+	location ?= 'location'? 
+	storage ?= 'storage'? 
+	('{'
+		attributes += ClientAttribute*
+	'}')?
 ;
 
-HttpClientTypeDefinition:
-	':' name = ID '{'
-		elements += HttpClientStateElement* 
+ClientScenario:
+	name = ID
+	('GIVEN' (givenRefs += ClientGivenRef)* )? 
+	clientWhenThen += ClientWhenThen ('AND' clientWhenThen += ClientWhenThen)*
+;
+
+ClientWhenThen: 
+	{ClientWhenThen} 
+	'WHEN' (whenBlock = ClientWhenBlock)? ('delayInMillis' delayInMillis = INT)?
+	('THEN' thenBlock = ClientThenBlock)?
+	
+;
+
+ClientGivenRef:
+	scenario = [ClientScenario | QualifiedName] (excludeGiven ?= 'exclude' 'GIVEN')?
+;
+
+ClientWhenBlock: 
+	action = [HttpClientAce|QualifiedName] 
+	('(' (inputValues += InputValue (',' inputValues += InputValue)* )? ')')?
+	('squishyValues' squishyValues += SquishyValue (',' squishyValues += SquishyValue)*)?
+	
+;
+
+SquishyValue:
+	{SquishyValue} '{'
+		('uuid' uuid = STRING 
+		('clientSystemTime' clientSystemTime = STRING)?
+		('serverSystemTime' serverSystemTime = STRING)?
+		('squishy' attribute = [Attribute | QualifiedName] ':' value = PrimitiveValue)?)?
 	'}'
 ;
 
+InputValue:
+	input = [Input | QualifiedName] ':' value = PrimitiveValue
+;
+
+ClientThenBlock: {ClientThenBlock} 
+	('expectedState' stateVerifications += StateVerification*)?
+	('verifications' verifications += CustomVerification*)?
+;
+
+StateVerification:
+	name = ID stateRef = [ClientAttribute | QualifiedName] 'should' (not ?= 'not')? 'be' value = JsonValueClient
+;
+
+CustomVerification:
+	functionName = ID ('(' stateRef = [ClientAttribute | QualifiedName] ')') ?
+;
+
+JsonObjectClient:
+	{JsonObjectClient} '{' 
+		(members+=JsonMemberClient)?
+		(',' members+=JsonMemberClient)* 
+	
+	'}';
+
+JsonMemberClient:
+	attribute=[ClientAttribute | QualifiedName] ':' value=JsonValueClient;
+	
+JsonValueClient:
+	JsonObjectClient | StringType | JsonArrayClient | BooleanType | NullType | LongType | JsonDateTime | UndefinedType;
+
+JsonArrayClient:
+	{JsonArrayClient} '[' (values+=JsonValueClient)? (',' values+=JsonValueClient)* ']';
+
+
+
+
+
+
 HttpServer:
-	language = ('Java' | 'C#')
-	type = ('Dropwizard' | 'ASP.NET5')?
-	persistenceLayer = 'JDBI3'?
-	migrations = 'Liquibase' ?
+	java ?= 'Java'?
+	cs ?= 'C#'?
+	dropwizard ?= 'Dropwizard'?
+	dotnet ?= 'NET6'?
+	JDBI3 ?= 'JDBI3'?
+	EF ?= 'EntityFramework'?
+	liquibase ?= 'Liquibase'?
 	name = QualifiedName
 	('Authorization' authUser = AuthUser)?
 	('import' authUserRef = [AuthUser | QualifiedName])?
@@ -79,10 +183,11 @@ HttpServerAce:
 ;
 
 HttpServerAceWrite: 
-	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
+	name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = WriteFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
+	multipartFormData ?= 'multipartFormData'? 
 	('pathParams' (pathParams += AttributeParamRef)*)?
 	('queryParams' (queryParams += AttributeParamRef)*)?
 	('payload' (payload += AttributeParamRef)*)?
@@ -96,7 +201,7 @@ HttpServerOutcome:
 ;
 
 HttpServerAceRead: 
-	proxy ?= 'proxy'? name = ID '<' model = [ Model | QualifiedName ] '>' 
+	name = ID '<' model = [ Model | QualifiedName ] '>' 
 	type = ReadFunctionType
 	url = STRING
 	authorize ?= 'authorize'? 
@@ -107,11 +212,11 @@ HttpServerAceRead:
 ;
 
 AttributeParamRef:
-	attribute = [Attribute | QualifiedName] optional ?= 'optional'? 
+	notNull ?= 'NotNull'? attribute = [Attribute | QualifiedName] 
 ;
 
 HttpServerView: 
-	name = ID 
+	afterCommit ?= 'afterCommit'? name = ID 
 	('{'
 		(renderFunctions += HttpServerViewFunction)*
 	'}')?		
@@ -136,19 +241,32 @@ Model:
 
 Scenario:
 	name = ID
-	('GIVEN' (givenRefs += GivenRef)* )? 
+	('GIVEN' (givenItems += Given)* )? 
+	whenThen += WhenThen ('AND' whenThen += WhenThen)*
+;
+
+WhenThen:
 	'WHEN' whenBlock = WhenBlock
 	'THEN' thenBlock = ThenBlock
 ;
 
+Given:
+	GivenRef | CustomCall
+;
+
+CustomCall:
+	customCallName = ID '(' (values += PrimitiveValue (',' values += PrimitiveValue)*)? ')' (times = INT 'x')?
+;
+
 GivenRef:
-	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'excludeGIVEN')?
+	scenario = [Scenario | QualifiedName] (times = INT 'x')? (excludeGiven ?= 'exclude' 'GIVEN')?
 ;
 
 WhenBlock: 
 	action = [HttpServerAce|QualifiedName] 
 	dataDefinition = DataDefinition
 	(authorization = Authorization)?
+	extractions += Extraction*
 ;
 
 ThenBlock:
@@ -186,6 +304,10 @@ Verification:
 	name = ID
 ;
 
+Extraction:
+	'extract' name = ID  
+;
+
 SelectByExpectation:
 	object = JsonObject | isNotNull ?= 'notNull' | isNull ?= 'null'	
 ;
@@ -206,10 +328,10 @@ Attribute:
 	primaryKey ?= 'PrimaryKey'? 
 	notNull ?= 'NotNull'? 
 	list ?= 'List'? 
-	(type = Type | model = [Model | QualifiedName]) 
+	(type = Type | model = [Model | QualifiedName])
 	name = ID 
 	('references' foreignKey = [Attribute | QualifiedName])? 
-	notReplayable ?= 'notReplayable'?
+	squishy ?= 'squishy'?
 ;
 
 QualifiedName:
@@ -225,15 +347,13 @@ ReadFunctionType:
 ;
 
 Type:
-	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long'
+	'Integer' | 'String' | 'Float' | 'Boolean' | 'DateTime' | 'Long' | 'FormData'
 ;
 
-JsonDateTime:
-	dateTime = STRING pattern = STRING
-;
-
-JsonObject:
-	{JsonObject} '{' 
+JsonObject: JsonObjectAce | 'json' StringType;
+	
+JsonObjectAce: 
+	{JsonObjectAce} '{' 
 		(members+=JsonMember)?
 		(',' members+=JsonMember)* 
 	
@@ -243,17 +363,38 @@ JsonMember:
 	attribute=[Attribute | QualifiedName] ':' value=JsonValue;
 	
 JsonValue:
-	JsonObject | string = STRING | JsonArray | boolean = JsonBoolean | null = JsonNull | long = INT | JsonDateTime;
+	JsonObject | StringType | JsonArray | BooleanType | NullType | LongType | JsonDateTime;
 
 JsonArray:
 	{JsonArray} '[' (values+=JsonValue)? (',' values+=JsonValue)* ']';
+	
+JsonDateTime:
+	dateTime = STRING pattern = STRING
+;
+
+StringType:
+	string = STRING
+;
+
+BooleanType:
+	boolean = JsonBoolean
+;
+
+NullType:
+	null ?= 'null'
+;
+
+UndefinedType:
+	undefined ?= 'undefined'
+;
+
+LongType:
+	long = INT
+;
 
 JsonBoolean:
   'true' | 'false';
 
-JsonNull:
-  'null';
-  
 PrimitiveValue:
 	string = STRING | long = INT
 ;

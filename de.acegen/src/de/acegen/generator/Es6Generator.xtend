@@ -1,33 +1,39 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.generator
 
+import de.acegen.aceGen.HttpClient
 import de.acegen.extensions.es6.AceExtension
+import de.acegen.extensions.es6.Es6Extension
 import de.acegen.templates.es6.AceTemplate
 import de.acegen.templates.es6.ActionTemplate
 import de.acegen.templates.es6.CommandTemplate
 import de.acegen.templates.es6.EventTemplate
+import de.acegen.templates.es6.ScenarioTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.aceGen.HttpClient
+import de.acegen.generator.es6.ReactGenerator
 
 class Es6Generator {
+	
 	@Inject
 	ActionTemplate actionTemplate;
 
@@ -41,7 +47,16 @@ class Es6Generator {
 	AceTemplate aceTemplate;
 
 	@Inject
+	ScenarioTemplate scenarioTemplate;
+
+	@Inject
 	extension AceExtension
+
+	@Inject
+	extension Es6Extension
+	
+	@Inject
+	ReactGenerator reactGenerator
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		for (ace : httpClient.aceOperations) {
@@ -64,25 +79,21 @@ class Es6Generator {
 					ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 					commandTemplate.generateSynchronousInitialCommandFile(ace, httpClient));
 			}
-			for (outcome : ace.outcomes) {
-				if (outcome.listeners.size > 0) {
-					fsa.generateFile(httpClient.getName + '/events/' + ace.eventName(outcome) + '.js',
-						IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateAbstractEventFile(ace, outcome, httpClient));
-				}
-			}
 		}
-		fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			eventTemplate.generateEventListenerRegistration(httpClient));
-		fsa.generateFile(httpClient.getName + '/ActionFactoryRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			actionTemplate.generateActionFactoryRegistration(httpClient));
-		fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
-			actionTemplate.generateActionFunctionExports(httpClient));
-		fsa.generateFile('app/App.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-			aceTemplate.generateAppStub());
-		fsa.generateFile('app/AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+		if (httpClient.aceOperations.size > 0) {
+			fsa.generateFile(httpClient.getName + '/EventListenerRegistration.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				eventTemplate.generateEventListenerRegistration(httpClient));
+			fsa.generateFile(httpClient.getName + '/ActionFunctions.js', IFileSystemAccess.DEFAULT_OUTPUT,
+				actionTemplate.generateActionFunctionExports(httpClient));
+			fsa.generateFile('actionIds/' + httpClient.getName + '/' + httpClient.actionIdName + '.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
+				actionTemplate.generateActionIds(httpClient));
+		}
+		fsa.generateFile('index.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+			aceTemplate.generateApp(httpClient));
+		fsa.generateFile('AppUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 			aceTemplate.generateAppUtilsStub());
-		fsa.generateFile('app/ReplayUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-			aceTemplate.generateReplayUtilsStub());
+		fsa.generateFile('AppState.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
+			aceTemplate.generateAppStateStub());
 		fsa.generateFile('ace/Action.js', IFileSystemAccess.DEFAULT_OUTPUT, actionTemplate.generateAction());
 		fsa.generateFile('ace/AsynchronousAction.js', IFileSystemAccess.DEFAULT_OUTPUT,
 			actionTemplate.generateAsynchronousAction());
@@ -95,16 +106,22 @@ class Es6Generator {
 			commandTemplate.generateSynchronousCommand());
 		fsa.generateFile('ace/Event.js', IFileSystemAccess.DEFAULT_OUTPUT, eventTemplate.generateEvent());
 		fsa.generateFile('ace/ACEController.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateACEController());
-		fsa.generateFile('ace/TriggerAction.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTriggerAction());
-		fsa.generateFile('ace/Scenario.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateScenario());
-		fsa.generateFile('ace/Bug.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateBug());
+		fsa.generateFile('ace/Timeline.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateTimeline());
 		fsa.generateFile('ace/Utils.js', IFileSystemAccess.DEFAULT_OUTPUT, aceTemplate.generateUtils());
-		if (httpClient.getAppState !== null) {
-			fsa.generateFile('ace/WriteAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateWriteAppState(httpClient.getAppState, ""));
-			fsa.generateFile('ace/ReadAppState.js', IFileSystemAccess.DEFAULT_OUTPUT,
-				aceTemplate.generateReadAppState(httpClient.getAppState, ""));
+		
+		if (httpClient.jsx) {
+			reactGenerator.doGenerate(httpClient, fsa);
 		}
+		
+		for (scenario : httpClient.scenarios) {
+			fsa.generateFile(httpClient.getName + '/' + scenario.name + '.scenario.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT,
+				scenarioTemplate.generateScenario(scenario, httpClient));
+			if (scenario.allVerifications.size > 0) {
+				fsa.generateFile(httpClient.getName + '/' + scenario.name + 'Verifications.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE,
+					scenarioTemplate.generateVerifications(scenario));
+			}
+		}
+		fsa.generateFile('ScenarioUtils.js', ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_TEST_OUTPUT_ONCE, scenarioTemplate.generateScenarioUtils());
 		
 	}
 }

@@ -1,3 +1,20 @@
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+
 package de.acegen.templates.java.actions
 
 import de.acegen.aceGen.HttpServer
@@ -5,8 +22,8 @@ import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.AttributeExtension
+import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
 
@@ -16,7 +33,7 @@ class Action {
 	extension ModelExtension
 
 	@Inject
-	extension AceExtension
+	extension JavaHttpServerExtension
 
 	@Inject
 	extension AttributeExtension
@@ -31,59 +48,38 @@ class Action {
 		
 		import java.time.LocalDateTime;
 		
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		
-		import org.apache.commons.lang3.StringUtils;
-		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.E2E;
-		import de.acegen.HttpMethod;
 		import de.acegen.ICommand;
 		import de.acegen.IDaoProvider;
-		import de.acegen.IDataContainer;
-		import de.acegen.ITimelineItem;
 		import de.acegen.ViewProvider;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.SquishyDataProvider;
 		import de.acegen.PersistenceConnection;
-		import de.acegen.«IF proxy»Proxy«ENDIF»WriteAction;
+		import de.acegen.WriteAction;
 
 		«getModel.dataImport»
-		«getModel.dataClassImport»
-		«IF outcomes.size > 0»
-			import «commandNameWithPackage(httpServer)»;
-		«ENDIF»
+		import «commandNameWithPackage»;
 		
-		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»WriteAction<«getModel.dataParamType»> {
+		import org.slf4j.Logger;
+		import org.slf4j.LoggerFactory;
+
+		public abstract class «abstractActionName» extends WriteAction<«model.dataParamType»> {
 
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
-			
+
 			«constructor»
-				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider, e2e);
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
 			@Override
-			public ICommand getCommand() {
-				«IF outcomes.size > 0»
-					return new «commandName»(this.actionData, daoProvider, viewProvider, this.appConfiguration);
-				«ELSE»
-					return null;
-				«ENDIF»
+			public ICommand<«model.dataParamType»> getCommand() {
+				return new «commandName»(daoProvider, viewProvider, this.appConfiguration);
 			}
 			
-			«initActionDataFrom»
+			«initActionDataFromSquishyDataProvider»		
 
-			«IF proxy»
-				@Override
-				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
-					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-					return («getModel.dataParamType»)originalData;
-				}
-			«ENDIF»
-
-			«initActionDataFromNotReplayableDataProvider»		
+			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+				return data;
+			}
 
 		}
 		
@@ -105,46 +101,34 @@ class Action {
 		import org.apache.commons.lang3.StringUtils;
 		
 		import de.acegen.CustomAppConfiguration;
-		import de.acegen.E2E;
 		import de.acegen.IDaoProvider;
 		import de.acegen.IDataContainer;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
-		import de.acegen.«IF isProxy»Proxy«ENDIF»ReadAction;
+		import de.acegen.ReadAction;
 		import de.acegen.ITimelineItem;
-		import de.acegen.NotReplayableDataProvider;
+		import de.acegen.SquishyDataProvider;
 		
-		«IF authorize»
-			import de.acegen.auth.AuthUser;
-		«ENDIF»
-
 		«getModel.dataImport»
 		«getModel.dataClassImport»
 		
 		@SuppressWarnings("unused")
-		public abstract class «abstractActionName» extends «IF isProxy»Proxy«ENDIF»ReadAction<«getModel.dataParamType»> {
+		public abstract class «abstractActionName» extends ReadAction<«getModel.dataParamType»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
 			
 			«constructor»
-				super("«actionNameWithPackage(httpServer)»", persistenceConnection, appConfiguration, daoProvider,
-								viewProvider, e2e);
+				super("«actionNameWithPackage»", persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
-			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			protected abstract «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle);
 		
-			«initActionDataFrom»
-			
-			«initActionDataFromNotReplayableDataProvider»
+			«initActionDataFromSquishyDataProvider»
 
-			«IF proxy»
-				@Override
-				protected «getModel.dataParamType» createDataFrom(ITimelineItem timelineItem) {
-					IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-					return («getModel.dataParamType»)originalData;
-				}
-			«ENDIF»
+			public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+				return data;
+			}
 
 		}
 		
@@ -160,10 +144,12 @@ class Action {
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ViewProvider;
 		import de.acegen.IDaoProvider;
-		import de.acegen.E2E;
 		import de.acegen.PersistenceConnection;
 		«IF getType.equals("GET")»
 			import de.acegen.PersistenceHandle;
+		«ENDIF»
+		«IF model.allSquishyAttributes.size > 0 || getType.equals("GET")»
+			«getModel.dataImport»
 		«ENDIF»
 		
 		import org.slf4j.Logger;
@@ -174,26 +160,32 @@ class Action {
 			static final Logger LOG = LoggerFactory.getLogger(«actionName».class);
 		
 			public «actionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, IDaoProvider daoProvider, 
-					ViewProvider viewProvider, E2E e2e) {
-				super(persistenceConnection, appConfiguration, daoProvider, viewProvider, e2e);
+					ViewProvider viewProvider) {
+				super(persistenceConnection, appConfiguration, daoProvider, viewProvider);
 			}
 		
 		
 			«IF getType.equals("GET")»
 				@Override
-				protected void loadDataForGetRequest(PersistenceHandle readonlyHandle) {
+				protected «getModel.dataParamType» loadDataForGetRequest(«getModel.dataParamType» data, PersistenceHandle readonlyHandle) {
+					«getModel.interfaceWithPackage» testData = «getModel.dataNameWithPackage».generateTestData();
+					«FOR attribute: it.model.attributes»
+						data.«attribute.setterCall('''testData.«attribute.getterCall»''')»;
+					«ENDFOR»
+					return data;
 				}
 			«ENDIF»
 			
-			public void initActionData() {
-				// init not replayable data here
-				«FOR attribute: model.allNotReplayableAttributes»
-					// «attribute.name»
-				«ENDFOR»
-			}
+			«IF model.allSquishyAttributes.size > 0»
+				public «getModel.dataParamType» initActionData(«getModel.dataParamType» data) {
+					«FOR attribute: model.allSquishyAttributes»
+						// «attribute.name»
+					«ENDFOR»
+					return data;
+				}
+			«ENDIF»
 		
 		}
-		
 		
 		«sdg»
 		
@@ -206,7 +198,6 @@ class Action {
 		
 		public abstract class Action<T extends IDataContainer> implements IAction<T> {
 		
-			protected T actionData;
 			protected String actionName;
 		
 			public Action(String actionName) {
@@ -214,16 +205,8 @@ class Action {
 				this.actionName = actionName;
 			}
 			
-			public void setActionData(T actionData) {
-				this.actionData = actionData;
-			}
-		
 			public String getActionName() {
 				return this.actionName;
-			}
-		
-			public T getActionData() {
-				return this.actionData;
 			}
 		
 			protected void throwSecurityException() {
@@ -240,7 +223,7 @@ class Action {
 		
 	'''
 	
-	def generateReadAction(boolean isProxy) '''
+	def generateReadAction() '''
 		«copyright»
 		
 		package de.acegen;
@@ -249,68 +232,46 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class «IF isProxy»Proxy«ENDIF»ReadAction<T extends IDataContainer> extends Action<T> {
+		public abstract class ReadAction<T extends IDataContainer> extends Action<T> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 			
 			private PersistenceConnection persistenceConnection;
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
-			private E2E e2e;
 			
-			public «IF isProxy»Proxy«ENDIF»ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			public ReadAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
-				this.e2e = e2e;
 			}
 		
-			protected abstract void loadDataForGetRequest(PersistenceHandle readonlyHandle);
+			protected abstract T loadDataForGetRequest(T data, PersistenceHandle readonlyHandle);
 			
-			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
+			protected abstract T initActionDataFromSquishyDataProvider(T data);
 
-			protected abstract void initActionDataFromNotReplayableDataProvider();
-
-			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
-
-			public void apply() {
+			public T apply(T data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
-							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
-							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
-							databaseHandle.rollbackTransaction();
-							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							databaseHandle.rollbackTransaction();
-							return;
-						}
-						this.actionData.setSystemTime(LocalDateTime.now());
-						this.initActionData();
-					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						initActionDataFrom(timelineItem);
+					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
+						LOG.error("duplicate request {} {} ", actionName, data.getUuid());
+						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
-					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNotReplayableDataProvider();
-					}
-					«IF isProxy»
-						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-							ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-							T originalData = this.createDataFrom(timelineItem);
-							this.setActionData(originalData);
-						} else {
-							this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
-						}
-					«ELSE»
-						this.loadDataForGetRequest(databaseHandle.getReadonlyHandle());
-					«ENDIF»
 					
+					data.setSystemTime(LocalDateTime.now());
 					«addActionToTimeline»
+
+					data = this.initActionData(data);
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
+						data = initActionDataFromSquishyDataProvider(data);
+					}
+					data = this.loadDataForGetRequest(data, databaseHandle.getReadonlyHandle());
+					
 					databaseHandle.commitTransaction();
+					return data;
 				«catchFinallyBlock»
 				
 			}
@@ -322,7 +283,7 @@ class Action {
 		
 	'''
 
-	def generateWriteAction(boolean isProxy) '''
+	def generateWriteAction() '''
 		«copyright»
 		
 		package de.acegen;
@@ -331,71 +292,52 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		public abstract class «IF isProxy»Proxy«ENDIF»WriteAction<T extends IDataContainer> extends Action<T> {
+		public abstract class WriteAction<T extends IDataContainer> extends Action<T> {
 		
-			static final Logger LOG = LoggerFactory.getLogger(«IF isProxy»Proxy«ENDIF»WriteAction.class);
+			static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
 			
 			private PersistenceConnection persistenceConnection;
 			protected CustomAppConfiguration appConfiguration;
 			protected IDaoProvider daoProvider;
 			protected ViewProvider viewProvider;
-			private E2E e2e;
 			
-			public «IF isProxy»Proxy«ENDIF»WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-					IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+			public WriteAction(String actionName, PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
+					IDaoProvider daoProvider, ViewProvider viewProvider) {
 				super(actionName);
 				this.persistenceConnection = persistenceConnection;
 				this.appConfiguration = appConfiguration;
 				this.daoProvider = daoProvider;
 				this.viewProvider = viewProvider;
-				this.e2e = e2e;
 			}
 		
-			protected abstract void initActionDataFrom(ITimelineItem timelineItem);
-		
-			«IF isProxy»protected abstract T createDataFrom(ITimelineItem timelineItem);«ENDIF»
-			
-			protected abstract void initActionDataFromNotReplayableDataProvider();
+			protected abstract T initActionDataFromSquishyDataProvider(T data);
 
-			protected abstract ICommand getCommand();
+			protected abstract ICommand<T> getCommand();
 		
-			public void apply() {
+			public T apply(T data) {
 				DatabaseHandle databaseHandle = new DatabaseHandle(persistenceConnection.getJdbi(), appConfiguration);
 				databaseHandle.beginTransaction();
 				try {
-					if (Config.DEV.equals(appConfiguration.getConfig().getMode())
-							|| Config.LIVE.equals(appConfiguration.getConfig().getMode())
-							|| Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						if (!daoProvider.getAceDao().checkUuid(this.actionData.getUuid())) {
-							LOG.warn("duplicate request {} {} ", actionName, this.actionData.getUuid());
-							databaseHandle.rollbackTransaction();
-							return;
-						}
-						this.actionData.setSystemTime(LocalDateTime.now());
-						this.initActionData();
-					} else if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-						ITimelineItem timelineItem = e2e.selectAction(this.actionData.getUuid());
-						initActionDataFrom(timelineItem);
+					if (!daoProvider.getAceDao().checkUuid(data.getUuid())) {
+						LOG.error("duplicate request {} {} ", actionName, data.getUuid());
+						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
-					if (Config.TEST.equals(appConfiguration.getConfig().getMode())) {
-						initActionDataFromNotReplayableDataProvider();
-					}
+
+					data.setSystemTime(LocalDateTime.now());
 					«addActionToTimeline»
+
+					data = this.initActionData(data);
+					if (Config.DEV.equals(appConfiguration.getConfig().getMode())) {
+						data = initActionDataFromSquishyDataProvider(data);
+					}
 					
-					ICommand command = this.getCommand();
-					«IF isProxy»
-						if (Config.REPLAY.equals(appConfiguration.getConfig().getMode())) {
-							ITimelineItem timelineItem = e2e.selectCommand(this.actionData.getUuid());
-							T originalData = this.createDataFrom(timelineItem);
-							command.setCommandData(originalData);
-						} else {
-							command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
-						}
-					«ELSE»
-						command.execute(databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
-					«ENDIF»
-					command.publishEvents(databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
+					ICommand<T> command = this.getCommand();
+					data = command.execute(data, databaseHandle.getReadonlyHandle(), databaseHandle.getTimelineHandle());
+					command.addEventsToTimeline(data, databaseHandle.getTimelineHandle());
+					command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
+					command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
+					return data;
 				«catchFinallyBlock»
 			}
 		
@@ -429,13 +371,9 @@ class Action {
 		
 			String getActionName();
 			
-			void setActionData(T actionData);
-			
-			IDataContainer getActionData();
-			
-		    void apply();
+		    T apply(T data);
 		    
-		    void initActionData();
+		    T initActionData(T data);
 		    
 		}
 		
@@ -446,59 +384,44 @@ class Action {
 	
 	private def constructor(HttpServerAce it) '''
 		public «abstractActionName»(PersistenceConnection persistenceConnection, CustomAppConfiguration appConfiguration, 
-				IDaoProvider daoProvider, ViewProvider viewProvider, E2E e2e) {
+				IDaoProvider daoProvider, ViewProvider viewProvider) {
 	'''
 	
-	private def initActionDataFrom(HttpServerAce it) '''
+	private def initActionDataFromSquishyDataProvider(HttpServerAce it) '''
 		@Override
-		protected void initActionDataFrom(ITimelineItem timelineItem) {
-			IDataContainer originalData = AceDataFactory.createAceData(timelineItem.getName(), timelineItem.getData());
-			«getModel.dataParamType» originalActionData = («getModel.dataParamType»)originalData;
-			this.actionData.setSystemTime(originalActionData.getSystemTime());
-			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					this.actionData.«attribute.setterCall('''(originalActionData.«attribute.getterCall»)''')»;
-				«ENDIF»
-			«ENDFOR»
-		}
-	'''
-	
-	private def initActionDataFromNotReplayableDataProvider(HttpServerAce it) '''
-		@Override
-		protected void initActionDataFromNotReplayableDataProvider() {
-			LocalDateTime systemTime = NotReplayableDataProvider.consumeSystemTime(this.actionData.getUuid());
+		protected «model.dataParamType» initActionDataFromSquishyDataProvider(«model.dataParamType» data) {
+			LocalDateTime systemTime = SquishyDataProvider.consumeSystemTime(data.getUuid());
 			if (systemTime != null) {
-				this.actionData.setSystemTime(systemTime);
-			} else {
-				this.actionData.setSystemTime(LocalDateTime.now());
+				data.setSystemTime(systemTime);
 			}
 			«FOR attribute : getModel.allAttributes»
-				«IF attribute.notReplayable»
-					Object value = NotReplayableDataProvider.consumeValue(this.actionData.getUuid(), "«attribute.name»");
-					if (value != null) {
+				«IF attribute.squishy»
+					String «attribute.name»Object = SquishyDataProvider.consumeValue(data.getUuid(), "«attribute.name»");
+					if («attribute.name»Object != null) {
 						try {
-							«attribute.javaType» «attribute.name» = («attribute.javaType»)value;
-							this.actionData.«attribute.setterCall(attribute.name)»;
+							«attribute.javaType» «attribute.name» = («attribute.javaType»)«attribute.name»Object;
+							data.«attribute.setterCall(attribute.name)»;
 						} catch (Exception x) {
-							LOG.warn("«attribute.name» is declared as not replayable and failed to parse {} from NotReplayableDataProvider.", value);
+							LOG.warn("«attribute.name» is declared as squishy and failed to parse {} from SquishyDataProvider.", «attribute.name»Object);
 						}
 					} else {
-						LOG.warn("«attribute.name» is declared as not replayable but no value was found in NotReplayableDataProvider.");
+						LOG.warn("«attribute.name» is declared as squishy but no value was found in SquishyDataProvider.");
 					}
 				«ENDIF»
 			«ENDFOR»
+			return data;
 		}
 	'''
 	
 	private def addActionToTimeline() '''
 		if (appConfiguration.getConfig().writeTimeline()) {
-			daoProvider.getAceDao().addActionToTimeline(this, databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addActionToTimeline(this.getActionName(), data, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
 	private def addExceptionToTimeline() '''
 		if (appConfiguration.getConfig().writeError()) {
-			daoProvider.getAceDao().addExceptionToTimeline(this.actionData.getUuid(), x, databaseHandle.getTimelineHandle());
+			daoProvider.getAceDao().addExceptionToTimeline(data.getUuid(), x, databaseHandle.getTimelineHandle());
 		}
 	'''
 	
@@ -513,7 +436,7 @@ class Action {
 			}
 			throw x;
 		} catch (SecurityException x) {
-			LOG.error(actionName + " SecurityException {} ", x.getMessage());
+			LOG.error(actionName + " SecurityException");
 			try {
 				«addExceptionToTimeline»
 				databaseHandle.rollbackTransaction();

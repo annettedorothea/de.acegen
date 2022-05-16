@@ -1,9 +1,0 @@
-[2020-03-18 12:22:44] Executing startup tasks
-[2020-03-18 12:22:44] Java(TM) SE Runtime Environment 11.0.2+9-LTS
-[2020-03-18 12:22:44] Product self.product.version
-[2020-03-18 12:22:44] Workspace /Users/annette/Documents/Projekte/notificationApp
-[2020-03-18 12:22:44] Bundle org.eclipse.oomph.setup 1.15.0.v20191116-1146, build=4434, branch=3a9f8ff482882029c027d32dc59d8b0436598aa8
-[2020-03-18 12:22:44] Bundle org.eclipse.oomph.setup.core 1.15.0.v20191103-0619, build=4434, branch=3a9f8ff482882029c027d32dc59d8b0436598aa8
-[2020-03-18 12:22:44] Bundle org.eclipse.oomph.setup.p2 1.13.0.v20191019-1424, build=4434, branch=3a9f8ff482882029c027d32dc59d8b0436598aa8
-[2020-03-18 12:22:44] Performing Preference /instance/de.acegen.ui/de.acegen.AceGen.templates = <?xml version="1.0" encoding="UTF-8" standalone="no"?><templates/>
-[2020-03-18 12:22:44] 

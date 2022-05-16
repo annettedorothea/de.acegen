@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java;
 
 import de.acegen.extensions.CommonExtension;
@@ -255,10 +270,9 @@ public class TimelineItem {
     _builder.newLine();
     _builder.append("import java.sql.SQLException;");
     _builder.newLine();
-    _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
-    _builder.append("import java.time.format.DateTimeFormatter;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.mapper.RowMapper;");
     _builder.newLine();
@@ -273,7 +287,22 @@ public class TimelineItem {
     _builder.append("public ITimelineItem map(ResultSet r, StatementContext ctx) throws SQLException {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("LocalDateTime time = LocalDateTime.parse(r.getString(\"time\"), DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss.SSSSSS\"));");
+    _builder.append("LocalDateTime timestamp;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("try {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("timestamp = r.getTimestamp(\"time\") != null ? r.getTimestamp(\"time\").toLocalDateTime() : null;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("} catch (Exception x) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("timestamp = null;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return new TimelineItem(");
@@ -285,7 +314,7 @@ public class TimelineItem {
     _builder.append("r.getString(\"name\"),");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("time,");
+    _builder.append("timestamp,");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("r.getString(\"data\"),");
@@ -300,6 +329,7 @@ public class TimelineItem {
     _builder.append("}");
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();

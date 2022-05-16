@@ -1,18 +1,20 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.generator
@@ -37,8 +39,6 @@ class AceGenGenerator extends AbstractGenerator {
 	@Inject
 	JavaGenerator javaGenerator;
 
-	@Inject
-	CSGenerator csGenerator;
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {
@@ -46,12 +46,8 @@ class AceGenGenerator extends AbstractGenerator {
 
 			if (project.httpClient !== null) {
 				es6Generator.doGenerate(project.httpClient, fsa);
-			} else if (project.httpServer !== null) {
-				if (project.httpServer.language == "Java") {
-					javaGenerator.doGenerate(project.httpServer, fsa);
-				} else if (project.httpServer.language == "C#") {
-					csGenerator.doGenerate(project.httpServer, fsa);
-				}
+			} else if (project.httpServer !== null && project.httpServer.java) {
+				javaGenerator.doGenerate(project.httpServer, fsa);
 			}
 
 		}

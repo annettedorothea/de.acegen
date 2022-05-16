@@ -1,25 +1,25 @@
-/* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+/********************************************************************************
+ * Copyright (c) 2020 Annette Pohl
  *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
+
  
 
 package de.acegen.templates.es6
 
 import de.acegen.aceGen.HttpClient
-import de.acegen.aceGen.HttpClientAce
-import de.acegen.aceGen.HttpClientOutcome
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.es6.AceExtension
 import de.acegen.extensions.es6.Es6Extension
@@ -36,26 +36,11 @@ class EventTemplate {
 	@Inject
 	extension CommonExtension
 	
-	def generateAbstractEventFile(HttpClientAce it, HttpClientOutcome outcome, HttpClient es6) '''
-		«copyright»
-
-		import Event from "../../../gen/ace/Event";
-		
-		export default class «eventName(outcome)» extends Event {
-		    constructor(eventData) {
-		        super(eventData, '«es6.getName».«eventName(outcome)»');
-		    }
-		}
-		
-		
-		«sdg»
-		
-	'''
 	def generateEventListenerRegistration(HttpClient it) '''
 		«copyright»
 
-		import ACEController from "../ace/ACEController";
-		import * as AppState from "../ace/WriteAppState";
+		import * as ACEController from "../ace/ACEController";
+		import * as AppState from "../../src/AppState";
 		
 		export default class EventListenerRegistration«projectName» {
 		
@@ -64,6 +49,9 @@ class EventTemplate {
 					«FOR outcome : aceOperation.outcomes»
 						«FOR listener : outcome.listeners»
 							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «listener.appStateFunction()»);
+						«ENDFOR»
+						«FOR function : outcome.functions»
+							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «function.appStateFunction()»);
 						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
@@ -79,28 +67,35 @@ class EventTemplate {
 	def generateEvent() '''
 		«copyright»
 
-		import AppUtils from "../../src/app/AppUtils";
-		import ACEController from "./ACEController";
+		import * as ACEController from "./ACEController";
 		
 		export default class Event {
-		    constructor(eventData, eventName) {
+		    constructor(eventName) {
 		        this.eventName = eventName;
-		        this.eventData = AppUtils.deepCopy(eventData);
+		    }
+
+		    publish(data) {
+		        ACEController.addItemToTimeLine({
+		            event: {
+		                eventName: this.eventName,
+		                data
+		            }
+		        });
+		        this.notifyListeners(data);
 		    }
 		
-		    publish() {
-		        this.notifyListeners();
-				ACEController.addItemToTimeLine({event: this});
+		    replay(data) {
+		        this.notifyListeners(data);
 		    }
 		
-		    notifyListeners() {
+		    notifyListeners(data) {
 		        let i, listener;
 		        if (this.eventName !== undefined) {
 		            const listenersForEvent = ACEController.listeners[this.eventName];
 		            if (listenersForEvent !== undefined) {
 		                for (i = 0; i < listenersForEvent.length; i += 1) {
 		                    listener = listenersForEvent[i];
-							listener(AppUtils.deepCopy(this.eventData));
+							listener(data);
 		                }
 		            }
 		        }
@@ -113,7 +108,7 @@ class EventTemplate {
 		
 		
 	'''
-	
+
 }
 	
 	

@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java.models;
 
 import de.acegen.aceGen.Attribute;
@@ -28,6 +43,129 @@ public class JDBI3Dao {
   @Extension
   private CommonExtension _commonExtension;
   
+  public CharSequence generateAbstractJdbiDao() {
+    StringConcatenation _builder = new StringConcatenation();
+    String _copyright = this._commonExtension.copyright();
+    _builder.append(_copyright);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("package de.acegen;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import java.util.List;");
+    _builder.newLine();
+    _builder.append("import java.util.Map;");
+    _builder.newLine();
+    _builder.append("import java.util.Optional;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("import org.jdbi.v3.core.mapper.RowMapper;");
+    _builder.newLine();
+    _builder.append("import org.jdbi.v3.core.statement.Query;");
+    _builder.newLine();
+    _builder.append("import org.jdbi.v3.core.statement.Update;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("@SuppressWarnings(\"all\")");
+    _builder.newLine();
+    _builder.append("public class AbstractDao {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected void update(PersistenceHandle handle, String sql, Map<String, Object> params) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("Update statement = handle.getHandle().createUpdate(sql);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("for (String paramName : params.keySet()) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("Object value = params.get(paramName);");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("if (value instanceof List) {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("statement.bindList(paramName, (List)value);");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("} else {");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("statement.bind(paramName, value);");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("statement.execute();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected <T> T selectOne(PersistenceHandle handle, String sql, Map<String, Object> params, RowMapper<T> mapper) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("Query query = handle.getHandle().createQuery(sql);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("for (String paramName : params.keySet()) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("query.bind(paramName, params.get(paramName));");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("Optional<T> optional = query.map(mapper).findFirst();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return optional.isPresent() ? optional.get() : null;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected <T> List<T> selectList(PersistenceHandle handle, String sql, Map<String, Object> params, RowMapper<T> mapper) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("Query query = handle.getHandle().createQuery(sql);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("for (String paramName : params.keySet()) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("query.bind(paramName, params.get(paramName));");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return query.map(mapper).list();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    String _sdg = this._commonExtension.sdg();
+    _builder.append(_sdg);
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    return _builder;
+  }
+  
   public CharSequence generateAbstractJdbiDao(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -41,6 +179,8 @@ public class JDBI3Dao {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
+    _builder.newLine();
+    _builder.append("import de.acegen.AbstractDao;");
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.statement.Update;");
     _builder.newLine();
@@ -57,7 +197,7 @@ public class JDBI3Dao {
     _builder.append("public class ");
     String _abstractModelDao = this._modelExtension.abstractModelDao(it);
     _builder.append(_abstractModelDao);
-    _builder.append(" {");
+    _builder.append(" extends AbstractDao {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.acegen.feature_0.5.0.jar" id="de.acegen.feature" version="0.5.0">
-      <category name="de.acegen"/>
-   </feature>
-   <feature url="features/de.acegen.feature_0.6.0.jar" id="de.acegen.feature" version="0.6.0">
-      <category name="de.acegen"/>
-   </feature>
-   <feature id="de.acegen.feature">
-      <category name="de.acegen"/>
-   </feature>
-   <category-def name="de.acegen" label="AceGen"/>
+	<feature id="de.acegen.feature" version="0.0.0">
+		<category name="main"/>
+	</feature>
+	<feature id="de.acegen.feature.source" version="0.0.0">
+		<category name="main.source"/>
+	</feature>
+	<category-def name="main" label="AceGen"/>
+	<category-def name="main.source" label="AceGen (Sources)"/>
 </site>

@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java;
 
 import de.acegen.extensions.CommonExtension;
@@ -17,10 +32,13 @@ public class DropwizardEventReplayCommand {
     _builder.append(_copyright);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
+    _builder.newLine();
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.util.List;");
+    _builder.newLine();
+    _builder.append("import java.util.Scanner;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("import org.jdbi.v3.core.Jdbi;");
@@ -68,12 +86,27 @@ public class DropwizardEventReplayCommand {
     _builder.append("throws Exception {");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (Config.LIVE.equals(configuration.getConfig().getMode())) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("throw new RuntimeException(\"we won\'t truncate all views and replay events in a live environment\");");
+    _builder.append("Scanner scanner = new Scanner(System.in);");
     _builder.newLine();
     _builder.append("\t\t");
+    _builder.append("System.out.print(\"The database is going to be cleared before replaying events. Continue? Confirm with yes: \");");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("String input = scanner.nextLine();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("scanner.close();");
+    _builder.newLine();
+    _builder.append("        ");
+    _builder.append("if (!input.equals(\"yes\")) {");
+    _builder.newLine();
+    _builder.append("        \t");
+    _builder.append("System.out.print(\"Event replay aborted.\");");
+    _builder.newLine();
+    _builder.append("        \t");
+    _builder.append("return;");
+    _builder.newLine();
+    _builder.append("        ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -95,11 +128,8 @@ public class DropwizardEventReplayCommand {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppRegistration.registerConsumers(viewProvider, Config.REPLAY);");
+    _builder.append("AppRegistration.registerConsumers(viewProvider);");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("LOG.info(\"START EVENT REPLAY\");");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("try {");
@@ -117,6 +147,9 @@ public class DropwizardEventReplayCommand {
     _builder.append("\t\t\t");
     _builder.append("List<ITimelineItem> timeline = daoProvider.getAceDao().selectReplayTimeline(handle);");
     _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("LOG.info(\"START EVENT REPLAY: found {} events\", timeline.size());");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("int i = 0;");
@@ -125,37 +158,22 @@ public class DropwizardEventReplayCommand {
     _builder.append("for (ITimelineItem nextEvent : timeline) {");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("IEvent event = EventFactory.createEvent(nextEvent.getName(), nextEvent.getData(), daoProvider, viewProvider, configuration);");
+    _builder.append("EventReplayService.replayEvent(nextEvent.getName(), nextEvent.getData(), handle, viewProvider);");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("if (event != null) {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("event.notifyListeners(databaseHandle.getHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
     _builder.append("i++;");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t\t");
     _builder.append("if (i%1000 == 0) {");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t\t");
+    _builder.append("\t\t\t\t\t");
     _builder.append("LOG.info(\"published \" + i + \" events\");");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("//LOG.info(\"published \" + nextEvent.getUuid() + \" - \" + nextEvent.getName());");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("LOG.info(\"event \" + nextEvent.getName() + \" seems to be obsolete and was not replayed\");");
-    _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("LOG.info(\"published \" + nextEvent.getUuid() + \" - \" + nextEvent.getName());");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("}");
@@ -196,6 +214,7 @@ public class DropwizardEventReplayCommand {
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.newLine();
     String _sdg = this._commonExtension.sdg();

@@ -1,9 +1,26 @@
+/**
+ * Copyright (c) 2020 Annette Pohl
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ * 
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ * 
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ */
 package de.acegen.templates.java;
 
+import de.acegen.aceGen.AuthUser;
 import de.acegen.extensions.CommonExtension;
 import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class DropwizardApp {
@@ -11,7 +28,7 @@ public class DropwizardApp {
   @Extension
   private CommonExtension _commonExtension;
   
-  public CharSequence generate() {
+  public CharSequence generate(final AuthUser authUser) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
     _builder.append(_copyright);
@@ -39,6 +56,11 @@ public class DropwizardApp {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import de.acegen.resources.GetServerInfoResource;");
+    _builder.newLine();
+    _builder.append("import de.acegen.resources.SquishyDataProviderResource;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import com.codahale.metrics.servlets.AdminServlet;");
     _builder.newLine();
     _builder.newLine();
@@ -63,8 +85,15 @@ public class DropwizardApp {
     _builder.append("import io.dropwizard.setup.Environment;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("//import de.acegen.auth.AuthUser;");
-    _builder.newLine();
+    {
+      if ((authUser != null)) {
+        _builder.append("//import de.acegen.auth.");
+        String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper);
+        _builder.append(";");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class App extends Application<CustomAppConfiguration> {");
     _builder.newLine();
@@ -134,15 +163,8 @@ public class DropwizardApp {
     _builder.append("\t\t");
     _builder.append("});");
     _builder.newLine();
-    _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (!Config.LIVE.equals(mode)) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("bootstrap.addCommand(new EventReplayCommand(this));");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
+    _builder.append("//bootstrap.addCommand(new EventReplayCommand(this));");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -162,7 +184,7 @@ public class DropwizardApp {
     _builder.append("DaoProvider daoProvider = new DaoProvider();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("ViewProvider viewProvider = new ViewProvider(daoProvider, configuration);");
+    _builder.append("ViewProvider viewProvider = ViewProvider.create(daoProvider, configuration);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
@@ -174,59 +196,16 @@ public class DropwizardApp {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("E2E e2e = new E2E();");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("mode = configuration.getConfig().getMode();");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("LOG.info(\"running in {} mode\", mode);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("if (Config.REPLAY.equals(mode)) {");
+    _builder.append("if (Config.DEV.equals(mode)) {");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new PrepareE2EResource(jdbi, daoProvider, viewProvider, e2e, configuration));");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new StartE2ESessionResource(jdbi, daoProvider, e2e, configuration));");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new StopE2ESessionResource(e2e, configuration));");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.warn(\"You are running in REPLAY mode. This is a security risc.\");");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} else if (Config.DEV.equals(mode)) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new GetServerTimelineResource(jdbi, configuration));");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.warn(\"You are running in DEV mode. This is a security risc.\");");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("} else if (Config.TEST.equals(mode)) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("LOG.warn(\"You are running in TEST mode and the database is going to be cleared.\");");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("PersistenceHandle handle = new PersistenceHandle(jdbi.open());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("daoProvider.truncateAllViews(handle);");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("handle.getHandle().close();");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("environment.jersey().register(new NotReplayableDataProviderResource());");
+    _builder.append("environment.jersey().register(new SquishyDataProviderResource());");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("}");
@@ -242,25 +221,34 @@ public class DropwizardApp {
     _builder.append("\t\t");
     _builder.append("environment.jersey().register(dbiExceptionsBundle);");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//environment.jersey()");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t.register(new AuthDynamicFeature(");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<AuthUser>()");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\t\t\t.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//\t\t\t\t\t\t.setPrefix(\"basic\").setRealm(\"basic private realm\").buildAuthFilter()));");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(AuthUser.class));");
-    _builder.newLine();
+    {
+      if ((authUser != null)) {
+        _builder.append("\t\t");
+        _builder.append("//environment.jersey()");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t.register(new AuthDynamicFeature(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\tnew BasicCredentialAuthFilter.Builder<");
+        String _firstUpper_1 = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper_1, "\t\t");
+        _builder.append(">()");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\t\t\t.setAuthenticator(new MyAuthenticator(new PersistenceConnection(jdbi)))");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//\t\t\t\t\t\t.setPrefix(\"basic\").setRealm(\"basic private realm\").buildAuthFilter()));");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("//environment.jersey().register(new AuthValueFactoryProvider.Binder<>(");
+        String _firstUpper_2 = StringExtensions.toFirstUpper(authUser.getName());
+        _builder.append(_firstUpper_2, "\t\t");
+        _builder.append(".class));");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("environment.jersey().register(RolesAllowedDynamicFeature.class);");
@@ -278,10 +266,10 @@ public class DropwizardApp {
     _builder.append("AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider,");
     _builder.newLine();
     _builder.append("\t\t\t\t");
-    _builder.append("viewProvider, e2e);");
+    _builder.append("viewProvider);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppRegistration.registerConsumers(viewProvider, mode);");
+    _builder.append("AppRegistration.registerConsumers(viewProvider);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -298,19 +286,13 @@ public class DropwizardApp {
     _builder.append("// Configure CORS parameters");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, \"*\");");
+    _builder.append("cors.setInitParameter(\"allowedOrigins\", \"*\");");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("\"X-Requested-With,Content-Type,Accept,Origin,Authorization\");");
+    _builder.append("cors.setInitParameter(\"allowedHeaders\", \"X-Requested-With,Content-Type,Accept,Origin\");");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, \"OPTIONS,GET,PUT,POST,DELETE,HEAD\");");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, \"true\");");
+    _builder.append("cors.setInitParameter(\"allowedMethods\", \"OPTIONS,GET,PUT,POST,DELETE,HEAD\");");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
@@ -319,6 +301,15 @@ public class DropwizardApp {
     _builder.append("\t\t");
     _builder.append("cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, \"/*\");");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// DO NOT pass a preflight request to down-stream auth filters");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// unauthenticated preflight requests should be permitted by spec");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("cors.setInitParameter(CrossOriginFilter.CHAIN_PREFLIGHT_PARAM, Boolean.FALSE.toString());");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
