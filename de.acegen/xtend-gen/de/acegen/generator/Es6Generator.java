@@ -20,7 +20,6 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateElement;
 import de.acegen.extensions.es6.AceExtension;
-import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.es6.AceTemplate;
 import de.acegen.templates.es6.ActionTemplate;
 import de.acegen.templates.es6.CommandTemplate;

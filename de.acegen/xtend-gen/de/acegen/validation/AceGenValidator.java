@@ -17,7 +17,6 @@ package de.acegen.validation;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.HttpServerAce;
-import de.acegen.validation.AbstractAceGenValidator;
 import org.eclipse.xtext.validation.Check;
 
 /**

@@ -3,8 +3,6 @@
  */
 package de.acegen;
 
-import de.acegen.AceGenStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */

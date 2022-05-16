@@ -18,7 +18,6 @@ package de.acegen.generator;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.extensions.cs.AceExtension;
 import de.acegen.extensions.cs.CSExtension;
-import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.templates.cs.Configuration;
 import de.acegen.templates.cs.actions.Action;
 import de.acegen.templates.cs.commands.Command;

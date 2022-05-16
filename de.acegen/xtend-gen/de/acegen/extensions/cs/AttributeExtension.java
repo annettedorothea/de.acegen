@@ -24,7 +24,6 @@ import de.acegen.aceGen.JsonObject;
 import de.acegen.aceGen.JsonValue;
 import de.acegen.aceGen.Model;
 import de.acegen.aceGen.PrimitiveValue;
-import de.acegen.extensions.cs.ModelExtension;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

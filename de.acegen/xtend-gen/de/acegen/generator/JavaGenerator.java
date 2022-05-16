@@ -24,7 +24,6 @@ import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.JavaExtension;
 import de.acegen.extensions.java.ModelExtension;
 import de.acegen.extensions.java.ViewExtension;
-import de.acegen.generator.ACEOutputConfigurationProvider;
 import de.acegen.generator.java.AppRegistrationGenerator;
 import de.acegen.generator.java.DaoGenerator;
 import de.acegen.generator.java.DropwizardGenerator;

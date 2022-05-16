@@ -37,7 +37,6 @@ import de.acegen.aceGen.SelectByUniqueAttribute;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.extensions.java.ModelExtension;
-import de.acegen.scoping.AbstractAceGenScopeProvider;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
