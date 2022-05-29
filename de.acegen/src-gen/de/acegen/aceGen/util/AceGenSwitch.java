@@ -94,13 +94,6 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.FUNCTION:
-      {
-        Function function = (Function)theEObject;
-        T result = caseFunction(function);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AceGenPackage.FROM_APP_STATE_REF:
       {
         FromAppStateRef fromAppStateRef = (FromAppStateRef)theEObject;
@@ -136,17 +129,17 @@ public class AceGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AceGenPackage.FUNCTION_CALL:
-      {
-        FunctionCall functionCall = (FunctionCall)theEObject;
-        T result = caseFunctionCall(functionCall);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AceGenPackage.CLIENT_ATTRIBUTE:
       {
         ClientAttribute clientAttribute = (ClientAttribute)theEObject;
         T result = caseClientAttribute(clientAttribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AceGenPackage.UI_ACTION:
+      {
+        UiAction uiAction = (UiAction)theEObject;
+        T result = caseUiAction(uiAction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -606,22 +599,6 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Function</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Function</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFunction(Function object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>From App State Ref</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -702,22 +679,6 @@ public class AceGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFunctionCall(FunctionCall object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Client Attribute</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -729,6 +690,22 @@ public class AceGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClientAttribute(ClientAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Ui Action</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Ui Action</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUiAction(UiAction object)
   {
     return null;
   }

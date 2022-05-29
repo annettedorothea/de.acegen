@@ -46,7 +46,7 @@ class CommandTemplate {
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {
-			if (outcome.listeners.size > 0 || outcome.functions.size > 0) {
+			if (outcome.listeners.size > 0) {
 				return true;
 			}
 		}
@@ -117,7 +117,7 @@ class CommandTemplate {
 					const events = [];
 					const actionsToBeTriggered = [];
 					«FOR outcome : outcomes»
-						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 							if (data.outcomes.includes("«outcome.getName»")) {
 								events.push(new Event('«es6.getName».«eventName(outcome)»'));
 								«FOR triggerdAceOperation : outcome.triggerdAceOperations»
@@ -205,7 +205,7 @@ class CommandTemplate {
 				const events = [];
 				const actionsToBeTriggered = [];
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (data.outcomes.includes("«outcome.getName»")) {
 							events.push(new Event('«es6.getName».«eventName(outcome)»'));
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»

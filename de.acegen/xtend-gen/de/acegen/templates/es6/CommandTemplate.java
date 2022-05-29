@@ -63,7 +63,9 @@ public class CommandTemplate {
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
-      if (((outcome.getListeners().size() > 0) || (outcome.getFunctions().size() > 0))) {
+      int _size = outcome.getListeners().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
         return true;
       }
     }
@@ -389,7 +391,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpClientOutcome outcome_1 : _outcomes_1) {
         {
-          if ((((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0)) || (outcome_1.getFunctions().size() > 0))) {
+          if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t\t");
             _builder.append("if (data.outcomes.includes(\"");
             String _name_10 = outcome_1.getName();
@@ -743,7 +745,7 @@ public class CommandTemplate {
       EList<HttpClientOutcome> _outcomes_1 = it.getOutcomes();
       for(final HttpClientOutcome outcome_1 : _outcomes_1) {
         {
-          if ((((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0)) || (outcome_1.getFunctions().size() > 0))) {
+          if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t\t");
             _builder.append("if (data.outcomes.includes(\"");
             String _name_3 = outcome_1.getName();

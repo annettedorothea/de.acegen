@@ -91,11 +91,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientAceAdapter();
       }
       @Override
-      public Adapter caseFunction(Function object)
-      {
-        return createFunctionAdapter();
-      }
-      @Override
       public Adapter caseFromAppStateRef(FromAppStateRef object)
       {
         return createFromAppStateRefAdapter();
@@ -121,14 +116,14 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
         return createHttpClientStateFunctionAdapter();
       }
       @Override
-      public Adapter caseFunctionCall(FunctionCall object)
-      {
-        return createFunctionCallAdapter();
-      }
-      @Override
       public Adapter caseClientAttribute(ClientAttribute object)
       {
         return createClientAttributeAdapter();
+      }
+      @Override
+      public Adapter caseUiAction(UiAction object)
+      {
+        return createUiActionAdapter();
       }
       @Override
       public Adapter caseClientScenario(ClientScenario object)
@@ -468,21 +463,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.Function <em>Function</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.Function
-   * @generated
-   */
-  public Adapter createFunctionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.FromAppStateRef <em>From App State Ref</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -558,21 +538,6 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.FunctionCall <em>Function Call</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.acegen.aceGen.FunctionCall
-   * @generated
-   */
-  public Adapter createFunctionCallAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.acegen.aceGen.ClientAttribute <em>Client Attribute</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -583,6 +548,21 @@ public class AceGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClientAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.acegen.aceGen.UiAction <em>Ui Action</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.acegen.aceGen.UiAction
+   * @generated
+   */
+  public Adapter createUiActionAdapter()
   {
     return null;
   }

@@ -23,7 +23,6 @@ import de.acegen.aceGen.ClientScenario;
 import de.acegen.aceGen.ClientWhenBlock;
 import de.acegen.aceGen.ClientWhenThen;
 import de.acegen.aceGen.CustomVerification;
-import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.JsonArrayClient;
@@ -59,7 +58,7 @@ public class Es6Extension {
     return _builder.toString();
   }
   
-  protected String _appStateFunction(final HttpClientStateFunction it) {
+  public String appStateFunction(final HttpClientStateFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(data) => {");
     _builder.newLine();
@@ -71,62 +70,6 @@ public class Es6Extension {
     CharSequence _stateFunctionCall = this.stateFunctionCall(_stateElement, _builder_1.toString(), "data");
     _builder.append(_stateFunctionCall, "\t\t");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    return _builder.toString();
-  }
-  
-  protected String _appStateFunction(final FunctionCall it) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(data) => {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("AppState.");
-    String _name = it.getFunction().getName();
-    _builder.append(_name, "\t\t");
-    _builder.append("(");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
-    _builder.append("data");
-    {
-      ClientAttribute _stateElement = it.getFunction().getStateElement();
-      boolean _tripleNotEquals = (_stateElement != null);
-      if (_tripleNotEquals) {
-        _builder.append(",");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t\t");
-        String _path = this.path(this.paramList(it.getFunction().getStateElement()));
-        _builder.append(_path, "\t\t\t");
-        {
-          if (((it.getFunction().getStateElement().getAttributes().size() > 0) && (!it.getFunction().getStateElement().isList()))) {
-            _builder.append(", ");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t");
-            _builder.append("[");
-            {
-              EList<ClientAttribute> _attributes = it.getFunction().getStateElement().getAttributes();
-              boolean _hasElements = false;
-              for(final ClientAttribute attribute : _attributes) {
-                if (!_hasElements) {
-                  _hasElements = true;
-                } else {
-                  _builder.appendImmediate(", ", "\t\t\t");
-                }
-                _builder.append("\"");
-                String _name_1 = attribute.getName();
-                _builder.append(_name_1, "\t\t\t");
-                _builder.append("\"");
-              }
-            }
-            _builder.append("]");
-          }
-        }
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append(")");
-    _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
     return _builder.toString();
@@ -408,14 +351,41 @@ public class Es6Extension {
     return _builder_1.toString();
   }
   
-  public String importComponent(final ClientAttribute it, final String subFolder) {
+  public String componentContainerName(final ClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+    _builder.append(_firstUpper);
+    _builder.append("Container");
+    return _builder.toString();
+  }
+  
+  public String importComponentContainer(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getAttributes().size() > 0) && (!it.isNoComponent()))) {
         _builder.append("import { ");
+        String _componentContainerName = this.componentContainerName(it);
+        _builder.append(_componentContainerName);
+        _builder.append(" } from \".");
+        _builder.append(subFolder);
+        _builder.append("/");
+        String _componentContainerName_1 = this.componentContainerName(it);
+        _builder.append(_componentContainerName_1);
+        _builder.append("\";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String importComponent(final ClientAttribute it, final String subFolder) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      if (((this.isTag(it)).booleanValue() || it.isList())) {
+        _builder.append("import { ");
         String _componentName = this.componentName(it);
         _builder.append(_componentName);
-        _builder.append(" } from \".");
+        _builder.append(" } from \"./");
         _builder.append(subFolder);
         _builder.append("/");
         String _componentName_1 = this.componentName(it);
@@ -427,8 +397,118 @@ public class Es6Extension {
     return _builder.toString();
   }
   
+  public boolean hasComplexAttribute(final ClientAttribute it) {
+    EList<ClientAttribute> _attributes = it.getAttributes();
+    for (final ClientAttribute attribute : _attributes) {
+      int _size = attribute.getAttributes().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean childrenContain(final ClientAttribute it, final String value) {
+    EList<ClientAttribute> _attributes = it.getAttributes();
+    for (final ClientAttribute attribute : _attributes) {
+      String _name = attribute.getName();
+      boolean _equals = Objects.equal(_name, value);
+      if (_equals) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public String depth(final ClientAttribute it) {
+    return this.depthRec(it, "../../");
+  }
+  
+  public String depthRec(final ClientAttribute attr, final String prefix) {
+    ClientAttribute clientAttribute = attr;
+    final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
+    if ((parent != null)) {
+      return this.depthRec(parent, (prefix + "../"));
+    } else {
+      return prefix;
+    }
+  }
+  
+  public String path(final ClientAttribute it) {
+    return this.pathRec(it, "");
+  }
+  
+  public String pathRec(final ClientAttribute attr, final String suffix) {
+    ClientAttribute clientAttribute = attr;
+    final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
+    if ((parent != null)) {
+      String _firstLower = StringExtensions.toFirstLower(parent.getName());
+      String _plus = (_firstLower + "/");
+      String _plus_1 = (_plus + suffix);
+      return this.pathRec(parent, _plus_1);
+    } else {
+      return suffix;
+    }
+  }
+  
   public String stateRefPath(final ClientAttribute it) {
     return this.elementPathRec(it, "");
+  }
+  
+  public Boolean isTag(final ClientAttribute it) {
+    if ((((((it.getName().endsWith("TextInput") || it.getName().endsWith("PasswordInput")) || it.getName().endsWith("Checkbox")) || 
+      it.getName().endsWith("Select")) || it.getName().endsWith("Button")) || it.getName().endsWith("Radio"))) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean isInput(final ClientAttribute it) {
+    if ((((it.getName().endsWith("TextInput") || it.getName().endsWith("PasswordInput")) || it.getName().endsWith("Checkbox")) || it.getName().endsWith("Radio"))) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public String inputType(final ClientAttribute it) {
+    boolean _endsWith = it.getName().endsWith("TextInput");
+    if (_endsWith) {
+      return "text";
+    }
+    boolean _endsWith_1 = it.getName().endsWith("PasswordInput");
+    if (_endsWith_1) {
+      return "password";
+    }
+    boolean _endsWith_2 = it.getName().endsWith("Checkbox");
+    if (_endsWith_2) {
+      return "checkbox";
+    }
+    boolean _endsWith_3 = it.getName().endsWith("Radio");
+    if (_endsWith_3) {
+      return "radio";
+    }
+    return null;
+  }
+  
+  public Boolean isButton(final ClientAttribute it) {
+    boolean _endsWith = it.getName().endsWith("Button");
+    if (_endsWith) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean isSelect(final ClientAttribute it) {
+    boolean _endsWith = it.getName().endsWith("Select");
+    if (_endsWith) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean isComponent(final ClientAttribute it) {
+    return Boolean.valueOf(((!it.isNoComponent()) && ((it.getAttributes().size() > 0) || (it.getActions().size() > 0))));
   }
   
   private String elementPathRec(final ClientAttribute attr, final String suffix) {
@@ -484,17 +564,6 @@ public class Es6Extension {
       }
     }
     return verifications;
-  }
-  
-  public String appStateFunction(final EObject it) {
-    if (it instanceof FunctionCall) {
-      return _appStateFunction((FunctionCall)it);
-    } else if (it instanceof HttpClientStateFunction) {
-      return _appStateFunction((HttpClientStateFunction)it);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(it).toString());
-    }
   }
   
   public CharSequence valueFrom(final JsonValueClient it) {

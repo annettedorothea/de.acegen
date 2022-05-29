@@ -14,8 +14,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jsx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="#//ClientAttribute"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
-        eType="#//Function" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
         eType="#//ClientScenario" containment="true"/>
   </eClassifiers>
@@ -31,10 +29,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Function">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FromAppStateRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -46,8 +40,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listeners" upperBound="-1"
         eType="#//HttpClientStateFunction" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
-        eType="#//FunctionCall" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="triggerdAceOperations"
         upperBound="-1" eType="#//TriggerdAceOperation" containment="true"/>
   </eClassifiers>
@@ -60,9 +52,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateFunctionType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateElement" eType="#//ClientAttribute"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionCall">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="noComponent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="list" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -71,6 +60,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="storage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//ClientAttribute" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="#//UiAction" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UiAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//HttpClientAce"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClientScenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

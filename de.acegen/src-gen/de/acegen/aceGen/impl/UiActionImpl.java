@@ -4,8 +4,8 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.ClientAttribute;
-import de.acegen.aceGen.Function;
+import de.acegen.aceGen.HttpClientAce;
+import de.acegen.aceGen.UiAction;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -17,56 +17,56 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Function</b></em>'.
+ * An implementation of the model object '<em><b>Ui Action</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.FunctionImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.FunctionImpl#getStateElement <em>State Element</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.UiActionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.UiActionImpl#getTarget <em>Target</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionImpl extends MinimalEObjectImpl.Container implements Function
+public class UiActionImpl extends MinimalEObjectImpl.Container implements UiAction
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String TYPE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected String type = TYPE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getStateElement() <em>State Element</em>}' reference.
+   * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStateElement()
+   * @see #getTarget()
    * @generated
    * @ordered
    */
-  protected ClientAttribute stateElement;
+  protected HttpClientAce target;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected FunctionImpl()
+  protected UiActionImpl()
   {
     super();
   }
@@ -79,7 +79,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   @Override
   protected EClass eStaticClass()
   {
-    return AceGenPackage.Literals.FUNCTION;
+    return AceGenPackage.Literals.UI_ACTION;
   }
 
   /**
@@ -88,9 +88,9 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * @generated
    */
   @Override
-  public String getName()
+  public String getType()
   {
-    return name;
+    return type;
   }
 
   /**
@@ -99,12 +99,12 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * @generated
    */
   @Override
-  public void setName(String newName)
+  public void setType(String newType)
   {
-    String oldName = name;
-    name = newName;
+    String oldType = type;
+    type = newType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.FUNCTION__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.UI_ACTION__TYPE, oldType, type));
   }
 
   /**
@@ -113,19 +113,19 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * @generated
    */
   @Override
-  public ClientAttribute getStateElement()
+  public HttpClientAce getTarget()
   {
-    if (stateElement != null && stateElement.eIsProxy())
+    if (target != null && target.eIsProxy())
     {
-      InternalEObject oldStateElement = (InternalEObject)stateElement;
-      stateElement = (ClientAttribute)eResolveProxy(oldStateElement);
-      if (stateElement != oldStateElement)
+      InternalEObject oldTarget = (InternalEObject)target;
+      target = (HttpClientAce)eResolveProxy(oldTarget);
+      if (target != oldTarget)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.FUNCTION__STATE_ELEMENT, oldStateElement, stateElement));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AceGenPackage.UI_ACTION__TARGET, oldTarget, target));
       }
     }
-    return stateElement;
+    return target;
   }
 
   /**
@@ -133,9 +133,9 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * <!-- end-user-doc -->
    * @generated
    */
-  public ClientAttribute basicGetStateElement()
+  public HttpClientAce basicGetTarget()
   {
-    return stateElement;
+    return target;
   }
 
   /**
@@ -144,12 +144,12 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * @generated
    */
   @Override
-  public void setStateElement(ClientAttribute newStateElement)
+  public void setTarget(HttpClientAce newTarget)
   {
-    ClientAttribute oldStateElement = stateElement;
-    stateElement = newStateElement;
+    HttpClientAce oldTarget = target;
+    target = newTarget;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.FUNCTION__STATE_ELEMENT, oldStateElement, stateElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.UI_ACTION__TARGET, oldTarget, target));
   }
 
   /**
@@ -162,11 +162,11 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   {
     switch (featureID)
     {
-      case AceGenPackage.FUNCTION__NAME:
-        return getName();
-      case AceGenPackage.FUNCTION__STATE_ELEMENT:
-        if (resolve) return getStateElement();
-        return basicGetStateElement();
+      case AceGenPackage.UI_ACTION__TYPE:
+        return getType();
+      case AceGenPackage.UI_ACTION__TARGET:
+        if (resolve) return getTarget();
+        return basicGetTarget();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -181,11 +181,11 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   {
     switch (featureID)
     {
-      case AceGenPackage.FUNCTION__NAME:
-        setName((String)newValue);
+      case AceGenPackage.UI_ACTION__TYPE:
+        setType((String)newValue);
         return;
-      case AceGenPackage.FUNCTION__STATE_ELEMENT:
-        setStateElement((ClientAttribute)newValue);
+      case AceGenPackage.UI_ACTION__TARGET:
+        setTarget((HttpClientAce)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -201,11 +201,11 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   {
     switch (featureID)
     {
-      case AceGenPackage.FUNCTION__NAME:
-        setName(NAME_EDEFAULT);
+      case AceGenPackage.UI_ACTION__TYPE:
+        setType(TYPE_EDEFAULT);
         return;
-      case AceGenPackage.FUNCTION__STATE_ELEMENT:
-        setStateElement((ClientAttribute)null);
+      case AceGenPackage.UI_ACTION__TARGET:
+        setTarget((HttpClientAce)null);
         return;
     }
     super.eUnset(featureID);
@@ -221,10 +221,10 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   {
     switch (featureID)
     {
-      case AceGenPackage.FUNCTION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case AceGenPackage.FUNCTION__STATE_ELEMENT:
-        return stateElement != null;
+      case AceGenPackage.UI_ACTION__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case AceGenPackage.UI_ACTION__TARGET:
+        return target != null;
     }
     return super.eIsSet(featureID);
   }
@@ -240,10 +240,10 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (type: ");
+    result.append(type);
     result.append(')');
     return result.toString();
   }
 
-} //FunctionImpl
+} //UiActionImpl

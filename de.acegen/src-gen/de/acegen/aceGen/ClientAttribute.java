@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see de.acegen.aceGen.AceGenPackage#getClientAttribute()
@@ -151,5 +152,17 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   EList<ClientAttribute> getAttributes();
+
+  /**
+   * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+   * The list contents are of type {@link de.acegen.aceGen.UiAction}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Actions</em>' containment reference list.
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Actions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<UiAction> getActions();
 
 } // ClientAttribute

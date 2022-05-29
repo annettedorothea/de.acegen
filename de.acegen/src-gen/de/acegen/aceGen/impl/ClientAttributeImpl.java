@@ -5,6 +5,7 @@ package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
 import de.acegen.aceGen.ClientAttribute;
+import de.acegen.aceGen.UiAction;
 
 import java.util.Collection;
 
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isStorage <em>Storage</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -151,6 +153,16 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<ClientAttribute> attributes;
+
+  /**
+   * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getActions()
+   * @generated
+   * @ordered
+   */
+  protected EList<UiAction> actions;
 
   /**
    * <!-- begin-user-doc -->
@@ -319,12 +331,29 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public EList<UiAction> getActions()
+  {
+    if (actions == null)
+    {
+      actions = new EObjectContainmentEList<UiAction>(UiAction.class, this, AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS);
+    }
+    return actions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
+      case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
+        return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -351,6 +380,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isStorage();
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         return getAttributes();
+      case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
+        return getActions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -385,6 +416,10 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         getAttributes().clear();
         getAttributes().addAll((Collection<? extends ClientAttribute>)newValue);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
+        getActions().clear();
+        getActions().addAll((Collection<? extends UiAction>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -417,6 +452,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
+        getActions().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -443,6 +481,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return storage != STORAGE_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
+      case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
+        return actions != null && !actions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

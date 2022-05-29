@@ -28,7 +28,6 @@ HttpClient:
 	('ACE' (aceOperations += HttpClientAce)*)?
 	('ui' (jsx ?= 'JSX')?  
 		container = ClientAttribute
-		('functions' functions += Function* )? 
 	)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
@@ -40,10 +39,6 @@ HttpClientAce:
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
 	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
 	(outcomes += HttpClientOutcome)*
-;
-
-Function: 
-	name = ID ('(' stateElement = [ClientAttribute | QualifiedName] ')' )?
 ;
 
 FromAppStateRef:
@@ -58,7 +53,6 @@ HttpClientOutcome:
 	'on' name = ID 
 	('(' 
 		listeners += HttpClientStateFunction* 
-		functions += FunctionCall *
 	')'	)? 
 	('triggers' '(' (triggerdAceOperations += TriggerdAceOperation)* ')')? 
 ;
@@ -69,10 +63,6 @@ TriggerdAceOperation:
 
 HttpClientStateFunction:
 	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]	
-;
-
-FunctionCall:
-	'call' function = [Function | QualifiedName]
 ;
 
 HttpClientStateFunctionType:
@@ -87,7 +77,14 @@ ClientAttribute:
 	storage ?= 'storage'? 
 	('{'
 		attributes += ClientAttribute*
+		('actions' '{'
+			actions += UiAction*
+		'}')?
 	'}')?
+;
+
+UiAction: 
+	type = STRING target = [HttpClientAce]
 ;
 
 ClientScenario:

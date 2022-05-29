@@ -24,7 +24,6 @@ import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.CustomVerification
-import de.acegen.aceGen.FunctionCall
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
 import de.acegen.aceGen.JsonArrayClient
@@ -44,17 +43,8 @@ class Es6Extension {
 
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
-	def dispatch String appStateFunction(HttpClientStateFunction it) '''(data) => {
+	def String appStateFunction(HttpClientStateFunction it) '''(data) => {
 		«stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»
-	}'''
-
-	def dispatch String appStateFunction(FunctionCall it) '''(data) => {
-		AppState.«function.name»(
-			data«IF function.stateElement !== null»,
-			«function.stateElement.paramList.path»«IF function.stateElement.attributes.size > 0 && !function.stateElement.isList», 
-			[«FOR attribute: function.stateElement.attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
-			«ENDIF»
-		)
 	}'''
 
 	def stateFunctionCall(ClientAttribute it, String functionName, String data) '''
@@ -168,14 +158,118 @@ class Es6Extension {
 		return '''«name.toFirstUpper»'''
 	}
 
-	def String importComponent(ClientAttribute it, String subFolder) '''
+	def String componentContainerName(ClientAttribute it) {
+		return '''«name.toFirstUpper»Container'''
+	}
+
+	def String importComponentContainer(ClientAttribute it, String subFolder) '''
 		«IF attributes.size > 0 && !noComponent»
-			import { «componentName» } from ".«subFolder»/«componentName»";
+			import { «componentContainerName» } from ".«subFolder»/«componentContainerName»";
 		«ENDIF»
 	'''
 
+	def String importComponent(ClientAttribute it, String subFolder) '''
+		«IF isTag || isList»
+			import { «componentName» } from "./«subFolder»/«componentName»";
+		«ENDIF»
+	'''
+
+	def boolean hasComplexAttribute(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.attributes.size > 0) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def boolean childrenContain(ClientAttribute it, String value) {
+		for (attribute : attributes) {
+			if (attribute.name == value) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def String depth(ClientAttribute it) {
+		return depthRec("../../")
+	}
+
+	def String depthRec(ClientAttribute attr, String prefix) {
+		var clientAttribute = attr
+		val parent = clientAttribute.findNextClientAttributeParent
+		if (parent !== null) {
+			return parent.depthRec(prefix + "../")
+		} else {
+			return prefix;
+		}
+	}
+
+	def String path(ClientAttribute it) {
+		return pathRec("")
+	}
+
+	def String pathRec(ClientAttribute attr, String suffix) {
+		var clientAttribute = attr
+		val parent = clientAttribute.findNextClientAttributeParent
+		if (parent !== null) {
+			return parent.pathRec(parent.name.toFirstLower + "/" + suffix)
+		} else {
+			return suffix;
+		}
+	}
+
 	def String stateRefPath(ClientAttribute it) {
 		return elementPathRec("")
+	}
+
+	def Boolean isTag(ClientAttribute it) {
+		if (name.endsWith("TextInput") || name.endsWith("PasswordInput") || name.endsWith("Checkbox") ||
+			name.endsWith("Select") || name.endsWith("Button") || name.endsWith("Radio")) {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isInput(ClientAttribute it) {
+		if (name.endsWith("TextInput") || name.endsWith("PasswordInput") || name.endsWith("Checkbox") || name.endsWith("Radio")) {
+			return true
+		}
+		return false
+	}
+	
+	def String inputType(ClientAttribute it) {
+		if (name.endsWith("TextInput")) {
+			return "text"
+		}
+		if (name.endsWith("PasswordInput")) {
+			return "password"
+		}
+		if (name.endsWith("Checkbox")) {
+			return "checkbox"
+		}
+		if (name.endsWith("Radio")) {
+			return "radio"
+		}
+	}
+	
+	def Boolean isButton(ClientAttribute it) {
+		if (name.endsWith("Button")) {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isSelect(ClientAttribute it) {
+		if (name.endsWith("Select")) {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isComponent(ClientAttribute it) {
+		return !noComponent && ((attributes.size > 0) || actions.size > 0)
 	}
 
 	private def String elementPathRec(ClientAttribute attr, String suffix) {

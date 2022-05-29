@@ -4,7 +4,6 @@
 package de.acegen.aceGen.impl;
 
 import de.acegen.aceGen.AceGenPackage;
-import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.TriggerdAceOperation;
@@ -35,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getListeners <em>Listeners</em>}</li>
- *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getFunctions <em>Functions</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.HttpClientOutcomeImpl#getTriggerdAceOperations <em>Triggerd Ace Operations</em>}</li>
  * </ul>
  *
@@ -72,16 +70,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected EList<HttpClientStateFunction> listeners;
-
-  /**
-   * The cached value of the '{@link #getFunctions() <em>Functions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFunctions()
-   * @generated
-   * @ordered
-   */
-  protected EList<FunctionCall> functions;
 
   /**
    * The cached value of the '{@link #getTriggerdAceOperations() <em>Triggerd Ace Operations</em>}' containment reference list.
@@ -160,21 +148,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
    * @generated
    */
   @Override
-  public EList<FunctionCall> getFunctions()
-  {
-    if (functions == null)
-    {
-      functions = new EObjectContainmentEList<FunctionCall>(FunctionCall.class, this, AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS);
-    }
-    return functions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<TriggerdAceOperation> getTriggerdAceOperations()
   {
     if (triggerdAceOperations == null)
@@ -196,8 +169,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
     {
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return ((InternalEList<?>)getListeners()).basicRemove(otherEnd, msgs);
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS:
-        return ((InternalEList<?>)getFunctions()).basicRemove(otherEnd, msgs);
       case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
         return ((InternalEList<?>)getTriggerdAceOperations()).basicRemove(otherEnd, msgs);
     }
@@ -218,8 +189,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return getName();
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return getListeners();
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS:
-        return getFunctions();
       case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
         return getTriggerdAceOperations();
     }
@@ -243,10 +212,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         getListeners().clear();
         getListeners().addAll((Collection<? extends HttpClientStateFunction>)newValue);
-        return;
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS:
-        getFunctions().clear();
-        getFunctions().addAll((Collection<? extends FunctionCall>)newValue);
         return;
       case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
         getTriggerdAceOperations().clear();
@@ -272,9 +237,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         getListeners().clear();
         return;
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS:
-        getFunctions().clear();
-        return;
       case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
         getTriggerdAceOperations().clear();
         return;
@@ -296,8 +258,6 @@ public class HttpClientOutcomeImpl extends MinimalEObjectImpl.Container implemen
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.HTTP_CLIENT_OUTCOME__LISTENERS:
         return listeners != null && !listeners.isEmpty();
-      case AceGenPackage.HTTP_CLIENT_OUTCOME__FUNCTIONS:
-        return functions != null && !functions.isEmpty();
       case AceGenPackage.HTTP_CLIENT_OUTCOME__TRIGGERD_ACE_OPERATIONS:
         return triggerdAceOperations != null && !triggerdAceOperations.isEmpty();
     }

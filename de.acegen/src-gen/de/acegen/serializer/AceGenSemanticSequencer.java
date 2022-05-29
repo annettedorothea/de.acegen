@@ -23,8 +23,6 @@ import de.acegen.aceGen.CustomVerification;
 import de.acegen.aceGen.DataDefinition;
 import de.acegen.aceGen.Extraction;
 import de.acegen.aceGen.FromAppStateRef;
-import de.acegen.aceGen.Function;
-import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.GivenRef;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
@@ -60,6 +58,7 @@ import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.StringType;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.TriggerdAceOperation;
+import de.acegen.aceGen.UiAction;
 import de.acegen.aceGen.UndefinedType;
 import de.acegen.aceGen.Verification;
 import de.acegen.aceGen.WhenBlock;
@@ -143,12 +142,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.FROM_APP_STATE_REF:
 				sequence_FromAppStateRef(context, (FromAppStateRef) semanticObject); 
-				return; 
-			case AceGenPackage.FUNCTION:
-				sequence_Function(context, (Function) semanticObject); 
-				return; 
-			case AceGenPackage.FUNCTION_CALL:
-				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
 			case AceGenPackage.GIVEN_REF:
 				sequence_GivenRef(context, (GivenRef) semanticObject); 
@@ -254,6 +247,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case AceGenPackage.TRIGGERD_ACE_OPERATION:
 				sequence_TriggerdAceOperation(context, (TriggerdAceOperation) semanticObject); 
+				return; 
+			case AceGenPackage.UI_ACTION:
+				sequence_UiAction(context, (UiAction) semanticObject); 
 				return; 
 			case AceGenPackage.UNDEFINED_TYPE:
 				sequence_UndefinedType(context, (UndefinedType) semanticObject); 
@@ -403,7 +399,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         name=ID 
 	 *         location?='location'? 
 	 *         storage?='storage'? 
-	 *         attributes+=ClientAttribute*
+	 *         attributes+=ClientAttribute* 
+	 *         actions+=UiAction*
 	 *     )
 	 * </pre>
 	 */
@@ -581,40 +578,6 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
-	 *     FunctionCall returns FunctionCall
-	 *
-	 * Constraint:
-	 *     function=[Function|QualifiedName]
-	 * </pre>
-	 */
-	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.FUNCTION_CALL__FUNCTION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.FUNCTION_CALL__FUNCTION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFunctionCallAccess().getFunctionFunctionQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.FUNCTION_CALL__FUNCTION, false));
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * <pre>
-	 * Contexts:
-	 *     Function returns Function
-	 *
-	 * Constraint:
-	 *     (name=ID stateElement=[ClientAttribute|QualifiedName]?)
-	 * </pre>
-	 */
-	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * <pre>
-	 * Contexts:
 	 *     Given returns GivenRef
 	 *     GivenRef returns GivenRef
 	 *
@@ -655,7 +618,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClientOutcome returns HttpClientOutcome
 	 *
 	 * Constraint:
-	 *     (name=ID listeners+=HttpClientStateFunction* functions+=FunctionCall* triggerdAceOperations+=TriggerdAceOperation*)
+	 *     (name=ID listeners+=HttpClientStateFunction* triggerdAceOperations+=TriggerdAceOperation*)
 	 * </pre>
 	 */
 	protected void sequence_HttpClientOutcome(ISerializationContext context, HttpClientOutcome semanticObject) {
@@ -692,7 +655,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     HttpClient returns HttpClient
 	 *
 	 * Constraint:
-	 *     (name=QualifiedName aceOperations+=HttpClientAce* (jsx?='JSX'? container=ClientAttribute functions+=Function*)? scenarios+=ClientScenario*)
+	 *     (name=QualifiedName aceOperations+=HttpClientAce* (jsx?='JSX'? container=ClientAttribute)? scenarios+=ClientScenario*)
 	 * </pre>
 	 */
 	protected void sequence_HttpClient(ISerializationContext context, HttpClient semanticObject) {
@@ -1262,6 +1225,29 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_TriggerdAceOperation(ISerializationContext context, TriggerdAceOperation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     UiAction returns UiAction
+	 *
+	 * Constraint:
+	 *     (type=STRING target=[HttpClientAce|ID])
+	 * </pre>
+	 */
+	protected void sequence_UiAction(ISerializationContext context, UiAction semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UI_ACTION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UI_ACTION__TYPE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UI_ACTION__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UI_ACTION__TARGET));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getUiActionAccess().getTypeSTRINGTerminalRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getUiActionAccess().getTargetHttpClientAceIDTerminalRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.UI_ACTION__TARGET, false));
+		feeder.finish();
 	}
 	
 	

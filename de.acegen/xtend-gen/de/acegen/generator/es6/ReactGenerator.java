@@ -8,6 +8,7 @@ import de.acegen.templates.es6.JsxTemplate;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -25,12 +26,13 @@ public class ReactGenerator {
     ClientAttribute _container = httpClient.getContainer();
     boolean _tripleNotEquals = (_container != null);
     if (_tripleNotEquals) {
-      this.doGenerate(httpClient.getContainer(), fsa, "", false);
+      this.doGenerate(httpClient.getContainer(), fsa, "", true);
     }
   }
   
-  public void doGenerate(final ClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isGroupedChild) {
-    if (((!it.isNoComponent()) && ((it.getAttributes().size() > 0) || isGroupedChild))) {
+  public void doGenerate(final ClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isRoot) {
+    Boolean _isComponent = this._es6Extension.isComponent(it);
+    if ((_isComponent).booleanValue()) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("components");
       _builder.append(subFolder);
@@ -40,13 +42,38 @@ public class ReactGenerator {
       _builder.append(".js");
       fsa.generateFile(_builder.toString(), 
         ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
-        this.reactTemplate.generateComponentStruct(it, this.folderPrefix(subFolder)));
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append(subFolder);
-      _builder_1.append("/");
+        this.reactTemplate.generateComponent(it, this.folderPrefix(subFolder)));
+      if (((!(this._es6Extension.isTag(it)).booleanValue()) && (!it.isList()))) {
+        if (isRoot) {
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("components");
+          _builder_1.append(subFolder);
+          _builder_1.append("/");
+          String _componentContainerName = this._es6Extension.componentContainerName(it);
+          _builder_1.append(_componentContainerName);
+          _builder_1.append(".js");
+          fsa.generateFile(_builder_1.toString(), 
+            IFileSystemAccess.DEFAULT_OUTPUT, 
+            this.reactTemplate.generateRootComponentContainer(it, this.folderPrefix(subFolder)));
+        } else {
+          StringConcatenation _builder_2 = new StringConcatenation();
+          _builder_2.append("components");
+          _builder_2.append(subFolder);
+          _builder_2.append("/");
+          String _componentContainerName_1 = this._es6Extension.componentContainerName(it);
+          _builder_2.append(_componentContainerName_1);
+          _builder_2.append(".js");
+          fsa.generateFile(_builder_2.toString(), 
+            IFileSystemAccess.DEFAULT_OUTPUT, 
+            this.reactTemplate.generateComponentContainer(it, this.folderPrefix(subFolder)));
+        }
+      }
+      StringConcatenation _builder_3 = new StringConcatenation();
+      _builder_3.append(subFolder);
+      _builder_3.append("/");
       String _firstLower = StringExtensions.toFirstLower(it.getName());
-      _builder_1.append(_firstLower);
-      final String nextSubFolder = _builder_1.toString();
+      _builder_3.append(_firstLower);
+      final String nextSubFolder = _builder_3.toString();
       EList<ClientAttribute> _attributes = it.getAttributes();
       for (final ClientAttribute attribute : _attributes) {
         this.doGenerate(attribute, fsa, nextSubFolder, false);
