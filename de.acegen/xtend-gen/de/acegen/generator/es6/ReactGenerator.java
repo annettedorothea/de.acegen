@@ -43,7 +43,9 @@ public class ReactGenerator {
       fsa.generateFile(_builder.toString(), 
         ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE, 
         this.reactTemplate.generateComponent(it, this.folderPrefix(subFolder)));
-      if (((!(this._es6Extension.isTag(it)).booleanValue()) && (!it.isList()))) {
+      Boolean _isTag = this._es6Extension.isTag(it);
+      boolean _not = (!(_isTag).booleanValue());
+      if (_not) {
         if (isRoot) {
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.append("components");
@@ -54,7 +56,7 @@ public class ReactGenerator {
           _builder_1.append(".js");
           fsa.generateFile(_builder_1.toString(), 
             IFileSystemAccess.DEFAULT_OUTPUT, 
-            this.reactTemplate.generateRootComponentContainer(it, this.folderPrefix(subFolder)));
+            this.reactTemplate.generateComponentContainer(it, this.folderPrefix(subFolder), true));
         } else {
           StringConcatenation _builder_2 = new StringConcatenation();
           _builder_2.append("components");
@@ -65,7 +67,7 @@ public class ReactGenerator {
           _builder_2.append(".js");
           fsa.generateFile(_builder_2.toString(), 
             IFileSystemAccess.DEFAULT_OUTPUT, 
-            this.reactTemplate.generateComponentContainer(it, this.folderPrefix(subFolder)));
+            this.reactTemplate.generateComponentContainer(it, this.folderPrefix(subFolder), false));
         }
       }
       StringConcatenation _builder_3 = new StringConcatenation();

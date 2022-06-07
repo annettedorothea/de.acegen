@@ -399,7 +399,9 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         name=ID 
 	 *         location?='location'? 
 	 *         storage?='storage'? 
+	 *         uiElement=UIElement? 
 	 *         attributes+=ClientAttribute* 
+	 *         options+=STRING* 
 	 *         actions+=UiAction*
 	 *     )
 	 * </pre>

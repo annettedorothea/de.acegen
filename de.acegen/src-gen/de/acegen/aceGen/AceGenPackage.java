@@ -490,13 +490,31 @@ public interface AceGenPackage extends EPackage
   int CLIENT_ATTRIBUTE__STORAGE = 4;
 
   /**
+   * The feature id for the '<em><b>Ui Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__UI_ELEMENT = 5;
+
+  /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ATTRIBUTES = 5;
+  int CLIENT_ATTRIBUTE__ATTRIBUTES = 6;
+
+  /**
+   * The feature id for the '<em><b>Options</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__OPTIONS = 7;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -505,7 +523,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ACTIONS = 6;
+  int CLIENT_ATTRIBUTE__ACTIONS = 8;
 
   /**
    * The number of structural features of the '<em>Client Attribute</em>' class.
@@ -514,7 +532,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 7;
+  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.UiActionImpl <em>Ui Action</em>}' class.
@@ -3369,6 +3387,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientAttribute_Storage();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#getUiElement <em>Ui Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Ui Element</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getUiElement()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_UiElement();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3378,6 +3407,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EReference getClientAttribute_Attributes();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.acegen.aceGen.ClientAttribute#getOptions <em>Options</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Options</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#getOptions()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Options();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.acegen.aceGen.ClientAttribute#getActions <em>Actions</em>}'.
@@ -5768,12 +5808,28 @@ public interface AceGenPackage extends EPackage
     EAttribute CLIENT_ATTRIBUTE__STORAGE = eINSTANCE.getClientAttribute_Storage();
 
     /**
+     * The meta object literal for the '<em><b>Ui Element</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__UI_ELEMENT = eINSTANCE.getClientAttribute_UiElement();
+
+    /**
      * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference CLIENT_ATTRIBUTE__ATTRIBUTES = eINSTANCE.getClientAttribute_Attributes();
+
+    /**
+     * The meta object literal for the '<em><b>Options</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__OPTIONS = eINSTANCE.getClientAttribute_Options();
 
     /**
      * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.

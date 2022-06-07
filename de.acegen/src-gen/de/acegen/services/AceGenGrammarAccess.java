@@ -574,17 +574,23 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cLocationLocationKeyword_3_0 = (Keyword)cLocationAssignment_3.eContents().get(0);
 		private final Assignment cStorageAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cStorageStorageKeyword_4_0 = (Keyword)cStorageAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cLeftCurlyBracketKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cAttributesAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cAttributesClientAttributeParserRuleCall_5_1_0 = (RuleCall)cAttributesAssignment_5_1.eContents().get(0);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cActionsKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_5_2_1 = (Keyword)cGroup_5_2.eContents().get(1);
-		private final Assignment cActionsAssignment_5_2_2 = (Assignment)cGroup_5_2.eContents().get(2);
-		private final RuleCall cActionsUiActionParserRuleCall_5_2_2_0 = (RuleCall)cActionsAssignment_5_2_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5_2_3 = (Keyword)cGroup_5_2.eContents().get(3);
-		private final Keyword cRightCurlyBracketKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
+		private final Assignment cUiElementAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cUiElementUIElementParserRuleCall_5_0 = (RuleCall)cUiElementAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cLeftCurlyBracketKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cAttributesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cAttributesClientAttributeParserRuleCall_6_1_0 = (RuleCall)cAttributesAssignment_6_1.eContents().get(0);
+		private final Group cGroup_6_2 = (Group)cGroup_6.eContents().get(2);
+		private final Keyword cOptionsKeyword_6_2_0 = (Keyword)cGroup_6_2.eContents().get(0);
+		private final Assignment cOptionsAssignment_6_2_1 = (Assignment)cGroup_6_2.eContents().get(1);
+		private final RuleCall cOptionsSTRINGTerminalRuleCall_6_2_1_0 = (RuleCall)cOptionsAssignment_6_2_1.eContents().get(0);
+		private final Group cGroup_6_3 = (Group)cGroup_6.eContents().get(3);
+		private final Keyword cActionsKeyword_6_3_0 = (Keyword)cGroup_6_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_6_3_1 = (Keyword)cGroup_6_3.eContents().get(1);
+		private final Assignment cActionsAssignment_6_3_2 = (Assignment)cGroup_6_3.eContents().get(2);
+		private final RuleCall cActionsUiActionParserRuleCall_6_3_2_0 = (RuleCall)cActionsAssignment_6_3_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_3_3 = (Keyword)cGroup_6_3.eContents().get(3);
+		private final Keyword cRightCurlyBracketKeyword_6_4 = (Keyword)cGroup_6.eContents().get(4);
 		
 		//ClientAttribute:
 		//    noComponent ?= 'noComponent'?
@@ -592,8 +598,10 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    name = ID
 		//    location ?= 'location'?
 		//    storage ?= 'storage'?
+		//    uiElement = UIElement?
 		//    ('{'
 		//        attributes += ClientAttribute*
+		//        ('options' options += STRING*)?
 		//        ('actions' '{'
 		//            actions += UiAction*
 		//        '}')?
@@ -606,8 +614,10 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//name = ID
 		//location ?= 'location'?
 		//storage ?= 'storage'?
+		//uiElement = UIElement?
 		//('{'
 		//    attributes += ClientAttribute*
+		//    ('options' options += STRING*)?
 		//    ('actions' '{'
 		//        actions += UiAction*
 		//    '}')?
@@ -644,45 +654,64 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'storage'
 		public Keyword getStorageStorageKeyword_4_0() { return cStorageStorageKeyword_4_0; }
 		
+		//uiElement = UIElement?
+		public Assignment getUiElementAssignment_5() { return cUiElementAssignment_5; }
+		
+		//UIElement
+		public RuleCall getUiElementUIElementParserRuleCall_5_0() { return cUiElementUIElementParserRuleCall_5_0; }
+		
 		//('{'
 		//    attributes += ClientAttribute*
+		//    ('options' options += STRING*)?
 		//    ('actions' '{'
 		//        actions += UiAction*
 		//    '}')?
 		//'}')?
-		public Group getGroup_5() { return cGroup_5; }
+		public Group getGroup_6() { return cGroup_6; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_5_0() { return cLeftCurlyBracketKeyword_5_0; }
+		public Keyword getLeftCurlyBracketKeyword_6_0() { return cLeftCurlyBracketKeyword_6_0; }
 		
 		//attributes += ClientAttribute*
-		public Assignment getAttributesAssignment_5_1() { return cAttributesAssignment_5_1; }
+		public Assignment getAttributesAssignment_6_1() { return cAttributesAssignment_6_1; }
 		
 		//ClientAttribute
-		public RuleCall getAttributesClientAttributeParserRuleCall_5_1_0() { return cAttributesClientAttributeParserRuleCall_5_1_0; }
+		public RuleCall getAttributesClientAttributeParserRuleCall_6_1_0() { return cAttributesClientAttributeParserRuleCall_6_1_0; }
+		
+		//('options' options += STRING*)?
+		public Group getGroup_6_2() { return cGroup_6_2; }
+		
+		//'options'
+		public Keyword getOptionsKeyword_6_2_0() { return cOptionsKeyword_6_2_0; }
+		
+		//options += STRING*
+		public Assignment getOptionsAssignment_6_2_1() { return cOptionsAssignment_6_2_1; }
+		
+		//STRING
+		public RuleCall getOptionsSTRINGTerminalRuleCall_6_2_1_0() { return cOptionsSTRINGTerminalRuleCall_6_2_1_0; }
 		
 		//('actions' '{'
 		//    actions += UiAction*
 		//'}')?
-		public Group getGroup_5_2() { return cGroup_5_2; }
+		public Group getGroup_6_3() { return cGroup_6_3; }
 		
 		//'actions'
-		public Keyword getActionsKeyword_5_2_0() { return cActionsKeyword_5_2_0; }
+		public Keyword getActionsKeyword_6_3_0() { return cActionsKeyword_6_3_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_5_2_1() { return cLeftCurlyBracketKeyword_5_2_1; }
+		public Keyword getLeftCurlyBracketKeyword_6_3_1() { return cLeftCurlyBracketKeyword_6_3_1; }
 		
 		//actions += UiAction*
-		public Assignment getActionsAssignment_5_2_2() { return cActionsAssignment_5_2_2; }
+		public Assignment getActionsAssignment_6_3_2() { return cActionsAssignment_6_3_2; }
 		
 		//UiAction
-		public RuleCall getActionsUiActionParserRuleCall_5_2_2_0() { return cActionsUiActionParserRuleCall_5_2_2_0; }
+		public RuleCall getActionsUiActionParserRuleCall_6_3_2_0() { return cActionsUiActionParserRuleCall_6_3_2_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5_2_3() { return cRightCurlyBracketKeyword_5_2_3; }
+		public Keyword getRightCurlyBracketKeyword_6_3_3() { return cRightCurlyBracketKeyword_6_3_3; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5_3() { return cRightCurlyBracketKeyword_5_3; }
+		public Keyword getRightCurlyBracketKeyword_6_4() { return cRightCurlyBracketKeyword_6_4; }
 	}
 	public class UiActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.UiAction");
@@ -715,6 +744,42 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//ID
 		public RuleCall getTargetHttpClientAceIDTerminalRuleCall_1_0_1() { return cTargetHttpClientAceIDTerminalRuleCall_1_0_1; }
+	}
+	public class UIElementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.UIElement");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cTextInputKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cCheckBoxKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cSelectKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cPasswordInputKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cRadioKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cButtonKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		
+		//UIElement:
+		//    'TextInput' | 'CheckBox' | 'Select' | 'PasswordInput' | 'Radio' | 'Button'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'TextInput' | 'CheckBox' | 'Select' | 'PasswordInput' | 'Radio' | 'Button'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'TextInput'
+		public Keyword getTextInputKeyword_0() { return cTextInputKeyword_0; }
+		
+		//'CheckBox'
+		public Keyword getCheckBoxKeyword_1() { return cCheckBoxKeyword_1; }
+		
+		//'Select'
+		public Keyword getSelectKeyword_2() { return cSelectKeyword_2; }
+		
+		//'PasswordInput'
+		public Keyword getPasswordInputKeyword_3() { return cPasswordInputKeyword_3; }
+		
+		//'Radio'
+		public Keyword getRadioKeyword_4() { return cRadioKeyword_4; }
+		
+		//'Button'
+		public Keyword getButtonKeyword_5() { return cButtonKeyword_5; }
 	}
 	public class ClientScenarioElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.ClientScenario");
@@ -3738,6 +3803,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final HttpClientStateFunctionTypeElements pHttpClientStateFunctionType;
 	private final ClientAttributeElements pClientAttribute;
 	private final UiActionElements pUiAction;
+	private final UIElementElements pUIElement;
 	private final ClientScenarioElements pClientScenario;
 	private final ClientWhenThenElements pClientWhenThen;
 	private final ClientGivenRefElements pClientGivenRef;
@@ -3818,6 +3884,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pHttpClientStateFunctionType = new HttpClientStateFunctionTypeElements();
 		this.pClientAttribute = new ClientAttributeElements();
 		this.pUiAction = new UiActionElements();
+		this.pUIElement = new UIElementElements();
 		this.pClientScenario = new ClientScenarioElements();
 		this.pClientWhenThen = new ClientWhenThenElements();
 		this.pClientGivenRef = new ClientGivenRefElements();
@@ -4025,8 +4092,10 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    name = ID
 	//    location ?= 'location'?
 	//    storage ?= 'storage'?
+	//    uiElement = UIElement?
 	//    ('{'
 	//        attributes += ClientAttribute*
+	//        ('options' options += STRING*)?
 	//        ('actions' '{'
 	//            actions += UiAction*
 	//        '}')?
@@ -4049,6 +4118,17 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getUiActionRule() {
 		return getUiActionAccess().getRule();
+	}
+	
+	//UIElement:
+	//    'TextInput' | 'CheckBox' | 'Select' | 'PasswordInput' | 'Radio' | 'Button'
+	//;
+	public UIElementElements getUIElementAccess() {
+		return pUIElement;
+	}
+	
+	public ParserRule getUIElementRule() {
+		return getUIElementAccess().getRule();
 	}
 	
 	//ClientScenario:

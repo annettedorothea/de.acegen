@@ -21,7 +21,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#getUiElement <em>Ui Element</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#getOptions <em>Options</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getActions <em>Actions</em>}</li>
  * </ul>
  *
@@ -142,6 +144,28 @@ public interface ClientAttribute extends EObject
   void setStorage(boolean value);
 
   /**
+   * Returns the value of the '<em><b>Ui Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ui Element</em>' attribute.
+   * @see #setUiElement(String)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_UiElement()
+   * @model
+   * @generated
+   */
+  String getUiElement();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#getUiElement <em>Ui Element</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Ui Element</em>' attribute.
+   * @see #getUiElement()
+   * @generated
+   */
+  void setUiElement(String value);
+
+  /**
    * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
    * The list contents are of type {@link de.acegen.aceGen.ClientAttribute}.
    * <!-- begin-user-doc -->
@@ -152,6 +176,18 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   EList<ClientAttribute> getAttributes();
+
+  /**
+   * Returns the value of the '<em><b>Options</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Options</em>' attribute list.
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Options()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getOptions();
 
   /**
    * Returns the value of the '<em><b>Actions</b></em>' containment reference list.

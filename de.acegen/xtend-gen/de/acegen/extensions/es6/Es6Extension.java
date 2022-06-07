@@ -352,11 +352,19 @@ public class Es6Extension {
   }
   
   public String componentContainerName(final ClientAttribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _firstUpper = StringExtensions.toFirstUpper(it.getName());
-    _builder.append(_firstUpper);
-    _builder.append("Container");
-    return _builder.toString();
+    boolean _isList = it.isList();
+    if (_isList) {
+      StringConcatenation _builder = new StringConcatenation();
+      String _firstUpper = StringExtensions.toFirstUpper(it.getName());
+      _builder.append(_firstUpper);
+      _builder.append("ItemContainer");
+      return _builder.toString();
+    }
+    StringConcatenation _builder_1 = new StringConcatenation();
+    String _firstUpper_1 = StringExtensions.toFirstUpper(it.getName());
+    _builder_1.append(_firstUpper_1);
+    _builder_1.append("Container");
+    return _builder_1.toString();
   }
   
   public String importComponentContainer(final ClientAttribute it, final String subFolder) {
@@ -381,7 +389,8 @@ public class Es6Extension {
   public String importComponent(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((this.isTag(it)).booleanValue() || it.isList())) {
+      boolean _isList = it.isList();
+      if (_isList) {
         _builder.append("import { ");
         String _componentName = this.componentName(it);
         _builder.append(_componentName);
@@ -414,6 +423,36 @@ public class Es6Extension {
     for (final ClientAttribute attribute : _attributes) {
       String _name = attribute.getName();
       boolean _equals = Objects.equal(_name, value);
+      if (_equals) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean oneChildIsLocationOrStorage(final ClientAttribute it) {
+    EList<ClientAttribute> _attributes = it.getAttributes();
+    for (final ClientAttribute attribute : _attributes) {
+      {
+        if ((attribute.isLocation() || attribute.isStorage())) {
+          return true;
+        }
+        EList<ClientAttribute> _attributes_1 = attribute.getAttributes();
+        for (final ClientAttribute childAttribute : _attributes_1) {
+          if ((childAttribute.isLocation() || childAttribute.isStorage())) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+  
+  public boolean attributesContain(final List<ClientAttribute> it, final ClientAttribute attribute) {
+    for (final ClientAttribute parentAttribute : it) {
+      String _name = parentAttribute.getName();
+      String _name_1 = attribute.getName();
+      boolean _equals = Objects.equal(_name, _name_1);
       if (_equals) {
         return true;
       }
@@ -457,51 +496,71 @@ public class Es6Extension {
   }
   
   public Boolean isTag(final ClientAttribute it) {
-    if ((((((it.getName().endsWith("TextInput") || it.getName().endsWith("PasswordInput")) || it.getName().endsWith("Checkbox")) || 
-      it.getName().endsWith("Select")) || it.getName().endsWith("Button")) || it.getName().endsWith("Radio"))) {
+    if ((((((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput")) || Objects.equal(it.getUiElement(), "CheckBox")) || 
+      Objects.equal(it.getUiElement(), "Select")) || Objects.equal(it.getUiElement(), "Button")) || Objects.equal(it.getUiElement(), "Radio"))) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
   
   public Boolean isInput(final ClientAttribute it) {
-    if ((((it.getName().endsWith("TextInput") || it.getName().endsWith("PasswordInput")) || it.getName().endsWith("Checkbox")) || it.getName().endsWith("Radio"))) {
+    if ((((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput")) || Objects.equal(it.getUiElement(), "CheckBox")) || Objects.equal(it.getUiElement(), "Radio"))) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean isValueInput(final ClientAttribute it) {
+    if ((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput"))) {
+      return Boolean.valueOf(true);
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean isCheckedInput(final ClientAttribute it) {
+    if ((Objects.equal(it.getUiElement(), "CheckBox") || Objects.equal(it.getUiElement(), "Radio"))) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
   
   public String inputType(final ClientAttribute it) {
-    boolean _endsWith = it.getName().endsWith("TextInput");
-    if (_endsWith) {
+    String _uiElement = it.getUiElement();
+    boolean _equals = Objects.equal(_uiElement, "TextInput");
+    if (_equals) {
       return "text";
     }
-    boolean _endsWith_1 = it.getName().endsWith("PasswordInput");
-    if (_endsWith_1) {
+    String _uiElement_1 = it.getUiElement();
+    boolean _equals_1 = Objects.equal(_uiElement_1, "PasswordInput");
+    if (_equals_1) {
       return "password";
     }
-    boolean _endsWith_2 = it.getName().endsWith("Checkbox");
-    if (_endsWith_2) {
+    String _uiElement_2 = it.getUiElement();
+    boolean _equals_2 = Objects.equal(_uiElement_2, "CheckBox");
+    if (_equals_2) {
       return "checkbox";
     }
-    boolean _endsWith_3 = it.getName().endsWith("Radio");
-    if (_endsWith_3) {
+    String _uiElement_3 = it.getUiElement();
+    boolean _equals_3 = Objects.equal(_uiElement_3, "Radio");
+    if (_equals_3) {
       return "radio";
     }
     return null;
   }
   
-  public Boolean isButton(final ClientAttribute it) {
-    boolean _endsWith = it.getName().endsWith("Button");
-    if (_endsWith) {
+  public Boolean isSelect(final ClientAttribute it) {
+    String _uiElement = it.getUiElement();
+    boolean _equals = Objects.equal(_uiElement, "Select");
+    if (_equals) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
   
-  public Boolean isSelect(final ClientAttribute it) {
-    boolean _endsWith = it.getName().endsWith("Select");
-    if (_endsWith) {
+  public Boolean isButton(final ClientAttribute it) {
+    String _uiElement = it.getUiElement();
+    boolean _equals = Objects.equal(_uiElement, "Button");
+    if (_equals) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);

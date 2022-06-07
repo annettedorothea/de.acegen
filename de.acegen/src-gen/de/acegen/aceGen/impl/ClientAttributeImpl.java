@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -36,7 +37,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isStorage <em>Storage</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getUiElement <em>Ui Element</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getOptions <em>Options</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
@@ -145,6 +148,26 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
   protected boolean storage = STORAGE_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getUiElement() <em>Ui Element</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUiElement()
+   * @generated
+   * @ordered
+   */
+  protected static final String UI_ELEMENT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getUiElement() <em>Ui Element</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUiElement()
+   * @generated
+   * @ordered
+   */
+  protected String uiElement = UI_ELEMENT_EDEFAULT;
+
+  /**
    * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -153,6 +176,16 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected EList<ClientAttribute> attributes;
+
+  /**
+   * The cached value of the '{@link #getOptions() <em>Options</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptions()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> options;
 
   /**
    * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
@@ -316,6 +349,31 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public String getUiElement()
+  {
+    return uiElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setUiElement(String newUiElement)
+  {
+    String oldUiElement = uiElement;
+    uiElement = newUiElement;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT, oldUiElement, uiElement));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<ClientAttribute> getAttributes()
   {
     if (attributes == null)
@@ -323,6 +381,21 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       attributes = new EObjectContainmentEList<ClientAttribute>(ClientAttribute.class, this, AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES);
     }
     return attributes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<String> getOptions()
+  {
+    if (options == null)
+    {
+      options = new EDataTypeEList<String>(String.class, this, AceGenPackage.CLIENT_ATTRIBUTE__OPTIONS);
+    }
+    return options;
   }
 
   /**
@@ -378,8 +451,12 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isLocation();
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         return isStorage();
+      case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
+        return getUiElement();
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         return getAttributes();
+      case AceGenPackage.CLIENT_ATTRIBUTE__OPTIONS:
+        return getOptions();
       case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
         return getActions();
     }
@@ -412,9 +489,16 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         setStorage((Boolean)newValue);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
+        setUiElement((String)newValue);
+        return;
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
         getAttributes().addAll((Collection<? extends ClientAttribute>)newValue);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__OPTIONS:
+        getOptions().clear();
+        getOptions().addAll((Collection<? extends String>)newValue);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
         getActions().clear();
@@ -449,8 +533,14 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         setStorage(STORAGE_EDEFAULT);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
+        setUiElement(UI_ELEMENT_EDEFAULT);
+        return;
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         getAttributes().clear();
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__OPTIONS:
+        getOptions().clear();
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
         getActions().clear();
@@ -479,8 +569,12 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return location != LOCATION_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         return storage != STORAGE_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
+        return UI_ELEMENT_EDEFAULT == null ? uiElement != null : !UI_ELEMENT_EDEFAULT.equals(uiElement);
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
+      case AceGenPackage.CLIENT_ATTRIBUTE__OPTIONS:
+        return options != null && !options.isEmpty();
       case AceGenPackage.CLIENT_ATTRIBUTE__ACTIONS:
         return actions != null && !actions.isEmpty();
     }
@@ -508,6 +602,10 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     result.append(location);
     result.append(", storage: ");
     result.append(storage);
+    result.append(", uiElement: ");
+    result.append(uiElement);
+    result.append(", options: ");
+    result.append(options);
     result.append(')');
     return result.toString();
   }

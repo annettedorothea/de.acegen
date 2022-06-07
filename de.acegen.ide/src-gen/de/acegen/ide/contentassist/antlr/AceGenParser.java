@@ -33,6 +33,7 @@ public class AceGenParser extends AbstractContentAssistParser {
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, AceGenGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getProjectAccess().getAlternatives_1(), "rule__Project__Alternatives_1");
 			builder.put(grammarAccess.getHttpClientStateFunctionTypeAccess().getAlternatives(), "rule__HttpClientStateFunctionType__Alternatives");
+			builder.put(grammarAccess.getUIElementAccess().getAlternatives(), "rule__UIElement__Alternatives");
 			builder.put(grammarAccess.getJsonValueClientAccess().getAlternatives(), "rule__JsonValueClient__Alternatives");
 			builder.put(grammarAccess.getHttpServerAceAccess().getAlternatives(), "rule__HttpServerAce__Alternatives");
 			builder.put(grammarAccess.getGivenAccess().getAlternatives(), "rule__Given__Alternatives");
@@ -68,8 +69,9 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTriggerdAceOperationAccess().getGroup_0(), "rule__TriggerdAceOperation__Group_0__0");
 			builder.put(grammarAccess.getHttpClientStateFunctionAccess().getGroup(), "rule__HttpClientStateFunction__Group__0");
 			builder.put(grammarAccess.getClientAttributeAccess().getGroup(), "rule__ClientAttribute__Group__0");
-			builder.put(grammarAccess.getClientAttributeAccess().getGroup_5(), "rule__ClientAttribute__Group_5__0");
-			builder.put(grammarAccess.getClientAttributeAccess().getGroup_5_2(), "rule__ClientAttribute__Group_5_2__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_6(), "rule__ClientAttribute__Group_6__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_6_2(), "rule__ClientAttribute__Group_6_2__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_6_3(), "rule__ClientAttribute__Group_6_3__0");
 			builder.put(grammarAccess.getUiActionAccess().getGroup(), "rule__UiAction__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup(), "rule__ClientScenario__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup_1(), "rule__ClientScenario__Group_1__0");
@@ -202,8 +204,10 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientAttributeAccess().getNameAssignment_2(), "rule__ClientAttribute__NameAssignment_2");
 			builder.put(grammarAccess.getClientAttributeAccess().getLocationAssignment_3(), "rule__ClientAttribute__LocationAssignment_3");
 			builder.put(grammarAccess.getClientAttributeAccess().getStorageAssignment_4(), "rule__ClientAttribute__StorageAssignment_4");
-			builder.put(grammarAccess.getClientAttributeAccess().getAttributesAssignment_5_1(), "rule__ClientAttribute__AttributesAssignment_5_1");
-			builder.put(grammarAccess.getClientAttributeAccess().getActionsAssignment_5_2_2(), "rule__ClientAttribute__ActionsAssignment_5_2_2");
+			builder.put(grammarAccess.getClientAttributeAccess().getUiElementAssignment_5(), "rule__ClientAttribute__UiElementAssignment_5");
+			builder.put(grammarAccess.getClientAttributeAccess().getAttributesAssignment_6_1(), "rule__ClientAttribute__AttributesAssignment_6_1");
+			builder.put(grammarAccess.getClientAttributeAccess().getOptionsAssignment_6_2_1(), "rule__ClientAttribute__OptionsAssignment_6_2_1");
+			builder.put(grammarAccess.getClientAttributeAccess().getActionsAssignment_6_3_2(), "rule__ClientAttribute__ActionsAssignment_6_3_2");
 			builder.put(grammarAccess.getUiActionAccess().getTypeAssignment_0(), "rule__UiAction__TypeAssignment_0");
 			builder.put(grammarAccess.getUiActionAccess().getTargetAssignment_1(), "rule__UiAction__TargetAssignment_1");
 			builder.put(grammarAccess.getClientScenarioAccess().getNameAssignment_0(), "rule__ClientScenario__NameAssignment_0");

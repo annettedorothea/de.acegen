@@ -75,8 +75,10 @@ ClientAttribute:
 	name = ID 
 	location ?= 'location'? 
 	storage ?= 'storage'? 
+	uiElement = UIElement? 
 	('{'
 		attributes += ClientAttribute*
+		('options' options += STRING*)?
 		('actions' '{'
 			actions += UiAction*
 		'}')?
@@ -85,6 +87,10 @@ ClientAttribute:
 
 UiAction: 
 	type = STRING target = [HttpClientAce]
+;
+
+UIElement: 
+	'TextInput' | 'CheckBox' | 'Select' | 'PasswordInput' | 'Radio' | 'Button'
 ;
 
 ClientScenario:

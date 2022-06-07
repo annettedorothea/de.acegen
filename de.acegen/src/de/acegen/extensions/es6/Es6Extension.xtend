@@ -159,6 +159,9 @@ class Es6Extension {
 	}
 
 	def String componentContainerName(ClientAttribute it) {
+		if (isList) {
+			return '''«name.toFirstUpper»ItemContainer'''
+		}
 		return '''«name.toFirstUpper»Container'''
 	}
 
@@ -169,7 +172,7 @@ class Es6Extension {
 	'''
 
 	def String importComponent(ClientAttribute it, String subFolder) '''
-		«IF isTag || isList»
+		«IF isList»
 			import { «componentName» } from "./«subFolder»/«componentName»";
 		«ENDIF»
 	'''
@@ -186,6 +189,29 @@ class Es6Extension {
 	def boolean childrenContain(ClientAttribute it, String value) {
 		for (attribute : attributes) {
 			if (attribute.name == value) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def boolean oneChildIsLocationOrStorage(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.location || attribute.storage) {
+				return true;
+			}
+			for (childAttribute : attribute.attributes) {
+				if (childAttribute.location || childAttribute.storage) {
+					return true;
+				}
+			}
+		}
+		return false
+	}
+
+	def boolean attributesContain(List<ClientAttribute> it, ClientAttribute attribute) {
+		for (parentAttribute : it) {
+			if (parentAttribute.name == attribute.name) {
 				return true;
 			}
 		}
@@ -225,44 +251,58 @@ class Es6Extension {
 	}
 
 	def Boolean isTag(ClientAttribute it) {
-		if (name.endsWith("TextInput") || name.endsWith("PasswordInput") || name.endsWith("Checkbox") ||
-			name.endsWith("Select") || name.endsWith("Button") || name.endsWith("Radio")) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput" || uiElement == "CheckBox" ||
+			uiElement == "Select" || uiElement == "Button" || uiElement == "Radio") {
 			return true
 		}
 		return false
 	}
 	
 	def Boolean isInput(ClientAttribute it) {
-		if (name.endsWith("TextInput") || name.endsWith("PasswordInput") || name.endsWith("Checkbox") || name.endsWith("Radio")) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput" || uiElement == "CheckBox" || uiElement == "Radio") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isValueInput(ClientAttribute it) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isCheckedInput(ClientAttribute it) {
+		if (uiElement == "CheckBox" || uiElement == "Radio") {
 			return true
 		}
 		return false
 	}
 	
 	def String inputType(ClientAttribute it) {
-		if (name.endsWith("TextInput")) {
+		if (uiElement == "TextInput") {
 			return "text"
 		}
-		if (name.endsWith("PasswordInput")) {
+		if (uiElement == "PasswordInput") {
 			return "password"
 		}
-		if (name.endsWith("Checkbox")) {
+		if (uiElement == "CheckBox") {
 			return "checkbox"
 		}
-		if (name.endsWith("Radio")) {
+		if (uiElement == "Radio") {
 			return "radio"
 		}
 	}
 	
-	def Boolean isButton(ClientAttribute it) {
-		if (name.endsWith("Button")) {
+	def Boolean isSelect(ClientAttribute it) {
+		if (uiElement == "Select") {
 			return true
 		}
 		return false
 	}
 	
-	def Boolean isSelect(ClientAttribute it) {
-		if (name.endsWith("Select")) {
+	def Boolean isButton(ClientAttribute it) {
+		if (uiElement == "Button") {
 			return true
 		}
 		return false

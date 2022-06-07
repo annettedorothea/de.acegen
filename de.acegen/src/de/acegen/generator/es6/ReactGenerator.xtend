@@ -28,15 +28,15 @@ class ReactGenerator {
 			fsa.generateFile('''components«subFolder»/«componentName».js''',
 				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
 				reactTemplate.generateComponent(it, folderPrefix(subFolder)));
-			if (!isTag && !isList) {
+			if (!isTag) {
 				if (isRoot) {
 					fsa.generateFile('''components«subFolder»/«componentContainerName».js''',
 						IFileSystemAccess.DEFAULT_OUTPUT,
-						reactTemplate.generateRootComponentContainer(it, folderPrefix(subFolder)));
+						reactTemplate.generateComponentContainer(it, folderPrefix(subFolder), true));
 				} else {
 					fsa.generateFile('''components«subFolder»/«componentContainerName».js''',
 						IFileSystemAccess.DEFAULT_OUTPUT,
-						reactTemplate.generateComponentContainer(it, folderPrefix(subFolder)));
+						reactTemplate.generateComponentContainer(it, folderPrefix(subFolder), false));
 				}
 			}
 			val nextSubFolder = '''«subFolder»/«name.toFirstLower»'''

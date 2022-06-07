@@ -1031,9 +1031,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
+  public EAttribute getClientAttribute_UiElement()
+  {
+    return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getClientAttribute_Attributes()
   {
-    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(5);
+    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientAttribute_Options()
+  {
+    return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -1044,7 +1066,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
   @Override
   public EReference getClientAttribute_Actions()
   {
-    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(6);
+    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -3204,7 +3226,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__NAME);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LOCATION);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__STORAGE);
+    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__UI_ELEMENT);
     createEReference(clientAttributeEClass, CLIENT_ATTRIBUTE__ATTRIBUTES);
+    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__OPTIONS);
     createEReference(clientAttributeEClass, CLIENT_ATTRIBUTE__ACTIONS);
 
     uiActionEClass = createEClass(UI_ACTION);
@@ -3553,7 +3577,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getClientAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Location(), ecorePackage.getEBoolean(), "location", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Storage(), ecorePackage.getEBoolean(), "storage", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientAttribute_UiElement(), ecorePackage.getEString(), "uiElement", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientAttribute_Attributes(), this.getClientAttribute(), null, "attributes", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientAttribute_Options(), ecorePackage.getEString(), "options", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClientAttribute_Actions(), this.getUiAction(), null, "actions", null, 0, -1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(uiActionEClass, UiAction.class, "UiAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
