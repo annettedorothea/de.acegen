@@ -20,8 +20,6 @@ class JsxTemplate {
 		
 		import React from "react";
 		
-		«componentImports»
-		
 		export const «componentName» = (props) => {
 			«IF isInput»
 				return <input 
@@ -32,7 +30,7 @@ class JsxTemplate {
 					placeholder="«name»"
 					className="text-input"
 					«FOR action : actions»
-						«action.type»={(event) => «action.target.getName.toFirstLower»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				/>
 			«ELSEIF isSelect»
@@ -47,7 +45,7 @@ class JsxTemplate {
 					«ENDFOR»
 					className="select"
 					«FOR action : actions»
-						«action.type»={(event) => «action.target.getName.toFirstLower»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				>
 					{options.map(item => <option value={item.value} key={item.value}>{item.option}</option>)}
@@ -59,15 +57,21 @@ class JsxTemplate {
 					«ENDFOR»
 					className="button"
 					«FOR action : actions»
-						«action.type»={(event) => «action.target.getName.toFirstLower»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				>
 					«name»
 				</button>
 			«ELSE»
 				return <>
+					<div>«name»</div>
 					«FOR attribute: attributes»
 						«attribute.renderChild»
+					«ENDFOR»
+					«FOR action : actions»
+						<div «action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}>
+							«action.type»
+						</div>
 					«ENDFOR»
 					«IF hasComplexAttribute»
 						{props.children}
@@ -103,13 +107,13 @@ class JsxTemplate {
 				
 			«ENDIF»
 			«IF hasComplexAttribute»
-				return <«componentName» {...props}>
+				return <«componentName» {...props} «actionProps»>
 					«FOR attribute: attributes»
-						«attribute.renderChildContainer(attributes)»
+						«attribute.renderChildContainer(attributes, it.isGroup())»
 					«ENDFOR»
 				</«componentName»> 
 			«ELSE»
-				return <«componentName» {...props} /> 
+				return <«componentName» {...props} «actionProps» /> 
 			«ENDIF»
 		}
 		
@@ -123,14 +127,18 @@ class JsxTemplate {
 		«ENDIF»
 	'''
 	
-	def renderChildContainer(ClientAttribute it, List<ClientAttribute> parentAttributes) '''
+	def renderChildContainer(ClientAttribute it, List<ClientAttribute> parentAttributes, boolean parentIsGroup) '''
 		«IF isTag»
-			<«componentName» «props(parentAttributes)» />
+			<«componentName» «props(parentAttributes)» «actionProps» />
 		«ELSEIF isComponent»
 			«IF !list»
-				{ props.«name» && <«componentContainerName» «props(parentAttributes)» /> }
+				«IF parentIsGroup»
+					{ props.«name» && <«componentContainerName» «props(parentAttributes)» «actionProps» /> }
+				«ELSE»
+					<«componentContainerName» «props(parentAttributes)» «actionProps» />
+				«ENDIF»
 			«ELSE»
-				{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.id} «parentPart(parentAttributes)» «storageAndLocationPart» />) : [] }
+				{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «parentPart(parentAttributes)» «storageAndLocationPart» «actionProps» />) : [] }
 			«ENDIF»
 		«ENDIF»
 	'''
@@ -141,26 +149,25 @@ class JsxTemplate {
 	
 	def parentPart(ClientAttribute it, List<ClientAttribute> parentAttributes) '''«FOR attribute:attributes»«IF parentAttributes.attributesContain(attribute)»«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»} «ENDIF»«ENDFOR»'''
 	
+	def actionProps(ClientAttribute it) '''«FOR action:actions»«action.type»={«action.target.getName.toFirstLower»} «ENDFOR»'''
+	
 	def CharSequence componentContainerImports(ClientAttribute it, String subFolder) '''
-		import { «componentName» } from "«depth()»src/components/«subFolder»«path»«componentName»";
+		import { «componentName» } from "«depth("../../")»src/components/«subFolder»«path»«componentName»";
 		«FOR attribute : attributes»
 			«IF attribute.isTag»
-				import { «attribute.componentName» } from "«depth()»src/components/«subFolder»«path»«name.toFirstLower»/«attribute.componentName»";
+				import { «attribute.componentName» } from "«depth("../../")»src/components/«subFolder»«path»«name.toFirstLower»/«attribute.componentName»";
 			«ELSE»
 				«attribute.importComponentContainer('''«subFolder»/«name.toFirstLower»''')»
 			«ENDIF»
+			«FOR action : attribute.actions»
+				import { «action.target.name.toFirstLower» } from "«depth("../")»«(action.target.eContainer as HttpClient).name»/ActionFunctions";
+			«ENDFOR»
 		«ENDFOR»
 		«IF oneChildIsLocationOrStorage»
-			import * as AppState from "«depth»src/AppState";
+			import * as AppState from "«depth("../../")»src/AppState";
 		«ENDIF»
-	''' 
-	
-	def CharSequence componentImports(ClientAttribute it) '''
-		«FOR attribute : attributes»
-			«attribute.importComponent(name.toFirstLower)»
-		«ENDFOR»
 		«FOR action : actions»
-			import { «action.target.name.toFirstLower» } from "«depth()»gen/«(action.target.eContainer as HttpClient).name»/ActionFunctions";
+			import { «action.target.name.toFirstLower» } from "«depth("../")»«(action.target.eContainer as HttpClient).name»/ActionFunctions";
 		«ENDFOR»
 	''' 
 	

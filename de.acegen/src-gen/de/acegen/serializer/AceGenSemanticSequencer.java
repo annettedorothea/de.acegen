@@ -396,6 +396,8 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         noComponent?='noComponent'? 
 	 *         list?='List'? 
+	 *         group?='group'? 
+	 *         listId?='listId'? 
 	 *         name=ID 
 	 *         location?='location'? 
 	 *         storage?='storage'? 
@@ -1236,7 +1238,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     UiAction returns UiAction
 	 *
 	 * Constraint:
-	 *     (type=STRING target=[HttpClientAce|ID])
+	 *     (type=STRING target=[HttpClientAce|QualifiedName])
 	 * </pre>
 	 */
 	protected void sequence_UiAction(ISerializationContext context, UiAction semanticObject) {
@@ -1248,7 +1250,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getUiActionAccess().getTypeSTRINGTerminalRuleCall_0_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getUiActionAccess().getTargetHttpClientAceIDTerminalRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.UI_ACTION__TARGET, false));
+		feeder.accept(grammarAccess.getUiActionAccess().getTargetHttpClientAceQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.UI_ACTION__TARGET, false));
 		feeder.finish();
 	}
 	

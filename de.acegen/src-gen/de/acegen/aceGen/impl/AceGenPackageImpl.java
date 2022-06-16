@@ -998,7 +998,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_Name()
+  public EAttribute getClientAttribute_Group()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(2);
   }
@@ -1009,7 +1009,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_Location()
+  public EAttribute getClientAttribute_ListId()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(3);
   }
@@ -1020,7 +1020,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_Storage()
+  public EAttribute getClientAttribute_Name()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(4);
   }
@@ -1031,7 +1031,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_UiElement()
+  public EAttribute getClientAttribute_Location()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(5);
   }
@@ -1042,9 +1042,9 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientAttribute_Attributes()
+  public EAttribute getClientAttribute_Storage()
   {
-    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(6);
+    return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1053,7 +1053,7 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getClientAttribute_Options()
+  public EAttribute getClientAttribute_UiElement()
   {
     return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(7);
   }
@@ -1064,9 +1064,31 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EReference getClientAttribute_Actions()
+  public EReference getClientAttribute_Attributes()
   {
     return (EReference)clientAttributeEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getClientAttribute_Options()
+  {
+    return (EAttribute)clientAttributeEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getClientAttribute_Actions()
+  {
+    return (EReference)clientAttributeEClass.getEStructuralFeatures().get(10);
   }
 
   /**
@@ -3223,6 +3245,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     clientAttributeEClass = createEClass(CLIENT_ATTRIBUTE);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__NO_COMPONENT);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LIST);
+    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__GROUP);
+    createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LIST_ID);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__NAME);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__LOCATION);
     createEAttribute(clientAttributeEClass, CLIENT_ATTRIBUTE__STORAGE);
@@ -3574,6 +3598,8 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEClass(clientAttributeEClass, ClientAttribute.class, "ClientAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClientAttribute_NoComponent(), ecorePackage.getEBoolean(), "noComponent", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_List(), ecorePackage.getEBoolean(), "list", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientAttribute_Group(), ecorePackage.getEBoolean(), "group", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClientAttribute_ListId(), ecorePackage.getEBoolean(), "listId", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Location(), ecorePackage.getEBoolean(), "location", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getClientAttribute_Storage(), ecorePackage.getEBoolean(), "storage", null, 0, 1, ClientAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

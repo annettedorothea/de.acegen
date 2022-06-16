@@ -172,18 +172,27 @@ class Es6Extension {
 	'''
 
 	def String importComponent(ClientAttribute it, String subFolder) '''
-		«IF isList»
+		«IF isList && attributes.length > 0»
 			import { «componentName» } from "./«subFolder»/«componentName»";
 		«ENDIF»
 	'''
 
 	def boolean hasComplexAttribute(ClientAttribute it) {
 		for (attribute : attributes) {
-			if (attribute.attributes.size > 0) {
+			if (attribute.attributes.size > 0 || attribute.actions.size > 0) {
 				return true;
 			}
 		}
 		return false
+	}
+
+	def String keyAttributeName(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.isListId) {
+				return attribute.name;
+			}
+		}
+		return "id"
 	}
 
 	def boolean childrenContain(ClientAttribute it, String value) {
@@ -218,8 +227,8 @@ class Es6Extension {
 		return false
 	}
 
-	def String depth(ClientAttribute it) {
-		return depthRec("../../")
+	def String depth(ClientAttribute it, String prefix) {
+		return depthRec(prefix)
 	}
 
 	def String depthRec(ClientAttribute attr, String prefix) {

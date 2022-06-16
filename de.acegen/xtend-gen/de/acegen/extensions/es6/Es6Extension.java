@@ -40,6 +40,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -389,8 +390,7 @@ public class Es6Extension {
   public String importComponent(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      boolean _isList = it.isList();
-      if (_isList) {
+      if ((it.isList() && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0))) {
         _builder.append("import { ");
         String _componentName = this.componentName(it);
         _builder.append(_componentName);
@@ -409,13 +409,22 @@ public class Es6Extension {
   public boolean hasComplexAttribute(final ClientAttribute it) {
     EList<ClientAttribute> _attributes = it.getAttributes();
     for (final ClientAttribute attribute : _attributes) {
-      int _size = attribute.getAttributes().size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
+      if (((attribute.getAttributes().size() > 0) || (attribute.getActions().size() > 0))) {
         return true;
       }
     }
     return false;
+  }
+  
+  public String keyAttributeName(final ClientAttribute it) {
+    EList<ClientAttribute> _attributes = it.getAttributes();
+    for (final ClientAttribute attribute : _attributes) {
+      boolean _isListId = attribute.isListId();
+      if (_isListId) {
+        return attribute.getName();
+      }
+    }
+    return "id";
   }
   
   public boolean childrenContain(final ClientAttribute it, final String value) {
@@ -460,8 +469,8 @@ public class Es6Extension {
     return false;
   }
   
-  public String depth(final ClientAttribute it) {
-    return this.depthRec(it, "../../");
+  public String depth(final ClientAttribute it, final String prefix) {
+    return this.depthRec(it, prefix);
   }
   
   public String depthRec(final ClientAttribute attr, final String prefix) {

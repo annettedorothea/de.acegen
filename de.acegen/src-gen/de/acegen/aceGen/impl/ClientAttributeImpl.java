@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isList <em>List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isGroup <em>Group</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isStorage <em>Storage</em>}</li>
@@ -86,6 +88,46 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected boolean list = LIST_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isGroup() <em>Group</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isGroup()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean GROUP_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isGroup() <em>Group</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isGroup()
+   * @generated
+   * @ordered
+   */
+  protected boolean group = GROUP_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isListId() <em>List Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isListId()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean LIST_ID_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isListId() <em>List Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isListId()
+   * @generated
+   * @ordered
+   */
+  protected boolean listId = LIST_ID_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -274,6 +316,56 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public boolean isGroup()
+  {
+    return group;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setGroup(boolean newGroup)
+  {
+    boolean oldGroup = group;
+    group = newGroup;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__GROUP, oldGroup, group));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isListId()
+  {
+    return listId;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setListId(boolean newListId)
+  {
+    boolean oldListId = listId;
+    listId = newListId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID, oldListId, listId));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getName()
   {
     return name;
@@ -445,6 +537,10 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isNoComponent();
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         return isList();
+      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
+        return isGroup();
+      case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
+        return isListId();
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
         return getName();
       case AceGenPackage.CLIENT_ATTRIBUTE__LOCATION:
@@ -479,6 +575,12 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         setList((Boolean)newValue);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
+        setGroup((Boolean)newValue);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
+        setListId((Boolean)newValue);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
         setName((String)newValue);
@@ -524,6 +626,12 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         setList(LIST_EDEFAULT);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
+        setGroup(GROUP_EDEFAULT);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
+        setListId(LIST_ID_EDEFAULT);
+        return;
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -563,6 +671,10 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return noComponent != NO_COMPONENT_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         return list != LIST_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
+        return group != GROUP_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
+        return listId != LIST_ID_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.CLIENT_ATTRIBUTE__LOCATION:
@@ -596,6 +708,10 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     result.append(noComponent);
     result.append(", list: ");
     result.append(list);
+    result.append(", group: ");
+    result.append(group);
+    result.append(", listId: ");
+    result.append(listId);
     result.append(", name: ");
     result.append(name);
     result.append(", location: ");

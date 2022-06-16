@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}</li>
@@ -76,6 +78,50 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   void setList(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Group</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Group</em>' attribute.
+   * @see #setGroup(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Group()
+   * @model
+   * @generated
+   */
+  boolean isGroup();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Group</em>' attribute.
+   * @see #isGroup()
+   * @generated
+   */
+  void setGroup(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>List Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>List Id</em>' attribute.
+   * @see #setListId(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_ListId()
+   * @model
+   * @generated
+   */
+  boolean isListId();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>List Id</em>' attribute.
+   * @see #isListId()
+   * @generated
+   */
+  void setListId(boolean value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

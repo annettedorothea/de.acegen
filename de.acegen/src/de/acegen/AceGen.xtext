@@ -72,6 +72,8 @@ HttpClientStateFunctionType:
 ClientAttribute:
 	noComponent ?= 'noComponent'? 
 	list ?= 'List'? 
+	group ?= 'group'? 
+	listId ?= 'listId'? 
 	name = ID 
 	location ?= 'location'? 
 	storage ?= 'storage'? 
@@ -86,7 +88,7 @@ ClientAttribute:
 ;
 
 UiAction: 
-	type = STRING target = [HttpClientAce]
+	type = STRING target = [HttpClientAce | QualifiedName]
 ;
 
 UIElement: 

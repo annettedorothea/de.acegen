@@ -463,13 +463,31 @@ public interface AceGenPackage extends EPackage
   int CLIENT_ATTRIBUTE__LIST = 1;
 
   /**
+   * The feature id for the '<em><b>Group</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__GROUP = 2;
+
+  /**
+   * The feature id for the '<em><b>List Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__LIST_ID = 3;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__NAME = 2;
+  int CLIENT_ATTRIBUTE__NAME = 4;
 
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -478,7 +496,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__LOCATION = 3;
+  int CLIENT_ATTRIBUTE__LOCATION = 5;
 
   /**
    * The feature id for the '<em><b>Storage</b></em>' attribute.
@@ -487,7 +505,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__STORAGE = 4;
+  int CLIENT_ATTRIBUTE__STORAGE = 6;
 
   /**
    * The feature id for the '<em><b>Ui Element</b></em>' attribute.
@@ -496,7 +514,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__UI_ELEMENT = 5;
+  int CLIENT_ATTRIBUTE__UI_ELEMENT = 7;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -505,7 +523,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ATTRIBUTES = 6;
+  int CLIENT_ATTRIBUTE__ATTRIBUTES = 8;
 
   /**
    * The feature id for the '<em><b>Options</b></em>' attribute list.
@@ -514,7 +532,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__OPTIONS = 7;
+  int CLIENT_ATTRIBUTE__OPTIONS = 9;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -523,7 +541,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ACTIONS = 8;
+  int CLIENT_ATTRIBUTE__ACTIONS = 10;
 
   /**
    * The number of structural features of the '<em>Client Attribute</em>' class.
@@ -532,7 +550,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 9;
+  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 11;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.UiActionImpl <em>Ui Action</em>}' class.
@@ -3354,6 +3372,28 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientAttribute_List();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Group</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isGroup()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Group();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>List Id</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isListId()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_ListId();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5782,6 +5822,22 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute CLIENT_ATTRIBUTE__LIST = eINSTANCE.getClientAttribute_List();
+
+    /**
+     * The meta object literal for the '<em><b>Group</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__GROUP = eINSTANCE.getClientAttribute_Group();
+
+    /**
+     * The meta object literal for the '<em><b>List Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__LIST_ID = eINSTANCE.getClientAttribute_ListId();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
