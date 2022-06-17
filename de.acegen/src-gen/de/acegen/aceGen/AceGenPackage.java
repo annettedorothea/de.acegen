@@ -463,13 +463,22 @@ public interface AceGenPackage extends EPackage
   int CLIENT_ATTRIBUTE__LIST = 1;
 
   /**
+   * The feature id for the '<em><b>Tree</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLIENT_ATTRIBUTE__TREE = 2;
+
+  /**
    * The feature id for the '<em><b>Group</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__GROUP = 2;
+  int CLIENT_ATTRIBUTE__GROUP = 3;
 
   /**
    * The feature id for the '<em><b>List Id</b></em>' attribute.
@@ -478,7 +487,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__LIST_ID = 3;
+  int CLIENT_ATTRIBUTE__LIST_ID = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -487,7 +496,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__NAME = 4;
+  int CLIENT_ATTRIBUTE__NAME = 5;
 
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -496,7 +505,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__LOCATION = 5;
+  int CLIENT_ATTRIBUTE__LOCATION = 6;
 
   /**
    * The feature id for the '<em><b>Storage</b></em>' attribute.
@@ -505,7 +514,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__STORAGE = 6;
+  int CLIENT_ATTRIBUTE__STORAGE = 7;
 
   /**
    * The feature id for the '<em><b>Ui Element</b></em>' attribute.
@@ -514,7 +523,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__UI_ELEMENT = 7;
+  int CLIENT_ATTRIBUTE__UI_ELEMENT = 8;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -523,7 +532,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ATTRIBUTES = 8;
+  int CLIENT_ATTRIBUTE__ATTRIBUTES = 9;
 
   /**
    * The feature id for the '<em><b>Options</b></em>' attribute list.
@@ -532,7 +541,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__OPTIONS = 9;
+  int CLIENT_ATTRIBUTE__OPTIONS = 10;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -541,7 +550,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE__ACTIONS = 10;
+  int CLIENT_ATTRIBUTE__ACTIONS = 11;
 
   /**
    * The number of structural features of the '<em>Client Attribute</em>' class.
@@ -550,7 +559,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 11;
+  int CLIENT_ATTRIBUTE_FEATURE_COUNT = 12;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.UiActionImpl <em>Ui Action</em>}' class.
@@ -563,13 +572,13 @@ public interface AceGenPackage extends EPackage
   int UI_ACTION = 9;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UI_ACTION__TYPE = 0;
+  int UI_ACTION__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' reference.
@@ -3372,6 +3381,17 @@ public interface AceGenPackage extends EPackage
   EAttribute getClientAttribute_List();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isTree <em>Tree</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Tree</em>'.
+   * @see de.acegen.aceGen.ClientAttribute#isTree()
+   * @see #getClientAttribute()
+   * @generated
+   */
+  EAttribute getClientAttribute_Tree();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3481,15 +3501,15 @@ public interface AceGenPackage extends EPackage
   EClass getUiAction();
 
   /**
-   * Returns the meta object for the attribute '{@link de.acegen.aceGen.UiAction#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.UiAction#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.acegen.aceGen.UiAction#getType()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.acegen.aceGen.UiAction#getName()
    * @see #getUiAction()
    * @generated
    */
-  EAttribute getUiAction_Type();
+  EAttribute getUiAction_Name();
 
   /**
    * Returns the meta object for the reference '{@link de.acegen.aceGen.UiAction#getTarget <em>Target</em>}'.
@@ -5824,6 +5844,14 @@ public interface AceGenPackage extends EPackage
     EAttribute CLIENT_ATTRIBUTE__LIST = eINSTANCE.getClientAttribute_List();
 
     /**
+     * The meta object literal for the '<em><b>Tree</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLIENT_ATTRIBUTE__TREE = eINSTANCE.getClientAttribute_Tree();
+
+    /**
      * The meta object literal for the '<em><b>Group</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5906,12 +5934,12 @@ public interface AceGenPackage extends EPackage
     EClass UI_ACTION = eINSTANCE.getUiAction();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute UI_ACTION__TYPE = eINSTANCE.getUiAction_Type();
+    EAttribute UI_ACTION__NAME = eINSTANCE.getUiAction_Name();
 
     /**
      * The meta object literal for the '<em><b>Target</b></em>' reference feature.

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.UiAction#getType <em>Type</em>}</li>
+ *   <li>{@link de.acegen.aceGen.UiAction#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.UiAction#getTarget <em>Target</em>}</li>
  * </ul>
  *
@@ -25,26 +25,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface UiAction extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
-   * @see de.acegen.aceGen.AceGenPackage#getUiAction_Type()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see de.acegen.aceGen.AceGenPackage#getUiAction_Name()
    * @model
    * @generated
    */
-  String getType();
+  String getName();
 
   /**
-   * Sets the value of the '{@link de.acegen.aceGen.UiAction#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link de.acegen.aceGen.UiAction#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
-   * @see #getType()
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
    * @generated
    */
-  void setType(String value);
+  void setName(String value);
 
   /**
    * Returns the value of the '<em><b>Target</b></em>' reference.

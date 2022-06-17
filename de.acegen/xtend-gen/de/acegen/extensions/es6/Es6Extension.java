@@ -96,7 +96,7 @@ public class Es6Extension {
     String _path = this.path(this.paramList(it));
     _builder.append(_path, "\t");
     {
-      if ((((!Objects.equal(functionName, "get")) && (it.getAttributes().size() > 0)) && (!it.isList()))) {
+      if (((((!Objects.equal(functionName, "get")) && (it.getAttributes().size() > 0)) && (!it.isList())) && (!it.isTree()))) {
         _builder.append(", ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -338,8 +338,7 @@ public class Es6Extension {
   }
   
   public String componentName(final ClientAttribute it) {
-    boolean _isList = it.isList();
-    if (_isList) {
+    if ((it.isList() || it.isTree())) {
       StringConcatenation _builder = new StringConcatenation();
       String _firstUpper = StringExtensions.toFirstUpper(it.getName());
       _builder.append(_firstUpper);
@@ -353,8 +352,7 @@ public class Es6Extension {
   }
   
   public String componentContainerName(final ClientAttribute it) {
-    boolean _isList = it.isList();
-    if (_isList) {
+    if ((it.isList() || it.isTree())) {
       StringConcatenation _builder = new StringConcatenation();
       String _firstUpper = StringExtensions.toFirstUpper(it.getName());
       _builder.append(_firstUpper);
@@ -371,7 +369,7 @@ public class Es6Extension {
   public String importComponentContainer(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if (((it.getAttributes().size() > 0) && (!it.isNoComponent()))) {
+      if ((((it.getAttributes().size() > 0) || (it.getActions().size() > 0)) && (!it.isNoComponent()))) {
         _builder.append("import { ");
         String _componentContainerName = this.componentContainerName(it);
         _builder.append(_componentContainerName);
@@ -390,7 +388,7 @@ public class Es6Extension {
   public String importComponent(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      if ((it.isList() && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0))) {
+      if (((it.isList() || it.isTree()) && (((Object[])Conversions.unwrapArray(it.getAttributes(), Object.class)).length > 0))) {
         _builder.append("import { ");
         String _componentName = this.componentName(it);
         _builder.append(_componentName);

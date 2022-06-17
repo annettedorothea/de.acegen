@@ -30,7 +30,7 @@ class JsxTemplate {
 					placeholder="«name»"
 					className="text-input"
 					«FOR action : actions»
-						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				/>
 			«ELSEIF isSelect»
@@ -45,7 +45,7 @@ class JsxTemplate {
 					«ENDFOR»
 					className="select"
 					«FOR action : actions»
-						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				>
 					{options.map(item => <option value={item.value} key={item.value}>{item.option}</option>)}
@@ -57,23 +57,25 @@ class JsxTemplate {
 					«ENDFOR»
 					className="button"
 					«FOR action : actions»
-						«action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
+						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
 				>
 					«name»
 				</button>
 			«ELSE»
 				return <>
-					<div>«name»</div>
-					«FOR attribute: attributes»
-						«attribute.renderChild»
-					«ENDFOR»
+					<h1>«componentName»</h1>
+					<ul>
+						«FOR attribute: attributes»
+							«attribute.renderChild»
+						«ENDFOR»
+					</ul>
 					«FOR action : actions»
-						<div «action.type»={(event) => props.«action.type»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}>
-							«action.type»
-						</div>
+						<a «action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}>
+							«action.target.name»
+						</a>
 					«ENDFOR»
-					«IF hasComplexAttribute»
+					«IF hasComplexAttribute || isTree»
 						{props.children}
 					«ENDIF»
 				</> 
@@ -112,6 +114,10 @@ class JsxTemplate {
 						«attribute.renderChildContainer(attributes, it.isGroup())»
 					«ENDFOR»
 				</«componentName»> 
+			«ELSEIF isTree»				
+				return <«componentName» {...props} «actionProps»>
+					{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «storageAndLocationPart» «actionProps» />) : [] }
+				</«componentName»> 
 			«ELSE»
 				return <«componentName» {...props} «actionProps» /> 
 			«ENDIF»
@@ -123,7 +129,7 @@ class JsxTemplate {
 	
 	def renderChild(ClientAttribute it) '''
 		«IF attributes.size == 0 && !isTag»
-			<div>«name.toFirstLower»: {props.«name.toFirstLower» !== null && props.«name.toFirstLower» !== undefined ? props.«name.toFirstLower».toString() : ""}</div>
+			<li>«name.toFirstLower»: {props.«name.toFirstLower» !== null && props.«name.toFirstLower» !== undefined ? props.«name.toFirstLower».toString() : ""}</li>
 		«ENDIF»
 	'''
 	
@@ -131,14 +137,14 @@ class JsxTemplate {
 		«IF isTag»
 			<«componentName» «props(parentAttributes)» «actionProps» />
 		«ELSEIF isComponent»
-			«IF !list»
+			«IF !list && !isTree»
 				«IF parentIsGroup»
 					{ props.«name» && <«componentContainerName» «props(parentAttributes)» «actionProps» /> }
 				«ELSE»
 					<«componentContainerName» «props(parentAttributes)» «actionProps» />
 				«ENDIF»
 			«ELSE»
-				{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «parentPart(parentAttributes)» «storageAndLocationPart» «actionProps» />) : [] }
+				{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «IF isList»«parentPart(parentAttributes)»«ENDIF» «storageAndLocationPart» «actionProps» />) : [] }
 			«ENDIF»
 		«ENDIF»
 	'''
@@ -149,7 +155,7 @@ class JsxTemplate {
 	
 	def parentPart(ClientAttribute it, List<ClientAttribute> parentAttributes) '''«FOR attribute:attributes»«IF parentAttributes.attributesContain(attribute)»«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»} «ENDIF»«ENDFOR»'''
 	
-	def actionProps(ClientAttribute it) '''«FOR action:actions»«action.type»={«action.target.getName.toFirstLower»} «ENDFOR»'''
+	def actionProps(ClientAttribute it) '''«FOR action:actions»«action.name»={«action.target.getName.toFirstLower»} «ENDFOR»'''
 	
 	def CharSequence componentContainerImports(ClientAttribute it, String subFolder) '''
 		import { «componentName» } from "«depth("../../")»src/components/«subFolder»«path»«componentName»";

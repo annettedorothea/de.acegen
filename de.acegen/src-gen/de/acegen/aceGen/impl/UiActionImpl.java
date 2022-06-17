@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.acegen.aceGen.impl.UiActionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.UiActionImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.UiActionImpl#getTarget <em>Target</em>}</li>
  * </ul>
  *
@@ -32,24 +32,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class UiActionImpl extends MinimalEObjectImpl.Container implements UiAction
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String type = TYPE_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
@@ -88,9 +88,9 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
    * @generated
    */
   @Override
-  public String getType()
+  public String getName()
   {
-    return type;
+    return name;
   }
 
   /**
@@ -99,12 +99,12 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
    * @generated
    */
   @Override
-  public void setType(String newType)
+  public void setName(String newName)
   {
-    String oldType = type;
-    type = newType;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.UI_ACTION__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.UI_ACTION__NAME, oldName, name));
   }
 
   /**
@@ -162,8 +162,8 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
   {
     switch (featureID)
     {
-      case AceGenPackage.UI_ACTION__TYPE:
-        return getType();
+      case AceGenPackage.UI_ACTION__NAME:
+        return getName();
       case AceGenPackage.UI_ACTION__TARGET:
         if (resolve) return getTarget();
         return basicGetTarget();
@@ -181,8 +181,8 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
   {
     switch (featureID)
     {
-      case AceGenPackage.UI_ACTION__TYPE:
-        setType((String)newValue);
+      case AceGenPackage.UI_ACTION__NAME:
+        setName((String)newValue);
         return;
       case AceGenPackage.UI_ACTION__TARGET:
         setTarget((HttpClientAce)newValue);
@@ -201,8 +201,8 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
   {
     switch (featureID)
     {
-      case AceGenPackage.UI_ACTION__TYPE:
-        setType(TYPE_EDEFAULT);
+      case AceGenPackage.UI_ACTION__NAME:
+        setName(NAME_EDEFAULT);
         return;
       case AceGenPackage.UI_ACTION__TARGET:
         setTarget((HttpClientAce)null);
@@ -221,8 +221,8 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
   {
     switch (featureID)
     {
-      case AceGenPackage.UI_ACTION__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case AceGenPackage.UI_ACTION__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AceGenPackage.UI_ACTION__TARGET:
         return target != null;
     }
@@ -240,8 +240,8 @@ public class UiActionImpl extends MinimalEObjectImpl.Container implements UiActi
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (type: ");
-    result.append(type);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }

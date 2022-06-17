@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isList <em>List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isTree <em>Tree</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isGroup <em>Group</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getName <em>Name</em>}</li>
@@ -88,6 +89,26 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected boolean list = LIST_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isTree() <em>Tree</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTree()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean TREE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isTree() <em>Tree</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isTree()
+   * @generated
+   * @ordered
+   */
+  protected boolean tree = TREE_EDEFAULT;
 
   /**
    * The default value of the '{@link #isGroup() <em>Group</em>}' attribute.
@@ -308,6 +329,31 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     list = newList;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__LIST, oldList, list));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean isTree()
+  {
+    return tree;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setTree(boolean newTree)
+  {
+    boolean oldTree = tree;
+    tree = newTree;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__TREE, oldTree, tree));
   }
 
   /**
@@ -537,6 +583,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isNoComponent();
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         return isList();
+      case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
+        return isTree();
       case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
         return isGroup();
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
@@ -575,6 +623,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         setList((Boolean)newValue);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
+        setTree((Boolean)newValue);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
         setGroup((Boolean)newValue);
@@ -626,6 +677,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         setList(LIST_EDEFAULT);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
+        setTree(TREE_EDEFAULT);
+        return;
       case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
         setGroup(GROUP_EDEFAULT);
         return;
@@ -671,6 +725,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return noComponent != NO_COMPONENT_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST:
         return list != LIST_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__TREE:
+        return tree != TREE_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__GROUP:
         return group != GROUP_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__LIST_ID:
@@ -708,6 +764,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     result.append(noComponent);
     result.append(", list: ");
     result.append(list);
+    result.append(", tree: ");
+    result.append(tree);
     result.append(", group: ");
     result.append(group);
     result.append(", listId: ");

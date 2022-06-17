@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isNoComponent <em>No Component</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isList <em>List</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isTree <em>Tree</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isGroup <em>Group</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isListId <em>List Id</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
@@ -78,6 +79,28 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   void setList(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Tree</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tree</em>' attribute.
+   * @see #setTree(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_Tree()
+   * @model
+   * @generated
+   */
+  boolean isTree();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isTree <em>Tree</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tree</em>' attribute.
+   * @see #isTree()
+   * @generated
+   */
+  void setTree(boolean value);
 
   /**
    * Returns the value of the '<em><b>Group</b></em>' attribute.

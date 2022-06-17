@@ -396,6 +396,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         noComponent?='noComponent'? 
 	 *         list?='List'? 
+	 *         tree?='Tree'? 
 	 *         group?='group'? 
 	 *         listId?='listId'? 
 	 *         name=ID 
@@ -1238,18 +1239,18 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     UiAction returns UiAction
 	 *
 	 * Constraint:
-	 *     (type=STRING target=[HttpClientAce|QualifiedName])
+	 *     (name=STRING target=[HttpClientAce|QualifiedName])
 	 * </pre>
 	 */
 	protected void sequence_UiAction(ISerializationContext context, UiAction semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UI_ACTION__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UI_ACTION__TYPE));
+			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UI_ACTION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UI_ACTION__NAME));
 			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.UI_ACTION__TARGET) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.UI_ACTION__TARGET));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getUiActionAccess().getTypeSTRINGTerminalRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getUiActionAccess().getNameSTRINGTerminalRuleCall_0_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getUiActionAccess().getTargetHttpClientAceQualifiedNameParserRuleCall_1_0_1(), semanticObject.eGet(AceGenPackage.Literals.UI_ACTION__TARGET, false));
 		feeder.finish();
 	}

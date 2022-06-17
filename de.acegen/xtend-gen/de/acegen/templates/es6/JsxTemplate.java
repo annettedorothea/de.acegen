@@ -82,11 +82,11 @@ public class JsxTemplate {
           for(final UiAction action : _actions) {
             _builder.append("\t");
             _builder.append("\t");
-            String _type = action.getType();
-            _builder.append(_type, "\t\t");
+            String _name_1 = action.getName();
+            _builder.append(_name_1, "\t\t");
             _builder.append("={(event) => props.");
-            String _type_1 = action.getType();
-            _builder.append(_type_1, "\t\t");
+            String _name_2 = action.getName();
+            _builder.append(_name_2, "\t\t");
             _builder.append("(");
             {
               EList<Input> _input = action.getTarget().getInput();
@@ -98,19 +98,19 @@ public class JsxTemplate {
                   _builder.appendImmediate(",", "\t\t");
                 }
                 {
-                  String _name_1 = param.getName();
-                  boolean _equals = Objects.equal(_name_1, "value");
+                  String _name_3 = param.getName();
+                  boolean _equals = Objects.equal(_name_3, "value");
                   if (_equals) {
                     _builder.append("event.target.value");
                   } else {
-                    String _name_2 = param.getName();
-                    boolean _equals_1 = Objects.equal(_name_2, "keyCode");
+                    String _name_4 = param.getName();
+                    boolean _equals_1 = Objects.equal(_name_4, "keyCode");
                     if (_equals_1) {
                       _builder.append("event.keyCode");
                     } else {
                       _builder.append("props.");
-                      String _name_3 = param.getName();
-                      _builder.append(_name_3, "\t\t");
+                      String _name_5 = param.getName();
+                      _builder.append(_name_5, "\t\t");
                     }
                   }
                 }
@@ -171,11 +171,11 @@ public class JsxTemplate {
             for(final UiAction action_1 : _actions_1) {
               _builder.append("\t");
               _builder.append("\t");
-              String _type_2 = action_1.getType();
-              _builder.append(_type_2, "\t\t");
+              String _name_6 = action_1.getName();
+              _builder.append(_name_6, "\t\t");
               _builder.append("={(event) => props.");
-              String _type_3 = action_1.getType();
-              _builder.append(_type_3, "\t\t");
+              String _name_7 = action_1.getName();
+              _builder.append(_name_7, "\t\t");
               _builder.append("(");
               {
                 EList<Input> _input_1 = action_1.getTarget().getInput();
@@ -187,19 +187,19 @@ public class JsxTemplate {
                     _builder.appendImmediate(",", "\t\t");
                   }
                   {
-                    String _name_4 = param_1.getName();
-                    boolean _equals_2 = Objects.equal(_name_4, "value");
+                    String _name_8 = param_1.getName();
+                    boolean _equals_2 = Objects.equal(_name_8, "value");
                     if (_equals_2) {
                       _builder.append("event.target.value");
                     } else {
-                      String _name_5 = param_1.getName();
-                      boolean _equals_3 = Objects.equal(_name_5, "keyCode");
+                      String _name_9 = param_1.getName();
+                      boolean _equals_3 = Objects.equal(_name_9, "keyCode");
                       if (_equals_3) {
                         _builder.append("event.keyCode");
                       } else {
                         _builder.append("props.");
-                        String _name_6 = param_1.getName();
-                        _builder.append(_name_6, "\t\t");
+                        String _name_10 = param_1.getName();
+                        _builder.append(_name_10, "\t\t");
                       }
                     }
                   }
@@ -248,11 +248,11 @@ public class JsxTemplate {
               for(final UiAction action_2 : _actions_2) {
                 _builder.append("\t");
                 _builder.append("\t");
-                String _type_4 = action_2.getType();
-                _builder.append(_type_4, "\t\t");
+                String _name_11 = action_2.getName();
+                _builder.append(_name_11, "\t\t");
                 _builder.append("={(event) => props.");
-                String _type_5 = action_2.getType();
-                _builder.append(_type_5, "\t\t");
+                String _name_12 = action_2.getName();
+                _builder.append(_name_12, "\t\t");
                 _builder.append("(");
                 {
                   EList<Input> _input_2 = action_2.getTarget().getInput();
@@ -264,19 +264,19 @@ public class JsxTemplate {
                       _builder.appendImmediate(",", "\t\t");
                     }
                     {
-                      String _name_7 = param_2.getName();
-                      boolean _equals_4 = Objects.equal(_name_7, "value");
+                      String _name_13 = param_2.getName();
+                      boolean _equals_4 = Objects.equal(_name_13, "value");
                       if (_equals_4) {
                         _builder.append("event.target.value");
                       } else {
-                        String _name_8 = param_2.getName();
-                        boolean _equals_5 = Objects.equal(_name_8, "keyCode");
+                        String _name_14 = param_2.getName();
+                        boolean _equals_5 = Objects.equal(_name_14, "keyCode");
                         if (_equals_5) {
                           _builder.append("event.keyCode");
                         } else {
                           _builder.append("props.");
-                          String _name_9 = param_2.getName();
-                          _builder.append(_name_9, "\t\t");
+                          String _name_15 = param_2.getName();
+                          _builder.append(_name_15, "\t\t");
                         }
                       }
                     }
@@ -291,8 +291,8 @@ public class JsxTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
-            String _name_10 = it.getName();
-            _builder.append(_name_10, "\t\t");
+            String _name_16 = it.getName();
+            _builder.append(_name_16, "\t\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("</button>");
@@ -303,32 +303,40 @@ public class JsxTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
-            _builder.append("<div>");
-            String _name_11 = it.getName();
-            _builder.append(_name_11, "\t\t");
-            _builder.append("</div>");
+            _builder.append("<h1>");
+            String _componentName_1 = this._es6Extension.componentName(it);
+            _builder.append(_componentName_1, "\t\t");
+            _builder.append("</h1>");
             _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("<ul>");
+            _builder.newLine();
             {
               EList<ClientAttribute> _attributes_3 = it.getAttributes();
               for(final ClientAttribute attribute_3 : _attributes_3) {
                 _builder.append("\t");
-                _builder.append("\t");
+                _builder.append("\t\t");
                 CharSequence _renderChild = this.renderChild(attribute_3);
-                _builder.append(_renderChild, "\t\t");
+                _builder.append(_renderChild, "\t\t\t");
                 _builder.newLineIfNotEmpty();
               }
             }
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("</ul>");
+            _builder.newLine();
             {
               EList<UiAction> _actions_3 = it.getActions();
               for(final UiAction action_3 : _actions_3) {
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("<div ");
-                String _type_6 = action_3.getType();
-                _builder.append(_type_6, "\t\t");
+                _builder.append("<a ");
+                String _name_17 = action_3.getName();
+                _builder.append(_name_17, "\t\t");
                 _builder.append("={(event) => props.");
-                String _type_7 = action_3.getType();
-                _builder.append(_type_7, "\t\t");
+                String _name_18 = action_3.getName();
+                _builder.append(_name_18, "\t\t");
                 _builder.append("(");
                 {
                   EList<Input> _input_3 = action_3.getTarget().getInput();
@@ -340,19 +348,19 @@ public class JsxTemplate {
                       _builder.appendImmediate(",", "\t\t");
                     }
                     {
-                      String _name_12 = param_3.getName();
-                      boolean _equals_6 = Objects.equal(_name_12, "value");
+                      String _name_19 = param_3.getName();
+                      boolean _equals_6 = Objects.equal(_name_19, "value");
                       if (_equals_6) {
                         _builder.append("event.target.value");
                       } else {
-                        String _name_13 = param_3.getName();
-                        boolean _equals_7 = Objects.equal(_name_13, "keyCode");
+                        String _name_20 = param_3.getName();
+                        boolean _equals_7 = Objects.equal(_name_20, "keyCode");
                         if (_equals_7) {
                           _builder.append("event.keyCode");
                         } else {
                           _builder.append("props.");
-                          String _name_14 = param_3.getName();
-                          _builder.append(_name_14, "\t\t");
+                          String _name_21 = param_3.getName();
+                          _builder.append(_name_21, "\t\t");
                         }
                       }
                     }
@@ -363,18 +371,17 @@ public class JsxTemplate {
                 _builder.append("\t");
                 _builder.append("\t");
                 _builder.append("\t");
-                String _type_8 = action_3.getType();
-                _builder.append(_type_8, "\t\t\t");
+                String _name_22 = action_3.getTarget().getName();
+                _builder.append(_name_22, "\t\t\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
                 _builder.append("\t");
-                _builder.append("</div>");
+                _builder.append("</a>");
                 _builder.newLine();
               }
             }
             {
-              boolean _hasComplexAttribute = this._es6Extension.hasComplexAttribute(it);
-              if (_hasComplexAttribute) {
+              if ((this._es6Extension.hasComplexAttribute(it) || it.isTree())) {
                 _builder.append("\t");
                 _builder.append("\t");
                 _builder.append("{props.children}");
@@ -491,15 +498,56 @@ public class JsxTemplate {
         _builder.append("> ");
         _builder.newLineIfNotEmpty();
       } else {
-        _builder.append("\t");
-        _builder.append("return <");
-        String _componentName_2 = this._es6Extension.componentName(it);
-        _builder.append(_componentName_2, "\t");
-        _builder.append(" {...props} ");
-        CharSequence _actionProps_1 = this.actionProps(it);
-        _builder.append(_actionProps_1, "\t");
-        _builder.append(" /> ");
-        _builder.newLineIfNotEmpty();
+        boolean _isTree = it.isTree();
+        if (_isTree) {
+          _builder.append("\t");
+          _builder.append("return <");
+          String _componentName_2 = this._es6Extension.componentName(it);
+          _builder.append(_componentName_2, "\t");
+          _builder.append(" {...props} ");
+          CharSequence _actionProps_1 = this.actionProps(it);
+          _builder.append(_actionProps_1, "\t");
+          _builder.append(">");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("\t");
+          _builder.append("{ props.");
+          String _name = it.getName();
+          _builder.append(_name, "\t\t");
+          _builder.append(" ? props.");
+          String _name_1 = it.getName();
+          _builder.append(_name_1, "\t\t");
+          _builder.append(".map(i => <");
+          String _componentContainerName_1 = this._es6Extension.componentContainerName(it);
+          _builder.append(_componentContainerName_1, "\t\t");
+          _builder.append(" {...i} key={i.");
+          String _keyAttributeName = this._es6Extension.keyAttributeName(it);
+          _builder.append(_keyAttributeName, "\t\t");
+          _builder.append("} ");
+          CharSequence _storageAndLocationPart = this.storageAndLocationPart(it);
+          _builder.append(_storageAndLocationPart, "\t\t");
+          _builder.append(" ");
+          CharSequence _actionProps_2 = this.actionProps(it);
+          _builder.append(_actionProps_2, "\t\t");
+          _builder.append(" />) : [] }");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("</");
+          String _componentName_3 = this._es6Extension.componentName(it);
+          _builder.append(_componentName_3, "\t");
+          _builder.append("> ");
+          _builder.newLineIfNotEmpty();
+        } else {
+          _builder.append("\t");
+          _builder.append("return <");
+          String _componentName_4 = this._es6Extension.componentName(it);
+          _builder.append(_componentName_4, "\t");
+          _builder.append(" {...props} ");
+          CharSequence _actionProps_3 = this.actionProps(it);
+          _builder.append(_actionProps_3, "\t");
+          _builder.append(" /> ");
+          _builder.newLineIfNotEmpty();
+        }
       }
     }
     _builder.append("}");
@@ -516,7 +564,7 @@ public class JsxTemplate {
     StringConcatenation _builder = new StringConcatenation();
     {
       if (((it.getAttributes().size() == 0) && (!(this._es6Extension.isTag(it)).booleanValue()))) {
-        _builder.append("<div>");
+        _builder.append("<li>");
         String _firstLower = StringExtensions.toFirstLower(it.getName());
         _builder.append(_firstLower);
         _builder.append(": {props.");
@@ -528,7 +576,7 @@ public class JsxTemplate {
         _builder.append(" !== undefined ? props.");
         String _firstLower_3 = StringExtensions.toFirstLower(it.getName());
         _builder.append(_firstLower_3);
-        _builder.append(".toString() : \"\"}</div>");
+        _builder.append(".toString() : \"\"}</li>");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -555,9 +603,7 @@ public class JsxTemplate {
         Boolean _isComponent = this._es6Extension.isComponent(it);
         if ((_isComponent).booleanValue()) {
           {
-            boolean _isList = it.isList();
-            boolean _not = (!_isList);
-            if (_not) {
+            if (((!it.isList()) && (!it.isTree()))) {
               {
                 if (parentIsGroup) {
                   _builder.append("{ props.");
@@ -602,8 +648,13 @@ public class JsxTemplate {
               String _keyAttributeName = this._es6Extension.keyAttributeName(it);
               _builder.append(_keyAttributeName);
               _builder.append("} ");
-              CharSequence _parentPart = this.parentPart(it, parentAttributes);
-              _builder.append(_parentPart);
+              {
+                boolean _isList = it.isList();
+                if (_isList) {
+                  CharSequence _parentPart = this.parentPart(it, parentAttributes);
+                  _builder.append(_parentPart);
+                }
+              }
               _builder.append(" ");
               CharSequence _storageAndLocationPart = this.storageAndLocationPart(it);
               _builder.append(_storageAndLocationPart);
@@ -680,8 +731,8 @@ public class JsxTemplate {
     {
       EList<UiAction> _actions = it.getActions();
       for(final UiAction action : _actions) {
-        String _type = action.getType();
-        _builder.append(_type);
+        String _name = action.getName();
+        _builder.append(_name);
         _builder.append("={");
         String _firstLower = StringExtensions.toFirstLower(action.getTarget().getName());
         _builder.append(_firstLower);

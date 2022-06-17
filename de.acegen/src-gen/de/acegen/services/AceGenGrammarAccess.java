@@ -568,37 +568,40 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cNoComponentNoComponentKeyword_0_0 = (Keyword)cNoComponentAssignment_0.eContents().get(0);
 		private final Assignment cListAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cListListKeyword_1_0 = (Keyword)cListAssignment_1.eContents().get(0);
-		private final Assignment cGroupAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cGroupGroupKeyword_2_0 = (Keyword)cGroupAssignment_2.eContents().get(0);
-		private final Assignment cListIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cListIdListIdKeyword_3_0 = (Keyword)cListIdAssignment_3.eContents().get(0);
-		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
-		private final Assignment cLocationAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final Keyword cLocationLocationKeyword_5_0 = (Keyword)cLocationAssignment_5.eContents().get(0);
-		private final Assignment cStorageAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final Keyword cStorageStorageKeyword_6_0 = (Keyword)cStorageAssignment_6.eContents().get(0);
-		private final Assignment cUiElementAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cUiElementUIElementParserRuleCall_7_0 = (RuleCall)cUiElementAssignment_7.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cLeftCurlyBracketKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cAttributesAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cAttributesClientAttributeParserRuleCall_8_1_0 = (RuleCall)cAttributesAssignment_8_1.eContents().get(0);
-		private final Group cGroup_8_2 = (Group)cGroup_8.eContents().get(2);
-		private final Keyword cOptionsKeyword_8_2_0 = (Keyword)cGroup_8_2.eContents().get(0);
-		private final Assignment cOptionsAssignment_8_2_1 = (Assignment)cGroup_8_2.eContents().get(1);
-		private final RuleCall cOptionsSTRINGTerminalRuleCall_8_2_1_0 = (RuleCall)cOptionsAssignment_8_2_1.eContents().get(0);
-		private final Group cGroup_8_3 = (Group)cGroup_8.eContents().get(3);
-		private final Keyword cActionsKeyword_8_3_0 = (Keyword)cGroup_8_3.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_8_3_1 = (Keyword)cGroup_8_3.eContents().get(1);
-		private final Assignment cActionsAssignment_8_3_2 = (Assignment)cGroup_8_3.eContents().get(2);
-		private final RuleCall cActionsUiActionParserRuleCall_8_3_2_0 = (RuleCall)cActionsAssignment_8_3_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_8_3_3 = (Keyword)cGroup_8_3.eContents().get(3);
-		private final Keyword cRightCurlyBracketKeyword_8_4 = (Keyword)cGroup_8.eContents().get(4);
+		private final Assignment cTreeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cTreeTreeKeyword_2_0 = (Keyword)cTreeAssignment_2.eContents().get(0);
+		private final Assignment cGroupAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cGroupGroupKeyword_3_0 = (Keyword)cGroupAssignment_3.eContents().get(0);
+		private final Assignment cListIdAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cListIdListIdKeyword_4_0 = (Keyword)cListIdAssignment_4.eContents().get(0);
+		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
+		private final Assignment cLocationAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final Keyword cLocationLocationKeyword_6_0 = (Keyword)cLocationAssignment_6.eContents().get(0);
+		private final Assignment cStorageAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final Keyword cStorageStorageKeyword_7_0 = (Keyword)cStorageAssignment_7.eContents().get(0);
+		private final Assignment cUiElementAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cUiElementUIElementParserRuleCall_8_0 = (RuleCall)cUiElementAssignment_8.eContents().get(0);
+		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
+		private final Keyword cLeftCurlyBracketKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cAttributesAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cAttributesClientAttributeParserRuleCall_9_1_0 = (RuleCall)cAttributesAssignment_9_1.eContents().get(0);
+		private final Group cGroup_9_2 = (Group)cGroup_9.eContents().get(2);
+		private final Keyword cOptionsKeyword_9_2_0 = (Keyword)cGroup_9_2.eContents().get(0);
+		private final Assignment cOptionsAssignment_9_2_1 = (Assignment)cGroup_9_2.eContents().get(1);
+		private final RuleCall cOptionsSTRINGTerminalRuleCall_9_2_1_0 = (RuleCall)cOptionsAssignment_9_2_1.eContents().get(0);
+		private final Group cGroup_9_3 = (Group)cGroup_9.eContents().get(3);
+		private final Keyword cActionsKeyword_9_3_0 = (Keyword)cGroup_9_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_9_3_1 = (Keyword)cGroup_9_3.eContents().get(1);
+		private final Assignment cActionsAssignment_9_3_2 = (Assignment)cGroup_9_3.eContents().get(2);
+		private final RuleCall cActionsUiActionParserRuleCall_9_3_2_0 = (RuleCall)cActionsAssignment_9_3_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_9_3_3 = (Keyword)cGroup_9_3.eContents().get(3);
+		private final Keyword cRightCurlyBracketKeyword_9_4 = (Keyword)cGroup_9.eContents().get(4);
 		
 		//ClientAttribute:
 		//    noComponent ?= 'noComponent'?
 		//    list ?= 'List'?
+		//    tree ?= 'Tree'?
 		//    group ?= 'group'?
 		//    listId ?= 'listId'?
 		//    name = ID
@@ -617,6 +620,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//noComponent ?= 'noComponent'?
 		//list ?= 'List'?
+		//tree ?= 'Tree'?
 		//group ?= 'group'?
 		//listId ?= 'listId'?
 		//name = ID
@@ -644,41 +648,47 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'List'
 		public Keyword getListListKeyword_1_0() { return cListListKeyword_1_0; }
 		
+		//tree ?= 'Tree'?
+		public Assignment getTreeAssignment_2() { return cTreeAssignment_2; }
+		
+		//'Tree'
+		public Keyword getTreeTreeKeyword_2_0() { return cTreeTreeKeyword_2_0; }
+		
 		//group ?= 'group'?
-		public Assignment getGroupAssignment_2() { return cGroupAssignment_2; }
+		public Assignment getGroupAssignment_3() { return cGroupAssignment_3; }
 		
 		//'group'
-		public Keyword getGroupGroupKeyword_2_0() { return cGroupGroupKeyword_2_0; }
+		public Keyword getGroupGroupKeyword_3_0() { return cGroupGroupKeyword_3_0; }
 		
 		//listId ?= 'listId'?
-		public Assignment getListIdAssignment_3() { return cListIdAssignment_3; }
+		public Assignment getListIdAssignment_4() { return cListIdAssignment_4; }
 		
 		//'listId'
-		public Keyword getListIdListIdKeyword_3_0() { return cListIdListIdKeyword_3_0; }
+		public Keyword getListIdListIdKeyword_4_0() { return cListIdListIdKeyword_4_0; }
 		
 		//name = ID
-		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_4_0() { return cNameIDTerminalRuleCall_4_0; }
+		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
 		
 		//location ?= 'location'?
-		public Assignment getLocationAssignment_5() { return cLocationAssignment_5; }
+		public Assignment getLocationAssignment_6() { return cLocationAssignment_6; }
 		
 		//'location'
-		public Keyword getLocationLocationKeyword_5_0() { return cLocationLocationKeyword_5_0; }
+		public Keyword getLocationLocationKeyword_6_0() { return cLocationLocationKeyword_6_0; }
 		
 		//storage ?= 'storage'?
-		public Assignment getStorageAssignment_6() { return cStorageAssignment_6; }
+		public Assignment getStorageAssignment_7() { return cStorageAssignment_7; }
 		
 		//'storage'
-		public Keyword getStorageStorageKeyword_6_0() { return cStorageStorageKeyword_6_0; }
+		public Keyword getStorageStorageKeyword_7_0() { return cStorageStorageKeyword_7_0; }
 		
 		//uiElement = UIElement?
-		public Assignment getUiElementAssignment_7() { return cUiElementAssignment_7; }
+		public Assignment getUiElementAssignment_8() { return cUiElementAssignment_8; }
 		
 		//UIElement
-		public RuleCall getUiElementUIElementParserRuleCall_7_0() { return cUiElementUIElementParserRuleCall_7_0; }
+		public RuleCall getUiElementUIElementParserRuleCall_8_0() { return cUiElementUIElementParserRuleCall_8_0; }
 		
 		//('{'
 		//    attributes += ClientAttribute*
@@ -687,74 +697,74 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//        actions += UiAction*
 		//    '}')?
 		//'}')?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_9() { return cGroup_9; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_8_0() { return cLeftCurlyBracketKeyword_8_0; }
+		public Keyword getLeftCurlyBracketKeyword_9_0() { return cLeftCurlyBracketKeyword_9_0; }
 		
 		//attributes += ClientAttribute*
-		public Assignment getAttributesAssignment_8_1() { return cAttributesAssignment_8_1; }
+		public Assignment getAttributesAssignment_9_1() { return cAttributesAssignment_9_1; }
 		
 		//ClientAttribute
-		public RuleCall getAttributesClientAttributeParserRuleCall_8_1_0() { return cAttributesClientAttributeParserRuleCall_8_1_0; }
+		public RuleCall getAttributesClientAttributeParserRuleCall_9_1_0() { return cAttributesClientAttributeParserRuleCall_9_1_0; }
 		
 		//('options' options += STRING*)?
-		public Group getGroup_8_2() { return cGroup_8_2; }
+		public Group getGroup_9_2() { return cGroup_9_2; }
 		
 		//'options'
-		public Keyword getOptionsKeyword_8_2_0() { return cOptionsKeyword_8_2_0; }
+		public Keyword getOptionsKeyword_9_2_0() { return cOptionsKeyword_9_2_0; }
 		
 		//options += STRING*
-		public Assignment getOptionsAssignment_8_2_1() { return cOptionsAssignment_8_2_1; }
+		public Assignment getOptionsAssignment_9_2_1() { return cOptionsAssignment_9_2_1; }
 		
 		//STRING
-		public RuleCall getOptionsSTRINGTerminalRuleCall_8_2_1_0() { return cOptionsSTRINGTerminalRuleCall_8_2_1_0; }
+		public RuleCall getOptionsSTRINGTerminalRuleCall_9_2_1_0() { return cOptionsSTRINGTerminalRuleCall_9_2_1_0; }
 		
 		//('actions' '{'
 		//    actions += UiAction*
 		//'}')?
-		public Group getGroup_8_3() { return cGroup_8_3; }
+		public Group getGroup_9_3() { return cGroup_9_3; }
 		
 		//'actions'
-		public Keyword getActionsKeyword_8_3_0() { return cActionsKeyword_8_3_0; }
+		public Keyword getActionsKeyword_9_3_0() { return cActionsKeyword_9_3_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_8_3_1() { return cLeftCurlyBracketKeyword_8_3_1; }
+		public Keyword getLeftCurlyBracketKeyword_9_3_1() { return cLeftCurlyBracketKeyword_9_3_1; }
 		
 		//actions += UiAction*
-		public Assignment getActionsAssignment_8_3_2() { return cActionsAssignment_8_3_2; }
+		public Assignment getActionsAssignment_9_3_2() { return cActionsAssignment_9_3_2; }
 		
 		//UiAction
-		public RuleCall getActionsUiActionParserRuleCall_8_3_2_0() { return cActionsUiActionParserRuleCall_8_3_2_0; }
+		public RuleCall getActionsUiActionParserRuleCall_9_3_2_0() { return cActionsUiActionParserRuleCall_9_3_2_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_8_3_3() { return cRightCurlyBracketKeyword_8_3_3; }
+		public Keyword getRightCurlyBracketKeyword_9_3_3() { return cRightCurlyBracketKeyword_9_3_3; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_8_4() { return cRightCurlyBracketKeyword_8_4; }
+		public Keyword getRightCurlyBracketKeyword_9_4() { return cRightCurlyBracketKeyword_9_4; }
 	}
 	public class UiActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.UiAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTypeSTRINGTerminalRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameSTRINGTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Assignment cTargetAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTargetHttpClientAceCrossReference_1_0 = (CrossReference)cTargetAssignment_1.eContents().get(0);
 		private final RuleCall cTargetHttpClientAceQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cTargetHttpClientAceCrossReference_1_0.eContents().get(1);
 		
 		//UiAction:
-		//    type = STRING target = [HttpClientAce | QualifiedName]
+		//    name = STRING target = [HttpClientAce | QualifiedName]
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type = STRING target = [HttpClientAce | QualifiedName]
+		//name = STRING target = [HttpClientAce | QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
-		//type = STRING
-		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
+		//name = STRING
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 		
 		//STRING
-		public RuleCall getTypeSTRINGTerminalRuleCall_0_0() { return cTypeSTRINGTerminalRuleCall_0_0; }
+		public RuleCall getNameSTRINGTerminalRuleCall_0_0() { return cNameSTRINGTerminalRuleCall_0_0; }
 		
 		//target = [HttpClientAce | QualifiedName]
 		public Assignment getTargetAssignment_1() { return cTargetAssignment_1; }
@@ -4109,6 +4119,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//ClientAttribute:
 	//    noComponent ?= 'noComponent'?
 	//    list ?= 'List'?
+	//    tree ?= 'Tree'?
 	//    group ?= 'group'?
 	//    listId ?= 'listId'?
 	//    name = ID
@@ -4132,7 +4143,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//UiAction:
-	//    type = STRING target = [HttpClientAce | QualifiedName]
+	//    name = STRING target = [HttpClientAce | QualifiedName]
 	//;
 	public UiActionElements getUiActionAccess() {
 		return pUiAction;

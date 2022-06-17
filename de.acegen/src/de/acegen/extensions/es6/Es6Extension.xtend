@@ -50,7 +50,7 @@ class Es6Extension {
 	def stateFunctionCall(ClientAttribute it, String functionName, String data) '''
 		AppState.«stateFunctionName(functionName)»(
 			«IF functionName != "get"»«data», «ENDIF»
-			«paramList.path»«IF functionName != "get" && attributes.size > 0 && !isList», 
+			«paramList.path»«IF functionName != "get" && attributes.size > 0 && !isList && !isTree», 
 			[«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
 		)
 	'''
@@ -152,27 +152,27 @@ class Es6Extension {
 	}
 
 	def String componentName(ClientAttribute it) {
-		if (isList) {
+		if (isList || isTree) {
 			return '''«name.toFirstUpper»Item'''
 		}
 		return '''«name.toFirstUpper»'''
 	}
 
 	def String componentContainerName(ClientAttribute it) {
-		if (isList) {
+		if (isList || isTree) {
 			return '''«name.toFirstUpper»ItemContainer'''
 		}
 		return '''«name.toFirstUpper»Container'''
 	}
 
 	def String importComponentContainer(ClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0 && !noComponent»
+		«IF (attributes.size > 0 || actions.size > 0)&& !noComponent »
 			import { «componentContainerName» } from ".«subFolder»/«componentContainerName»";
 		«ENDIF»
 	'''
 
 	def String importComponent(ClientAttribute it, String subFolder) '''
-		«IF isList && attributes.length > 0»
+		«IF (isList  || isTree) && attributes.length > 0»
 			import { «componentName» } from "./«subFolder»/«componentName»";
 		«ENDIF»
 	'''

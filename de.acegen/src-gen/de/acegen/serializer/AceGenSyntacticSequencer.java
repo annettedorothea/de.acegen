@@ -22,9 +22,9 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected AceGenGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_ClientAttribute_OptionsKeyword_8_2_0_q;
-	protected AbstractElementAlias match_ClientAttribute___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q;
-	protected AbstractElementAlias match_ClientAttribute___LeftCurlyBracketKeyword_8_0_OptionsKeyword_8_2_0_q___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q_RightCurlyBracketKeyword_8_4__q;
+	protected AbstractElementAlias match_ClientAttribute_OptionsKeyword_9_2_0_q;
+	protected AbstractElementAlias match_ClientAttribute___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q;
+	protected AbstractElementAlias match_ClientAttribute___LeftCurlyBracketKeyword_9_0_OptionsKeyword_9_2_0_q___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q_RightCurlyBracketKeyword_9_4__q;
 	protected AbstractElementAlias match_ClientScenario_GIVENKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_ExpectedStateKeyword_1_0_q;
 	protected AbstractElementAlias match_ClientThenBlock_VerificationsKeyword_2_0_q;
@@ -60,9 +60,9 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (AceGenGrammarAccess) access;
-		match_ClientAttribute_OptionsKeyword_8_2_0_q = new TokenAlias(false, true, grammarAccess.getClientAttributeAccess().getOptionsKeyword_8_2_0());
-		match_ClientAttribute___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getActionsKeyword_8_3_0()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_8_3_1()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_8_3_3()));
-		match_ClientAttribute___LeftCurlyBracketKeyword_8_0_OptionsKeyword_8_2_0_q___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q_RightCurlyBracketKeyword_8_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_8_0()), new TokenAlias(false, true, grammarAccess.getClientAttributeAccess().getOptionsKeyword_8_2_0()), new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getActionsKeyword_8_3_0()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_8_3_1()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_8_3_3())), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_8_4()));
+		match_ClientAttribute_OptionsKeyword_9_2_0_q = new TokenAlias(false, true, grammarAccess.getClientAttributeAccess().getOptionsKeyword_9_2_0());
+		match_ClientAttribute___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getActionsKeyword_9_3_0()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_9_3_1()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_9_3_3()));
+		match_ClientAttribute___LeftCurlyBracketKeyword_9_0_OptionsKeyword_9_2_0_q___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q_RightCurlyBracketKeyword_9_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_9_0()), new TokenAlias(false, true, grammarAccess.getClientAttributeAccess().getOptionsKeyword_9_2_0()), new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getActionsKeyword_9_3_0()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_9_3_1()), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_9_3_3())), new TokenAlias(false, false, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_9_4()));
 		match_ClientScenario_GIVENKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientScenarioAccess().getGIVENKeyword_1_0());
 		match_ClientThenBlock_ExpectedStateKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getExpectedStateKeyword_1_0());
 		match_ClientThenBlock_VerificationsKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getClientThenBlockAccess().getVerificationsKeyword_2_0());
@@ -108,12 +108,12 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_ClientAttribute_OptionsKeyword_8_2_0_q.equals(syntax))
-				emit_ClientAttribute_OptionsKeyword_8_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ClientAttribute___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q.equals(syntax))
-				emit_ClientAttribute___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ClientAttribute___LeftCurlyBracketKeyword_8_0_OptionsKeyword_8_2_0_q___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q_RightCurlyBracketKeyword_8_4__q.equals(syntax))
-				emit_ClientAttribute___LeftCurlyBracketKeyword_8_0_OptionsKeyword_8_2_0_q___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q_RightCurlyBracketKeyword_8_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_ClientAttribute_OptionsKeyword_9_2_0_q.equals(syntax))
+				emit_ClientAttribute_OptionsKeyword_9_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClientAttribute___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q.equals(syntax))
+				emit_ClientAttribute___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClientAttribute___LeftCurlyBracketKeyword_9_0_OptionsKeyword_9_2_0_q___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q_RightCurlyBracketKeyword_9_4__q.equals(syntax))
+				emit_ClientAttribute___LeftCurlyBracketKeyword_9_0_OptionsKeyword_9_2_0_q___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q_RightCurlyBracketKeyword_9_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientScenario_GIVENKeyword_1_0_q.equals(syntax))
 				emit_ClientScenario_GIVENKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClientThenBlock_ExpectedStateKeyword_1_0_q.equals(syntax))
@@ -195,7 +195,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 
 	 * </pre>
 	 */
-	protected void emit_ClientAttribute_OptionsKeyword_8_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClientAttribute_OptionsKeyword_9_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -210,7 +210,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 
 	 * </pre>
 	 */
-	protected void emit_ClientAttribute___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClientAttribute___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -227,7 +227,7 @@ public class AceGenSyntacticSequencer extends AbstractSyntacticSequencer {
 	 
 	 * </pre>
 	 */
-	protected void emit_ClientAttribute___LeftCurlyBracketKeyword_8_0_OptionsKeyword_8_2_0_q___ActionsKeyword_8_3_0_LeftCurlyBracketKeyword_8_3_1_RightCurlyBracketKeyword_8_3_3__q_RightCurlyBracketKeyword_8_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClientAttribute___LeftCurlyBracketKeyword_9_0_OptionsKeyword_9_2_0_q___ActionsKeyword_9_3_0_LeftCurlyBracketKeyword_9_3_1_RightCurlyBracketKeyword_9_3_3__q_RightCurlyBracketKeyword_9_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
