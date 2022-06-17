@@ -980,10 +980,24 @@ ruleClientAttribute returns [EObject current=null]
 		)?
 		(
 			(
+				lv_fromParent_8_0='fromParent'
 				{
-					newCompositeNode(grammarAccess.getClientAttributeAccess().getUiElementUIElementParserRuleCall_8_0());
+					newLeafNode(lv_fromParent_8_0, grammarAccess.getClientAttributeAccess().getFromParentFromParentKeyword_8_0());
 				}
-				lv_uiElement_8_0=ruleUIElement
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getClientAttributeRule());
+					}
+					setWithLastConsumed($current, "fromParent", lv_fromParent_8_0 != null, "fromParent");
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getClientAttributeAccess().getUiElementUIElementParserRuleCall_9_0());
+				}
+				lv_uiElement_9_0=ruleUIElement
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getClientAttributeRule());
@@ -991,23 +1005,23 @@ ruleClientAttribute returns [EObject current=null]
 					set(
 						$current,
 						"uiElement",
-						lv_uiElement_8_0,
+						lv_uiElement_9_0,
 						"de.acegen.AceGen.UIElement");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
 		(
-			otherlv_9='{'
+			otherlv_10='{'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_9_0());
+				newLeafNode(otherlv_10, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_10_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getClientAttributeAccess().getAttributesClientAttributeParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getClientAttributeAccess().getAttributesClientAttributeParserRuleCall_10_1_0());
 					}
-					lv_attributes_10_0=ruleClientAttribute
+					lv_attributes_11_0=ruleClientAttribute
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getClientAttributeRule());
@@ -1015,22 +1029,22 @@ ruleClientAttribute returns [EObject current=null]
 						add(
 							$current,
 							"attributes",
-							lv_attributes_10_0,
+							lv_attributes_11_0,
 							"de.acegen.AceGen.ClientAttribute");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
 			(
-				otherlv_11='options'
+				otherlv_12='options'
 				{
-					newLeafNode(otherlv_11, grammarAccess.getClientAttributeAccess().getOptionsKeyword_9_2_0());
+					newLeafNode(otherlv_12, grammarAccess.getClientAttributeAccess().getOptionsKeyword_10_2_0());
 				}
 				(
 					(
-						lv_options_12_0=RULE_STRING
+						lv_options_13_0=RULE_STRING
 						{
-							newLeafNode(lv_options_12_0, grammarAccess.getClientAttributeAccess().getOptionsSTRINGTerminalRuleCall_9_2_1_0());
+							newLeafNode(lv_options_13_0, grammarAccess.getClientAttributeAccess().getOptionsSTRINGTerminalRuleCall_10_2_1_0());
 						}
 						{
 							if ($current==null) {
@@ -1039,27 +1053,27 @@ ruleClientAttribute returns [EObject current=null]
 							addWithLastConsumed(
 								$current,
 								"options",
-								lv_options_12_0,
+								lv_options_13_0,
 								"org.eclipse.xtext.common.Terminals.STRING");
 						}
 					)
 				)*
 			)?
 			(
-				otherlv_13='actions'
+				otherlv_14='actions'
 				{
-					newLeafNode(otherlv_13, grammarAccess.getClientAttributeAccess().getActionsKeyword_9_3_0());
+					newLeafNode(otherlv_14, grammarAccess.getClientAttributeAccess().getActionsKeyword_10_3_0());
 				}
-				otherlv_14='{'
+				otherlv_15='{'
 				{
-					newLeafNode(otherlv_14, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_9_3_1());
+					newLeafNode(otherlv_15, grammarAccess.getClientAttributeAccess().getLeftCurlyBracketKeyword_10_3_1());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getClientAttributeAccess().getActionsUiActionParserRuleCall_9_3_2_0());
+							newCompositeNode(grammarAccess.getClientAttributeAccess().getActionsUiActionParserRuleCall_10_3_2_0());
 						}
-						lv_actions_15_0=ruleUiAction
+						lv_actions_16_0=ruleUiAction
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getClientAttributeRule());
@@ -1067,20 +1081,20 @@ ruleClientAttribute returns [EObject current=null]
 							add(
 								$current,
 								"actions",
-								lv_actions_15_0,
+								lv_actions_16_0,
 								"de.acegen.AceGen.UiAction");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
-				otherlv_16='}'
+				otherlv_17='}'
 				{
-					newLeafNode(otherlv_16, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_9_3_3());
+					newLeafNode(otherlv_17, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_10_3_3());
 				}
 			)?
-			otherlv_17='}'
+			otherlv_18='}'
 			{
-				newLeafNode(otherlv_17, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_9_4());
+				newLeafNode(otherlv_18, grammarAccess.getClientAttributeAccess().getRightCurlyBracketKeyword_10_4());
 			}
 		)?
 	)

@@ -36,6 +36,7 @@ import de.acegen.aceGen.StringType
 import de.acegen.aceGen.UndefinedType
 import java.util.ArrayList
 import java.util.List
+import de.acegen.aceGen.UiAction
 
 class Es6Extension {
 	
@@ -253,6 +254,32 @@ class Es6Extension {
 		} else {
 			return suffix;
 		}
+	}
+	
+	def List<UiAction> uniqueActions(ClientAttribute attribute) {
+		var list = new ArrayList<UiAction>();
+		for(item: attribute.actions) {
+			if (!contains(list, item)) {
+				list.add(item);
+			}
+		}
+		for (attributeItem: attribute.attributes) {
+			for(item: attributeItem.actions) {
+				if (!contains(list, item)) {
+					list.add(item);
+				}
+			}
+		}
+		return list;
+	}
+	
+	def contains(List<UiAction> actions, UiAction action) {
+		for(item: actions) {
+			if (item.target.name == action.target.name) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	def String stateRefPath(ClientAttribute it) {

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isStorage <em>Storage</em>}</li>
+ *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#isFromParent <em>From Parent</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getUiElement <em>Ui Element</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.ClientAttributeImpl#getOptions <em>Options</em>}</li>
@@ -209,6 +210,26 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected boolean storage = STORAGE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isFromParent() <em>From Parent</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isFromParent()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean FROM_PARENT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isFromParent() <em>From Parent</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isFromParent()
+   * @generated
+   * @ordered
+   */
+  protected boolean fromParent = FROM_PARENT_EDEFAULT;
 
   /**
    * The default value of the '{@link #getUiElement() <em>Ui Element</em>}' attribute.
@@ -487,6 +508,31 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
+  public boolean isFromParent()
+  {
+    return fromParent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setFromParent(boolean newFromParent)
+  {
+    boolean oldFromParent = fromParent;
+    fromParent = newFromParent;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.CLIENT_ATTRIBUTE__FROM_PARENT, oldFromParent, fromParent));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getUiElement()
   {
     return uiElement;
@@ -595,6 +641,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return isLocation();
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         return isStorage();
+      case AceGenPackage.CLIENT_ATTRIBUTE__FROM_PARENT:
+        return isFromParent();
       case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
         return getUiElement();
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
@@ -641,6 +689,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         setStorage((Boolean)newValue);
+        return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__FROM_PARENT:
+        setFromParent((Boolean)newValue);
         return;
       case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
         setUiElement((String)newValue);
@@ -695,6 +746,9 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         setStorage(STORAGE_EDEFAULT);
         return;
+      case AceGenPackage.CLIENT_ATTRIBUTE__FROM_PARENT:
+        setFromParent(FROM_PARENT_EDEFAULT);
+        return;
       case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
         setUiElement(UI_ELEMENT_EDEFAULT);
         return;
@@ -737,6 +791,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
         return location != LOCATION_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__STORAGE:
         return storage != STORAGE_EDEFAULT;
+      case AceGenPackage.CLIENT_ATTRIBUTE__FROM_PARENT:
+        return fromParent != FROM_PARENT_EDEFAULT;
       case AceGenPackage.CLIENT_ATTRIBUTE__UI_ELEMENT:
         return UI_ELEMENT_EDEFAULT == null ? uiElement != null : !UI_ELEMENT_EDEFAULT.equals(uiElement);
       case AceGenPackage.CLIENT_ATTRIBUTE__ATTRIBUTES:
@@ -776,6 +832,8 @@ public class ClientAttributeImpl extends MinimalEObjectImpl.Container implements
     result.append(location);
     result.append(", storage: ");
     result.append(storage);
+    result.append(", fromParent: ");
+    result.append(fromParent);
     result.append(", uiElement: ");
     result.append(uiElement);
     result.append(", options: ");

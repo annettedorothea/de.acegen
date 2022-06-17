@@ -56,6 +56,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/storage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/fromParent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/uiElement"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AceGen.ecore#//ClientAttribute/attributes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//ClientAttribute/options"/>

@@ -69,9 +69,9 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTriggerdAceOperationAccess().getGroup_0(), "rule__TriggerdAceOperation__Group_0__0");
 			builder.put(grammarAccess.getHttpClientStateFunctionAccess().getGroup(), "rule__HttpClientStateFunction__Group__0");
 			builder.put(grammarAccess.getClientAttributeAccess().getGroup(), "rule__ClientAttribute__Group__0");
-			builder.put(grammarAccess.getClientAttributeAccess().getGroup_9(), "rule__ClientAttribute__Group_9__0");
-			builder.put(grammarAccess.getClientAttributeAccess().getGroup_9_2(), "rule__ClientAttribute__Group_9_2__0");
-			builder.put(grammarAccess.getClientAttributeAccess().getGroup_9_3(), "rule__ClientAttribute__Group_9_3__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_10(), "rule__ClientAttribute__Group_10__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_10_2(), "rule__ClientAttribute__Group_10_2__0");
+			builder.put(grammarAccess.getClientAttributeAccess().getGroup_10_3(), "rule__ClientAttribute__Group_10_3__0");
 			builder.put(grammarAccess.getUiActionAccess().getGroup(), "rule__UiAction__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup(), "rule__ClientScenario__Group__0");
 			builder.put(grammarAccess.getClientScenarioAccess().getGroup_1(), "rule__ClientScenario__Group_1__0");
@@ -207,10 +207,11 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getClientAttributeAccess().getNameAssignment_5(), "rule__ClientAttribute__NameAssignment_5");
 			builder.put(grammarAccess.getClientAttributeAccess().getLocationAssignment_6(), "rule__ClientAttribute__LocationAssignment_6");
 			builder.put(grammarAccess.getClientAttributeAccess().getStorageAssignment_7(), "rule__ClientAttribute__StorageAssignment_7");
-			builder.put(grammarAccess.getClientAttributeAccess().getUiElementAssignment_8(), "rule__ClientAttribute__UiElementAssignment_8");
-			builder.put(grammarAccess.getClientAttributeAccess().getAttributesAssignment_9_1(), "rule__ClientAttribute__AttributesAssignment_9_1");
-			builder.put(grammarAccess.getClientAttributeAccess().getOptionsAssignment_9_2_1(), "rule__ClientAttribute__OptionsAssignment_9_2_1");
-			builder.put(grammarAccess.getClientAttributeAccess().getActionsAssignment_9_3_2(), "rule__ClientAttribute__ActionsAssignment_9_3_2");
+			builder.put(grammarAccess.getClientAttributeAccess().getFromParentAssignment_8(), "rule__ClientAttribute__FromParentAssignment_8");
+			builder.put(grammarAccess.getClientAttributeAccess().getUiElementAssignment_9(), "rule__ClientAttribute__UiElementAssignment_9");
+			builder.put(grammarAccess.getClientAttributeAccess().getAttributesAssignment_10_1(), "rule__ClientAttribute__AttributesAssignment_10_1");
+			builder.put(grammarAccess.getClientAttributeAccess().getOptionsAssignment_10_2_1(), "rule__ClientAttribute__OptionsAssignment_10_2_1");
+			builder.put(grammarAccess.getClientAttributeAccess().getActionsAssignment_10_3_2(), "rule__ClientAttribute__ActionsAssignment_10_3_2");
 			builder.put(grammarAccess.getUiActionAccess().getNameAssignment_0(), "rule__UiAction__NameAssignment_0");
 			builder.put(grammarAccess.getUiActionAccess().getTargetAssignment_1(), "rule__UiAction__TargetAssignment_1");
 			builder.put(grammarAccess.getClientScenarioAccess().getNameAssignment_0(), "rule__ClientScenario__NameAssignment_0");

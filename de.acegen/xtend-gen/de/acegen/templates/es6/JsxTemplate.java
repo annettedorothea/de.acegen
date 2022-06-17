@@ -517,13 +517,16 @@ public class JsxTemplate {
           _builder.append(" ? props.");
           String _name_1 = it.getName();
           _builder.append(_name_1, "\t\t");
-          _builder.append(".map(i => <");
+          _builder.append(".map((item, index) => <");
           String _componentContainerName_1 = this._es6Extension.componentContainerName(it);
           _builder.append(_componentContainerName_1, "\t\t");
-          _builder.append(" {...i} key={i.");
+          _builder.append(" {...item} key={item.");
           String _keyAttributeName = this._es6Extension.keyAttributeName(it);
           _builder.append(_keyAttributeName, "\t\t");
-          _builder.append("} ");
+          _builder.append("} depth={props.depth+1} index={index} ");
+          CharSequence _fromParentTreeProps = this.fromParentTreeProps(it);
+          _builder.append(_fromParentTreeProps, "\t\t");
+          _builder.append(" ");
           CharSequence _storageAndLocationPart = this.storageAndLocationPart(it);
           _builder.append(_storageAndLocationPart, "\t\t");
           _builder.append(" ");
@@ -641,21 +644,27 @@ public class JsxTemplate {
               _builder.append(" ? props.");
               String _name_2 = it.getName();
               _builder.append(_name_2);
-              _builder.append(".map(i => <");
+              _builder.append(".map((item, index) => <");
               String _componentContainerName_2 = this._es6Extension.componentContainerName(it);
               _builder.append(_componentContainerName_2);
-              _builder.append(" {...i} key={i.");
+              _builder.append(" {...item} key={item.");
               String _keyAttributeName = this._es6Extension.keyAttributeName(it);
               _builder.append(_keyAttributeName);
               _builder.append("} ");
               {
                 boolean _isList = it.isList();
                 if (_isList) {
+                  _builder.append("index={index} ");
                   CharSequence _parentPart = this.parentPart(it, parentAttributes);
                   _builder.append(_parentPart);
+                  _builder.append(" ");
+                } else {
+                  _builder.append("depth={1} index={index} ");
+                  CharSequence _fromParentTreeProps = this.fromParentTreeProps(it);
+                  _builder.append(_fromParentTreeProps);
+                  _builder.append(" ");
                 }
               }
-              _builder.append(" ");
               CharSequence _storageAndLocationPart = this.storageAndLocationPart(it);
               _builder.append(_storageAndLocationPart);
               _builder.append(" ");
@@ -742,6 +751,27 @@ public class JsxTemplate {
     return _builder;
   }
   
+  public CharSequence fromParentTreeProps(final ClientAttribute it) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      EList<ClientAttribute> _attributes = it.getAttributes();
+      for(final ClientAttribute attribute : _attributes) {
+        {
+          boolean _isFromParent = attribute.isFromParent();
+          if (_isFromParent) {
+            String _firstLower = StringExtensions.toFirstLower(attribute.getName());
+            _builder.append(_firstLower);
+            _builder.append("={props.");
+            String _firstLower_1 = StringExtensions.toFirstLower(attribute.getName());
+            _builder.append(_firstLower_1);
+            _builder.append("} ");
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
   public CharSequence componentContainerImports(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import { ");
@@ -792,46 +822,30 @@ public class JsxTemplate {
             _builder.newLineIfNotEmpty();
           }
         }
-        {
-          EList<UiAction> _actions = attribute.getActions();
-          for(final UiAction action : _actions) {
-            _builder.append("import { ");
-            String _firstLower_2 = StringExtensions.toFirstLower(action.getTarget().getName());
-            _builder.append(_firstLower_2);
-            _builder.append(" } from \"");
-            String _depth_2 = this._es6Extension.depth(it, "../");
-            _builder.append(_depth_2);
-            EObject _eContainer = action.getTarget().eContainer();
-            String _name = ((HttpClient) _eContainer).getName();
-            _builder.append(_name);
-            _builder.append("/ActionFunctions\";");
-            _builder.newLineIfNotEmpty();
-          }
-        }
       }
     }
     {
       boolean _oneChildIsLocationOrStorage = this._es6Extension.oneChildIsLocationOrStorage(it);
       if (_oneChildIsLocationOrStorage) {
         _builder.append("import * as AppState from \"");
-        String _depth_3 = this._es6Extension.depth(it, "../../");
-        _builder.append(_depth_3);
+        String _depth_2 = this._es6Extension.depth(it, "../../");
+        _builder.append(_depth_2);
         _builder.append("src/AppState\";");
         _builder.newLineIfNotEmpty();
       }
     }
     {
-      EList<UiAction> _actions_1 = it.getActions();
-      for(final UiAction action_1 : _actions_1) {
+      List<UiAction> _uniqueActions = this._es6Extension.uniqueActions(it);
+      for(final UiAction action : _uniqueActions) {
         _builder.append("import { ");
-        String _firstLower_3 = StringExtensions.toFirstLower(action_1.getTarget().getName());
-        _builder.append(_firstLower_3);
+        String _firstLower_2 = StringExtensions.toFirstLower(action.getTarget().getName());
+        _builder.append(_firstLower_2);
         _builder.append(" } from \"");
-        String _depth_4 = this._es6Extension.depth(it, "../");
-        _builder.append(_depth_4);
-        EObject _eContainer_1 = action_1.getTarget().eContainer();
-        String _name_1 = ((HttpClient) _eContainer_1).getName();
-        _builder.append(_name_1);
+        String _depth_3 = this._es6Extension.depth(it, "../");
+        _builder.append(_depth_3);
+        EObject _eContainer = action.getTarget().eContainer();
+        String _name = ((HttpClient) _eContainer).getName();
+        _builder.append(_name);
         _builder.append("/ActionFunctions\";");
         _builder.newLineIfNotEmpty();
       }

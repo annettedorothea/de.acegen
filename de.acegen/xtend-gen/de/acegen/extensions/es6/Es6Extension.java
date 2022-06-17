@@ -33,6 +33,7 @@ import de.acegen.aceGen.LongType;
 import de.acegen.aceGen.NullType;
 import de.acegen.aceGen.PrimitiveValue;
 import de.acegen.aceGen.StringType;
+import de.acegen.aceGen.UiAction;
 import de.acegen.aceGen.UndefinedType;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -496,6 +497,42 @@ public class Es6Extension {
     } else {
       return suffix;
     }
+  }
+  
+  public List<UiAction> uniqueActions(final ClientAttribute attribute) {
+    ArrayList<UiAction> list = new ArrayList<UiAction>();
+    EList<UiAction> _actions = attribute.getActions();
+    for (final UiAction item : _actions) {
+      boolean _contains = this.contains(list, item);
+      boolean _not = (!_contains);
+      if (_not) {
+        list.add(item);
+      }
+    }
+    EList<ClientAttribute> _attributes = attribute.getAttributes();
+    for (final ClientAttribute attributeItem : _attributes) {
+      EList<UiAction> _actions_1 = attributeItem.getActions();
+      for (final UiAction item_1 : _actions_1) {
+        boolean _contains_1 = this.contains(list, item_1);
+        boolean _not_1 = (!_contains_1);
+        if (_not_1) {
+          list.add(item_1);
+        }
+      }
+    }
+    return list;
+  }
+  
+  public boolean contains(final List<UiAction> actions, final UiAction action) {
+    for (final UiAction item : actions) {
+      String _name = item.getTarget().getName();
+      String _name_1 = action.getTarget().getName();
+      boolean _equals = Objects.equal(_name, _name_1);
+      if (_equals) {
+        return true;
+      }
+    }
+    return false;
   }
   
   public String stateRefPath(final ClientAttribute it) {

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getName <em>Name</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isLocation <em>Location</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#isStorage <em>Storage</em>}</li>
+ *   <li>{@link de.acegen.aceGen.ClientAttribute#isFromParent <em>From Parent</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getUiElement <em>Ui Element</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link de.acegen.aceGen.ClientAttribute#getOptions <em>Options</em>}</li>
@@ -211,6 +212,28 @@ public interface ClientAttribute extends EObject
    * @generated
    */
   void setStorage(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>From Parent</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>From Parent</em>' attribute.
+   * @see #setFromParent(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getClientAttribute_FromParent()
+   * @model
+   * @generated
+   */
+  boolean isFromParent();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.ClientAttribute#isFromParent <em>From Parent</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>From Parent</em>' attribute.
+   * @see #isFromParent()
+   * @generated
+   */
+  void setFromParent(boolean value);
 
   /**
    * Returns the value of the '<em><b>Ui Element</b></em>' attribute.

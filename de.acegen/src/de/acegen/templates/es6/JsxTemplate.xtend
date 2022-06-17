@@ -114,9 +114,9 @@ class JsxTemplate {
 						«attribute.renderChildContainer(attributes, it.isGroup())»
 					«ENDFOR»
 				</«componentName»> 
-			«ELSEIF isTree»				
+			«ELSEIF tree»				
 				return <«componentName» {...props} «actionProps»>
-					{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «storageAndLocationPart» «actionProps» />) : [] }
+					{ props.«name» ? props.«name».map((item, index) => <«componentContainerName» {...item} key={item.«keyAttributeName»} depth={props.depth+1} index={index} «fromParentTreeProps» «storageAndLocationPart» «actionProps» />) : [] }
 				</«componentName»> 
 			«ELSE»
 				return <«componentName» {...props} «actionProps» /> 
@@ -137,14 +137,14 @@ class JsxTemplate {
 		«IF isTag»
 			<«componentName» «props(parentAttributes)» «actionProps» />
 		«ELSEIF isComponent»
-			«IF !list && !isTree»
+			«IF !list && !tree»
 				«IF parentIsGroup»
 					{ props.«name» && <«componentContainerName» «props(parentAttributes)» «actionProps» /> }
 				«ELSE»
 					<«componentContainerName» «props(parentAttributes)» «actionProps» />
 				«ENDIF»
 			«ELSE»
-				{ props.«name» ? props.«name».map(i => <«componentContainerName» {...i} key={i.«keyAttributeName»} «IF isList»«parentPart(parentAttributes)»«ENDIF» «storageAndLocationPart» «actionProps» />) : [] }
+				{ props.«name» ? props.«name».map((item, index) => <«componentContainerName» {...item} key={item.«keyAttributeName»} «IF isList»index={index} «parentPart(parentAttributes)» «ELSE»depth={1} index={index} «fromParentTreeProps» «ENDIF»«storageAndLocationPart» «actionProps» />) : [] }
 			«ENDIF»
 		«ENDIF»
 	'''
@@ -157,6 +157,8 @@ class JsxTemplate {
 	
 	def actionProps(ClientAttribute it) '''«FOR action:actions»«action.name»={«action.target.getName.toFirstLower»} «ENDFOR»'''
 	
+	def fromParentTreeProps(ClientAttribute it) '''«FOR attribute: attributes»«IF attribute.fromParent»«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»} «ENDIF»«ENDFOR»'''
+	
 	def CharSequence componentContainerImports(ClientAttribute it, String subFolder) '''
 		import { «componentName» } from "«depth("../../")»src/components/«subFolder»«path»«componentName»";
 		«FOR attribute : attributes»
@@ -165,16 +167,13 @@ class JsxTemplate {
 			«ELSE»
 				«attribute.importComponentContainer('''«subFolder»/«name.toFirstLower»''')»
 			«ENDIF»
-			«FOR action : attribute.actions»
-				import { «action.target.name.toFirstLower» } from "«depth("../")»«(action.target.eContainer as HttpClient).name»/ActionFunctions";
-			«ENDFOR»
 		«ENDFOR»
 		«IF oneChildIsLocationOrStorage»
 			import * as AppState from "«depth("../../")»src/AppState";
 		«ENDIF»
-		«FOR action : actions»
+		«FOR action : uniqueActions»
 			import { «action.target.name.toFirstLower» } from "«depth("../")»«(action.target.eContainer as HttpClient).name»/ActionFunctions";
 		«ENDFOR»
-	''' 
+	'''
 	
 }
