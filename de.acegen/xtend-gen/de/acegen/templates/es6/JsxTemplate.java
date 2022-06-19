@@ -529,9 +529,6 @@ public class JsxTemplate {
           _builder.append(" ");
           CharSequence _storageAndLocationPart = this.storageAndLocationPart(it);
           _builder.append(_storageAndLocationPart, "\t\t");
-          _builder.append(" ");
-          CharSequence _actionProps_2 = this.actionProps(it);
-          _builder.append(_actionProps_2, "\t\t");
           _builder.append(" />) : [] }");
           _builder.newLineIfNotEmpty();
           _builder.append("\t");
@@ -546,8 +543,8 @@ public class JsxTemplate {
           String _componentName_4 = this._es6Extension.componentName(it);
           _builder.append(_componentName_4, "\t");
           _builder.append(" {...props} ");
-          CharSequence _actionProps_3 = this.actionProps(it);
-          _builder.append(_actionProps_3, "\t");
+          CharSequence _actionProps_2 = this.actionProps(it);
+          _builder.append(_actionProps_2, "\t");
           _builder.append(" /> ");
           _builder.newLineIfNotEmpty();
         }

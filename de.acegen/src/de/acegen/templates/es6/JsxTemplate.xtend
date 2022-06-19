@@ -116,7 +116,7 @@ class JsxTemplate {
 				</«componentName»> 
 			«ELSEIF tree»				
 				return <«componentName» {...props} «actionProps»>
-					{ props.«name» ? props.«name».map((item, index) => <«componentContainerName» {...item} key={item.«keyAttributeName»} depth={props.depth+1} index={index} «fromParentTreeProps» «storageAndLocationPart» «actionProps» />) : [] }
+					{ props.«name» ? props.«name».map((item, index) => <«componentContainerName» {...item} key={item.«keyAttributeName»} depth={props.depth+1} index={index} «fromParentTreeProps» «storageAndLocationPart» />) : [] }
 				</«componentName»> 
 			«ELSE»
 				return <«componentName» {...props} «actionProps» /> 
