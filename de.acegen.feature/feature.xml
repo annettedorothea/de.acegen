@@ -2,7 +2,7 @@
 <feature
       id="de.acegen.feature"
       label="AceGen Feature "
-      version="1.10.0.qualifier"
+      version="1.10.1.qualifier"
       provider-name="Annette Pohl">
 
    <plugin
