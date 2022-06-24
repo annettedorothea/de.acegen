@@ -60,30 +60,30 @@ public class Scenario {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   private int index;
-  
+
   private void resetIndex() {
     this.index = 0;
   }
-  
+
   private void incIndex() {
     int _index = this.index;
     this.index = (_index + 1);
   }
-  
+
   public CharSequence generateScenario(final de.acegen.aceGen.Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -179,7 +179,7 @@ public class Scenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractScenario(final de.acegen.aceGen.Scenario it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -420,7 +420,7 @@ public class Scenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence whenThenTestBlock(final WhenThen it, final de.acegen.aceGen.Scenario scenario, final HttpServer java, final int index) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
@@ -494,7 +494,7 @@ public class Scenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence whenThenBlock(final WhenThen it, final int index, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("private HttpResponse<");
@@ -828,7 +828,7 @@ public class Scenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence _givenItem(final GivenRef it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -858,7 +858,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence _givenItem(final CustomCall it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -920,7 +920,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence givenBlock(final GivenRef givenRef, final HttpServer java, final boolean forLoop) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -1113,7 +1113,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence _persistenceVerification(final SelectByUniqueAttribute it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(model);
@@ -1159,7 +1159,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence _persistenceVerification(final SelectByPrimaryKeys it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     String _interfaceWithPackage = this._modelExtension.interfaceWithPackage(model);
@@ -1213,7 +1213,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence _persistenceVerification(final Count it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Map<String, String> filterMap = new HashMap<String, String>();");
@@ -1244,7 +1244,7 @@ public class Scenario {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   private AttributeAndValue findForPrimaryKey(final Attribute it, final List<AttributeAndValue> list) {
     for (final AttributeAndValue attributeAndValue : list) {
       String _name = attributeAndValue.getAttribute().getName();
@@ -1256,7 +1256,7 @@ public class Scenario {
     }
     return null;
   }
-  
+
   private ArrayList<Given> allGivenItems(final de.acegen.aceGen.Scenario it) {
     ArrayList<Given> allWhenBlocks = new ArrayList<Given>();
     EList<Given> _givenItems = it.getGivenItems();
@@ -1276,7 +1276,7 @@ public class Scenario {
     }
     return allWhenBlocks;
   }
-  
+
   private void allGivenItemsRec(final Given it, final List<Given> allWhenBlocks) {
     if ((it instanceof GivenRef)) {
       boolean _isExcludeGiven = ((GivenRef)it).isExcludeGiven();
@@ -1290,7 +1290,7 @@ public class Scenario {
     }
     allWhenBlocks.add(it);
   }
-  
+
   private CharSequence generatePrepare(final WhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -1332,7 +1332,7 @@ public class Scenario {
     }
     return _builder;
   }
-  
+
   private CharSequence generateDataCreation(final WhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -1361,7 +1361,7 @@ public class Scenario {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCall(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1405,7 +1405,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCall(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1419,7 +1419,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCall(final Void it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{\" +");
@@ -1431,7 +1431,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallPayload(final JsonObjectAce it, final HttpServerAce action) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1478,7 +1478,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallPayload(final StringType it, final HttpServerAce action) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1492,7 +1492,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallPayload(final Void it, final HttpServerAce action) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{}\",");
@@ -1502,7 +1502,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallExpectedData(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1550,7 +1550,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallExpectedData(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1563,7 +1563,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallExpectedPersistenceData(final JsonObjectAce it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1602,7 +1602,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallExpectedPersistenceData(final StringType it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"");
@@ -1615,7 +1615,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence _objectMapperCallExpectedPersistenceData(final Void it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("objectMapper.readValue(\"{}\",");
@@ -1625,7 +1625,7 @@ public class Scenario {
     _builder.append(".class)");
     return _builder;
   }
-  
+
   private CharSequence generateActionCalls(final WhenBlock it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
@@ -1859,7 +1859,7 @@ public class Scenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence givenItem(final Given it, final HttpServer java) {
     if (it instanceof CustomCall) {
       return _givenItem((CustomCall)it, java);
@@ -1870,7 +1870,7 @@ public class Scenario {
         Arrays.<Object>asList(it, java).toString());
     }
   }
-  
+
   private CharSequence persistenceVerification(final PersistenceVerificationExpression it, final Model model) {
     if (it instanceof Count) {
       return _persistenceVerification((Count)it, model);
@@ -1883,7 +1883,7 @@ public class Scenario {
         Arrays.<Object>asList(it, model).toString());
     }
   }
-  
+
   private CharSequence objectMapperCall(final JsonObject it, final Model model) {
     if (it instanceof JsonObjectAce) {
       return _objectMapperCall((JsonObjectAce)it, model);
@@ -1896,7 +1896,7 @@ public class Scenario {
         Arrays.<Object>asList(it, model).toString());
     }
   }
-  
+
   private CharSequence objectMapperCallPayload(final JsonObject it, final HttpServerAce action) {
     if (it instanceof JsonObjectAce) {
       return _objectMapperCallPayload((JsonObjectAce)it, action);
@@ -1909,7 +1909,7 @@ public class Scenario {
         Arrays.<Object>asList(it, action).toString());
     }
   }
-  
+
   private CharSequence objectMapperCallExpectedData(final JsonObject it, final Model model) {
     if (it instanceof JsonObjectAce) {
       return _objectMapperCallExpectedData((JsonObjectAce)it, model);
@@ -1920,7 +1920,7 @@ public class Scenario {
         Arrays.<Object>asList(it, model).toString());
     }
   }
-  
+
   private CharSequence objectMapperCallExpectedPersistenceData(final JsonObject it, final Model model) {
     if (it instanceof JsonObjectAce) {
       return _objectMapperCallExpectedPersistenceData((JsonObjectAce)it, model);

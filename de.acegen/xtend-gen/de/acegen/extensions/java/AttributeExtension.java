@@ -48,7 +48,7 @@ public class AttributeExtension {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   public String stringLineBreak = new Function0<String>() {
     @Override
     public String apply() {
@@ -59,13 +59,13 @@ public class AttributeExtension {
       return _builder.toString();
     }
   }.apply();
-  
+
   public String resourceParamType(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("String");
     return _builder.toString();
   }
-  
+
   public String resourceParam(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -81,7 +81,7 @@ public class AttributeExtension {
     }
     return _builder.toString();
   }
-  
+
   public String initActionData(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -216,7 +216,7 @@ public class AttributeExtension {
     }
     return _builder.toString();
   }
-  
+
   public String initActionDataFromPayload(final AttributeParamRef it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -270,7 +270,7 @@ public class AttributeExtension {
     _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
-  
+
   public String getterCall(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("get");
@@ -279,7 +279,7 @@ public class AttributeExtension {
     _builder.append("()");
     return _builder.toString();
   }
-  
+
   public String javaType(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -335,7 +335,7 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   public String javaTypeNew(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -386,7 +386,7 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   public List<Integer> timesIterator(final int length) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     for (int i = 0; (i < length); i++) {
@@ -394,7 +394,7 @@ public class AttributeExtension {
     }
     return list;
   }
-  
+
   public String mapperInit(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -440,7 +440,7 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   public String sqlType(final Attribute it) {
     String _xifexpression = null;
     String _type = it.getType();
@@ -474,7 +474,7 @@ public class AttributeExtension {
     }
     return _xifexpression;
   }
-  
+
   public String randomValue(final Attribute it) {
     String _xifexpression = null;
     String _type = it.getType();
@@ -511,7 +511,7 @@ public class AttributeExtension {
     }
     return _xifexpression;
   }
-  
+
   public String tableName(final Attribute it) {
     String _xifexpression = null;
     String _type = it.getType();
@@ -525,7 +525,7 @@ public class AttributeExtension {
     }
     return _xifexpression;
   }
-  
+
   public String declaration(final Attribute it) {
     String _type = it.getType();
     boolean _tripleNotEquals = (_type != null);
@@ -563,7 +563,7 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   public String paramAsJsonProperty(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@JsonProperty(\"");
@@ -574,7 +574,7 @@ public class AttributeExtension {
     _builder.append(_param);
     return _builder.toString();
   }
-  
+
   public String param(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     String _javaType = this.javaType(it);
@@ -584,7 +584,7 @@ public class AttributeExtension {
     _builder.append(_name);
     return _builder.toString();
   }
-  
+
   public String interfaceGetter(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     String _javaType = this.javaType(it);
@@ -595,7 +595,7 @@ public class AttributeExtension {
     _builder.append("();");
     return _builder.toString();
   }
-  
+
   public String interfaceSetter(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("void set");
@@ -610,7 +610,7 @@ public class AttributeExtension {
     _builder.append(");");
     return _builder.toString();
   }
-  
+
   public String assign(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("this.");
@@ -622,7 +622,7 @@ public class AttributeExtension {
     _builder.append(";");
     return _builder.toString();
   }
-  
+
   public String deepCopy(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -762,7 +762,7 @@ public class AttributeExtension {
     }
     return _builder.toString();
   }
-  
+
   public String getter(final Attribute it, final boolean jsonProperty) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -797,7 +797,7 @@ public class AttributeExtension {
     _builder.newLine();
     return _builder.toString();
   }
-  
+
   public String with(final Attribute it, final Model model) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public ");
@@ -830,7 +830,7 @@ public class AttributeExtension {
     _builder.newLine();
     return _builder.toString();
   }
-  
+
   public String setter(final Attribute it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public void set");
@@ -857,7 +857,7 @@ public class AttributeExtension {
     _builder.newLine();
     return _builder.toString();
   }
-  
+
   public String setterCall(final Attribute it, final String param) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("set");
@@ -868,7 +868,7 @@ public class AttributeExtension {
     _builder.append(")");
     return _builder.toString();
   }
-  
+
   public String setterCall(final Attribute it, final String param, final String type) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("set");
@@ -886,7 +886,7 @@ public class AttributeExtension {
     _builder.append("))");
     return _builder.toString();
   }
-  
+
   public String setterCall(final Attribute it, final String param, final String type, final String parse) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("set");
@@ -903,11 +903,11 @@ public class AttributeExtension {
     _builder.append("))");
     return _builder.toString();
   }
-  
+
   public boolean isPrimitive(final Attribute it) {
     return ((!it.isList()) && (it.getModel() == null));
   }
-  
+
   public LocalDateTime dateTimeParse(final String dateString, final String pattern) {
     try {
       return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(pattern));
@@ -919,7 +919,7 @@ public class AttributeExtension {
       }
     }
   }
-  
+
   protected CharSequence _valueFrom(final JsonObjectAce it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -949,11 +949,11 @@ public class AttributeExtension {
     }
     return _builder;
   }
-  
+
   protected CharSequence _valueFrom(final String it) {
     return this.valueFromString(it);
   }
-  
+
   protected CharSequence _valueFrom(final JsonValue it) {
     if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
@@ -980,17 +980,17 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   protected CharSequence _squishyValueFrom(final JsonObjectAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("null");
     return _builder;
   }
-  
+
   protected CharSequence _squishyValueFrom(final String it) {
     return this.valueFromString(it);
   }
-  
+
   protected CharSequence _squishyValueFrom(final JsonValue it) {
     if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
@@ -1015,7 +1015,7 @@ public class AttributeExtension {
     }
     return null;
   }
-  
+
   public CharSequence valueFromString(final String it) {
     String returnString = it;
     boolean _contains = it.contains("${random}");
@@ -1047,7 +1047,7 @@ public class AttributeExtension {
     _builder_2.append(returnString);
     return _builder_2;
   }
-  
+
   protected CharSequence _valueFrom(final JsonArray it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -1073,7 +1073,7 @@ public class AttributeExtension {
     }
     return _builder;
   }
-  
+
   protected CharSequence _valueFrom(final JsonDateTime it) {
     boolean _contains = it.getDateTime().contains("${");
     if (_contains) {
@@ -1096,7 +1096,7 @@ public class AttributeExtension {
     _builder_1.append("\\\"");
     return _builder_1;
   }
-  
+
   public Object primitiveValueFrom(final PrimitiveValue it) {
     String _string = it.getString();
     boolean _tripleNotEquals = (_string != null);
@@ -1129,7 +1129,7 @@ public class AttributeExtension {
     }
     return Integer.valueOf(it.getLong());
   }
-  
+
   public CharSequence valueFrom(final Object it) {
     if (it instanceof JsonObjectAce) {
       return _valueFrom((JsonObjectAce)it);
@@ -1146,7 +1146,7 @@ public class AttributeExtension {
         Arrays.<Object>asList(it).toString());
     }
   }
-  
+
   public CharSequence squishyValueFrom(final Object it) {
     if (it instanceof JsonObjectAce) {
       return _squishyValueFrom((JsonObjectAce)it);

@@ -35,15 +35,15 @@ public class AceDataFactory {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAceDataFactory(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -137,7 +137,7 @@ public class AceDataFactory {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence _createData(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (className.equals(\"");
@@ -204,7 +204,7 @@ public class AceDataFactory {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence _createData(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (className.equals(\"");
@@ -233,7 +233,7 @@ public class AceDataFactory {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence createData(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
       return _createData((HttpServerAceRead)it, httpServer);

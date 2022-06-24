@@ -25,7 +25,7 @@ public class TimelineItem {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateITimelineItem() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -77,7 +77,7 @@ public class TimelineItem {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateTimelineItem() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -256,7 +256,7 @@ public class TimelineItem {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateTimelineItemMapper() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

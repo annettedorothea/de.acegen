@@ -33,15 +33,15 @@ public class ActionTemplate {
   @Inject
   @Extension
   private AceExtension _aceExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAbstractActionFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -197,7 +197,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateInitialActionFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -245,7 +245,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateActionFunctionExports(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -324,7 +324,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateActionIds(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -367,7 +367,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -430,7 +430,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAsynchronousAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -592,7 +592,7 @@ public class ActionTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateSynchronousAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

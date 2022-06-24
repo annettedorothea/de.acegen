@@ -38,19 +38,19 @@ public class AppRegistration {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ViewExtension _viewExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAppRegistration(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
@@ -100,7 +100,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAppRegistration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -128,7 +128,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence registerConsumers(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
@@ -146,7 +146,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence _registerConsumer(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -174,12 +174,12 @@ public class AppRegistration {
     }
     return _builder;
   }
-  
+
   private CharSequence _registerConsumer(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   private CharSequence addConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("viewProvider.addConsumer(\"");
@@ -204,7 +204,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence addAfterCommitConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("viewProvider.addAfterCommitConsumer(\"");
@@ -229,7 +229,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence registerConsumer(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
       return _registerConsumer((HttpServerAceRead)it, httpServer);

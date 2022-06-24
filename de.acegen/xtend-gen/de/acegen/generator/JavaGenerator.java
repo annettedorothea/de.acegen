@@ -60,100 +60,100 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class JavaGenerator {
   @Inject
   private JDBI3Generator jdbi3Generator;
-  
+
   @Inject
   private DaoGenerator daoGenerator;
-  
+
   @Inject
   private DropwizardGenerator dropwizardGenerator;
-  
+
   @Inject
   private AppRegistrationGenerator appRegistrationGenerator;
-  
+
   @Inject
   private LiquibaseGenerator liquibaseGenerator;
-  
+
   @Inject
   private EventConsumer eventConsumer;
-  
+
   @Inject
   private Model model;
-  
+
   @Inject
   private Data data;
-  
+
   @Inject
   private Dao dao;
-  
+
   @Inject
   private DaoProvider daoProvider;
-  
+
   @Inject
   private Action action;
-  
+
   @Inject
   private AceDataFactory aceDataFactory;
-  
+
   @Inject
   private Command command;
-  
+
   @Inject
   private Event event;
-  
+
   @Inject
   private EventReplayService eventReplayService;
-  
+
   @Inject
   private View view;
-  
+
   @Inject
   private ViewProvider viewProvider;
-  
+
   @Inject
   private ServerInfo serverInfo;
-  
+
   @Inject
   private AceOperation aceOperation;
-  
+
   @Inject
   private Scenario scenario;
-  
+
   @Inject
   private BaseScenario baseScenario;
-  
+
   @Inject
   private YamlConfiguration yamlConfiguration;
-  
+
   @Inject
   private SquishyDataProvider squishyDataProvider;
-  
+
   @Inject
   private DatabaseHandle databaseHandle;
-  
+
   @Inject
   private TimelineItem timelineItem;
-  
+
   @Inject
   private Converter converter;
-  
+
   @Inject
   private Persistence persistence;
-  
+
   @Inject
   private AuthUser authUser;
-  
+
   @Inject
   @Extension
   private ViewExtension _viewExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     boolean _isJDBI3 = httpServer.isJDBI3();
     if (_isJDBI3) {

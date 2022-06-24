@@ -31,7 +31,7 @@ public class ViewExtension {
     _builder.append("View");
     return _builder.toString();
   }
-  
+
   public String viewInterfaceName(final HttpServerView it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -40,7 +40,7 @@ public class ViewExtension {
     _builder.append("View");
     return _builder.toString();
   }
-  
+
   public String viewNameWithPackage(final HttpServerView it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -51,7 +51,7 @@ public class ViewExtension {
     _builder.append(_viewName);
     return _builder.toString();
   }
-  
+
   public String viewNameAsVariable(final HttpServerView it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstLower = StringExtensions.toFirstLower(it.getName());
@@ -59,7 +59,7 @@ public class ViewExtension {
     _builder.append("View");
     return _builder.toString();
   }
-  
+
   public String viewFunctionWithViewName(final HttpServerViewFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -70,7 +70,7 @@ public class ViewExtension {
     _builder.append(_name);
     return _builder.toString();
   }
-  
+
   public String viewFunctionWithViewNameAsVariable(final HttpServerViewFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -81,7 +81,7 @@ public class ViewExtension {
     _builder.append(_name);
     return _builder.toString();
   }
-  
+
   public HttpServerView view(final HttpServerViewFunction it) {
     EObject _eContainer = it.eContainer();
     return ((HttpServerView) _eContainer);

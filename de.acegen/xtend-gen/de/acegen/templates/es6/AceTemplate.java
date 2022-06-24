@@ -26,7 +26,7 @@ public class AceTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAppUtilsStub() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -99,7 +99,7 @@ public class AceTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAppStateStub() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -174,7 +174,7 @@ public class AceTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateApp(final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -295,7 +295,7 @@ public class AceTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateACEController() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -506,7 +506,7 @@ public class AceTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateTimeline() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -576,7 +576,7 @@ public class AceTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateUtils() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

@@ -30,15 +30,15 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class DaoGenerator {
   @Inject
   private Dao dao;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     EList<Model> _models = httpServer.getModels();
     for (final Model modelAce : _models) {

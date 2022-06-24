@@ -31,15 +31,15 @@ public class View {
   @Inject
   @Extension
   private ViewExtension _viewExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateView(final HttpServerView it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -126,7 +126,7 @@ public class View {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateViewInterface(final HttpServerView it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

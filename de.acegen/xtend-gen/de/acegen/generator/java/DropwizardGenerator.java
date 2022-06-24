@@ -38,35 +38,35 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class DropwizardGenerator {
   @Inject
   private GetServerInfoResource getServerInfoResource;
-  
+
   @Inject
   private Resource resource;
-  
+
   @Inject
   private DropwizardApp dropwizardApp;
-  
+
   @Inject
   private DropwizardConfiguration dropwizardConfiguration;
-  
+
   @Inject
   private SquishyDataProviderResource squishyDataProviderResource;
-  
+
   @Inject
   private DropwizardResource dropwizardResource;
-  
+
   @Inject
   private DropwizardAppRegistration dropwizardAppRegistration;
-  
+
   @Inject
   private DropwizardEventReplayCommand dropwizardEventReplayCommand;
-  
+
   @Inject
   private FormData formData;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     AuthUser authUser = httpServer.getAuthUser();
     if ((authUser == null)) {

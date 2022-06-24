@@ -37,15 +37,15 @@ public class Command {
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAbstractCommandFile(final HttpServerAceWrite it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -285,7 +285,7 @@ public class Command {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateInitialCommandFile(final HttpServerAceWrite it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -389,7 +389,7 @@ public class Command {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -508,7 +508,7 @@ public class Command {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateICommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

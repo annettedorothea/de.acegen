@@ -43,23 +43,23 @@ public class CommandTemplate {
   @Inject
   @Extension
   private AceExtension _aceExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   @Inject
   @Extension
   private HttpServerExtension _httpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
     for (final HttpClientOutcome outcome : _outcomes) {
@@ -71,7 +71,7 @@ public class CommandTemplate {
     }
     return false;
   }
-  
+
   public CharSequence generateAsynchronousAbstractCommandFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -194,10 +194,13 @@ public class CommandTemplate {
               boolean _isNotNull = payload.isNotNull();
               if (_isNotNull) {
                 _builder.append("\t\t");
-                _builder.append("if (!data.");
+                _builder.append("if (data.");
                 String _name_3 = payload.getAttribute().getName();
                 _builder.append(_name_3, "\t\t");
-                _builder.append(") {");
+                _builder.append(" === undefined || data.");
+                String _name_4 = payload.getAttribute().getName();
+                _builder.append(_name_4, "\t\t");
+                _builder.append(" === null) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
@@ -205,8 +208,8 @@ public class CommandTemplate {
                 String _abstractCommandName_1 = this._aceExtension.abstractCommandName(it);
                 _builder.append(_abstractCommandName_1, "\t\t\t");
                 _builder.append(": ");
-                String _name_4 = payload.getAttribute().getName();
-                _builder.append(_name_4, "\t\t\t");
+                String _name_5 = payload.getAttribute().getName();
+                _builder.append(_name_5, "\t\t\t");
                 _builder.append(" is mandatory but is not set\", data);");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -227,10 +230,13 @@ public class CommandTemplate {
               boolean _isNotNull_1 = queryParam.isNotNull();
               if (_isNotNull_1) {
                 _builder.append("\t\t");
-                _builder.append("if (!data.");
-                String _name_5 = queryParam.getAttribute().getName();
-                _builder.append(_name_5, "\t\t");
-                _builder.append(") {");
+                _builder.append("if (data.");
+                String _name_6 = queryParam.getAttribute().getName();
+                _builder.append(_name_6, "\t\t");
+                _builder.append(" === undefined || data.");
+                String _name_7 = queryParam.getAttribute().getName();
+                _builder.append(_name_7, "\t\t");
+                _builder.append(" === null) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
@@ -238,8 +244,8 @@ public class CommandTemplate {
                 String _abstractCommandName_2 = this._aceExtension.abstractCommandName(it);
                 _builder.append(_abstractCommandName_2, "\t\t\t");
                 _builder.append(": ");
-                String _name_6 = queryParam.getAttribute().getName();
-                _builder.append(_name_6, "\t\t\t");
+                String _name_8 = queryParam.getAttribute().getName();
+                _builder.append(_name_8, "\t\t\t");
                 _builder.append(" is mandatory but is not set\", data);");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -260,10 +266,13 @@ public class CommandTemplate {
               boolean _isNotNull_2 = pathParam.isNotNull();
               if (_isNotNull_2) {
                 _builder.append("\t\t");
-                _builder.append("if (!data.");
-                String _name_7 = pathParam.getAttribute().getName();
-                _builder.append(_name_7, "\t\t");
-                _builder.append(") {");
+                _builder.append("if (data.");
+                String _name_9 = pathParam.getAttribute().getName();
+                _builder.append(_name_9, "\t\t");
+                _builder.append(" === undefined || data.");
+                String _name_10 = pathParam.getAttribute().getName();
+                _builder.append(_name_10, "\t\t");
+                _builder.append(" === null) {");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
                 _builder.append("\t");
@@ -271,8 +280,8 @@ public class CommandTemplate {
                 String _abstractCommandName_3 = this._aceExtension.abstractCommandName(it);
                 _builder.append(_abstractCommandName_3, "\t\t\t");
                 _builder.append(": ");
-                String _name_8 = pathParam.getAttribute().getName();
-                _builder.append(_name_8, "\t\t\t");
+                String _name_11 = pathParam.getAttribute().getName();
+                _builder.append(_name_11, "\t\t\t");
                 _builder.append(" is mandatory but is not set\", data);");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -328,11 +337,11 @@ public class CommandTemplate {
                 } else {
                   _builder.appendImmediate(",\n", "\t\t    \t\t");
                 }
-                String _name_9 = payload_1.getAttribute().getName();
-                _builder.append(_name_9, "\t\t    \t\t");
+                String _name_12 = payload_1.getAttribute().getName();
+                _builder.append(_name_12, "\t\t    \t\t");
                 _builder.append(" : data.");
-                String _name_10 = payload_1.getAttribute().getName();
-                _builder.append(_name_10, "\t\t    \t\t");
+                String _name_13 = payload_1.getAttribute().getName();
+                _builder.append(_name_13, "\t\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
@@ -375,14 +384,14 @@ public class CommandTemplate {
               _builder.appendImmediate("&", "\t\t\t\t\t\t");
             }
             _builder.append("${data.");
-            String _name_11 = queryParam_1.getAttribute().getName();
-            _builder.append(_name_11, "\t\t\t\t\t\t");
+            String _name_14 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_14, "\t\t\t\t\t\t");
             _builder.append(" ? `");
-            String _name_12 = queryParam_1.getAttribute().getName();
-            _builder.append(_name_12, "\t\t\t\t\t\t");
+            String _name_15 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_15, "\t\t\t\t\t\t");
             _builder.append("=${data.");
-            String _name_13 = queryParam_1.getAttribute().getName();
-            _builder.append(_name_13, "\t\t\t\t\t\t");
+            String _name_16 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_16, "\t\t\t\t\t\t");
             _builder.append("}` : \"\"}");
           }
         }
@@ -451,11 +460,11 @@ public class CommandTemplate {
             _builder.append("\t");
             _builder.append("\t\t\t\t\t");
             _builder.append("data.");
-            String _name_14 = attribute.getName();
-            _builder.append(_name_14, "\t\t\t\t\t\t");
+            String _name_17 = attribute.getName();
+            _builder.append(_name_17, "\t\t\t\t\t\t");
             _builder.append(" = response.");
-            String _name_15 = attribute.getName();
-            _builder.append(_name_15, "\t\t\t\t\t\t");
+            String _name_18 = attribute.getName();
+            _builder.append(_name_18, "\t\t\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
@@ -526,15 +535,15 @@ public class CommandTemplate {
           if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t\t");
             _builder.append("if (data.outcomes.includes(\"");
-            String _name_16 = outcome_1.getName();
-            _builder.append(_name_16, "\t\t\t");
+            String _name_19 = outcome_1.getName();
+            _builder.append(_name_19, "\t\t\t");
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t\t");
             _builder.append("\t");
             _builder.append("events.push(new Event(\'");
-            String _name_17 = es6.getName();
-            _builder.append(_name_17, "\t\t\t\t");
+            String _name_20 = es6.getName();
+            _builder.append(_name_20, "\t\t\t\t");
             _builder.append(".");
             String _eventName = this._aceExtension.eventName(it, outcome_1);
             _builder.append(_eventName, "\t\t\t\t");
@@ -581,11 +590,11 @@ public class CommandTemplate {
                         _builder.append("\t\t\t");
                         _builder.append("\t");
                         _builder.append("\t\t\t");
-                        String _name_18 = inputParam.getName();
-                        _builder.append(_name_18, "\t\t\t\t\t\t\t");
+                        String _name_21 = inputParam.getName();
+                        _builder.append(_name_21, "\t\t\t\t\t\t\t");
                         _builder.append(": data.");
-                        String _name_19 = inputParam.getName();
-                        _builder.append(_name_19, "\t\t\t\t\t\t\t");
+                        String _name_22 = inputParam.getName();
+                        _builder.append(_name_22, "\t\t\t\t\t\t\t");
                         _builder.newLineIfNotEmpty();
                       }
                     }
@@ -631,11 +640,11 @@ public class CommandTemplate {
                             _builder.append("\t\t\t");
                             _builder.append("\t");
                             _builder.append("\t\t");
-                            String _name_20 = inputParam_1.getName();
-                            _builder.append(_name_20, "\t\t\t\t\t\t");
+                            String _name_23 = inputParam_1.getName();
+                            _builder.append(_name_23, "\t\t\t\t\t\t");
                             _builder.append(": data.");
-                            String _name_21 = inputParam_1.getName();
-                            _builder.append(_name_21, "\t\t\t\t\t\t");
+                            String _name_24 = inputParam_1.getName();
+                            _builder.append(_name_24, "\t\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
@@ -679,11 +688,11 @@ public class CommandTemplate {
                             _builder.append("\t\t\t");
                             _builder.append("\t");
                             _builder.append("\t\t");
-                            String _name_22 = inputParam_2.getName();
-                            _builder.append(_name_22, "\t\t\t\t\t\t");
+                            String _name_25 = inputParam_2.getName();
+                            _builder.append(_name_25, "\t\t\t\t\t\t");
                             _builder.append(": data.");
-                            String _name_23 = inputParam_2.getName();
-                            _builder.append(_name_23, "\t\t\t\t\t\t");
+                            String _name_26 = inputParam_2.getName();
+                            _builder.append(_name_26, "\t\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
@@ -747,7 +756,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateSynchronousAbstractCommandFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
@@ -1099,7 +1108,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAsynchronousInitialCommandFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1251,7 +1260,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateSynchronousInitialCommandFile(final HttpClientAce it, final HttpClient es6) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1309,7 +1318,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1395,7 +1404,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAsynchronousCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1593,7 +1602,7 @@ public class CommandTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateSynchronousCommand() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

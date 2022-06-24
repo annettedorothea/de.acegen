@@ -30,10 +30,10 @@ public class LiquibaseGenerator {
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   private Liquibase liquibase;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     EList<Model> _models = httpServer.getModels();
     for (final Model modelAce : _models) {

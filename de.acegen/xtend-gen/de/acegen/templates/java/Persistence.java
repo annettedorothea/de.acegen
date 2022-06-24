@@ -25,7 +25,7 @@ public class Persistence {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generatePersistenceHandle() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -78,7 +78,7 @@ public class Persistence {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generatePersistenceConnection() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

@@ -86,7 +86,7 @@ class CommandTemplate {
 				«IF getServerCall !== null»
 					«FOR payload : getServerCall.payload»
 						«IF payload.notNull»
-							if (!data.«payload.attribute.name») {
+							if (data.«payload.attribute.name» === undefined || data.«payload.attribute.name» === null) {
 								console.warn("«abstractCommandName»: «payload.attribute.name» is mandatory but is not set", data);
 								return false;
 							}
@@ -94,7 +94,7 @@ class CommandTemplate {
 					«ENDFOR»
 					«FOR queryParam : getServerCall.queryParams»
 						«IF queryParam.notNull»
-							if (!data.«queryParam.attribute.name») {
+							if (data.«queryParam.attribute.name» === undefined || data.«queryParam.attribute.name» === null) {
 								console.warn("«abstractCommandName»: «queryParam.attribute.name» is mandatory but is not set", data);
 								return false;
 							}
@@ -102,7 +102,7 @@ class CommandTemplate {
 					«ENDFOR»
 					«FOR pathParam : getServerCall.pathParams»
 						«IF pathParam.notNull»
-							if (!data.«pathParam.attribute.name») {
+							if (data.«pathParam.attribute.name» === undefined || data.«pathParam.attribute.name» === null) {
 								console.warn("«abstractCommandName»: «pathParam.attribute.name» is mandatory but is not set", data);
 								return false;
 							}

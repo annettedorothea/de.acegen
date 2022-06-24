@@ -31,15 +31,15 @@ public class JDBI3Mapper {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generate(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -115,7 +115,7 @@ public class JDBI3Mapper {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractMapper(final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

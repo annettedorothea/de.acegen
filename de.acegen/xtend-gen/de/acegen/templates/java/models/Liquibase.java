@@ -30,11 +30,11 @@ public class Liquibase {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   public CharSequence generateMigration(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<createTable tableName=\"");
@@ -101,7 +101,7 @@ public class Liquibase {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAceMigration() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<createTable tableName=\"timeline\">");

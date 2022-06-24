@@ -25,7 +25,7 @@ public class DropwizardConfiguration {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateCustomAppConfiguration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -47,7 +47,7 @@ public class DropwizardConfiguration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAppConfiguration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -195,7 +195,7 @@ public class DropwizardConfiguration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateConfig() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");

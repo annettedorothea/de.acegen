@@ -36,19 +36,19 @@ public class Action {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   protected CharSequence _generateAbstractActionFile(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -175,7 +175,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence _generateAbstractActionFile(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -298,7 +298,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateInitialActionFile(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -466,7 +466,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -536,7 +536,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateReadAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -680,7 +680,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateWriteAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -838,7 +838,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateHttpMethod() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -863,7 +863,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateIAction() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -901,7 +901,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence constructor(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public ");
@@ -914,7 +914,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence initActionDataFromSquishyDataProvider(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@Override");
@@ -1028,7 +1028,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence addActionToTimeline() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (appConfiguration.getConfig().writeTimeline()) {");
@@ -1040,7 +1040,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence addExceptionToTimeline() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (appConfiguration.getConfig().writeError()) {");
@@ -1052,7 +1052,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence catchFinallyBlock() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("} catch (IllegalArgumentException x) {");
@@ -1145,7 +1145,7 @@ public class Action {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractActionFile(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
       return _generateAbstractActionFile((HttpServerAceRead)it, httpServer);

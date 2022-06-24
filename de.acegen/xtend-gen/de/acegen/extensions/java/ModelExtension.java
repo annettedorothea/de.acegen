@@ -33,7 +33,7 @@ public class ModelExtension {
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   public String modelName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -42,7 +42,7 @@ public class ModelExtension {
     _builder.append("Model");
     return _builder.toString();
   }
-  
+
   public String modelListAttributeName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = it.getName();
@@ -50,7 +50,7 @@ public class ModelExtension {
     _builder.append("List");
     return _builder.toString();
   }
-  
+
   public String modelClassName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -58,7 +58,7 @@ public class ModelExtension {
     _builder.append("Model");
     return _builder.toString();
   }
-  
+
   public String modelClassNameWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -70,7 +70,7 @@ public class ModelExtension {
     _builder.append("Model");
     return _builder.toString();
   }
-  
+
   public String modelParam(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstLower = StringExtensions.toFirstLower(it.getName());
@@ -78,7 +78,7 @@ public class ModelExtension {
     _builder.append("Model");
     return _builder.toString();
   }
-  
+
   public String modelDao(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -86,7 +86,7 @@ public class ModelExtension {
     _builder.append("Dao");
     return _builder.toString();
   }
-  
+
   public String modelDaoWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -97,7 +97,7 @@ public class ModelExtension {
     _builder.append(_modelDao);
     return _builder.toString();
   }
-  
+
   public String abstractModelDao(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -106,7 +106,7 @@ public class ModelExtension {
     _builder.append("Dao");
     return _builder.toString();
   }
-  
+
   public String modelMapper(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -114,7 +114,7 @@ public class ModelExtension {
     _builder.append("Mapper");
     return _builder.toString();
   }
-  
+
   public String table(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\\\"");
@@ -123,14 +123,14 @@ public class ModelExtension {
     _builder.append("\\\"");
     return _builder.toString();
   }
-  
+
   public String tableFkRef(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _lowerCase = it.getName().toLowerCase();
     _builder.append(_lowerCase);
     return _builder.toString();
   }
-  
+
   public String importModel(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import ");
@@ -139,7 +139,7 @@ public class ModelExtension {
     _builder.append(";");
     return _builder.toString();
   }
-  
+
   public String interfaceWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -150,7 +150,7 @@ public class ModelExtension {
     _builder.append(_modelName);
     return _builder.toString();
   }
-  
+
   public String modelGetAttribute(final Model it, final Attribute attribute) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(" ");
@@ -162,7 +162,7 @@ public class ModelExtension {
     _builder.append(" ");
     return _builder.toString();
   }
-  
+
   public String modelAttributeSqlValue(final Model it, final Attribute attribute) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(":");
@@ -170,7 +170,7 @@ public class ModelExtension {
     _builder.append(_lowerCase);
     return _builder.toString();
   }
-  
+
   public List<Attribute> allUniqueAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     EList<Attribute> _attributes = it.getAttributes();
@@ -182,7 +182,7 @@ public class ModelExtension {
     }
     return list;
   }
-  
+
   public List<Attribute> allPrimaryKeyAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     EList<Attribute> _attributes = it.getAttributes();
@@ -194,7 +194,7 @@ public class ModelExtension {
     }
     return list;
   }
-  
+
   public List<Attribute> allSquishyAttributes(final Model it) {
     ArrayList<Attribute> list = new ArrayList<Attribute>();
     if ((it == null)) {
@@ -210,7 +210,7 @@ public class ModelExtension {
     }
     return list;
   }
-  
+
   public boolean containsPrimitiveAttributes(final Model it) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
@@ -221,7 +221,7 @@ public class ModelExtension {
     }
     return false;
   }
-  
+
   public String listGetter(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@JsonProperty");
@@ -243,7 +243,7 @@ public class ModelExtension {
     _builder.append("}");
     return _builder.toString();
   }
-  
+
   public String listSetter(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public void set");
@@ -269,7 +269,7 @@ public class ModelExtension {
     _builder.append("}");
     return _builder.toString();
   }
-  
+
   public String interfaceGetter(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _interfaceWithPackage = this.interfaceWithPackage(it);
@@ -280,7 +280,7 @@ public class ModelExtension {
     _builder.append("();");
     return _builder.toString();
   }
-  
+
   public String declaration(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("private ");
@@ -293,7 +293,7 @@ public class ModelExtension {
     _builder.newLineIfNotEmpty();
     return _builder.toString();
   }
-  
+
   public String getter(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@JsonProperty");
@@ -315,7 +315,7 @@ public class ModelExtension {
     _builder.append("}");
     return _builder.toString();
   }
-  
+
   public String setter(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("public void set");
@@ -341,13 +341,13 @@ public class ModelExtension {
     _builder.append("}");
     return _builder.toString();
   }
-  
+
   public List<Attribute> allAttributes(final Model it) {
     final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
     this.allAttributesRec(it, attrs);
     return attrs;
   }
-  
+
   public String formDataAttributeName(final Model it) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attr : _attributes) {
@@ -359,7 +359,7 @@ public class ModelExtension {
     }
     return "formData";
   }
-  
+
   public void allAttributesRec(final Model it, final List<Attribute> attrs) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
@@ -374,13 +374,13 @@ public class ModelExtension {
       this.allAttributesRec(superModel, attrs);
     }
   }
-  
+
   public List<Model> allSuperModels(final Model it) {
     final ArrayList<Model> models = new ArrayList<Model>();
     this.allSupperModelsRec(it, models);
     return models;
   }
-  
+
   public void allSupperModelsRec(final Model it, final List<Model> models) {
     boolean _containsModel = this.containsModel(models, it);
     boolean _not = (!_containsModel);
@@ -392,21 +392,21 @@ public class ModelExtension {
       this.allSupperModelsRec(superModel, models);
     }
   }
-  
+
   public String modelRefToLower(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstLower = StringExtensions.toFirstLower(it.getName());
     _builder.append(_firstLower);
     return _builder.toString();
   }
-  
+
   public String modelRefToUpper(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String dataName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -420,7 +420,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String abstractDataName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -435,7 +435,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String dataInterfaceName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -450,7 +450,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String dataNameWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -465,7 +465,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String dataInterfaceNameWithPackage(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -476,7 +476,7 @@ public class ModelExtension {
     _builder.append(_dataInterfaceName);
     return _builder.toString();
   }
-  
+
   public String dataImport(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -497,7 +497,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String dataClassImport(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -518,7 +518,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public String dataParamType(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -531,7 +531,7 @@ public class ModelExtension {
     }
     return _builder.toString();
   }
-  
+
   public boolean containsAttribute(final List<Attribute> it, final Attribute attribute) {
     int _size = it.size();
     boolean _equals = (_size == 0);
@@ -546,7 +546,7 @@ public class ModelExtension {
     }
     return false;
   }
-  
+
   public boolean containsModel(final List<Model> it, final Model model) {
     int _size = it.size();
     boolean _equals = (_size == 0);

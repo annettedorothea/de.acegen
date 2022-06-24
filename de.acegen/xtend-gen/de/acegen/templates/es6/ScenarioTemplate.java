@@ -27,11 +27,11 @@ public class ScenarioTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   public CharSequence generateScenarioUtils() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -180,7 +180,7 @@ public class ScenarioTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateScenario(final ClientScenario it, final HttpClient httpClient) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -542,7 +542,7 @@ public class ScenarioTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence initSquishyData(final ClientWhenBlock it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -619,7 +619,7 @@ public class ScenarioTemplate {
     }
     return _builder;
   }
-  
+
   private ArrayList<ClientGivenRef> allGivenItems(final ClientScenario it) {
     ArrayList<ClientGivenRef> allWhenBlocks = new ArrayList<ClientGivenRef>();
     EList<ClientGivenRef> _givenRefs = it.getGivenRefs();
@@ -635,7 +635,7 @@ public class ScenarioTemplate {
     }
     return allWhenBlocks;
   }
-  
+
   private void allGivenItemsRec(final ClientGivenRef it, final List<ClientGivenRef> allWhenBlocks) {
     if ((it instanceof ClientGivenRef)) {
       EList<ClientGivenRef> _givenRefs = it.getScenario().getGivenRefs();
@@ -645,7 +645,7 @@ public class ScenarioTemplate {
     }
     allWhenBlocks.add(it);
   }
-  
+
   public CharSequence generateVerifications(final ClientScenario it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

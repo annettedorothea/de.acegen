@@ -72,7 +72,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
     if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {

@@ -39,19 +39,19 @@ public class Data {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   public CharSequence generateDataInterface(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -137,7 +137,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractData(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -380,7 +380,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateData(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -692,7 +692,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateResponseData(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -807,7 +807,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateReponseDataInterface(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -846,7 +846,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generatePayloadData(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -961,7 +961,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generatePayloadDataInterface(final HttpServerAce it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1000,7 +1000,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateIDataContainer() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1061,7 +1061,7 @@ public class Data {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractData() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

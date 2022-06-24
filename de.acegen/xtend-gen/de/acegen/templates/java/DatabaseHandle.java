@@ -25,7 +25,7 @@ public class DatabaseHandle {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateDatabaseHandle() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

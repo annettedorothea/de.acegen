@@ -33,7 +33,7 @@ public class AceGenUiModule extends AbstractAceGenUiModule {
     super.configure(binder);
     binder.<IOutputConfigurationProvider>bind(IOutputConfigurationProvider.class).to(ACEOutputConfigurationProvider.class).in(Singleton.class);
   }
-  
+
   public AceGenUiModule(final AbstractUIPlugin plugin) {
     super(plugin);
   }

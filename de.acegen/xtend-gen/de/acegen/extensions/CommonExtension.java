@@ -34,7 +34,7 @@ public class CommonExtension {
     _builder.newLine();
     return _builder.toString();
   }
-  
+
   public String sdg() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();

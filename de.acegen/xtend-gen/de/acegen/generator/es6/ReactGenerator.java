@@ -17,11 +17,11 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class ReactGenerator {
   @Inject
   private JsxTemplate reactTemplate;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   public void doGenerate(final HttpClient httpClient, final IFileSystemAccess2 fsa) {
     ClientAttribute _container = httpClient.getContainer();
     boolean _tripleNotEquals = (_container != null);
@@ -29,7 +29,7 @@ public class ReactGenerator {
       this.doGenerate(httpClient.getContainer(), fsa, "", true);
     }
   }
-  
+
   public void doGenerate(final ClientAttribute it, final IFileSystemAccess2 fsa, final String subFolder, final boolean isRoot) {
     Boolean _isComponent = this._es6Extension.isComponent(it);
     if ((_isComponent).booleanValue()) {
@@ -82,7 +82,7 @@ public class ReactGenerator {
       }
     }
   }
-  
+
   private String folderPrefix(final String subFolder) {
     int _length = subFolder.split("/").length;
     final int count = (_length - 1);

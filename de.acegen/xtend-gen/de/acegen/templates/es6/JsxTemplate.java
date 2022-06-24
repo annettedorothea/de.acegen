@@ -20,11 +20,11 @@ public class JsxTemplate {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   public CharSequence generateComponent(final ClientAttribute it, final String folderPrefix) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -404,7 +404,7 @@ public class JsxTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateComponentContainer(final ClientAttribute it, final String folderPrefix, final boolean root) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -559,7 +559,7 @@ public class JsxTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence renderChild(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -582,7 +582,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence renderChildContainer(final ClientAttribute it, final List<ClientAttribute> parentAttributes, final boolean parentIsGroup) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -676,7 +676,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence props(final ClientAttribute it, final List<ClientAttribute> parentAttributes) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("{...props.");
@@ -690,7 +690,7 @@ public class JsxTemplate {
     _builder.append(_parentPart);
     return _builder;
   }
-  
+
   public CharSequence storageAndLocationPart(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -710,7 +710,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence parentPart(final ClientAttribute it, final List<ClientAttribute> parentAttributes) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -731,7 +731,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence actionProps(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -747,7 +747,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence fromParentTreeProps(final ClientAttribute it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -768,7 +768,7 @@ public class JsxTemplate {
     }
     return _builder;
   }
-  
+
   public CharSequence componentContainerImports(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import { ");

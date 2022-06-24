@@ -25,7 +25,7 @@ public class YamlConfiguration {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateYamlConfiguration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -126,7 +126,7 @@ public class YamlConfiguration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateDatabase() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -173,7 +173,7 @@ public class YamlConfiguration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateServer() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -263,7 +263,7 @@ public class YamlConfiguration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateConnectors() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

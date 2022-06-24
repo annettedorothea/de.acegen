@@ -25,7 +25,7 @@ public class EventConsumer {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateEventconsumer() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

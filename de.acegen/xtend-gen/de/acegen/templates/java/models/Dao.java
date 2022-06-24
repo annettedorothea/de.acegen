@@ -33,15 +33,15 @@ public class Dao {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAbstractDao(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -183,7 +183,7 @@ public class Dao {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateDao(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -412,7 +412,7 @@ public class Dao {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAceDao() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

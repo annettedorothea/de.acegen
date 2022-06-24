@@ -52,14 +52,14 @@ public class Es6Extension {
     _builder.append(_replace);
     return _builder.toString();
   }
-  
+
   public String projectName(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String appStateFunction(final HttpClientStateFunction it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(data) => {");
@@ -76,7 +76,7 @@ public class Es6Extension {
     _builder.append("}");
     return _builder.toString();
   }
-  
+
   public CharSequence stateFunctionCall(final ClientAttribute it, final String functionName, final String data) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("AppState.");
@@ -125,7 +125,7 @@ public class Es6Extension {
     _builder.newLine();
     return _builder;
   }
-  
+
   private List<String> paramList(final ClientAttribute it) {
     ArrayList<String> paramList = new ArrayList<String>();
     List<ClientAttribute> _allParentAttributesInclusiveItem = this.allParentAttributesInclusiveItem(it);
@@ -139,7 +139,7 @@ public class Es6Extension {
     }
     return paramList;
   }
-  
+
   private String path(final List<String> paramList) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("[");
@@ -157,7 +157,7 @@ public class Es6Extension {
     _builder.append("]");
     return _builder.toString();
   }
-  
+
   private String stateFunctionName(final ClientAttribute it, final String functionName) {
     boolean _isLocation = it.isLocation();
     if (_isLocation) {
@@ -169,7 +169,7 @@ public class Es6Extension {
     }
     return functionName;
   }
-  
+
   private List<ClientAttribute> allParentAttributesInclusiveItem(final ClientAttribute it) {
     ArrayList<ClientAttribute> attributes = new ArrayList<ClientAttribute>();
     attributes.add(it);
@@ -184,13 +184,13 @@ public class Es6Extension {
     }
     return attributes;
   }
-  
+
   public List<HttpClient> allReferencedHttpClients(final ClientScenario it) {
     ArrayList<HttpClient> list = new ArrayList<HttpClient>();
     this.allReferencedHttpClientsRec(it, list);
     return list;
   }
-  
+
   private void allReferencedHttpClientsRec(final ClientScenario it, final ArrayList<HttpClient> list) {
     EList<ClientWhenThen> _clientWhenThen = it.getClientWhenThen();
     for (final ClientWhenThen whenThenItem : _clientWhenThen) {
@@ -213,7 +213,7 @@ public class Es6Extension {
       }
     }
   }
-  
+
   public CharSequence actionIdName(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -221,7 +221,7 @@ public class Es6Extension {
     _builder.append("ActionIds");
     return _builder;
   }
-  
+
   public Object primitiveValueFrom(final PrimitiveValue it) {
     String _string = it.getString();
     boolean _tripleNotEquals = (_string != null);
@@ -235,7 +235,7 @@ public class Es6Extension {
     }
     return Integer.valueOf(it.getLong());
   }
-  
+
   public Object primitiveParamFrom(final PrimitiveValue it) {
     String _string = it.getString();
     boolean _tripleNotEquals = (_string != null);
@@ -247,7 +247,7 @@ public class Es6Extension {
     }
     return Integer.valueOf(it.getLong());
   }
-  
+
   protected CharSequence _valueFrom(final JsonObjectClient it) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -280,7 +280,7 @@ public class Es6Extension {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   protected CharSequence _valueFrom(final JsonValueClient it) {
     if ((it instanceof StringType)) {
       StringConcatenation _builder = new StringConcatenation();
@@ -337,7 +337,7 @@ public class Es6Extension {
     }
     return null;
   }
-  
+
   public String componentName(final ClientAttribute it) {
     if ((it.isList() || it.isTree())) {
       StringConcatenation _builder = new StringConcatenation();
@@ -351,7 +351,7 @@ public class Es6Extension {
     _builder_1.append(_firstUpper_1);
     return _builder_1.toString();
   }
-  
+
   public String componentContainerName(final ClientAttribute it) {
     if ((it.isList() || it.isTree())) {
       StringConcatenation _builder = new StringConcatenation();
@@ -366,7 +366,7 @@ public class Es6Extension {
     _builder_1.append("Container");
     return _builder_1.toString();
   }
-  
+
   public String importComponentContainer(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -385,7 +385,7 @@ public class Es6Extension {
     }
     return _builder.toString();
   }
-  
+
   public String importComponent(final ClientAttribute it, final String subFolder) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -404,7 +404,7 @@ public class Es6Extension {
     }
     return _builder.toString();
   }
-  
+
   public boolean hasComplexAttribute(final ClientAttribute it) {
     EList<ClientAttribute> _attributes = it.getAttributes();
     for (final ClientAttribute attribute : _attributes) {
@@ -414,7 +414,7 @@ public class Es6Extension {
     }
     return false;
   }
-  
+
   public String keyAttributeName(final ClientAttribute it) {
     EList<ClientAttribute> _attributes = it.getAttributes();
     for (final ClientAttribute attribute : _attributes) {
@@ -425,7 +425,7 @@ public class Es6Extension {
     }
     return "id";
   }
-  
+
   public boolean childrenContain(final ClientAttribute it, final String value) {
     EList<ClientAttribute> _attributes = it.getAttributes();
     for (final ClientAttribute attribute : _attributes) {
@@ -437,7 +437,7 @@ public class Es6Extension {
     }
     return false;
   }
-  
+
   public boolean oneChildIsLocationOrStorage(final ClientAttribute it) {
     EList<ClientAttribute> _attributes = it.getAttributes();
     for (final ClientAttribute attribute : _attributes) {
@@ -455,7 +455,7 @@ public class Es6Extension {
     }
     return false;
   }
-  
+
   public boolean attributesContain(final List<ClientAttribute> it, final ClientAttribute attribute) {
     for (final ClientAttribute parentAttribute : it) {
       String _name = parentAttribute.getName();
@@ -467,11 +467,11 @@ public class Es6Extension {
     }
     return false;
   }
-  
+
   public String depth(final ClientAttribute it, final String prefix) {
     return this.depthRec(it, prefix);
   }
-  
+
   public String depthRec(final ClientAttribute attr, final String prefix) {
     ClientAttribute clientAttribute = attr;
     final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
@@ -481,11 +481,11 @@ public class Es6Extension {
       return prefix;
     }
   }
-  
+
   public String path(final ClientAttribute it) {
     return this.pathRec(it, "");
   }
-  
+
   public String pathRec(final ClientAttribute attr, final String suffix) {
     ClientAttribute clientAttribute = attr;
     final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
@@ -498,7 +498,7 @@ public class Es6Extension {
       return suffix;
     }
   }
-  
+
   public List<UiAction> uniqueActions(final ClientAttribute attribute) {
     ArrayList<UiAction> list = new ArrayList<UiAction>();
     EList<UiAction> _actions = attribute.getActions();
@@ -522,7 +522,7 @@ public class Es6Extension {
     }
     return list;
   }
-  
+
   public boolean contains(final List<UiAction> actions, final UiAction action) {
     for (final UiAction item : actions) {
       String _name = item.getTarget().getName();
@@ -534,11 +534,11 @@ public class Es6Extension {
     }
     return false;
   }
-  
+
   public String stateRefPath(final ClientAttribute it) {
     return this.elementPathRec(it, "");
   }
-  
+
   public Boolean isTag(final ClientAttribute it) {
     if ((((((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput")) || Objects.equal(it.getUiElement(), "CheckBox")) || 
       Objects.equal(it.getUiElement(), "Select")) || Objects.equal(it.getUiElement(), "Button")) || Objects.equal(it.getUiElement(), "Radio"))) {
@@ -546,28 +546,28 @@ public class Es6Extension {
     }
     return Boolean.valueOf(false);
   }
-  
+
   public Boolean isInput(final ClientAttribute it) {
     if ((((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput")) || Objects.equal(it.getUiElement(), "CheckBox")) || Objects.equal(it.getUiElement(), "Radio"))) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
-  
+
   public Boolean isValueInput(final ClientAttribute it) {
     if ((Objects.equal(it.getUiElement(), "TextInput") || Objects.equal(it.getUiElement(), "PasswordInput"))) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
-  
+
   public Boolean isCheckedInput(final ClientAttribute it) {
     if ((Objects.equal(it.getUiElement(), "CheckBox") || Objects.equal(it.getUiElement(), "Radio"))) {
       return Boolean.valueOf(true);
     }
     return Boolean.valueOf(false);
   }
-  
+
   public String inputType(final ClientAttribute it) {
     String _uiElement = it.getUiElement();
     boolean _equals = Objects.equal(_uiElement, "TextInput");
@@ -591,7 +591,7 @@ public class Es6Extension {
     }
     return null;
   }
-  
+
   public Boolean isSelect(final ClientAttribute it) {
     String _uiElement = it.getUiElement();
     boolean _equals = Objects.equal(_uiElement, "Select");
@@ -600,7 +600,7 @@ public class Es6Extension {
     }
     return Boolean.valueOf(false);
   }
-  
+
   public Boolean isButton(final ClientAttribute it) {
     String _uiElement = it.getUiElement();
     boolean _equals = Objects.equal(_uiElement, "Button");
@@ -609,11 +609,11 @@ public class Es6Extension {
     }
     return Boolean.valueOf(false);
   }
-  
+
   public Boolean isComponent(final ClientAttribute it) {
     return Boolean.valueOf(((!it.isNoComponent()) && ((it.getAttributes().size() > 0) || (it.getActions().size() > 0))));
   }
-  
+
   private String elementPathRec(final ClientAttribute attr, final String suffix) {
     ClientAttribute clientAttribute = attr;
     final ClientAttribute parent = this.findNextClientAttributeParent(clientAttribute);
@@ -643,7 +643,7 @@ public class Es6Extension {
       return (_name + _builder_1);
     }
   }
-  
+
   private ClientAttribute findNextClientAttributeParent(final ClientAttribute it) {
     EObject parent = it.eContainer();
     while ((parent != null)) {
@@ -657,7 +657,7 @@ public class Es6Extension {
     }
     return null;
   }
-  
+
   public List<CustomVerification> allVerifications(final ClientScenario it) {
     final ArrayList<CustomVerification> verifications = new ArrayList<CustomVerification>();
     EList<ClientWhenThen> _clientWhenThen = it.getClientWhenThen();
@@ -668,7 +668,7 @@ public class Es6Extension {
     }
     return verifications;
   }
-  
+
   public CharSequence valueFrom(final JsonValueClient it) {
     if (it instanceof JsonObjectClient) {
       return _valueFrom((JsonObjectClient)it);

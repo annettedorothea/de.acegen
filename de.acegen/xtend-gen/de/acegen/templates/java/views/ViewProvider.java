@@ -25,7 +25,7 @@ public class ViewProvider {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateViewProvider() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -65,7 +65,7 @@ public class ViewProvider {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractViewProvider() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

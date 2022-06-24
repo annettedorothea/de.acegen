@@ -32,15 +32,15 @@ public class EventTemplate {
   @Inject
   @Extension
   private AceExtension _aceExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateEventListenerRegistration(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -102,7 +102,7 @@ public class EventTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateEvent() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

@@ -36,30 +36,30 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class Es6Generator {
   @Inject
   private ActionTemplate actionTemplate;
-  
+
   @Inject
   private CommandTemplate commandTemplate;
-  
+
   @Inject
   private EventTemplate eventTemplate;
-  
+
   @Inject
   private AceTemplate aceTemplate;
-  
+
   @Inject
   private ScenarioTemplate scenarioTemplate;
-  
+
   @Inject
   @Extension
   private AceExtension _aceExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   @Inject
   private ReactGenerator reactGenerator;
-  
+
   public void doGenerate(final HttpClient httpClient, final IFileSystemAccess2 fsa) {
     EList<HttpClientAce> _aceOperations = httpClient.getAceOperations();
     for (final HttpClientAce ace : _aceOperations) {

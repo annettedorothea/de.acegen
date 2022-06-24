@@ -27,7 +27,7 @@ public class DropwizardApp {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generate(final AuthUser authUser) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

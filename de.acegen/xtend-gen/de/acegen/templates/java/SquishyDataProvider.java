@@ -25,7 +25,7 @@ public class SquishyDataProvider {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generate() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
