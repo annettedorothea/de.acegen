@@ -64,12 +64,12 @@ class ActionTemplate {
 		
 			«IF getLoadingFlag !== null»
 				preCall() {
-					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: true}''')»
+					«getLoadingFlag.stateFunctionCall("merge", '''{«getLoadingFlag.getName»: true}''')»
 					AppState.stateUpdated();
 				}
 				
 				postCall() {
-					«getLoadingFlag.stateFunctionCall("set", '''{«getLoadingFlag.getName»: false}''')»
+					«getLoadingFlag.stateFunctionCall("merge", '''{«getLoadingFlag.getName»: false}''')»
 					AppState.stateUpdated();
 				}
 			«ENDIF»

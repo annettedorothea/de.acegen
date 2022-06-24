@@ -151,7 +151,7 @@ public class ActionTemplate {
         String _name_2 = it.getLoadingFlag().getName();
         _builder_1.append(_name_2);
         _builder_1.append(": true}");
-        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(_loadingFlag_3, "set", _builder_1.toString());
+        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(_loadingFlag_3, "merge", _builder_1.toString());
         _builder.append(_stateFunctionCall, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -174,7 +174,7 @@ public class ActionTemplate {
         String _name_3 = it.getLoadingFlag().getName();
         _builder_2.append(_name_3);
         _builder_2.append(": false}");
-        CharSequence _stateFunctionCall_1 = this._es6Extension.stateFunctionCall(_loadingFlag_4, "set", _builder_2.toString());
+        CharSequence _stateFunctionCall_1 = this._es6Extension.stateFunctionCall(_loadingFlag_4, "merge", _builder_2.toString());
         _builder.append(_stateFunctionCall_1, "\t\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");

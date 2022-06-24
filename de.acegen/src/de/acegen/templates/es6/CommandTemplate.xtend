@@ -81,33 +81,67 @@ class CommandTemplate {
 					data.outcomes.push("«outcome.getName»");
 				}
 			«ENDFOR»
+			
+			allMandatoryValuesAreSet(data) {
+				«IF getServerCall !== null»
+					«FOR payload : getServerCall.payload»
+						«IF payload.notNull»
+							if (!data.«payload.attribute.name») {
+								console.warn("«abstractCommandName»: «payload.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+					«FOR queryParam : getServerCall.queryParams»
+						«IF queryParam.notNull»
+							if (!data.«queryParam.attribute.name») {
+								console.warn("«abstractCommandName»: «queryParam.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+					«FOR pathParam : getServerCall.pathParams»
+						«IF pathParam.notNull»
+							if (!data.«pathParam.attribute.name») {
+								console.warn("«abstractCommandName»: «pathParam.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+				return true;
+			}
 
 			«IF serverCall !== null»
 				execute(data) {
 				    return new Promise((resolve, reject) => {
-				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
-				    		let payload = {
-				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
-				    		};
-				    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
-				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
-				        «ENDIF»
-						AppUtils.«httpCall»(
-								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
-								data.uuid, 
-								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
-								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
-								 payload«ENDIF»«ENDIF»)
-							.then((«IF serverCall.response.size > 0»response«ENDIF») => {
-								«FOR attribute : serverCall.response»
-									data.«attribute.name» = response.«attribute.name»;
-								«ENDFOR»
-								this.handleResponse(data, resolve, reject);
-							}, (error) => {
-								data.error = error;
-								this.handleError(data, resolve, reject);
-							})
-							.catch(x => reject(x));
+				    	if (this.allMandatoryValuesAreSet(data)) {
+					    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
+					    		let payload = {
+					    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
+					    		};
+					    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
+					    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
+					        «ENDIF»
+							AppUtils.«httpCall»(
+									`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
+									data.uuid, 
+									«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
+									 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
+									 payload«ENDIF»«ENDIF»)
+								.then((«IF serverCall.response.size > 0»response«ENDIF») => {
+									«FOR attribute : serverCall.response»
+										data.«attribute.name» = response.«attribute.name»;
+									«ENDFOR»
+									this.handleResponse(data, resolve, reject);
+								}, (error) => {
+									data.error = error;
+									this.handleError(data, resolve, reject);
+								})
+								.catch(x => reject(x));
+						} else {
+							resolve(data);
+						}
 				    });
 				}
 			«ENDIF»

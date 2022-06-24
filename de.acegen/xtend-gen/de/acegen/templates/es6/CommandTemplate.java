@@ -178,11 +178,127 @@ public class CommandTemplate {
         _builder.newLine();
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("allMandatoryValuesAreSet(data) {");
     _builder.newLine();
     {
       HttpServerAce _serverCall = it.getServerCall();
       boolean _tripleNotEquals_1 = (_serverCall != null);
       if (_tripleNotEquals_1) {
+        {
+          EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
+          for(final AttributeParamRef payload : _payload) {
+            {
+              boolean _isNotNull = payload.isNotNull();
+              if (_isNotNull) {
+                _builder.append("\t\t");
+                _builder.append("if (!data.");
+                String _name_3 = payload.getAttribute().getName();
+                _builder.append(_name_3, "\t\t");
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("console.warn(\"");
+                String _abstractCommandName_1 = this._aceExtension.abstractCommandName(it);
+                _builder.append(_abstractCommandName_1, "\t\t\t");
+                _builder.append(": ");
+                String _name_4 = payload.getAttribute().getName();
+                _builder.append(_name_4, "\t\t\t");
+                _builder.append(" is mandatory but is not set\", data);");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("return false;");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        {
+          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
+          for(final AttributeParamRef queryParam : _queryParams) {
+            {
+              boolean _isNotNull_1 = queryParam.isNotNull();
+              if (_isNotNull_1) {
+                _builder.append("\t\t");
+                _builder.append("if (!data.");
+                String _name_5 = queryParam.getAttribute().getName();
+                _builder.append(_name_5, "\t\t");
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("console.warn(\"");
+                String _abstractCommandName_2 = this._aceExtension.abstractCommandName(it);
+                _builder.append(_abstractCommandName_2, "\t\t\t");
+                _builder.append(": ");
+                String _name_6 = queryParam.getAttribute().getName();
+                _builder.append(_name_6, "\t\t\t");
+                _builder.append(" is mandatory but is not set\", data);");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("return false;");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+        {
+          EList<AttributeParamRef> _pathParams = it.getServerCall().getPathParams();
+          for(final AttributeParamRef pathParam : _pathParams) {
+            {
+              boolean _isNotNull_2 = pathParam.isNotNull();
+              if (_isNotNull_2) {
+                _builder.append("\t\t");
+                _builder.append("if (!data.");
+                String _name_7 = pathParam.getAttribute().getName();
+                _builder.append(_name_7, "\t\t");
+                _builder.append(") {");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("console.warn(\"");
+                String _abstractCommandName_3 = this._aceExtension.abstractCommandName(it);
+                _builder.append(_abstractCommandName_3, "\t\t\t");
+                _builder.append(": ");
+                String _name_8 = pathParam.getAttribute().getName();
+                _builder.append(_name_8, "\t\t\t");
+                _builder.append(" is mandatory but is not set\", data);");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t\t");
+                _builder.append("\t");
+                _builder.append("return false;");
+                _builder.newLine();
+                _builder.append("\t\t");
+                _builder.append("}");
+                _builder.newLine();
+              }
+            }
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.append("return true;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      HttpServerAce _serverCall_1 = it.getServerCall();
+      boolean _tripleNotEquals_2 = (_serverCall_1 != null);
+      if (_tripleNotEquals_2) {
         _builder.append("\t");
         _builder.append("execute(data) {");
         _builder.newLine();
@@ -190,90 +306,94 @@ public class CommandTemplate {
         _builder.append("    ");
         _builder.append("return new Promise((resolve, reject) => {");
         _builder.newLine();
+        _builder.append("\t");
+        _builder.append("    \t");
+        _builder.append("if (this.allMandatoryValuesAreSet(data)) {");
+        _builder.newLine();
         {
           if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
             _builder.append("\t");
-            _builder.append("    \t");
+            _builder.append("\t    \t");
             _builder.append("let payload = {");
             _builder.newLine();
             _builder.append("\t");
-            _builder.append("    \t");
+            _builder.append("\t    \t");
             _builder.append("\t");
             {
-              EList<AttributeParamRef> _payload = it.getServerCall().getPayload();
+              EList<AttributeParamRef> _payload_1 = it.getServerCall().getPayload();
               boolean _hasElements = false;
-              for(final AttributeParamRef payload : _payload) {
+              for(final AttributeParamRef payload_1 : _payload_1) {
                 if (!_hasElements) {
                   _hasElements = true;
                 } else {
-                  _builder.appendImmediate(",\n", "\t    \t\t");
+                  _builder.appendImmediate(",\n", "\t\t    \t\t");
                 }
-                String _name_3 = payload.getAttribute().getName();
-                _builder.append(_name_3, "\t    \t\t");
+                String _name_9 = payload_1.getAttribute().getName();
+                _builder.append(_name_9, "\t\t    \t\t");
                 _builder.append(" : data.");
-                String _name_4 = payload.getAttribute().getName();
-                _builder.append(_name_4, "\t    \t\t");
+                String _name_10 = payload_1.getAttribute().getName();
+                _builder.append(_name_10, "\t\t    \t\t");
               }
             }
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("    \t");
+            _builder.append("\t    \t");
             _builder.append("};");
             _builder.newLine();
           } else {
             if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue())) {
               _builder.append("\t");
-              _builder.append("    \t");
+              _builder.append("\t    \t");
               _builder.append("const formData = data.");
               String _formDataAttributeName = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
-              _builder.append(_formDataAttributeName, "\t    \t");
+              _builder.append(_formDataAttributeName, "\t\t    \t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
             }
           }
         }
         _builder.append("\t");
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
         _builder.append("AppUtils.");
         String _httpCall = this._aceExtension.httpCall(it);
-        _builder.append(_httpCall, "\t\t\t");
+        _builder.append(_httpCall, "\t\t\t\t");
         _builder.append("(");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("`");
         String _httpUrl = this._aceExtension.httpUrl(it);
-        _builder.append(_httpUrl, "\t\t\t\t\t");
+        _builder.append(_httpUrl, "\t\t\t\t\t\t");
         {
-          EList<AttributeParamRef> _queryParams = it.getServerCall().getQueryParams();
+          EList<AttributeParamRef> _queryParams_1 = it.getServerCall().getQueryParams();
           boolean _hasElements_1 = false;
-          for(final AttributeParamRef queryParam : _queryParams) {
+          for(final AttributeParamRef queryParam_1 : _queryParams_1) {
             if (!_hasElements_1) {
               _hasElements_1 = true;
-              _builder.append("?", "\t\t\t\t\t");
+              _builder.append("?", "\t\t\t\t\t\t");
             } else {
-              _builder.appendImmediate("&", "\t\t\t\t\t");
+              _builder.appendImmediate("&", "\t\t\t\t\t\t");
             }
             _builder.append("${data.");
-            String _name_5 = queryParam.getAttribute().getName();
-            _builder.append(_name_5, "\t\t\t\t\t");
+            String _name_11 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_11, "\t\t\t\t\t\t");
             _builder.append(" ? `");
-            String _name_6 = queryParam.getAttribute().getName();
-            _builder.append(_name_6, "\t\t\t\t\t");
+            String _name_12 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_12, "\t\t\t\t\t\t");
             _builder.append("=${data.");
-            String _name_7 = queryParam.getAttribute().getName();
-            _builder.append(_name_7, "\t\t\t\t\t");
+            String _name_13 = queryParam_1.getAttribute().getName();
+            _builder.append(_name_13, "\t\t\t\t\t\t");
             _builder.append("}` : \"\"}");
           }
         }
         _builder.append("`, ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("data.uuid, ");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         {
           boolean _isAuthorize = it.getServerCall().isAuthorize();
           if (_isAuthorize) {
@@ -290,11 +410,11 @@ public class CommandTemplate {
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
-                _builder.append("\t\t\t\t");
+                _builder.append("\t\t\t\t\t");
                 _builder.append(" ");
                 _builder.append("formData, \"");
                 String _formDataAttributeName_1 = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
-                _builder.append(_formDataAttributeName_1, "\t\t\t\t\t ");
+                _builder.append(_formDataAttributeName_1, "\t\t\t\t\t\t ");
                 _builder.append("\"");
               } else {
                 int _size = it.getServerCall().getPayload().size();
@@ -303,7 +423,7 @@ public class CommandTemplate {
                   _builder.append(",");
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
-                  _builder.append("\t\t\t\t");
+                  _builder.append("\t\t\t\t\t");
                   _builder.append(" ");
                   _builder.append("payload");
                 }
@@ -314,7 +434,7 @@ public class CommandTemplate {
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append(".then((");
         {
           int _size_1 = it.getServerCall().getResponse().size();
@@ -329,40 +449,52 @@ public class CommandTemplate {
           EList<Attribute> _response = it.getServerCall().getResponse();
           for(final Attribute attribute : _response) {
             _builder.append("\t");
-            _builder.append("\t\t\t\t");
+            _builder.append("\t\t\t\t\t");
             _builder.append("data.");
-            String _name_8 = attribute.getName();
-            _builder.append(_name_8, "\t\t\t\t\t");
+            String _name_14 = attribute.getName();
+            _builder.append(_name_14, "\t\t\t\t\t\t");
             _builder.append(" = response.");
-            String _name_9 = attribute.getName();
-            _builder.append(_name_9, "\t\t\t\t\t");
+            String _name_15 = attribute.getName();
+            _builder.append(_name_15, "\t\t\t\t\t\t");
             _builder.append(";");
             _builder.newLineIfNotEmpty();
           }
         }
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("this.handleResponse(data, resolve, reject);");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append("}, (error) => {");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("data.error = error;");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t\t");
+        _builder.append("\t\t\t\t\t");
         _builder.append("this.handleError(data, resolve, reject);");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append("})");
         _builder.newLine();
         _builder.append("\t");
-        _builder.append("\t\t\t");
+        _builder.append("\t\t\t\t");
         _builder.append(".catch(x => reject(x));");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("} else {");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t\t");
+        _builder.append("resolve(data);");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t\t");
+        _builder.append("}");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("    ");
@@ -394,15 +526,15 @@ public class CommandTemplate {
           if (((outcome_1.getListeners().size() > 0) || (outcome_1.getTriggerdAceOperations().size() > 0))) {
             _builder.append("\t\t\t");
             _builder.append("if (data.outcomes.includes(\"");
-            String _name_10 = outcome_1.getName();
-            _builder.append(_name_10, "\t\t\t");
+            String _name_16 = outcome_1.getName();
+            _builder.append(_name_16, "\t\t\t");
             _builder.append("\")) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t\t");
             _builder.append("\t");
             _builder.append("events.push(new Event(\'");
-            String _name_11 = es6.getName();
-            _builder.append(_name_11, "\t\t\t\t");
+            String _name_17 = es6.getName();
+            _builder.append(_name_17, "\t\t\t\t");
             _builder.append(".");
             String _eventName = this._aceExtension.eventName(it, outcome_1);
             _builder.append(_eventName, "\t\t\t\t");
@@ -449,11 +581,11 @@ public class CommandTemplate {
                         _builder.append("\t\t\t");
                         _builder.append("\t");
                         _builder.append("\t\t\t");
-                        String _name_12 = inputParam.getName();
-                        _builder.append(_name_12, "\t\t\t\t\t\t\t");
+                        String _name_18 = inputParam.getName();
+                        _builder.append(_name_18, "\t\t\t\t\t\t\t");
                         _builder.append(": data.");
-                        String _name_13 = inputParam.getName();
-                        _builder.append(_name_13, "\t\t\t\t\t\t\t");
+                        String _name_19 = inputParam.getName();
+                        _builder.append(_name_19, "\t\t\t\t\t\t\t");
                         _builder.newLineIfNotEmpty();
                       }
                     }
@@ -499,11 +631,11 @@ public class CommandTemplate {
                             _builder.append("\t\t\t");
                             _builder.append("\t");
                             _builder.append("\t\t");
-                            String _name_14 = inputParam_1.getName();
-                            _builder.append(_name_14, "\t\t\t\t\t\t");
+                            String _name_20 = inputParam_1.getName();
+                            _builder.append(_name_20, "\t\t\t\t\t\t");
                             _builder.append(": data.");
-                            String _name_15 = inputParam_1.getName();
-                            _builder.append(_name_15, "\t\t\t\t\t\t");
+                            String _name_21 = inputParam_1.getName();
+                            _builder.append(_name_21, "\t\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
@@ -547,11 +679,11 @@ public class CommandTemplate {
                             _builder.append("\t\t\t");
                             _builder.append("\t");
                             _builder.append("\t\t");
-                            String _name_16 = inputParam_2.getName();
-                            _builder.append(_name_16, "\t\t\t\t\t\t");
+                            String _name_22 = inputParam_2.getName();
+                            _builder.append(_name_22, "\t\t\t\t\t\t");
                             _builder.append(": data.");
-                            String _name_17 = inputParam_2.getName();
-                            _builder.append(_name_17, "\t\t\t\t\t\t");
+                            String _name_23 = inputParam_2.getName();
+                            _builder.append(_name_23, "\t\t\t\t\t\t");
                             _builder.newLineIfNotEmpty();
                           }
                         }
