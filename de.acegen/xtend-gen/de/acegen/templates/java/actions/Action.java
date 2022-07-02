@@ -548,6 +548,9 @@ public class Action {
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
     _builder.newLine();
+    _builder.append("import java.time.ZoneOffset;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
     _builder.append("import org.slf4j.LoggerFactory;");
@@ -630,7 +633,7 @@ public class Action {
     _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("data.setSystemTime(LocalDateTime.now());");
+    _builder.append("data.setSystemTime(LocalDateTime.now(ZoneOffset.UTC));");
     _builder.newLine();
     _builder.append("\t\t\t");
     CharSequence _addActionToTimeline = this.addActionToTimeline();
@@ -691,6 +694,9 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import java.time.LocalDateTime;");
+    _builder.newLine();
+    _builder.append("import java.time.ZoneOffset;");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("import org.slf4j.Logger;");
     _builder.newLine();
@@ -778,7 +784,7 @@ public class Action {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("data.setSystemTime(LocalDateTime.now());");
+    _builder.append("data.setSystemTime(LocalDateTime.now(ZoneOffset.UTC));");
     _builder.newLine();
     _builder.append("\t\t\t");
     CharSequence _addActionToTimeline = this.addActionToTimeline();
