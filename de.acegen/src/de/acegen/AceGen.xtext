@@ -37,7 +37,7 @@ HttpClientAce:
 		('(' input += Input (',' input += Input)* ')' )?
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
+	('set' 'loading' loadingIndicators += [ClientAttribute | QualifiedName] (',' loadingIndicators += [ClientAttribute | QualifiedName])* )? 
 	(outcomes += HttpClientOutcome)*
 ;
 

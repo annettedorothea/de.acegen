@@ -43,7 +43,7 @@ class ActionTemplate {
 		«IF outcomes.size > 0»
 			import «commandName» from "../../../src/«es6.getName»/commands/«commandName»";
 		«ENDIF»
-		«IF getLoadingFlag !== null»
+		«IF loadingIndicators.size > 0»
 			import * as AppState from "../../../src/AppState";
 		«ENDIF»
 		
@@ -51,7 +51,7 @@ class ActionTemplate {
 		
 		    constructor() {
 		        super('«es6.getName».«actionName»');
-				«IF getLoadingFlag !== null»
+				«IF loadingIndicators.size > 0»
 					this.postCall = this.postCall.bind(this);
 				«ENDIF»
 			}
@@ -62,14 +62,18 @@ class ActionTemplate {
 				}
 			«ENDIF»
 		
-			«IF getLoadingFlag !== null»
+			«IF loadingIndicators.size > 0»
 				preCall() {
-					«getLoadingFlag.stateFunctionCall("merge", '''{«getLoadingFlag.getName»: true}''')»
+					«FOR loadingIndicator: loadingIndicators»
+						«loadingIndicator.stateFunctionCall("merge", '''{«loadingIndicator.getName»: true}''')»
+					«ENDFOR»
 					AppState.stateUpdated();
 				}
 				
 				postCall() {
-					«getLoadingFlag.stateFunctionCall("merge", '''{«getLoadingFlag.getName»: false}''')»
+					«FOR loadingIndicator: loadingIndicators»
+						«loadingIndicator.stateFunctionCall("merge", '''{«loadingIndicator.getName»: false}''')»
+					«ENDFOR»
 					AppState.stateUpdated();
 				}
 			«ENDIF»

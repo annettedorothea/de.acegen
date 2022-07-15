@@ -25,7 +25,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="refs" upperBound="-1" eType="#//FromAppStateRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serverCall" eType="#//HttpServerAce"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingFlag" eType="#//ClientAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingIndicators" unique="false"
+        upperBound="-1" eType="#//ClientAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outcomes" upperBound="-1"
         eType="#//HttpClientOutcome" containment="true"/>
   </eClassifiers>

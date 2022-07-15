@@ -29,6 +29,7 @@ class JsxTemplate {
 					«ENDFOR»
 					placeholder="«name»"
 					className="text-input"
+					{...props}
 					«FOR action : actions»
 						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
@@ -44,6 +45,7 @@ class JsxTemplate {
 						«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»}
 					«ENDFOR»
 					className="select"
+					{...props}
 					«FOR action : actions»
 						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
@@ -56,6 +58,7 @@ class JsxTemplate {
 						«attribute.name.toFirstLower»={props.«attribute.name.toFirstLower»}
 					«ENDFOR»
 					className="button"
+					{...props}
 					«FOR action : actions»
 						«action.name»={(event) => props.«action.name»(«FOR param: action.target.input SEPARATOR ','»«IF param.name == "value"»event.target.value«ELSEIF param.name == "keyCode"»event.keyCode«ELSE»props.«param.name»«ENDIF»«ENDFOR»)}
 					«ENDFOR»
