@@ -77,6 +77,10 @@ public class JsxTemplate {
         _builder.append("\t");
         _builder.append("className=\"text-input\"");
         _builder.newLine();
+        _builder.append("\t");
+        _builder.append("\t");
+        _builder.append("{...props}");
+        _builder.newLine();
         {
           EList<UiAction> _actions = it.getActions();
           for(final UiAction action : _actions) {
@@ -166,6 +170,10 @@ public class JsxTemplate {
           _builder.append("\t");
           _builder.append("className=\"select\"");
           _builder.newLine();
+          _builder.append("\t");
+          _builder.append("\t");
+          _builder.append("{...props}");
+          _builder.newLine();
           {
             EList<UiAction> _actions_1 = it.getActions();
             for(final UiAction action_1 : _actions_1) {
@@ -242,6 +250,10 @@ public class JsxTemplate {
             _builder.append("\t");
             _builder.append("\t");
             _builder.append("className=\"button\"");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("\t");
+            _builder.append("{...props}");
             _builder.newLine();
             {
               EList<UiAction> _actions_2 = it.getActions();

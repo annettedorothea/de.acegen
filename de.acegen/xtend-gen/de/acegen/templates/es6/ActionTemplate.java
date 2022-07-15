@@ -76,9 +76,9 @@ public class ActionTemplate {
       }
     }
     {
-      ClientAttribute _loadingFlag = it.getLoadingFlag();
-      boolean _tripleNotEquals = (_loadingFlag != null);
-      if (_tripleNotEquals) {
+      int _size_1 = it.getLoadingIndicators().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
         _builder.append("import * as AppState from \"../../../src/AppState\";");
         _builder.newLine();
       }
@@ -103,9 +103,9 @@ public class ActionTemplate {
     _builder.append("\');");
     _builder.newLineIfNotEmpty();
     {
-      ClientAttribute _loadingFlag_1 = it.getLoadingFlag();
-      boolean _tripleNotEquals_1 = (_loadingFlag_1 != null);
-      if (_tripleNotEquals_1) {
+      int _size_2 = it.getLoadingIndicators().size();
+      boolean _greaterThan_2 = (_size_2 > 0);
+      if (_greaterThan_2) {
         _builder.append("\t\t");
         _builder.append("this.postCall = this.postCall.bind(this);");
         _builder.newLine();
@@ -117,9 +117,9 @@ public class ActionTemplate {
     _builder.append("\t\t");
     _builder.newLine();
     {
-      int _size_1 = it.getOutcomes().size();
-      boolean _greaterThan_1 = (_size_1 > 0);
-      if (_greaterThan_1) {
+      int _size_3 = it.getOutcomes().size();
+      boolean _greaterThan_3 = (_size_3 > 0);
+      if (_greaterThan_3) {
         _builder.append("\t");
         _builder.append("getCommand() {");
         _builder.newLine();
@@ -137,23 +137,27 @@ public class ActionTemplate {
     }
     _builder.newLine();
     {
-      ClientAttribute _loadingFlag_2 = it.getLoadingFlag();
-      boolean _tripleNotEquals_2 = (_loadingFlag_2 != null);
-      if (_tripleNotEquals_2) {
+      int _size_4 = it.getLoadingIndicators().size();
+      boolean _greaterThan_4 = (_size_4 > 0);
+      if (_greaterThan_4) {
         _builder.append("\t");
         _builder.append("preCall() {");
         _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        ClientAttribute _loadingFlag_3 = it.getLoadingFlag();
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("{");
-        String _name_2 = it.getLoadingFlag().getName();
-        _builder_1.append(_name_2);
-        _builder_1.append(": true}");
-        CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(_loadingFlag_3, "merge", _builder_1.toString());
-        _builder.append(_stateFunctionCall, "\t\t");
-        _builder.newLineIfNotEmpty();
+        {
+          EList<ClientAttribute> _loadingIndicators = it.getLoadingIndicators();
+          for(final ClientAttribute loadingIndicator : _loadingIndicators) {
+            _builder.append("\t");
+            _builder.append("\t");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("{");
+            String _name_2 = loadingIndicator.getName();
+            _builder_1.append(_name_2);
+            _builder_1.append(": true}");
+            CharSequence _stateFunctionCall = this._es6Extension.stateFunctionCall(loadingIndicator, "merge", _builder_1.toString());
+            _builder.append(_stateFunctionCall, "\t\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.stateUpdated();");
@@ -166,17 +170,21 @@ public class ActionTemplate {
         _builder.append("\t");
         _builder.append("postCall() {");
         _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        ClientAttribute _loadingFlag_4 = it.getLoadingFlag();
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("{");
-        String _name_3 = it.getLoadingFlag().getName();
-        _builder_2.append(_name_3);
-        _builder_2.append(": false}");
-        CharSequence _stateFunctionCall_1 = this._es6Extension.stateFunctionCall(_loadingFlag_4, "merge", _builder_2.toString());
-        _builder.append(_stateFunctionCall_1, "\t\t");
-        _builder.newLineIfNotEmpty();
+        {
+          EList<ClientAttribute> _loadingIndicators_1 = it.getLoadingIndicators();
+          for(final ClientAttribute loadingIndicator_1 : _loadingIndicators_1) {
+            _builder.append("\t");
+            _builder.append("\t");
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("{");
+            String _name_3 = loadingIndicator_1.getName();
+            _builder_2.append(_name_3);
+            _builder_2.append(": false}");
+            CharSequence _stateFunctionCall_1 = this._es6Extension.stateFunctionCall(loadingIndicator_1, "merge", _builder_2.toString());
+            _builder.append(_stateFunctionCall_1, "\t\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("AppState.stateUpdated();");
