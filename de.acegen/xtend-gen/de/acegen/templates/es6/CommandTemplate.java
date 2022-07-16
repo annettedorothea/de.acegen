@@ -1422,7 +1422,7 @@ public class CommandTemplate {
     _builder.append("    ");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("executeCommand(data) {");
+    _builder.append("executeCommand(data, postCall) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("this.initCommandData(data);");
@@ -1453,6 +1453,9 @@ public class CommandTemplate {
     _builder.newLine();
     _builder.append("\t\t\t    ");
     _builder.append("this.execute(data).then((data) => {");
+    _builder.newLine();
+    _builder.append("\t\t\t    \t");
+    _builder.append("postCall();");
     _builder.newLine();
     _builder.append("\t\t\t        ");
     _builder.append("this.publishEvents(data).then(resolve);");

@@ -397,7 +397,7 @@ class CommandTemplate {
 		
 		export default class AsynchronousCommand extends Command {
 		    
-		    executeCommand(data) {
+		    executeCommand(data, postCall) {
 				this.initCommandData(data);
 		        ACEController.addItemToTimeLine({
 					command: {
@@ -408,6 +408,7 @@ class CommandTemplate {
 		        return new Promise((resolve, reject) => {
 					if (this.validateCommandData(data)) {
 					    this.execute(data).then((data) => {
+					    	postCall();
 					        this.publishEvents(data).then(resolve);
 					    }, (error) => {
 					        reject(error);

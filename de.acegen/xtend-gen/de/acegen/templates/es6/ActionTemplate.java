@@ -548,10 +548,7 @@ public class ActionTemplate {
     _builder.append("let command = this.getCommand();");
     _builder.newLine();
     _builder.append("            ");
-    _builder.append("command.executeCommand(data).then(() => {");
-    _builder.newLine();
-    _builder.append("                ");
-    _builder.append("this.postCall();");
+    _builder.append("command.executeCommand(data, this.postCall).then(() => {");
     _builder.newLine();
     _builder.append("                ");
     _builder.append("resolve();");
