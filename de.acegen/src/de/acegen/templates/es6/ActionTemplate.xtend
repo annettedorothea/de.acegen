@@ -198,6 +198,12 @@ class ActionTemplate {
 		            this.applyAction(data).then(
 		                resolve,
 		                (error) => {
+							ACEController.addItemToTimeLine({
+								error: {
+									actionName: this.actionName,
+									error
+								}
+							});
 		                    AppUtils.displayUnexpectedError(error);
 		                }
 		            );
@@ -261,6 +267,12 @@ class ActionTemplate {
 			    try {
 			        this.applyAction(data);
 			    } catch (error) {
+					ACEController.addItemToTimeLine({
+						error: {
+							actionName: this.actionName,
+							error
+						}
+					});
 			        AppUtils.displayUnexpectedError(error);
 			    }
 			}
