@@ -523,9 +523,6 @@ public class ActionTemplate {
     _builder.append("error: {");
     _builder.newLine();
     _builder.append("\t\t\t\t\t\t\t");
-    _builder.append("actionName: this.actionName,");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t\t\t");
     _builder.append("error");
     _builder.newLine();
     _builder.append("\t\t\t\t\t\t");
@@ -695,9 +692,6 @@ public class ActionTemplate {
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("error: {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t\t");
-    _builder.append("actionName: this.actionName,");
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
     _builder.append("error");

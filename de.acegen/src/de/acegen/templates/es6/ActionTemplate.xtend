@@ -200,7 +200,6 @@ class ActionTemplate {
 		                (error) => {
 							ACEController.addItemToTimeLine({
 								error: {
-									actionName: this.actionName,
 									error
 								}
 							});
@@ -269,7 +268,6 @@ class ActionTemplate {
 			    } catch (error) {
 					ACEController.addItemToTimeLine({
 						error: {
-							actionName: this.actionName,
 							error
 						}
 					});
