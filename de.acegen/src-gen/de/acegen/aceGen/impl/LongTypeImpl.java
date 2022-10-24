@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.impl.LongTypeImpl#isMinus <em>Minus</em>}</li>
  *   <li>{@link de.acegen.aceGen.impl.LongTypeImpl#getLong <em>Long</em>}</li>
  * </ul>
  *
@@ -27,6 +28,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class LongTypeImpl extends JsonValueClientImpl implements LongType
 {
+  /**
+   * The default value of the '{@link #isMinus() <em>Minus</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMinus()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MINUS_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMinus() <em>Minus</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMinus()
+   * @generated
+   * @ordered
+   */
+  protected boolean minus = MINUS_EDEFAULT;
+
   /**
    * The default value of the '{@link #getLong() <em>Long</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -74,6 +95,31 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
    * @generated
    */
   @Override
+  public boolean isMinus()
+  {
+    return minus;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setMinus(boolean newMinus)
+  {
+    boolean oldMinus = minus;
+    minus = newMinus;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AceGenPackage.LONG_TYPE__MINUS, oldMinus, minus));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public int getLong()
   {
     return long_;
@@ -103,6 +149,8 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
   {
     switch (featureID)
     {
+      case AceGenPackage.LONG_TYPE__MINUS:
+        return isMinus();
       case AceGenPackage.LONG_TYPE__LONG:
         return getLong();
     }
@@ -119,6 +167,9 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
   {
     switch (featureID)
     {
+      case AceGenPackage.LONG_TYPE__MINUS:
+        setMinus((Boolean)newValue);
+        return;
       case AceGenPackage.LONG_TYPE__LONG:
         setLong((Integer)newValue);
         return;
@@ -136,6 +187,9 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
   {
     switch (featureID)
     {
+      case AceGenPackage.LONG_TYPE__MINUS:
+        setMinus(MINUS_EDEFAULT);
+        return;
       case AceGenPackage.LONG_TYPE__LONG:
         setLong(LONG_EDEFAULT);
         return;
@@ -153,6 +207,8 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
   {
     switch (featureID)
     {
+      case AceGenPackage.LONG_TYPE__MINUS:
+        return minus != MINUS_EDEFAULT;
       case AceGenPackage.LONG_TYPE__LONG:
         return long_ != LONG_EDEFAULT;
     }
@@ -170,7 +226,9 @@ public class LongTypeImpl extends JsonValueClientImpl implements LongType
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (long: ");
+    result.append(" (minus: ");
+    result.append(minus);
+    result.append(", long: ");
     result.append(long_);
     result.append(')');
     return result.toString();

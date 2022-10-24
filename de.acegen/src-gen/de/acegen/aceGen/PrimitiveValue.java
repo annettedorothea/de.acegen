@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.acegen.aceGen.PrimitiveValue#getString <em>String</em>}</li>
+ *   <li>{@link de.acegen.aceGen.PrimitiveValue#isMinus <em>Minus</em>}</li>
  *   <li>{@link de.acegen.aceGen.PrimitiveValue#getLong <em>Long</em>}</li>
  * </ul>
  *
@@ -45,6 +46,28 @@ public interface PrimitiveValue extends EObject
    * @generated
    */
   void setString(String value);
+
+  /**
+   * Returns the value of the '<em><b>Minus</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Minus</em>' attribute.
+   * @see #setMinus(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getPrimitiveValue_Minus()
+   * @model
+   * @generated
+   */
+  boolean isMinus();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.PrimitiveValue#isMinus <em>Minus</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Minus</em>' attribute.
+   * @see #isMinus()
+   * @generated
+   */
+  void setMinus(boolean value);
 
   /**
    * Returns the value of the '<em><b>Long</b></em>' attribute.

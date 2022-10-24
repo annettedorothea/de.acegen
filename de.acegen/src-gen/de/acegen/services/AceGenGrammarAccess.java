@@ -3793,19 +3793,31 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	public class LongTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.LongType");
-		private final Assignment cLongAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cLongINTTerminalRuleCall_0 = (RuleCall)cLongAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cMinusAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cMinusHyphenMinusKeyword_0_0 = (Keyword)cMinusAssignment_0.eContents().get(0);
+		private final Assignment cLongAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLongINTTerminalRuleCall_1_0 = (RuleCall)cLongAssignment_1.eContents().get(0);
 		
 		//LongType:
-		//    long = INT
+		//    minus ?= '-'? long = INT
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//minus ?= '-'? long = INT
+		public Group getGroup() { return cGroup; }
+		
+		//minus ?= '-'?
+		public Assignment getMinusAssignment_0() { return cMinusAssignment_0; }
+		
+		//'-'
+		public Keyword getMinusHyphenMinusKeyword_0_0() { return cMinusHyphenMinusKeyword_0_0; }
+		
 		//long = INT
-		public Assignment getLongAssignment() { return cLongAssignment; }
+		public Assignment getLongAssignment_1() { return cLongAssignment_1; }
 		
 		//INT
-		public RuleCall getLongINTTerminalRuleCall_0() { return cLongINTTerminalRuleCall_0; }
+		public RuleCall getLongINTTerminalRuleCall_1_0() { return cLongINTTerminalRuleCall_1_0; }
 	}
 	public class JsonBooleanElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.acegen.AceGen.JsonBoolean");
@@ -3831,15 +3843,18 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cStringAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
 		private final RuleCall cStringSTRINGTerminalRuleCall_0_0 = (RuleCall)cStringAssignment_0.eContents().get(0);
-		private final Assignment cLongAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cLongINTTerminalRuleCall_1_0 = (RuleCall)cLongAssignment_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Assignment cMinusAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final Keyword cMinusHyphenMinusKeyword_1_0_0 = (Keyword)cMinusAssignment_1_0.eContents().get(0);
+		private final Assignment cLongAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cLongINTTerminalRuleCall_1_1_0 = (RuleCall)cLongAssignment_1_1.eContents().get(0);
 		
 		//PrimitiveValue:
-		//    string = STRING | long = INT
+		//    string = STRING | ( minus ?= '-'? long =  INT)
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//string = STRING | long = INT
+		//string = STRING | ( minus ?= '-'? long =  INT)
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//string = STRING
@@ -3848,11 +3863,20 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//STRING
 		public RuleCall getStringSTRINGTerminalRuleCall_0_0() { return cStringSTRINGTerminalRuleCall_0_0; }
 		
-		//long = INT
-		public Assignment getLongAssignment_1() { return cLongAssignment_1; }
+		//( minus ?= '-'? long =  INT)
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//minus ?= '-'?
+		public Assignment getMinusAssignment_1_0() { return cMinusAssignment_1_0; }
+		
+		//'-'
+		public Keyword getMinusHyphenMinusKeyword_1_0_0() { return cMinusHyphenMinusKeyword_1_0_0; }
+		
+		//long =  INT
+		public Assignment getLongAssignment_1_1() { return cLongAssignment_1_1; }
 		
 		//INT
-		public RuleCall getLongINTTerminalRuleCall_1_0() { return cLongINTTerminalRuleCall_1_0; }
+		public RuleCall getLongINTTerminalRuleCall_1_1_0() { return cLongINTTerminalRuleCall_1_1_0; }
 	}
 	
 	
@@ -4881,7 +4905,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//LongType:
-	//    long = INT
+	//    minus ?= '-'? long = INT
 	//;
 	public LongTypeElements getLongTypeAccess() {
 		return pLongType;
@@ -4902,7 +4926,7 @@ public class AceGenGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//PrimitiveValue:
-	//    string = STRING | long = INT
+	//    string = STRING | ( minus ?= '-'? long =  INT)
 	//;
 	public PrimitiveValueElements getPrimitiveValueAccess() {
 		return pPrimitiveValue;

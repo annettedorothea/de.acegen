@@ -971,6 +971,12 @@ public class AttributeExtension {
         } else {
           if ((it instanceof LongType)) {
             StringConcatenation _builder_1 = new StringConcatenation();
+            {
+              boolean _isMinus = ((LongType)it).isMinus();
+              if (_isMinus) {
+                _builder_1.append("-");
+              }
+            }
             int _long = ((LongType)it).getLong();
             _builder_1.append(_long);
             return _builder_1;
@@ -1126,6 +1132,11 @@ public class AttributeExtension {
       _builder_2.append(returnString);
       _builder_2.append("\"");
       return _builder_2.toString();
+    }
+    boolean _isMinus = it.isMinus();
+    if (_isMinus) {
+      int _long = it.getLong();
+      return Integer.valueOf((_long * (-1)));
     }
     return Integer.valueOf(it.getLong());
   }

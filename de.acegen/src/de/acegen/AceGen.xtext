@@ -396,15 +396,16 @@ UndefinedType:
 ;
 
 LongType:
-	long = INT
+	minus ?= '-'? long = INT
 ;
 
 JsonBoolean:
   'true' | 'false';
 
 PrimitiveValue:
-	string = STRING | long = INT
+	string = STRING | ( minus ?= '-'? long =  INT)
 ;
+
 
 /******* S.D.G. *******/
 	

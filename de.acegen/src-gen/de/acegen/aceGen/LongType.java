@@ -13,6 +13,7 @@ package de.acegen.aceGen;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.acegen.aceGen.LongType#isMinus <em>Minus</em>}</li>
  *   <li>{@link de.acegen.aceGen.LongType#getLong <em>Long</em>}</li>
  * </ul>
  *
@@ -22,6 +23,28 @@ package de.acegen.aceGen;
  */
 public interface LongType extends JsonValueClient, JsonValue
 {
+  /**
+   * Returns the value of the '<em><b>Minus</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Minus</em>' attribute.
+   * @see #setMinus(boolean)
+   * @see de.acegen.aceGen.AceGenPackage#getLongType_Minus()
+   * @model
+   * @generated
+   */
+  boolean isMinus();
+
+  /**
+   * Sets the value of the '{@link de.acegen.aceGen.LongType#isMinus <em>Minus</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Minus</em>' attribute.
+   * @see #isMinus()
+   * @generated
+   */
+  void setMinus(boolean value);
+
   /**
    * Returns the value of the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->

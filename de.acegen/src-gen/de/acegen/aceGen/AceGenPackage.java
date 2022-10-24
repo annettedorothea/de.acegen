@@ -2947,13 +2947,22 @@ public interface AceGenPackage extends EPackage
   int LONG_TYPE = 62;
 
   /**
+   * The feature id for the '<em><b>Minus</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LONG_TYPE__MINUS = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LONG_TYPE__LONG = JSON_VALUE_CLIENT_FEATURE_COUNT + 0;
+  int LONG_TYPE__LONG = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Long Type</em>' class.
@@ -2962,7 +2971,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LONG_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 1;
+  int LONG_TYPE_FEATURE_COUNT = JSON_VALUE_CLIENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.acegen.aceGen.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
@@ -2984,13 +2993,22 @@ public interface AceGenPackage extends EPackage
   int PRIMITIVE_VALUE__STRING = 0;
 
   /**
+   * The feature id for the '<em><b>Minus</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_VALUE__MINUS = 1;
+
+  /**
    * The feature id for the '<em><b>Long</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMITIVE_VALUE__LONG = 1;
+  int PRIMITIVE_VALUE__LONG = 2;
 
   /**
    * The number of structural features of the '<em>Primitive Value</em>' class.
@@ -2999,7 +3017,7 @@ public interface AceGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIMITIVE_VALUE_FEATURE_COUNT = 2;
+  int PRIMITIVE_VALUE_FEATURE_COUNT = 3;
 
 
   /**
@@ -5492,6 +5510,17 @@ public interface AceGenPackage extends EPackage
   EClass getLongType();
 
   /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.LongType#isMinus <em>Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Minus</em>'.
+   * @see de.acegen.aceGen.LongType#isMinus()
+   * @see #getLongType()
+   * @generated
+   */
+  EAttribute getLongType_Minus();
+
+  /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.LongType#getLong <em>Long</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5522,6 +5551,17 @@ public interface AceGenPackage extends EPackage
    * @generated
    */
   EAttribute getPrimitiveValue_String();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#isMinus <em>Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Minus</em>'.
+   * @see de.acegen.aceGen.PrimitiveValue#isMinus()
+   * @see #getPrimitiveValue()
+   * @generated
+   */
+  EAttribute getPrimitiveValue_Minus();
 
   /**
    * Returns the meta object for the attribute '{@link de.acegen.aceGen.PrimitiveValue#getLong <em>Long</em>}'.
@@ -7540,6 +7580,14 @@ public interface AceGenPackage extends EPackage
     EClass LONG_TYPE = eINSTANCE.getLongType();
 
     /**
+     * The meta object literal for the '<em><b>Minus</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LONG_TYPE__MINUS = eINSTANCE.getLongType_Minus();
+
+    /**
      * The meta object literal for the '<em><b>Long</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7564,6 +7612,14 @@ public interface AceGenPackage extends EPackage
      * @generated
      */
     EAttribute PRIMITIVE_VALUE__STRING = eINSTANCE.getPrimitiveValue_String();
+
+    /**
+     * The meta object literal for the '<em><b>Minus</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_VALUE__MINUS = eINSTANCE.getPrimitiveValue_Minus();
 
     /**
      * The meta object literal for the '<em><b>Long</b></em>' attribute feature.

@@ -173,6 +173,8 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getJsonArrayAccess().getGroup(), "rule__JsonArray__Group__0");
 			builder.put(grammarAccess.getJsonArrayAccess().getGroup_3(), "rule__JsonArray__Group_3__0");
 			builder.put(grammarAccess.getJsonDateTimeAccess().getGroup(), "rule__JsonDateTime__Group__0");
+			builder.put(grammarAccess.getLongTypeAccess().getGroup(), "rule__LongType__Group__0");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getGroup_1(), "rule__PrimitiveValue__Group_1__0");
 			builder.put(grammarAccess.getProjectAccess().getHttpClientAssignment_1_0_1(), "rule__Project__HttpClientAssignment_1_0_1");
 			builder.put(grammarAccess.getProjectAccess().getHttpServerAssignment_1_1_1(), "rule__Project__HttpServerAssignment_1_1_1");
 			builder.put(grammarAccess.getHttpClientAccess().getNameAssignment_0(), "rule__HttpClient__NameAssignment_0");
@@ -367,9 +369,11 @@ public class AceGenParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getBooleanTypeAccess().getBooleanAssignment(), "rule__BooleanType__BooleanAssignment");
 			builder.put(grammarAccess.getNullTypeAccess().getNullAssignment(), "rule__NullType__NullAssignment");
 			builder.put(grammarAccess.getUndefinedTypeAccess().getUndefinedAssignment(), "rule__UndefinedType__UndefinedAssignment");
-			builder.put(grammarAccess.getLongTypeAccess().getLongAssignment(), "rule__LongType__LongAssignment");
+			builder.put(grammarAccess.getLongTypeAccess().getMinusAssignment_0(), "rule__LongType__MinusAssignment_0");
+			builder.put(grammarAccess.getLongTypeAccess().getLongAssignment_1(), "rule__LongType__LongAssignment_1");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getStringAssignment_0(), "rule__PrimitiveValue__StringAssignment_0");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getLongAssignment_1(), "rule__PrimitiveValue__LongAssignment_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getMinusAssignment_1_0(), "rule__PrimitiveValue__MinusAssignment_1_0");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getLongAssignment_1_1(), "rule__PrimitiveValue__LongAssignment_1_1");
 		}
 	}
 	

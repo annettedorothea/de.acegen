@@ -3154,9 +3154,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getLongType_Long()
+  public EAttribute getLongType_Minus()
   {
     return (EAttribute)longTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLongType_Long()
+  {
+    return (EAttribute)longTypeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3187,9 +3198,20 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
    * @generated
    */
   @Override
-  public EAttribute getPrimitiveValue_Long()
+  public EAttribute getPrimitiveValue_Minus()
   {
     return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrimitiveValue_Long()
+  {
+    return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3517,10 +3539,12 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     createEAttribute(undefinedTypeEClass, UNDEFINED_TYPE__UNDEFINED);
 
     longTypeEClass = createEClass(LONG_TYPE);
+    createEAttribute(longTypeEClass, LONG_TYPE__MINUS);
     createEAttribute(longTypeEClass, LONG_TYPE__LONG);
 
     primitiveValueEClass = createEClass(PRIMITIVE_VALUE);
     createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__STRING);
+    createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__MINUS);
     createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__LONG);
   }
 
@@ -3872,10 +3896,12 @@ public class AceGenPackageImpl extends EPackageImpl implements AceGenPackage
     initEAttribute(getUndefinedType_Undefined(), ecorePackage.getEBoolean(), "undefined", null, 0, 1, UndefinedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(longTypeEClass, LongType.class, "LongType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLongType_Minus(), ecorePackage.getEBoolean(), "minus", null, 0, 1, LongType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLongType_Long(), ecorePackage.getEInt(), "long", null, 0, 1, LongType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(primitiveValueEClass, PrimitiveValue.class, "PrimitiveValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPrimitiveValue_String(), ecorePackage.getEString(), "string", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimitiveValue_Minus(), ecorePackage.getEBoolean(), "minus", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPrimitiveValue_Long(), ecorePackage.getEInt(), "long", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

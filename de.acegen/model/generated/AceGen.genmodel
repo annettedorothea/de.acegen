@@ -295,10 +295,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//UndefinedType/undefined"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//LongType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//LongType/minus"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//LongType/long"/>
     </genClasses>
     <genClasses ecoreClass="AceGen.ecore#//PrimitiveValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PrimitiveValue/string"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PrimitiveValue/minus"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AceGen.ecore#//PrimitiveValue/long"/>
     </genClasses>
   </genPackages>

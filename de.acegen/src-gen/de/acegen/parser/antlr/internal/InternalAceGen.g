@@ -5833,20 +5833,36 @@ ruleLongType returns [EObject current=null]
 }:
 	(
 		(
-			lv_long_0_0=RULE_INT
-			{
-				newLeafNode(lv_long_0_0, grammarAccess.getLongTypeAccess().getLongINTTerminalRuleCall_0());
-			}
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getLongTypeRule());
+			(
+				lv_minus_0_0='-'
+				{
+					newLeafNode(lv_minus_0_0, grammarAccess.getLongTypeAccess().getMinusHyphenMinusKeyword_0_0());
 				}
-				setWithLastConsumed(
-					$current,
-					"long",
-					lv_long_0_0,
-					"org.eclipse.xtext.common.Terminals.INT");
-			}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getLongTypeRule());
+					}
+					setWithLastConsumed($current, "minus", lv_minus_0_0 != null, "-");
+				}
+			)
+		)?
+		(
+			(
+				lv_long_1_0=RULE_INT
+				{
+					newLeafNode(lv_long_1_0, grammarAccess.getLongTypeAccess().getLongINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getLongTypeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"long",
+						lv_long_1_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
 		)
 	)
 ;
@@ -5918,20 +5934,36 @@ rulePrimitiveValue returns [EObject current=null]
 		    |
 		(
 			(
-				lv_long_1_0=RULE_INT
-				{
-					newLeafNode(lv_long_1_0, grammarAccess.getPrimitiveValueAccess().getLongINTTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+				(
+					lv_minus_1_0='-'
+					{
+						newLeafNode(lv_minus_1_0, grammarAccess.getPrimitiveValueAccess().getMinusHyphenMinusKeyword_1_0_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"long",
-						lv_long_1_0,
-						"org.eclipse.xtext.common.Terminals.INT");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+						}
+						setWithLastConsumed($current, "minus", lv_minus_1_0 != null, "-");
+					}
+				)
+			)?
+			(
+				(
+					lv_long_2_0=RULE_INT
+					{
+						newLeafNode(lv_long_2_0, grammarAccess.getPrimitiveValueAccess().getLongINTTerminalRuleCall_1_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"long",
+							lv_long_2_0,
+							"org.eclipse.xtext.common.Terminals.INT");
+					}
+				)
 			)
 		)
 	)

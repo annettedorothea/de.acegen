@@ -984,17 +984,11 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     LongType returns LongType
 	 *
 	 * Constraint:
-	 *     long=INT
+	 *     (minus?='-'? long=INT)
 	 * </pre>
 	 */
 	protected void sequence_LongType(ISerializationContext context, LongType semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AceGenPackage.Literals.LONG_TYPE__LONG) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AceGenPackage.Literals.LONG_TYPE__LONG));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getLongTypeAccess().getLongINTTerminalRuleCall_0(), semanticObject.getLong());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1066,7 +1060,7 @@ public class AceGenSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     PrimitiveValue returns PrimitiveValue
 	 *
 	 * Constraint:
-	 *     (string=STRING | long=INT)
+	 *     (string=STRING | (minus?='-'? long=INT))
 	 * </pre>
 	 */
 	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
