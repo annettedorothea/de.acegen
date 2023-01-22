@@ -42,5 +42,17 @@
    <feature url="features/de.acegen.feature_1.12.1.202211062120.jar" id="de.acegen.feature" version="1.12.1.202211062120">
       <category name="de.acegen"/>
    </feature>
+   <feature url="features/de.acegen.feature_1.13.0.202301222115.jar" id="de.acegen.feature" version="1.13.0.202301222115">
+      <category name="de.acegen"/>
+   </feature>
+   <feature url="features/de.acegen.feature_1.13.1.202301222128.jar" id="de.acegen.feature" version="1.13.1.202301222128">
+      <category name="de.acegen"/>
+   </feature>
+   <feature url="features/de.acegen.feature_1.13.2.202301222137.jar" id="de.acegen.feature" version="1.13.2.202301222137">
+      <category name="de.acegen"/>
+   </feature>
+   <feature url="features/de.acegen.feature_1.13.3.202301222147.jar" id="de.acegen.feature" version="1.13.3.202301222147">
+      <category name="de.acegen"/>
+   </feature>
    <category-def name="de.acegen" label="AceGen"/>
 </site>
