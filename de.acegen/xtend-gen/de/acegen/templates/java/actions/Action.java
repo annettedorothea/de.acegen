@@ -821,9 +821,6 @@ public class Action {
     _builder.append("databaseHandle.commitTransaction();");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());");
-    _builder.newLine();
-    _builder.append("\t\t\t");
     _builder.append("return data;");
     _builder.newLine();
     _builder.append("\t\t");

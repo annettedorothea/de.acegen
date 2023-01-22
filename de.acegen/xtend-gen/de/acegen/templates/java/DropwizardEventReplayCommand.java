@@ -128,7 +128,7 @@ public class DropwizardEventReplayCommand {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppRegistration.registerConsumers(viewProvider);");
+    _builder.append("AppRegistration.registerConsumers(environment, viewProvider);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");

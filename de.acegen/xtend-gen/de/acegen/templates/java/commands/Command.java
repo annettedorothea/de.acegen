@@ -18,18 +18,13 @@ package de.acegen.templates.java.commands;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
-import de.acegen.aceGen.HttpServerView;
-import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.JavaHttpServerExtension;
 import de.acegen.extensions.java.ModelExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -191,12 +186,7 @@ public class Command {
       EList<HttpServerOutcome> _outcomes_2 = it.getOutcomes();
       for(final HttpServerOutcome outcome_2 : _outcomes_2) {
         {
-          final Function1<HttpServerViewFunction, Boolean> _function = (HttpServerViewFunction listenerFunction) -> {
-            EObject _eContainer = listenerFunction.eContainer();
-            boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
-            return Boolean.valueOf((!_isAfterCommit));
-          };
-          int _size_1 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_2.getListeners(), _function));
+          int _size_1 = outcome_2.getListeners().size();
           boolean _greaterThan_1 = (_size_1 > 0);
           if (_greaterThan_1) {
             _builder.append("\t\t");
@@ -214,54 +204,6 @@ public class Command {
             String _eventNameWithPackage_1 = this._javaHttpServerExtension.eventNameWithPackage(it, outcome_2);
             _builder.append(_eventNameWithPackage_1, "\t\t\t");
             _builder.append("\", viewProvider).publish(data.deepCopy(), handle, timelineHandle);");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("}");
-            _builder.newLine();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public void publishAfterCommitEvents(");
-    String _dataParamType_5 = this._modelExtension.dataParamType(it.getModel());
-    _builder.append(_dataParamType_5, "\t");
-    _builder.append(" data, PersistenceHandle handle, PersistenceHandle timelineHandle) {");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<HttpServerOutcome> _outcomes_3 = it.getOutcomes();
-      for(final HttpServerOutcome outcome_3 : _outcomes_3) {
-        {
-          final Function1<HttpServerViewFunction, Boolean> _function_1 = (HttpServerViewFunction listenerFunction) -> {
-            EObject _eContainer = listenerFunction.eContainer();
-            return Boolean.valueOf(((HttpServerView) _eContainer).isAfterCommit());
-          };
-          int _size_2 = IterableExtensions.size(IterableExtensions.<HttpServerViewFunction>filter(outcome_3.getListeners(), _function_1));
-          boolean _greaterThan_2 = (_size_2 > 0);
-          if (_greaterThan_2) {
-            _builder.append("\t\t");
-            _builder.append("if (data.hasOutcome(\"");
-            String _name_5 = outcome_3.getName();
-            _builder.append(_name_5, "\t\t");
-            _builder.append("\")){");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("new Event<");
-            String _dataParamType_6 = this._modelExtension.dataParamType(it.getModel());
-            _builder.append(_dataParamType_6, "\t\t\t");
-            _builder.append(">(\"");
-            String _eventNameWithPackage_2 = this._javaHttpServerExtension.eventNameWithPackage(it, outcome_3);
-            _builder.append(_eventNameWithPackage_2, "\t\t\t");
-            _builder.append("\", viewProvider).publishAfterCommit(data.deepCopy(), handle, timelineHandle);");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("}");
@@ -535,10 +477,6 @@ public class Command {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("void publishEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("void publishAfterCommitEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);");
     _builder.newLine();
     _builder.newLine();
     _builder.append("}");

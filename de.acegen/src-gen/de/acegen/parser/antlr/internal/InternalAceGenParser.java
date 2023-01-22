@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'JSX'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'set'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'merge'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'{'", "'options'", "'actions'", "'}'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'exclude'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'not'", "'be'", "'['", "']'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'multipartFormData'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'afterCommit'", "'persistent'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'json'", "'undefined'", "'-'", "'true'", "'false'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'JSX'", "'scenarios'", "'async'", "'('", "','", "')'", "'fromAppState'", "'call'", "'set'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'takeLatest'", "'merge'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'{'", "'options'", "'actions'", "'}'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'exclude'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'not'", "'be'", "'['", "']'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'authorize'", "'multipartFormData'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'NotNull'", "'queued'", "'persistent'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'notNull'", "'null'", "'systemTime'", "'authorization'", "'Unique'", "'PrimaryKey'", "'references'", "'.'", "'POST'", "'PUT'", "'DELETE'", "'GET'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'json'", "'undefined'", "'-'", "'true'", "'false'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -8513,11 +8513,11 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHttpServerView"
-    // InternalAceGen.g:3276:1: ruleHttpServerView returns [EObject current=null] : ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) ;
+    // InternalAceGen.g:3276:1: ruleHttpServerView returns [EObject current=null] : ( ( (lv_queued_0_0= 'queued' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) ;
     public final EObject ruleHttpServerView() throws RecognitionException {
         EObject current = null;
 
-        Token lv_afterCommit_0_0=null;
+        Token lv_queued_0_0=null;
         Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
@@ -8528,13 +8528,13 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAceGen.g:3282:2: ( ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) )
-            // InternalAceGen.g:3283:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
+            // InternalAceGen.g:3282:2: ( ( ( (lv_queued_0_0= 'queued' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? ) )
+            // InternalAceGen.g:3283:2: ( ( (lv_queued_0_0= 'queued' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
             {
-            // InternalAceGen.g:3283:2: ( ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
-            // InternalAceGen.g:3284:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
+            // InternalAceGen.g:3283:2: ( ( (lv_queued_0_0= 'queued' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )? )
+            // InternalAceGen.g:3284:3: ( (lv_queued_0_0= 'queued' ) )? ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '{' ( (lv_renderFunctions_3_0= ruleHttpServerViewFunction ) )* otherlv_4= '}' )?
             {
-            // InternalAceGen.g:3284:3: ( (lv_afterCommit_0_0= 'afterCommit' ) )?
+            // InternalAceGen.g:3284:3: ( (lv_queued_0_0= 'queued' ) )?
             int alt111=2;
             int LA111_0 = input.LA(1);
 
@@ -8543,20 +8543,20 @@ public class InternalAceGenParser extends AbstractInternalAntlrParser {
             }
             switch (alt111) {
                 case 1 :
-                    // InternalAceGen.g:3285:4: (lv_afterCommit_0_0= 'afterCommit' )
+                    // InternalAceGen.g:3285:4: (lv_queued_0_0= 'queued' )
                     {
-                    // InternalAceGen.g:3285:4: (lv_afterCommit_0_0= 'afterCommit' )
-                    // InternalAceGen.g:3286:5: lv_afterCommit_0_0= 'afterCommit'
+                    // InternalAceGen.g:3285:4: (lv_queued_0_0= 'queued' )
+                    // InternalAceGen.g:3286:5: lv_queued_0_0= 'queued'
                     {
-                    lv_afterCommit_0_0=(Token)match(input,87,FOLLOW_9); 
+                    lv_queued_0_0=(Token)match(input,87,FOLLOW_9); 
 
-                    					newLeafNode(lv_afterCommit_0_0, grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0());
+                    					newLeafNode(lv_queued_0_0, grammarAccess.getHttpServerViewAccess().getQueuedQueuedKeyword_0_0());
                     				
 
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getHttpServerViewRule());
                     					}
-                    					setWithLastConsumed(current, "afterCommit", lv_afterCommit_0_0 != null, "afterCommit");
+                    					setWithLastConsumed(current, "queued", lv_queued_0_0 != null, "queued");
                     				
 
                     }

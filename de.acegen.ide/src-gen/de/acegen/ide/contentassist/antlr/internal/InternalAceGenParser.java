@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'afterCommit'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'GET'", "'set'", "'merge'", "'TextInput'", "'CheckBox'", "'Select'", "'PasswordInput'", "'Radio'", "'Button'", "'POST'", "'PUT'", "'DELETE'", "'Integer'", "'String'", "'Float'", "'Boolean'", "'DateTime'", "'Long'", "'FormData'", "'true'", "'false'", "'HttpClient'", "'HttpServer'", "'ACE'", "'ui'", "'scenarios'", "'('", "')'", "','", "'fromAppState'", "'call'", "'loading'", "'as'", "'on'", "'triggers'", "'delayInMillis'", "'{'", "'}'", "'options'", "'actions'", "'GIVEN'", "'AND'", "'WHEN'", "'THEN'", "'squishyValues'", "'uuid'", "'clientSystemTime'", "'serverSystemTime'", "'squishy'", "':'", "'expectedState'", "'verifications'", "'should'", "'be'", "'['", "']'", "'Authorization'", "'import'", "'views'", "'models'", "'<'", "'>'", "'pathParams'", "'queryParams'", "'payload'", "'response'", "'extends'", "'x'", "'shouldBe'", "'persistence'", "'selectByPrimaryKey'", "'selectBy'", "'filterAndCountBy'", "'extract'", "'systemTime'", "'authorization'", "'references'", "'.'", "'json'", "'JSX'", "'async'", "'takeLatest'", "'noComponent'", "'List'", "'Tree'", "'group'", "'listId'", "'location'", "'storage'", "'fromParent'", "'exclude'", "'not'", "'Java'", "'C#'", "'Dropwizard'", "'NET6'", "'JDBI3'", "'EntityFramework'", "'Liquibase'", "'authorize'", "'multipartFormData'", "'NotNull'", "'queued'", "'persistent'", "'notNull'", "'null'", "'Unique'", "'PrimaryKey'", "'undefined'", "'-'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -29342,20 +29342,20 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HttpServerView__Group__0__Impl"
-    // InternalAceGen.g:9204:1: rule__HttpServerView__Group__0__Impl : ( ( rule__HttpServerView__AfterCommitAssignment_0 )? ) ;
+    // InternalAceGen.g:9204:1: rule__HttpServerView__Group__0__Impl : ( ( rule__HttpServerView__QueuedAssignment_0 )? ) ;
     public final void rule__HttpServerView__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:9208:1: ( ( ( rule__HttpServerView__AfterCommitAssignment_0 )? ) )
-            // InternalAceGen.g:9209:1: ( ( rule__HttpServerView__AfterCommitAssignment_0 )? )
+            // InternalAceGen.g:9208:1: ( ( ( rule__HttpServerView__QueuedAssignment_0 )? ) )
+            // InternalAceGen.g:9209:1: ( ( rule__HttpServerView__QueuedAssignment_0 )? )
             {
-            // InternalAceGen.g:9209:1: ( ( rule__HttpServerView__AfterCommitAssignment_0 )? )
-            // InternalAceGen.g:9210:2: ( rule__HttpServerView__AfterCommitAssignment_0 )?
+            // InternalAceGen.g:9209:1: ( ( rule__HttpServerView__QueuedAssignment_0 )? )
+            // InternalAceGen.g:9210:2: ( rule__HttpServerView__QueuedAssignment_0 )?
             {
-             before(grammarAccess.getHttpServerViewAccess().getAfterCommitAssignment_0()); 
-            // InternalAceGen.g:9211:2: ( rule__HttpServerView__AfterCommitAssignment_0 )?
+             before(grammarAccess.getHttpServerViewAccess().getQueuedAssignment_0()); 
+            // InternalAceGen.g:9211:2: ( rule__HttpServerView__QueuedAssignment_0 )?
             int alt122=2;
             int LA122_0 = input.LA(1);
 
@@ -29364,10 +29364,10 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
             }
             switch (alt122) {
                 case 1 :
-                    // InternalAceGen.g:9211:3: rule__HttpServerView__AfterCommitAssignment_0
+                    // InternalAceGen.g:9211:3: rule__HttpServerView__QueuedAssignment_0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__HttpServerView__AfterCommitAssignment_0();
+                    rule__HttpServerView__QueuedAssignment_0();
 
                     state._fsp--;
 
@@ -29377,7 +29377,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getHttpServerViewAccess().getAfterCommitAssignment_0()); 
+             after(grammarAccess.getHttpServerViewAccess().getQueuedAssignment_0()); 
 
             }
 
@@ -47258,30 +47258,30 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__AttributeParamRef__AttributeAssignment_1"
 
 
-    // $ANTLR start "rule__HttpServerView__AfterCommitAssignment_0"
-    // InternalAceGen.g:15324:1: rule__HttpServerView__AfterCommitAssignment_0 : ( ( 'afterCommit' ) ) ;
-    public final void rule__HttpServerView__AfterCommitAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__HttpServerView__QueuedAssignment_0"
+    // InternalAceGen.g:15324:1: rule__HttpServerView__QueuedAssignment_0 : ( ( 'queued' ) ) ;
+    public final void rule__HttpServerView__QueuedAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAceGen.g:15328:1: ( ( ( 'afterCommit' ) ) )
-            // InternalAceGen.g:15329:2: ( ( 'afterCommit' ) )
+            // InternalAceGen.g:15328:1: ( ( ( 'queued' ) ) )
+            // InternalAceGen.g:15329:2: ( ( 'queued' ) )
             {
-            // InternalAceGen.g:15329:2: ( ( 'afterCommit' ) )
-            // InternalAceGen.g:15330:3: ( 'afterCommit' )
+            // InternalAceGen.g:15329:2: ( ( 'queued' ) )
+            // InternalAceGen.g:15330:3: ( 'queued' )
             {
-             before(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); 
-            // InternalAceGen.g:15331:3: ( 'afterCommit' )
-            // InternalAceGen.g:15332:4: 'afterCommit'
+             before(grammarAccess.getHttpServerViewAccess().getQueuedQueuedKeyword_0_0()); 
+            // InternalAceGen.g:15331:3: ( 'queued' )
+            // InternalAceGen.g:15332:4: 'queued'
             {
-             before(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); 
+             before(grammarAccess.getHttpServerViewAccess().getQueuedQueuedKeyword_0_0()); 
             match(input,113,FOLLOW_2); 
-             after(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); 
+             after(grammarAccess.getHttpServerViewAccess().getQueuedQueuedKeyword_0_0()); 
 
             }
 
-             after(grammarAccess.getHttpServerViewAccess().getAfterCommitAfterCommitKeyword_0_0()); 
+             after(grammarAccess.getHttpServerViewAccess().getQueuedQueuedKeyword_0_0()); 
 
             }
 
@@ -47300,7 +47300,7 @@ public class InternalAceGenParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__HttpServerView__AfterCommitAssignment_0"
+    // $ANTLR end "rule__HttpServerView__QueuedAssignment_0"
 
 
     // $ANTLR start "rule__HttpServerView__NameAssignment_1"

@@ -67,10 +67,23 @@ public class View {
         _builder.newLineIfNotEmpty();
       }
     }
+    {
+      boolean _isQueued = it.isQueued();
+      if (_isQueued) {
+        _builder.append("import de.acegen.QueuedView;");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("public class ");
     String _viewName = this._viewExtension.viewName(it);
     _builder.append(_viewName);
+    {
+      boolean _isQueued_1 = it.isQueued();
+      if (_isQueued_1) {
+        _builder.append(" extends QueuedView");
+      }
+    }
     _builder.append(" implements ");
     String _viewInterfaceName = this._viewExtension.viewInterfaceName(it);
     _builder.append(_viewInterfaceName);
@@ -115,6 +128,20 @@ public class View {
         _builder.newLine();
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected boolean canStop() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return true;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
@@ -175,7 +202,21 @@ public class View {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t");
     _builder.newLine();
+    {
+      boolean _isQueued = it.isQueued();
+      if (_isQueued) {
+        _builder.append("\t");
+        _builder.append("void start();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("void stop();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.newLine();
+      }
+    }
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

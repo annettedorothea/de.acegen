@@ -29,6 +29,7 @@ import de.acegen.templates.java.FormData;
 import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.Resource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
+import de.acegen.templates.java.views.QueuedView;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -62,6 +63,9 @@ public class DropwizardGenerator {
 
   @Inject
   private FormData formData;
+
+  @Inject
+  private QueuedView queuedView;
 
   @Inject
   @Extension
@@ -106,5 +110,7 @@ public class DropwizardGenerator {
       this.dropwizardEventReplayCommand.generateEventReplayCommand());
     fsa.generateFile("de/acegen/FormData.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.formData.generate());
+    fsa.generateFile("de/acegen/QueuedView.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.queuedView.generate());
   }
 }

@@ -223,7 +223,7 @@ AttributeParamRef:
 ;
 
 HttpServerView: 
-	afterCommit ?= 'afterCommit'? name = ID 
+	queued ?= ('queued')? name = ID 
 	('{'
 		(renderFunctions += HttpServerViewFunction)*
 	'}')?		

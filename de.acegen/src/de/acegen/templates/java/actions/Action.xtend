@@ -340,7 +340,6 @@ class Action {
 					command.addEventsToTimeline(data, databaseHandle.getTimelineHandle());
 					command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
-					command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					return data;
 				«catchFinallyBlock»
 			}

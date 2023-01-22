@@ -128,7 +128,7 @@ class DropwizardApp {
 		
 				AppRegistration.registerResources(environment, new PersistenceConnection(jdbi), configuration, daoProvider,
 						viewProvider);
-				AppRegistration.registerConsumers(viewProvider);
+				AppRegistration.registerConsumers(environment, viewProvider);
 			}
 		
 			private void configureCors(Environment environment) {
