@@ -25,7 +25,7 @@ public class Event {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateEvent() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -165,7 +165,7 @@ public class Event {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateIEvent() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

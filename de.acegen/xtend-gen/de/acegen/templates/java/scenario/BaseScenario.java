@@ -25,7 +25,7 @@ public class BaseScenario {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateBaseScenario() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -904,7 +904,7 @@ public class BaseScenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractBaseScenario() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1069,7 +1069,7 @@ public class BaseScenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateTestLogger() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -1173,7 +1173,7 @@ public class BaseScenario {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateHttpResponse() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

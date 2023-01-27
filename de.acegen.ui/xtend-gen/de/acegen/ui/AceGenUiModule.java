@@ -28,12 +28,11 @@ import org.eclipse.xtext.generator.IOutputConfigurationProvider;
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class AceGenUiModule extends AbstractAceGenUiModule {
-  @Override
   public void configure(final Binder binder) {
     super.configure(binder);
     binder.<IOutputConfigurationProvider>bind(IOutputConfigurationProvider.class).to(ACEOutputConfigurationProvider.class).in(Singleton.class);
   }
-  
+
   public AceGenUiModule(final AbstractUIPlugin plugin) {
     super(plugin);
   }

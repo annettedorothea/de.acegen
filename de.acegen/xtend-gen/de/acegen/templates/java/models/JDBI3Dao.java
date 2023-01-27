@@ -34,15 +34,15 @@ public class JDBI3Dao {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAbstractJdbiDao() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -165,7 +165,7 @@ public class JDBI3Dao {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAbstractJdbiDao(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -684,7 +684,7 @@ public class JDBI3Dao {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateJdbiDao(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

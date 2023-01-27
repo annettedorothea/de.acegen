@@ -27,7 +27,7 @@ public class DropwizardApp {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generate(final AuthUser authUser) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -269,7 +269,7 @@ public class DropwizardApp {
     _builder.append("viewProvider);");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("AppRegistration.registerConsumers(viewProvider);");
+    _builder.append("AppRegistration.registerConsumers(environment, viewProvider);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");

@@ -32,15 +32,15 @@ public class Model {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateInterface(final de.acegen.aceGen.Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -124,7 +124,7 @@ public class Model {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateClass(final de.acegen.aceGen.Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

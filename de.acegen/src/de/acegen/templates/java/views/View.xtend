@@ -47,8 +47,9 @@ class View {
 		«FOR renderFunction : renderFunctions»
 			«renderFunction.getModel.dataImport»
 		«ENDFOR»
+		«IF queued»import de.acegen.QueuedView;«ENDIF»
 		
-		public class «viewName» implements «viewInterfaceName» {
+		public class «viewName»«IF queued» extends QueuedView«ENDIF» implements «viewInterfaceName» {
 		
 			private IDaoProvider daoProvider;
 			
@@ -61,6 +62,11 @@ class View {
 				public void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle) {
 				}
 			«ENDFOR»
+			
+			@Override
+			protected boolean canStop() {
+				return true;
+			}
 		
 		}
 		
@@ -87,7 +93,12 @@ class View {
 			«FOR renderFunction : renderFunctions»
 				void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle);
 			«ENDFOR»
-		
+			
+			«IF queued»
+				void start();
+				void stop();
+				
+			«ENDIF»
 		}
 		
 		

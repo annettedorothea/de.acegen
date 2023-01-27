@@ -29,6 +29,7 @@ import de.acegen.templates.java.FormData;
 import de.acegen.templates.java.resources.GetServerInfoResource;
 import de.acegen.templates.java.resources.Resource;
 import de.acegen.templates.java.resources.SquishyDataProviderResource;
+import de.acegen.templates.java.views.QueuedView;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
@@ -38,35 +39,38 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class DropwizardGenerator {
   @Inject
   private GetServerInfoResource getServerInfoResource;
-  
+
   @Inject
   private Resource resource;
-  
+
   @Inject
   private DropwizardApp dropwizardApp;
-  
+
   @Inject
   private DropwizardConfiguration dropwizardConfiguration;
-  
+
   @Inject
   private SquishyDataProviderResource squishyDataProviderResource;
-  
+
   @Inject
   private DropwizardResource dropwizardResource;
-  
+
   @Inject
   private DropwizardAppRegistration dropwizardAppRegistration;
-  
+
   @Inject
   private DropwizardEventReplayCommand dropwizardEventReplayCommand;
-  
+
   @Inject
   private FormData formData;
-  
+
+  @Inject
+  private QueuedView queuedView;
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     AuthUser authUser = httpServer.getAuthUser();
     if ((authUser == null)) {
@@ -106,5 +110,7 @@ public class DropwizardGenerator {
       this.dropwizardEventReplayCommand.generateEventReplayCommand());
     fsa.generateFile("de/acegen/FormData.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
       this.formData.generate());
+    fsa.generateFile("de/acegen/QueuedView.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.queuedView.generate());
   }
 }

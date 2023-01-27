@@ -31,18 +31,18 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class JDBI3Generator {
   @Inject
   private JDBI3Dao jdbi3Dao;
-  
+
   @Inject
   private JDBI3Mapper jdbi3Mapper;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     fsa.generateFile("de/acegen/AbstractDao.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.jdbi3Dao.generateAbstractJdbiDao());

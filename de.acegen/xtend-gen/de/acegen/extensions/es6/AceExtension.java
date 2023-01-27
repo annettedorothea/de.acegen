@@ -37,7 +37,7 @@ public class AceExtension {
   @Inject
   @Extension
   private HttpServerExtension _httpServerExtension;
-  
+
   public String abstractActionName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -46,7 +46,7 @@ public class AceExtension {
     _builder.append("Action");
     return _builder.toString();
   }
-  
+
   public String actionName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -54,7 +54,7 @@ public class AceExtension {
     _builder.append("Action");
     return _builder.toString();
   }
-  
+
   public String abstractName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -62,14 +62,14 @@ public class AceExtension {
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String nameUppercase(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String resourceName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -77,7 +77,7 @@ public class AceExtension {
     _builder.append("Resource");
     return _builder.toString();
   }
-  
+
   public String actionNameWithPackage(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -88,7 +88,7 @@ public class AceExtension {
     _builder.append(_actionName);
     return _builder.toString();
   }
-  
+
   public String abstractCommandName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -97,7 +97,7 @@ public class AceExtension {
     _builder.append("Command");
     return _builder.toString();
   }
-  
+
   public String commandName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -105,7 +105,7 @@ public class AceExtension {
     _builder.append("Command");
     return _builder.toString();
   }
-  
+
   public List<HttpClientAce> aggregatedTriggeredAceOperations(final HttpClientAce it) {
     ArrayList<HttpClientAce> list = new ArrayList<HttpClientAce>();
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
@@ -121,7 +121,7 @@ public class AceExtension {
     }
     return list;
   }
-  
+
   public List<HttpClientStateFunction> aggregatedListeners(final HttpClientAce it) {
     ArrayList<HttpClientStateFunction> list = new ArrayList<HttpClientStateFunction>();
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
@@ -137,7 +137,7 @@ public class AceExtension {
     }
     return list;
   }
-  
+
   public String eventName(final HttpClientAce it, final HttpClientOutcome outcome) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -147,7 +147,7 @@ public class AceExtension {
     _builder.append("Event");
     return _builder.toString();
   }
-  
+
   public String eventNameWithPackage(final HttpClientAce it, final HttpClientOutcome outcome) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -158,7 +158,7 @@ public class AceExtension {
     _builder.append(_eventName);
     return _builder.toString();
   }
-  
+
   public String httpCall(final HttpClientAce it) {
     Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it.getServerCall());
     if ((_isMulitpartFormData).booleanValue()) {
@@ -191,7 +191,7 @@ public class AceExtension {
       }
     }
   }
-  
+
   public String httpUrl(final HttpClientAce it) {
     String url = it.getServerCall().getUrl();
     int _indexOf = url.indexOf("/");

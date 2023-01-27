@@ -20,27 +20,27 @@ public class JavaHttpServerExtension {
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
-  
+
   public String packageFolder(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _replace = it.getName().replace(".", "/");
     _builder.append(_replace);
     return _builder.toString();
   }
-  
+
   public String projectName(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String fileExtension() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(".java");
     return _builder.toString();
   }
-  
+
   public String abstractActionName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -49,7 +49,7 @@ public class JavaHttpServerExtension {
     _builder.append("Action");
     return _builder.toString();
   }
-  
+
   public String actionName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -57,7 +57,7 @@ public class JavaHttpServerExtension {
     _builder.append("Action");
     return _builder.toString();
   }
-  
+
   public String actionNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -68,7 +68,7 @@ public class JavaHttpServerExtension {
     _builder.append(_actionName);
     return _builder.toString();
   }
-  
+
   public String abstractName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -76,14 +76,14 @@ public class JavaHttpServerExtension {
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String nameUppercase(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
     _builder.append(_firstUpper);
     return _builder.toString();
   }
-  
+
   public String resourceName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -91,7 +91,7 @@ public class JavaHttpServerExtension {
     _builder.append("Resource");
     return _builder.toString();
   }
-  
+
   public String abstractCommandName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Abstract");
@@ -100,7 +100,7 @@ public class JavaHttpServerExtension {
     _builder.append("Command");
     return _builder.toString();
   }
-  
+
   public String commandName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -108,7 +108,7 @@ public class JavaHttpServerExtension {
     _builder.append("Command");
     return _builder.toString();
   }
-  
+
   public String commandNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -119,7 +119,7 @@ public class JavaHttpServerExtension {
     _builder.append(_commandName);
     return _builder.toString();
   }
-  
+
   public String eventName(final HttpServerAce it, final HttpServerOutcome outcome) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -129,7 +129,7 @@ public class JavaHttpServerExtension {
     _builder.append("Event");
     return _builder.toString();
   }
-  
+
   public String eventNameWithPackage(final HttpServerAce it, final HttpServerOutcome outcome) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -140,7 +140,7 @@ public class JavaHttpServerExtension {
     _builder.append(_eventName);
     return _builder.toString();
   }
-  
+
   public String responseDataName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -148,7 +148,7 @@ public class JavaHttpServerExtension {
     _builder.append("Response");
     return _builder.toString();
   }
-  
+
   public String responseDataNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -160,7 +160,7 @@ public class JavaHttpServerExtension {
     _builder.append("Response");
     return _builder.toString();
   }
-  
+
   public String responseDataInterfaceName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -169,7 +169,7 @@ public class JavaHttpServerExtension {
     _builder.append("Response");
     return _builder.toString();
   }
-  
+
   public String payloadDataName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(it.getName());
@@ -177,7 +177,7 @@ public class JavaHttpServerExtension {
     _builder.append("Payload");
     return _builder.toString();
   }
-  
+
   public String payloadDataNameWithPackage(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     EObject _eContainer = it.eContainer();
@@ -189,7 +189,7 @@ public class JavaHttpServerExtension {
     _builder.append("Payload");
     return _builder.toString();
   }
-  
+
   public String payloadDataInterfaceName(final HttpServerAce it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("I");
@@ -198,11 +198,11 @@ public class JavaHttpServerExtension {
     _builder.append("Payload");
     return _builder.toString();
   }
-  
+
   public boolean isRead(final HttpServerAce it) {
     return (it instanceof HttpServerAceRead);
   }
-  
+
   public String packageFor(final HttpServerAce it) {
     EObject _eContainer = it.eContainer();
     final HttpServer java = ((HttpServer) _eContainer);
@@ -211,7 +211,7 @@ public class JavaHttpServerExtension {
     _builder.append(_name);
     return _builder.toString();
   }
-  
+
   public String urlWithPathParams(final HttpServerAce it, final String dataVarName, final boolean generateQueryParams) {
     int _size = it.getPathParams().size();
     boolean _equals = (_size == 0);
@@ -321,7 +321,7 @@ public class JavaHttpServerExtension {
     urlWithPathParam = (_urlWithPathParam + _builder_2);
     return urlWithPathParam;
   }
-  
+
   public String urlEncodedValue(final String valueVar) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(");

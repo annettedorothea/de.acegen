@@ -29,14 +29,14 @@ public class DropwizardAppRegistration {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   private AppRegistration appRegistration;
-  
+
   public CharSequence generateAppRegistration(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -112,7 +112,7 @@ public class DropwizardAppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAppRegistration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

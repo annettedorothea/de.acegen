@@ -46,7 +46,7 @@ class CommandTemplate {
 	
 	def boolean hasEventOutcome(HttpClientAce it) {
 		for(outcome: outcomes) {
-			if (outcome.listeners.size > 0 || outcome.functions.size > 0) {
+			if (outcome.listeners.size > 0) {
 				return true;
 			}
 		}
@@ -81,33 +81,67 @@ class CommandTemplate {
 					data.outcomes.push("«outcome.getName»");
 				}
 			«ENDFOR»
+			
+			allMandatoryValuesAreSet(data) {
+				«IF getServerCall !== null»
+					«FOR payload : getServerCall.payload»
+						«IF payload.notNull»
+							if (data.«payload.attribute.name» === undefined || data.«payload.attribute.name» === null) {
+								console.warn("«abstractCommandName»: «payload.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+					«FOR queryParam : getServerCall.queryParams»
+						«IF queryParam.notNull»
+							if (data.«queryParam.attribute.name» === undefined || data.«queryParam.attribute.name» === null) {
+								console.warn("«abstractCommandName»: «queryParam.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+					«FOR pathParam : getServerCall.pathParams»
+						«IF pathParam.notNull»
+							if (data.«pathParam.attribute.name» === undefined || data.«pathParam.attribute.name» === null) {
+								console.warn("«abstractCommandName»: «pathParam.attribute.name» is mandatory but is not set", data);
+								return false;
+							}
+						«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+				return true;
+			}
 
 			«IF serverCall !== null»
 				execute(data) {
 				    return new Promise((resolve, reject) => {
-				    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
-				    		let payload = {
-				    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
-				    		};
-				    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
-				    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
-				        «ENDIF»
-						AppUtils.«httpCall»(
-								`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
-								data.uuid, 
-								«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
-								 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
-								 payload«ENDIF»«ENDIF»)
-							.then((«IF serverCall.response.size > 0»response«ENDIF») => {
-								«FOR attribute : serverCall.response»
-									data.«attribute.name» = response.«attribute.name»;
-								«ENDFOR»
-								this.handleResponse(data, resolve, reject);
-							}, (error) => {
-								data.error = error;
-								this.handleError(data, resolve, reject);
-							})
-							.catch(x => reject(x));
+				    	if (this.allMandatoryValuesAreSet(data)) {
+					    	«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.payload.size > 0 && !getServerCall.isMulitpartFormData»
+					    		let payload = {
+					    			«FOR payload : getServerCall.payload SEPARATOR ",\n"»«payload.attribute.name» : data.«payload.attribute.name»«ENDFOR»
+					    		};
+					    	«ELSEIF (getServerCall.getType == "POST" || getServerCall.getType == "PUT") && getServerCall.isMulitpartFormData»
+					    		const formData = data.«getServerCall.getModel.formDataAttributeName»;
+					        «ENDIF»
+							AppUtils.«httpCall»(
+									`«httpUrl»«FOR queryParam : getServerCall.queryParams BEFORE "?" SEPARATOR "&"»${data.«queryParam.attribute.name» ? `«queryParam.attribute.name»=${data.«queryParam.attribute.name»}` : ""}«ENDFOR»`, 
+									data.uuid, 
+									«IF getServerCall.isAuthorize»true«ELSE»false«ENDIF»«IF (getServerCall.getType == "POST" || getServerCall.getType == "PUT")»«IF getServerCall.isMulitpartFormData»,
+									 formData, "«getServerCall.getModel.formDataAttributeName»"«ELSEIF getServerCall.payload.size > 0»,
+									 payload«ENDIF»«ENDIF»)
+								.then((«IF serverCall.response.size > 0»response«ENDIF») => {
+									«FOR attribute : serverCall.response»
+										data.«attribute.name» = response.«attribute.name»;
+									«ENDFOR»
+									this.handleResponse(data, resolve, reject);
+								}, (error) => {
+									data.error = error;
+									this.handleError(data, resolve, reject);
+								})
+								.catch(x => reject(x));
+						} else {
+							resolve(data);
+						}
 				    });
 				}
 			«ENDIF»
@@ -117,7 +151,7 @@ class CommandTemplate {
 					const events = [];
 					const actionsToBeTriggered = [];
 					«FOR outcome : outcomes»
-						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+						«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 							if (data.outcomes.includes("«outcome.getName»")) {
 								events.push(new Event('«es6.getName».«eventName(outcome)»'));
 								«FOR triggerdAceOperation : outcome.triggerdAceOperations»
@@ -205,7 +239,7 @@ class CommandTemplate {
 				const events = [];
 				const actionsToBeTriggered = [];
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0 || outcome.functions.size > 0»
+					«IF outcome.listeners.size > 0 || outcome.triggerdAceOperations.size > 0»
 						if (data.outcomes.includes("«outcome.getName»")) {
 							events.push(new Event('«es6.getName».«eventName(outcome)»'));
 							«FOR triggerdAceOperation : outcome.triggerdAceOperations»
@@ -363,7 +397,7 @@ class CommandTemplate {
 		
 		export default class AsynchronousCommand extends Command {
 		    
-		    executeCommand(data) {
+		    executeCommand(data, postCall) {
 				this.initCommandData(data);
 		        ACEController.addItemToTimeLine({
 					command: {
@@ -374,6 +408,7 @@ class CommandTemplate {
 		        return new Promise((resolve, reject) => {
 					if (this.validateCommandData(data)) {
 					    this.execute(data).then((data) => {
+					    	postCall();
 					        this.publishEvents(data).then(resolve);
 					    }, (error) => {
 					        reject(error);

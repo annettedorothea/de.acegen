@@ -7,6 +7,7 @@ import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.es6.JsxTemplate
 import javax.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 class ReactGenerator {
 
@@ -18,16 +19,26 @@ class ReactGenerator {
 
 	def void doGenerate(HttpClient httpClient, IFileSystemAccess2 fsa) {
 		if (httpClient.container !== null) {
-			doGenerate(httpClient.container, fsa, "", false);
+			doGenerate(httpClient.container, fsa, "", true);
 		}
 	}
 
-	def void doGenerate(ClientAttribute it, IFileSystemAccess2 fsa, String subFolder,
-		boolean isGroupedChild) {
-		if (!noComponent && (attributes.size > 0 || isGroupedChild)) {
+	def void doGenerate(ClientAttribute it, IFileSystemAccess2 fsa, String subFolder, boolean isRoot) {
+		if (isComponent) {
 			fsa.generateFile('''components«subFolder»/«componentName».js''',
 				ACEOutputConfigurationProvider.DEFAULT_JAVASCRIPT_OUTPUT_ONCE,
-				reactTemplate.generateComponentStruct(it, folderPrefix(subFolder)));
+				reactTemplate.generateComponent(it, folderPrefix(subFolder)));
+			if (!isTag) {
+				if (isRoot) {
+					fsa.generateFile('''components«subFolder»/«componentContainerName».js''',
+						IFileSystemAccess.DEFAULT_OUTPUT,
+						reactTemplate.generateComponentContainer(it, folderPrefix(subFolder), true));
+				} else {
+					fsa.generateFile('''components«subFolder»/«componentContainerName».js''',
+						IFileSystemAccess.DEFAULT_OUTPUT,
+						reactTemplate.generateComponentContainer(it, folderPrefix(subFolder), false));
+				}
+			}
 			val nextSubFolder = '''«subFolder»/«name.toFirstLower»'''
 			for (attribute : attributes) {
 				doGenerate(attribute, fsa, nextSubFolder, false);

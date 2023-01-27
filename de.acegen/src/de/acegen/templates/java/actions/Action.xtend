@@ -229,6 +229,8 @@ class Action {
 		package de.acegen;
 		
 		import java.time.LocalDateTime;
+		import java.time.ZoneOffset;
+
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -261,7 +263,7 @@ class Action {
 						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
 					
-					data.setSystemTime(LocalDateTime.now());
+					data.setSystemTime(LocalDateTime.now(ZoneOffset.UTC));
 					«addActionToTimeline»
 
 					data = this.initActionData(data);
@@ -289,6 +291,8 @@ class Action {
 		package de.acegen;
 		
 		import java.time.LocalDateTime;
+		import java.time.ZoneOffset;
+		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
@@ -323,7 +327,7 @@ class Action {
 						throwIllegalArgumentException("duplicate request " + actionName + " " + data.getUuid());
 					}
 
-					data.setSystemTime(LocalDateTime.now());
+					data.setSystemTime(LocalDateTime.now(ZoneOffset.UTC));
 					«addActionToTimeline»
 
 					data = this.initActionData(data);
@@ -336,7 +340,6 @@ class Action {
 					command.addEventsToTimeline(data, databaseHandle.getTimelineHandle());
 					command.publishEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					databaseHandle.commitTransaction();
-					command.publishAfterCommitEvents(data, databaseHandle.getHandle(), databaseHandle.getTimelineHandle());
 					return data;
 				«catchFinallyBlock»
 			}

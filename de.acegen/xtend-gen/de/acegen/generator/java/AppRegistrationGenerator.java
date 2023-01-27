@@ -27,11 +27,11 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class AppRegistrationGenerator {
   @Inject
   private AppRegistration appRegistration;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
     int _size = httpServer.getAceOperations().size();
     boolean _greaterThan = (_size > 0);

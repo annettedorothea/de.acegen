@@ -38,19 +38,19 @@ public class AppRegistration {
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ViewExtension _viewExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAppRegistration(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("\t");
@@ -69,6 +69,9 @@ public class AppRegistration {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("import de.acegen.ViewProvider;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("import io.dropwizard.setup.Environment;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
@@ -100,7 +103,7 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateAppRegistration() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -110,11 +113,14 @@ public class AppRegistration {
     _builder.append("package de.acegen;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import io.dropwizard.setup.Environment;");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("public class AppRegistration {");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
+    _builder.append("public static void registerConsumers(Environment environment, ViewProvider viewProvider) {");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("}");
@@ -128,10 +134,10 @@ public class AppRegistration {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence registerConsumers(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("public static void registerConsumers(ViewProvider viewProvider) {");
+    _builder.append("public static void registerConsumers(Environment environment, ViewProvider viewProvider) {");
     _builder.newLine();
     {
       EList<HttpServerAce> _aceOperations = it.getAceOperations();
@@ -142,11 +148,29 @@ public class AppRegistration {
         _builder.newLineIfNotEmpty();
       }
     }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      EList<HttpServerView> _views = it.getViews();
+      for(final HttpServerView view : _views) {
+        {
+          boolean _isQueued = view.isQueued();
+          if (_isQueued) {
+            _builder.append("\t");
+            _builder.append("environment.lifecycle().manage(viewProvider.");
+            String _name = view.getName();
+            _builder.append(_name, "\t");
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
     _builder.append("}");
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence _registerConsumer(final HttpServerAceWrite it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -155,33 +179,26 @@ public class AppRegistration {
         {
           EList<HttpServerViewFunction> _listeners = outcome.getListeners();
           for(final HttpServerViewFunction listener : _listeners) {
-            {
-              EObject _eContainer = listener.eContainer();
-              boolean _isAfterCommit = ((HttpServerView) _eContainer).isAfterCommit();
-              if (_isAfterCommit) {
-                CharSequence _addAfterCommitConsumers = this.addAfterCommitConsumers(httpServer, it, outcome, listener);
-                _builder.append(_addAfterCommitConsumers);
-                _builder.newLineIfNotEmpty();
-              } else {
-                CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
-                _builder.append(_addConsumers);
-                _builder.newLineIfNotEmpty();
-              }
-            }
+            CharSequence _addConsumers = this.addConsumers(httpServer, it, outcome, listener);
+            _builder.append(_addConsumers);
+            _builder.newLineIfNotEmpty();
           }
         }
       }
     }
     return _builder;
   }
-  
+
   private CharSequence _registerConsumer(final HttpServerAceRead it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   private CharSequence addConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
     StringConcatenation _builder = new StringConcatenation();
+    EObject _eContainer = listener.eContainer();
+    final HttpServerView view = ((HttpServerView) _eContainer);
+    _builder.newLineIfNotEmpty();
     _builder.append("viewProvider.addConsumer(\"");
     String _name = java.getName();
     _builder.append(_name);
@@ -190,46 +207,39 @@ public class AppRegistration {
     _builder.append(_eventName);
     _builder.append("\", (dataContainer, handle) -> {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("viewProvider.");
-    String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
-    _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
-    _builder.append("((");
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
-    _builder.append(_dataNameWithPackage, "\t");
-    _builder.append(") dataContainer, handle);");
-    _builder.newLineIfNotEmpty();
+    {
+      boolean _isQueued = view.isQueued();
+      if (_isQueued) {
+        _builder.append("\t");
+        _builder.append("viewProvider.");
+        String _viewNameWithPackage = this._viewExtension.viewNameWithPackage(view);
+        _builder.append(_viewNameWithPackage, "\t");
+        _builder.append(".addToQueue(() -> viewProvider.");
+        String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
+        _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
+        _builder.append("((");
+        String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
+        _builder.append(_dataNameWithPackage, "\t");
+        _builder.append(") dataContainer, handle));");
+        _builder.newLineIfNotEmpty();
+      } else {
+        _builder.append("\t");
+        _builder.append("viewProvider.");
+        String _viewFunctionWithViewNameAsVariable_1 = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
+        _builder.append(_viewFunctionWithViewNameAsVariable_1, "\t");
+        _builder.append("((");
+        String _dataNameWithPackage_1 = this._modelExtension.dataNameWithPackage(listener.getModel());
+        _builder.append(_dataNameWithPackage_1, "\t");
+        _builder.append(") dataContainer, handle);");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.append("});");
     _builder.newLine();
     _builder.newLine();
     return _builder;
   }
-  
-  private CharSequence addAfterCommitConsumers(final HttpServer java, final HttpServerAce aceOperation, final HttpServerOutcome outcome, final HttpServerViewFunction listener) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("viewProvider.addAfterCommitConsumer(\"");
-    String _name = java.getName();
-    _builder.append(_name);
-    _builder.append(".events.");
-    String _eventName = this._javaHttpServerExtension.eventName(aceOperation, outcome);
-    _builder.append(_eventName);
-    _builder.append("\", (dataContainer, handle) -> {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("viewProvider.");
-    String _viewFunctionWithViewNameAsVariable = this._viewExtension.viewFunctionWithViewNameAsVariable(listener);
-    _builder.append(_viewFunctionWithViewNameAsVariable, "\t");
-    _builder.append("((");
-    String _dataNameWithPackage = this._modelExtension.dataNameWithPackage(listener.getModel());
-    _builder.append(_dataNameWithPackage, "\t");
-    _builder.append(") dataContainer, handle);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("});");
-    _builder.newLine();
-    _builder.newLine();
-    return _builder;
-  }
-  
+
   private CharSequence registerConsumer(final HttpServerAce it, final HttpServer httpServer) {
     if (it instanceof HttpServerAceRead) {
       return _registerConsumer((HttpServerAceRead)it, httpServer);

@@ -283,7 +283,7 @@ class AttributeExtension {
 		} else if (it instanceof NullType) {
 			return "null";
 		} else if (it instanceof LongType) {
-			return '''«long»''';
+			return '''«IF minus»-«ENDIF»«long»''';
 		}
 	}
 
@@ -353,6 +353,9 @@ class AttributeExtension {
 					templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
 			}
 			return '''"«returnString»"''';
+		}
+		if (isMinus) {
+			return getLong() * (-1)
 		}
 		return getLong()
 	}

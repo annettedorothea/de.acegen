@@ -19,7 +19,6 @@ package de.acegen.templates.java.commands
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.aceGen.HttpServerView
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
@@ -79,20 +78,9 @@ class Command {
 			@Override
 			public void publishEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				«FOR outcome : outcomes»
-					«IF outcome.listeners.filter[listenerFunction | !(listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
+					«IF outcome.listeners.size > 0»
 						if (data.hasOutcome("«outcome.getName»")){
 							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", viewProvider).publish(data.deepCopy(), handle, timelineHandle);
-						}
-					«ENDIF»
-				«ENDFOR»
-			}
-			
-			@Override
-			public void publishAfterCommitEvents(«model.dataParamType» data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
-				«FOR outcome : outcomes»
-					«IF outcome.listeners.filter[listenerFunction | (listenerFunction.eContainer as HttpServerView).afterCommit ].size > 0»
-						if (data.hasOutcome("«outcome.getName»")){
-							new Event<«model.dataParamType»>("«eventNameWithPackage(outcome)»", viewProvider).publishAfterCommit(data.deepCopy(), handle, timelineHandle);
 						}
 					«ENDIF»
 				«ENDFOR»
@@ -209,8 +197,6 @@ class Command {
 			void addEventsToTimeline(T data, PersistenceHandle timelineHandle);
 
 			void publishEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
-
-			void publishAfterCommitEvents(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
 
 		}
 		

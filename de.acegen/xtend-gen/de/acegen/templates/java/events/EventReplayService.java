@@ -34,15 +34,15 @@ public class EventReplayService {
   @Inject
   @Extension
   private JavaHttpServerExtension _javaHttpServerExtension;
-  
+
   @Inject
   @Extension
   private ModelExtension _modelExtension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateEventReplayService() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -72,7 +72,7 @@ public class EventReplayService {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateEventReplayService(final HttpServer it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -181,7 +181,7 @@ public class EventReplayService {
     _builder.newLine();
     return _builder;
   }
-  
+
   private int eventCount(final HttpServer it) {
     int count = 0;
     EList<HttpServerAce> _aceOperations = it.getAceOperations();
@@ -198,7 +198,7 @@ public class EventReplayService {
     }
     return count;
   }
-  
+
   private CharSequence _createEvent(final HttpServerAceWrite it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -253,12 +253,12 @@ public class EventReplayService {
     }
     return _builder;
   }
-  
+
   private CharSequence _createEvent(final HttpServerAceRead it, final HttpServer java) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   private CharSequence createEvent(final HttpServerAce it, final HttpServer java) {
     if (it instanceof HttpServerAceRead) {
       return _createEvent((HttpServerAceRead)it, java);

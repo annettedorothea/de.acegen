@@ -12,3 +12,5 @@ de.acegen/bin
 *.xtendbin
 *._trace
 .idea/.idea.de.acegen.dir/.idea
+.idea
+logs.zip

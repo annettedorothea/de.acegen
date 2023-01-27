@@ -25,7 +25,7 @@ public class AceOperation {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generate() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

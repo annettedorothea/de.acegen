@@ -25,7 +25,7 @@ public class Converter {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateDateTimeToStringConverter() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -64,7 +64,7 @@ public class Converter {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateStringToDateTimeConverter() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

@@ -50,9 +50,6 @@ class EventTemplate {
 						«FOR listener : outcome.listeners»
 							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «listener.appStateFunction()»);
 						«ENDFOR»
-						«FOR function : outcome.functions»
-							ACEController.registerListener('«getName».«aceOperation.eventName(outcome)»', «function.appStateFunction()»);
-						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}

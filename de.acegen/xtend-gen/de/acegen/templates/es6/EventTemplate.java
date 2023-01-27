@@ -15,7 +15,6 @@
  */
 package de.acegen.templates.es6;
 
-import de.acegen.aceGen.FunctionCall;
 import de.acegen.aceGen.HttpClient;
 import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
@@ -33,15 +32,15 @@ public class EventTemplate {
   @Inject
   @Extension
   private AceExtension _aceExtension;
-  
+
   @Inject
   @Extension
   private Es6Extension _es6Extension;
-  
+
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateEventListenerRegistration(final HttpClient it) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -85,23 +84,6 @@ public class EventTemplate {
                 _builder.newLineIfNotEmpty();
               }
             }
-            {
-              EList<FunctionCall> _functions = outcome.getFunctions();
-              for(final FunctionCall function : _functions) {
-                _builder.append("\t\t");
-                _builder.append("ACEController.registerListener(\'");
-                String _name_1 = it.getName();
-                _builder.append(_name_1, "\t\t");
-                _builder.append(".");
-                String _eventName_1 = this._aceExtension.eventName(aceOperation, outcome);
-                _builder.append(_eventName_1, "\t\t");
-                _builder.append("\', ");
-                String _appStateFunction_1 = this._es6Extension.appStateFunction(function);
-                _builder.append(_appStateFunction_1, "\t\t");
-                _builder.append(");");
-                _builder.newLineIfNotEmpty();
-              }
-            }
           }
         }
       }
@@ -120,7 +102,7 @@ public class EventTemplate {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateEvent() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

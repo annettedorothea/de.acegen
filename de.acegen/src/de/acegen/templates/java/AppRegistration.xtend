@@ -22,13 +22,13 @@ import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
-import de.acegen.aceGen.HttpServerView
 import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.JavaHttpServerExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.extensions.java.ViewExtension
 import javax.inject.Inject
+import de.acegen.aceGen.HttpServerView
 
 class AppRegistration {
 
@@ -50,6 +50,7 @@ class AppRegistration {
 		package «getName»;
 		
 		import de.acegen.ViewProvider;
+		import io.dropwizard.setup.Environment;
 		
 		@SuppressWarnings("all")
 		public class AppRegistration {
@@ -68,9 +69,11 @@ class AppRegistration {
 		
 		package de.acegen;
 		
+		import io.dropwizard.setup.Environment;
+		
 		public class AppRegistration {
 		
-			public static void registerConsumers(ViewProvider viewProvider) {
+			public static void registerConsumers(Environment environment, ViewProvider viewProvider) {
 			}
 		}
 		
@@ -79,9 +82,15 @@ class AppRegistration {
 	'''
 
 	def registerConsumers(HttpServer it) '''
-		public static void registerConsumers(ViewProvider viewProvider) {
+		public static void registerConsumers(Environment environment, ViewProvider viewProvider) {
 			«FOR aceOperation : aceOperations»
 				«registerConsumer(aceOperation, it)»
+			«ENDFOR»
+			
+			«FOR view : it.views»
+				«IF view.queued»
+					environment.lifecycle().manage(viewProvider.«view.name»);
+				«ENDIF»
 			«ENDFOR»
 		}
 	'''
@@ -89,11 +98,7 @@ class AppRegistration {
 	private def dispatch registerConsumer(HttpServerAceWrite it, HttpServer httpServer) '''
 		«FOR outcome : outcomes»
 			«FOR listener : outcome.listeners»
-				«IF (listener.eContainer as HttpServerView).afterCommit»
-					«addAfterCommitConsumers(httpServer, it, outcome, listener)»
-				«ELSE»
-					«addConsumers(httpServer, it, outcome, listener)»
-				«ENDIF»
+				«addConsumers(httpServer, it, outcome, listener)»
 			«ENDFOR»
 		«ENDFOR»
 	'''
@@ -101,18 +106,15 @@ class AppRegistration {
 	private def dispatch registerConsumer(HttpServerAceRead it, HttpServer httpServer) ''''''
 	
 	private def addConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
+		«val view = (listener.eContainer as HttpServerView)»
 		viewProvider.addConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
-			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
+			«IF view.queued»
+				viewProvider.«view.viewNameWithPackage».addToQueue(() -> viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle));
+			«ELSE»
+				viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
+			«ENDIF»
 		});
 		
 	'''
-
-	private def addAfterCommitConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
-		viewProvider.addAfterCommitConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
-			viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
-		});
-		
-	'''
-
 	
 }

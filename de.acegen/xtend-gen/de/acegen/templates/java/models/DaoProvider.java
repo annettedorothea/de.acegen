@@ -25,7 +25,7 @@ public class DaoProvider {
   @Inject
   @Extension
   private CommonExtension _commonExtension;
-  
+
   public CharSequence generateAbstractDaoProvider() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -66,7 +66,7 @@ public class DaoProvider {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateDaoProvider() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();
@@ -112,7 +112,7 @@ public class DaoProvider {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence generateIDaoProvider() {
     StringConcatenation _builder = new StringConcatenation();
     String _copyright = this._commonExtension.copyright();

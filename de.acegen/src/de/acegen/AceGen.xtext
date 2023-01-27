@@ -28,7 +28,6 @@ HttpClient:
 	('ACE' (aceOperations += HttpClientAce)*)?
 	('ui' (jsx ?= 'JSX')?  
 		container = ClientAttribute
-		('functions' functions += Function* )? 
 	)?
 	('scenarios' (scenarios += ClientScenario)*)?
 ;
@@ -38,12 +37,8 @@ HttpClientAce:
 		('(' input += Input (',' input += Input)* ')' )?
 		('fromAppState' '(' refs += FromAppStateRef (',' refs += FromAppStateRef)* ')' )?  
 	('call' serverCall = [HttpServerAce | QualifiedName] )? 
-	('loadingFlag' loadingFlag = [ClientAttribute | QualifiedName])? 
+	('set' 'loading' loadingIndicators += [ClientAttribute | QualifiedName] (',' loadingIndicators += [ClientAttribute | QualifiedName])* )? 
 	(outcomes += HttpClientOutcome)*
-;
-
-Function: 
-	name = ID ('(' stateElement = [ClientAttribute | QualifiedName] ')' )?
 ;
 
 FromAppStateRef:
@@ -58,7 +53,6 @@ HttpClientOutcome:
 	'on' name = ID 
 	('(' 
 		listeners += HttpClientStateFunction* 
-		functions += FunctionCall *
 	')'	)? 
 	('triggers' '(' (triggerdAceOperations += TriggerdAceOperation)* ')')? 
 ;
@@ -71,10 +65,6 @@ HttpClientStateFunction:
 	stateFunctionType = HttpClientStateFunctionType stateElement = [ClientAttribute | QualifiedName]	
 ;
 
-FunctionCall:
-	'call' function = [Function | QualifiedName]
-;
-
 HttpClientStateFunctionType:
 	'set' | 'merge'
 ;
@@ -82,12 +72,29 @@ HttpClientStateFunctionType:
 ClientAttribute:
 	noComponent ?= 'noComponent'? 
 	list ?= 'List'? 
+	tree ?= 'Tree'? 
+	group ?= 'group'? 
+	listId ?= 'listId'? 
 	name = ID 
 	location ?= 'location'? 
 	storage ?= 'storage'? 
+	fromParent ?= 'fromParent'? 
+	uiElement = UIElement? 
 	('{'
 		attributes += ClientAttribute*
+		('options' options += STRING*)?
+		('actions' '{'
+			actions += UiAction*
+		'}')?
 	'}')?
+;
+
+UiAction: 
+	name = STRING target = [HttpClientAce | QualifiedName]
+;
+
+UIElement: 
+	'TextInput' | 'CheckBox' | 'Select' | 'PasswordInput' | 'Radio' | 'Button'
 ;
 
 ClientScenario:
@@ -216,7 +223,7 @@ AttributeParamRef:
 ;
 
 HttpServerView: 
-	afterCommit ?= 'afterCommit'? name = ID 
+	queued ?= ('queued')? name = ID 
 	('{'
 		(renderFunctions += HttpServerViewFunction)*
 	'}')?		
@@ -389,15 +396,16 @@ UndefinedType:
 ;
 
 LongType:
-	long = INT
+	minus ?= '-'? long = INT
 ;
 
 JsonBoolean:
   'true' | 'false';
 
 PrimitiveValue:
-	string = STRING | long = INT
+	string = STRING | ( minus ?= '-'? long =  INT)
 ;
+
 
 /******* S.D.G. *******/
 	

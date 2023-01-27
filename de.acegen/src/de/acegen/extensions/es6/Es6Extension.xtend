@@ -24,7 +24,6 @@ import de.acegen.aceGen.ClientAttribute
 import de.acegen.aceGen.ClientGivenRef
 import de.acegen.aceGen.ClientScenario
 import de.acegen.aceGen.CustomVerification
-import de.acegen.aceGen.FunctionCall
 import de.acegen.aceGen.HttpClient
 import de.acegen.aceGen.HttpClientStateFunction
 import de.acegen.aceGen.JsonArrayClient
@@ -37,6 +36,7 @@ import de.acegen.aceGen.StringType
 import de.acegen.aceGen.UndefinedType
 import java.util.ArrayList
 import java.util.List
+import de.acegen.aceGen.UiAction
 
 class Es6Extension {
 	
@@ -44,23 +44,14 @@ class Es6Extension {
 
 	def String projectName(HttpClient it) '''«getName.toFirstUpper»'''
 
-	def dispatch String appStateFunction(HttpClientStateFunction it) '''(data) => {
+	def String appStateFunction(HttpClientStateFunction it) '''(data) => {
 		«stateElement.stateFunctionCall('''«stateFunctionType»''', "data")»
-	}'''
-
-	def dispatch String appStateFunction(FunctionCall it) '''(data) => {
-		AppState.«function.name»(
-			data«IF function.stateElement !== null»,
-			«function.stateElement.paramList.path»«IF function.stateElement.attributes.size > 0 && !function.stateElement.isList», 
-			[«FOR attribute: function.stateElement.attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
-			«ENDIF»
-		)
 	}'''
 
 	def stateFunctionCall(ClientAttribute it, String functionName, String data) '''
 		AppState.«stateFunctionName(functionName)»(
 			«IF functionName != "get"»«data», «ENDIF»
-			«paramList.path»«IF functionName != "get" && attributes.size > 0 && !isList», 
+			«paramList.path»«IF functionName != "get" && attributes.size > 0 && !isList && !isTree», 
 			[«FOR attribute: attributes SEPARATOR ", "»"«attribute.name»"«ENDFOR»]«ENDIF»
 		)
 	'''
@@ -162,20 +153,199 @@ class Es6Extension {
 	}
 
 	def String componentName(ClientAttribute it) {
-		if (isList) {
+		if (isList || isTree) {
 			return '''«name.toFirstUpper»Item'''
 		}
 		return '''«name.toFirstUpper»'''
 	}
 
-	def String importComponent(ClientAttribute it, String subFolder) '''
-		«IF attributes.size > 0 && !noComponent»
-			import { «componentName» } from ".«subFolder»/«componentName»";
+	def String componentContainerName(ClientAttribute it) {
+		if (isList || isTree) {
+			return '''«name.toFirstUpper»ItemContainer'''
+		}
+		return '''«name.toFirstUpper»Container'''
+	}
+
+	def String importComponentContainer(ClientAttribute it, String subFolder) '''
+		«IF (attributes.size > 0 || actions.size > 0)&& !noComponent »
+			import { «componentContainerName» } from ".«subFolder»/«componentContainerName»";
 		«ENDIF»
 	'''
 
+	def String importComponent(ClientAttribute it, String subFolder) '''
+		«IF (isList  || isTree) && attributes.length > 0»
+			import { «componentName» } from "./«subFolder»/«componentName»";
+		«ENDIF»
+	'''
+
+	def boolean hasComplexAttribute(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.attributes.size > 0 || attribute.actions.size > 0) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def String keyAttributeName(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.isListId) {
+				return attribute.name;
+			}
+		}
+		return "id"
+	}
+
+	def boolean childrenContain(ClientAttribute it, String value) {
+		for (attribute : attributes) {
+			if (attribute.name == value) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def boolean oneChildIsLocationOrStorage(ClientAttribute it) {
+		for (attribute : attributes) {
+			if (attribute.location || attribute.storage) {
+				return true;
+			}
+			for (childAttribute : attribute.attributes) {
+				if (childAttribute.location || childAttribute.storage) {
+					return true;
+				}
+			}
+		}
+		return false
+	}
+
+	def boolean attributesContain(List<ClientAttribute> it, ClientAttribute attribute) {
+		for (parentAttribute : it) {
+			if (parentAttribute.name == attribute.name) {
+				return true;
+			}
+		}
+		return false
+	}
+
+	def String depth(ClientAttribute it, String prefix) {
+		return depthRec(prefix)
+	}
+
+	def String depthRec(ClientAttribute attr, String prefix) {
+		var clientAttribute = attr
+		val parent = clientAttribute.findNextClientAttributeParent
+		if (parent !== null) {
+			return parent.depthRec(prefix + "../")
+		} else {
+			return prefix;
+		}
+	}
+
+	def String path(ClientAttribute it) {
+		return pathRec("")
+	}
+
+	def String pathRec(ClientAttribute attr, String suffix) {
+		var clientAttribute = attr
+		val parent = clientAttribute.findNextClientAttributeParent
+		if (parent !== null) {
+			return parent.pathRec(parent.name.toFirstLower + "/" + suffix)
+		} else {
+			return suffix;
+		}
+	}
+	
+	def List<UiAction> uniqueActions(ClientAttribute attribute) {
+		var list = new ArrayList<UiAction>();
+		for(item: attribute.actions) {
+			if (!contains(list, item)) {
+				list.add(item);
+			}
+		}
+		for (attributeItem: attribute.attributes) {
+			for(item: attributeItem.actions) {
+				if (!contains(list, item)) {
+					list.add(item);
+				}
+			}
+		}
+		return list;
+	}
+	
+	def contains(List<UiAction> actions, UiAction action) {
+		for(item: actions) {
+			if (item.target.name == action.target.name) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	def String stateRefPath(ClientAttribute it) {
 		return elementPathRec("")
+	}
+
+	def Boolean isTag(ClientAttribute it) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput" || uiElement == "CheckBox" ||
+			uiElement == "Select" || uiElement == "Button" || uiElement == "Radio") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isInput(ClientAttribute it) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput" || uiElement == "CheckBox" || uiElement == "Radio") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isValueInput(ClientAttribute it) {
+		if (uiElement == "TextInput" || uiElement == "PasswordInput") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isCheckedInput(ClientAttribute it) {
+		if (uiElement == "CheckBox" || uiElement == "Radio") {
+			return true
+		}
+		return false
+	}
+	
+	def String inputType(ClientAttribute it) {
+		if (uiElement == "TextInput") {
+			return "text"
+		}
+		if (uiElement == "PasswordInput") {
+			return "password"
+		}
+		if (uiElement == "CheckBox") {
+			return "checkbox"
+		}
+		if (uiElement == "Radio") {
+			return "radio"
+		}
+	}
+	
+	def Boolean isSelect(ClientAttribute it) {
+		if (uiElement == "Select") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isButton(ClientAttribute it) {
+		if (uiElement == "Button") {
+			return true
+		}
+		return false
+	}
+	
+	def Boolean isComponent(ClientAttribute it) {
+		return !noComponent && ((attributes.size > 0) || actions.size > 0)
 	}
 
 	private def String elementPathRec(ClientAttribute attr, String suffix) {

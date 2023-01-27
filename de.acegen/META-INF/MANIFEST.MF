@@ -2,8 +2,9 @@ Manifest-Version: 1.0
 Automatic-Module-Name: de.acegen
 Bundle-ManifestVersion: 2
 Bundle-Name: de.acegen
+Bundle-RequiredExecutionEnvironment: JavaSE-19
 Bundle-Vendor: Annette Pohl
-Bundle-Version: 1.9.4.qualifier
+Bundle-Version: 1.13.3.qualifier
 Bundle-SymbolicName: de.acegen; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
@@ -15,7 +16,6 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.emf.common,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtend.lib;bundle-version="2.14.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.acegen.serializer,
  de.acegen.validation,
  de.acegen,
