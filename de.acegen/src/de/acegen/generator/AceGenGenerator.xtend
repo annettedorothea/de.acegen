@@ -48,6 +48,8 @@ class AceGenGenerator extends AbstractGenerator {
 				es6Generator.doGenerate(project.httpClient, fsa);
 			} else if (project.httpServer !== null && project.httpServer.java) {
 				javaGenerator.doGenerate(project.httpServer, fsa);
+			} else if (project.httpServer !== null && project.httpServer.cs) {
+				javaGenerator.doGenerate(project.httpServer, fsa);
 			}
 
 		}
