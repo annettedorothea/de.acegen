@@ -189,9 +189,6 @@ public class Action {
     _builder.append("import org.slf4j.LoggerFactory;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import org.apache.commons.lang3.StringUtils;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import de.acegen.Data;");
     _builder.newLine();
     _builder.append("import de.acegen.CustomAppConfiguration;");
@@ -206,12 +203,8 @@ public class Action {
     _builder.newLine();
     _builder.append("import de.acegen.ReadAction;");
     _builder.newLine();
-    _builder.append("import de.acegen.ITimelineItem;");
-    _builder.newLine();
     _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public abstract class ");
     String _abstractActionName = this._typeExtension.abstractActionName(it);
@@ -303,6 +296,8 @@ public class Action {
     _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
+    _builder.append("import de.acegen.Data;");
+    _builder.newLine();
     _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
     {
@@ -310,15 +305,6 @@ public class Action {
       if (_equals) {
         _builder.append("import de.acegen.PersistenceHandle;");
         _builder.newLine();
-      }
-    }
-    {
-      if (((this._commonExtension.allSquishyAttributes(it.getModel()).size() > 0) || it.getType().equals("GET"))) {
-        _builder.append("import ");
-        String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
-        _builder.append(_modelClassNameWithPackage);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
       }
     }
     _builder.newLine();
@@ -377,11 +363,11 @@ public class Action {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
+        String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
+        _builder.append(_modelClassNameWithPackage, "\t\t");
+        _builder.append(" testData = ");
         String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it.getModel());
         _builder.append(_modelClassNameWithPackage_1, "\t\t");
-        _builder.append(" testData = ");
-        String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it.getModel());
-        _builder.append(_modelClassNameWithPackage_2, "\t\t");
         _builder.append(".generateTestData();");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");

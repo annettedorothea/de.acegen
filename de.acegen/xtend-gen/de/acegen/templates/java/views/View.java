@@ -172,18 +172,6 @@ public class View {
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
-    {
-      EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
-      for(final HttpServerViewFunction renderFunction : _renderFunctions) {
-        _builder.append("import ");
-        String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(renderFunction.getModel());
-        _builder.append(_modelClassNameWithPackage);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.newLine();
-    _builder.append("@SuppressWarnings(\"all\")");
     _builder.newLine();
     _builder.append("public interface ");
     String _viewInterfaceName = this._viewExtension.viewInterfaceName(it);
@@ -192,14 +180,14 @@ public class View {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {
-      EList<HttpServerViewFunction> _renderFunctions_1 = it.getRenderFunctions();
-      for(final HttpServerViewFunction renderFunction_1 : _renderFunctions_1) {
+      EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
+      for(final HttpServerViewFunction renderFunction : _renderFunctions) {
         _builder.append("\t");
         _builder.append("void ");
-        String _name_1 = renderFunction_1.getName();
+        String _name_1 = renderFunction.getName();
         _builder.append(_name_1, "\t");
         _builder.append("(");
-        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(renderFunction_1.getModel());
+        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(renderFunction.getModel());
         _builder.append(_dataWithGenericModel, "\t");
         _builder.append(" data, PersistenceHandle handle);");
         _builder.newLineIfNotEmpty();

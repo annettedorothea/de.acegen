@@ -17,110 +17,13 @@
 
 package de.acegen.templates.java.models
 
-import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class Dao {
 	
 	@Inject
-	extension TypeExtension
-	
-	@Inject
 	extension CommonExtension
-	
-	def generateAbstractDao(de.acegen.aceGen.Model it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».models;
-		
-		import de.acegen.PersistenceHandle;
-
-		import java.util.List;
-		import java.util.Map;
-		
-		public abstract class «abstractModelDao» {
-			
-			public abstract void insert(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName»);
-			
-			«FOR attribute : allUniqueAttributes»
-				public abstract void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName»);
-
-				public abstract void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
-
-				public abstract «modelClassNameWithPackage» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
-			«ENDFOR»
-			
-			«IF allPrimaryKeyAttributes.length > 0»
-				public abstract «modelClassNameWithPackage» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR»);
-			«ENDIF»
-			
-			public abstract int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap);
-
-			public abstract List<«modelClassNameWithPackage»> selectAll(PersistenceHandle handle);
-
-			public abstract void truncate(PersistenceHandle handle);
-
-		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateDao(de.acegen.aceGen.Model it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».models;
-		
-		import de.acegen.PersistenceHandle;
-
-		import java.util.List;
-		import java.util.Map;
-
-		public class «modelDao» extends «abstractModelDao» {
-
-			public void insert(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
-				throw new RuntimeException("«modelDao».insert not implemented");
-			}
-			
-			«FOR attribute : allUniqueAttributes»
-				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
-					throw new RuntimeException("«modelDao».updateBy«attribute.name.toFirstUpper» not implemented");
-				}
-
-				public void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
-					throw new RuntimeException("«modelDao».deleteBy«attribute.name.toFirstUpper» not implemented");
-				}
-
-				public «modelClassNameWithPackage» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
-					throw new RuntimeException("«modelDao».selectBy«attribute.name.toFirstUpper» not implemented");
-				}
-			«ENDFOR»
-			
-			«IF allPrimaryKeyAttributes.length > 0»
-				public «modelClassNameWithPackage» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
-					throw new RuntimeException("«modelDao».selectByPrimaryKey not implemented");
-				}
-			«ENDIF»
-			
-			public int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap) {
-				throw new RuntimeException("«modelDao».filterAndCountBy not implemented");
-			}
-
-			public List<«modelClassNameWithPackage»> selectAll(PersistenceHandle handle) {
-				throw new RuntimeException("«modelDao».selectAll not implemented");
-			}
-
-			public void truncate(PersistenceHandle handle) {
-				throw new RuntimeException("«modelDao».truncate not implemented");
-			}
-
-		}
-		
-		«sdg»
-		
-	'''
 	
 	def generateAceDao() '''
 		«copyright»

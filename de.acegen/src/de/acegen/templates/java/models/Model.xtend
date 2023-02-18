@@ -17,7 +17,6 @@
 
 package de.acegen.templates.java.models
 
-import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
@@ -57,14 +56,11 @@ class Model {
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-		import java.util.List;
-		import java.util.ArrayList;
-
 		import de.acegen.DateTimeToStringConverter;
 		import de.acegen.StringToDateTimeConverter;
 		import de.acegen.AbstractModel;
 
-		@SuppressWarnings("all")
+		@SuppressWarnings("unused")
 		public class «modelClassName» extends AbstractModel {
 		
 			«FOR attribute : allAttributes»
@@ -126,14 +122,6 @@ class Model {
 				«ENDFOR»
 			}
 
-			public «modelClassNameWithPackage» deepCopy() {
-				«modelClassNameWithPackage» copy = new «modelClassName»();
-				«FOR attribute : allAttributes»
-					«attribute.deepCopy»
-				«ENDFOR»
-				return copy;
-			}
-			
 			public static «modelClassName» generateTestData() {
 				java.util.Random random = new java.util.Random();
 				«IF allAttributes.filter[a | a.list].size > 0»
@@ -185,35 +173,5 @@ class Model {
 		«sdg»
 		
 	'''	
-	
-	private def String deepCopy(Attribute it) '''
-		«IF !list»
-			«IF type !== null»
-				copy.«setterName»(this.«getterName»());
-			«ELSEIF model !== null»
-				if (this.«getterName»() != null) {
-					copy.«setterName»(this.«getterName»().deepCopy());
-				}
-			«ENDIF»
-		«ELSE»
-			«IF type !== null»
-				List<«type»> «name»Copy = new ArrayList<«type»>();
-				if (this.«getterName»() != null) {
-					for(«type» item: this.«getterName»()) {
-						«name»Copy.add(item);
-					}
-				}
-			«ELSEIF model !== null»
-				List<«model.modelClassNameWithPackage»> «name»Copy = new ArrayList<«model.modelClassNameWithPackage»>();
-				if (this.«getterName»() != null) {
-					for(«model.modelClassNameWithPackage» item: this.«getterName»()) {
-						«propertyName»Copy.add(item.deepCopy());
-					}
-				}
-			«ENDIF»
-			copy.«setterName»(«propertyName»Copy);
-		«ENDIF»
-	'''
-	
 	
 }

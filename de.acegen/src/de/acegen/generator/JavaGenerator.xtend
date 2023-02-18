@@ -24,7 +24,6 @@ import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
 import de.acegen.generator.java.AppRegistrationGenerator
-import de.acegen.generator.java.DaoGenerator
 import de.acegen.generator.java.DropwizardGenerator
 import de.acegen.generator.java.JDBI3Generator
 import de.acegen.generator.java.LiquibaseGenerator
@@ -56,9 +55,6 @@ class JavaGenerator {
 
 	@Inject
 	JDBI3Generator jdbi3Generator;
-
-	@Inject
-	DaoGenerator daoGenerator;
 
 	@Inject
 	DropwizardGenerator dropwizardGenerator;
@@ -142,8 +138,6 @@ class JavaGenerator {
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
 		if (httpServer.JDBI3) {
 			jdbi3Generator.doGenerate(httpServer, fsa)
-		} else {
-			daoGenerator.doGenerate(httpServer, fsa)
 		}
 		if (httpServer.dropwizard) {
 			dropwizardGenerator.doGenerate(httpServer, fsa)

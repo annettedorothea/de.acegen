@@ -44,8 +44,6 @@ class Command {
 		import de.acegen.PersistenceHandle;
 		import de.acegen.Event;
 		
-		import «model.modelClassNameWithPackage»;
-		
 		@SuppressWarnings("unused")
 		public abstract class «abstractCommandName» extends Command<«model.modelClassNameWithPackage»> {
 		
@@ -100,11 +98,10 @@ class Command {
 		import de.acegen.IDaoProvider;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.PersistenceHandle;
+		import de.acegen.Data;
 		
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
-		
-		import «model.modelClassNameWithPackage»
 		
 		public class «commandName» extends «abstractCommandName» {
 		

@@ -94,8 +94,6 @@ class Action {
 		import org.slf4j.Logger;
 		import org.slf4j.LoggerFactory;
 		
-		import org.apache.commons.lang3.StringUtils;
-		
 		import de.acegen.Data;
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
@@ -103,10 +101,8 @@ class Action {
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
 		import de.acegen.ReadAction;
-		import de.acegen.ITimelineItem;
 		import de.acegen.SquishyDataProvider;
 		
-		@SuppressWarnings("unused")
 		public abstract class «abstractActionName» extends ReadAction<«model.modelClassNameWithPackage»> {
 		
 			static final Logger LOG = LoggerFactory.getLogger(«abstractActionName».class);
@@ -137,12 +133,10 @@ class Action {
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.ViewProvider;
 		import de.acegen.IDaoProvider;
+		import de.acegen.Data;
 		import de.acegen.PersistenceConnection;
 		«IF getType.equals("GET")»
 			import de.acegen.PersistenceHandle;
-		«ENDIF»
-		«IF model.allSquishyAttributes.size > 0 || getType.equals("GET")»
-			import «model.modelClassNameWithPackage»;
 		«ENDIF»
 		
 		import org.slf4j.Logger;

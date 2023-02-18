@@ -39,8 +39,6 @@ public class JDBI3Generator {
   private TypeExtension _typeExtension;
 
   public void doGenerate(final HttpServer httpServer, final IFileSystemAccess2 fsa) {
-    fsa.generateFile("de/acegen/AbstractDao.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.jdbi3Dao.generateAbstractJdbiDao());
     fsa.generateFile("de/acegen/AbstractMapper.java", 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.jdbi3Mapper.generateAbstractMapper(httpServer));
     EList<Model> _models = httpServer.getModels();
