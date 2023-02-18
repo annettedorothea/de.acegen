@@ -19,7 +19,8 @@ import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.EcoreExtension;
+import de.acegen.extensions.java.TypeExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -29,17 +30,21 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class Liquibase {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private AttributeExtension _attributeExtension;
 
   @Inject
   @Extension
-  private AttributeExtension _attributeExtension;
+  private TypeExtension _typeExtension;
+
+  @Inject
+  @Extension
+  private EcoreExtension _ecoreExtension;
 
   public CharSequence generateMigration(final Model it, final HttpServer httpServer) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<createTable tableName=\"");
-    String _lowerCase = it.getName().toLowerCase();
-    _builder.append(_lowerCase);
+    String _tableName = this._typeExtension.tableName(it);
+    _builder.append(_tableName);
     _builder.append("\">");
     _builder.newLineIfNotEmpty();
     {
@@ -47,10 +52,10 @@ public class Liquibase {
       for(final Attribute attribute : _attributes) {
         _builder.append("\t");
         _builder.append("<column name=\"");
-        String _lowerCase_1 = attribute.getName().toLowerCase();
-        _builder.append(_lowerCase_1, "\t");
+        String _propertyName = this._attributeExtension.propertyName(attribute);
+        _builder.append(_propertyName, "\t");
         _builder.append("\" type=\"");
-        String _sqlType = this._attributeExtension.sqlType(attribute);
+        String _sqlType = this._typeExtension.sqlType(attribute);
         _builder.append(_sqlType, "\t");
         _builder.append("\">");
         _builder.newLineIfNotEmpty();
@@ -76,17 +81,17 @@ public class Liquibase {
           boolean _tripleNotEquals = (_foreignKey != null);
           if (_tripleNotEquals) {
             _builder.append(" references=\"");
-            String _tableName = this._attributeExtension.tableName(attribute.getForeignKey());
-            _builder.append(_tableName, "\t\t");
+            String _tableName_1 = this._typeExtension.tableName(this._ecoreExtension.parent(attribute));
+            _builder.append(_tableName_1, "\t\t");
             _builder.append("(");
-            String _lowerCase_2 = attribute.getForeignKey().getName().toLowerCase();
-            _builder.append(_lowerCase_2, "\t\t");
+            String _propertyName_1 = this._attributeExtension.propertyName(attribute.getForeignKey());
+            _builder.append(_propertyName_1, "\t\t");
             _builder.append(")\" deleteCascade=\"true\" foreignKeyName=\"fk_");
-            String _tableFkRef = this._modelExtension.tableFkRef(it);
-            _builder.append(_tableFkRef, "\t\t");
+            String _tableName_2 = this._typeExtension.tableName(it);
+            _builder.append(_tableName_2, "\t\t");
             _builder.append("_");
-            String _lowerCase_3 = attribute.getForeignKey().getName().toLowerCase();
-            _builder.append(_lowerCase_3, "\t\t");
+            String _propertyName_2 = this._attributeExtension.propertyName(attribute.getForeignKey());
+            _builder.append(_propertyName_2, "\t\t");
             _builder.append("\"");
           }
         }

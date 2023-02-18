@@ -19,7 +19,7 @@ import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import de.acegen.extensions.java.ViewExtension;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -34,7 +34,7 @@ public class View {
 
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   @Extension
@@ -54,16 +54,18 @@ public class View {
     _builder.newLine();
     _builder.append("import de.acegen.IDaoProvider;");
     _builder.newLine();
+    _builder.append("import de.acegen.Data;");
     _builder.newLine();
-    _builder.append("import de.acegen.IDataContainer;");
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
       for(final HttpServerViewFunction renderFunction : _renderFunctions) {
-        String _dataImport = this._modelExtension.dataImport(renderFunction.getModel());
-        _builder.append(_dataImport);
+        _builder.append("import ");
+        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(renderFunction.getModel());
+        _builder.append(_dataWithGenericModel);
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -119,8 +121,8 @@ public class View {
         String _name_1 = renderFunction_1.getName();
         _builder.append(_name_1, "\t");
         _builder.append("(");
-        String _dataInterfaceName = this._modelExtension.dataInterfaceName(renderFunction_1.getModel());
-        _builder.append(_dataInterfaceName, "\t");
+        String _dataWithGenericModel_1 = this._typeExtension.dataWithGenericModel(renderFunction_1.getModel());
+        _builder.append(_dataWithGenericModel_1, "\t");
         _builder.append(" data, PersistenceHandle handle) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -166,16 +168,17 @@ public class View {
     _builder.append(".views;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import de.acegen.IDataContainer;");
+    _builder.append("import de.acegen.Data;");
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceHandle;");
     _builder.newLine();
     {
       EList<HttpServerViewFunction> _renderFunctions = it.getRenderFunctions();
       for(final HttpServerViewFunction renderFunction : _renderFunctions) {
-        String _dataImport = this._modelExtension.dataImport(renderFunction.getModel());
-        _builder.append(_dataImport);
+        _builder.append("import ");
+        String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(renderFunction.getModel());
+        _builder.append(_modelClassNameWithPackage);
+        _builder.append(";");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -196,8 +199,8 @@ public class View {
         String _name_1 = renderFunction_1.getName();
         _builder.append(_name_1, "\t");
         _builder.append("(");
-        String _dataInterfaceName = this._modelExtension.dataInterfaceName(renderFunction_1.getModel());
-        _builder.append(_dataInterfaceName, "\t");
+        String _dataWithGenericModel = this._typeExtension.dataWithGenericModel(renderFunction_1.getModel());
+        _builder.append(_dataWithGenericModel, "\t");
         _builder.append(" data, PersistenceHandle handle);");
         _builder.newLineIfNotEmpty();
       }

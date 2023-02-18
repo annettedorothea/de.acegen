@@ -19,22 +19,26 @@ package de.acegen.templates.java.models
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.extensions.java.TypeExtension
+import de.acegen.extensions.java.EcoreExtension
 
 class Liquibase {
 	
 	@Inject
-	extension ModelExtension
-	
-	@Inject
 	extension AttributeExtension
 	
+	@Inject
+	extension TypeExtension
+	
+	@Inject
+	extension EcoreExtension
+	
 	def generateMigration(de.acegen.aceGen.Model it, HttpServer httpServer) '''
-		<createTable tableName="«name.toLowerCase»">
+		<createTable tableName="«tableName»">
 			«FOR attribute : attributes»
-				<column name="«attribute.name.toLowerCase»" type="«attribute.sqlType»">
-					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.notNull»nullable="false"«ENDIF» «IF attribute.foreignKey !== null» references="«attribute.foreignKey.tableName»(«attribute.foreignKey.name.toLowerCase»)" deleteCascade="true" foreignKeyName="fk_«tableFkRef»_«attribute.foreignKey.name.toLowerCase»"«ENDIF» />
+				<column name="«attribute.propertyName»" type="«attribute.sqlType»">
+					<constraints «IF attribute.isPrimaryKey»primaryKey="true"«ENDIF» «IF attribute.notNull»nullable="false"«ENDIF» «IF attribute.foreignKey !== null» references="«attribute.parent.tableName»(«attribute.foreignKey.propertyName»)" deleteCascade="true" foreignKeyName="fk_«tableName»_«attribute.foreignKey.propertyName»"«ENDIF» />
 				</column>
 			«ENDFOR»
 		</createTable>

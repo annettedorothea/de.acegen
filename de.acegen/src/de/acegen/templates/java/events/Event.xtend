@@ -32,7 +32,7 @@ class Event {
 		
 		import java.util.List;
 		
-		public class Event<T extends IDataContainer> implements IEvent<T> {
+		public class Event<T extends AbstractModel> {
 		
 			private String eventName;
 			private ViewProvider viewProvider;
@@ -43,7 +43,7 @@ class Event {
 				this.viewProvider = viewProvider;
 			}
 		
-			public void notifyListeners(T data, PersistenceHandle handle) {
+			public void notifyListeners(Data<T> data, PersistenceHandle handle) {
 				List<EventConsumer> consumerList = viewProvider.getConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (EventConsumer consumer : consumerList) {
@@ -54,7 +54,7 @@ class Event {
 				}
 			}
 		
-			public void notifyAfterCommitListeners(T data, PersistenceHandle handle) {
+			public void notifyAfterCommitListeners(Data<T> data, PersistenceHandle handle) {
 				List<EventConsumer> consumerList = viewProvider.getAfterCommitConsumerForEvent(eventName);
 				if (consumerList != null) {
 					for (EventConsumer consumer : consumerList) {
@@ -69,11 +69,11 @@ class Event {
 				return eventName;
 			}
 		
-			public void publish(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publish(Data<T> data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				this.notifyListeners(data, handle);
 			}
 		
-			public void publishAfterCommit(T data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
+			public void publishAfterCommit(Data<T> data, PersistenceHandle handle, PersistenceHandle timelineHandle) {
 				this.notifyAfterCommitListeners(data, handle);
 			}
 		
@@ -82,30 +82,5 @@ class Event {
 		«sdg»
 		
 	'''
-
-	def generateIEvent() '''
-		«copyright»
-		
-		package de.acegen;
-		
-		public interface IEvent<T extends IDataContainer> {
-		
-			String getEventName();
-			
-			void publish(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
-
-			void publishAfterCommit(T data, PersistenceHandle handle, PersistenceHandle timelineHandle);
-			
-			void notifyListeners(T data, PersistenceHandle handle);
-			
-			void notifyAfterCommitListeners(T data, PersistenceHandle handle);
-			
-			
-		}
-		
-		«sdg»
-		
-	'''
-	
 	
 }

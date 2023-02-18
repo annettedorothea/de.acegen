@@ -17,29 +17,26 @@
 
 package de.acegen.templates.java.resources
 
+import de.acegen.aceGen.AttributeParamRef
 import de.acegen.aceGen.AuthUser
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.HttpServerExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.EcoreExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class Resource {
 
 	@Inject
-	extension ModelExtension
-
-	@Inject
-	extension JavaHttpServerExtension
-
-	@Inject
-	extension HttpServerExtension
+	extension EcoreExtension
 
 	@Inject
 	extension AttributeExtension
+
+	@Inject
+	extension TypeExtension
 
 	@Inject
 	extension CommonExtension
@@ -47,7 +44,7 @@ class Resource {
 	def generate(HttpServerAce it, HttpServer httpServer, AuthUser authUser) '''
 		«copyright»
 		
-		package «httpServer.name».resources;
+		package «httpServer.resourcePackageName»;
 		
 		import java.util.UUID;
 		
@@ -75,7 +72,6 @@ class Resource {
 		
 		import de.acegen.CustomAppConfiguration;
 		import de.acegen.IDaoProvider;
-		import de.acegen.IDataContainer;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
 		import de.acegen.PersistenceHandle;
@@ -83,6 +79,7 @@ class Resource {
 		import de.acegen.ITimelineItem;
 		import de.acegen.SquishyDataProvider;
 		import de.acegen.Config;
+		import de.acegen.Data;
 		
 		«IF authorize && authUser !== null»
 			import de.acegen.auth.«authUser.name.toFirstUpper»;
@@ -101,8 +98,7 @@ class Resource {
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.DELETE;
 		
-		«getModel.dataImport»
-		«getModel.dataClassImport»
+		import «model.modelClassNameWithPackage»;
 		
 		import de.acegen.Resource;
 		
@@ -139,17 +135,17 @@ class Resource {
 			public Response «resourceName.toFirstLower»(
 					«IF isAuthorize && authUser !== null»@Auth «authUser.name.toFirstUpper» «authUser.name.toFirstLower», «ENDIF»
 					«FOR param : queryParams»
-						@QueryParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
+						@QueryParam("«param.attribute.propertyName»") String «param.attribute.propertyName», 
 					«ENDFOR»
 					«FOR param : pathParams»
-						@PathParam("«param.attribute.name»") «param.attribute.resourceParamType» «param.attribute.name», 
+						@PathParam("«param.attribute.propertyName»") String «param.attribute.propertyName», 
 					«ENDFOR»
 					«IF isMulitpartFormData»
-						@FormDataParam("«getModel.formDataAttributeName»")FormDataContentDisposition contentDisposition,
-						@FormDataParam("«getModel.formDataAttributeName»")InputStream inputStream,
+						@FormDataParam("«model.formDataAttributeName»")FormDataContentDisposition contentDisposition,
+						@FormDataParam("«model.formDataAttributeName»")InputStream inputStream,
 					«ENDIF»
 					@QueryParam("uuid") String uuid«IF payload.size > 0», 
-					«getModel.dataParamType» payload«ENDIF») 
+					«payloadDataNameWithPackage» payload«ENDIF») 
 					throws JsonProcessingException {
 				«IF payload.size > 0»
 					if (payload == null) {
@@ -160,7 +156,8 @@ class Resource {
 					uuid = UUID.randomUUID().toString();
 				}
 				try {
-					«getModel.dataInterfaceNameWithPackage» data = new «getModel.dataName»(uuid);
+					«model.dataWithGenericModel» data = new «model.dataWithGenericModel»(uuid);
+					«model.modelClassNameWithPackage» model = new «model.modelClassNameWithPackage»();
 					«FOR paramRef : queryParams»
 						«paramRef.initActionData»
 					«ENDFOR»
@@ -171,24 +168,25 @@ class Resource {
 						«attributeRef.initActionDataFromPayload»
 					«ENDFOR»
 					«IF isAuthorize && authUser !== null»
-						«FOR param : getModel.allAttributes»
+						«FOR param : model.allAttributes»
 								«IF authUser.attributes.containsAttribute(param)»
-									data.«param.setterCall('''«authUser.name.toFirstLower».«getterCall(param)»''')»;
+									model.«param.setterName»(«authUser.name.toFirstLower».«param.getterName»());
 								«ENDIF»
 						«ENDFOR»
 					«ENDIF»
 					«IF isMulitpartFormData»
-						«FOR param : getModel.allAttributes»
+						«FOR param : model.allAttributes»
 								«IF param.type == "FormData"»
-									data.«param.setterCall('''new de.acegen.FormData(contentDisposition, inputStream)''')»;
+									model.«param.setterName»(new de.acegen.FormData(contentDisposition, inputStream));
 								«ENDIF»
 						«ENDFOR»
 					«ENDIF»
 					
+					data.setModel(model);
 					«actionNameWithPackage» action = new «actionNameWithPackage»(persistenceConnection, appConfiguration, daoProvider, viewProvider);
 					data = action.apply(data);
 					«IF response.size > 0»
-						return Response.ok(new «responseDataNameWithPackage»(data)).build();
+						return Response.ok(new «responseDataNameWithPackage»(data.getModel())).build();
 					«ELSE»
 						return ok();
 					«ENDIF»
@@ -217,5 +215,58 @@ class Resource {
 		
 		«sdg»
 	'''
+	
+	private def String initActionDataFromPayload(AttributeParamRef it) '''
+		«IF notNull»
+			«IF "String".equals(attribute.type) && !attribute.list»
+				if (StringUtils.isBlank(payload.«attribute.getterName»()) || "null".equals(payload.«attribute.getterName»())) {
+					return badRequest("«attribute.propertyName» is mandatory");
+				}
+			«ELSE»
+				if (payload.«attribute.getterName»() == null) {
+					return badRequest("«attribute.propertyName» is mandatory");
+				}
+			«ENDIF»
+		«ENDIF»
+		model.«attribute.setterName»(payload.«attribute.getterName»());
+	'''
+	
+	private def String initActionData(AttributeParamRef it) '''
+		«IF attribute.type !== null && attribute.type.equals('DateTime') && !attribute.list»
+			«IF notNull»
+				if (StringUtils.isBlank(«attribute.propertyName») || "null".equals(«attribute.propertyName»)) {
+					return badRequest("«attribute.propertyName» is mandatory");
+				}
+			«ENDIF»
+			if (StringUtils.isNotBlank(«attribute.propertyName»)) {
+				try {
+					model.«attribute.setterName»(«IF attribute.type !== null && attribute.type.equals('DateTime')»LocalDateTime.parse(«attribute.propertyName», DateTimeFormatter.ISO_DATE_TIME)«ELSE»«attribute.propertyName»«ENDIF»);
+				} catch (Exception x) {
+					LOG.warn("failed to parse dateTime «attribute.propertyName» - {}", «attribute.propertyName»);
+				}
+			}
+		«ELSE»
+			«IF notNull»
+				if («attribute.name» == null || StringUtils.isBlank(«attribute.propertyName») || "null".equals(«attribute.propertyName»)) {
+					return badRequest("«attribute.propertyName» is mandatory");
+				}
+			«ENDIF»
+			«IF "Integer".equals(attribute.type)»
+				if («attribute.propertyName» != null) {
+					model.«attribute.setterName»("null".equals(«attribute.propertyName») ? null : «attribute.type».parseInt(«attribute.propertyName»));
+				}
+			«ELSEIF "String".equals(attribute.type)»
+				if («attribute.propertyName» != null) {
+					model.«attribute.setterName»(«attribute.propertyName»);
+				}
+			«ELSE»
+				if («attribute.propertyName» != null) {
+					model.«attribute.setterName»("null".equals(«attribute.propertyName») ? null : «attribute.type».parse«attribute.type.toFirstUpper»(«attribute.propertyName»));
+				}
+			«ENDIF»
+		«ENDIF»
+	'''
+	
+	
 	
 }

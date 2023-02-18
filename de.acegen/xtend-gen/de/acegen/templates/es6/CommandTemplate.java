@@ -26,10 +26,10 @@ import de.acegen.aceGen.HttpServerAce;
 import de.acegen.aceGen.Input;
 import de.acegen.aceGen.TriggerdAceOperation;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.HttpServerExtension;
 import de.acegen.extensions.es6.AceExtension;
 import de.acegen.extensions.es6.Es6Extension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.AttributeExtension;
+import de.acegen.extensions.java.EcoreExtension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -54,11 +54,11 @@ public class CommandTemplate {
 
   @Inject
   @Extension
-  private HttpServerExtension _httpServerExtension;
+  private EcoreExtension _ecoreExtension;
 
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private AttributeExtension _attributeExtension;
 
   public boolean hasEventOutcome(final HttpClientAce it) {
     EList<HttpClientOutcome> _outcomes = it.getOutcomes();
@@ -320,7 +320,7 @@ public class CommandTemplate {
         _builder.append("if (this.allMandatoryValuesAreSet(data)) {");
         _builder.newLine();
         {
-          if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
+          if ((((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (it.getServerCall().getPayload().size() > 0)) && (!(this._ecoreExtension.isMulitpartFormData(it.getServerCall())).booleanValue()))) {
             _builder.append("\t");
             _builder.append("\t    \t");
             _builder.append("let payload = {");
@@ -350,11 +350,11 @@ public class CommandTemplate {
             _builder.append("};");
             _builder.newLine();
           } else {
-            if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._httpServerExtension.isMulitpartFormData(it.getServerCall())).booleanValue())) {
+            if (((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT")) && (this._ecoreExtension.isMulitpartFormData(it.getServerCall())).booleanValue())) {
               _builder.append("\t");
               _builder.append("\t    \t");
               _builder.append("const formData = data.");
-              String _formDataAttributeName = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
+              String _formDataAttributeName = this._attributeExtension.formDataAttributeName(it.getServerCall().getModel());
               _builder.append(_formDataAttributeName, "\t\t    \t");
               _builder.append(";");
               _builder.newLineIfNotEmpty();
@@ -414,7 +414,7 @@ public class CommandTemplate {
         {
           if ((Objects.equal(it.getServerCall().getType(), "POST") || Objects.equal(it.getServerCall().getType(), "PUT"))) {
             {
-              Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it.getServerCall());
+              Boolean _isMulitpartFormData = this._ecoreExtension.isMulitpartFormData(it.getServerCall());
               if ((_isMulitpartFormData).booleanValue()) {
                 _builder.append(",");
                 _builder.newLineIfNotEmpty();
@@ -422,7 +422,7 @@ public class CommandTemplate {
                 _builder.append("\t\t\t\t\t");
                 _builder.append(" ");
                 _builder.append("formData, \"");
-                String _formDataAttributeName_1 = this._modelExtension.formDataAttributeName(it.getServerCall().getModel());
+                String _formDataAttributeName_1 = this._attributeExtension.formDataAttributeName(it.getServerCall().getModel());
                 _builder.append(_formDataAttributeName_1, "\t\t\t\t\t\t ");
                 _builder.append("\"");
               } else {

@@ -48,10 +48,6 @@ public class AceGenGenerator extends AbstractGenerator {
       } else {
         if (((project.getHttpServer() != null) && project.getHttpServer().isJava())) {
           this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
-        } else {
-          if (((project.getHttpServer() != null) && project.getHttpServer().isCs())) {
-            this.javaGenerator.doGenerate(project.getHttpServer(), fsa);
-          }
         }
       }
     }

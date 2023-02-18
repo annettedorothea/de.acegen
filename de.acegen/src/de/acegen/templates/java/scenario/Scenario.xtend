@@ -19,15 +19,21 @@ package de.acegen.templates.java.scenario
 
 import de.acegen.aceGen.Attribute
 import de.acegen.aceGen.AttributeAndValue
+import de.acegen.aceGen.BooleanType
 import de.acegen.aceGen.Count
 import de.acegen.aceGen.CustomCall
-import de.acegen.aceGen.DataDefinition
 import de.acegen.aceGen.Given
 import de.acegen.aceGen.GivenRef
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.JsonArray
+import de.acegen.aceGen.JsonDateTime
 import de.acegen.aceGen.JsonObjectAce
+import de.acegen.aceGen.JsonValue
+import de.acegen.aceGen.LongType
 import de.acegen.aceGen.Model
+import de.acegen.aceGen.NullType
+import de.acegen.aceGen.PrimitiveValue
 import de.acegen.aceGen.SelectByPrimaryKeys
 import de.acegen.aceGen.SelectByUniqueAttribute
 import de.acegen.aceGen.StringType
@@ -35,8 +41,9 @@ import de.acegen.aceGen.WhenBlock
 import de.acegen.aceGen.WhenThen
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
@@ -44,13 +51,10 @@ import javax.inject.Inject
 class Scenario {
 
 	@Inject
-	extension ModelExtension
+	extension TypeExtension
 
 	@Inject
 	extension AttributeExtension
-
-	@Inject
-	extension JavaHttpServerExtension
 
 	@Inject
 	extension CommonExtension
@@ -64,6 +68,10 @@ class Scenario {
 	private def void incIndex() {
 		index += 1;
 	}
+	
+	String stringLineBreak = '''," + 
+"'''
+	
 
 	def generateScenario(de.acegen.aceGen.Scenario it, HttpServer java) '''
 		«copyright»
@@ -119,6 +127,9 @@ class Scenario {
 		import de.acegen.ITimelineItem;
 		import de.acegen.SquishyDataProvider;
 		import de.acegen.HttpResponse;
+		import de.acegen.Data;
+		
+		import com.fasterxml.jackson.core.type.TypeReference;
 		
 		@SuppressWarnings("unused")
 		public abstract class Abstract«name»Scenario extends BaseScenario {
@@ -251,7 +262,7 @@ class Scenario {
 					}
 
 					«IF thenBlock.response !== null»
-						«whenBlock.action.model.dataNameWithPackage» expectedData = «thenBlock.response.data.objectMapperCallExpectedData(whenBlock.action.model)»;
+						«whenBlock.action.model.modelClassNameWithPackage» expectedData = «thenBlock.response.data.objectMapperCallExpectedData(whenBlock.action.model)»;
 						
 						«whenBlock.action.responseDataNameWithPackage» expected = new «whenBlock.action.responseDataNameWithPackage»(expectedData);
 						
@@ -325,10 +336,10 @@ class Scenario {
 	'''
 
 	private dispatch def persistenceVerification(SelectByUniqueAttribute it, Model model) '''
-		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectBy«attributeAndValue.attribute.name.toFirstUpper»(handle, «attributeAndValue.value.primitiveValueFrom»);
+		«model.modelClassNameWithPackage» actual = daoProvider.get«model.modelDao»().selectBy«attributeAndValue.attribute.name.toFirstUpper»(handle, «attributeAndValue.value.primitiveValueFrom»);
 		
 		«IF expected.object !== null»
-			«model.interfaceWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
+			«model.modelClassNameWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
 			assertThat(actual, expected);
 		«ELSEIF expected.isNull»
 			assertIsNull(actual);
@@ -338,10 +349,10 @@ class Scenario {
 	'''
 
 	private dispatch def persistenceVerification(SelectByPrimaryKeys it, Model model) '''
-		«model.interfaceWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute : model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
+		«model.modelClassNameWithPackage» actual = daoProvider.get«model.modelDao»().selectByPrimaryKey(handle, «FOR attribute : model.allPrimaryKeyAttributes SEPARATOR ', '»«attribute.findForPrimaryKey(attributeAndValues).value.primitiveValueFrom»«ENDFOR»);
 		
 		«IF expected.object !== null»
-			«model.interfaceWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
+			«model.modelClassNameWithPackage» expected = «expected.object.objectMapperCallExpectedPersistenceData(model)»;
 			assertThat(actual, expected);
 		«ELSEIF expected.isNull»
 			assertIsNull(actual);
@@ -413,22 +424,19 @@ class Scenario {
 		«IF action.payload.size > 0»
 			«action.payloadDataNameWithPackage» payload_«index» = «dataDefinition.data.objectMapperCallPayload(action)»;
 		«ENDIF»
-		«action.model.dataNameWithPackage» data_«index» = «dataDefinition.data.objectMapperCall(action.model)»;
+		«action.model.modelClassNameWithPackage» model_«index» = «dataDefinition.data.objectMapperCall(action.model)»;
+		«action.model.dataWithGenericModel» data_«index» = new «action.model.dataWithGenericModel»(uuid);
+		data_«index».setModel(model_«index»);
 	'''
 
 	private dispatch def objectMapperCall(JsonObjectAce it, Model model) '''
  		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
- 		"\"uuid\" : \"" + uuid + "\"«FOR member : it.members.filter[!attribute.squishy] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ \"uuid\" : \"" + uuid + "\"}«ENDIF»",
-		«model.dataNameWithPackage».class)'''
+ 			"«FOR member : it.members.filter[!attribute.squishy] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{ }«ENDIF»", «model.modelClassNameWithPackage».class)'''
 
 	private dispatch def objectMapperCall(StringType it, Model model) '''
- 		objectMapper.readValue("«string.valueFrom»",
-		«model.dataNameWithPackage».class)'''
+ 		objectMapper.readValue("«string.valueFrom»", «model.modelClassNameWithPackage».class)'''
 
-	private dispatch def objectMapperCall(Void it, Model model) '''
-		objectMapper.readValue("{" +
-		"\"uuid\" : \"" + uuid + "\" }",
-		«model.dataNameWithPackage».class)'''
+	private dispatch def objectMapperCall(Void it, Model model) '''new «model.modelClassNameWithPackage»()'''
 
 	private dispatch def objectMapperCallPayload(JsonObjectAce it, HttpServerAce action) '''
  		objectMapper.readValue("«IF it !== null && it.members !== null && it.members.filter[!attribute.squishy].size > 0»{" +
@@ -445,12 +453,10 @@ class Scenario {
 	
 	private dispatch def objectMapperCallExpectedData(JsonObjectAce it, Model model) '''
 		objectMapper.readValue("«IF it !== null && members !== null»{" +
-			"\"uuid\" : \"«(eContainer as DataDefinition).uuid»\"«FOR member : members.filter[!attribute.squishy] BEFORE stringLineBreak SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»",
-		«model.dataNameWithPackage».class)'''
+			"«FOR member : members.filter[!attribute.squishy] SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom»«ENDFOR»} «ELSE»{}«ENDIF»", «model.modelClassNameWithPackage».class)'''
 	
 	private dispatch def objectMapperCallExpectedData(StringType it, Model model) '''
-		objectMapper.readValue("«string.valueFrom»",
-		«model.dataNameWithPackage».class)'''
+		objectMapper.readValue("«string.valueFrom»", new TypeReference<Data<«model.modelClassNameWithPackage»>>() {})'''
 	
 	private dispatch def objectMapperCallExpectedPersistenceData(JsonObjectAce it, Model model) '''
 		objectMapper.readValue("«IF it !== null && it.members !== null»{" +
@@ -469,7 +475,7 @@ class Scenario {
 		
 		«IF action.getType == "POST"»
 			this.httpPost(
-				"«action.urlWithPathParams('''data_«index»''', false)»", 
+				"«action.urlWithPathParams('''data_«index».getModel()''', false)»", 
 			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
 				uuid,
@@ -477,7 +483,7 @@ class Scenario {
 			);
 		«ELSEIF action.getType == "PUT"»
 			this.httpPut(
-				"«action.urlWithPathParams('''data_«index»''', true)»", 
+				"«action.urlWithPathParams('''data_«index».getModel()''', true)»", 
 			 	«IF action.payload.size > 0»payload_«index»«ELSE»null«ENDIF»,
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
 				uuid,
@@ -485,14 +491,14 @@ class Scenario {
 			);
 		«ELSEIF action.getType == "DELETE"»
 			this.httpDelete(
-				"«action.urlWithPathParams('''data_«index»''', true)»", 
+				"«action.urlWithPathParams('''data_«index».getModel()''', true)»", 
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
 				uuid,
 				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
 			);
 		«ELSE»
 			this.httpGet(
-				"«action.urlWithPathParams('''data_«index»''', true)»", 
+				"«action.urlWithPathParams('''data_«index».getModel()''', true)»", 
 				«IF action.isAuthorize && authorization !== null»authorization("«authorization.username»", "«authorization.password»")«ELSE»null«ENDIF»,
 				uuid,
 				«IF action.response.size > 0»«action.responseDataNameWithPackage».class«ELSE»null«ENDIF»
@@ -500,5 +506,137 @@ class Scenario {
 		«ENDIF»
 		
 	'''
+	
+	private def String urlWithPathParams(HttpServerAce it, String dataVarName, boolean generateQueryParams) {
+		if (pathParams.size == 0) {
+			var retUrl = url +
+				'''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «IF queryParam.attribute.type == "String"»«urlEncodedValue('''«dataVarName».«queryParam.attribute.getterName»()''')»«ELSE»«dataVarName».«queryParam.attribute.getterName»()«ENDIF» + "«ENDFOR»«ENDIF»'''
+			return retUrl
+		}
+		val split1 = getUrl.split('\\{')
+		var urlElements = new ArrayList();
+		for (split : split1) {
+			val split2 = split.split('\\}');
+			urlElements.addAll(split2)
+		}
+		var urlWithPathParam = "";
+		for (var i = 0; i < urlElements.size; i++) {
+			if (i % 2 == 0) {
+				urlWithPathParam += urlElements.get(i)
+			} else {
+				urlWithPathParam +=
+					'''" + «urlEncodedValue('''«dataVarName».get«urlElements.get(i).toFirstUpper»()''')» + "'''
+			}
+		}
+		urlWithPathParam +=
+			'''«IF generateQueryParams»«FOR queryParam : queryParams BEFORE "?" SEPARATOR "&"»«queryParam.attribute.name»=" + «urlEncodedValue('''«dataVarName».«queryParam.attribute.getterName»()''')» + "«ENDFOR»«ENDIF»'''
+		return urlWithPathParam;
+	}
+
+	private def String urlEncodedValue(
+		String valueVar) '''(«valueVar» != null ? URLEncoder.encode(«valueVar», StandardCharsets.UTF_8.toString()) : "")'''
+	
+
+	private def primitiveValueFrom(PrimitiveValue it) {
+		if (string !== null) {
+			var returnString = string;
+			if (string.contains("${testId}")) {
+				returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+			} else if (string.contains("${")) {
+				val beginIndex = string.indexOf("${")
+				val endIndex = string.indexOf("}")
+				val templateString = string.substring(beginIndex, endIndex + 1)
+				val templateStringName = string.substring(beginIndex + 2, endIndex)
+				returnString = returnString.replace(
+					templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
+			}
+			return '''"«returnString»"''';
+		}
+		if (isMinus) {
+			return getLong() * (-1)
+		}
+		return getLong()
+	}
+	
+	private def LocalDateTime dateTimeParse(String dateString, String pattern) {
+		try {
+			return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(pattern));
+		} catch (Exception x) {
+			return null;
+		}
+	}
+
+	private def dispatch CharSequence valueFrom(
+		JsonObjectAce it) '''«IF it !== null && members !== null && members.size > 0»{ «FOR member : members SEPARATOR stringLineBreak»\"«member.attribute.name»\" : «member.value.valueFrom()»«ENDFOR»}«ELSE»{}«ENDIF»'''
+
+	private def dispatch CharSequence valueFrom(String it) {
+		return valueFromString
+	}
+
+	private def dispatch CharSequence valueFrom(JsonValue it) {
+		if (it instanceof StringType) {
+			return '''\"«string.valueFromString»\"''';
+		} else if (it instanceof BooleanType) {
+			return boolean;
+		} else if (it instanceof NullType) {
+			return "null";
+		} else if (it instanceof LongType) {
+			return '''«IF minus»-«ENDIF»«long»''';
+		}
+	}
+
+	private def dispatch CharSequence squishyValueFrom(
+		JsonObjectAce it) '''null'''
+
+	private def dispatch CharSequence squishyValueFrom(String it) {
+		return valueFromString
+	}
+
+	private def dispatch CharSequence squishyValueFrom(JsonValue it) {
+		if (it instanceof StringType) {
+			return '''«string.valueFromString»''';
+		} else if (it instanceof BooleanType) {
+			return boolean;
+		} else if (it instanceof NullType) {
+			return "null";
+		} else if (it instanceof LongType) {
+			return '''«long»''';
+		}
+	}
+
+	private def CharSequence valueFromString(String it) {
+		var returnString = it;
+		if (it.contains("${random}")) {
+			returnString = returnString.replace("${random}", '''" + this.randomString() + "''');
+		}
+		if (it.contains("${testId}")) {
+			returnString = returnString.replace("${testId}", '''" + this.getTestId() + "''');
+		}
+		while (returnString.contains("${")) {
+			val beginIndex = returnString.indexOf("${")
+			val endIndex = returnString.indexOf("}")
+			val templateString = returnString.substring(beginIndex, endIndex + 1)
+			val templateStringName = returnString.substring(beginIndex + 2, endIndex)
+
+			returnString = returnString.replace(
+				templateString, '''" + this.extractedValues.get("«templateStringName»").toString() + "''');
+		}
+		return '''«returnString»''';
+	}
+
+	private def dispatch CharSequence valueFrom(
+		JsonArray it) '''«IF it !== null && values !== null && values.size > 0»[ «FOR value : values SEPARATOR stringLineBreak»«value.valueFrom»«ENDFOR»]«ELSE»[]«ENDIF»'''
+
+	private def dispatch CharSequence valueFrom(JsonDateTime it) {
+		if (dateTime.contains("${")) {
+			val beginIndex = dateTime.indexOf("${")
+			val endIndex = dateTime.indexOf("}")
+			val templateStringName = dateTime.substring(beginIndex + 2, endIndex)
+			return '''\"" + LocalDateTime.parse(this.extractedValues.get("«templateStringName»").toString(), DateTimeFormatter.ofPattern("«pattern»"))  + "\"''';
+		}
+		return '''\"«dateTimeParse(dateTime, pattern)»\"'''
+	}
+
+	
 
 }

@@ -15,12 +15,12 @@
  */
 package de.acegen.templates.java.models;
 
+import com.google.common.base.Objects;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -30,11 +30,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class JDBI3Mapper {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
-
-  @Inject
-  @Extension
-  private AttributeExtension _attributeExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   @Extension
@@ -47,9 +43,9 @@ public class JDBI3Mapper {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("package ");
-    String _name = httpServer.getName();
-    _builder.append(_name);
-    _builder.append(".models;");
+    String _modelPackageName = this._typeExtension.modelPackageName(it);
+    _builder.append(_modelPackageName);
+    _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import java.sql.ResultSet;");
@@ -64,29 +60,29 @@ public class JDBI3Mapper {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
-    String _modelMapper = this._modelExtension.modelMapper(it);
+    String _modelMapper = this._typeExtension.modelMapper(it);
     _builder.append(_modelMapper);
     _builder.append(" extends AbstractMapper<");
-    String _modelName = this._modelExtension.modelName(it);
-    _builder.append(_modelName);
+    String _modelClassName = this._typeExtension.modelClassName(it);
+    _builder.append(_modelClassName);
     _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _modelName_1 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_1, "\t");
+    String _modelClassName_1 = this._typeExtension.modelClassName(it);
+    _builder.append(_modelClassName_1, "\t");
     _builder.append(" map(ResultSet r, StatementContext ctx) throws SQLException {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("return new ");
-    String _modelClassName = this._modelExtension.modelClassName(it);
-    _builder.append(_modelClassName, "\t\t");
+    String _modelClassName_2 = this._typeExtension.modelClassName(it);
+    _builder.append(_modelClassName_2, "\t\t");
     _builder.append("(");
     _builder.newLineIfNotEmpty();
     {
-      List<Attribute> _allAttributes = this._modelExtension.allAttributes(it);
+      List<Attribute> _allAttributes = this._commonExtension.allAttributes(it);
       boolean _hasElements = false;
       for(final Attribute attribute : _allAttributes) {
         if (!_hasElements) {
@@ -95,7 +91,7 @@ public class JDBI3Mapper {
           _builder.appendImmediate(",", "\t\t\t");
         }
         _builder.append("\t\t\t");
-        String _mapperInit = this._attributeExtension.mapperInit(attribute);
+        String _mapperInit = this.mapperInit(attribute);
         _builder.append(_mapperInit, "\t\t\t");
         _builder.newLineIfNotEmpty();
       }
@@ -219,5 +215,51 @@ public class JDBI3Mapper {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
+  }
+
+  private String mapperInit(final Attribute it) {
+    String _type = it.getType();
+    boolean _tripleNotEquals = (_type != null);
+    if (_tripleNotEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        boolean _isList = it.isList();
+        if (_isList) {
+          _builder.append("null");
+        } else {
+          String _type_1 = it.getType();
+          boolean _equals = Objects.equal(_type_1, "DateTime");
+          if (_equals) {
+            _builder.append("this.mapToDateTime(r, \"");
+            String _name = it.getName();
+            _builder.append(_name);
+            _builder.append("\")");
+          } else {
+            String _type_2 = it.getType();
+            boolean _equals_1 = Objects.equal(_type_2, "FormData");
+            if (_equals_1) {
+              _builder.append("null");
+            } else {
+              _builder.append("this.mapTo");
+              String _javaType = this._typeExtension.javaType(it);
+              _builder.append(_javaType);
+              _builder.append("(r, \"");
+              String _name_1 = it.getName();
+              _builder.append(_name_1);
+              _builder.append("\")");
+            }
+          }
+        }
+      }
+      return _builder.toString();
+    }
+    Model _model = it.getModel();
+    boolean _tripleNotEquals_1 = (_model != null);
+    if (_tripleNotEquals_1) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("null");
+      return _builder_1.toString();
+    }
+    return null;
   }
 }

@@ -18,8 +18,7 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.models.Dao
 import javax.inject.Inject
@@ -31,10 +30,7 @@ class DaoGenerator {
 	Dao dao;
 
 	@Inject
-	extension JavaHttpServerExtension
-
-	@Inject
-	extension ModelExtension
+	extension TypeExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
 		for (modelAce : httpServer.models) {

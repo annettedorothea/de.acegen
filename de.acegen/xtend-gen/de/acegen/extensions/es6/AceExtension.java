@@ -21,7 +21,7 @@ import de.acegen.aceGen.HttpClientAce;
 import de.acegen.aceGen.HttpClientOutcome;
 import de.acegen.aceGen.HttpClientStateFunction;
 import de.acegen.aceGen.TriggerdAceOperation;
-import de.acegen.extensions.HttpServerExtension;
+import de.acegen.extensions.java.EcoreExtension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -36,7 +36,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class AceExtension {
   @Inject
   @Extension
-  private HttpServerExtension _httpServerExtension;
+  private EcoreExtension _ecoreExtension;
 
   public String abstractActionName(final HttpClientAce it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -160,7 +160,7 @@ public class AceExtension {
   }
 
   public String httpCall(final HttpClientAce it) {
-    Boolean _isMulitpartFormData = this._httpServerExtension.isMulitpartFormData(it.getServerCall());
+    Boolean _isMulitpartFormData = this._ecoreExtension.isMulitpartFormData(it.getServerCall());
     if ((_isMulitpartFormData).booleanValue()) {
       String _type = it.getServerCall().getType();
       boolean _equals = Objects.equal(_type, "POST");

@@ -21,8 +21,7 @@ package de.acegen.generator
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
 import de.acegen.generator.java.AppRegistrationGenerator
 import de.acegen.generator.java.DaoGenerator
@@ -36,14 +35,12 @@ import de.acegen.templates.java.Persistence
 import de.acegen.templates.java.ServerInfo
 import de.acegen.templates.java.SquishyDataProvider
 import de.acegen.templates.java.TimelineItem
-import de.acegen.templates.java.actions.AceDataFactory
 import de.acegen.templates.java.actions.Action
 import de.acegen.templates.java.auth.AuthUser
 import de.acegen.templates.java.commands.Command
 import de.acegen.templates.java.data.Data
 import de.acegen.templates.java.events.Event
 import de.acegen.templates.java.events.EventConsumer
-import de.acegen.templates.java.events.EventReplayService
 import de.acegen.templates.java.models.Dao
 import de.acegen.templates.java.models.DaoProvider
 import de.acegen.templates.java.models.Model
@@ -91,16 +88,10 @@ class JavaGenerator {
 	Action action;
 
 	@Inject
-	AceDataFactory aceDataFactory;
-
-	@Inject
 	Command command;
 
 	@Inject
 	Event event;
-
-	@Inject
-	EventReplayService eventReplayService;
 
 	@Inject
 	View view;
@@ -145,10 +136,7 @@ class JavaGenerator {
 	extension ViewExtension
 
 	@Inject
-	extension JavaHttpServerExtension
-
-	@Inject
-	extension ModelExtension
+	extension TypeExtension
 
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
@@ -166,16 +154,8 @@ class JavaGenerator {
 			liquibaseGenerator.doGenerate(httpServer, fsa)
 		}
 		for (modelAce : httpServer.models) {
-			fsa.generateFile(httpServer.packageFolder + "/models/" + modelAce.modelName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, model.generateInterface(modelAce, httpServer));
 			fsa.generateFile(httpServer.packageFolder + "/models/" + modelAce.modelClassName + fileExtension,
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, model.generateClass(modelAce, httpServer));
-			fsa.generateFile(httpServer.packageFolder + "/data/" + modelAce.dataInterfaceName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateDataInterface(modelAce, httpServer));
-			fsa.generateFile(httpServer.packageFolder + "/data/" + modelAce.abstractDataName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateAbstractData(modelAce, httpServer));
-			fsa.generateFile(httpServer.packageFolder + "/data/" + modelAce.dataName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, data.generateData(modelAce, httpServer));
 		}
 		for (ace : httpServer.aceOperations) {
 			fsa.generateFile(httpServer.packageFolder + "/actions/" + ace.abstractActionName + fileExtension,
@@ -193,13 +173,9 @@ class JavaGenerator {
 			}
 			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataName + fileExtension,
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateResponseData(ace, httpServer));
-			fsa.generateFile(httpServer.packageFolder + "/data/" + ace.responseDataInterfaceName + fileExtension,
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generateReponseDataInterface(ace, httpServer));
 			if (ace.payload.size > 0) {
 				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.payloadDataName + fileExtension,
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generatePayloadData(ace, httpServer));
-				fsa.generateFile(httpServer.packageFolder + "/data/" + ace.payloadDataInterfaceName + fileExtension,
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, data.generatePayloadDataInterface(ace, httpServer));
 			}
 		}
 		for (viewAce : httpServer.views) {
@@ -208,19 +184,6 @@ class JavaGenerator {
 			fsa.generateFile(httpServer.packageFolder + "/views/" + viewAce.viewInterfaceName + fileExtension,
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, view.generateViewInterface(viewAce, httpServer));
 		}
-
-		if (httpServer.aceOperations.size > 0) {
-			fsa.generateFile(httpServer.packageFolder + "/events/EventReplayService.java",
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventReplayService.generateEventReplayService(httpServer));
-		}
-
-		if (httpServer.aceOperations.size > 0) {
-			fsa.generateFile(httpServer.packageFolder + "/actions/AceDataFactory.java",
-				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceDataFactory.generateAceDataFactory(httpServer));
-		}
-
-		fsa.generateFile("de/acegen/EventReplayService.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-			eventReplayService.generateEventReplayService());
 
 		fsa.generateFile("de/acegen/AceOperation.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			aceOperation.generate());
@@ -249,21 +212,19 @@ class JavaGenerator {
 
 		fsa.generateFile("de/acegen/Event.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			event.generateEvent());
-		fsa.generateFile("de/acegen/IEvent.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-			event.generateIEvent());
 
 		fsa.generateFile("de/acegen/DatabaseHandle.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 			databaseHandle.generateDatabaseHandle());
-		fsa.generateFile("de/acegen/IDataContainer.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-			data.generateIDataContainer());
 		fsa.generateFile("de/acegen/ITimelineItem.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			timelineItem.generateITimelineItem());
 		fsa.generateFile("de/acegen/TimelineItem.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			timelineItem.generateTimelineItem());
 		fsa.generateFile("de/acegen/TimelineItemMapper.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			timelineItem.generateTimelineItemMapper());
-		fsa.generateFile("de/acegen/AbstractData.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+		fsa.generateFile("de/acegen/Data.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			data.generateAbstractData());
+		fsa.generateFile("de/acegen/AbstractModel.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			model.generateAbstractModel());
 
 		fsa.generateFile("de/acegen/AbstractDaoProvider.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 			daoProvider.generateAbstractDaoProvider());

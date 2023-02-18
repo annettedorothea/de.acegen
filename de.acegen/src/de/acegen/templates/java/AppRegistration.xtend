@@ -22,21 +22,14 @@ import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerAceRead
 import de.acegen.aceGen.HttpServerAceWrite
 import de.acegen.aceGen.HttpServerOutcome
+import de.acegen.aceGen.HttpServerView
 import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerView
 
 class AppRegistration {
-
-	@Inject
-	extension ModelExtension
-
-	@Inject
-	extension JavaHttpServerExtension
 
 	@Inject
 	extension ViewExtension
@@ -44,12 +37,16 @@ class AppRegistration {
 	@Inject
 	extension CommonExtension
 	
+	@Inject
+	extension TypeExtension
+	
 	def generateAppRegistration(HttpServer it) '''
 		«copyright»
 		
-		package «getName»;
+		package «name»;
 		
 		import de.acegen.ViewProvider;
+		import de.acegen.Data;
 		import io.dropwizard.setup.Environment;
 		
 		@SuppressWarnings("all")
@@ -107,11 +104,11 @@ class AppRegistration {
 	
 	private def addConsumers(HttpServer java, HttpServerAce aceOperation, HttpServerOutcome outcome, HttpServerViewFunction listener) '''
 		«val view = (listener.eContainer as HttpServerView)»
-		viewProvider.addConsumer("«java.getName».events.«aceOperation.eventName(outcome)»", (dataContainer, handle) -> {
+		viewProvider.addConsumer("«aceOperation.eventName(outcome)»", (data, handle) -> {
 			«IF view.queued»
-				viewProvider.«view.viewNameWithPackage».addToQueue(() -> viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle));
+				viewProvider.«view.viewNameWithPackage».addToQueue(() -> viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.model.dataWithGenericModel») data, handle));
 			«ELSE»
-				viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.getModel.dataNameWithPackage») dataContainer, handle);
+				viewProvider.«listener.viewFunctionWithViewNameAsVariable»((«listener.model.dataWithGenericModel») data, handle);
 			«ENDIF»
 		});
 		

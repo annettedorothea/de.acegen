@@ -18,8 +18,7 @@
 package de.acegen.generator.java
 
 import de.acegen.aceGen.HttpServer
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.models.JDBI3Dao
 import de.acegen.templates.java.models.JDBI3Mapper
@@ -35,10 +34,7 @@ class JDBI3Generator {
 	JDBI3Mapper jdbi3Mapper;
 
 	@Inject
-	extension JavaHttpServerExtension
-
-	@Inject
-	extension ModelExtension
+	extension TypeExtension
 
 	def void doGenerate(HttpServer httpServer, IFileSystemAccess2 fsa) {
 		fsa.generateFile('de/acegen/AbstractDao.java',

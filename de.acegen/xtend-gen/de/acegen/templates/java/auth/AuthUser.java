@@ -105,7 +105,7 @@ public class AuthUser {
       EList<Attribute> _attributes_3 = it.getAttributes();
       for(final Attribute attribute_3 : _attributes_3) {
         _builder.append("\t");
-        String _ter = this._attributeExtension.getter(attribute_3, false);
+        String _ter = this._attributeExtension.getter(attribute_3);
         _builder.append(_ter, "\t");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");

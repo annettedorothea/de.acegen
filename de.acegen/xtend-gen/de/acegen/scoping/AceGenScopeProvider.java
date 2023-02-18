@@ -48,7 +48,7 @@ import de.acegen.aceGen.StateVerification;
 import de.acegen.aceGen.ThenBlock;
 import de.acegen.aceGen.WhenBlock;
 import de.acegen.aceGen.WhenThen;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.CommonExtension;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -71,7 +71,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private CommonExtension _commonExtension;
 
   public IScope getScope(final EObject context, final EReference reference) {
     if (((context instanceof ClientWhenBlock) && Objects.equal(reference, AceGenPackage.Literals.INPUT_VALUE__INPUT))) {
@@ -89,14 +89,14 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE))) {
       final HttpServerAce javaAce = ((HttpServerAce) context);
       final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce.getModel(), attrs);
+      this._commonExtension.allAttributesRec(javaAce.getModel(), attrs);
       return Scopes.scopeFor(attrs);
     }
     if ((((context instanceof HttpServerAceRead) || (context instanceof HttpServerAceWrite)) && 
       Objects.equal(reference, AceGenPackage.Literals.ATTRIBUTE_PARAM_REF__ATTRIBUTE))) {
       final HttpServerAce javaAce_1 = ((HttpServerAce) context);
       final ArrayList<Attribute> attrs_1 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce_1.getModel(), attrs_1);
+      this._commonExtension.allAttributesRec(javaAce_1.getModel(), attrs_1);
       return Scopes.scopeFor(attrs_1);
     }
     if (((context instanceof AttributeParamRef) && 
@@ -105,7 +105,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       EObject _eContainer = attributeParamRef.eContainer();
       final HttpServerAce javaAce_2 = ((HttpServerAce) _eContainer);
       final ArrayList<Attribute> attrs_2 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce_2.getModel(), attrs_2);
+      this._commonExtension.allAttributesRec(javaAce_2.getModel(), attrs_2);
       return Scopes.scopeFor(attrs_2);
     }
     if ((context instanceof HttpServerOutcome)) {
@@ -169,7 +169,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final PersistenceVerification persistenceVerification = ((PersistenceVerification) _eContainer_2);
       final Model model = persistenceVerification.getModel();
       final ArrayList<Attribute> attrs_3 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model, attrs_3);
+      this._commonExtension.allAttributesRec(model, attrs_3);
       EObject _eContainer_3 = context.eContainer();
       final boolean selectByUnique = (_eContainer_3 instanceof SelectByUniqueAttribute);
       EObject _eContainer_4 = context.eContainer();
@@ -191,7 +191,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final PersistenceVerification persistenceVerification_1 = ((PersistenceVerification) _eContainer_5);
       final Model model_1 = persistenceVerification_1.getModel();
       final ArrayList<Attribute> attrs_4 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_1, attrs_4);
+      this._commonExtension.allAttributesRec(model_1, attrs_4);
       final ArrayList<Attribute> filtered_2 = new ArrayList<Attribute>();
       for (final Attribute attribute_1 : attrs_4) {
         boolean _isPrimaryKey = attribute_1.isPrimaryKey();
@@ -207,7 +207,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final PersistenceVerification persistenceVerification_2 = ((PersistenceVerification) _eContainer_6);
       final Model model_2 = persistenceVerification_2.getModel();
       final ArrayList<Attribute> attrs_5 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_2, attrs_5);
+      this._commonExtension.allAttributesRec(model_2, attrs_5);
       final ArrayList<Attribute> filtered_3 = new ArrayList<Attribute>();
       for (final Attribute attribute_2 : attrs_5) {
         boolean _isUnique = attribute_2.isUnique();
@@ -222,7 +222,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
       final PersistenceVerification persistenceVerification_3 = ((PersistenceVerification) _eContainer_7);
       final Model model_3 = persistenceVerification_3.getModel();
       final ArrayList<Attribute> attrs_6 = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(model_3, attrs_6);
+      this._commonExtension.allAttributesRec(model_3, attrs_6);
       return Scopes.scopeFor(attrs_6);
     }
     if (((context instanceof PersistenceVerification) && 
@@ -268,7 +268,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         if (isVerification) {
           final Model model_4 = persistenceVerification_4.getModel();
           final ArrayList<Attribute> attrs_7 = new ArrayList<Attribute>();
-          this._modelExtension.allAttributesRec(model_4, attrs_7);
+          this._commonExtension.allAttributesRec(model_4, attrs_7);
           return Scopes.scopeFor(attrs_7);
         } else {
           if (isWhen) {
@@ -288,7 +288,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
                 for (final AttributeParamRef attributeRef_2 : _pathParams) {
                   attr.add(attributeRef_2.getAttribute());
                 }
-                attr.addAll(this._modelExtension.allSquishyAttributes(whenThenItem.getWhenBlock().getAction().getModel()));
+                attr.addAll(this._commonExtension.allSquishyAttributes(whenThenItem.getWhenBlock().getAction().getModel()));
               }
             }
             return Scopes.scopeFor(attr);
@@ -348,7 +348,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         if (((jsonMember.getAttribute() != null) && (jsonMember.getAttribute().getModel() != null))) {
           Model _model = jsonMember.getAttribute().getModel();
           final Model model_5 = ((Model) _model);
-          this._modelExtension.allAttributesRec(model_5, attr_4);
+          this._commonExtension.allAttributesRec(model_5, attr_4);
         }
         return Scopes.scopeFor(attr_4);
       }

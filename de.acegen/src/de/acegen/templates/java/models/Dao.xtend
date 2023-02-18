@@ -19,17 +19,13 @@ package de.acegen.templates.java.models
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import javax.inject.Inject
 
 class Dao {
 	
 	@Inject
-	extension ModelExtension
-	
-	@Inject
-	extension AttributeExtension
+	extension TypeExtension
 	
 	@Inject
 	extension CommonExtension
@@ -46,23 +42,23 @@ class Dao {
 		
 		public abstract class «abstractModelDao» {
 			
-			public abstract void insert(PersistenceHandle handle, «modelName» «modelParam»);
+			public abstract void insert(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName»);
 			
 			«FOR attribute : allUniqueAttributes»
-				public abstract void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam»);
+				public abstract void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName»);
 
 				public abstract void deleteBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
 
-				public abstract «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
+				public abstract «modelClassNameWithPackage» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name»);
 			«ENDFOR»
 			
 			«IF allPrimaryKeyAttributes.length > 0»
-				public abstract «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR»);
+				public abstract «modelClassNameWithPackage» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR»);
 			«ENDIF»
 			
 			public abstract int filterAndCountBy(PersistenceHandle handle, Map<String, String> filterMap);
 
-			public abstract List<«modelName»> selectAll(PersistenceHandle handle);
+			public abstract List<«modelClassNameWithPackage»> selectAll(PersistenceHandle handle);
 
 			public abstract void truncate(PersistenceHandle handle);
 
@@ -84,12 +80,12 @@ class Dao {
 
 		public class «modelDao» extends «abstractModelDao» {
 
-			public void insert(PersistenceHandle handle, «modelName» «modelParam») {
+			public void insert(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
 				throw new RuntimeException("«modelDao».insert not implemented");
 			}
 			
 			«FOR attribute : allUniqueAttributes»
-				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelName» «modelParam») {
+				public void updateBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «modelClassNameWithPackage» «modelParamName») {
 					throw new RuntimeException("«modelDao».updateBy«attribute.name.toFirstUpper» not implemented");
 				}
 
@@ -97,13 +93,13 @@ class Dao {
 					throw new RuntimeException("«modelDao».deleteBy«attribute.name.toFirstUpper» not implemented");
 				}
 
-				public «modelName» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
+				public «modelClassNameWithPackage» selectBy«attribute.name.toFirstUpper»(PersistenceHandle handle, «attribute.javaType» «attribute.name») {
 					throw new RuntimeException("«modelDao».selectBy«attribute.name.toFirstUpper» not implemented");
 				}
 			«ENDFOR»
 			
 			«IF allPrimaryKeyAttributes.length > 0»
-				public «modelName» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
+				public «modelClassNameWithPackage» selectByPrimaryKey(PersistenceHandle handle, «FOR attribute : allPrimaryKeyAttributes SEPARATOR ', '»«attribute.javaType» «attribute.name»«ENDFOR») {
 					throw new RuntimeException("«modelDao».selectByPrimaryKey not implemented");
 				}
 			«ENDIF»
@@ -112,7 +108,7 @@ class Dao {
 				throw new RuntimeException("«modelDao».filterAndCountBy not implemented");
 			}
 
-			public List<«modelName»> selectAll(PersistenceHandle handle) {
+			public List<«modelClassNameWithPackage»> selectAll(PersistenceHandle handle) {
 				throw new RuntimeException("«modelDao».selectAll not implemented");
 			}
 
@@ -208,19 +204,19 @@ class Dao {
 						.map(new TimelineItemMapper()).list();
 			}
 			
-			public void addActionToTimeline(String actionName, IDataContainer data, PersistenceHandle timelineHandle) {
+			public void addActionToTimeline(String actionName, Data<?> data, PersistenceHandle timelineHandle) {
 				addItemToTimeline("action", actionName, data, timelineHandle);
 			}
 		
-			public void addCommandToTimeline(String commandName, IDataContainer data, PersistenceHandle timelineHandle) {
+			public void addCommandToTimeline(String commandName, Data<?> data, PersistenceHandle timelineHandle) {
 				addItemToTimeline("command", commandName, data, timelineHandle);
 			}
 		
-			public void addEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
+			public void addEventToTimeline(String eventName, Data<?> data, PersistenceHandle timelineHandle) {
 				addItemToTimeline("event", eventName, data, timelineHandle);
 			}
 		
-			public void addPreparingEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {
+			public void addPreparingEventToTimeline(String eventName, Data<?> data, PersistenceHandle timelineHandle) {
 				try {
 					String json = mapper.writeValueAsString(data);
 					this.insertIntoTimeline(timelineHandle, "preparing event", eventName, json, data.getUuid(), LocalDateTime.now());
@@ -234,7 +230,7 @@ class Dao {
 						x.getMessage() != null ? x.getMessage() : "", uuid, LocalDateTime.now());
 			}
 		
-			private void addItemToTimeline(String type, String name, IDataContainer data, 
+			private void addItemToTimeline(String type, String name, Data<?> data, 
 					PersistenceHandle timelineHandle) {
 				try {
 					String json = mapper.writeValueAsString(data);

@@ -20,7 +20,7 @@ package de.acegen.templates.java.views
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerView
 import de.acegen.extensions.CommonExtension
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.java.TypeExtension
 import de.acegen.extensions.java.ViewExtension
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ class View {
 	extension ViewExtension
 
 	@Inject
-	extension ModelExtension
+	extension TypeExtension
 
 	@Inject
 	extension CommonExtension
@@ -41,11 +41,11 @@ class View {
 		package «java.getName».views;
 		
 		import de.acegen.IDaoProvider;
+		import de.acegen.Data;
 		
-		import de.acegen.IDataContainer;
 		import de.acegen.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
-			«renderFunction.getModel.dataImport»
+			import «renderFunction.model.dataWithGenericModel»;
 		«ENDFOR»
 		«IF queued»import de.acegen.QueuedView;«ENDIF»
 		
@@ -59,7 +59,7 @@ class View {
 			}
 		
 			«FOR renderFunction : renderFunctions»
-				public void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle) {
+				public void «renderFunction.getName»(«renderFunction.model.dataWithGenericModel» data, PersistenceHandle handle) {
 				}
 			«ENDFOR»
 			
@@ -80,18 +80,17 @@ class View {
 		
 		package «java.getName».views;
 		
-		
-		import de.acegen.IDataContainer;
+		import de.acegen.Data;
 		import de.acegen.PersistenceHandle;
 		«FOR renderFunction : renderFunctions»
-			«renderFunction.getModel.dataImport»
+			import «renderFunction.getModel.modelClassNameWithPackage»;
 		«ENDFOR»
 		
 		@SuppressWarnings("all")
 		public interface «viewInterfaceName» {
 		
 			«FOR renderFunction : renderFunctions»
-				void «renderFunction.getName»(«renderFunction.getModel.dataInterfaceName» data, PersistenceHandle handle);
+				void «renderFunction.getName»(«renderFunction.model.dataWithGenericModel» data, PersistenceHandle handle);
 			«ENDFOR»
 			
 			«IF queued»

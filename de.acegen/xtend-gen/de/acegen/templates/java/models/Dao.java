@@ -19,8 +19,7 @@ import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
 import de.acegen.extensions.CommonExtension;
-import de.acegen.extensions.java.AttributeExtension;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.java.TypeExtension;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -32,11 +31,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class Dao {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
-
-  @Inject
-  @Extension
-  private AttributeExtension _attributeExtension;
+  private TypeExtension _typeExtension;
 
   @Inject
   @Extension
@@ -63,7 +58,7 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public abstract class ");
-    String _abstractModelDao = this._modelExtension.abstractModelDao(it);
+    String _abstractModelDao = this._typeExtension.abstractModelDao(it);
     _builder.append(_abstractModelDao);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -71,28 +66,28 @@ public class Dao {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public abstract void insert(PersistenceHandle handle, ");
-    String _modelName = this._modelExtension.modelName(it);
-    _builder.append(_modelName, "\t");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage, "\t");
     _builder.append(" ");
-    String _modelParam = this._modelExtension.modelParam(it);
-    _builder.append(_modelParam, "\t");
+    String _modelParamName = this._typeExtension.modelParamName(it);
+    _builder.append(_modelParamName, "\t");
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.newLine();
     {
-      List<Attribute> _allUniqueAttributes = this._modelExtension.allUniqueAttributes(it);
+      List<Attribute> _allUniqueAttributes = this._commonExtension.allUniqueAttributes(it);
       for(final Attribute attribute : _allUniqueAttributes) {
         _builder.append("\t");
         _builder.append("public abstract void updateBy");
         String _firstUpper = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _modelName_1 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_1, "\t");
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_1, "\t");
         _builder.append(" ");
-        String _modelParam_1 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_1, "\t");
+        String _modelParamName_1 = this._typeExtension.modelParamName(it);
+        _builder.append(_modelParamName_1, "\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -101,7 +96,7 @@ public class Dao {
         String _firstUpper_1 = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper_1, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType = this._attributeExtension.javaType(attribute);
+        String _javaType = this._typeExtension.javaType(attribute);
         _builder.append(_javaType, "\t");
         _builder.append(" ");
         String _name_1 = attribute.getName();
@@ -111,13 +106,13 @@ public class Dao {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public abstract ");
-        String _modelName_2 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_2, "\t");
+        String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_2, "\t");
         _builder.append(" selectBy");
         String _firstUpper_2 = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper_2, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType_1 = this._attributeExtension.javaType(attribute);
+        String _javaType_1 = this._typeExtension.javaType(attribute);
         _builder.append(_javaType_1, "\t");
         _builder.append(" ");
         String _name_2 = attribute.getName();
@@ -129,16 +124,16 @@ public class Dao {
     _builder.append("\t");
     _builder.newLine();
     {
-      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allPrimaryKeyAttributes(it), Object.class)).length;
+      int _length = ((Object[])Conversions.unwrapArray(this._commonExtension.allPrimaryKeyAttributes(it), Object.class)).length;
       boolean _greaterThan = (_length > 0);
       if (_greaterThan) {
         _builder.append("\t");
         _builder.append("public abstract ");
-        String _modelName_3 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_3, "\t");
+        String _modelClassNameWithPackage_3 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_3, "\t");
         _builder.append(" selectByPrimaryKey(PersistenceHandle handle, ");
         {
-          List<Attribute> _allPrimaryKeyAttributes = this._modelExtension.allPrimaryKeyAttributes(it);
+          List<Attribute> _allPrimaryKeyAttributes = this._commonExtension.allPrimaryKeyAttributes(it);
           boolean _hasElements = false;
           for(final Attribute attribute_1 : _allPrimaryKeyAttributes) {
             if (!_hasElements) {
@@ -146,7 +141,7 @@ public class Dao {
             } else {
               _builder.appendImmediate(", ", "\t");
             }
-            String _javaType_2 = this._attributeExtension.javaType(attribute_1);
+            String _javaType_2 = this._typeExtension.javaType(attribute_1);
             _builder.append(_javaType_2, "\t");
             _builder.append(" ");
             String _name_3 = attribute_1.getName();
@@ -165,8 +160,8 @@ public class Dao {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public abstract List<");
-    String _modelName_4 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_4, "\t");
+    String _modelClassNameWithPackage_4 = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage_4, "\t");
     _builder.append("> selectAll(PersistenceHandle handle);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -205,26 +200,26 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("public class ");
-    String _modelDao = this._modelExtension.modelDao(it);
+    String _modelDao = this._typeExtension.modelDao(it);
     _builder.append(_modelDao);
     _builder.append(" extends ");
-    String _abstractModelDao = this._modelExtension.abstractModelDao(it);
+    String _abstractModelDao = this._typeExtension.abstractModelDao(it);
     _builder.append(_abstractModelDao);
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public void insert(PersistenceHandle handle, ");
-    String _modelName = this._modelExtension.modelName(it);
-    _builder.append(_modelName, "\t");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage, "\t");
     _builder.append(" ");
-    String _modelParam = this._modelExtension.modelParam(it);
-    _builder.append(_modelParam, "\t");
+    String _modelParamName = this._typeExtension.modelParamName(it);
+    _builder.append(_modelParamName, "\t");
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("throw new RuntimeException(\"");
-    String _modelDao_1 = this._modelExtension.modelDao(it);
+    String _modelDao_1 = this._typeExtension.modelDao(it);
     _builder.append(_modelDao_1, "\t\t");
     _builder.append(".insert not implemented\");");
     _builder.newLineIfNotEmpty();
@@ -234,24 +229,24 @@ public class Dao {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<Attribute> _allUniqueAttributes = this._modelExtension.allUniqueAttributes(it);
+      List<Attribute> _allUniqueAttributes = this._commonExtension.allUniqueAttributes(it);
       for(final Attribute attribute : _allUniqueAttributes) {
         _builder.append("\t");
         _builder.append("public void updateBy");
         String _firstUpper = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _modelName_1 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_1, "\t");
+        String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_1, "\t");
         _builder.append(" ");
-        String _modelParam_1 = this._modelExtension.modelParam(it);
-        _builder.append(_modelParam_1, "\t");
+        String _modelParamName_1 = this._typeExtension.modelParamName(it);
+        _builder.append(_modelParamName_1, "\t");
         _builder.append(") {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("throw new RuntimeException(\"");
-        String _modelDao_2 = this._modelExtension.modelDao(it);
+        String _modelDao_2 = this._typeExtension.modelDao(it);
         _builder.append(_modelDao_2, "\t\t");
         _builder.append(".updateBy");
         String _firstUpper_1 = StringExtensions.toFirstUpper(attribute.getName());
@@ -267,7 +262,7 @@ public class Dao {
         String _firstUpper_2 = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper_2, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType = this._attributeExtension.javaType(attribute);
+        String _javaType = this._typeExtension.javaType(attribute);
         _builder.append(_javaType, "\t");
         _builder.append(" ");
         String _name_1 = attribute.getName();
@@ -277,7 +272,7 @@ public class Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("throw new RuntimeException(\"");
-        String _modelDao_3 = this._modelExtension.modelDao(it);
+        String _modelDao_3 = this._typeExtension.modelDao(it);
         _builder.append(_modelDao_3, "\t\t");
         _builder.append(".deleteBy");
         String _firstUpper_3 = StringExtensions.toFirstUpper(attribute.getName());
@@ -290,13 +285,13 @@ public class Dao {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public ");
-        String _modelName_2 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_2, "\t");
+        String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_2, "\t");
         _builder.append(" selectBy");
         String _firstUpper_4 = StringExtensions.toFirstUpper(attribute.getName());
         _builder.append(_firstUpper_4, "\t");
         _builder.append("(PersistenceHandle handle, ");
-        String _javaType_1 = this._attributeExtension.javaType(attribute);
+        String _javaType_1 = this._typeExtension.javaType(attribute);
         _builder.append(_javaType_1, "\t");
         _builder.append(" ");
         String _name_2 = attribute.getName();
@@ -306,7 +301,7 @@ public class Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("throw new RuntimeException(\"");
-        String _modelDao_4 = this._modelExtension.modelDao(it);
+        String _modelDao_4 = this._typeExtension.modelDao(it);
         _builder.append(_modelDao_4, "\t\t");
         _builder.append(".selectBy");
         String _firstUpper_5 = StringExtensions.toFirstUpper(attribute.getName());
@@ -321,16 +316,16 @@ public class Dao {
     _builder.append("\t");
     _builder.newLine();
     {
-      int _length = ((Object[])Conversions.unwrapArray(this._modelExtension.allPrimaryKeyAttributes(it), Object.class)).length;
+      int _length = ((Object[])Conversions.unwrapArray(this._commonExtension.allPrimaryKeyAttributes(it), Object.class)).length;
       boolean _greaterThan = (_length > 0);
       if (_greaterThan) {
         _builder.append("\t");
         _builder.append("public ");
-        String _modelName_3 = this._modelExtension.modelName(it);
-        _builder.append(_modelName_3, "\t");
+        String _modelClassNameWithPackage_3 = this._typeExtension.modelClassNameWithPackage(it);
+        _builder.append(_modelClassNameWithPackage_3, "\t");
         _builder.append(" selectByPrimaryKey(PersistenceHandle handle, ");
         {
-          List<Attribute> _allPrimaryKeyAttributes = this._modelExtension.allPrimaryKeyAttributes(it);
+          List<Attribute> _allPrimaryKeyAttributes = this._commonExtension.allPrimaryKeyAttributes(it);
           boolean _hasElements = false;
           for(final Attribute attribute_1 : _allPrimaryKeyAttributes) {
             if (!_hasElements) {
@@ -338,7 +333,7 @@ public class Dao {
             } else {
               _builder.appendImmediate(", ", "\t");
             }
-            String _javaType_2 = this._attributeExtension.javaType(attribute_1);
+            String _javaType_2 = this._typeExtension.javaType(attribute_1);
             _builder.append(_javaType_2, "\t");
             _builder.append(" ");
             String _name_3 = attribute_1.getName();
@@ -350,7 +345,7 @@ public class Dao {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("throw new RuntimeException(\"");
-        String _modelDao_5 = this._modelExtension.modelDao(it);
+        String _modelDao_5 = this._typeExtension.modelDao(it);
         _builder.append(_modelDao_5, "\t\t");
         _builder.append(".selectByPrimaryKey not implemented\");");
         _builder.newLineIfNotEmpty();
@@ -366,7 +361,7 @@ public class Dao {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("throw new RuntimeException(\"");
-    String _modelDao_6 = this._modelExtension.modelDao(it);
+    String _modelDao_6 = this._typeExtension.modelDao(it);
     _builder.append(_modelDao_6, "\t\t");
     _builder.append(".filterAndCountBy not implemented\");");
     _builder.newLineIfNotEmpty();
@@ -376,13 +371,13 @@ public class Dao {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public List<");
-    String _modelName_4 = this._modelExtension.modelName(it);
-    _builder.append(_modelName_4, "\t");
+    String _modelClassNameWithPackage_4 = this._typeExtension.modelClassNameWithPackage(it);
+    _builder.append(_modelClassNameWithPackage_4, "\t");
     _builder.append("> selectAll(PersistenceHandle handle) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("throw new RuntimeException(\"");
-    String _modelDao_7 = this._modelExtension.modelDao(it);
+    String _modelDao_7 = this._typeExtension.modelDao(it);
     _builder.append(_modelDao_7, "\t\t");
     _builder.append(".selectAll not implemented\");");
     _builder.newLineIfNotEmpty();
@@ -395,7 +390,7 @@ public class Dao {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("throw new RuntimeException(\"");
-    String _modelDao_8 = this._modelExtension.modelDao(it);
+    String _modelDao_8 = this._typeExtension.modelDao(it);
     _builder.append(_modelDao_8, "\t\t");
     _builder.append(".truncate not implemented\");");
     _builder.newLineIfNotEmpty();
@@ -620,7 +615,7 @@ public class Dao {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void addActionToTimeline(String actionName, IDataContainer data, PersistenceHandle timelineHandle) {");
+    _builder.append("public void addActionToTimeline(String actionName, Data<?> data, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("addItemToTimeline(\"action\", actionName, data, timelineHandle);");
@@ -630,7 +625,7 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void addCommandToTimeline(String commandName, IDataContainer data, PersistenceHandle timelineHandle) {");
+    _builder.append("public void addCommandToTimeline(String commandName, Data<?> data, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("addItemToTimeline(\"command\", commandName, data, timelineHandle);");
@@ -640,7 +635,7 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void addEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {");
+    _builder.append("public void addEventToTimeline(String eventName, Data<?> data, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("addItemToTimeline(\"event\", eventName, data, timelineHandle);");
@@ -650,7 +645,7 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public void addPreparingEventToTimeline(String eventName, IDataContainer data, PersistenceHandle timelineHandle) {");
+    _builder.append("public void addPreparingEventToTimeline(String eventName, Data<?> data, PersistenceHandle timelineHandle) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("try {");
@@ -688,7 +683,7 @@ public class Dao {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private void addItemToTimeline(String type, String name, IDataContainer data, ");
+    _builder.append("private void addItemToTimeline(String type, String name, Data<?> data, ");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("PersistenceHandle timelineHandle) {");

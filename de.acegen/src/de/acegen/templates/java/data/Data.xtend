@@ -19,18 +19,13 @@ package de.acegen.templates.java.data
 
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.Model
 import de.acegen.extensions.CommonExtension
 import de.acegen.extensions.java.AttributeExtension
-import de.acegen.extensions.java.JavaHttpServerExtension
-import de.acegen.extensions.java.ModelExtension
 import javax.inject.Inject
+import de.acegen.extensions.java.TypeExtension
 
 class Data {
 
-	@Inject
-	extension ModelExtension
-	
 	@Inject
 	extension AttributeExtension
 	
@@ -38,212 +33,12 @@ class Data {
 	extension CommonExtension
 	
 	@Inject
-	extension JavaHttpServerExtension
+	extension TypeExtension
 
-	def generateDataInterface(Model it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».data;
-		
-		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-		
-		import de.acegen.IDataContainer;
-		
-		«importModel»
-		
-		@JsonDeserialize(as=«dataName».class)
-		public interface «dataInterfaceName» extends «modelName», IDataContainer {
-			«FOR superModel : superModels»
-				void mapFrom(«superModel.interfaceWithPackage» model);
-			«ENDFOR»
-			
-			«FOR attribute : allAttributes»
-				«dataInterfaceName» with«attribute.name.toFirstUpper»(«attribute.javaType» «attribute.name»);
-				
-			«ENDFOR»
-			
-			«dataInterfaceName» deepCopy();
-		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateAbstractData(Model it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».data;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-		
-		import java.time.LocalDateTime;
-		import java.util.List;
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		import java.util.ArrayList;
-		«importModel»
-		«FOR superModel : superModels»
-			«superModel.importModel»
-		«ENDFOR»
-		
-		import de.acegen.AbstractData;
-		import de.acegen.IDataContainer;
-		import de.acegen.DateTimeToStringConverter;
-		import de.acegen.StringToDateTimeConverter;
-		
-		@SuppressWarnings("unused")
-		public abstract class «abstractDataName» extends AbstractData implements «dataInterfaceName» {
-			
-			static final Logger LOG = LoggerFactory.getLogger(«abstractDataName».class);
-			
-			«FOR attribute : allAttributes»
-				«attribute.declaration»
-				
-			«ENDFOR»
-		
-			public «abstractDataName»(
-				«FOR attribute : allAttributes SEPARATOR ',' AFTER ','»
-					«attribute.paramAsJsonProperty»
-				«ENDFOR»
-				@JsonProperty("uuid") String uuid
-			) {
-				super(uuid);
-				«FOR attribute : allAttributes»
-					«attribute.assign»
-				«ENDFOR»
-			}
-		
-			«IF allAttributes.length > 0»
-				public «abstractDataName»( String uuid ) {
-					super(uuid);
-				}
-			«ENDIF»
-		
-			«FOR attribute : allAttributes»
-				«attribute.getter(true)»
-				«attribute.setter»
-				«attribute.with(it)»
-				
-			«ENDFOR»
-			
-			«FOR superModel : superModels»
-				public void mapFrom(«superModel.interfaceWithPackage» model) {
-					«FOR attribute: superModel.allAttributes»
-						this.«attribute.name» = model.«attribute.getterCall»;
-					«ENDFOR»
-				}
-			«ENDFOR»
-			
-			public «dataInterfaceName» deepCopy() {
-				«dataInterfaceName» copy = new «dataName»(this.getUuid());
-				«FOR attribute : allAttributes»
-					«attribute.deepCopy»
-				«ENDFOR»
-				copy.setSystemTime(this.getSystemTime());
-				return copy;
-			}
-
-		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateData(Model it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».data;
-		
-		import com.fasterxml.jackson.annotation.JsonProperty;
-		
-		import java.time.LocalDateTime;
-		import java.util.List;
-		
-		import de.acegen.AbstractData;
-		
-		public class «dataName» extends «abstractDataName» implements «dataInterfaceName» {
-			
-			public «dataName»(
-				«FOR attribute : allAttributes»
-					«attribute.paramAsJsonProperty», 
-				«ENDFOR»
-				@JsonProperty("uuid") String uuid
-			) {
-				super(
-					«FOR attribute : allAttributes»
-						«attribute.name»,
-					«ENDFOR»
-					uuid
-				);
-			}
-
-			«IF allAttributes.length > 0»
-				public «dataName»( String uuid ) {
-					super(uuid);
-				}
-
-			«ENDIF»
-			public void migrateLegacyData(String json) {
-			}
-		
-			public static «interfaceWithPackage» generateTestData() {
-				java.util.Random random = new java.util.Random();
-				«IF allAttributes.filter[a | a.list].size > 0»
-					int n;
-				«ENDIF»
-				«interfaceWithPackage» testData = new «modelClassNameWithPackage»();
-				«FOR attribute : allAttributes»
-					«IF attribute.model !== null»
-						«IF attribute.list»
-							java.util.List<«attribute.model.interfaceWithPackage»> «attribute.name.toFirstLower»List = new java.util.ArrayList<«attribute.model.interfaceWithPackage»>();
-							n = random.nextInt(20) + 1;
-							for ( int i = 0; i < n; i++ ) {
-								«attribute.name.toFirstLower»List.add(«attribute.model.dataNameWithPackage».generateTestData());
-							}
-							testData.«attribute.setterCall('''«attribute.name.toFirstLower»List''')»;
-						«ELSE»
-							testData.«attribute.setterCall('''«attribute.model.dataNameWithPackage».generateTestData()''')»;
-						«ENDIF»
-					«ELSE»
-						«IF attribute.list»
-							«attribute.javaType» «attribute.name.toFirstLower»List = new «attribute.javaTypeNew»();
-							n = random.nextInt(20) + 1;
-							for ( int i = 0; i < n; i++ ) {
-								«attribute.name.toFirstLower»List.add(«attribute.randomValue»);
-							}
-							testData.«attribute.setterCall('''«attribute.name.toFirstLower»List''')»;
-						«ELSE»
-							testData.«attribute.setterCall('''«attribute.randomValue»''')»;
-						«ENDIF»
-					«ENDIF»
-				«ENDFOR»
-				return testData;
-			}
-			
-			private static String randomString(java.util.Random random) {
-				String chars = "aaaaaaabcdeeeeeeeffffghiiiiiiijkllllllmmmmnnnnnnnooooooooopqrstttuuuuuuuvxyz";
-				int n = random.nextInt(20) + 5;
-				StringBuilder sb = new StringBuilder(n);
-				for (int i = 0; i < n; i++) {
-					int index = random.nextInt(chars.length());
-					sb.append(chars.charAt(index));
-				}
-				String string  = sb.toString(); 
-				return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();
-			}
-			
-		}
-		
-		«sdg»
-		
-	'''
-	
 	def generateResponseData(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.getName».data;
+		package «httpServer.dataPackageName»;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -253,12 +48,11 @@ class Data {
 		import java.time.LocalDateTime;
 		import java.util.List;
 		
-		import de.acegen.IDataContainer;
 		import de.acegen.DateTimeToStringConverter;
 		import de.acegen.StringToDateTimeConverter;
 		
 		@SuppressWarnings("all")
-		public class «responseDataName» implements «responseDataInterfaceName» {
+		public class «responseDataName» {
 			
 			«FOR attribute : response»
 				«attribute.declaration»
@@ -267,43 +61,29 @@ class Data {
 			public «responseDataName»() {
 			}
 			
-			public «responseDataName»(«getModel.interfaceWithPackage» data) {
+			public «responseDataName»(«model.modelClassNameWithPackage» model) {
 				«FOR attribute : response»
-					«attribute.name» = data.«attribute.getterCall»;
+					«attribute.propertyName» = model.«attribute.getterName»();
 				«ENDFOR»
 			}
 			
 			«FOR attribute : response»
-				«attribute.getter(true)»
+				«attribute.getter»
 				
 			«ENDFOR»
+			
+			
 		}
 		
 		«sdg»
 		
 	'''
 	
-	def generateReponseDataInterface(HttpServerAce it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».data;
-		
-		public interface «responseDataInterfaceName» {
-			«FOR attribute : response»
-				«attribute.interfaceGetter»
-				
-			«ENDFOR»
-		
-		}
-		
-		«sdg»
-		
-	'''
 	
 	def generatePayloadData(HttpServerAce it, HttpServer httpServer) '''
 		«copyright»
 		
-		package «httpServer.getName».data;
+		package «httpServer.dataPackageName»;
 		
 		import com.fasterxml.jackson.annotation.JsonProperty;
 		import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -313,12 +93,11 @@ class Data {
 		import java.time.LocalDateTime;
 		import java.util.List;
 		
-		import de.acegen.IDataContainer;
 		import de.acegen.DateTimeToStringConverter;
 		import de.acegen.StringToDateTimeConverter;
 		
 		@SuppressWarnings("all")
-		public class «payloadDataName» implements «payloadDataInterfaceName» {
+		public class «payloadDataName» {
 			
 			«FOR attributeRef : payload»
 				«attributeRef.attribute.declaration»
@@ -327,67 +106,13 @@ class Data {
 			public «payloadDataName»() {
 			}
 			
-			public «payloadDataName»(«getModel.interfaceWithPackage» data) {
-				«FOR attributeRef : payload»
-					«attributeRef.attribute.name» = data.«attributeRef.attribute.getterCall»;
-				«ENDFOR»
-			}
 			
 			«FOR attributeRef : payload»
-				«attributeRef.attribute.getter(true)»
+				«attributeRef.attribute.jsonProperty»
+				«attributeRef.attribute.getter»
 				
 			«ENDFOR»
 		}
-		
-		«sdg»
-		
-	'''
-	
-	def generatePayloadDataInterface(HttpServerAce it, HttpServer httpServer) '''
-		«copyright»
-		
-		package «httpServer.getName».data;
-		
-		public interface «payloadDataInterfaceName» {
-			«FOR attributeRef : payload»
-				«attributeRef.attribute.interfaceGetter»
-				
-			«ENDFOR»
-		
-		}
-		
-		«sdg»
-		
-	'''
-	
-	def generateIDataContainer() '''
-		«copyright»
-		
-		package de.acegen;
-		
-		import java.time.LocalDateTime;
-		import java.util.List;
-		
-		public interface IDataContainer {
-		
-			String getUuid();
-			
-			void setUuid(String uuid);
-
-			boolean hasOutcome(String outcome);
-
-			List<String> getOutcomes();
-
-			void addOutcome(String outcome);
-		
-			LocalDateTime getSystemTime();
-		
-			void setSystemTime(LocalDateTime systemTime);
-		
-			void migrateLegacyData(String json);
-
-		}
-		
 		
 		«sdg»
 		
@@ -406,7 +131,7 @@ class Data {
 		import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 		import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 		
-		public abstract class AbstractData implements IDataContainer {
+		public class Data<T extends AbstractModel> {
 		
 			private String uuid;
 			
@@ -414,7 +139,12 @@ class Data {
 			
 			private LocalDateTime systemTime;
 			
-			public AbstractData( String uuid ) {
+			protected Boolean frozen = false;
+			private Boolean systemTimeFrozen = false;
+			
+			private T model;
+			
+			public Data( String uuid ) {
 				this.uuid = uuid;
 				outcomes = new ArrayList<String>();
 			}
@@ -438,6 +168,9 @@ class Data {
 		
 			@JsonProperty
 			public void setSystemTime(LocalDateTime systemTime) {
+				if (systemTimeFrozen) {
+					throw new RuntimeException("system time is frozen");
+				}
 				this.systemTime = systemTime;
 			}
 		
@@ -455,8 +188,29 @@ class Data {
 				this.outcomes.add(outcome);
 			}
 			
+			public void freeze() {
+				this.frozen = true;
+				model.freeze();
+			}
+			
+			public void freezeSystemTime() {
+				this.systemTimeFrozen = true;
+			}
+			
+			@JsonProperty
+			public T getModel() {
+				return model;
+			}
+			
+			@JsonProperty
+			public void setModel(T model) {
+				if (frozen) {
+					throw new RuntimeException(model.getClass() + " is frozen");
+				}
+				this.model = model;
+			}
+			
 		}
-		
 		
 		«sdg»
 		
