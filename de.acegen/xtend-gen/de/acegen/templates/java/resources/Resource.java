@@ -113,14 +113,6 @@ public class Resource {
     _builder.newLine();
     _builder.append("import de.acegen.PersistenceConnection;");
     _builder.newLine();
-    _builder.append("import de.acegen.PersistenceHandle;");
-    _builder.newLine();
-    _builder.append("import de.acegen.ReadAction;");
-    _builder.newLine();
-    _builder.append("import de.acegen.ITimelineItem;");
-    _builder.newLine();
-    _builder.append("import de.acegen.SquishyDataProvider;");
-    _builder.newLine();
     _builder.append("import de.acegen.Config;");
     _builder.newLine();
     _builder.append("import de.acegen.Data;");
@@ -158,12 +150,6 @@ public class Resource {
     _builder.newLine();
     _builder.append("import javax.ws.rs.DELETE;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import ");
-    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
-    _builder.append(_modelClassNameWithPackage);
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("import de.acegen.Resource;");
     _builder.newLine();
@@ -392,11 +378,11 @@ public class Resource {
     _builder.append("(uuid);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
+    String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
+    _builder.append(_modelClassNameWithPackage, "\t\t\t");
+    _builder.append(" model = new ");
     String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it.getModel());
     _builder.append(_modelClassNameWithPackage_1, "\t\t\t");
-    _builder.append(" model = new ");
-    String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it.getModel());
-    _builder.append(_modelClassNameWithPackage_2, "\t\t\t");
     _builder.append("();");
     _builder.newLineIfNotEmpty();
     {

@@ -22,7 +22,6 @@ import de.acegen.aceGen.HttpServerView;
 import de.acegen.extensions.java.TypeExtension;
 import de.acegen.extensions.java.ViewExtension;
 import de.acegen.generator.java.AppRegistrationGenerator;
-import de.acegen.generator.java.DaoGenerator;
 import de.acegen.generator.java.DropwizardGenerator;
 import de.acegen.generator.java.JDBI3Generator;
 import de.acegen.generator.java.LiquibaseGenerator;
@@ -57,9 +56,6 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class JavaGenerator {
   @Inject
   private JDBI3Generator jdbi3Generator;
-
-  @Inject
-  private DaoGenerator daoGenerator;
 
   @Inject
   private DropwizardGenerator dropwizardGenerator;
@@ -145,8 +141,6 @@ public class JavaGenerator {
     boolean _isJDBI3 = httpServer.isJDBI3();
     if (_isJDBI3) {
       this.jdbi3Generator.doGenerate(httpServer, fsa);
-    } else {
-      this.daoGenerator.doGenerate(httpServer, fsa);
     }
     boolean _isDropwizard = httpServer.isDropwizard();
     if (_isDropwizard) {

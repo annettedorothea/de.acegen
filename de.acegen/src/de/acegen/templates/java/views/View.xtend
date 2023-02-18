@@ -82,11 +82,7 @@ class View {
 		
 		import de.acegen.Data;
 		import de.acegen.PersistenceHandle;
-		«FOR renderFunction : renderFunctions»
-			import «renderFunction.getModel.modelClassNameWithPackage»;
-		«ENDFOR»
 		
-		@SuppressWarnings("all")
 		public interface «viewInterfaceName» {
 		
 			«FOR renderFunction : renderFunctions»

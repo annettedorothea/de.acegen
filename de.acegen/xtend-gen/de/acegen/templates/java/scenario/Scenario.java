@@ -125,7 +125,7 @@ public class Scenario {
       }
     }
     _builder.newLine();
-    _builder.append("@SuppressWarnings(\"unused\")");
+    _builder.append("//@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ");
     String _name_1 = it.getName();
@@ -208,12 +208,6 @@ public class Scenario {
     _builder.append(".scenarios;");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("import java.util.ArrayList;");
-    _builder.newLine();
-    _builder.append("import java.util.Arrays;");
-    _builder.newLine();
-    _builder.append("import java.util.List;");
-    _builder.newLine();
     _builder.append("import java.util.Map;");
     _builder.newLine();
     _builder.append("import java.util.HashMap;");
@@ -234,10 +228,6 @@ public class Scenario {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import de.acegen.BaseScenario;");
-    _builder.newLine();
-    _builder.append("import de.acegen.ITimelineItem;");
-    _builder.newLine();
-    _builder.append("import de.acegen.SquishyDataProvider;");
     _builder.newLine();
     _builder.append("import de.acegen.HttpResponse;");
     _builder.newLine();

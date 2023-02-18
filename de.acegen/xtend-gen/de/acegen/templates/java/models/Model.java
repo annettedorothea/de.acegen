@@ -87,11 +87,6 @@ public class Model {
     _builder.append("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("import java.util.List;");
-    _builder.newLine();
-    _builder.append("import java.util.ArrayList;");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("import de.acegen.DateTimeToStringConverter;");
     _builder.newLine();
     _builder.append("import de.acegen.StringToDateTimeConverter;");
@@ -99,7 +94,7 @@ public class Model {
     _builder.append("import de.acegen.AbstractModel;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("@SuppressWarnings(\"all\")");
+    _builder.append("@SuppressWarnings(\"unused\")");
     _builder.newLine();
     _builder.append("public class ");
     String _modelClassName = this._typeExtension.modelClassName(it);
@@ -315,40 +310,9 @@ public class Model {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("public ");
-    String _modelClassNameWithPackage_3 = this._typeExtension.modelClassNameWithPackage(it);
-    _builder.append(_modelClassNameWithPackage_3, "\t");
-    _builder.append(" deepCopy() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    String _modelClassNameWithPackage_4 = this._typeExtension.modelClassNameWithPackage(it);
-    _builder.append(_modelClassNameWithPackage_4, "\t\t");
-    _builder.append(" copy = new ");
-    String _modelClassName_4 = this._typeExtension.modelClassName(it);
-    _builder.append(_modelClassName_4, "\t\t");
-    _builder.append("();");
-    _builder.newLineIfNotEmpty();
-    {
-      List<Attribute> _allAttributes_6 = this._commonExtension.allAttributes(it);
-      for(final Attribute attribute_6 : _allAttributes_6) {
-        _builder.append("\t\t");
-        String _deepCopy = this.deepCopy(attribute_6);
-        _builder.append(_deepCopy, "\t\t");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t\t");
-    _builder.append("return copy;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("public static ");
-    String _modelClassName_5 = this._typeExtension.modelClassName(it);
-    _builder.append(_modelClassName_5, "\t");
+    String _modelClassName_4 = this._typeExtension.modelClassName(it);
+    _builder.append(_modelClassName_4, "\t");
     _builder.append(" generateTestData() {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -369,33 +333,33 @@ public class Model {
       }
     }
     _builder.append("\t\t");
+    String _modelClassName_5 = this._typeExtension.modelClassName(it);
+    _builder.append(_modelClassName_5, "\t\t");
+    _builder.append(" testData = new ");
     String _modelClassName_6 = this._typeExtension.modelClassName(it);
     _builder.append(_modelClassName_6, "\t\t");
-    _builder.append(" testData = new ");
-    String _modelClassName_7 = this._typeExtension.modelClassName(it);
-    _builder.append(_modelClassName_7, "\t\t");
     _builder.append("();");
     _builder.newLineIfNotEmpty();
     {
-      List<Attribute> _allAttributes_7 = this._commonExtension.allAttributes(it);
-      for(final Attribute attribute_7 : _allAttributes_7) {
+      List<Attribute> _allAttributes_6 = this._commonExtension.allAttributes(it);
+      for(final Attribute attribute_6 : _allAttributes_6) {
         {
-          de.acegen.aceGen.Model _model_1 = attribute_7.getModel();
+          de.acegen.aceGen.Model _model_1 = attribute_6.getModel();
           boolean _tripleNotEquals_1 = (_model_1 != null);
           if (_tripleNotEquals_1) {
             {
-              boolean _isList_1 = attribute_7.isList();
+              boolean _isList_1 = attribute_6.isList();
               if (_isList_1) {
                 _builder.append("\t\t");
                 _builder.append("java.util.List<");
-                String _modelClassNameWithPackage_5 = this._typeExtension.modelClassNameWithPackage(attribute_7.getModel());
-                _builder.append(_modelClassNameWithPackage_5, "\t\t");
+                String _modelClassNameWithPackage_3 = this._typeExtension.modelClassNameWithPackage(attribute_6.getModel());
+                _builder.append(_modelClassNameWithPackage_3, "\t\t");
                 _builder.append("> ");
-                String _propertyName_4 = this._attributeExtension.propertyName(attribute_7);
+                String _propertyName_4 = this._attributeExtension.propertyName(attribute_6);
                 _builder.append(_propertyName_4, "\t\t");
                 _builder.append("List = new java.util.ArrayList<");
-                String _modelClassNameWithPackage_6 = this._typeExtension.modelClassNameWithPackage(attribute_7.getModel());
-                _builder.append(_modelClassNameWithPackage_6, "\t\t");
+                String _modelClassNameWithPackage_4 = this._typeExtension.modelClassNameWithPackage(attribute_6.getModel());
+                _builder.append(_modelClassNameWithPackage_4, "\t\t");
                 _builder.append(">();");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -406,11 +370,11 @@ public class Model {
                 _builder.newLine();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                String _propertyName_5 = this._attributeExtension.propertyName(attribute_7);
+                String _propertyName_5 = this._attributeExtension.propertyName(attribute_6);
                 _builder.append(_propertyName_5, "\t\t\t");
                 _builder.append("List.add(");
-                String _modelClassNameWithPackage_7 = this._typeExtension.modelClassNameWithPackage(attribute_7.getModel());
-                _builder.append(_modelClassNameWithPackage_7, "\t\t\t");
+                String _modelClassNameWithPackage_5 = this._typeExtension.modelClassNameWithPackage(attribute_6.getModel());
+                _builder.append(_modelClassNameWithPackage_5, "\t\t\t");
                 _builder.append(".generateTestData());");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -418,37 +382,37 @@ public class Model {
                 _builder.newLine();
                 _builder.append("\t\t");
                 _builder.append("testData.");
-                String _setterName_1 = this._attributeExtension.setterName(attribute_7);
+                String _setterName_1 = this._attributeExtension.setterName(attribute_6);
                 _builder.append(_setterName_1, "\t\t");
                 _builder.append("(");
-                String _firstLower = StringExtensions.toFirstLower(attribute_7.getName());
+                String _firstLower = StringExtensions.toFirstLower(attribute_6.getName());
                 _builder.append(_firstLower, "\t\t");
                 _builder.append("List);");
                 _builder.newLineIfNotEmpty();
               } else {
                 _builder.append("\t\t");
                 _builder.append("testData.");
-                String _setterName_2 = this._attributeExtension.setterName(attribute_7);
+                String _setterName_2 = this._attributeExtension.setterName(attribute_6);
                 _builder.append(_setterName_2, "\t\t");
                 _builder.append("(");
-                String _modelClassNameWithPackage_8 = this._typeExtension.modelClassNameWithPackage(attribute_7.getModel());
-                _builder.append(_modelClassNameWithPackage_8, "\t\t");
+                String _modelClassNameWithPackage_6 = this._typeExtension.modelClassNameWithPackage(attribute_6.getModel());
+                _builder.append(_modelClassNameWithPackage_6, "\t\t");
                 _builder.append(".generateTestData());");
                 _builder.newLineIfNotEmpty();
               }
             }
           } else {
             {
-              boolean _isList_2 = attribute_7.isList();
+              boolean _isList_2 = attribute_6.isList();
               if (_isList_2) {
                 _builder.append("\t\t");
-                String _javaType = this._typeExtension.javaType(attribute_7);
+                String _javaType = this._typeExtension.javaType(attribute_6);
                 _builder.append(_javaType, "\t\t");
                 _builder.append(" ");
-                String _propertyName_6 = this._attributeExtension.propertyName(attribute_7);
+                String _propertyName_6 = this._attributeExtension.propertyName(attribute_6);
                 _builder.append(_propertyName_6, "\t\t");
                 _builder.append("List = new ");
-                String _javaTypeNew = this._typeExtension.javaTypeNew(attribute_7);
+                String _javaTypeNew = this._typeExtension.javaTypeNew(attribute_6);
                 _builder.append(_javaTypeNew, "\t\t");
                 _builder.append("();");
                 _builder.newLineIfNotEmpty();
@@ -460,10 +424,10 @@ public class Model {
                 _builder.newLine();
                 _builder.append("\t\t");
                 _builder.append("\t");
-                String _propertyName_7 = this._attributeExtension.propertyName(attribute_7);
+                String _propertyName_7 = this._attributeExtension.propertyName(attribute_6);
                 _builder.append(_propertyName_7, "\t\t\t");
                 _builder.append("List.add(");
-                String _randomValue = this._attributeExtension.randomValue(attribute_7);
+                String _randomValue = this._attributeExtension.randomValue(attribute_6);
                 _builder.append(_randomValue, "\t\t\t");
                 _builder.append(");");
                 _builder.newLineIfNotEmpty();
@@ -472,20 +436,20 @@ public class Model {
                 _builder.newLine();
                 _builder.append("\t\t");
                 _builder.append("testData.");
-                String _setterName_3 = this._attributeExtension.setterName(attribute_7);
+                String _setterName_3 = this._attributeExtension.setterName(attribute_6);
                 _builder.append(_setterName_3, "\t\t");
                 _builder.append("(");
-                String _firstLower_1 = StringExtensions.toFirstLower(attribute_7.getName());
+                String _firstLower_1 = StringExtensions.toFirstLower(attribute_6.getName());
                 _builder.append(_firstLower_1, "\t\t");
                 _builder.append("List);");
                 _builder.newLineIfNotEmpty();
               } else {
                 _builder.append("\t\t");
                 _builder.append("testData.");
-                String _setterName_4 = this._attributeExtension.setterName(attribute_7);
+                String _setterName_4 = this._attributeExtension.setterName(attribute_6);
                 _builder.append(_setterName_4, "\t\t");
                 _builder.append("(");
-                String _randomValue_1 = this._attributeExtension.randomValue(attribute_7);
+                String _randomValue_1 = this._attributeExtension.randomValue(attribute_6);
                 _builder.append(_randomValue_1, "\t\t");
                 _builder.append(");");
                 _builder.newLineIfNotEmpty();
@@ -545,141 +509,5 @@ public class Model {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder;
-  }
-
-  private String deepCopy(final Attribute it) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      boolean _isList = it.isList();
-      boolean _not = (!_isList);
-      if (_not) {
-        {
-          String _type = it.getType();
-          boolean _tripleNotEquals = (_type != null);
-          if (_tripleNotEquals) {
-            _builder.append("copy.");
-            String _setterName = this._attributeExtension.setterName(it);
-            _builder.append(_setterName);
-            _builder.append("(this.");
-            String _terName = this._attributeExtension.getterName(it);
-            _builder.append(_terName);
-            _builder.append("());");
-            _builder.newLineIfNotEmpty();
-          } else {
-            de.acegen.aceGen.Model _model = it.getModel();
-            boolean _tripleNotEquals_1 = (_model != null);
-            if (_tripleNotEquals_1) {
-              _builder.append("if (this.");
-              String _terName_1 = this._attributeExtension.getterName(it);
-              _builder.append(_terName_1);
-              _builder.append("() != null) {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("copy.");
-              String _setterName_1 = this._attributeExtension.setterName(it);
-              _builder.append(_setterName_1, "\t");
-              _builder.append("(this.");
-              String _terName_2 = this._attributeExtension.getterName(it);
-              _builder.append(_terName_2, "\t");
-              _builder.append("().deepCopy());");
-              _builder.newLineIfNotEmpty();
-              _builder.append("}");
-              _builder.newLine();
-            }
-          }
-        }
-      } else {
-        {
-          String _type_1 = it.getType();
-          boolean _tripleNotEquals_2 = (_type_1 != null);
-          if (_tripleNotEquals_2) {
-            _builder.append("List<");
-            String _type_2 = it.getType();
-            _builder.append(_type_2);
-            _builder.append("> ");
-            String _name = it.getName();
-            _builder.append(_name);
-            _builder.append("Copy = new ArrayList<");
-            String _type_3 = it.getType();
-            _builder.append(_type_3);
-            _builder.append(">();");
-            _builder.newLineIfNotEmpty();
-            _builder.append("if (this.");
-            String _terName_3 = this._attributeExtension.getterName(it);
-            _builder.append(_terName_3);
-            _builder.append("() != null) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("for(");
-            String _type_4 = it.getType();
-            _builder.append(_type_4, "\t");
-            _builder.append(" item: this.");
-            String _terName_4 = this._attributeExtension.getterName(it);
-            _builder.append(_terName_4, "\t");
-            _builder.append("()) {");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            String _name_1 = it.getName();
-            _builder.append(_name_1, "\t\t");
-            _builder.append("Copy.add(item);");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("}");
-            _builder.newLine();
-            _builder.append("}");
-            _builder.newLine();
-          } else {
-            de.acegen.aceGen.Model _model_1 = it.getModel();
-            boolean _tripleNotEquals_3 = (_model_1 != null);
-            if (_tripleNotEquals_3) {
-              _builder.append("List<");
-              String _modelClassNameWithPackage = this._typeExtension.modelClassNameWithPackage(it.getModel());
-              _builder.append(_modelClassNameWithPackage);
-              _builder.append("> ");
-              String _name_2 = it.getName();
-              _builder.append(_name_2);
-              _builder.append("Copy = new ArrayList<");
-              String _modelClassNameWithPackage_1 = this._typeExtension.modelClassNameWithPackage(it.getModel());
-              _builder.append(_modelClassNameWithPackage_1);
-              _builder.append(">();");
-              _builder.newLineIfNotEmpty();
-              _builder.append("if (this.");
-              String _terName_5 = this._attributeExtension.getterName(it);
-              _builder.append(_terName_5);
-              _builder.append("() != null) {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("for(");
-              String _modelClassNameWithPackage_2 = this._typeExtension.modelClassNameWithPackage(it.getModel());
-              _builder.append(_modelClassNameWithPackage_2, "\t");
-              _builder.append(" item: this.");
-              String _terName_6 = this._attributeExtension.getterName(it);
-              _builder.append(_terName_6, "\t");
-              _builder.append("()) {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t");
-              String _propertyName = this._attributeExtension.propertyName(it);
-              _builder.append(_propertyName, "\t\t");
-              _builder.append("Copy.add(item.deepCopy());");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t");
-              _builder.append("}");
-              _builder.newLine();
-              _builder.append("}");
-              _builder.newLine();
-            }
-          }
-        }
-        _builder.append("copy.");
-        String _setterName_2 = this._attributeExtension.setterName(it);
-        _builder.append(_setterName_2);
-        _builder.append("(");
-        String _propertyName_1 = this._attributeExtension.propertyName(it);
-        _builder.append(_propertyName_1);
-        _builder.append("Copy);");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder.toString();
   }
 }

@@ -74,10 +74,6 @@ class Resource {
 		import de.acegen.IDaoProvider;
 		import de.acegen.ViewProvider;
 		import de.acegen.PersistenceConnection;
-		import de.acegen.PersistenceHandle;
-		import de.acegen.ReadAction;
-		import de.acegen.ITimelineItem;
-		import de.acegen.SquishyDataProvider;
 		import de.acegen.Config;
 		import de.acegen.Data;
 		
@@ -97,8 +93,6 @@ class Resource {
 		import javax.ws.rs.POST;
 		import javax.ws.rs.PUT;
 		import javax.ws.rs.DELETE;
-		
-		import «model.modelClassNameWithPackage»;
 		
 		import de.acegen.Resource;
 		
